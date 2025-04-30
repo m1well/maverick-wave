@@ -1,0 +1,96 @@
+@use 'sass:color';
+@use '../abstracts' as *;
+
+.mw-btn {
+  display: inline-block;
+  padding: spacing('2') spacing('4');
+  border-radius: radius('sm');
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--mw-transition);
+  border: 1px solid transparent;
+  vertical-align: middle;
+
+  // Color variants
+  &-primary {
+    background: var(--mw-primary-color);
+    color: var(--mw-dark-text-color);
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+    }
+  }
+
+  &-secondary {
+    background: var(--mw-secondary-color);
+    color: var(--mw-dark-text-color);
+
+    &:hover {
+      background: var(--mw-secondary-color-hover);
+    }
+  }
+
+  &-outline {
+    background: transparent;
+    border-color: var(--mw-primary-color);
+    color: var(--mw-primary-color);
+
+    &:hover {
+      background: var(--mw-primary-color);
+      color: var(--mw-dark-text-color);
+    }
+  }
+
+  &-link {
+    background: transparent;
+    color: var(--mw-primary-color);
+    padding: spacing('0');
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-link-secondary {
+    background: transparent;
+    color: var(--mw-text-secondary-color);
+    padding: spacing('0');
+
+    &:hover {
+      color: var(--mw-primary-color);
+      text-decoration: underline;
+    }
+  }
+
+  // Size variants
+  &-sm {
+    padding: spacing('1') spacing('3');
+    font-size: font-size('sm');
+  }
+
+  &-lg {
+    padding: spacing('3') spacing('6');
+    font-size: font-size('md');
+  }
+
+  // Icon variants
+  &-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('2');
+    white-space: nowrap;
+    > i,
+    > svg,
+    > span:first-child {
+      font-size: font-size('md');
+    }
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    &-icon {
+      gap: spacing('1');
+    }
+  }
+}

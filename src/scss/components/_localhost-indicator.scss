@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+// Localhost indicator - a pulsating thin line at the very top of the header
+.mw-localhost-indicator-pulse {
+  position: absolute;
+  top: 2px;
+  left: spacing('0');
+  width: 100%;
+  height: 4px;
+  background: var(--mw-warning-color);
+  z-index: 10;
+  animation: pulse-indicator 4s infinite;
+}
+
+// Keyframes for the pulsing indicator
+@keyframes pulse-indicator {
+  0% {
+    opacity: 0.4;
+    box-shadow: 0 0 3px var(--mw-warning-color);
+  }
+  25% {
+    opacity: 0.9;
+    box-shadow: 0 6px 13px var(--mw-warning-color);
+  }
+  100% {
+    opacity: 0.4;
+    box-shadow: 0 0 3px var(--mw-warning-color);
+  }
+}

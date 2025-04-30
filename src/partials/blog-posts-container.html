@@ -1,0 +1,129 @@
+<h3 class="mw-section-subtitle">Blog Posts</h3>
+
+<div class="mw-blog-post mw-mt-9">
+  <h2 class="mw-blog-post-title">Just a dummy blog post</h2>
+
+  <div class="mw-blog-post-header">
+    <div class="mw-blog-post-header-icon">
+      <i class="fas fa-code"></i>
+    </div>
+    <div class="mw-blog-post-meta">
+      <div class="mw-blog-post-meta-item">
+        <i class="far fa-calendar"></i>
+        <span>April 10, 2025</span>
+      </div>
+      <div class="mw-blog-post-meta-item">
+        <i class="far fa-user"></i>
+        <span>By Sarah Johnson</span>
+      </div>
+      <div class="mw-blog-post-meta-item">
+        <i class="far fa-clock"></i>
+        <span>8 min read</span>
+      </div>
+    </div>
+  </div>
+
+  <img
+    src="https://images.unsplash.com/photo-1603969072881-b0fc7f3d77d7?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    alt="UI/UX design"
+    class="mw-blog-post-featured-image"
+  />
+
+  <div class="mw-blog-post-content">
+    <p>
+      The landscape of web development continues to evolve at a rapid pace. In
+      this article, we explore the latest frameworks, tools, and methodologies
+      that are shaping the industry in 2025.
+    </p>
+
+    <h3>The Rise of AI-Assisted Development</h3>
+    <p>
+      Artificial intelligence has transformed how we approach coding. Modern
+      IDEs now come equipped with sophisticated AI assistants that can generate
+      entire components, optimize performance, and even identify potential bugs
+      before they manifest.
+    </p>
+
+    <p>
+      The most significant advancement has been in the realm of natural language
+      programming, where developers can describe functionality in plain English
+      and have the AI generate the corresponding code.
+    </p>
+
+    <blockquote>
+      "AI hasn't replaced developers; it has elevated them. We now spend more
+      time on architecture and problem-solving rather than writing boilerplate
+      code." — Elena Vega, Lead Developer at TechFront
+    </blockquote>
+
+    <h3>Serverless Architecture: Beyond the Basics</h3>
+    <p>
+      Serverless computing has matured significantly, moving beyond simple
+      function execution to comprehensive application architectures. The new
+      generation of serverless platforms offers:
+    </p>
+
+    <ul>
+      <li>Stateful serverless functions with built-in memory persistence</li>
+      <li>Edge-optimized execution for global performance</li>
+      <li>Integrated database connections with automatic scaling</li>
+      <li>Real-time monitoring and debugging capabilities</li>
+    </ul>
+
+    <h4>Code Example: Modern Serverless Function</h4>
+    <pre><code>// Modern serverless function with state management
+export async function handler(event, context) {
+  // Access persistent state across invocations
+  const state = await context.getState();
+
+  // Process the incoming request
+  const result = processRequest(event, state);
+
+  // Update the state for future invocations
+  await context.setState({
+    lastProcessed: new Date(),
+    counter: (state.counter || 0) + 1,
+    recentRequests: [...(state.recentRequests || []), event.id].slice(-10)
+  });
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(result)
+  };
+}</code></pre>
+
+    <h3>Web Components and Micro-Frontends</h3>
+    <p>
+      The component-based architecture has evolved into a more standardized
+      approach with Web Components becoming the foundation of modern frontend
+      development. This has enabled true interoperability between different
+      frameworks and libraries.
+    </p>
+
+    <p>
+      Micro-frontends have also gained widespread adoption, allowing teams to
+      develop, test, and deploy parts of a frontend independently, using
+      different technologies if necessary.
+    </p>
+
+    <h3>Conclusion</h3>
+    <p>
+      As we move further into 2025, the web development landscape continues to
+      prioritize developer experience, performance, and scalability. By
+      embracing these modern techniques, developers can create more robust,
+      efficient, and maintainable applications.
+    </p>
+  </div>
+
+  <div class="mw-blog-post-footer">
+    <a class="mw-btn mw-blog-post-footer-button">
+      <i class="fas fa-arrow-left"></i>
+      <span>Previous Post</span>
+    </a>
+    <a class="mw-btn mw-btn-primary">Back to Blog</a>
+    <a class="mw-btn mw-blog-post-footer-button next">
+      <i class="fas fa-arrow-right"></i>
+      <span>Next Post</span>
+    </a>
+  </div>
+</div>

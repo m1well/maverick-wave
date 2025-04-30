@@ -1,0 +1,25 @@
+@use '../abstracts' as *;
+
+.mw-home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 2.5s ease-in;
+  @media (max-width: breakpoint('sm')) {
+    justify-content: start;
+    padding-top: 100px !important;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

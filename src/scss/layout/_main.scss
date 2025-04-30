@@ -1,0 +1,19 @@
+@use '../abstracts' as *;
+
+.mw-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: spacing('0');
+  padding: spacing('0');
+}
+
+.mw-container {
+  width: min(90%, 1100px);
+  margin: spacing('0') auto;
+  padding: spacing('0');
+
+  @media (max-width: breakpoint('xs')) {
+    width: 94%;
+  }
+}

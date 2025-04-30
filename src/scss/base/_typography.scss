@@ -1,0 +1,264 @@
+@use 'sass:color';
+@use '../abstracts' as *;
+
+// System Font Stacks
+$font-family-base:
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
+  Cantarell, 'Helvetica Neue', sans-serif;
+
+$font-family-heading:
+  system-ui,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
+
+$font-family-mono:
+  SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+  monospace;
+
+:root {
+  --mw-font-family-base: #{$font-family-base};
+  --mw-font-family-heading: #{$font-family-heading};
+  --mw-font-family-mono: #{$font-family-mono};
+}
+
+// Base font settings
+body {
+  font-family: var(--mw-font-family-base);
+  line-height: 1.5;
+  color: var(--mw-text-color);
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--mw-font-family-heading);
+  line-height: 1.2;
+  margin-bottom: spacing('4');
+  font-weight: 600;
+}
+
+h1 {
+  font-size: font-size('5xl');
+
+  @include media-down('sm') {
+    font-size: font-size('3xl');
+  }
+}
+
+h2 {
+  font-size: font-size('4xl');
+
+  @include media-down('sm') {
+    font-size: font-size('2xl');
+  }
+}
+
+h3 {
+  font-size: font-size('xl');
+
+  &.mw-accent {
+    color: var(--mw-primary-color);
+  }
+}
+
+h4 {
+  font-size: font-size('lg');
+}
+
+h5 {
+  font-size: font-size('md');
+  font-weight: 500;
+}
+
+h6 {
+  font-size: font-size('sm');
+  font-weight: 500;
+}
+
+// Paragraphs
+p {
+  margin-bottom: spacing('3');
+
+  &.mw-text-secondary {
+    color: var(--mw-text-secondary-color);
+  }
+}
+
+// Code elements
+code,
+pre,
+kbd {
+  font-family: var(--mw-font-family-mono);
+}
+
+pre {
+  border: 1px solid var(--mw-border);
+  margin-bottom: 6px;
+}
+
+code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+blockquote {
+  color: var(--mw-secondary-color);
+  font-style: italic;
+  position: relative;
+  padding: spacing('4');
+  margin: spacing('5') spacing('2') spacing('3') spacing('1');
+  border-left: 2px solid var(--mw-secondary-background-hover);
+
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 0.7;
+    }
+  }
+
+  &::before,
+  &::after {
+    font-family: Georgia, serif;
+    font-size: font-size('5xl');
+    position: absolute;
+    opacity: 0.4;
+    line-height: 1;
+  }
+
+  &::before {
+    content: '"';
+    top: spacing('-2');
+    left: spacing('1');
+  }
+
+  &::after {
+    content: '"';
+    bottom: spacing('-5');
+    right: spacing('2');
+  }
+}
+
+// Text utilities
+.mw-text {
+  &-center {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+
+  &-primary {
+    color: var(--mw-primary-color);
+  }
+
+  &-secondary {
+    color: var(--mw-secondary-color);
+  }
+
+  &-muted {
+    color: var(--mw-text-secondary-color);
+  }
+
+  &-bold {
+    font-weight: 700;
+  }
+
+  &-medium {
+    font-weight: 500;
+  }
+
+  &-normal {
+    font-weight: 400;
+  }
+
+  &-italic {
+    font-style: italic;
+  }
+
+  &-color-dark {
+    color: var(--mw-dark-text-color);
+  }
+
+  &-color-light {
+    color: var(--mw-light-text-color);
+  }
+
+  @each $name, $size in $font-sizes {
+    &-#{$name} {
+      font-size: $size;
+    }
+  }
+}
+
+// Line height utilities
+.mw-leading {
+  &-tight {
+    line-height: 1.2;
+  }
+
+  &-normal {
+    line-height: 1.5;
+  }
+
+  &-loose {
+    line-height: 1.8;
+  }
+}
+
+// TODO test this manual below and write it down in the showcase html
+
+/*
+  CUSTOM FONTS IMPLEMENTATION
+  
+  To use your own fonts:
+  
+  1. Create a 'fonts' folder in your project (e.g., src/assets/fonts/)
+  
+  2. Add your font files (.woff2, .woff, .ttf) to this folder
+     - .woff2 is recommended for best performance and compatibility
+     - Include multiple weights (400, 500, 700) as needed
+  
+  3. Define your fonts using @font-face in your SCSS:
+  
+  @font-face {
+    font-family: 'YourCustomFont';
+    src: url('../assets/fonts/YourCustomFont-Regular.woff2') format('woff2'),
+         url('../assets/fonts/YourCustomFont-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap; // Improves performance
+  }
+  
+  @font-face {
+    font-family: 'YourCustomFont';
+    src: url('../assets/fonts/YourCustomFont-Bold.woff2') format('woff2'),
+         url('../assets/fonts/YourCustomFont-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  4. Update the font variables in your theme:
+  
+  $font-family-base: 'YourCustomFont', sans-serif;
+  $font-family-heading: 'YourCustomFont', sans-serif;
+  
+  :root {
+    --mw-font-family-base: #{$font-family-base};
+    --mw-font-family-heading: #{$font-family-heading};
+  }
+*/

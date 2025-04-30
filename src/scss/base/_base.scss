@@ -1,0 +1,104 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+
+// CSS Variables for theming and overriding
+:root {
+  // Base colors
+  --mw-primary-color: #{map.get($base-colors, 'primary-color')};
+  --mw-primary-color-hover: #{map.get($base-colors, 'primary-color-hover')};
+  --mw-primary-background: #{map.get($base-colors, 'primary-background')};
+  --mw-primary-background-hover: #{map.get(
+      $base-colors,
+      'primary-background-hover'
+    )};
+  --mw-secondary-color: #{map.get($base-colors, 'secondary-color')};
+  --mw-secondary-color-hover: #{map.get($base-colors, 'secondary-color-hover')};
+  --mw-secondary-background: #{map.get($base-colors, 'secondary-background')};
+  --mw-secondary-background-hover: #{map.get(
+      $base-colors,
+      'secondary-background-hover'
+    )};
+  --mw-gray-background: #{map.get($base-colors, 'gray-background')};
+
+  // Status colors
+  --mw-success-color: #{map.get($status-colors, 'success-color')};
+  --mw-success-background: #{map.get($status-colors, 'success-background')};
+  --mw-warning-color: #{map.get($status-colors, 'warning-color')};
+  --mw-warning-background: #{map.get($status-colors, 'warning-background')};
+  --mw-danger-color: #{map.get($status-colors, 'danger-color')};
+  --mw-danger-background: #{map.get($status-colors, 'danger-background')};
+  --mw-info-color: #{map.get($status-colors, 'info-color')};
+  --mw-info-background: #{map.get($status-colors, 'info-background')};
+
+  // Dark theme colors
+  --mw-dark-page-background: #{map.get($dark-theme-colors, 'page-background')};
+  --mw-dark-card-background: #{map.get($dark-theme-colors, 'card-background')};
+  --mw-dark-footer-background: #{map.get(
+      $dark-theme-colors,
+      'footer-background'
+    )};
+  --mw-dark-border: #{map.get($dark-theme-colors, 'border')};
+  --mw-dark-shadow: #{map.get($dark-theme-colors, 'shadow')};
+  --mw-dark-text-color: #{map.get($dark-theme-colors, 'text-color')};
+  --mw-dark-text-secondary-color: #{map.get(
+      $dark-theme-colors,
+      'text-secondary-color'
+    )};
+
+  // Light theme colors
+  --mw-light-page-background: #{map.get($light-theme-colors, 'page-background')};
+  --mw-light-card-background: #{map.get($light-theme-colors, 'card-background')};
+  --mw-light-footer-background: #{map.get(
+      $light-theme-colors,
+      'footer-background'
+    )};
+  --mw-light-border: #{map.get($light-theme-colors, 'border')};
+  --mw-light-shadow: #{map.get($light-theme-colors, 'shadow')};
+  --mw-light-text-color: #{map.get($light-theme-colors, 'text-color')};
+  --mw-light-text-secondary-color: #{map.get(
+      $light-theme-colors,
+      'text-secondary-color'
+    )};
+
+  // Typography
+  --mw-font-family: #{$font-family};
+
+  // Transitions
+  --mw-transition: #{$transition-default};
+
+  // theme for theme-toggle
+  --mw-internal-theme-mode: #{$mw-theme-mode};
+
+  @if $mw-theme-mode == 'dark' or $mw-theme-mode == 'switchable' {
+    // Dark theme variables
+    --mw-page-background: var(--mw-dark-page-background);
+    --mw-card-background: var(--mw-dark-card-background);
+    --mw-footer-background: var(--mw-dark-footer-background);
+    --mw-border: var(--mw-dark-border);
+    --mw-shadow: var(--mw-dark-shadow);
+    --mw-text-color: var(--mw-dark-text-color);
+    --mw-text-secondary-color: var(--mw-dark-text-secondary-color);
+  } @else {
+    // Light theme variables
+    --mw-page-background: var(--mw-light-page-background);
+    --mw-card-background: var(--mw-light-card-background);
+    --mw-footer-background: var(--mw-light-footer-background);
+    --mw-border: var(--mw-light-border);
+    --mw-shadow: var(--mw-light-shadow);
+    --mw-text-color: var(--mw-light-text-color);
+    --mw-text-secondary-color: var(--mw-light-text-secondary-color);
+  }
+}
+
+@if $mw-theme-mode == 'switchable' {
+  .mw-theme-light {
+    // Light theme variables for switching
+    --mw-page-background: var(--mw-light-page-background);
+    --mw-card-background: var(--mw-light-card-background);
+    --mw-footer-background: var(--mw-light-footer-background);
+    --mw-border: var(--mw-light-border);
+    --mw-shadow: var(--mw-light-shadow);
+    --mw-text-color: var(--mw-light-text-color);
+    --mw-text-secondary-color: var(--mw-light-text-secondary-color);
+  }
+}

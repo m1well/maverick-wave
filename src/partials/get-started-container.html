@@ -1,0 +1,352 @@
+<h3>Installation</h3>
+<p>
+  Add MaverickWave CSS framework to your project using one of these methods:
+</p>
+
+<h4 class="mw-mt-4">Option 1: CDN</h4>
+<pre
+  class="mw-code-block"
+><code>&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@v{{VERSION}}/maverick-wave.min.css"&gt;
+&lt;script src="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@{{VERSION}}/maverick-wave.min.js"&gt;&lt;/script&gt;</code></pre>
+
+<h4 class="mw-mt-4">Option 2: Direct Download</h4>
+<div class="mw-d-flex mw-gap-4">
+  <a href="maverick-wave.min.css" download class="mw-btn mw-btn-primary">
+    Download CSS
+  </a>
+  <a href="maverick-wave.min.js" download class="mw-btn mw-btn-outline">
+    Download JS
+  </a>
+</div>
+
+<h3 class="mw-mt-6">Integration Options</h3>
+
+<div class="mw-tabs mw-mb-6">
+  <div class="mw-tabs-nav">
+    <div class="mw-tabs-nav-item active" data-tab="html-css">HTML/CSS</div>
+    <div class="mw-tabs-nav-item" data-tab="scss">SCSS Projects</div>
+    <div class="mw-tabs-nav-item" data-tab="angular">Angular</div>
+    <div class="mw-tabs-nav-item" data-tab="react">React</div>
+  </div>
+
+  <div class="mw-tabs-content">
+    <!-- HTML/CSS Tab -->
+    <div class="mw-tabs-panel active" id="html-css">
+      <div class="mw-card mw-card-simple">
+        <h4>Using Pre-compiled CSS (CDN or Download)</h4>
+        <p>
+          This is the simplest method if you don't need SCSS customization. Link
+          the compiled <code>maverick-wave.min.css</code> and
+          <code>maverick-wave.min.js</code> files in your HTML head and before
+          the closing body tag, respectively.
+        </p>
+        <pre class="mw-code-block"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;My MaverickWave Project&lt;/title&gt;
+    &lt;!-- Framework CSS (CDN or local path) --&gt;
+    &lt;link rel="stylesheet" href="path/to/maverick-wave.min.css"&gt;
+      
+    &lt;!-- Your Custom Styles (Load AFTER framework) --&gt;
+    &lt;link rel="stylesheet" href="your-custom-styles.css"&gt; 
+    &lt;!-- OR --&gt;
+    &lt;style&gt;
+        /* Custom overrides here */
+        :root {
+          --mw-primary-color: #your-color; 
+          --mw-dark-page-background: #your-color;
+          --mw-dark-card-background: #your-color;
+          /* ... more overrides ... */
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content --&gt;
+      
+    &lt;!-- Framework JS (CDN or local path) --&gt;
+    &lt;script src="path/to/maverick-wave.min.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h5 class="mw-mt-4">Customizing via CSS Variables</h5>
+        <p>
+          Even without SCSS, you can customize colors and other properties by
+          overriding the CSS variables defined by MaverickWave. Create your own
+          CSS file (e.g., <code>your-custom-styles.css</code>) or use a
+          <code>&lt;style&gt;</code> tag in your HTML head.
+          <strong
+            >Make sure your custom styles are loaded *after* the MaverickWave
+            CSS file.</strong
+          >
+        </p>
+        <p>Override variables within the <code>:root</code> selector:</p>
+        <pre class="mw-code-block"><code>/* your-custom-styles.css */
+:root {
+  /* Override base colors */
+  --mw-primary-color: #e94560; /* Your brand's primary color */
+  --mw-secondary-color: #f39c12;
+  --mw-success-color: rgba(26, 188, 156, 0.15); /* Custom success */
+
+  /* Override specific theme colors */
+  --mw-dark-page-background: #1a1a2e; /* Custom dark theme page */
+  --mw-dark-card-background: #2a2a4a; /* Custom dark theme card */
+  --mw-light-page-background: #ffffff; /* Custom light theme page */
+  --mw-light-card-background: #f0f0f5; /* Custom light theme card */
+        
+  /* Override font */
+  --mw-font-family: 'Your Custom Font', sans-serif; 
+}</code></pre>
+        <p>
+          Refer to the framework's source or documentation for a full list of
+          available CSS variables.
+        </p>
+      </div>
+    </div>
+
+    <!-- SCSS Tab -->
+    <div class="mw-tabs-panel" id="scss">
+      <div class="mw-card mw-card-simple">
+        <h4>Using SCSS Source Files (Requires Sass Build Process)</h4>
+        <p>
+          For full customization control, integrate MaverickWave's SCSS source
+          files into your project's Sass build process (e.g., using Node Sass,
+          Dart Sass). This allows you to override Sass variables before the
+          framework is compiled.
+        </p>
+        <p>
+          MaverickWave uses the <code>!default</code> flag for its Sass
+          variables, meaning you can easily set your own values before importing
+          the framework.
+        </p>
+
+        <h5 class="mw-mt-4">1. Configure Theme Mode (Optional)</h5>
+        <p>
+          You can choose the theme behavior during compilation by setting the
+          <code>$mw-theme-mode</code> variable.
+        </p>
+        <ul>
+          <li>
+            <code>'switchable'</code> (Default): Includes styles for both dark
+            (default) and light themes, activated by the
+            <code>.mw-theme-light</code>
+            class and the JS toggle.
+          </li>
+          <li>
+            <code>'dark'</code>: Compiles only the dark theme styles. The theme
+            toggle (if present) will be disabled.
+          </li>
+          <li>
+            <code>'light'</code>: Compiles only the light theme styles. The
+            theme toggle (if present) will be disabled.
+          </li>
+        </ul>
+        <p class="mw-text-warning">
+          <i class="fas fa-exclamation-triangle mw-mr-1"></i>
+          <strong>Important:</strong> Regardless of the chosen theme mode, the
+          main header and navigation bar components currently retain their
+          default dark appearance as defined in the framework.
+        </p>
+
+        <h5 class="mw-mt-4">2. Override Sass Variables</h5>
+        <p>
+          Define your custom variable values in your main Sass file
+          <em>before</em> importing MaverickWave.
+        </p>
+
+        <h5 class="mw-mt-4">3. Import MaverickWave</h5>
+        <p>Import the main framework SCSS file after your overrides.</p>
+
+        <pre
+          class="mw-code-block"
+        ><code>// Your main project SCSS file (e.g., styles.scss)
+    
+// --- 1. Configure Theme Mode (Optional) ---
+// Options: 'switchable' (default), 'dark', 'light'
+$mw-theme-mode: 'switchable'; // this is the default!
+
+// --- 2. Override Framework Sass Variables ---
+// Base Colors
+$primary-color: #e94560;    // Your brand primary
+$secondary-color: #f39c12;  // Your brand secondary
+/* and status colors .... */
+
+// Basic background colors
+$dark-background: #1f1f2e;
+$light-background: #f8f9fa;
+    
+// Base Text Colors
+$dark-text-color: #ffffff;
+$light-text-color: #1c1c1c;
+    
+// Font Family (Ensure you load the font via @font-face)
+$font-family: 'Your Custom Font', sans-serif;
+    
+// You can override entire theme maps if needed
+// $dark-theme-colors: (
+  'page-background': #your-color,
+  'card-background': #your-color,
+  'footer-background': #your-color,
+  'border': #your-color,
+  'shadow': #your-color,
+  'text-color': #your-color,
+  'text-secondary-color': #your-color,
+// );
+    
+// --- 3. Import MaverickWave Framework ---
+// Adjust the path based on your project structure (e.g., node_modules)
+@import 'path/to/maverick-wave/scss/maverick-wave';
+    
+// --- Your Additional Project Styles ---
+body {
+  // Your custom body styles
+}
+    </code></pre>
+        <p>
+          When you compile this Sass file, MaverickWave will use your variable
+          values, and derived colors (like alert backgrounds calculated with
+          <code>color.adjust</code> or <code>rgba</code> in the framework's
+          SCSS) will automatically use your overridden base colors.
+        </p>
+      </div>
+    </div>
+
+    <!-- Angular Tab -->
+    <div class="mw-tabs-panel" id="angular">
+      <div class="mw-card mw-card-simple">
+        <h4>Angular Integration</h4>
+        <p>
+          For Angular projects, install via NPM and include in your
+          angular.json:
+        </p>
+        <pre class="mw-code-block"><code>// Install package
+npm install maverick-wave
+
+// In angular.json
+"styles": [
+  "node_modules/maverick-wave/maverick-wave.min.css",
+  "src/styles.scss"
+],
+"scripts": [
+  "node_modules/maverick-wave/maverick-wave.min.js"
+]</code></pre>
+        <p>For SCSS integration in Angular:</p>
+        <pre class="mw-code-block"><code>// In src/styles.scss
+@import 'node_modules/maverick-wave/scss/maverick-wave';</code></pre>
+        <p>You can also create a theme file to customize variables:</p>
+        <pre class="mw-code-block"><code>// In src/theme.scss
+$primary-color: #3f51b5;
+$secondary-color: #ff4081;
+
+@import 'node_modules/maverick-wave/scss/maverick-wave';</code></pre>
+      </div>
+    </div>
+
+    <!-- React Tab -->
+    <div class="mw-tabs-panel" id="react">
+      <div class="mw-card mw-card-simple">
+        <h4>React Integration</h4>
+        <p>For React projects, install via NPM and import in your index.js:</p>
+        <pre class="mw-code-block"><code>// Install package
+npm install maverick-wave
+
+// In index.js or App.js
+import 'maverick-wave/maverick-wave.min.css';
+
+// If you need the JavaScript functionality
+import 'maverick-wave/maverick-wave.min.js';</code></pre>
+        <p>For SCSS integration in React:</p>
+        <pre class="mw-code-block"><code>// In your main SCSS file
+@import '~maverick-wave/scss/maverick-wave';</code></pre>
+        <p>Example usage in a React component:</p>
+        <pre class="mw-code-block"><code>function App() {
+  return (
+    &lt;div className="mw-container"&gt;
+      &lt;h1 className="mw-text-primary"&gt;Hello, MaverickWave!&lt;/h1&gt;
+      &lt;p&gt;Start building your awesome React project.&lt;/p&gt;
+      &lt;button className="mw-btn mw-btn-primary"&gt;Get Started&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Added mw-container and mw-mt-6 for spacing -->
+<h3 class="mw-mt-6">Adding Custom Fonts</h3>
+<p>
+  To use custom fonts with MaverickWave, you need to load the font files using
+  the standard CSS <code>@font-face</code> rule and then tell the framework to
+  use your font.
+</p>
+<div class="mw-card mw-card-simple">
+  <h5 class="mw-mb-2">1. Load the Font</h5>
+  <p>
+    Place your font files (e.g., woff2, woff) in your project and define
+    <code>@font-face</code> rules in your custom CSS/SCSS file. Load this CSS
+    early.
+  </p>
+  <pre
+    class="mw-code-block"
+  ><code>/* your-custom-styles.css or your-fonts.scss */
+
+@font-face {
+  font-family: 'Your Custom Font';
+  src: url('/path/to/your-custom-font.woff2') format('woff2'),
+       url('/path/to/your-custom-font.woff') format('woff');
+  font-weight: 400; /* Normal weight */
+  font-style: normal;
+  font-display: swap; /* Improves perceived performance */
+}
+
+@font-face {
+  font-family: 'Your Custom Font';
+  src: url('/path/to/your-custom-font-bold.woff2') format('woff2'),
+       url('/path/to/your-custom-font-bold.woff') format('woff');
+  font-weight: 700; /* Bold weight */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Add other weights/styles as needed */
+</code></pre>
+
+  <h5 class="mw-mt-4 mw-mb-2">2. Apply the Font</h5>
+  <p>
+    Update the font family used by MaverickWave by overriding either the Sass
+    variable (if using SCSS integration) or the CSS variable (if using
+    CDN/pre-compiled CSS).
+  </p>
+
+  <p>
+    <strong>SCSS Method (Before <code>@import</code>):</strong>
+  </p>
+  <pre class="mw-code-block"><code>// your-main.scss
+$font-family: 'Your Custom Font', /* Fallback fonts */ system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+@import 'path/to/maverick-wave/scss/maverick-wave';</code></pre>
+
+  <p>
+    <strong>CSS Variable Method (In <code>:root</code>):</strong>
+  </p>
+  <pre class="mw-code-block"><code>/* your-custom-styles.css */
+:root {
+  --mw-font-family: 'Your Custom Font', /* Fallback fonts */ system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}</code></pre>
+  <p>Remember to include appropriate fallback fonts in your font stack.</p>
+</div>
+
+<div class="mw-d-flex mw-flex-wrap mw-gap-4 mw-justify-center mw-mt-6">
+  <a href="#documentation" class="mw-btn mw-btn-primary">
+    Explore Documentation
+  </a>
+  <a
+    href="https://github.com/m1well/maverick-wave"
+    target="_blank"
+    class="mw-btn mw-btn-outline"
+  >
+    <i class="fab fa-github"></i> GitHub Repository
+  </a>
+</div>

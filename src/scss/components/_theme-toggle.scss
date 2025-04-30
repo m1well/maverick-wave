@@ -1,0 +1,43 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+
+.mw-theme-toggle {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  border-radius: radius('lg');
+  background: var(--mw-dark-footer-background);
+  border: 1px solid var(--mw-primary-color-hover);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: spacing('0') spacing('1');
+  transition: var(--mw-transition);
+  // margin: spacing('2') spacing('7') spacing('2') spacing('2');
+
+  &-slider {
+    position: absolute;
+    left: spacing('1');
+    width: 20px;
+    height: 20px;
+    border-radius: radius('full');
+    background: var(--mw-secondary-color);
+    transition: var(--mw-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mw-text-color);
+    font-size: font-size('md');
+  }
+
+  &.active &-slider {
+    left: 35px;
+  }
+
+  &-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: font-size('md');
+  }
+}

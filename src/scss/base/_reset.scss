@@ -1,0 +1,73 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
+  min-width: 333px;
+  @media (min-width: 768px) {
+    scroll-padding-top: 80px;
+  }
+}
+
+body {
+  font-family: var(--mw-font-family);
+  background: var(--mw-page-background);
+  color: var(--mw-text-color);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--mw-text-secondary-color);
+  transition: var(--mw-transition);
+}
+
+ul {
+  list-style: none;
+}
+
+hr {
+  margin: 15px 0;
+  color: var(--mw-text-secondary-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+table,
+th,
+td {
+  border: 1px solid var(--mw-border);
+  border-collapse: collapse;
+  padding: 3px 8px;
+  text-align: left;
+  tr:nth-child(even) {
+    background: var(--mw-gray-background);
+  }
+}
+
+th {
+  background: var(--mw-primary-color);
+  color: var(--mw-dark-text-color);
+}

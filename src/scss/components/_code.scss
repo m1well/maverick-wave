@@ -1,0 +1,261 @@
+@use '../abstracts' as *;
+
+code,
+pre {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: font-size('xs');
+  border-radius: radius('sm');
+}
+
+code {
+  color: var(--mw-text-secondary-color);
+  padding: spacing('1') spacing('2');
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+pre {
+  color: var(--mw-text-color);
+  padding: spacing('4');
+  overflow-x: auto;
+  border: none;
+
+  code {
+    color: inherit;
+    padding: spacing('0');
+    white-space: pre-wrap;
+    display: block;
+    line-height: 1.5;
+
+    @include media-down('sm') {
+      font-size: font-size('2xs');
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @include media-down('xs') {
+      font-size: font-size('3xs');
+    }
+  }
+}
+
+// Code block with filename
+.mw-code-block {
+  border-radius: radius('sm');
+  overflow: hidden;
+  border: 1px solid var(--mw-border);
+  width: 100%;
+
+  &-header {
+    padding: spacing('2') spacing('4');
+    border-bottom: 1px solid var(--mw-border);
+    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-size: font-size('xs');
+    color: var(--mw-text-secondary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @include media-down('sm') {
+      padding: spacing('2');
+    }
+  }
+
+  &-filename {
+    font-weight: 500;
+    margin-right: spacing('2');
+
+    @include media-down('sm') {
+      font-size: font-size('2xs');
+      margin-bottom: spacing('1');
+    }
+  }
+
+  &-language {
+    font-size: font-size('xs');
+    padding: spacing('1');
+    border-radius: radius('sm');
+
+    @include media-down('sm') {
+      font-size: font-size('2xs');
+    }
+  }
+
+  pre {
+    margin: spacing('0');
+    border: none;
+    max-width: 100%;
+    overflow-x: auto;
+
+    @include media-down('sm') {
+      padding: spacing('2');
+    }
+
+    @media (max-width: breakpoint('sm')) {
+      font-size: font-size('2xs');
+      padding: spacing('1');
+
+      code {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+
+    @media (max-width: breakpoint('xs')) {
+      font-size: font-size('3xs');
+    }
+  }
+}
+
+// Terminal
+.mw-terminal {
+  background: #232323; // fix color
+  color: var(--mw-dark-text-color);
+  border-radius: radius('sm');
+  padding: spacing('4');
+  margin: spacing('4') spacing('0');
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: font-size('xs');
+  line-height: 1.5;
+  overflow: auto;
+  max-width: 100%;
+
+  @include media-down('sm') {
+    padding: spacing('2');
+    font-size: font-size('2xs');
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    font-size: font-size('2xs');
+    padding: spacing('1');
+  }
+
+  @media (max-width: breakpoint('xs')) {
+    font-size: font-size('3xs');
+  }
+
+  &-line {
+    display: block;
+    word-break: break-word;
+
+    &::before {
+      content: '$ ';
+      color: #6bdd6b;
+      font-weight: bold;
+    }
+
+    &.mw-terminal-output::before {
+      content: '';
+    }
+  }
+}
+
+// Syntax highlighting
+.mw-code-keyword {
+  color: #bd63d9;
+}
+
+.mw-code-string {
+  color: #98c379;
+}
+
+.mw-code-comment {
+  color: #7f848e;
+  font-style: italic;
+}
+
+.mw-code-function {
+  color: #489bde;
+}
+
+.mw-code-number {
+  color: #d19a66;
+}
+
+.mw-code-operator {
+  color: #56b6c2;
+}
+
+// Light theme adjustments
+.mw-theme-light {
+  .mw-code-keyword {
+    color: #9d1a9a;
+  }
+
+  .mw-code-string {
+    color: #43a342;
+  }
+
+  .mw-code-comment {
+    color: #a0a1a7;
+  }
+
+  .mw-code-function {
+    color: #4078f2;
+  }
+
+  .mw-code-number {
+    color: #89610c;
+  }
+
+  .mw-code-operator {
+    color: #0184bc;
+  }
+}
+
+// Responsive container
+.mw-code-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  position: relative;
+
+  // Add horizontal scrolling indicator for small screens
+  @media (max-width: breakpoint('sm')) {
+    background-position:
+      left center,
+      right center;
+    background-repeat: no-repeat;
+    background-size:
+      20px 100%,
+      20px 100%;
+    background-attachment: local, local;
+  }
+
+  // Children should not be wider than the container
+  & > * {
+    max-width: 100%;
+  }
+
+  .mw-code-block {
+    margin: spacing('0');
+    width: 100%;
+
+    pre {
+      white-space: pre;
+      width: 100%;
+      overflow-x: auto;
+
+      // For very small screens, allow wrapping
+      @media (max-width: breakpoint('xs')) {
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+
+    // Add horizontal scrolling for code that can't wrap nicely
+    &.mw-code-nowrap {
+      pre {
+        white-space: pre;
+        code {
+          white-space: pre;
+        }
+      }
+    }
+  }
+
+  .mw-terminal {
+    width: 100%;
+  }
+}

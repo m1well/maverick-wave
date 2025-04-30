@@ -1,0 +1,77 @@
+@use 'sass:color';
+@use '../abstracts' as *;
+
+.mw-section-title {
+  font-size: font-size('3xl');
+  margin-bottom: spacing('7');
+  text-align: center;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: spacing('-2');
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: var(--mw-primary-color);
+  }
+
+  @include media-down('sm') {
+    font-size: font-size('2xl');
+  }
+}
+
+.mw-section-subtitle {
+  font-size: font-size('2xl');
+  margin: spacing('8') spacing('0') spacing('6') spacing('0');
+  text-align: center;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: spacing('-2');
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: var(--mw-secondary-color);
+  }
+
+  @include media-down('sm') {
+    font-size: font-size('xl');
+  }
+}
+
+.mw-section-nav {
+  max-width: 90%;
+  margin: spacing('-3') auto spacing('-5') auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: spacing('3');
+}
+
+// Responsive adjustments
+@media (max-width: breakpoint('sm')) {
+  .mw-section-nav {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .mw-section-btn {
+    width: 90%;
+    margin: spacing('0') auto;
+    text-align: center;
+  }
+}
+
+// additional spacing for the whole section
+section {
+  padding: spacing('8') spacing('0');
+}

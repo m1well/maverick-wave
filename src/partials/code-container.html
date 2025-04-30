@@ -1,0 +1,194 @@
+<h3 class="mw-section-subtitle">Code</h3>
+
+<div class="mw-grid-2 mw-gap-5">
+  <div>
+    <h3 class="mw-mb-4">Inline Code</h3>
+    <div class="mw-card mw-card-simple">
+      <p>
+        Use <code>inline code</code> for variables, function names, or short
+        code snippets within your text.
+      </p>
+      <p>
+        For example, use <code>mw-btn</code> class to create a button or
+        <code>mw-card</code> to create a card component in your layout.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Code Block</h3>
+    <div class="mw-card mw-card-simple">
+      <p>Use code blocks for multi-line code examples:</p>
+      <div class="mw-code-container">
+        <pre><code>// A simple greeting function
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+// Display greeting in console
+console.log(greet('Developer'));</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mw-grid-1 mw-mt-6 mw-gap-5">
+  <div>
+    <h3 class="mw-mb-4">Code Block with Filename</h3>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-code-block">
+        <div class="mw-code-block-header">
+          <span class="mw-code-block-filename">counter.jsx</span>
+          <span class="mw-code-block-language">React</span>
+        </div>
+        <div class="mw-code-container">
+          <pre><code>// A simple React counter component
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  return (
+    ......
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Terminal</h3>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-terminal">
+        <span class="mw-terminal-line">cd my-project</span>
+        <span class="mw-terminal-line"
+          >touch index.html styles.css script.js</span
+        >
+        <span class="mw-terminal-line mw-terminal-output">Created 3 files</span>
+        <span class="mw-terminal-line">mkdir assets</span>
+        <span class="mw-terminal-line">ls -la</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Syntax Highlighting (Integration)</h3>
+    <div class="mw-card mw-card-simple">
+      <p>
+        MaverickWave provides styling for code containers
+        (<code>.mw-code-block</code>, <code>.mw-code-container</code>) and basic
+        styles for common code tokens (like keywords, comments, strings) using
+        classes such as <code>.mw-code-keyword</code>,
+        <code>.mw-code-comment</code>, etc.
+      </p>
+      <p>
+        However, MaverickWave
+        <strong>does not include a built-in JavaScript library</strong>
+        for automatically parsing code and applying these highlighting classes.
+      </p>
+      <h5 class="mw-mt-4 mw-mb-2">Option 1: Manual Highlighting</h5>
+      <p>
+        For simple snippets, you can manually wrap parts of your code with
+        <code>&lt;span&gt;</code> tags using the provided
+        <code>.mw-code-*</code> classes:
+      </p>
+      <div class="mw-code-container">
+        <div class="mw-code-block">
+          <div class="mw-code-block-header">
+            <span class="mw-code-block-filename">manual-example.js</span>
+            <span class="mw-code-block-language">JavaScript</span>
+          </div>
+          <pre><code><span class="mw-code-keyword">const</span> <span class="mw-code-function">greet</span> = (<span class="mw-code-keyword">name</span>) <span class="mw-code-operator">=></span> {
+  <span class="mw-code-comment">// Simple greeting</span>
+  <span class="mw-code-keyword">return</span> <span class="mw-code-string">`Hello, ${<span class="mw-code-keyword">name</span>}!`</span>;
+};</code></pre>
+        </div>
+      </div>
+
+      <h5 class="mw-mt-4 mw-mb-2">
+        Option 2: Using a Syntax Highlighting Library
+      </h5>
+      <p>
+        For automatic highlighting of various languages, integrate a dedicated
+        JavaScript library like
+        <a
+          href="https://prismjs.com/"
+          target="_blank"
+          class="mw-btn mw-btn-link mw-p-0"
+          >Prism.js</a
+        >
+        or
+        <a
+          href="https://highlightjs.org/"
+          target="_blank"
+          class="mw-btn mw-btn-link mw-p-0"
+          >Highlight.js</a
+        >.
+      </p>
+      <ol class="mw-list mw-list-dot mw-ml-4">
+        <li>Include the library's CSS and JavaScript files in your project.</li>
+        <li>
+          Ensure the library is configured to process code within MaverickWave's
+          <code>&lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt;</code>
+          structures, often by adding specific language classes (e.g.,
+          <code>&lt;code class="language-javascript"&gt;</code>).
+        </li>
+        <li>
+          You might need to slightly adjust the library's theme or
+          MaverickWave's token styles (<code>.mw-code-*</code>) for perfect
+          visual integration, or simply rely entirely on the chosen library's
+          theme.
+        </li>
+      </ol>
+      <p>
+        Using an external library is recommended for robust, multi-language
+        syntax highlighting.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Using Code Components</h3>
+    <div class="mw-card mw-card-simple">
+      <h4>Basic Structure</h4>
+      <p>
+        Here's how to structure the HTML for MaverickWave's code components:
+      </p>
+
+      <h5 class="mw-mt-4 mw-mb-2">Inline Code</h5>
+      <pre
+        class="mw-code-block"
+      ><code>&lt;p&gt;Use the &lt;code&gt;mw-btn&lt;/code&gt; class.&lt;/p&gt;</code></pre>
+
+      <h5 class="mw-mt-4 mw-mb-2">Basic Code Block</h5>
+      <pre class="mw-code-block"><code>&lt;div class="mw-code-container"&gt;
+  &lt;pre&gt;&lt;code&gt;your_code_here();
+    more_code();&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</code></pre>
+
+      <h5 class="mw-mt-4 mw-mb-2">Code Block with Header</h5>
+      <pre
+        class="mw-code-block"
+      ><code>&lt;div class="mw-code-block"&gt; &lt;!-- Note: .mw-code-block wraps header + container --&gt;
+  &lt;div class="mw-code-block-header"&gt;
+    &lt;span class="mw-code-block-filename"&gt;script.js&lt;/span&gt;
+    &lt;span class="mw-code-block-language"&gt;JavaScript&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="mw-code-container"&gt;
+    &lt;pre&gt;&lt;code&gt;your_code_here();&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+      <h5 class="mw-mt-4 mw-mb-2">Terminal Block</h5>
+      <pre class="mw-code-block"><code>&lt;div class="mw-terminal"&gt;
+  &lt;span class="mw-terminal-line"&gt;npm install maverick-wave&lt;/span&gt;
+  &lt;span class="mw-terminal-line mw-terminal-output"&gt;+ maverick-wave added&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+      <p class="mw-mt-4">
+        Remember to integrate a syntax highlighting library if you need
+        automatic language coloring (see the "Syntax Highlighting" section
+        above).
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+{
+  "name": "maverick-wave",
+  "version": "1.3.0",
+  "config": {
+    "version_short": "1.3"
+  },
+  "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
+  "main": "src/js/main.js",
+  "style": "src/scss/main.scss",
+  "scripts": {
+    "clean": "gulp clean",
+    "format": "prettier --write \"**/*.{scss,js,json,html,md}\"",
+    "showcase": "http-server -c-1 -p 8888 dist",
+    "start": "gulp",
+    "build": "gulp clean && gulp build",
+    "release": "gulp release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m1well/maverick-wave.git"
+  },
+  "bugs": {
+    "url": "https://github.com/m1well/maverick-wave/issues"
+  },
+  "homepage": "https://maverickwave.m1well.com/",
+  "author": "m1well",
+  "license": "MIT",
+  "keywords": [
+    "css",
+    "sass",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "del": "^8.0.0",
+    "gulp": "^5.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-file-include": "^2.3.0",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^6.0.1",
+    "gulp-terser": "^2.1.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "sass": "^1.87.0",
+    "through2": "^4.0.2"
+  }
+}

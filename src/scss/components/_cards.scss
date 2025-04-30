@@ -1,0 +1,215 @@
+@use '../abstracts' as *;
+
+.mw-card {
+  background: var(--mw-card-background);
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  padding: spacing('5');
+  box-shadow: 0 5px 10px var(--mw-shadow);
+  transition: var(--mw-transition);
+  border: 1px solid var(--mw-border);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 21px var(--mw-shadow);
+    border-color: var(--mw-primary-color-hover);
+  }
+
+  // Simple card variant - no flex layout
+  &-simple {
+    // This class inherits all the base styles but doesn't use flex
+    padding: spacing('4');
+  }
+
+  // Content card variant - uses flex layout for footer positioning
+  &-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  &-img {
+    height: 210px;
+    overflow: hidden;
+    border-radius: radius('md') radius('md') radius('noe') radius('none');
+    margin: -#{spacing('6')} -#{spacing('6')} 30px -#{spacing('6')};
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--mw-transition);
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  &-img-contain {
+    @extend .mw-card-img;
+    img {
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &-title {
+    margin-bottom: spacing('3');
+    font-size: font-size('xl');
+    @media (max-width: breakpoint('md')) {
+      font-size: font-size('lg');
+    }
+  }
+
+  &-text {
+    margin-bottom: spacing('4');
+    color: var(--mw-text-secondary-color);
+    @media (max-width: breakpoint('sm')) {
+      margin-bottom: spacing('2');
+    }
+  }
+
+  &-body > *:last-child:not(.mw-card-footer) {
+    margin-bottom: spacing('0');
+  }
+
+  &-body .mw-card-footer {
+    margin-top: auto;
+    padding-top: spacing('4');
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: spacing('4');
+    flex-shrink: 0;
+    text-wrap: balance;
+
+    // When the card gets too narrow, stack the footer elements vertically
+    @media (max-width: breakpoint('lg')) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: spacing('3');
+
+      > * {
+        width: 100%;
+        &.mw-btn {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  // Card sizes
+  &-sm {
+    padding: spacing('2');
+  }
+
+  &-lg {
+    .mw-card-img {
+      height: 330px;
+    }
+  }
+
+  &-xl {
+    .mw-card-img {
+      height: 480px;
+      @media (max-width: breakpoint('sm')) {
+        height: 430px;
+      }
+    }
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    padding: spacing('3');
+
+    // Adjust the image margin to match the new padding
+    .mw-card-img {
+      margin: -#{spacing('4')} -#{spacing('4')} spacing('4');
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  &-stack {
+    padding: spacing('3');
+    transition: all 0.3s ease;
+
+    // Icon transition setup
+    &-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: radius('full');
+      background: var(--mw-primary-color);
+      color: var(--mw-dark-text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: spacing('2');
+      font-size: font-size('md');
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px var(--mw-shadow);
+      transition: transform 0.6s ease;
+    }
+
+    // Add rotation on hover
+    &:hover &-icon {
+      transform: rotate(33deg);
+    }
+
+    // Rest of your styles...
+    &-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: spacing('3');
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -#{spacing('4')};
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        height: 2px;
+        background-color: var(--mw-secondary-color);
+        opacity: 0.6;
+      }
+    }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: spacing('0');
+
+      @media (max-width: breakpoint('sm')) {
+        font-size: font-size('sm');
+      }
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      padding-top: spacing('1');
+    }
+
+    &-text {
+      margin-top: spacing('2');
+      color: var(--mw-text-secondary-color);
+      font-size: font-size('sm');
+    }
+  }
+}

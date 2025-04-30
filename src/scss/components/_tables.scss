@@ -1,0 +1,128 @@
+@use '../abstracts' as *;
+
+// Base table styles
+.mw-table {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+  background: var(--mw-card-background);
+
+  th,
+  td {
+    padding: spacing('3');
+    text-align: left;
+    border: 1px solid var(--mw-border);
+    color: var(--mw-text-secondary-color);
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--mw-dark-text-color);
+    background: var(--mw-primary-color);
+  }
+
+  // Zebra striping
+  tr:nth-child(even) {
+    background: var(--mw-gray-background);
+  }
+
+  tr:hover {
+    td {
+      background: var(--mw-primary-background-hover);
+      color: var(--mw-text-color);
+    }
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    th,
+    td {
+      padding: spacing('1') spacing('3');
+      font-size: font-size('xs');
+    }
+  }
+}
+
+// Responsive table container
+.mw-table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: spacing('5');
+
+  .mw-table {
+    margin-bottom: spacing('0');
+  }
+}
+
+// Card view for mobile - clean and simple approach
+.mw-table-cards {
+  @media (max-width: breakpoint('md')) {
+    // Hide table header on mobile
+    thead {
+      display: none;
+    }
+
+    // Make each row a card
+    tr {
+      display: block;
+      margin-bottom: spacing('3');
+      box-shadow: 0 5px 7px var(--mw-shadow);
+      background: var(--mw-card-background);
+    }
+
+    // Style each cell as a row in the card
+    td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: spacing('1') spacing('4');
+
+      // Add the column header as a label
+      &::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--mw-text-color);
+        flex: 1;
+        text-align: left;
+      }
+
+      // The cell value
+      span,
+      a,
+      div {
+        flex: 2;
+        text-align: right;
+      }
+    }
+
+    // Add some visual separation between cards
+    tr:not(:last-child) {
+      margin-bottom: spacing('4');
+    }
+  }
+}
+
+// Compact table
+.mw-table-compact {
+  th,
+  td {
+    padding: spacing('1') spacing('3');
+    font-size: font-size('sm');
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    th,
+    td {
+      padding: spacing('1') spacing('2');
+      font-size: font-size('2xs');
+    }
+  }
+}
+
+// Hoverable rows
+.mw-table-hover {
+  tbody tr:hover {
+    background: var(--mw-hover-bg);
+  }
+}

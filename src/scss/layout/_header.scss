@@ -1,0 +1,128 @@
+@use 'sass:color';
+@use '../abstracts' as *;
+
+.mw-header {
+  position: fixed;
+  top: spacing('0');
+  left: spacing('0');
+  width: 100%;
+  z-index: z-index('header');
+  background: var(--mw-dark-footer-background);
+  backdrop-filter: blur(7px);
+  border-bottom: 1px solid var(--mw-primary-color-hover);
+  padding: spacing('3') spacing('0');
+  transition: var(--mw-transition);
+
+  .mw-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mw-logo {
+    display: flex;
+    align-items: center;
+    z-index: z-index('header') + 5;
+    position: relative;
+    flex-shrink: 0;
+
+    a {
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    img {
+      height: 45px;
+      width: auto;
+      max-width: 100%;
+      display: block;
+    }
+  }
+
+  .mw-d-flex {
+    display: flex;
+    align-items: center;
+  }
+
+  .mw-theme-toggle {
+    margin-right: spacing('3');
+  }
+
+  .mw-menu-btn {
+    z-index: z-index('header') + 4;
+    position: relative;
+    margin-left: spacing('3');
+  }
+
+  .mw-menu-btn__burger,
+  .mw-menu-btn__burger::before,
+  .mw-menu-btn__burger::after {
+    background: var(--mw-dark-text-color);
+  }
+
+  .mw-nav {
+    @media (min-width: breakpoint('md')) {
+      margin-left: auto;
+
+      .mw-nav-list {
+        display: flex;
+        align-items: center;
+        gap: spacing('4');
+      }
+    }
+
+    // For mobile view
+    @media (max-width: breakpoint('md')) {
+      position: fixed;
+      top: spacing('0');
+      right: spacing('0');
+      width: 80%;
+      padding-left: spacing('3');
+      max-width: 230px;
+      height: 100vh;
+      background: var(--mw-dark-footer-background);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: z-index('header') + 3;
+
+      &.open {
+        transform: translateX(0);
+      }
+
+      .mw-nav-list {
+        padding-top: 80px;
+      }
+    }
+  }
+}
+
+// Ensure compact navbar styles are consistent
+.mw-navbar-compact {
+  .mw-logo {
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  // Adjust the mobile nav to ensure X is visible
+  .mw-nav {
+    @include media-down('xl') {
+      background: var(--mw-dark-footer-background);
+
+      &.open {
+        right: spacing('0');
+
+        // Add a close button within the nav itself
+        &::after {
+          content: '';
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 30px;
+          height: 30px;
+          z-index: 1002;
+        }
+      }
+    }
+  }
+}

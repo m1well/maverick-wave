@@ -1,0 +1,86 @@
+@use '../abstracts' as *;
+
+// Base list styles
+.mw-list {
+  margin: spacing('3') spacing('0') spacing('5') spacing('0');
+  padding-left: spacing('2');
+
+  li {
+    margin-bottom: spacing('1');
+
+    &:last-child {
+      margin-bottom: spacing('0');
+    }
+  }
+
+  // Nested lists
+  .mw-list {
+    margin: spacing('1');
+  }
+}
+
+// Unstyled list - removes bullets and padding
+.mw-list-unstyled {
+  list-style: none;
+  padding-left: spacing('0');
+}
+
+// Inline list - horizontal layout
+.mw-list-inline {
+  list-style: none;
+  padding-left: spacing('0');
+
+  li {
+    display: inline-block;
+    margin-right: spacing('4');
+
+    &:last-child {
+      margin-right: spacing('0');
+    }
+  }
+}
+
+// Link list - with anchor tag
+.mw-list-link {
+  list-style: none;
+
+  a {
+    background: transparent;
+    color: var(--mw-text-secondary-color);
+    padding: spacing('0');
+
+    &:hover {
+      color: var(--mw-primary-color);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+// Dot lists
+.mw-list-dot {
+  list-style: none;
+  padding-left: spacing('1');
+
+  li {
+    position: relative;
+    padding-left: spacing('5');
+    margin-bottom: spacing('2');
+
+    &::before {
+      content: '•'; // Default bullet, can be overridden
+      position: absolute;
+      left: spacing('0');
+      color: var(--mw-primary-color);
+    }
+  }
+}
+
+// Check list
+.mw-list-check {
+  @extend .mw-list-dot;
+
+  li::before {
+    content: '✓';
+  }
+}

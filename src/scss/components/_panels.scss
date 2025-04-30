@@ -1,0 +1,119 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+
+.mw-panel {
+  background: var(--mw-card-background);
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  border: 2px solid var(--mw-border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  &-header {
+    padding: spacing('4');
+    border-bottom: 1px solid var(--mw-primary-color-hover);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: spacing('0');
+      font-size: font-size('lg');
+      font-weight: 500;
+    }
+  }
+
+  &-body {
+    padding: spacing('4');
+    flex: 1;
+    overflow-y: auto;
+
+    // Scrollbar styling
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--mw-card-background);
+      border-radius: radius('sm');
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--mw-primary-color-hover);
+      border-radius: radius('sm');
+    }
+  }
+
+  &-footer {
+    padding: spacing('4');
+    border-top: 1px solid var(--mw-primary-color-hover);
+    display: flex;
+    justify-content: flex-end;
+    gap: spacing('3');
+  }
+
+  // Panel variants
+  &-primary {
+    .mw-panel-header {
+      background: var(--mw-primary-color);
+      color: var(--mw-dark-text-color);
+    }
+  }
+
+  &-secondary {
+    .mw-panel-header {
+      background: var(--mw-secondary-color);
+      color: var(--mw-dark-text-color);
+    }
+  }
+
+  // Scrollable variant for fixed height
+  &-scrollable {
+    max-height: 500px; // Maximale Höhe, bevor Scrolling aktiviert wird
+
+    .mw-panel-body {
+      overflow-y: auto;
+      max-height: calc(
+        500px - 2 * spacing('4') - 2px
+      ); // Abzüglich Header, Footer und Borders
+    }
+  }
+
+  // Scrollable variants for max height
+  &-max-height {
+    &-sm {
+      max-height: 300px;
+      .mw-panel-body {
+        max-height: calc(300px - 2 * spacing('4') - 2px);
+        overflow-y: auto;
+      }
+    }
+
+    &-md {
+      max-height: 500px;
+      .mw-panel-body {
+        max-height: calc(500px - 2 * spacing('4') - 2px);
+        overflow-y: auto;
+      }
+    }
+
+    &-lg {
+      max-height: 700px;
+      .mw-panel-body {
+        max-height: calc(700px - 2 * spacing('4') - 2px);
+        overflow-y: auto;
+      }
+    }
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    font-size: font-size('sm');
+
+    &-header {
+      h3 {
+        font-size: font-size('sm');
+      }
+    }
+  }
+}

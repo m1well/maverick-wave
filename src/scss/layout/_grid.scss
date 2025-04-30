@@ -1,0 +1,93 @@
+@use '../abstracts' as *;
+
+// Base grid styles that apply to all grid types
+%grid-base {
+  display: grid;
+  gap: spacing('5');
+}
+
+// Individual grid classes
+.mw-grid {
+  @extend %grid-base;
+}
+
+.mw-grid-1 {
+  @extend %grid-base;
+  grid-template-columns: 1fr;
+}
+
+.mw-grid-2 {
+  @extend %grid-base;
+  grid-template-columns: repeat(2, 1fr);
+
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-3 {
+  @extend %grid-base;
+  grid-template-columns: repeat(3, 1fr);
+
+  @include media-down('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-4 {
+  @extend %grid-base;
+  grid-template-columns: repeat(4, 1fr);
+
+  @include media-down('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-5 {
+  @extend %grid-base;
+  grid-template-columns: repeat(5, 1fr);
+
+  @include media-down('lg') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include media-down('md') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include media-down('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include media-down('xs') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-auto {
+  @extend %grid-base;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.mw-flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing('5');
+
+  &-item {
+    flex: 1;
+    min-width: 300px;
+
+    @include media-down('sm') {
+      min-width: 100%;
+    }
+  }
+}

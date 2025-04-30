@@ -1,0 +1,159 @@
+<h3 class="mw-section-subtitle">Accordions</h3>
+
+<div class="mw-accordion">
+  <div class="mw-accordion-item">
+    <div class="mw-accordion-header active">
+      <h3>What is MaverickWave?</h3>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </div>
+    <div class="mw-accordion-content active">
+      <div class="mw-accordion-content-inner">
+        <p>
+          MaverickWave is a lightweight, responsive CSS framework designed for
+          modern web development. It provides a clean foundation with
+          customizable components and utility classes to help you build
+          beautiful, responsive websites quickly.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-accordion-item">
+    <div class="mw-accordion-header">
+      <h3>How do I customize MaverickWave?</h3>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </div>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">
+        <p>
+          MaverickWave offers two main ways to customize its appearance to match
+          your project's needs:
+        </p>
+
+        <h5 class="mw-mt-4 mw-mb-2">
+          1. Using CSS Variables (Recommended for CDN/CSS Users)
+        </h5>
+        <p>
+          If you're using the pre-compiled CSS file (via CDN or download), you
+          can override MaverickWave's default styles by redefining its CSS
+          variables in your own stylesheet (loaded *after* MaverickWave's CSS).
+        </p>
+        <pre class="mw-code-block"><code>/* Your custom-styles.css */
+  :root {
+    /* Override base colors */
+    --mw-primary-color: #e94560; 
+    --mw-secondary-color: #f39c12;
+  
+    /* Override specific theme colors */
+    --mw-dark-page-background: #1a1a2e; 
+    --mw-light-card-background: #f0f0f5; 
+  
+    /* Override component variables */
+    --mw-alert-primary-bg: rgba(233, 69, 96, 0.15);
+  
+    /* Override font */
+    --mw-font-family: 'Your Custom Font', sans-serif; 
+  }</code></pre>
+        <p>This method is flexible and doesn't require a Sass build process.</p>
+
+        <h5 class="mw-mt-4 mw-mb-2">
+          2. Using SCSS Variables (Requires Sass Build Process)
+        </h5>
+        <p>
+          If you integrate MaverickWave's SCSS source files into your project,
+          you can override the framework's default Sass variables
+          <em>before</em> importing it. This gives you deeper control and allows
+          derived colors (calculated using Sass functions like
+          <code>rgba()</code> or <code>color.adjust()</code> within the
+          framework) to automatically use your custom base colors.
+        </p>
+        <pre class="mw-code-block"><code>// Your main.scss
+  
+  // Override Sass variables BEFORE importing
+  $primary-color: #e94560;
+  $font-family: 'Your Custom Font', sans-serif;
+  $mw-theme-mode: 'dark'; // Optionally set theme mode
+  
+  // Import MaverickWave
+  @import 'path/to/maverick-wave/scss/maverick-wave';</code></pre>
+        <p>
+          This method requires you to have a Sass compiler set up in your
+          project.
+        </p>
+        <p class="mw-mt-4">
+          <a href="#get-started" class="mw-btn mw-btn-link mw-p-0"
+            >See the "Get Started" section</a
+          >
+          for more detailed integration examples for both methods.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-accordion-item">
+    <div class="mw-accordion-header">
+      <h3>Is MaverickWave responsive?</h3>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </div>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">
+        <p>
+          Yes, MaverickWave CSS framework is fully responsive and works on all
+          devices. It uses a mobile-first approach with responsive breakpoints
+          for different screen sizes, ensuring your website looks great on
+          phones, tablets, laptops, and desktops.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-accordion-item">
+    <div class="mw-accordion-header">
+      <h3>Scrollable Content Example</h3>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </div>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">
+        <p>
+          This accordion panel demonstrates scrollable content when the content
+          exceeds the available space. This is useful for displaying large
+          amounts of information in a compact format.
+        </p>
+        <p>
+          Accordions are excellent UI components for FAQs, product details, or
+          any content that benefits from progressive disclosure. They help
+          reduce cognitive load by showing only the most relevant information at
+          first.
+        </p>
+        <p>When designing with accordions, consider these best practices:</p>
+        <ul>
+          <li>
+            Use clear, descriptive headers that indicate the content inside
+          </li>
+          <li>Keep content concise and focused on a single topic per panel</li>
+          <li>
+            Consider whether users need to compare information across panels
+          </li>
+          <li>Ensure keyboard accessibility for navigation</li>
+          <li>Provide visual feedback for interactive elements</li>
+        </ul>
+        <p>
+          MaverickWave accordions are designed with accessibility in mind,
+          ensuring they work well with screen readers and keyboard navigation.
+          The smooth animations provide visual feedback without being
+          distracting.
+        </p>
+        <p>
+          You can customize the appearance of accordions using CSS variables to
+          match your brand colors and design language. The component is built
+          with flexibility in mind.
+        </p>
+        <p>
+          For more complex use cases, you can nest accordions or combine them
+          with other components like tabs or cards to create rich, interactive
+          interfaces that guide users through complex information hierarchies.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,176 @@
+@use 'sass:map';
+@use 'sass:color';
+
+$mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
+
+$primary-color: #1031bb;
+$secondary-color: #bb3110;
+$success-color: #28a745;
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+$info-color: #17a2b8;
+$gray-color: #565656;
+$dark-background: #0b111a;
+$dark-text-color: #f2f3f4;
+$light-background: #d0d2db;
+$light-text-color: #1a1a1d;
+
+// Base colors that don't change between themes
+$base-colors: (
+  'primary-color': $primary-color,
+  'primary-color-hover': color.adjust(
+      $primary-color,
+      $lightness: -2%,
+      $alpha: -0.2
+    ),
+  'primary-background': color.adjust(
+      $primary-color,
+      $lightness: -10%,
+      $alpha: -0.85
+    ),
+  'primary-background-hover': color.adjust(
+      $primary-color,
+      $lightness: -3%,
+      $alpha: -0.6
+    ),
+  'secondary-color': $secondary-color,
+  'secondary-color-hover': color.adjust(
+      $secondary-color,
+      $lightness: -2%,
+      $alpha: -0.3
+    ),
+  'secondary-background': color.adjust(
+      $secondary-color,
+      $lightness: -10%,
+      $alpha: -0.85
+    ),
+  'secondary-background-hover': color.adjust(
+      $secondary-color,
+      $lightness: -3%,
+      $alpha: -0.6
+    ),
+  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.8),
+);
+
+$status-colors: (
+  'success-color': $success-color,
+  'success-background': color.adjust(
+      $success-color,
+      $lightness: -10%,
+      $alpha: -0.85
+    ),
+  'warning-color': $warning-color,
+  'warning-background': color.adjust(
+      $warning-color,
+      $lightness: -10%,
+      $alpha: -0.85
+    ),
+  'danger-color': $danger-color,
+  'danger-background': color.adjust(
+      $danger-color,
+      $lightness: -10%,
+      $alpha: -0.85
+    ),
+  'info-color': $info-color,
+  'info-background': color.adjust($info-color, $lightness: -10%, $alpha: -0.85),
+);
+
+// Dark theme colors
+$dark-theme-colors: (
+  'page-background': $dark-background,
+  'card-background': color.adjust($dark-background, $lightness: +6%),
+  'footer-background': color.adjust($dark-background, $lightness: +3%),
+  'border': color.adjust($dark-background, $lightness: +15%),
+  'shadow': color.adjust($dark-text-color, $alpha: -0.7),
+  'text-color': $dark-text-color,
+  'text-secondary-color': color.adjust($dark-text-color, $lightness: -29%),
+);
+
+// Light theme colors
+$light-theme-colors: (
+  'page-background': $light-background,
+  'card-background': color.adjust($light-background, $lightness: +2%),
+  'footer-background': color.adjust($light-background, $lightness: -2%),
+  'border': color.adjust($light-background, $lightness: -13%),
+  'shadow': color.adjust($light-text-color, $alpha: -0.7),
+  'text-color': $light-text-color,
+  'text-secondary-color': color.adjust($light-text-color, $lightness: +27%),
+);
+
+// Typography
+$font-family: 'Poppins', sans-serif;
+$font-sizes: (
+  '3xs': 0.6rem,
+  '2xs': 0.7rem,
+  'xs': 0.8rem,
+  'sm': 0.9rem,
+  'base': 1rem,
+  'md': 1.1rem,
+  'lg': 1.3rem,
+  'xl': 1.5rem,
+  '2xl': 1.8rem,
+  '3xl': 2.2rem,
+  '4xl': 2.5rem,
+  '5xl': 3rem,
+  '6xl': 4.4rem,
+);
+
+// Spacing
+$spacing: (
+  '-5': -1.75rem,
+  '-4': -1.25rem,
+  '-3': -0.75rem,
+  '-2': -0.5rem,
+  '-1': -0.25rem,
+  '0': 0,
+  '1': 0.25rem,
+  '2': 0.5rem,
+  '3': 0.75rem,
+  '4': 1rem,
+  '5': 1.5rem,
+  '6': 2rem,
+  '7': 2.5rem,
+  '8': 3rem,
+  '9': 4rem,
+  '10': 5rem,
+);
+
+// Breakpoints
+$breakpoints: (
+  'xs': 375px,
+  // Extra small devices (smaller phones)
+  'sm': 576px,
+  // Small devices (landscape phones)
+  'md': 768px,
+  // Medium devices (tablets)
+  'lg': 992px,
+  // Large devices (desktops)
+  'xl': 1200px,
+  // Extra large devices (large desktops)
+  '2xl': 1400px,
+  // Extra extra large devices (larger desktops)
+  '3xl': 1600px, // Ultra large devices (very large screens)
+);
+
+// Border radius
+$radius: (
+  'none': 0,
+  'xs': 2px,
+  'sm': 5px,
+  'md': 10px,
+  'lg': 15px,
+  'xl': 20px,
+  '2xl': 30px,
+  'full': 50%,
+);
+
+// Transitions
+$transition-default: all 0.3s ease;
+
+// Z-index
+$z-index: (
+  'base': 1,
+  'menu': 10,
+  'header': 100,
+  'modal': 1000,
+);

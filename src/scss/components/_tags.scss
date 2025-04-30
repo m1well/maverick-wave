@@ -1,0 +1,114 @@
+@use 'sass:color';
+@use '../abstracts' as *;
+
+.mw-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing('1');
+  margin-top: spacing('4');
+}
+
+// Tag item
+.mw-tags-item {
+  display: inline-flex;
+  align-items: center;
+  background: var(--mw-primary-background);
+  color: var(--mw-text-color);
+  padding: spacing('1') spacing('2');
+  border-radius: radius('xl');
+  font-size: font-size('xs');
+  border: 1px solid var(--mw-primary-color);
+  transition: var(--mw-transition);
+
+  &:hover {
+    background: var(--mw-primary-background-hover);
+    cursor: default;
+  }
+
+  // Removable tag styling
+  &.mw-tags-removable {
+    padding-right: spacing('1');
+
+    &:hover {
+      cursor: default; // Keep default cursor on tag hover
+    }
+  }
+}
+
+// Close button for removable tags
+.mw-tags-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  margin-left: spacing('2');
+  border-radius: radius('full');
+  background: rgba(255, 255, 255, 0.5); // fixed color
+  transition: var(--mw-transition);
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.8); // fixed color
+  }
+
+  &::before {
+    content: '×'; // Unicode × character
+    font-size: 12px;
+    line-height: 1;
+    font-weight: bold;
+  }
+}
+
+// Color variants
+.mw-tags-primary .mw-tags-item {
+  background: var(--mw-primary-background);
+  border-color: var(--mw-primary-color);
+
+  &:hover {
+    background: var(--mw-primary-background-hover);
+  }
+}
+
+.mw-tags-secondary .mw-tags-item {
+  background: var(--mw-secondary-background);
+  border-color: var(--mw-secondary-color);
+
+  &:hover {
+    background: var(--mw-secondary-background-hover);
+  }
+}
+
+// Size variants
+.mw-tags-sm .mw-tags-item {
+  font-size: font-size('2xs');
+  padding: 3px 8px;
+
+  .mw-tags-remove {
+    width: 14px;
+    height: 14px;
+
+    &::before {
+      font-size: font-size('2xs');
+    }
+  }
+}
+
+.mw-tags-lg .mw-tags-item {
+  font-size: font-size('sm');
+  padding: 6px 12px;
+
+  .mw-tags-remove {
+    width: 18px;
+    height: 18px;
+
+    &::before {
+      font-size: font-size('sm');
+    }
+  }
+}
+
+// Icon
+.mw-tags-icon {
+  margin-right: spacing('1');
+}

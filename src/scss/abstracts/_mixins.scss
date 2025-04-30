@@ -1,0 +1,45 @@
+@use 'sass:map';
+@use 'variables' as v;
+
+// Media query mixins
+@mixin media-up($breakpoint) {
+  @media (min-width: map.get(v.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+@mixin media-down($breakpoint) {
+  @media (max-width: map.get(v.$breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
+// Flexbox mixins
+@mixin flex(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Grid mixins
+@mixin grid($columns: 1, $gap: 1rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+@mixin media-between($min, $max) {
+  $min-width: map.get($mw-breakpoints, $min);
+  $max-width: map.get($mw-breakpoints, $max) - 1px;
+
+  @media (min-width: $min-width) and (max-width: $max-width) {
+    @content;
+  }
+}

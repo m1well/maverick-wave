@@ -1,0 +1,146 @@
+@use '../abstracts' as *;
+
+.mw-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &-nav {
+    display: flex;
+    border-bottom: 1px solid var(--mw-primary-color-hover);
+    margin-bottom: spacing('3');
+    overflow-x: auto;
+
+    @include media-down('sm') {
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  &-nav-item {
+    padding: spacing('3');
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--mw-text-secondary-color);
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--mw-primary-color);
+    }
+
+    &.active {
+      color: var(--mw-primary-color);
+      border-bottom-color: var(--mw-primary-color);
+    }
+  }
+
+  &-content {
+    flex: 1;
+  }
+
+  &-panel {
+    display: none;
+
+    &.active {
+      display: block;
+      animation: fadeIn 1.4s ease;
+    }
+  }
+
+  // Vertical tabs variant
+  &-vertical {
+    flex-direction: row;
+
+    @include media-down('sm') {
+      flex-direction: column;
+      display: block;
+    }
+
+    .mw-tabs-nav {
+      flex-direction: column;
+      border-bottom: none;
+      border-right: 1px solid var(--mw-primary-color-hover);
+      margin-bottom: spacing('0');
+      margin-right: spacing('3');
+      min-width: 160px;
+      max-width: 200px;
+
+      @include media-down('sm') {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--mw-primary-color-hover);
+        margin-right: spacing('0');
+        margin-bottom: spacing('4');
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        overflow-x: auto;
+        display: flex;
+      }
+    }
+
+    .mw-tabs-nav-item {
+      border-bottom: none;
+      border-right: 2px solid transparent;
+
+      &.active {
+        border-right-color: var(--mw-primary-color);
+      }
+
+      @include media-down('sm') {
+        border-right: none;
+        border-bottom: 2px solid transparent;
+        flex-shrink: 0;
+
+        &.active {
+          border-right-color: transparent;
+          border-bottom-color: var(--mw-primary-color);
+        }
+      }
+    }
+
+    .mw-tabs-content {
+      flex: 1;
+
+      @include media-down('sm') {
+        width: 100%;
+        margin-top: spacing('4');
+      }
+    }
+  }
+
+  // Pills variant
+  &-pills {
+    .mw-tabs-nav {
+      border-bottom: none;
+      gap: spacing('2');
+    }
+
+    .mw-tabs-nav-item {
+      border-radius: radius('2xl');
+      height: 40px;
+      line-height: 0.9;
+      border: 1px solid var(--mw-primary-color-hover);
+      background: var(--mw-card-background);
+
+      &.active {
+        background: var(--mw-primary-color);
+        color: var(--mw-dark-text-color);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

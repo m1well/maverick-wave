@@ -1,0 +1,78 @@
+@use '../abstracts' as *;
+
+// Margin utilities
+@each $key, $value in $spacing {
+  .mw-m-#{$key} {
+    margin: $value;
+  }
+
+  .mw-mt-#{$key} {
+    margin-top: $value;
+  }
+
+  .mw-mb-#{$key} {
+    margin-bottom: $value;
+  }
+
+  .mw-ml-#{$key} {
+    margin-left: $value;
+  }
+
+  .mw-mr-#{$key} {
+    margin-right: $value;
+  }
+
+  .mw-mx-#{$key} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+
+  .mw-my-#{$key} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+}
+
+// Padding utilities
+@each $key, $value in $spacing {
+  .mw-p-#{$key} {
+    padding: $value;
+  }
+
+  .mw-pt-#{$key} {
+    padding-top: $value;
+  }
+
+  .mw-pb-#{$key} {
+    padding-bottom: $value;
+  }
+
+  .mw-pl-#{$key} {
+    padding-left: $value;
+  }
+
+  .mw-pr-#{$key} {
+    padding-right: $value;
+  }
+
+  .mw-px-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+
+  .mw-py-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+}
+
+// Gap utilities
+@each $key, $value in $spacing {
+  .mw-gap-#{$key} {
+    gap: $value;
+
+    @media (max-width: breakpoint('sm')) {
+      gap: calc($value * 0.75);
+    }
+  }
+}

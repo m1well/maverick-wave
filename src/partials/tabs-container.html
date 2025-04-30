@@ -1,0 +1,258 @@
+<h3 class="mw-section-subtitle">Tabs</h3>
+
+<h3 class="mw-mb-4">Default Tabs</h3>
+<div class="mw-tabs mw-mb-6">
+  <div class="mw-tabs-nav">
+    <div class="mw-tabs-nav-item active" data-tab="tab1">Features</div>
+    <div class="mw-tabs-nav-item" data-tab="tab2">Specifications</div>
+    <div class="mw-tabs-nav-item" data-tab="tab3">Reviews</div>
+    <div class="mw-tabs-nav-item" data-tab="tab4">Support</div>
+  </div>
+  <div class="mw-tabs-content">
+    <div class="mw-tabs-panel active" id="tab1">
+      <div class="mw-card mw-card-simple">
+        <h4>Key Features</h4>
+        <p>
+          MaverickWave CSS framework provides a comprehensive set of features to
+          make your web development faster and more efficient:
+        </p>
+        <ul>
+          <li>Responsive grid system with flexible layouts</li>
+          <li>Customizable components with consistent design language</li>
+          <li>Dark and light theme support with smooth transitions</li>
+          <li>Utility classes for rapid development and prototyping</li>
+          <li>Modern design aesthetic with attention to detail</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="tab2">
+      <div class="mw-card mw-card-simple">
+        <h4>Technical Specifications</h4>
+        <p>
+          MaverickWave CSS framework is built with modern web standards in mind:
+        </p>
+        <ul>
+          <li>Built with SCSS for better organization and maintainability</li>
+          <li>Optimized file size (under 30KB minified and gzipped)</li>
+          <li>
+            Compatible with all modern browsers (Chrome, Firefox, Safari, Edge)
+          </li>
+          <li>No JavaScript dependencies for core functionality</li>
+          <li>CSS custom properties for easy theming and customization</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="tab3">
+      <div class="mw-card mw-card-simple">
+        <h4>User Reviews</h4>
+        <div class="mw-mb-4">
+          <h5>Alex T. - Frontend Developer</h5>
+          <p>
+            "MaverickWave CSS framework has simplified my workflow tremendously.
+            The components are well-designed and the utility classes save me
+            hours of custom CSS writing. The documentation is clear and
+            comprehensive."
+          </p>
+        </div>
+        <div class="mw-mb-4">
+          <h5>Jamie L. - UX Designer</h5>
+          <p>
+            "I love how easy it is to customize the framework to match my brand.
+            The dark/light theme toggle was a breeze to implement and my clients
+            are impressed with the polished look!"
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="tab4">
+      <div class="mw-card mw-card-simple">
+        <h4>Support Options</h4>
+        <p>I offer multiple support channels for MaverickWave:</p>
+        <ul>
+          <li>Comprehensive documentation</li>
+          <li>Regular updates with new features and improvements</li>
+          <li>Dedicated support for power users</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 class="mw-mb-4">Vertical Tabs</h3>
+<div class="mw-tabs mw-tabs-vertical mw-mb-6">
+  <div class="mw-tabs-nav">
+    <div class="mw-tabs-nav-item active" data-tab="vtab1">Getting Started</div>
+    <div class="mw-tabs-nav-item" data-tab="vtab2">Configuration</div>
+    <div class="mw-tabs-nav-item" data-tab="vtab3">Customization</div>
+    <div class="mw-tabs-nav-item" data-tab="vtab4">Best Practices</div>
+  </div>
+  <div class="mw-tabs-content">
+    <div class="mw-tabs-panel active" id="vtab1">
+      <div class="mw-card mw-card-simple">
+        <h4>Getting Started Guide</h4>
+        <p>Begin by creating a new project folder:</p>
+        <div class="mw-terminal">
+          <span class="mw-terminal-line">mkdir my-project</span>
+          <span class="mw-terminal-line">cd my-project</span>
+          <span class="mw-terminal-line">touch index.html styles.css</span>
+        </div>
+        <p>Add the CSS to your HTML:</p>
+        <div class="mw-code-container">
+          <pre><code>&lt;link rel="stylesheet" 
+href="path/maverick-wave.min.css"&gt;</code></pre>
+        </div>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="vtab2">
+      <div class="mw-card mw-card-simple">
+        <h4>Configuration Options</h4>
+        <p>
+          MaverickWave offers flexibility in how you configure and customize its
+          appearance. The primary methods involve overriding CSS variables or,
+          for deeper integration, overriding Sass variables during a build
+          process.
+        </p>
+
+        <h5 class="mw-mt-4 mw-mb-2">Theme Mode (SCSS Build Only)</h5>
+        <p>
+          If using the SCSS source files, you can control the theme output by
+          setting the <code>$mw-theme-mode</code> variable before importing the
+          framework:
+        </p>
+        <ul>
+          <li>
+            <code>'switchable'</code> (Default): Includes dark and light themes,
+            controlled by JS.
+          </li>
+          <li><code>'dark'</code>: Compiles only dark theme styles.</li>
+          <li><code>'light'</code>: Compiles only light theme styles.</li>
+        </ul>
+        <pre class="mw-code-block"><code>// Your main.scss
+$mw-theme-mode: 'switchable'; // Or 'dark', 'light'    
+@import 'path/to/maverick-wave/scss/maverick-wave';</code></pre>
+        <p class="mw-text-warning mw-mt-2">
+          <i class="fas fa-exclamation-triangle mw-mr-1"></i>
+          Note: The main header/navigation currently retains its default dark
+          appearance regardless of this setting.
+        </p>
+
+        <h5 class="mw-mt-4 mw-mb-2">Color & Font Overrides</h5>
+        <p>
+          See the "Customization" tab for details on overriding colors and fonts
+          using either CSS or SCSS variables.
+        </p>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="vtab3">
+      <div class="mw-card mw-card-simple">
+        <h4>Customization Guide</h4>
+        <p>
+          Choose the customization method that best suits your project setup:
+        </p>
+
+        <h5 class="mw-mt-4 mw-mb-2">Method 1: CSS Variable Overrides</h5>
+        <p>
+          Ideal for CDN/pre-compiled CSS usage. Define overrides in your own CSS
+          file (loaded after MaverickWave):
+        </p>
+        <pre class="mw-code-block"><code>/* your-custom-styles.css */
+:root {
+  --mw-primary-color: #e94560; 
+  --mw-dark-page-background: #1a1a2e; 
+  --mw-font-family: 'Your Custom Font', sans-serif; 
+  /* ... other overrides ... */
+}</code></pre>
+
+        <h5 class="mw-mt-4 mw-mb-2">Method 2: SCSS Variable Overrides</h5>
+        <p>
+          Requires a Sass build process. Define overrides in your main SCSS file
+          <em>before</em> importing MaverickWave:
+        </p>
+        <pre class="mw-code-block"><code>// your-main.scss
+$primary-color: #e94560;
+$font-family: 'Your Custom Font', sans-serif;
+// ... other overrides ...
+    
+@import 'path/to/maverick-wave/scss/maverick-wave';</code></pre>
+        <p>
+          This method allows framework-internal calculations (like derived alert
+          backgrounds) to use your custom base colors.
+        </p>
+
+        <h5 class="mw-mt-4 mw-mb-2">Adding Custom Fonts</h5>
+        <p>
+          Remember to load custom fonts using <code>@font-face</code> rules in
+          your CSS/SCSS before applying them via the
+          <code>--mw-font-family</code> or <code>$font-family</code> variable.
+        </p>
+        <p class="mw-mt-4">
+          <a href="#get-started" class="mw-btn mw-btn-link mw-p-0"
+            >Refer to the "Get Started" section</a
+          >
+          for more detailed examples.
+        </p>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="vtab4">
+      <div class="mw-card mw-card-simple">
+        <h4>Best Practices</h4>
+        <p>When working with MaverickWave:</p>
+        <ul>
+          <li>Use semantic HTML elements for better accessibility</li>
+          <li>Leverage utility classes for quick adjustments</li>
+          <li>Customize variables to match your brand identity</li>
+          <li>Test thoroughly across different browsers and devices</li>
+          <li>Consider performance by only including components you need</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 class="mw-mb-4">Pills Style Tabs</h3>
+<div class="mw-tabs mw-tabs-pills">
+  <div class="mw-tabs-nav">
+    <div class="mw-tabs-nav-item active" data-tab="ptab1">Dashboard</div>
+    <div class="mw-tabs-nav-item" data-tab="ptab2">Profile</div>
+    <div class="mw-tabs-nav-item" data-tab="ptab3">Messages</div>
+    <div class="mw-tabs-nav-item" data-tab="ptab4">Settings</div>
+  </div>
+  <div class="mw-tabs-content">
+    <div class="mw-tabs-panel active" id="ptab1">
+      <div class="mw-card mw-card-simple">
+        <h4>Dashboard Overview</h4>
+        <p>
+          Welcome to your dashboard! Here you can monitor key metrics, recent
+          activity, and important notifications at a glance.
+        </p>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="ptab2">
+      <div class="mw-card mw-card-simple">
+        <h4>User Profile</h4>
+        <p>
+          Manage your profile information, update your avatar, and customize
+          your bio and contact details.
+        </p>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="ptab3">
+      <div class="mw-card mw-card-simple">
+        <h4>Message Center</h4>
+        <p>
+          View and respond to messages from your team members. Organize
+          conversations and track important communications.
+        </p>
+      </div>
+    </div>
+    <div class="mw-tabs-panel" id="ptab4">
+      <div class="mw-card mw-card-simple">
+        <h4>Account Settings</h4>
+        <p>
+          Configure your account preferences, notification settings, privacy
+          options, and security features.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

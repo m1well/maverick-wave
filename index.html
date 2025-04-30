@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, minimum-scale=1, initial-scale=1"
+    />
+    <title>MaverickWave</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="maverick-wave.min.css" />
+    <!-- Basic favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- PNG favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicon/favicon-16x16.png"
+    />
+
+    <!-- Apple Touch Icon (for iOS devices) -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon/apple-touch-icon.png"
+    />
+
+    <!-- Safari Pinned Tab Icon -->
+    <link
+      rel="mask-icon"
+      href="favicon/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+
+    <!-- Android/Chrome Icons -->
+    <link rel="manifest" href="favicon/site.webmanifest" />
+
+    <!-- Microsoft Tiles (for Windows) -->
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="msapplication-config" content="favicon/browserconfig.xml" />
+
+    <!-- Theme Color for browsers that support it -->
+    <meta name="theme-color" content="#ffffff" />
+    <style>
+      /* Additional styles only for the showcase page */
+      .position-relative {
+        position: relative;
+      }
+
+      .version-corner {
+        position: absolute;
+        top: -24px;
+        right: 13%;
+        background: var(--mw-primary-color);
+        color: var(--mw-dark-text-color);
+        font-size: 1.1rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 0.4rem;
+        font-weight: 600;
+        box-shadow: 3px 7px 10px var(--mw-shadow);
+        transform: rotate(7deg);
+      }
+
+      .color-card {
+        padding: 18px;
+      }
+
+      .color-card p {
+        margin-bottom: 5px !important;
+        font-size: 0.9rem;
+      }
+
+      .color-swatch {
+        width: 100%;
+        height: 70px;
+        border-radius: 6px;
+        margin-bottom: 9px;
+        border: 1px solid var(--mw-border);
+      }
+
+      /* Medium screens */
+      @media (max-width: 992px) {
+        .version-corner {
+          right: 7%;
+          font-size: 1rem;
+        }
+      }
+
+      /* Small screens */
+      @media (max-width: 576px) {
+        .version-corner {
+          right: 4%;
+        }
+        .color-swatch {
+          margin: 0 auto 7px auto;
+          width: 92%;
+          height: 50px;
+        }
+      }
+    </style>
+
+    <script src="maverick-wave.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header class="mw-header mw-localhost-indicator-activated">
+      <div class="mw-container">
+        @@include('./src/partials/header-container.html')
+      </div>
+    </header>
+
+    <main class="mw-main">
+      <!-- Home section -->
+      <section id="home">
+        <div class="mw-container mw-home">
+          @@include('./src/partials/home-container.html')
+        </div>
+      </section>
+
+      <!-- Get started section -->
+      <section id="get-started">
+        <h2 class="mw-section-title">Get started</h2>
+        <div class="mw-container">
+          @@include('./src/partials/get-started-container.html')
+        </div>
+      </section>
+
+      <!-- Documentation section -->
+      <section id="documentation">
+        <h2 class="mw-section-title">Documentation</h2>
+        <div class="mw-container">
+          @@include('./src/partials/documentation-container.html')
+        </div>
+      </section>
+
+      <!-- Foundations section -->
+      <section id="foundations">
+        <h2 class="mw-section-title">Foundations</h2>
+        <div class="mw-section-nav">
+          <a href="#typography" class="mw-btn mw-btn-primary">Typography</a>
+          <a href="#colors" class="mw-btn mw-btn-primary">Main Colors</a>
+          <a href="#utilities" class="mw-btn mw-btn-primary">Utilities</a>
+          <a href="#header-utilities" class="mw-btn mw-btn-primary"
+            >Header Utilities</a
+          >
+          <a href="#coming-soon" class="mw-btn mw-btn-primary"
+            >Coming Soon Banner</a
+          >
+        </div>
+
+        <!-- Typography container -->
+        <div id="typography" class="mw-container">
+          @@include('./src/partials/typography-container.html')
+        </div>
+
+        <!-- Colors container -->
+        <div id="colors" class="mw-container">
+          @@include('./src/partials/colors-container.html')
+        </div>
+
+        <!-- Utilities container -->
+        <div id="utilities" class="mw-container">
+          @@include('./src/partials/utilities-container.html')
+        </div>
+
+        <!-- Header Utilities container -->
+        <div id="header-utilities" class="mw-container">
+          @@include('./src/partials/header-utilities-container.html')
+        </div>
+
+        <!-- Coming Soon container -->
+        <div id="coming-soon" class="mw-container">
+          @@include('./src/partials/coming-soon-container.html')
+        </div>
+      </section>
+
+      <!-- Layout & navigation section -->
+      <section id="layout-navigation">
+        <h2 class="mw-section-title">Layout & Navigation</h2>
+        <div class="mw-section-nav">
+          <a href="#grid" class="mw-btn mw-btn-primary">Grid System</a>
+          <a href="#cards" class="mw-btn mw-btn-primary">Cards</a>
+          <a href="#panels" class="mw-btn mw-btn-primary">Panels</a>
+          <a href="#tabs" class="mw-btn mw-btn-primary">Tabs</a>
+          <a href="#accordions" class="mw-btn mw-btn-primary">Accordions</a>
+          <a href="#lists" class="mw-btn mw-btn-primary">Lists</a>
+        </div>
+
+        <!-- Grid container -->
+        <div id="grid" class="mw-container">
+          @@include('./src/partials/grid-container.html')
+        </div>
+
+        <!-- Cards container -->
+        <div id="cards" class="mw-container">
+          @@include('./src/partials/cards-container.html')
+        </div>
+
+        <!-- Panels container -->
+        <div id="panels" class="mw-container">
+          @@include('./src/partials/panels-container.html')
+        </div>
+
+        <!-- Tabs container -->
+        <div id="tabs" class="mw-container">
+          @@include('./src/partials/tabs-container.html')
+        </div>
+
+        <!-- Accordions contaier -->
+        <div id="accordions" class="mw-container">
+          @@include('./src/partials/accordions-container.html')
+        </div>
+
+        <!-- Lists container -->
+        <div id="lists" class="mw-container">
+          @@include('./src/partials/lists-container.html')
+        </div>
+      </section>
+
+      <!-- Components section -->
+      <section id="components">
+        <h2 class="mw-section-title">Components</h2>
+        <div class="mw-section-nav">
+          <a href="#buttons" class="mw-btn mw-btn-primary">Buttons</a>
+          <a href="#progress" class="mw-btn mw-btn-primary">Progress Bars</a>
+          <a href="#spinners" class="mw-btn mw-btn-primary">Loading Spinners</a>
+          <a href="#avatars" class="mw-btn mw-btn-primary">Avatars</a>
+          <a href="#tags" class="mw-btn mw-btn-primary">Tags</a>
+          <a href="#alerts" class="mw-btn mw-btn-primary">Alerts</a>
+          <a href="#counters" class="mw-btn mw-btn-primary">Counters</a>
+          <a href="#code" class="mw-btn mw-btn-primary">Code</a>
+        </div>
+
+        <!-- Buttons container -->
+        <div id="buttons" class="mw-container">
+          @@include('./src/partials/buttons-container.html')
+        </div>
+
+        <!-- Progress container -->
+        <div id="progress" class="mw-container">
+          @@include('./src/partials/progress-container.html')
+        </div>
+
+        <!-- Spinners container -->
+        <div id="spinners" class="mw-container">
+          @@include('./src/partials/spinners-container.html')
+        </div>
+
+        <!-- Avatars container -->
+        <div id="avatars" class="mw-container">
+          @@include('./src/partials/avatars-container.html')
+        </div>
+
+        <!-- Tags container -->
+        <div id="tags" class="mw-container">
+          @@include('./src/partials/tags-container.html')
+        </div>
+
+        <!-- Alerts container -->
+        <div id="alerts" class="mw-container">
+          @@include('./src/partials/alerts-container.html')
+        </div>
+
+        <!-- Counters container -->
+        <div id="counters" class="mw-container">
+          @@include('./src/partials/counters-container.html')
+        </div>
+
+        <!-- Code container -->
+        <div id="code" class="mw-container">
+          @@include('./src/partials/code-container.html')
+        </div>
+      </section>
+
+      <!-- Data & display section -->
+      <section id="data-display">
+        <h2 class="mw-section-title">Data & Display</h2>
+        <div class="mw-section-nav">
+          <a href="#tables" class="mw-btn mw-btn-primary">Tables</a>
+          <a href="#gallery" class="mw-btn mw-btn-primary">Image Gallery</a>
+          <a href="#blog-posts" class="mw-btn mw-btn-primary">Blog Posts</a>
+        </div>
+
+        <!-- Tables container -->
+        <div id="tables" class="mw-container">
+          @@include('./src/partials/tables-container.html')
+        </div>
+
+        <!-- Gallery container-->
+        <div id="gallery" class="mw-container">
+          @@include('./src/partials/gallery-container.html')
+        </div>
+
+        <!-- Blogposts container-->
+        <div id="blog-posts" class="mw-container">
+          @@include('./src/partials/blog-posts-container.html')
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mw-footer">
+      <div class="mw-container">
+        @@include('./src/partials/footer-container.html')
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+@use '../abstracts' as *;
+
+// Display utilities
+.mw-d {
+  &-flex {
+    display: flex;
+  }
+
+  &-block {
+    display: block;
+  }
+
+  &-inline {
+    display: inline;
+  }
+
+  &-inline-block {
+    display: inline-block;
+  }
+
+  &-grid {
+    display: grid;
+  }
+
+  &-none {
+    display: none;
+  }
+}
+
+// Border radius
+@each $key, $value in $radius {
+  .mw-radius-#{$key} {
+    border-radius: $value;
+  }
+}

@@ -1,0 +1,129 @@
+@use '../abstracts' as *;
+
+.mw-avatar {
+  display: inline-flex;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--mw-border);
+  box-shadow: 0 6px 15px var(--mw-shadow);
+  margin: spacing('1');
+
+  // Standard (md)
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0; // Prevents the avatar from shrinking
+  flex-grow: 0; // Prevents the avatar from growing
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  // Sizes
+  &-xs {
+    width: 32px;
+    height: 32px;
+    border-width: 2px;
+  }
+
+  &-sm {
+    width: 64px;
+    height: 64px;
+    border-width: 2px;
+  }
+
+  &-lg {
+    width: 144px;
+    height: 144px;
+    border-width: 5px;
+  }
+
+  &-xl {
+    width: 250px;
+    height: 250px;
+    border-width: 7px;
+  }
+
+  // Square
+  &-square {
+    border-radius: radius('sm');
+  }
+
+  // Border colors
+  &-primary {
+    border-color: var(--mw-primary-color);
+  }
+
+  &-secondary {
+    border-color: var(--mw-secondary-color);
+  }
+
+  &-success {
+    border-color: var(--mw-success-color);
+  }
+
+  &-warning {
+    border-color: var(--mw-warning-color);
+  }
+
+  &-danger {
+    border-color: var(--mw-danger-color);
+  }
+
+  // Groups
+  &-group {
+    display: flex;
+    flex-wrap: wrap; // Allow items to wrap to next line
+    justify-content: flex-start;
+    margin: spacing('3') spacing('4') spacing('6') spacing('0');
+
+    .mw-avatar {
+      margin-right: -15px;
+      margin-bottom: -15px;
+      border: 2px solid var(--mw-secondary-color);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        z-index: 1;
+      }
+
+      &:last-child {
+        margin-right: spacing('0');
+      }
+    }
+
+    // Group sizes
+    &-sm .mw-avatar {
+      margin-right: -10px;
+    }
+
+    &-lg .mw-avatar {
+      margin-right: -20px;
+    }
+
+    @media (max-width: breakpoint('sm')) {
+      // For small screens, create a more compact layout
+      .mw-avatar {
+        margin-right: -10px; // Reduce overlap on small screens
+      }
+    }
+  }
+
+  @media (max-width: breakpoint('sm')) {
+    &-lg {
+      width: 120px;
+      height: 120px;
+      border-width: 4px;
+    }
+
+    &-xl {
+      width: 170px;
+      height: 170px;
+      border-width: 6px;
+    }
+  }
+}
