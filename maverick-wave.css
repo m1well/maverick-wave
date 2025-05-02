@@ -2398,9 +2398,13 @@ pre code {
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: 0 0.25rem;
   transition: var(--mw-transition);
-  margin: 0.25rem 1.5rem 0 0.5rem;
+  margin: 0.25rem 1rem 0 1rem;
+}
+@media (max-width: 992px) {
+  .mw-theme-toggle {
+    margin: 0.25rem 0.5rem 0 1rem;
+  }
 }
 .mw-theme-toggle-slider {
   position: absolute;
@@ -2682,9 +2686,6 @@ pre code {
   display: flex;
   align-items: center;
 }
-.mw-header .mw-theme-toggle {
-  margin-right: 0.75rem;
-}
 .mw-header .mw-menu-btn {
   z-index: 104;
   position: relative;
@@ -2704,7 +2705,7 @@ pre code {
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1rem;
+  gap: 2rem;
 }
 @media (max-width: 1200px) {
   .mw-navbar-list {
@@ -2761,7 +2762,7 @@ pre code {
     display: none;
   }
 }
-@media (min-width: 768px) {
+@media (max-width: 992px) {
   .mw-navbar {
     margin-left: auto;
   }

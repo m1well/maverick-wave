@@ -11,9 +11,11 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  padding: spacing('0') spacing('1');
   transition: var(--mw-transition);
-  margin: spacing('1') spacing('5') spacing('0') spacing('2');
+  margin: spacing('1') spacing('4') spacing('0') spacing('4');
+  @media (max-width: breakpoint('lg')) {
+    margin: spacing('1') spacing('2') spacing('0') spacing('4');
+  }
 
   &-slider {
     position: absolute;
