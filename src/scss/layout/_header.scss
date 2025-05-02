@@ -7,9 +7,9 @@
   left: spacing('0');
   width: 100%;
   z-index: z-index('header');
-  background: var(--mw-dark-footer-background);
+  background: var(--mw-header-background);
   backdrop-filter: blur(7px);
-  border-bottom: 1px solid var(--mw-primary-color-hover);
+  border-bottom: 1px solid var(--mw-header-border);
   padding: spacing('3') spacing('0');
   transition: var(--mw-transition);
 
@@ -53,7 +53,7 @@
   .mw-menu-btn-burger,
   .mw-menu-btn-burger::before,
   .mw-menu-btn-burger::after {
-    background: var(--mw-dark-text-color);
+    background: var(--mw-header-burgerbutton-color);
   }
 }
 
@@ -92,11 +92,10 @@
     position: relative;
     font-weight: 500;
     transition: var(--mw-transition);
-    color: var(--mw-dark-text-secondary-color);
+    color: var(--mw-header-navbar-list-color);
 
     &::after {
       content: '';
-      background: var(--mw-primary-color);
       position: absolute;
       bottom: spacing('-1');
       left: spacing('0');
@@ -107,19 +106,19 @@
 
     &:hover,
     &.active {
-      color: var(--mw-primary-color);
+      color: var(--mw-header-navbar-list-ative-color);
     }
 
     &:hover::after,
     &.active::after {
-      color: var(--mw-primary-color);
+      color: var(--mw-header-navbar-list-ative-color);
       width: 100%;
     }
 
     @include media-down('md') {
       display: block;
       padding: spacing('3') spacing('0');
-      border-bottom: 1px solid var(--mw-primary-color);
+      border-bottom: 1px solid var(--mw-header-border);
 
       &.active::after {
         display: none;
@@ -145,7 +144,7 @@
     padding-left: spacing('3');
     max-width: 230px;
     height: 100vh;
-    background: var(--mw-dark-footer-background);
+    background: var(--mw-header-background);
     transform: translateX(100%);
     transition: transform 0.3s ease;
     z-index: z-index('header') + 3;
@@ -164,7 +163,7 @@
 .mw-navbar-compact {
   .mw-navbar {
     @include media-down('xl') {
-      background: var(--mw-dark-footer-background);
+      background: var(--mw-header-background);
       position: fixed;
       top: spacing('0');
       right: -100%;
@@ -174,7 +173,7 @@
       padding: 80px 20px 20px;
       transition: var(--mw-transition);
       box-shadow: -5px 0 15px var(--mw-shadow);
-      border-left: 1px solid var(--mw-primary-color);
+      border-left: 1px solid var(--mw-header-border);
       overflow-y: auto;
       z-index: 998; // important: smaller than the X button
 
@@ -195,7 +194,7 @@
       .mw-navbar-link {
         display: block;
         padding: spacing('2') spacing('0');
-        border-bottom: 1px solid var(--mw-primary-color);
+        border-bottom: 1px solid var(---mw-header-border);
 
         &.active::after {
           display: none;
@@ -259,7 +258,7 @@
   &-burger {
     width: 30px;
     height: 3px;
-    background: var(--mw-text-color);
+    background: var(--mw-header-burgerbutton-color);
     border-radius: radius('sm');
     transition: var(--mw-transition);
     position: absolute;
