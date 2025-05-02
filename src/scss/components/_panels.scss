@@ -57,14 +57,14 @@
   &-primary {
     .mw-panel-header {
       background: var(--mw-primary-color);
-      color: var(--mw-dark-text-color);
+      color: var(--mw-primary-text-color);
     }
   }
 
   &-secondary {
     .mw-panel-header {
       background: var(--mw-secondary-color);
-      color: var(--mw-dark-text-color);
+      color: var(--mw-secondary-text-color);
     }
   }
 

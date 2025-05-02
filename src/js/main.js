@@ -231,7 +231,7 @@
   // ===== Smooth Scrolling =====
   function initSmoothScrolling() {
     const menuBtn = document.querySelector('.mw-menu-btn');
-    const nav = document.querySelector('.mw-nav');
+    const nav = document.querySelector('.mw-navbar');
 
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
@@ -255,7 +255,7 @@
           }
 
           // Update active link
-          document.querySelectorAll('.mw-nav-link').forEach((link) => {
+          document.querySelectorAll('.mw-navbar-link').forEach((link) => {
             link.classList.remove('active');
           });
           this.classList.add('active');
@@ -267,7 +267,7 @@
   // ===== Scroll Spy =====
   function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.mw-nav-link');
+    const navLinks = document.querySelectorAll('.mw-navbar-link');
 
     if (sections.length === 0 || navLinks.length === 0) return;
 

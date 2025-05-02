@@ -10,12 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- new colors for the fixed header/navbar
+- new color variables for text on primary or secondary elements
+- new color variables for the fixed header/navbar
 - CHANGELOG.md
 
 ### Changed
 
-- updated complete header
+- updated complete header and navbar
 - ol/ul-list margin in the blog-post
 
 ## [1.3.0] - 2025-04-30

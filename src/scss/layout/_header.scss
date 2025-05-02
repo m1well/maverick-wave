@@ -194,7 +194,6 @@
       .mw-navbar-link {
         display: block;
         padding: spacing('2') spacing('0');
-        border-bottom: 1px solid var(---mw-header-border);
 
         &.active::after {
           display: none;
@@ -241,7 +240,7 @@
   }
 
   // For compact navbar at xl breakpoint
-  .mw-nav-compact & {
+  .mw-navbar-compact & {
     @include media-down('xl') {
       display: block;
 
