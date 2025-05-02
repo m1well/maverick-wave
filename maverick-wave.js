@@ -202,13 +202,13 @@
   // ===== Mobile Navigation =====
   function initMobileNav() {
     const menuBtn = document.querySelector('.mw-menu-btn');
-    const nav = document.querySelector('.mw-nav');
+    const navbar = document.querySelector('.mw-navbar');
 
-    if (!menuBtn || !nav) return;
+    if (!menuBtn || !navbar) return;
 
     menuBtn.addEventListener('click', function () {
       menuBtn.classList.toggle('open');
-      nav.classList.toggle('open');
+      navbar.classList.toggle('open');
     });
   }
 
