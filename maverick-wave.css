@@ -2825,6 +2825,7 @@ pre code {
   .mw-navbar-compact .mw-navbar .mw-navbar-link {
     display: block;
     padding: 0.5rem 0;
+    border-bottom: 1px solid var(--mw-header-border);
   }
   .mw-navbar-compact .mw-navbar .mw-navbar-link.active::after {
     display: none;
