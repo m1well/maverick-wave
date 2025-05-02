@@ -4,12 +4,12 @@
   --mw-primary-color-hover: rgba(15.1960591133, 46.5379310345, 177.6039408867, 0.8);
   --mw-primary-background: rgba(11.9802955665, 36.6896551724, 140.0197044335, 0.15);
   --mw-primary-background-hover: rgba(14.79408867, 45.3068965517, 172.90591133, 0.4);
-  --mw-primary-text-color: ;
+  --mw-primary-text-color: #f2f3f4;
   --mw-secondary-color: #bb3110;
   --mw-secondary-color-hover: rgba(177.6039408867, 46.5379310345, 15.1960591133, 0.7);
   --mw-secondary-background: rgba(140.0197044335, 36.6896551724, 11.9802955665, 0.15);
   --mw-secondary-background-hover: rgba(172.90591133, 45.3068965517, 14.79408867, 0.4);
-  --mw-secondary-text-color: ;
+  --mw-secondary-text-color: #f2f3f4;
   --mw-gray-background: rgba(98.75, 98.75, 98.75, 0.2);
   --mw-success-color: #28a745;
   --mw-success-background: rgba(30.1449275362, 125.8550724638, 52, 0.15);

@@ -11,7 +11,7 @@
       $base-colors,
       'primary-background-hover'
     )};
-  --mw-primary-text-color: #{map.get($base-colors, 'dark-text-color')};
+  --mw-primary-text-color: #{map.get($base-colors, 'primary-text-color')};
   --mw-secondary-color: #{map.get($base-colors, 'secondary-color')};
   --mw-secondary-color-hover: #{map.get($base-colors, 'secondary-color-hover')};
   --mw-secondary-background: #{map.get($base-colors, 'secondary-background')};
@@ -19,7 +19,7 @@
       $base-colors,
       'secondary-background-hover'
     )};
-  --mw-secondary-text-color: #{map.get($base-colors, 'dark-text-color')};
+  --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
 
   // Status colors

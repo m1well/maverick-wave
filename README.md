@@ -14,7 +14,7 @@ While AI tools helped kickstart the development of some components and provided 
 
 The result is a framework that balances utility with simplicity, offering developers a solid foundation that can be easily customized.
 
-**➡️ **[**View the Live Showcase & Documentation**](https://maverick-wave.m1well.com)
+➡️ [**View the Live Showcase & Documentation**](https://maverick-wave.m1well.com)
 
 ## Features
 

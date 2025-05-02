@@ -33,6 +33,7 @@ $base-colors: (
       $lightness: -3%,
       $alpha: -0.6
     ),
+  'primary-text-color': $dark-text-color,
   'secondary-color': $secondary-color,
   'secondary-color-hover': color.adjust(
       $secondary-color,
@@ -49,6 +50,7 @@ $base-colors: (
       $lightness: -3%,
       $alpha: -0.6
     ),
+  'secondary-text-color': $dark-text-color,
   'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.8),
 );
 
