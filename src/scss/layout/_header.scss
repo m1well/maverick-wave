@@ -44,10 +44,6 @@
     align-items: center;
   }
 
-  .mw-theme-toggle {
-    margin-right: spacing('3');
-  }
-
   .mw-menu-btn {
     z-index: z-index('header') + 4;
     position: relative;
@@ -69,7 +65,7 @@
     list-style: none;
     margin: spacing('0');
     padding: spacing('0');
-    gap: spacing('4');
+    gap: spacing('6');
 
     @include media-down('xl') {
       gap: spacing('3');
@@ -131,7 +127,7 @@
     }
   }
 
-  @media (min-width: breakpoint('md')) {
+  @media (max-width: breakpoint('lg')) {
     margin-left: auto;
 
     .mw-navbar-list {
