@@ -30,6 +30,16 @@
   --mw-info-color: #{map.get($status-colors, 'info-color')};
   --mw-info-background: #{map.get($status-colors, 'info-background')};
 
+  // Header/navbar colors (they are fixed, but you can change them seperately)
+  --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};
+  --mw-header-navbar-list-color: #{map.get(
+      $dark-theme-colors,
+      'text-secondary-color'
+    )};
+  --mw-header-navbar-list-ative-color: #{map.get($base-colors, 'primary-color')};
+  --mw-header-burgerbutton-color: #{map.get($dark-theme-colors, 'text-color')};
+  --mw-header-border: #{map.get($base-colors, 'primary-color-hover')};
+
   // Dark theme colors
   --mw-dark-page-background: #{map.get($dark-theme-colors, 'page-background')};
   --mw-dark-card-background: #{map.get($dark-theme-colors, 'card-background')};
