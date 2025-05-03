@@ -8,9 +8,28 @@
   align-items: center;
   text-align: center;
   animation: fadeIn 2.5s ease-in;
-  @include media-down('sm') {
-    justify-content: start;
-    padding-top: 100px !important;
+
+  // Spacing on top at smaller screens if you have a lot of content
+
+  &-top-spacing-sm {
+    @include media-down('sm') {
+      justify-content: start;
+      padding-top: 9vh !important;
+    }
+  }
+
+  &-top-spacing-md {
+    @include media-down('sm') {
+      justify-content: start;
+      padding-top: 14vh !important;
+    }
+  }
+
+  &-top-spacing-lg {
+    @include media-down('sm') {
+      justify-content: start;
+      padding-top: 19vh !important;
+    }
   }
 
   &-text {

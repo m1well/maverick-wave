@@ -2886,9 +2886,21 @@ pre code {
   animation: fadeIn 2.5s ease-in;
 }
 @media (max-width: 576px) {
-  .mw-home {
+  .mw-home-top-spacing-sm {
     justify-content: start;
-    padding-top: 100px !important;
+    padding-top: 9vh !important;
+  }
+}
+@media (max-width: 576px) {
+  .mw-home-top-spacing-md {
+    justify-content: start;
+    padding-top: 14vh !important;
+  }
+}
+@media (max-width: 576px) {
+  .mw-home-top-spacing-lg {
+    justify-content: start;
+    padding-top: 19vh !important;
   }
 }
 .mw-home-text {
