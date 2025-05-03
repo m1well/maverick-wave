@@ -38,7 +38,6 @@
   --mw-light-shadow: rgba(26, 26, 29, 0.3);
   --mw-light-text-color: #1a1a1d;
   --mw-light-text-secondary-color: rgb(91.0945454545, 91.0945454545, 101.6054545455);
-  --mw-font-family: Poppins, sans-serif;
   --mw-transition: all 0.3s ease;
   --mw-internal-theme-mode: switchable;
   --mw-page-background: var(--mw-dark-page-background);
@@ -261,47 +260,6 @@ blockquote::after {
   line-height: 1.8;
 }
 
-/*
-  CUSTOM FONTS IMPLEMENTATION
-
-  To use your own fonts:
-
-  1. Create a 'fonts' folder in your project (e.g., src/assets/fonts/)
-
-  2. Add your font files (.woff2, .woff, .ttf) to this folder
-     - .woff2 is recommended for best performance and compatibility
-     - Include multiple weights (400, 500, 700) as needed
-
-  3. Define your fonts using @font-face in your SCSS:
-
-  @font-face {
-    font-family: 'YourCustomFont';
-    src: url('../assets/fonts/YourCustomFont-Regular.woff2') format('woff2'),
-         url('../assets/fonts/YourCustomFont-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap; // Improves performance
-  }
-
-  @font-face {
-    font-family: 'YourCustomFont';
-    src: url('../assets/fonts/YourCustomFont-Bold.woff2') format('woff2'),
-         url('../assets/fonts/YourCustomFont-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
-  4. Update the font variables in your theme:
-
-  $font-family-base: 'YourCustomFont', sans-serif;
-  $font-family-heading: 'YourCustomFont', sans-serif;
-
-  :root {
-    --mw-font-family-base: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica Neue, sans-serif;
-    --mw-font-family-heading: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
-  }
-*/
 *,
 *::before,
 *::after {
@@ -322,7 +280,7 @@ html {
 }
 
 body {
-  font-family: var(--mw-font-family);
+  font-family: var(--mw-font-family-base);
   background: var(--mw-page-background);
   color: var(--mw-text-color);
   line-height: 1.6;

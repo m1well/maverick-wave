@@ -159,7 +159,7 @@ $mw-theme-mode: 'switchable'; // Or 'dark', 'light'
 :root {
   --mw-primary-color: #e94560; 
   --mw-dark-page-background: #1a1a2e; 
-  --mw-font-family: 'Your Custom Font', sans-serif; 
+  --mw-font-family-base: 'Your Custom Font', sans-serif; 
   /* ... other overrides ... */
 }</code></pre>
 
@@ -183,7 +183,8 @@ $font-family: 'Your Custom Font', sans-serif;
         <p>
           Remember to load custom fonts using <code>@font-face</code> rules in
           your CSS/SCSS before applying them via the
-          <code>--mw-font-family</code> or <code>$font-family</code> variable.
+          <code>--mw-font-family-base</code> or
+          <code>$font-family</code> variable.
         </p>
         <p class="mw-mt-4">
           <a href="#get-started" class="mw-btn mw-btn-link mw-p-0"
