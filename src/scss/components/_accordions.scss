@@ -31,7 +31,7 @@
       font-size: font-size('md');
       font-weight: 500;
 
-      @media (max-width: breakpoint('sm')) {
+      @include media-down('sm') {
         font-size: font-size('sm');
       }
     }
@@ -60,7 +60,7 @@
     &-inner {
       padding: spacing('4');
       border-top: 1px solid var(--mw-primary-color-hover);
-      @media (max-width: breakpoint('sm')) {
+      @include media-down('sm') {
         font-size: font-size('sm');
       }
     }

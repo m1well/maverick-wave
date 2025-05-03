@@ -105,7 +105,7 @@
       margin-right: -20px;
     }
 
-    @media (max-width: breakpoint('sm')) {
+    @include media-down('sm') {
       // For small screens, create a more compact layout
       .mw-avatar {
         margin-right: -10px; // Reduce overlap on small screens
@@ -113,7 +113,7 @@
     }
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     &-lg {
       width: 120px;
       height: 120px;

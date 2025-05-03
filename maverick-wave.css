@@ -2891,6 +2891,17 @@ pre code {
     padding-top: 100px !important;
   }
 }
+.mw-home-text {
+  width: min(75%, 700px);
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 1rem;
+}
+@media (max-width: 576px) {
+  .mw-home-text {
+    width: 85%;
+  }
+}
 
 @keyframes fadeIn {
   from {

@@ -13,7 +13,7 @@
   align-items: center;
   transition: var(--mw-transition);
   margin: spacing('1') spacing('4') spacing('0') spacing('4');
-  @media (max-width: breakpoint('lg')) {
+  @include media-down('lg') {
     margin: spacing('1') spacing('2') spacing('0') spacing('4');
   }
 

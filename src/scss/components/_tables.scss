@@ -33,7 +33,7 @@
     }
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     th,
     td {
       padding: spacing('1') spacing('3');
@@ -57,7 +57,7 @@
 
 // Card view for mobile - clean and simple approach
 .mw-table-cards {
-  @media (max-width: breakpoint('md')) {
+  @include media-down('md') {
     // Hide table header on mobile
     thead {
       display: none;
@@ -111,7 +111,7 @@
     font-size: font-size('sm');
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     th,
     td {
       padding: spacing('1') spacing('2');

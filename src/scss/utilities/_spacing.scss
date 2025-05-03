@@ -71,7 +71,7 @@
   .mw-gap-#{$key} {
     gap: $value;
 
-    @media (max-width: breakpoint('sm')) {
+    @include media-down('sm') {
       gap: calc($value * 0.75);
     }
   }

@@ -132,7 +132,7 @@
 }
 
 // Responsive adjustments
-@media (max-width: breakpoint('md')) {
+@include media-down('md') {
   .mw-counter {
     padding: spacing('1');
 
@@ -158,7 +158,7 @@
   }
 }
 
-@media (max-width: breakpoint('sm')) {
+@include media-down('sm') {
   .mw-counter {
     width: 180px;
 

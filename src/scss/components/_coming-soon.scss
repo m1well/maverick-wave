@@ -70,7 +70,7 @@
   }
 
   // Add responsive adjustments
-  @media (max-width: breakpoint('md')) {
+  @include media-down('md') {
     min-height: 150px;
 
     &-text,
@@ -79,7 +79,7 @@
     }
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     min-height: 120px;
 
     &-text,
