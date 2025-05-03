@@ -83,7 +83,7 @@
     color: var(--mw-info-color);
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     &-content {
       flex: 1;
 

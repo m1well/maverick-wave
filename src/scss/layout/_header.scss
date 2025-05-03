@@ -126,7 +126,7 @@
     }
   }
 
-  @media (max-width: breakpoint('lg')) {
+  @include media-down('lg') {
     margin-left: auto;
 
     .mw-navbar-list {
@@ -136,7 +136,7 @@
     }
   }
 
-  @media (max-width: breakpoint('md')) {
+  @include media-down('md') {
     position: fixed;
     top: spacing('0');
     right: spacing('0');

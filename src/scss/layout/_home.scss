@@ -8,11 +8,22 @@
   align-items: center;
   text-align: center;
   animation: fadeIn 2.5s ease-in;
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     justify-content: start;
     padding-top: 100px !important;
   }
+
+  &-text {
+    width: min(75%, 700px);
+    margin: spacing('0') auto;
+    position: relative;
+    margin-bottom: spacing('4');
+    @include media-down('sm') {
+      width: 85%;
+    }
+  }
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;

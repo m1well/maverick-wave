@@ -94,7 +94,7 @@
   }
 }
 
-@media (max-width: breakpoint('md')) {
+@include media-down('md') {
   .mw-gallery {
     &-slide img {
       height: 430px;
@@ -110,7 +110,7 @@
   }
 }
 
-@media (max-width: breakpoint('sm')) {
+@include media-down('sm') {
   .mw-gallery {
     &-slide img {
       height: 290px;

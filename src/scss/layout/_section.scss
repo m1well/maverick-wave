@@ -55,7 +55,7 @@
 }
 
 // Responsive adjustments
-@media (max-width: breakpoint('sm')) {
+@include media-down('sm') {
   .mw-section-nav {
     flex-direction: column;
     width: 100%;

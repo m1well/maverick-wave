@@ -13,7 +13,7 @@
   margin: spacing('0') auto;
   padding: spacing('0');
 
-  @media (max-width: breakpoint('xs')) {
+  @include media-down('xs') {
     width: 94%;
   }
 }

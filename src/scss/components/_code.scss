@@ -92,7 +92,7 @@ pre {
       padding: spacing('2');
     }
 
-    @media (max-width: breakpoint('sm')) {
+    @include media-down('sm') {
       font-size: font-size('2xs');
       padding: spacing('1');
 
@@ -102,7 +102,7 @@ pre {
       }
     }
 
-    @media (max-width: breakpoint('xs')) {
+    @include media-down('xs') {
       font-size: font-size('3xs');
     }
   }
@@ -126,12 +126,12 @@ pre {
     font-size: font-size('2xs');
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     font-size: font-size('2xs');
     padding: spacing('1');
   }
 
-  @media (max-width: breakpoint('xs')) {
+  @include media-down('xs') {
     font-size: font-size('3xs');
   }
 
@@ -212,7 +212,7 @@ pre {
   position: relative;
 
   // Add horizontal scrolling indicator for small screens
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     background-position:
       left center,
       right center;
@@ -238,7 +238,7 @@ pre {
       overflow-x: auto;
 
       // For very small screens, allow wrapping
-      @media (max-width: breakpoint('xs')) {
+      @include media-down('xs') {
         white-space: pre-wrap;
         word-break: break-word;
       }

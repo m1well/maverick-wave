@@ -108,7 +108,7 @@
     margin: spacing('1') auto;
   }
 
-  @media (max-width: breakpoint('md')) {
+  @include media-down('md') {
     .mw-social-links {
       gap: spacing('6');
       a {
@@ -119,7 +119,7 @@
     }
   }
 
-  @media (max-width: breakpoint('sm')) {
+  @include media-down('sm') {
     &-column {
       h3 {
         font-size: font-size('md');
