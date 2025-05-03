@@ -694,8 +694,7 @@ th {
   box-shadow: 0 5px 12px var(--mw-shadow);
 }
 .mw-blog-post-content {
-  font-size: 0.9rem;
-  line-height: 1.7;
+  line-height: 1.8;
   color: var(--mw-text-primary-color);
 }
 .mw-blog-post-content a {
