@@ -70,9 +70,20 @@
     }
   }
 
-  &-text {
-    margin-bottom: spacing('4');
+  &-subtitle {
+    margin-bottom: spacing('3');
+    font-size: font-size('md');
+    line-height: 1.2;
+    font-style: italic;
     color: var(--mw-text-secondary-color);
+    @include media-down('md') {
+      margin-bottom: spacing('2');
+    }
+  }
+
+  &-text {
+    margin: spacing('2') spacing('0') spacing('4') spacing('0');
+    color: var(--mw-text-color);
     @include media-down('sm') {
       margin-bottom: spacing('2');
     }
@@ -131,7 +142,7 @@
   }
 
   @include media-down('sm') {
-    padding: spacing('3');
+    padding: spacing('4');
 
     // Adjust the image margin to match the new padding
     .mw-card-img {
@@ -208,7 +219,7 @@
 
     &-text {
       margin-top: spacing('2');
-      color: var(--mw-text-secondary-color);
+      color: var(--mw-text-color);
       font-size: font-size('sm');
     }
   }
