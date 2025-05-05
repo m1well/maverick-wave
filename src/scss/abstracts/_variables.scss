@@ -6,12 +6,12 @@ $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
 $primary-color: #1031bb;
 $secondary-color: #bb3110;
 $success-color: #28a745;
-$warning-color: #ffc107;
-$danger-color: #dc3545;
+$warning-color: #d4a310;
+$danger-color: #d72537;
 $info-color: #17a2b8;
 $gray-color: #565656;
 $dark-background: #0b111a;
-$dark-text-color: #f2f3f4;
+$dark-text-color: #d6dbdf;
 $light-background: #d0d2db;
 $light-text-color: #1a1a1d;
 
@@ -30,8 +30,8 @@ $base-colors: (
     ),
   'primary-background-hover': color.adjust(
       $primary-color,
-      $lightness: -3%,
-      $alpha: -0.6
+      $lightness: -4%,
+      $alpha: -0.5
     ),
   'primary-text-color': $dark-text-color,
   'secondary-color': $secondary-color,
@@ -85,7 +85,7 @@ $dark-theme-colors: (
   'border': color.adjust($dark-background, $lightness: +15%),
   'shadow': color.adjust($dark-text-color, $alpha: -0.7),
   'text-color': $dark-text-color,
-  'text-secondary-color': color.adjust($dark-text-color, $lightness: -29%),
+  'text-secondary-color': color.adjust($dark-text-color, $lightness: -26%),
 );
 
 // Light theme colors

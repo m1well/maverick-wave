@@ -9,7 +9,7 @@
 
   th,
   td {
-    padding: spacing('3');
+    padding: spacing('2') spacing('3');
     text-align: left;
     border: 1px solid var(--mw-border);
     color: var(--mw-text-secondary-color);
@@ -107,14 +107,13 @@
 .mw-table-compact {
   th,
   td {
-    padding: spacing('1') spacing('3');
+    padding: spacing('1') spacing('2');
     font-size: font-size('sm');
   }
 
   @include media-down('sm') {
     th,
     td {
-      padding: spacing('1') spacing('2');
       font-size: font-size('2xs');
     }
   }

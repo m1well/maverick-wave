@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.8.0] - 2025-05-03
 
+### Added
+
+- card subtitle
+
+### Changed
+
+- some color and size adjustments
+
+## [1.8.0] - 2025-05-03
+
 ### Fixed
 
 - too small font-size on blog-post
