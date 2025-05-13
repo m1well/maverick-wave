@@ -58,3 +58,13 @@
     }
   }
 }
+
+// if you dont want to use mw-home - use mw-content
+.mw-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
