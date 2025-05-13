@@ -1705,16 +1705,14 @@ pre code {
 .mw-login {
   background: var(--mw-card-background);
   border-radius: 5px 20px 5px 20px;
-  padding: 1.5rem;
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(390px, 92%);
+  width: min(390px, 80vw);
   margin: 4rem auto;
   padding: 2.5rem 2rem;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: stretch;
