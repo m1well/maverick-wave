@@ -3,16 +3,14 @@
 .mw-login {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  padding: spacing('5');
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(390px, 92%);
+  width: min(390px, 80vw);
   margin: spacing('9') auto;
   padding: spacing('7') spacing('6');
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: stretch;
