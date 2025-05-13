@@ -1711,7 +1711,7 @@ pre code {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  max-width: 390px;
+  width: min(390px, 92%);
   margin: 4rem auto;
   padding: 2.5rem 2rem;
   text-align: center;
@@ -1719,18 +1719,32 @@ pre code {
   flex-direction: column;
   align-items: stretch;
 }
-@media (max-width: 576px) {
+@media (max-width: 375px) {
   .mw-login {
     padding: 2.5rem 1rem;
   }
 }
-.mw-login:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 9px 21px var(--mw-shadow);
-  border-color: var(--mw-primary-color-hover);
+.mw-login-error {
+  border: 2px solid var(--mw-danger-color);
+}
+.mw-login-error .mw-login-error-message {
+  display: block;
+}
+.mw-login-error-message {
+  display: none;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.9rem;
+  color: var(--mw-danger-color);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
 }
 .mw-login-logo {
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
 }
 .mw-login-logo img {
   display: block;

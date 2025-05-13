@@ -322,5 +322,23 @@
         @@include('./src/partials/footer-container.html')
       </div>
     </footer>
+    <script>
+      // just for the showcase (login button triggers login error)
+      document.addEventListener('DOMContentLoaded', () => {
+        const loginCard = document.querySelector('.mw-login');
+        const form = document.querySelector('.mw-login-form');
+        const btn = form.querySelector('a[type="submit"]');
+
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          loginCard.classList.remove('mw-login-error');
+          void loginCard.offsetWidth;
+          loginCard.classList.add('mw-login-error');
+          setTimeout(() => {
+            loginCard.classList.remove('mw-login-error');
+          }, 4000);
+        });
+      });
+    </script>
   </body>
 </html>
