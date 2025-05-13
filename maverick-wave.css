@@ -3059,6 +3059,15 @@ pre code {
   }
 }
 
+.mw-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 .mw-section-title {
   font-size: 2.2rem;
   margin-bottom: 2.5rem;
