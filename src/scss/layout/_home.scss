@@ -14,7 +14,9 @@
       padding: spacing('9') spacing('2');
     }
 
+    // choose mw-home-content or mw-home-content-fade
     &-fade {
+      @extend .mw-home-content;
       animation: fadeIn 2.5s ease-in;
     }
   }

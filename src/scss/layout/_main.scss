@@ -18,23 +18,43 @@
   }
 
   // when it contains a full-width child
-  &:has(> .mw-container-full) {
-    width: 100%;
-    margin: 0;
-    padding: 0;
+  @supports (selector(:has(> .mw-container-full))) {
+    &:has(> .mw-container-full) {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   // add a hero part for a full size background picture
-  &:has(> .mw-hero) {
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-    background-position: center;
+  @supports (selector(:has(> .mw-hero))) {
+    &:has(> .mw-hero) {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      background-image: var(--mw-hero-background);
+
+      // the “overlay”
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--mw-hero-overlay-background);
+        backdrop-filter: blur(2px);
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      // your actual content should sit above the overlay
+      > * {
+        position: relative;
+        z-index: 3;
+      }
+    }
   }
 }
