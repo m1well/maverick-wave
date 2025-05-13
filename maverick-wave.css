@@ -601,8 +601,8 @@ th {
 }
 
 .mw-blog-post {
-  margin-top: 4rem;
-  padding: 0.75rem 2.5rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: 5px 30px 5px 30px;
   box-shadow: var(--mw-border) 0px 30px 60px -18px inset, var(--mw-border) 0px 18px 36px -18px inset;

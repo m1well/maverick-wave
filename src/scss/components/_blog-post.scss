@@ -2,9 +2,8 @@
 @use '../abstracts' as *;
 
 .mw-blog-post {
-  margin-top: spacing('9');
-  padding: spacing('3') spacing('7');
-  // Page load animation
+  margin-top: spacing('5');
+  padding: spacing('3') spacing('5');
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: radius('sm') radius('2xl') radius('sm') radius('2xl');
   box-shadow:
