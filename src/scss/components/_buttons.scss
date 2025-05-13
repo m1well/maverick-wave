@@ -10,7 +10,7 @@
   cursor: pointer;
   transition: var(--mw-transition);
   border: 1px solid transparent;
-  vertical-align: middle;
+  line-height: 1.2;
 
   // Color variants
   &-primary {
@@ -70,7 +70,7 @@
   }
 
   &-lg {
-    padding: spacing('3') spacing('6');
+    padding: spacing('3') spacing('5');
     font-size: font-size('md');
   }
 

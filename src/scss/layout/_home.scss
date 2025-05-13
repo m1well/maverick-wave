@@ -7,28 +7,15 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  animation: fadeIn 2.5s ease-in;
 
-  // Spacing on top at smaller screens if you have a lot of content
-
-  &-top-spacing-sm {
+  &-content {
+    padding: spacing('6') spacing('2');
     @include media-down('sm') {
-      justify-content: start;
-      padding-top: 9vh !important;
+      padding: spacing('9') spacing('2');
     }
-  }
 
-  &-top-spacing-md {
-    @include media-down('sm') {
-      justify-content: start;
-      padding-top: 14vh !important;
-    }
-  }
-
-  &-top-spacing-lg {
-    @include media-down('sm') {
-      justify-content: start;
-      padding-top: 19vh !important;
+    &-fade {
+      animation: fadeIn 2.5s ease-in;
     }
   }
 
