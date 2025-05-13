@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- main and home parts and added hero for full-size background image
+- main and home parts and added hero with full-size background image
 - changed some little styles
 
 ## [1.9.0] - 2025-05-05

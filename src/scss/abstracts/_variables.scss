@@ -3,6 +3,8 @@
 
 $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
 
+$mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d1?q=80&w=3542&auto=format&fit=crop') !default;
+
 $primary-color: #1031bb;
 $secondary-color: #bb3110;
 $success-color: #28a745;
@@ -80,6 +82,7 @@ $status-colors: (
 // Dark theme colors
 $dark-theme-colors: (
   'page-background': $dark-background,
+  'hero-overlay-background': color.adjust($dark-background, $alpha: -0.7),
   'card-background': color.adjust($dark-background, $lightness: +6%),
   'footer-background': color.adjust($dark-background, $lightness: +3%),
   'border': color.adjust($dark-background, $lightness: +15%),
@@ -91,7 +94,8 @@ $dark-theme-colors: (
 // Light theme colors
 $light-theme-colors: (
   'page-background': $light-background,
-  'card-background': color.adjust($light-background, $lightness: +2%),
+  'hero-overlay-background': color.adjust($light-background, $alpha: -0.7),
+  'card-background': color.adjust($light-background, $lightness: +5%),
   'footer-background': color.adjust($light-background, $lightness: -2%),
   'border': color.adjust($light-background, $lightness: -13%),
   'shadow': color.adjust($light-text-color, $alpha: -0.7),

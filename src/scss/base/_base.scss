@@ -44,6 +44,10 @@
 
   // Dark theme colors
   --mw-dark-page-background: #{map.get($dark-theme-colors, 'page-background')};
+  --mw-dark-hero-overlay-background: #{map.get(
+      $dark-theme-colors,
+      'hero-overlay-background'
+    )};
   --mw-dark-card-background: #{map.get($dark-theme-colors, 'card-background')};
   --mw-dark-footer-background: #{map.get(
       $dark-theme-colors,
@@ -59,6 +63,10 @@
 
   // Light theme colors
   --mw-light-page-background: #{map.get($light-theme-colors, 'page-background')};
+  --mw-light-hero-overlay-background: #{map.get(
+      $light-theme-colors,
+      'hero-overlay-background'
+    )};
   --mw-light-card-background: #{map.get($light-theme-colors, 'card-background')};
   --mw-light-footer-background: #{map.get(
       $light-theme-colors,
@@ -78,9 +86,13 @@
   // theme for theme-toggle
   --mw-internal-theme-mode: #{$mw-theme-mode};
 
+  // hero background image
+  --mw-hero-background: #{$mw-hero-image};
+
   @if $mw-theme-mode == 'dark' or $mw-theme-mode == 'switchable' {
     // Dark theme variables
     --mw-page-background: var(--mw-dark-page-background);
+    --mw-hero-overlay-background: var(--mw-dark-hero-overlay-background);
     --mw-card-background: var(--mw-dark-card-background);
     --mw-footer-background: var(--mw-dark-footer-background);
     --mw-border: var(--mw-dark-border);
@@ -90,6 +102,7 @@
   } @else {
     // Light theme variables
     --mw-page-background: var(--mw-light-page-background);
+    --mw-hero-overlay-background: var(--mw-light-hero-overlay-background);
     --mw-card-background: var(--mw-light-card-background);
     --mw-footer-background: var(--mw-light-footer-background);
     --mw-border: var(--mw-light-border);
@@ -103,6 +116,7 @@
   .mw-theme-light {
     // Light theme variables for switching
     --mw-page-background: var(--mw-light-page-background);
+    --mw-hero-overlay-background: var(--mw-light-hero-overlay-background);
     --mw-card-background: var(--mw-light-card-background);
     --mw-footer-background: var(--mw-light-footer-background);
     --mw-border: var(--mw-light-border);
