@@ -1,6 +1,11 @@
 <h3 class="mw-section-subtitle">Login</h3>
 
-<div>
+<p class="mw-text-secondary mw-my-0">
+  Click “Log In” to simulate a failure and see the red border + message. It will
+  automatically clear after 4 seconds.
+</p>
+
+<div class="mw-mb-4">
   <div class="mw-login">
     <div class="mw-login-logo">
       <img
@@ -8,6 +13,7 @@
         alt="Your Logo"
       />
     </div>
+    <p class="mw-login-error-message">Login failed. Please try again.</p>
     <form class="mw-login-form" action="#" method="POST">
       <label>
         <span>Email</span>
@@ -27,7 +33,7 @@
           required
         />
       </label>
-      <a class="mw-btn mw-btn-primary">Login</a>
+      <a type="submit" class="mw-btn mw-btn-primary">Login</a>
     </form>
   </div>
 </div>

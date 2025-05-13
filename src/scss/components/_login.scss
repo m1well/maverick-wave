@@ -9,7 +9,7 @@
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  max-width: 390px;
+  width: min(390px, 92%);
   margin: spacing('9') auto;
   padding: spacing('7') spacing('6');
   text-align: center;
@@ -17,18 +17,34 @@
   flex-direction: column;
   align-items: stretch;
 
-  @include media-down('sm') {
+  @include media-down('xs') {
     padding: spacing('7') spacing('4');
   }
 
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 9px 21px var(--mw-shadow);
-    border-color: var(--mw-primary-color-hover);
+  &-error {
+    border: 2px solid var(--mw-danger-color);
+
+    .mw-login-error-message {
+      display: block; // show the message
+    }
+  }
+
+  &-error-message {
+    display: none; // hide by default
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: font-size('sm');
+    color: var(--mw-danger-color);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 10;
   }
 
   &-logo {
-    margin-bottom: spacing('8');
+    margin-bottom: spacing('9');
+    position: relative;
     img {
       display: block;
       margin: 0 auto;
