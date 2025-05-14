@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - spacing of mw-content
+- spacing and elements of mw-blog-post
 
 ## [1.14.0] - 2025-05-14
 
