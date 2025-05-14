@@ -61,7 +61,7 @@
 
 // if you dont want to use mw-home - use mw-content
 .mw-content {
-  min-height: 100vh;
+  margin-top: spacing('8');
   display: flex;
   flex-direction: column;
   justify-content: center;

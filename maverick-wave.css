@@ -601,7 +601,7 @@ th {
 }
 
 .mw-blog-post {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   padding: 0.75rem 1.5rem;
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: 5px 30px 5px 30px;
@@ -3123,7 +3123,7 @@ pre code {
 }
 
 .mw-content {
-  min-height: 100vh;
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
