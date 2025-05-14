@@ -59,17 +59,15 @@
 
 // Dot lists
 .mw-list-dot {
-  list-style: none;
-  padding-left: spacing('1');
+  list-style: disc;
+  padding-left: spacing('5');
+  list-style-position: inside;
 
   li {
-    position: relative;
-    padding-left: spacing('5');
-    margin-bottom: spacing('2');
+    padding-left: spacing('0');
+    margin-bottom: spacing('1');
 
-    &::before {
-      content: '•'; // Default bullet, can be overridden
-      position: absolute;
+    &::marker {
       left: spacing('0');
       color: var(--mw-primary-color);
     }
@@ -78,9 +76,17 @@
 
 // Check list
 .mw-list-check {
-  @extend .mw-list-dot;
+  list-style: none;
+  padding-left: spacing('4');
+
+  li {
+    padding-left: spacing('0');
+    margin-bottom: spacing('1');
+  }
 
   li::before {
     content: '✓';
+    color: var(--mw-primary-color);
+    padding-right: spacing('4');
   }
 }
