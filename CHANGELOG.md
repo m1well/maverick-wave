@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - spacing of mw-content
 - spacing and elements of mw-blog-post
+- spacing of tags
 
 ## [1.14.0] - 2025-05-14
 

@@ -5,7 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: spacing('2');
-  margin-top: spacing('4');
+  margin: spacing('4') spacing('1') spacing('2') spacing('1');
 }
 
 // Tag item
