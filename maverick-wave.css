@@ -602,7 +602,7 @@ th {
 }
 
 .mw-blog-post {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   padding: 0.75rem 1.5rem;
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: 5px 30px 5px 30px;
@@ -3127,7 +3127,7 @@ pre code {
 }
 
 .mw-content {
-  margin-top: 3rem;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -3202,7 +3202,7 @@ pre code {
   }
 }
 section {
-  padding: 3rem 0;
+  padding: 2.5rem 0;
 }
 
 .mw-d-flex {
