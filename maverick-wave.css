@@ -1636,6 +1636,7 @@ pre code {
 .mw-list {
   margin: 0.75rem 0 1.5rem 0;
   padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 .mw-list li {
   margin-bottom: 0.25rem;
