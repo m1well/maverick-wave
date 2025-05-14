@@ -1,0 +1,47 @@
+@use '../abstracts' as *;
+
+.mw-rating {
+  display: inline-flex;
+  gap: spacing('2');
+  font-size: font-size('2xl');
+  padding: spacing('2') spacing('4');
+
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+
+  &-container {
+    margin: spacing('4') spacing('0');
+  }
+
+  &-info {
+    display: flex;
+    justify-content: space-between;
+    margin: spacing('2') spacing('1') spacing('1') spacing('1');
+    font-size: font-size('md');
+  }
+
+  &-sm {
+    font-size: font-size('lg');
+    padding: spacing('2') spacing('3');
+  }
+
+  &-lg {
+    font-size: font-size('4xl');
+    padding: spacing('3') spacing('5');
+  }
+
+  &-icon {
+    color: var(--mw-gray-background);
+    transition: color var(--mw-transition);
+    pointer-events: none;
+  }
+}
+
+// fill first N icons based on data-rating
+@for $i from 1 through 5 {
+  .mw-rating[data-rating='#{$i}'] {
+    & .mw-rating-icon:nth-child(-n + #{$i}) {
+      color: var(--mw-primary-color);
+    }
+  }
+}
