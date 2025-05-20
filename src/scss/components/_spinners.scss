@@ -1,30 +1,36 @@
 @use 'sass:color';
 @use '../abstracts' as *;
 
+$_size-default: 4rem;
+$_size-sm: 2.5rem;
+$_size-lg: 7.5rem;
+
 .mw-spinner {
   display: inline-block;
   position: relative;
 
   // Default spinner (circle border)
   &-border {
-    width: 2rem;
-    height: 2rem;
-    border: 0.25rem solid var(--mw-gray-background);
+    width: $_size-default;
+    height: $_size-default;
+    border: 0.4rem solid var(--mw-gray-background);
     border-radius: radius('full');
     border-top-color: var(--mw-primary-color);
-    animation: mw-spin 0.8s linear infinite;
+    animation: mw-spin 1.2s linear infinite;
 
     // Size variants
     &.mw-spinner-sm {
-      width: 1.5rem;
-      height: 1.5rem;
-      border-width: 0.2rem;
+      width: $_size-sm;
+      height: $_size-sm;
+      border-width: 0.3rem;
+      animation: mw-spin 1.4s linear infinite;
     }
 
     &.mw-spinner-lg {
-      width: 3rem;
-      height: 3rem;
-      border-width: 0.3rem;
+      width: $_size-lg;
+      height: $_size-lg;
+      border-width: 0.6rem;
+      animation: mw-spin 1s linear infinite;
     }
 
     // Color variants
@@ -39,17 +45,17 @@
 
   // Dots spinner
   &-dots {
-    width: 2.5rem;
+    width: $_size-default;
     height: 1rem;
     text-align: center;
 
     > div {
-      width: 0.75rem;
-      height: 0.75rem;
+      width: 1rem;
+      height: 1rem;
       background: var(--mw-primary-color);
       border-radius: radius('full');
       display: inline-block;
-      margin: spacing('0') 0.125rem;
+      margin: spacing('0') 0.2rem;
       animation: mw-bounce 1.4s infinite ease-in-out both;
 
       &:nth-child(1) {
@@ -63,24 +69,24 @@
 
     // Size variants
     &.mw-spinner-sm {
-      width: 2rem;
+      width: $_size-sm;
       height: 0.75rem;
 
       > div {
-        width: 0.5rem;
-        height: 0.5rem;
+        width: 0.75rem;
+        height: 0.75rem;
         margin: spacing('0') 0.1rem;
       }
     }
 
     &.mw-spinner-lg {
-      width: 3.5rem;
+      width: $_size-lg;
       height: 1.5rem;
 
       > div {
-        width: 1rem;
-        height: 1rem;
-        margin: spacing('0') 0.15rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: spacing('0') 0.3rem;
       }
     }
 
@@ -96,41 +102,41 @@
 
   // Dual ring spinner
   &-dual-ring {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: $_size-default;
+    height: $_size-default;
 
     &:after {
       content: ' ';
       display: block;
-      width: 2rem;
-      height: 2rem;
+      width: $_size-default;
+      height: $_size-default;
       border-radius: radius('full');
-      border: 0.25rem solid var(--mw-primary-color);
+      border: 0.4rem solid var(--mw-primary-color);
       border-color: var(--mw-primary-color) transparent var(--mw-primary-color)
         transparent;
-      animation: mw-spin 1.2s linear infinite;
+      animation: mw-spin 1.5s linear infinite;
     }
 
     // Size variants
     &.mw-spinner-sm {
-      width: 1.75rem;
-      height: 1.75rem;
+      width: $_size-sm;
+      height: $_size-sm;
 
       &:after {
-        width: 1.5rem;
-        height: 1.5rem;
-        border-width: 0.2rem;
+        width: $_size-sm;
+        height: $_size-sm;
+        border-width: 0.3rem;
       }
     }
 
     &.mw-spinner-lg {
-      width: 3.5rem;
-      height: 3.5rem;
+      width: $_size-lg;
+      height: $_size-lg;
 
       &:after {
-        width: 3rem;
-        height: 3rem;
-        border-width: 0.3rem;
+        width: $_size-lg;
+        height: $_size-lg;
+        border-width: 0.5rem;
       }
     }
 
@@ -152,10 +158,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: spacing('4');
+  height: 80%; // a little further up than the center
 
   &-overlay {
+    @extend .mw-spinner-container;
     position: absolute;
     top: spacing('0');
     left: spacing('0');
@@ -164,8 +173,7 @@
     background: var(--mw-gray-background);
     backdrop-filter: blur(2px);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
     z-index: 95;
   }
 }
