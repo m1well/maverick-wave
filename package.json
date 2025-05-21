@@ -1,8 +1,8 @@
 {
   "name": "maverick-wave",
-  "version": "1.17.5",
+  "version": "1.18.0",
   "config": {
-    "version_short": "1.17"
+    "version_short": "1.18"
   },
   "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
   "main": "src/js/main.js",

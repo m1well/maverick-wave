@@ -156,7 +156,7 @@ blockquote {
   font-style: italic;
   position: relative;
   padding: 1rem;
-  margin: 0.5rem 0.25rem;
+  margin: 0.5rem 0.2rem;
   border-left: 2px solid var(--mw-secondary-background-hover);
 }
 blockquote:hover::before, blockquote:hover::after {
@@ -172,7 +172,7 @@ blockquote::before, blockquote::after {
 blockquote::before {
   content: '"';
   top: -0.5rem;
-  left: 0.25rem;
+  left: 0.2rem;
 }
 blockquote::after {
   content: '"';
@@ -348,7 +348,7 @@ th {
   border: 1px solid var(--mw-border);
   border-radius: 5px 20px 5px 20px;
   overflow: hidden;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-accordion-item {
   border-bottom: 1px solid var(--mw-primary-color-hover);
@@ -423,7 +423,7 @@ th {
 .mw-alert {
   padding: 1rem;
   border-radius: 10px;
-  margin: 0.25rem;
+  margin: 0.2rem;
   display: flex;
   align-items: flex-start;
 }
@@ -494,7 +494,7 @@ th {
   }
   .mw-alert-content h4 {
     font-size: 1.1rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
     font-weight: 500;
   }
   .mw-alert-content p {
@@ -509,7 +509,7 @@ th {
   overflow: hidden;
   border: 3px solid var(--mw-border);
   box-shadow: 0 6px 15px var(--mw-shadow);
-  margin: 0.25rem;
+  margin: 0.2rem;
   width: 96px;
   height: 96px;
   flex-shrink: 0;
@@ -563,7 +563,7 @@ th {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-avatar-group .mw-avatar {
   margin-right: -15px;
@@ -603,7 +603,7 @@ th {
 }
 
 .mw-blog-post {
-  margin: 0.25rem;
+  margin: 0.2rem;
   padding: 0.75rem 1.5rem;
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: 5px 30px 5px 30px;
@@ -714,7 +714,7 @@ th {
 }
 .mw-blog-post-content h2, .mw-blog-post-content-markdown h2 {
   font-size: 2.2rem;
-  margin: 1.5rem 0.25rem 1rem 0.25rem;
+  margin: 1.5rem 0.2rem 1rem 0.2rem;
 }
 @media (max-width: 768px) {
   .mw-blog-post-content h2, .mw-blog-post-content-markdown h2 {
@@ -723,7 +723,7 @@ th {
 }
 .mw-blog-post-content h3, .mw-blog-post-content-markdown h3 {
   font-size: 1.8rem;
-  margin: 1rem 0.25rem 0.75rem 0.25rem;
+  margin: 1rem 0.2rem 0.75rem 0.2rem;
 }
 @media (max-width: 768px) {
   .mw-blog-post-content h3, .mw-blog-post-content-markdown h3 {
@@ -850,7 +850,7 @@ th {
   text-decoration: underline;
 }
 .mw-btn-sm {
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.75rem;
   font-size: 0.9rem;
 }
 .mw-btn-lg {
@@ -871,7 +871,7 @@ th {
 }
 @media (max-width: 576px) {
   .mw-btn-icon {
-    gap: 0.25rem;
+    gap: 0.2rem;
   }
 }
 
@@ -884,7 +884,7 @@ th {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-card:hover {
   transform: translateY(-3px);
@@ -1060,7 +1060,7 @@ th {
 .mw-card-stack-body {
   display: flex;
   flex-direction: column;
-  padding-top: 0.25rem;
+  padding-top: 0.2rem;
 }
 .mw-card-stack-text {
   margin-top: 0.5rem;
@@ -1077,7 +1077,7 @@ pre {
 
 code {
   color: var(--mw-text-secondary-color);
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -1137,12 +1137,12 @@ pre code {
 @media (max-width: 576px) {
   .mw-code-block-filename {
     font-size: 0.7rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
   }
 }
 .mw-code-block-language {
   font-size: 0.8rem;
-  padding: 0.25rem;
+  padding: 0.2rem;
   border-radius: 5px;
 }
 @media (max-width: 576px) {
@@ -1164,7 +1164,7 @@ pre code {
 @media (max-width: 576px) {
   .mw-code-block pre {
     font-size: 0.7rem;
-    padding: 0.25rem;
+    padding: 0.2rem;
   }
   .mw-code-block pre code {
     white-space: pre-wrap;
@@ -1182,7 +1182,7 @@ pre code {
   color: #f2f3f4;
   border-radius: 5px;
   padding: 1rem;
-  margin: 0.25rem;
+  margin: 0.2rem;
   font-family: "Fira Code", "Consolas", "Monaco", monospace;
   font-size: 0.8rem;
   line-height: 1.5;
@@ -1198,7 +1198,7 @@ pre code {
 @media (max-width: 576px) {
   .mw-terminal {
     font-size: 0.7rem;
-    padding: 0.25rem;
+    padding: 0.2rem;
   }
 }
 @media (max-width: 375px) {
@@ -1315,8 +1315,8 @@ pre code {
   overflow: hidden;
   position: relative;
   transition: var(--mw-transition);
-  padding: 6rem 0;
-  margin: 0.25rem;
+  padding: 6.5rem 0;
+  margin: 0.2rem;
 }
 .mw-coming-soon-icon {
   margin-right: 1.5rem;
@@ -1411,7 +1411,7 @@ pre code {
   font-size: 2.5rem;
   font-weight: 700;
   color: var(--mw-text-color);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
   position: relative;
   z-index: 2;
   transition: transform var(--counter-transition), color var(--counter-transition);
@@ -1483,13 +1483,13 @@ pre code {
 
 @media (max-width: 768px) {
   .mw-counter {
-    padding: 0.25rem;
+    padding: 0.2rem;
   }
   .mw-counter-label {
     font-size: 0.9rem;
   }
   .mw-counter-sm {
-    padding: 0.25rem;
+    padding: 0.2rem;
   }
   .mw-counter-sm .mw-counter-label {
     font-size: 0.8rem;
@@ -1520,7 +1520,7 @@ pre code {
   overflow: hidden;
   width: 100%;
   border-radius: 10px;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-gallery-track {
   display: flex;
@@ -1571,7 +1571,7 @@ pre code {
 .mw-gallery-desc {
   text-align: left;
   padding: 0.5rem 0.75rem;
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
   background: var(--mw-card-background);
   border-radius: 10px;
   border: 1px solid var(--mw-primary-color-hover);
@@ -1616,7 +1616,7 @@ pre code {
     height: 290px;
   }
   .mw-gallery-navi {
-    padding: 0.75rem 0.25rem;
+    padding: 0.75rem 0.2rem;
     font-size: 1.8rem;
     height: 261px;
     border-radius: 5px;
@@ -1643,13 +1643,13 @@ pre code {
   padding-right: 0.5rem;
 }
 .mw-list li {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 .mw-list li:last-child {
   margin-bottom: 0;
 }
 .mw-list .mw-list {
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 
 .mw-list-unstyled {
@@ -1690,7 +1690,7 @@ pre code {
 }
 .mw-list-dot li {
   padding-left: 0;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 .mw-list-dot li::marker {
   left: 0;
@@ -1703,7 +1703,7 @@ pre code {
 }
 .mw-list-check li {
   padding-left: 0;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 .mw-list-check li::before {
   content: "✓";
@@ -1772,7 +1772,7 @@ pre code {
   color: var(--mw-text-secondary-color);
 }
 .mw-login-form label span {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 .mw-login-form label input {
   padding: 0.5rem 0.75rem;
@@ -1829,7 +1829,7 @@ pre code {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-panel-header {
   padding: 1rem;
@@ -1912,12 +1912,12 @@ pre code {
 }
 
 .mw-progress-container {
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-progress-info {
   display: flex;
   justify-content: space-between;
-  margin: 0.75rem 0.25rem 0.25rem 0.25rem;
+  margin: 0.75rem 0.2rem 0.2rem 0.2rem;
   font-size: 0.9rem;
 }
 .mw-progress-info.mw-progress-hide-info {
@@ -1991,12 +1991,12 @@ pre code {
   border-radius: 10px;
 }
 .mw-rating-container {
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-rating-info {
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 0.25rem 0.25rem 0.25rem;
+  margin: 0.5rem 0.2rem 0.2rem 0.2rem;
   font-size: 1.1rem;
 }
 .mw-rating-sm {
@@ -2196,7 +2196,7 @@ pre code {
 }
 .mw-table {
   width: 100%;
-  margin: 0.25rem;
+  margin: 0.2rem;
   border-collapse: collapse;
   background: var(--mw-card-background);
 }
@@ -2222,7 +2222,7 @@ pre code {
 @media (max-width: 576px) {
   .mw-table th,
   .mw-table td {
-    padding: 0.25rem 0.75rem;
+    padding: 0.2rem 0.75rem;
     font-size: 0.8rem;
   }
 }
@@ -2232,7 +2232,7 @@ pre code {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 .mw-table-responsive .mw-table {
   margin-bottom: 0;
@@ -2252,7 +2252,7 @@ pre code {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.25rem 1rem;
+    padding: 0.2rem 1rem;
   }
   .mw-table-cards td::before {
     content: attr(data-label);
@@ -2274,7 +2274,7 @@ pre code {
 
 .mw-table-compact th,
 .mw-table-compact td {
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   font-size: 0.9rem;
 }
 @media (max-width: 576px) {
@@ -2421,7 +2421,7 @@ pre code {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 
 .mw-tags-item {
@@ -2429,7 +2429,7 @@ pre code {
   align-items: center;
   background: var(--mw-primary-background);
   color: var(--mw-text-color);
-  padding: 0.25rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 20px;
   font-size: 0.8rem;
   border: 1px solid var(--mw-primary-color);
@@ -2440,7 +2440,7 @@ pre code {
   cursor: default;
 }
 .mw-tags-item.mw-tags-removable {
-  padding-right: 0.25rem;
+  padding-right: 0.2rem;
 }
 .mw-tags-item.mw-tags-removable:hover {
   cursor: default;
@@ -2509,7 +2509,7 @@ pre code {
 }
 
 .mw-tags-icon {
-  margin-right: 0.25rem;
+  margin-right: 0.2rem;
 }
 
 .mw-theme-toggle {
@@ -2523,16 +2523,16 @@ pre code {
   display: flex;
   align-items: center;
   transition: var(--mw-transition);
-  margin: 0.25rem 1rem 0 1rem;
+  margin: 0.2rem 1rem 0 1rem;
 }
 @media (max-width: 992px) {
   .mw-theme-toggle {
-    margin: 0.25rem 0.5rem 0 1rem;
+    margin: 0.2rem 0.5rem 0 1rem;
   }
 }
 .mw-theme-toggle-slider {
   position: absolute;
-  left: 0.25rem;
+  left: 0.2rem;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -2576,7 +2576,7 @@ pre code {
 }
 .mw-timeline-big {
   position: relative;
-  margin: 0.25rem auto;
+  margin: 0.2rem auto;
   padding: 1.5rem 0;
   width: min(96%, 900px);
 }
@@ -2623,7 +2623,7 @@ pre code {
 }
 .mw-timeline-big-content {
   width: 48%;
-  padding: 4.5rem 0.5rem 0.25rem 0.5rem;
+  padding: 4.5rem 0.5rem 0.2rem 0.5rem;
   opacity: 0;
 }
 .mw-timeline-big-step:nth-child(1) .mw-timeline-big-content {
@@ -2733,7 +2733,7 @@ pre code {
     justify-content: left;
   }
   .mw-timeline-big-date-sub {
-    margin-left: 0.25rem;
+    margin-left: 0.2rem;
   }
   .mw-timeline-big-content {
     width: auto;
@@ -2747,7 +2747,7 @@ pre code {
 
 .mw-timeline-simple {
   position: relative;
-  margin: 0.25rem auto;
+  margin: 0.2rem auto;
   padding: 0.75rem 0;
   width: min(96%, 930px);
 }
@@ -2774,7 +2774,7 @@ pre code {
   left: -15px;
   text-align: center;
   font-size: 0.9rem;
-  padding: 0.25rem;
+  padding: 0.2rem;
   border-radius: 10px;
   border: 3px solid var(--mw-primary-color);
   background: var(--mw-card-background);
@@ -2828,7 +2828,7 @@ pre code {
 }
 @media (max-width: 576px) {
   .mw-timeline-simple::before {
-    left: 0.25rem;
+    left: 0.2rem;
   }
   .mw-timeline-simple-date {
     position: absolute;
@@ -2925,7 +2925,7 @@ pre code {
   color: var(--mw-text-secondary-color);
   font-size: 0.9rem;
   padding-top: 1rem;
-  margin: 1.5rem auto 0.25rem auto;
+  margin: 1.5rem auto 0.2rem auto;
   width: 80%;
   border-top: 1px solid var(--mw-secondary-color);
 }
@@ -2934,7 +2934,7 @@ pre code {
   color: var(--mw-text-secondary-color);
   font-size: 0.8rem;
   padding-top: 0;
-  margin: 0.25rem auto 0 auto;
+  margin: 0.2rem auto 0 auto;
 }
 @media (max-width: 768px) {
   .mw-footer .mw-social-links {
@@ -3152,10 +3152,10 @@ pre code {
 .mw-navbar-link::after {
   content: "";
   position: absolute;
-  bottom: -0.25rem;
+  bottom: -0.2rem;
   left: 0;
   width: 0;
-  height: 0.25rem;
+  height: 0.2rem;
   transition: var(--mw-transition);
 }
 .mw-navbar-link:hover, .mw-navbar-link.active {
@@ -3300,7 +3300,7 @@ pre code {
   content: "";
   position: absolute;
   width: 30px;
-  height: 0.25rem;
+  height: 0.2rem;
   border-radius: 5px;
   transition: var(--mw-transition);
 }
@@ -3719,33 +3719,33 @@ section {
 }
 
 .mw-m--1 {
-  margin: -0.25rem;
+  margin: -0.2rem;
 }
 
 .mw-mt--1 {
-  margin-top: -0.25rem;
+  margin-top: -0.2rem;
 }
 
 .mw-mb--1 {
-  margin-bottom: -0.25rem;
+  margin-bottom: -0.2rem;
 }
 
 .mw-ml--1 {
-  margin-left: -0.25rem;
+  margin-left: -0.2rem;
 }
 
 .mw-mr--1 {
-  margin-right: -0.25rem;
+  margin-right: -0.2rem;
 }
 
 .mw-mx--1 {
-  margin-left: -0.25rem;
-  margin-right: -0.25rem;
+  margin-left: -0.2rem;
+  margin-right: -0.2rem;
 }
 
 .mw-my--1 {
-  margin-top: -0.25rem;
-  margin-bottom: -0.25rem;
+  margin-top: -0.2rem;
+  margin-bottom: -0.2rem;
 }
 
 .mw-m-0 {
@@ -3779,33 +3779,33 @@ section {
 }
 
 .mw-m-1 {
-  margin: 0.25rem;
+  margin: 0.2rem;
 }
 
 .mw-mt-1 {
-  margin-top: 0.25rem;
+  margin-top: 0.2rem;
 }
 
 .mw-mb-1 {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .mw-ml-1 {
-  margin-left: 0.25rem;
+  margin-left: 0.2rem;
 }
 
 .mw-mr-1 {
-  margin-right: 0.25rem;
+  margin-right: 0.2rem;
 }
 
 .mw-mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .mw-my-1 {
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .mw-m-2 {
@@ -4049,33 +4049,33 @@ section {
 }
 
 .mw-m-10 {
-  margin: 6rem;
+  margin: 6.5rem;
 }
 
 .mw-mt-10 {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
 }
 
 .mw-mb-10 {
-  margin-bottom: 6rem;
+  margin-bottom: 6.5rem;
 }
 
 .mw-ml-10 {
-  margin-left: 6rem;
+  margin-left: 6.5rem;
 }
 
 .mw-mr-10 {
-  margin-right: 6rem;
+  margin-right: 6.5rem;
 }
 
 .mw-mx-10 {
-  margin-left: 6rem;
-  margin-right: 6rem;
+  margin-left: 6.5rem;
+  margin-right: 6.5rem;
 }
 
 .mw-my-10 {
-  margin-top: 6rem;
-  margin-bottom: 6rem;
+  margin-top: 6.5rem;
+  margin-bottom: 6.5rem;
 }
 
 .mw-p--5 {
@@ -4199,33 +4199,33 @@ section {
 }
 
 .mw-p--1 {
-  padding: -0.25rem;
+  padding: -0.2rem;
 }
 
 .mw-pt--1 {
-  padding-top: -0.25rem;
+  padding-top: -0.2rem;
 }
 
 .mw-pb--1 {
-  padding-bottom: -0.25rem;
+  padding-bottom: -0.2rem;
 }
 
 .mw-pl--1 {
-  padding-left: -0.25rem;
+  padding-left: -0.2rem;
 }
 
 .mw-pr--1 {
-  padding-right: -0.25rem;
+  padding-right: -0.2rem;
 }
 
 .mw-px--1 {
-  padding-left: -0.25rem;
-  padding-right: -0.25rem;
+  padding-left: -0.2rem;
+  padding-right: -0.2rem;
 }
 
 .mw-py--1 {
-  padding-top: -0.25rem;
-  padding-bottom: -0.25rem;
+  padding-top: -0.2rem;
+  padding-bottom: -0.2rem;
 }
 
 .mw-p-0 {
@@ -4259,33 +4259,33 @@ section {
 }
 
 .mw-p-1 {
-  padding: 0.25rem;
+  padding: 0.2rem;
 }
 
 .mw-pt-1 {
-  padding-top: 0.25rem;
+  padding-top: 0.2rem;
 }
 
 .mw-pb-1 {
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.2rem;
 }
 
 .mw-pl-1 {
-  padding-left: 0.25rem;
+  padding-left: 0.2rem;
 }
 
 .mw-pr-1 {
-  padding-right: 0.25rem;
+  padding-right: 0.2rem;
 }
 
 .mw-px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
 }
 
 .mw-py-1 {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
 .mw-p-2 {
@@ -4529,33 +4529,33 @@ section {
 }
 
 .mw-p-10 {
-  padding: 6rem;
+  padding: 6.5rem;
 }
 
 .mw-pt-10 {
-  padding-top: 6rem;
+  padding-top: 6.5rem;
 }
 
 .mw-pb-10 {
-  padding-bottom: 6rem;
+  padding-bottom: 6.5rem;
 }
 
 .mw-pl-10 {
-  padding-left: 6rem;
+  padding-left: 6.5rem;
 }
 
 .mw-pr-10 {
-  padding-right: 6rem;
+  padding-right: 6.5rem;
 }
 
 .mw-px-10 {
-  padding-left: 6rem;
-  padding-right: 6rem;
+  padding-left: 6.5rem;
+  padding-right: 6.5rem;
 }
 
 .mw-py-10 {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: 6.5rem;
+  padding-bottom: 6.5rem;
 }
 
 .mw-gap--5 {
@@ -4595,11 +4595,11 @@ section {
 }
 
 .mw-gap--1 {
-  gap: -0.25rem;
+  gap: -0.2rem;
 }
 @media (max-width: 576px) {
   .mw-gap--1 {
-    gap: -0.1875rem;
+    gap: -0.15rem;
   }
 }
 
@@ -4613,11 +4613,11 @@ section {
 }
 
 .mw-gap-1 {
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 @media (max-width: 576px) {
   .mw-gap-1 {
-    gap: 0.1875rem;
+    gap: 0.15rem;
   }
 }
 
@@ -4694,10 +4694,10 @@ section {
 }
 
 .mw-gap-10 {
-  gap: 6rem;
+  gap: 6.5rem;
 }
 @media (max-width: 576px) {
   .mw-gap-10 {
-    gap: 4.5rem;
+    gap: 4.875rem;
   }
 }
