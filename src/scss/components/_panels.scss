@@ -70,13 +70,11 @@
 
   // Scrollable variant for fixed height
   &-scrollable {
-    max-height: 500px; // Maximale Höhe, bevor Scrolling aktiviert wird
+    max-height: 500px;
 
     .mw-panel-body {
       overflow-y: auto;
-      max-height: calc(
-        500px - 2 * spacing('4') - 2px
-      ); // Abzüglich Header, Footer und Borders
+      max-height: calc(500px - 2 * spacing('4') - 2px);
     }
   }
 

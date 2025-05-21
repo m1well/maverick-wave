@@ -9,7 +9,7 @@
   position: relative;
   overflow: hidden;
   width: min(390px, 80vw);
-  margin: spacing('9') auto;
+  margin: spacing('2') auto;
   padding: spacing('7') spacing('6');
   display: flex;
   flex-direction: column;
@@ -45,7 +45,7 @@
     position: relative;
     img {
       display: block;
-      margin: 0 auto;
+      margin: spacing('0') auto;
       height: 60px;
       object-fit: contain;
     }

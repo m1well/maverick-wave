@@ -3,7 +3,7 @@
 // Base table styles
 .mw-table {
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin: spacing('1');
   border-collapse: collapse;
   background: var(--mw-card-background);
 
@@ -48,7 +48,7 @@
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin-bottom: spacing('5');
+  margin: spacing('1');
 
   .mw-table {
     margin-bottom: spacing('0');

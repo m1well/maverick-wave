@@ -4,6 +4,7 @@
   border: 1px solid var(--mw-border);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
   overflow: hidden;
+  margin: spacing('1');
 
   &-item {
     border-bottom: 1px solid var(--mw-primary-color-hover);
