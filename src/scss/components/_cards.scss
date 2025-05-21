@@ -9,6 +9,7 @@
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
+  margin: spacing('1');
 
   &:hover {
     transform: translateY(-3px);
