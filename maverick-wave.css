@@ -2573,7 +2573,7 @@ pre code {
   position: relative;
   margin: 2.5rem auto;
   padding: 1.5rem 0;
-  width: min(96%, 930px);
+  width: min(96%, 900px);
 }
 .mw-timeline-big::before {
   content: "";
@@ -2591,19 +2591,29 @@ pre code {
   display: flex;
   align-items: flex-start;
 }
-.mw-timeline-big-date {
+.mw-timeline-big-date-container {
   position: absolute;
   min-width: 230px;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  text-align: center;
-  font-size: 0.9rem;
-  padding: 0.75rem;
-  border-radius: 10px;
   border: 4px solid var(--mw-primary-color);
   background: var(--mw-card-background);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.mw-timeline-big-date-main {
+  font-size: 0.9rem;
   line-height: 1.2;
+}
+.mw-timeline-big-date-sub {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--mw-text-secondary-color);
 }
 .mw-timeline-big-content {
   width: 47%;
@@ -2709,17 +2719,19 @@ pre code {
     display: block;
     margin: 1.5rem 0;
   }
-  .mw-timeline-big-date {
-    width: 250px;
+  .mw-timeline-big-date-container {
     position: relative;
-    left: 0.25rem;
+    left: 2px;
     transform: none;
-    text-align: left;
+    width: 310px;
+    justify-content: left;
+  }
+  .mw-timeline-big-date-sub {
+    margin-left: 0.25rem;
   }
   .mw-timeline-big-content {
     width: auto;
     padding: 0.5rem;
-    margin-top: 0.5rem;
     margin-left: 2rem !important;
     text-align: left !important;
     opacity: 1;
