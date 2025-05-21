@@ -2571,7 +2571,7 @@ pre code {
 }
 .mw-timeline-big {
   position: relative;
-  margin: 2.5rem auto;
+  margin: 2.5rem auto 1rem auto;
   padding: 1.5rem 0;
   width: min(96%, 900px);
 }
@@ -2717,7 +2717,7 @@ pre code {
   }
   .mw-timeline-big-step {
     display: block;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
   }
   .mw-timeline-big-date-container {
     position: relative;
@@ -2732,6 +2732,7 @@ pre code {
   .mw-timeline-big-content {
     width: auto;
     padding: 0.5rem;
+    margin-top: 0.5rem;
     margin-left: 2rem !important;
     text-align: left !important;
     opacity: 1;
@@ -2740,7 +2741,7 @@ pre code {
 
 .mw-timeline-simple {
   position: relative;
-  margin: 2.5rem auto;
+  margin: 2rem auto 1rem auto;
   padding: 0.75rem 0;
   width: min(96%, 930px);
 }
@@ -3379,7 +3380,7 @@ pre code {
 }
 @media (max-width: 375px) {
   .mw-container {
-    width: 93%;
+    width: 90%;
   }
 }
 @supports (selector(:has(> .mw-container-full))) {
