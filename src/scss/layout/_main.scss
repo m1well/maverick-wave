@@ -21,8 +21,8 @@
   @supports (selector(:has(> .mw-container-full))) {
     &:has(> .mw-container-full) {
       width: 100%;
-      margin: 0;
-      padding: 0;
+      margin: spacing('0');
+      padding: spacing('0');
     }
   }
 

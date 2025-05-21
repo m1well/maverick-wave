@@ -1825,6 +1825,7 @@ pre code {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  margin: 0.25rem;
 }
 .mw-panel-header {
   padding: 1rem;
@@ -1907,7 +1908,7 @@ pre code {
 }
 
 .mw-progress-container {
-  margin-bottom: 0.5rem;
+  margin: 0.25rem;
 }
 .mw-progress-info {
   display: flex;
@@ -1986,7 +1987,7 @@ pre code {
   border-radius: 10px;
 }
 .mw-rating-container {
-  margin: 1rem 0;
+  margin: 0.25rem;
 }
 .mw-rating-info {
   display: flex;
@@ -2416,7 +2417,7 @@ pre code {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin: 1rem 0.25rem 0.5rem 0.25rem;
+  margin: 0.25rem;
 }
 
 .mw-tags-item {
