@@ -1,6 +1,7 @@
 @use '../abstracts' as *;
 
-$_border-width: 4px;
+$_border-width-big: 4px;
+$_border-width-simple: 3px;
 
 // shared keyframes
 @keyframes mw-slide-in-left {
@@ -26,7 +27,7 @@ $_border-width: 4px;
 
 .mw-timeline-big {
   position: relative;
-  margin: spacing('7') auto spacing('4') auto;
+  margin: spacing('1') auto;
   padding: spacing('5') 0;
   width: min(96%, 900px);
 
@@ -35,7 +36,7 @@ $_border-width: 4px;
     position: absolute;
     left: 50%;
     top: 0;
-    width: $_border-width;
+    width: $_border-width-big;
     height: 100%;
     background: var(--mw-primary-color);
     transform: translateX(-50%);
@@ -50,15 +51,15 @@ $_border-width: 4px;
 
   &-date-container {
     position: absolute;
-    min-width: 230px;
+    min-width: 330px;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
 
-    border: $_border-width solid var(--mw-primary-color);
+    border: $_border-width-big solid var(--mw-primary-color);
     background: var(--mw-card-background);
     border-radius: radius('md');
-    padding: spacing('3');
+    padding: spacing('4');
 
     // changed to row
     display: flex;
@@ -79,7 +80,7 @@ $_border-width: 4px;
   }
 
   &-content {
-    width: 47%;
+    width: 48%;
     padding: spacing('9') spacing('2') spacing('1') spacing('2');
     opacity: 0;
   }
@@ -137,7 +138,7 @@ $_border-width: 4px;
 
 .mw-timeline-simple {
   position: relative;
-  margin: spacing('6') auto spacing('4') auto;
+  margin: spacing('1') auto;
   padding: spacing('3') 0;
   width: min(96%, 930px);
 
@@ -146,7 +147,7 @@ $_border-width: 4px;
     position: absolute;
     left: 95px;
     top: 0;
-    width: $_border-width;
+    width: $_border-width-simple;
     height: 100%;
     background: var(--mw-primary-color);
     transform: translateX(-50%);
@@ -154,7 +155,7 @@ $_border-width: 4px;
 
   &-step {
     position: relative;
-    margin: spacing('4') 0;
+    margin: spacing('4') spacing('0');
     display: flex;
     align-items: flex-start;
   }
@@ -163,19 +164,19 @@ $_border-width: 4px;
     position: absolute;
     width: 120px;
     top: 0;
-    left: -10px;
+    left: -15px;
     text-align: center;
     font-size: font-size('sm');
     padding: spacing('1');
     border-radius: radius('md');
-    border: $_border-width solid var(--mw-primary-color);
+    border: $_border-width-simple solid var(--mw-primary-color);
     background: var(--mw-card-background);
     line-height: 1.2;
   }
 
   &-content {
     padding: spacing('0');
-    margin-left: 120px;
+    margin-left: 115px;
     text-align: left;
     opacity: 0;
   }
