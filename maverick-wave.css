@@ -2608,6 +2608,7 @@ pre code {
 }
 .mw-timeline-big-date-main {
   font-size: 0.9rem;
+  color: var(--mw-text-color);
   line-height: 1.2;
 }
 .mw-timeline-big-date-sub {
