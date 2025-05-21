@@ -127,9 +127,9 @@ $spacing: (
   '-4': -1.25rem,
   '-3': -0.75rem,
   '-2': -0.5rem,
-  '-1': -0.25rem,
+  '-1': -0.2rem,
   '0': 0,
-  '1': 0.25rem,
+  '1': 0.2rem,
   '2': 0.5rem,
   '3': 0.75rem,
   '4': 1rem,
@@ -138,7 +138,7 @@ $spacing: (
   '7': 2.5rem,
   '8': 3rem,
   '9': 4.5rem,
-  '10': 6rem,
+  '10': 6.5rem,
 );
 
 // Breakpoints
@@ -154,8 +154,6 @@ $breakpoints: (
   'xl': 1200px,
   // Extra large devices (large desktops)
   '2xl': 1400px,
-  // Extra extra large devices (larger desktops)
-  '3xl': 1600px, // Ultra large devices (very large screens)
 );
 
 // Border radius

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - spacing in many components
+- header logo as svg
 - some stuff in new timeline components
 
 ## [1.17.0] - 2025-05-21

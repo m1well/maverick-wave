@@ -190,6 +190,7 @@ maverick-wave/
 │   │    ├── utilities/     # Utility classes
 │   │    └── main.scss      # Main SCSS entry point
 ├── .prettierrc.json        # Prettier configuration
+├── CHANGELOG.md            # Please write changelog here
 ├── gulpfile.js             # Gulp tasks configuration
 ├── index.html              # Showcase entry HTML
 ├── package.json            # Project configuration
