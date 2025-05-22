@@ -87,10 +87,6 @@ h6 {
 // Paragraphs
 p {
   margin-bottom: spacing('3');
-
-  &.mw-text-secondary {
-    color: var(--mw-text-secondary-color);
-  }
 }
 
 // Code elements
@@ -171,7 +167,7 @@ blockquote {
   }
 
   &-muted {
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
   }
 
   &-bold {

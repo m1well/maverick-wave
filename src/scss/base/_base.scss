@@ -36,7 +36,7 @@
   --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};
   --mw-header-navbar-list-color: #{map.get(
       $dark-theme-colors,
-      'text-secondary-color'
+      'text-muted-color'
     )};
   --mw-header-navbar-list-ative-color: #{map.get($base-colors, 'primary-color')};
   --mw-header-burgerbutton-color: #{map.get($dark-theme-colors, 'text-color')};
@@ -56,10 +56,7 @@
   --mw-dark-border: #{map.get($dark-theme-colors, 'border')};
   --mw-dark-shadow: #{map.get($dark-theme-colors, 'shadow')};
   --mw-dark-text-color: #{map.get($dark-theme-colors, 'text-color')};
-  --mw-dark-text-secondary-color: #{map.get(
-      $dark-theme-colors,
-      'text-secondary-color'
-    )};
+  --mw-dark-text-muted-color: #{map.get($dark-theme-colors, 'text-muted-color')};
 
   // Light theme colors
   --mw-light-page-background: #{map.get($light-theme-colors, 'page-background')};
@@ -75,9 +72,9 @@
   --mw-light-border: #{map.get($light-theme-colors, 'border')};
   --mw-light-shadow: #{map.get($light-theme-colors, 'shadow')};
   --mw-light-text-color: #{map.get($light-theme-colors, 'text-color')};
-  --mw-light-text-secondary-color: #{map.get(
+  --mw-light-text-muted-color: #{map.get(
       $light-theme-colors,
-      'text-secondary-color'
+      'text-muted-color'
     )};
 
   // Transitions
@@ -98,7 +95,7 @@
     --mw-border: var(--mw-dark-border);
     --mw-shadow: var(--mw-dark-shadow);
     --mw-text-color: var(--mw-dark-text-color);
-    --mw-text-secondary-color: var(--mw-dark-text-secondary-color);
+    --mw-text-muted-color: var(--mw-dark-text-muted-color);
   } @else {
     // Light theme variables
     --mw-page-background: var(--mw-light-page-background);
@@ -108,7 +105,7 @@
     --mw-border: var(--mw-light-border);
     --mw-shadow: var(--mw-light-shadow);
     --mw-text-color: var(--mw-light-text-color);
-    --mw-text-secondary-color: var(--mw-light-text-secondary-color);
+    --mw-text-muted-color: var(--mw-light-text-muted-color);
   }
 }
 
@@ -122,6 +119,6 @@
     --mw-border: var(--mw-light-border);
     --mw-shadow: var(--mw-light-shadow);
     --mw-text-color: var(--mw-light-text-color);
-    --mw-text-secondary-color: var(--mw-light-text-secondary-color);
+    --mw-text-muted-color: var(--mw-light-text-muted-color);
   }
 }

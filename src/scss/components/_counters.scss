@@ -121,12 +121,12 @@
 
     .mw-counter-value,
     .mw-counter-label {
-      color: var(--mw-secondary-text-color);
+      color: var(--mw-muted-color);
     }
 
     &:hover .mw-counter-value {
-      color: var(--mw-secondary-text-color);
-      text-shadow: 0 2px 10px var(--mw-secondary-text-color);
+      color: var(--mw-muted-color);
+      text-shadow: 0 2px 10px var(--mw-muted-color);
     }
   }
 }

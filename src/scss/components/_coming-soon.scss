@@ -19,13 +19,13 @@
     transition: var(--mw-transition);
     position: relative;
     z-index: 2;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
   }
 
   &-text {
     font-size: font-size('3xl');
     font-weight: 700;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     text-transform: uppercase;
     letter-spacing: spacing('3');
     position: relative;

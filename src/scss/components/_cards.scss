@@ -117,7 +117,7 @@
     font-size: font-size('md');
     line-height: 1.2;
     font-style: italic;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     @include media-down('md') {
       margin-bottom: spacing('2');
     }

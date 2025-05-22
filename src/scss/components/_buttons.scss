@@ -24,7 +24,7 @@
 
   &-secondary {
     background: var(--mw-secondary-color);
-    color: var(--mw-secondary-text-color);
+    color: var(--mw-muted-color);
 
     &:hover {
       background: var(--mw-secondary-color-hover);
@@ -52,9 +52,9 @@
     }
   }
 
-  &-link-secondary {
+  &-link-muted {
     background: transparent;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     padding: spacing('0');
 
     &:hover {

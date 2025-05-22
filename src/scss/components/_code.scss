@@ -8,7 +8,7 @@ pre {
 }
 
 code {
-  color: var(--mw-text-secondary-color);
+  color: var(--mw-text-muted-color);
   padding: spacing('1') spacing('2');
   white-space: pre-wrap;
   word-break: break-word;
@@ -51,7 +51,7 @@ pre {
     border-bottom: 1px solid var(--mw-border);
     font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
     font-size: font-size('xs');
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     display: flex;
     justify-content: space-between;
     align-items: center;

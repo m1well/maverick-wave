@@ -160,7 +160,7 @@
       const bgColor = window.getComputedStyle(swatch).backgroundColor;
       const hex = rgbToHex(bgColor);
       const hexTextElement =
-        swatch.parentElement.querySelector('.mw-text-secondary');
+        swatch.parentElement.querySelector('.mw-text-muted');
       if (hexTextElement) {
         hexTextElement.textContent = hex;
       }
