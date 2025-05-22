@@ -6,7 +6,7 @@
     margin: spacing('1');
   }
 
-  &-info {
+  &-barinfo {
     display: flex;
     justify-content: space-between;
     margin: spacing('3') spacing('1') spacing('1') spacing('1');
@@ -55,23 +55,6 @@
     background: var(--mw-secondary-color);
     border-radius: radius('sm');
     transition: width 1.5s ease-in-out;
-
-    // Variants
-    &.mw-progress-primary {
-      background: var(--mw-primary-color);
-    }
-
-    &.mw-progress-success {
-      background: var(--mw-success-color);
-    }
-
-    &.mw-progress-warning {
-      background: var(--mw-warning-color);
-    }
-
-    &.mw-progress-danger {
-      background: var(--mw-danger-color);
-    }
   }
 
   // Sizes
@@ -99,5 +82,20 @@
       font-weight: 500;
       color: var(--mw-primary-text-color);
     }
+  }
+}
+
+$_mw-progress-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+@each $name, $col in $_mw-progress-colors {
+  .mw-progress-#{$name} {
+    background: #{$col};
   }
 }

@@ -22,7 +22,6 @@
       margin-bottom: spacing('2');
       font-weight: 600;
     }
-
     p {
       margin: spacing('0');
     }
@@ -46,43 +45,6 @@
     display: none;
   }
 
-  // Alert variants
-  &-primary {
-    background: var(--mw-primary-background);
-    border-left: 4px solid var(--mw-primary-color);
-    color: var(--mw-primary-color);
-  }
-
-  &-secondary {
-    background: var(--mw-secondary-background);
-    border-left: 4px solid var(--mw-secondary-color);
-    color: var(--mw-secondary-color);
-  }
-
-  &-success {
-    background: var(--mw-success-background);
-    border-left: 4px solid var(--mw-success-color);
-    color: var(--mw-success-color);
-  }
-
-  &-warning {
-    background: var(--mw-warning-background);
-    border-left: 4px solid var(--mw-warning-color);
-    color: var(--mw-warning-color);
-  }
-
-  &-danger {
-    background: var(--mw-danger-background);
-    border-left: 4px solid var(--mw-danger-color);
-    color: var(--mw-danger-color);
-  }
-
-  &-info {
-    background: var(--mw-info-background);
-    border-left: 4px solid var(--mw-info-color);
-    color: var(--mw-info-color);
-  }
-
   @include media-down('sm') {
     &-content {
       flex: 1;
@@ -97,5 +59,22 @@
         font-size: font-size('sm');
       }
     }
+  }
+}
+
+$_mw-alert-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+@each $name, $col in $_mw-alert-colors {
+  .mw-alert-#{$name} {
+    background: var(--mw-#{$name}-background);
+    border-left: 4px solid #{$col};
+    color: #{$col};
   }
 }

@@ -52,27 +52,6 @@
     border-radius: radius('sm');
   }
 
-  // Border colors
-  &-primary {
-    border-color: var(--mw-primary-color);
-  }
-
-  &-secondary {
-    border-color: var(--mw-secondary-color);
-  }
-
-  &-success {
-    border-color: var(--mw-success-color);
-  }
-
-  &-warning {
-    border-color: var(--mw-warning-color);
-  }
-
-  &-danger {
-    border-color: var(--mw-danger-color);
-  }
-
   // Groups
   &-group {
     display: flex;
@@ -125,5 +104,20 @@
       height: 170px;
       border-width: 6px;
     }
+  }
+}
+
+$_mw-avatar-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+@each $name, $col in $_mw-avatar-colors {
+  .mw-avatar-#{$name} {
+    border-color: #{$col};
   }
 }
