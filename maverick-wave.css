@@ -894,7 +894,7 @@ th {
   background: var(--mw-card-background);
   border-radius: 5px 20px 5px 20px;
   padding: 0;
-  padding-top: 1rem;
+  padding: 1rem 0 0.5rem 0;
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
@@ -928,21 +928,26 @@ th {
 }
 .mw-card-ribbon {
   position: absolute;
-  top: 10px;
-  right: -25px;
+  top: 20px;
+  right: -35px;
   padding: 0.2rem 1rem;
   font-size: 0.8rem;
   color: var(--mw-primary-text-color);
   background-color: var(--mw-primary-color);
   border-radius: 2px;
   white-space: nowrap;
-  width: 170px;
+  width: 220px;
   z-index: 10;
   pointer-events: none;
   transform: rotate(25deg);
   text-align: center;
   opacity: 0.75;
   font-weight: 600;
+}
+@media (max-width: 576px) {
+  .mw-card-ribbon {
+    font-size: 0.7rem;
+  }
 }
 .mw-card-content {
   display: flex;
@@ -2691,7 +2696,7 @@ pre code {
   border: 4px solid var(--mw-primary-color);
   background: var(--mw-card-background);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

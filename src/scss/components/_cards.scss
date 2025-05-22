@@ -4,7 +4,7 @@
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
   padding: spacing('0');
-  padding-top: spacing('4');
+  padding: spacing('4') spacing('0') spacing('2') spacing('0');
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
@@ -41,21 +41,24 @@
 
   &-ribbon {
     position: absolute;
-    top: 10px;
-    right: -25px;
+    top: 20px;
+    right: -35px;
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-primary-text-color);
     background-color: var(--mw-primary-color);
     border-radius: radius('xs');
     white-space: nowrap;
-    width: 170px;
+    width: 220px;
     z-index: 10;
     pointer-events: none;
     transform: rotate(25deg);
     text-align: center;
     opacity: 0.75;
     font-weight: 600;
+    @include media-down('sm') {
+      font-size: font-size('2xs');
+    }
   }
 
   // Content card variant - uses flex layout for footer positioning
