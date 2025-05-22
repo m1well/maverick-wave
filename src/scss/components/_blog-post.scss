@@ -120,16 +120,6 @@
   &-content {
     line-height: 1.6;
 
-    a {
-      text-decoration: none;
-      color: var(--mw-text-muted-color);
-      transition: var(--mw-transition);
-      &:hover {
-        color: var(--mw-primary-color);
-        text-decoration: underline;
-      }
-    }
-
     h2 {
       font-size: font-size('3xl');
       margin: spacing('5') spacing('1') spacing('4') spacing('1');
@@ -169,6 +159,16 @@
 
   &-content-markdown {
     @extend .mw-blog-post-content;
+
+    a {
+      text-decoration: none;
+      color: var(--mw-text-muted-color);
+      transition: var(--mw-transition);
+      &:hover {
+        color: var(--mw-primary-color);
+        text-decoration: underline;
+      }
+    }
 
     ul {
       list-style: disc;

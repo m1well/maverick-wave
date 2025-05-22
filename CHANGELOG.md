@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- text-secondary to text-muted
 - Spacing within cards
 - color variants in components as loop
 
