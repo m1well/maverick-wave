@@ -3,7 +3,8 @@
 .mw-card {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  padding: spacing('5');
+  padding: spacing('0');
+  padding-top: spacing('4');
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
@@ -11,16 +12,50 @@
   overflow: hidden;
   margin: spacing('1');
 
+  &-simple {
+    padding: spacing('4');
+  }
+
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 9px 21px var(--mw-shadow);
     border-color: var(--mw-primary-color-hover);
   }
 
-  // Simple card variant - no flex layout
-  &-simple {
-    // This class inherits all the base styles but doesn't use flex
-    padding: spacing('4');
+  &-badge {
+    position: absolute;
+    top: spacing('2');
+    right: spacing('3');
+    padding: spacing('1') spacing('4');
+    font-size: font-size('xs');
+    color: var(--mw-primary-text-color);
+    background-color: var(--mw-primary-color);
+    border-radius: radius('md');
+    white-space: nowrap;
+    z-index: 10;
+    pointer-events: none;
+    text-align: center;
+    opacity: 0.9;
+    font-weight: 600;
+  }
+
+  &-ribbon {
+    position: absolute;
+    top: 10px;
+    right: -25px;
+    padding: spacing('1') spacing('4');
+    font-size: font-size('xs');
+    color: var(--mw-primary-text-color);
+    background-color: var(--mw-primary-color);
+    border-radius: radius('xs');
+    white-space: nowrap;
+    width: 170px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(25deg);
+    text-align: center;
+    opacity: 0.75;
+    font-weight: 600;
   }
 
   // Content card variant - uses flex layout for footer positioning
@@ -33,8 +68,9 @@
   &-img {
     height: 210px;
     overflow: hidden;
-    border-radius: radius('md') radius('md') radius('noe') radius('none');
-    margin: -#{spacing('6')} -#{spacing('6')} 30px -#{spacing('6')};
+    top: 0;
+    left: 0;
+    margin-top: spacing('-4');
     flex-shrink: 0;
 
     img {
@@ -42,6 +78,7 @@
       height: 100%;
       object-fit: cover;
       transition: var(--mw-transition);
+      z-index: 3;
     }
 
     &:hover img {
@@ -61,6 +98,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    padding: spacing('4') spacing('6') spacing('4') spacing('4');
   }
 
   &-title {
@@ -123,13 +161,9 @@
   }
 
   // Card sizes
-  &-sm {
-    padding: spacing('2');
-  }
-
   &-lg {
     .mw-card-img {
-      height: 330px;
+      height: 340px;
     }
   }
 
@@ -137,17 +171,20 @@
     .mw-card-img {
       height: 480px;
       @include media-down('sm') {
-        height: 430px;
+        height: 440px;
       }
     }
   }
 
   @include media-down('sm') {
-    padding: spacing('4');
+    &-body {
+      padding: spacing('3');
+    }
 
     // Adjust the image margin to match the new padding
     .mw-card-img {
-      margin: -#{spacing('4')} -#{spacing('4')} spacing('4');
+      margin-bottom: spacing('2');
+      // margin: -#{spacing('4')} -#{spacing('4')} spacing('4');
 
       img {
         width: 100%;
@@ -157,7 +194,7 @@
 
   &-stack {
     padding: spacing('3');
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 
     // Icon transition setup
     &-icon {
@@ -215,7 +252,7 @@
     &-body {
       display: flex;
       flex-direction: column;
-      padding-top: spacing('1');
+      padding-top: spacing('3');
     }
 
     &-text {
@@ -223,5 +260,20 @@
       color: var(--mw-text-color);
       font-size: font-size('sm');
     }
+  }
+}
+
+$_mw-card-addon-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+@each $name, $col in $_mw-card-addon-colors {
+  .mw-card-addon-#{$name} {
+    background-color: #{$col};
   }
 }
