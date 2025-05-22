@@ -30,7 +30,7 @@
     }
 
     p {
-      color: var(--mw-text-secondary-color);
+      color: var(--mw-text-muted-color);
       margin-bottom: spacing('3');
     }
 
@@ -42,7 +42,7 @@
         margin-bottom: spacing('2');
 
         a {
-          color: var(--mw-text-secondary-color);
+          color: var(--mw-text-muted-color);
           transition: var(--mw-transition);
 
           &:hover {
@@ -83,7 +83,7 @@
 
   .mw-disclaimer {
     text-align: center;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     font-size: font-size('sm');
     width: min(85%, 700px);
     margin: spacing('0') auto spacing('3') auto;
@@ -92,7 +92,7 @@
 
   .mw-copyright {
     text-align: center;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     font-size: font-size('sm');
     padding-top: spacing('4');
     margin: spacing('5') auto spacing('1') auto;
@@ -102,7 +102,7 @@
 
   .mw-last-updated {
     text-align: center;
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
     font-size: font-size('xs');
     padding-top: spacing('0');
     margin: spacing('1') auto spacing('0') auto;

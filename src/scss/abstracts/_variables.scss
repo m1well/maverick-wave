@@ -52,7 +52,7 @@ $base-colors: (
       $lightness: -3%,
       $alpha: -0.6
     ),
-  'secondary-text-color': $dark-text-color,
+  'muted-color': $dark-text-color,
   'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.8),
 );
 
@@ -88,7 +88,7 @@ $dark-theme-colors: (
   'border': color.adjust($dark-background, $lightness: +15%),
   'shadow': color.adjust($dark-text-color, $alpha: -0.7),
   'text-color': $dark-text-color,
-  'text-secondary-color': color.adjust($dark-text-color, $lightness: -26%),
+  'text-muted-color': color.adjust($dark-text-color, $lightness: -26%),
 );
 
 // Light theme colors
@@ -100,7 +100,7 @@ $light-theme-colors: (
   'border': color.adjust($light-background, $lightness: -13%),
   'shadow': color.adjust($light-text-color, $alpha: -0.7),
   'text-color': $light-text-color,
-  'text-secondary-color': color.adjust($light-text-color, $lightness: +27%),
+  'text-muted-color': color.adjust($light-text-color, $lightness: +29%),
 );
 
 // Typography

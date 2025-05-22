@@ -77,7 +77,7 @@ $_border-width-simple: 3px;
   &-date-sub {
     margin-left: spacing('2');
     font-size: font-size('xs');
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
   }
 
   &-content {

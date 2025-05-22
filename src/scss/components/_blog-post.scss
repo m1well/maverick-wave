@@ -89,7 +89,7 @@
     gap: spacing('5');
     margin-bottom: spacing('6');
     font-size: font-size('sm');
-    color: var(--mw-text-secondary-color);
+    color: var(--mw-text-muted-color);
 
     @include media-down('sm') {
       flex-direction: column;
@@ -122,7 +122,7 @@
 
     a {
       text-decoration: none;
-      color: var(--mw-text-secondary-color);
+      color: var(--mw-text-muted-color);
       transition: var(--mw-transition);
       &:hover {
         color: var(--mw-primary-color);

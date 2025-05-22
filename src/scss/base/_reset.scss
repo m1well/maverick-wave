@@ -24,7 +24,7 @@ body {
 
 a {
   text-decoration: none;
-  color: var(--mw-text-secondary-color);
+  color: var(--mw-text-muted-color);
   transition: var(--mw-transition);
 }
 
@@ -34,7 +34,7 @@ ul {
 
 hr {
   margin: 15px 0;
-  color: var(--mw-text-secondary-color);
+  color: var(--mw-text-muted-color);
 }
 
 img {
