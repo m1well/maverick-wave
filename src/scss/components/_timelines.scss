@@ -59,7 +59,7 @@ $_border-width-simple: 3px;
     border: $_border-width-big solid var(--mw-primary-color);
     background: var(--mw-card-background);
     border-radius: radius('md');
-    padding: spacing('4');
+    padding: spacing('3') spacing('4');
 
     // changed to row
     display: flex;
