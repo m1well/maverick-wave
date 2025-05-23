@@ -1637,37 +1637,37 @@ pre code {
 .mw-info-primary {
   background: var(--mw-primary-info-background);
   border-color: var(--mw-primary-color);
-  border-left: 8px solid var(--mw-primary-color);
+  border-left: 6px solid var(--mw-primary-color);
 }
 
 .mw-info-secondary {
   background: var(--mw-secondary-info-background);
   border-color: var(--mw-secondary-color);
-  border-left: 8px solid var(--mw-secondary-color);
+  border-left: 6px solid var(--mw-secondary-color);
 }
 
 .mw-info-info {
   background: var(--mw-info-info-background);
   border-color: var(--mw-info-color);
-  border-left: 8px solid var(--mw-info-color);
+  border-left: 6px solid var(--mw-info-color);
 }
 
 .mw-info-success {
   background: var(--mw-success-info-background);
   border-color: var(--mw-success-color);
-  border-left: 8px solid var(--mw-success-color);
+  border-left: 6px solid var(--mw-success-color);
 }
 
 .mw-info-warning {
   background: var(--mw-warning-info-background);
   border-color: var(--mw-warning-color);
-  border-left: 8px solid var(--mw-warning-color);
+  border-left: 6px solid var(--mw-warning-color);
 }
 
 .mw-info-danger {
   background: var(--mw-danger-info-background);
   border-color: var(--mw-danger-color);
-  border-left: 8px solid var(--mw-danger-color);
+  border-left: 6px solid var(--mw-danger-color);
 }
 
 .mw-list {
