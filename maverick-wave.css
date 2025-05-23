@@ -2,23 +2,23 @@
 :root {
   --mw-primary-color: #1031bb;
   --mw-primary-color-hover: rgba(15.1960591133, 46.5379310345, 177.6039408867, 0.8);
-  --mw-primary-background: rgba(11.9802955665, 36.6896551724, 140.0197044335, 0.15);
+  --mw-primary-background: rgba(11.9802955665, 36.6896551724, 140.0197044335, 0.3);
   --mw-primary-background-hover: rgba(14.3921182266, 44.075862069, 168.2078817734, 0.5);
   --mw-primary-text-color: #d6dbdf;
   --mw-secondary-color: #bb3110;
   --mw-secondary-color-hover: rgba(177.6039408867, 46.5379310345, 15.1960591133, 0.7);
-  --mw-secondary-background: rgba(140.0197044335, 36.6896551724, 11.9802955665, 0.15);
+  --mw-secondary-background: rgba(140.0197044335, 36.6896551724, 11.9802955665, 0.3);
   --mw-secondary-background-hover: rgba(172.90591133, 45.3068965517, 14.79408867, 0.4);
   --mw-secondary-text-color: ;
   --mw-gray-background: rgba(98.75, 98.75, 98.75, 0.2);
   --mw-success-color: #28a745;
-  --mw-success-background: rgba(30.1449275362, 125.8550724638, 52, 0.15);
+  --mw-success-background: rgba(30.1449275362, 125.8550724638, 52, 0.3);
   --mw-warning-color: #d4a310;
-  --mw-warning-background: rgba(164.5789473684, 126.5394736842, 12.4210526316, 0.15);
+  --mw-warning-background: rgba(164.5789473684, 126.5394736842, 12.4210526316, 0.3);
   --mw-danger-color: #d72537;
-  --mw-danger-background: rgba(171.4880952381, 29.5119047619, 43.869047619, 0.15);
+  --mw-danger-background: rgba(171.4880952381, 29.5119047619, 43.869047619, 0.3);
   --mw-info-color: #17a2b8;
-  --mw-info-background: rgba(17.3333333333, 122.0869565217, 138.6666666667, 0.15);
+  --mw-info-background: rgba(17.3333333333, 122.0869565217, 138.6666666667, 0.3);
   --mw-header-background: rgb(15.5486486486, 24.0297297297, 36.7513513514);
   --mw-header-navbar-list-color: rgb(139.5260273973, 153.6082191781, 164.8739726027);
   --mw-header-navbar-list-ative-color: #1031bb;
@@ -418,7 +418,7 @@ th {
 }
 
 .mw-alert {
-  padding: 1rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
   border-radius: 10px;
   margin: 0.2rem;
   display: flex;
@@ -426,19 +426,19 @@ th {
 }
 .mw-alert-icon {
   margin-right: 0.75rem;
-  font-size: 1.5rem;
-  line-height: 1;
+  font-size: 1.3rem;
+  line-height: 1.5;
 }
 .mw-alert-content {
   flex: 1;
 }
-.mw-alert-content h4 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
 .mw-alert-content p {
-  margin: 0;
+  margin: 0.2rem;
+  line-height: 1.3;
+}
+.mw-alert-title {
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 .mw-alert-close {
   background: none;
@@ -446,7 +446,8 @@ th {
   cursor: pointer;
   font-size: 1.5rem;
   line-height: 1;
-  opacity: 0.7;
+  opacity: 0.8;
+  color: var(--mw-text-color);
   transition: var(--mw-transition);
 }
 .mw-alert-close:hover {
@@ -456,52 +457,48 @@ th {
   display: none;
 }
 @media (max-width: 576px) {
-  .mw-alert-content {
-    flex: 1;
-  }
-  .mw-alert-content h4 {
-    font-size: 1.1rem;
-    margin-bottom: 0.2rem;
-    font-weight: 500;
-  }
   .mw-alert-content p {
     font-size: 0.9rem;
+  }
+  .mw-alert-title {
+    font-size: 1rem;
+    font-weight: 600;
   }
 }
 
 .mw-alert-primary {
   background: var(--mw-primary-background);
-  border-left: 4px solid var(--mw-primary-color);
+  border-left: 6px solid var(--mw-primary-color);
   color: var(--mw-primary-color);
 }
 
 .mw-alert-secondary {
   background: var(--mw-secondary-background);
-  border-left: 4px solid var(--mw-secondary-color);
+  border-left: 6px solid var(--mw-secondary-color);
   color: var(--mw-secondary-color);
 }
 
 .mw-alert-info {
   background: var(--mw-info-background);
-  border-left: 4px solid var(--mw-info-color);
+  border-left: 6px solid var(--mw-info-color);
   color: var(--mw-info-color);
 }
 
 .mw-alert-success {
   background: var(--mw-success-background);
-  border-left: 4px solid var(--mw-success-color);
+  border-left: 6px solid var(--mw-success-color);
   color: var(--mw-success-color);
 }
 
 .mw-alert-warning {
   background: var(--mw-warning-background);
-  border-left: 4px solid var(--mw-warning-color);
+  border-left: 6px solid var(--mw-warning-color);
   color: var(--mw-warning-color);
 }
 
 .mw-alert-danger {
   background: var(--mw-danger-background);
-  border-left: 4px solid var(--mw-danger-color);
+  border-left: 6px solid var(--mw-danger-color);
   color: var(--mw-danger-color);
 }
 
