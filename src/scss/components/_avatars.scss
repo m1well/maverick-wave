@@ -1,5 +1,14 @@
 @use '../abstracts' as *;
 
+$_mw-avatar-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
 .mw-avatar {
   display: inline-flex;
   position: relative;
@@ -106,15 +115,6 @@
     }
   }
 }
-
-$_mw-avatar-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
 
 @each $name, $col in $_mw-avatar-colors {
   .mw-avatar-#{$name} {

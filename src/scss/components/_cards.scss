@@ -1,5 +1,14 @@
 @use '../abstracts' as *;
 
+$_mw-card-addon-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
 .mw-card {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
@@ -273,15 +282,6 @@
     }
   }
 }
-
-$_mw-card-addon-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
 
 @each $name, $col in $_mw-card-addon-colors {
   .mw-card-addon-#{$name} {
