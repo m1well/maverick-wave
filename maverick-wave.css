@@ -471,32 +471,32 @@ th {
 
 .mw-alert-primary {
   background: var(--mw-primary-alert-background);
-  border-left: 6px solid var(--mw-primary-color);
+  border-left: 8px solid var(--mw-primary-color);
 }
 
 .mw-alert-secondary {
   background: var(--mw-secondary-alert-background);
-  border-left: 6px solid var(--mw-secondary-color);
+  border-left: 8px solid var(--mw-secondary-color);
 }
 
 .mw-alert-info {
   background: var(--mw-info-alert-background);
-  border-left: 6px solid var(--mw-info-color);
+  border-left: 8px solid var(--mw-info-color);
 }
 
 .mw-alert-success {
   background: var(--mw-success-alert-background);
-  border-left: 6px solid var(--mw-success-color);
+  border-left: 8px solid var(--mw-success-color);
 }
 
 .mw-alert-warning {
   background: var(--mw-warning-alert-background);
-  border-left: 6px solid var(--mw-warning-color);
+  border-left: 8px solid var(--mw-warning-color);
 }
 
 .mw-alert-danger {
   background: var(--mw-danger-alert-background);
-  border-left: 6px solid var(--mw-danger-color);
+  border-left: 8px solid var(--mw-danger-color);
 }
 
 .mw-avatar {
@@ -891,7 +891,7 @@ th {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  margin: 0.2rem;
+  margin: 0;
 }
 .mw-card-simple {
   padding: 1rem;
@@ -971,7 +971,7 @@ th {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 1rem 2rem 1rem 1rem;
+  padding: 1rem 1.5rem 1rem 1rem;
 }
 .mw-card-title {
   margin-bottom: 0.75rem;
