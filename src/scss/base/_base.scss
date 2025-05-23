@@ -11,9 +11,9 @@
       $base-colors,
       'primary-background-hover'
     )};
-  --mw-primary-alert-background: #{map.get(
+  --mw-primary-info-background: #{map.get(
       $base-colors,
-      'primary-alert-background'
+      'primary-info-background'
     )};
   --mw-primary-text-color: #{map.get($base-colors, 'primary-text-color')};
   --mw-secondary-color: #{map.get($base-colors, 'secondary-color')};
@@ -23,34 +23,31 @@
       $base-colors,
       'secondary-background-hover'
     )};
-  --mw-secondary-alert-background: #{map.get(
+  --mw-secondary-info-background: #{map.get(
       $base-colors,
-      'secondary-alert-background'
+      'secondary-info-background'
     )};
   --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
 
   // Status colors
   --mw-success-color: #{map.get($status-colors, 'success-color')};
-  --mw-success-alert-background: #{map.get(
+  --mw-success-info-background: #{map.get(
       $status-colors,
-      'success-alert-background'
+      'success-info-background'
     )};
   --mw-warning-color: #{map.get($status-colors, 'warning-color')};
-  --mw-warning-alert-background: #{map.get(
+  --mw-warning-info-background: #{map.get(
       $status-colors,
-      'warning-alert-background'
+      'warning-info-background'
     )};
   --mw-danger-color: #{map.get($status-colors, 'danger-color')};
-  --mw-danger-alert-background: #{map.get(
+  --mw-danger-info-background: #{map.get(
       $status-colors,
-      'danger-alert-background'
+      'danger-info-background'
     )};
   --mw-info-color: #{map.get($status-colors, 'info-color')};
-  --mw-info-alert-background: #{map.get(
-      $status-colors,
-      'info-alert-background'
-    )};
+  --mw-info-info-background: #{map.get($status-colors, 'info-info-background')};
 
   // Header/navbar colors (they are fixed, but you can change them seperately)
   --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};

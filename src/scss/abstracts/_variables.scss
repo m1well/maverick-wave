@@ -35,9 +35,9 @@ $base-colors: (
       $lightness: -4%,
       $alpha: -0.5
     ),
-  'primary-alert-background': color.adjust(
+  'primary-info-background': color.adjust(
       $primary-color,
-      $lightness: -5%,
+      $lightness: -1%,
       $alpha: -0.3
     ),
   'primary-text-color': $dark-text-color,
@@ -57,9 +57,9 @@ $base-colors: (
       $lightness: -3%,
       $alpha: -0.6
     ),
-  'secondary-alert-background': color.adjust(
+  'secondary-info-background': color.adjust(
       $secondary-color,
-      $lightness: -5%,
+      $lightness: -8%,
       $alpha: -0.3
     ),
   'secondary-text-color': $dark-text-color,
@@ -68,27 +68,27 @@ $base-colors: (
 
 $status-colors: (
   'success-color': $success-color,
-  'success-alert-background': color.adjust(
+  'success-info-background': color.adjust(
       $success-color,
-      $lightness: -5%,
+      $lightness: -8%,
       $alpha: -0.2
     ),
   'warning-color': $warning-color,
-  'warning-alert-background': color.adjust(
+  'warning-info-background': color.adjust(
       $warning-color,
-      $lightness: -5%,
+      $lightness: -8%,
       $alpha: -0.2
     ),
   'danger-color': $danger-color,
-  'danger-alert-background': color.adjust(
+  'danger-info-background': color.adjust(
       $danger-color,
-      $lightness: -5%,
+      $lightness: -8%,
       $alpha: -0.2
     ),
   'info-color': $info-color,
-  'info-alert-background': color.adjust(
+  'info-info-background': color.adjust(
       $info-color,
-      $lightness: -5%,
+      $lightness: -8%,
       $alpha: -0.2
     ),
 );

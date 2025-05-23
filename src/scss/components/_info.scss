@@ -1,0 +1,76 @@
+@use '../abstracts' as *;
+
+$_mw-info-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+.mw-info {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: spacing('2') spacing('4');
+  margin: spacing('1');
+  font-size: font-size('base');
+  font-weight: 500;
+  color: var(--mw-text-color);
+  background: var(--mw-card-background);
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: -1px 6px 9px var(--mw-shadow);
+  }
+
+  // size variants
+  &-sm {
+    padding: spacing('1') spacing('3');
+    font-size: font-size('sm');
+    font-weight: 400;
+  }
+  &-lg {
+    padding: spacing('3') spacing('5');
+    font-size: font-size('lg');
+    font-weight: 500;
+  }
+  &-xl {
+    padding: spacing('4') spacing('6');
+    font-size: font-size('xl');
+    font-weight: 600;
+  }
+
+  // counter variant: big number + small label
+  &-counter {
+    .mw-info-value {
+      font-size: font-size('4xl');
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .mw-info-label {
+      font-size: font-size('sm');
+      font-weight: 500;
+      opacity: 0.8;
+      min-width: 5rem;
+      text-align: center;
+    }
+  }
+}
+
+// generate color modifiers
+@each $name, $col in $_mw-info-colors {
+  .mw-info-#{$name} {
+    background: var(--mw-#{$name}-info-background);
+    border-color: #{$col};
+    border-left: 8px solid #{$col};
+  }
+}
