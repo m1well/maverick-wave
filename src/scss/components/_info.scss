@@ -71,6 +71,6 @@ $_mw-info-colors: (
   .mw-info-#{$name} {
     background: var(--mw-#{$name}-info-background);
     border-color: #{$col};
-    border-left: 8px solid #{$col};
+    border-left: 6px solid #{$col};
   }
 }
