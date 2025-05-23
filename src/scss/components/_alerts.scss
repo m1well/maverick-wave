@@ -72,6 +72,6 @@ $_mw-alert-colors: (
 @each $name, $col in $_mw-alert-colors {
   .mw-alert-#{$name} {
     background: var(--mw-#{$name}-alert-background);
-    border-left: 6px solid #{$col};
+    border-left: 8px solid #{$col};
   }
 }

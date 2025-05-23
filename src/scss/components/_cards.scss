@@ -10,7 +10,7 @@
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  margin: spacing('1');
+  margin: spacing('0');
 
   &-simple {
     padding: spacing('4');
@@ -101,7 +101,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: spacing('4') spacing('6') spacing('4') spacing('4');
+    padding: spacing('4') spacing('5') spacing('4') spacing('4');
   }
 
   &-title {
