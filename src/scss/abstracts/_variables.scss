@@ -27,13 +27,18 @@ $base-colors: (
     ),
   'primary-background': color.adjust(
       $primary-color,
-      $lightness: -10%,
-      $alpha: -0.7
+      $lightness: -8%,
+      $alpha: -0.8
     ),
   'primary-background-hover': color.adjust(
       $primary-color,
       $lightness: -4%,
       $alpha: -0.5
+    ),
+  'primary-alert-background': color.adjust(
+      $primary-color,
+      $lightness: -5%,
+      $alpha: -0.3
     ),
   'primary-text-color': $dark-text-color,
   'secondary-color': $secondary-color,
@@ -44,39 +49,48 @@ $base-colors: (
     ),
   'secondary-background': color.adjust(
       $secondary-color,
-      $lightness: -10%,
-      $alpha: -0.7
+      $lightness: -8%,
+      $alpha: -0.8
     ),
   'secondary-background-hover': color.adjust(
       $secondary-color,
       $lightness: -3%,
       $alpha: -0.6
     ),
-  'muted-color': $dark-text-color,
-  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.8),
+  'secondary-alert-background': color.adjust(
+      $secondary-color,
+      $lightness: -5%,
+      $alpha: -0.3
+    ),
+  'secondary-text-color': $dark-text-color,
+  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.7),
 );
 
 $status-colors: (
   'success-color': $success-color,
-  'success-background': color.adjust(
+  'success-alert-background': color.adjust(
       $success-color,
-      $lightness: -10%,
-      $alpha: -0.7
+      $lightness: -5%,
+      $alpha: -0.2
     ),
   'warning-color': $warning-color,
-  'warning-background': color.adjust(
+  'warning-alert-background': color.adjust(
       $warning-color,
-      $lightness: -10%,
-      $alpha: -0.7
+      $lightness: -5%,
+      $alpha: -0.2
     ),
   'danger-color': $danger-color,
-  'danger-background': color.adjust(
+  'danger-alert-background': color.adjust(
       $danger-color,
-      $lightness: -10%,
-      $alpha: -0.7
+      $lightness: -5%,
+      $alpha: -0.2
     ),
   'info-color': $info-color,
-  'info-background': color.adjust($info-color, $lightness: -10%, $alpha: -0.7),
+  'info-alert-background': color.adjust(
+      $info-color,
+      $lightness: -5%,
+      $alpha: -0.2
+    ),
 );
 
 // Dark theme colors

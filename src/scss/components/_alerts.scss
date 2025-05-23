@@ -16,6 +16,8 @@
 
   &-content {
     flex: 1;
+    color: var(--mw-text-color);
+    opacity: 0.8;
     p {
       margin: spacing('1');
       line-height: 1.3;
@@ -33,7 +35,6 @@
     cursor: pointer;
     font-size: font-size('xl');
     line-height: 1;
-    opacity: 0.8;
     color: var(--mw-text-color);
     transition: var(--mw-transition);
 
@@ -70,8 +71,7 @@ $_mw-alert-colors: (
 
 @each $name, $col in $_mw-alert-colors {
   .mw-alert-#{$name} {
-    background: var(--mw-#{$name}-background);
+    background: var(--mw-#{$name}-alert-background);
     border-left: 6px solid #{$col};
-    color: #{$col};
   }
 }

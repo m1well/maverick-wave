@@ -137,18 +137,26 @@
 
   &-body .mw-card-footer {
     margin-top: auto;
-    padding-top: spacing('4');
+    padding-top: spacing('5');
   }
 
   &-footer {
     display: flex;
-    justify-content: space-between;
+    /* remove or change this: */
+    // justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    gap: spacing('4');
+    gap: spacing('3');
     flex-shrink: 0;
     text-wrap: balance;
 
-    // When the card gets too narrow, stack the footer elements vertically
+    /* push the last element all the way right */
+    > *:last-child {
+      margin-left: auto;
+      text-align: right;
+    }
+
+    // responsive stacking stays the same
     @include media-down('lg') {
       flex-direction: column;
       align-items: flex-start;
