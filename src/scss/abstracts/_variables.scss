@@ -28,7 +28,7 @@ $base-colors: (
   'primary-background': color.adjust(
       $primary-color,
       $lightness: -10%,
-      $alpha: -0.85
+      $alpha: -0.7
     ),
   'primary-background-hover': color.adjust(
       $primary-color,
@@ -45,7 +45,7 @@ $base-colors: (
   'secondary-background': color.adjust(
       $secondary-color,
       $lightness: -10%,
-      $alpha: -0.85
+      $alpha: -0.7
     ),
   'secondary-background-hover': color.adjust(
       $secondary-color,
@@ -61,22 +61,22 @@ $status-colors: (
   'success-background': color.adjust(
       $success-color,
       $lightness: -10%,
-      $alpha: -0.85
+      $alpha: -0.7
     ),
   'warning-color': $warning-color,
   'warning-background': color.adjust(
       $warning-color,
       $lightness: -10%,
-      $alpha: -0.85
+      $alpha: -0.7
     ),
   'danger-color': $danger-color,
   'danger-background': color.adjust(
       $danger-color,
       $lightness: -10%,
-      $alpha: -0.85
+      $alpha: -0.7
     ),
   'info-color': $info-color,
-  'info-background': color.adjust($info-color, $lightness: -10%, $alpha: -0.85),
+  'info-background': color.adjust($info-color, $lightness: -10%, $alpha: -0.7),
 );
 
 // Dark theme colors

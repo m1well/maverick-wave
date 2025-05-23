@@ -2,7 +2,7 @@
 @use '../abstracts' as *;
 
 .mw-alert {
-  padding: spacing('4');
+  padding: spacing('2') spacing('4') spacing('2') spacing('3');
   border-radius: radius('md');
   margin: spacing('1');
   display: flex;
@@ -10,21 +10,21 @@
 
   &-icon {
     margin-right: spacing('3');
-    font-size: font-size('xl');
-    line-height: 1;
+    font-size: font-size('lg');
+    line-height: 1.5;
   }
 
   &-content {
     flex: 1;
-
-    h4 {
-      margin-top: spacing('0');
-      margin-bottom: spacing('2');
-      font-weight: 600;
-    }
     p {
-      margin: spacing('0');
+      margin: spacing('1');
+      line-height: 1.3;
     }
+  }
+
+  &-title {
+    font-size: font-size('md');
+    font-weight: 700;
   }
 
   &-close {
@@ -33,7 +33,8 @@
     cursor: pointer;
     font-size: font-size('xl');
     line-height: 1;
-    opacity: 0.7;
+    opacity: 0.8;
+    color: var(--mw-text-color);
     transition: var(--mw-transition);
 
     &:hover {
@@ -47,17 +48,13 @@
 
   @include media-down('sm') {
     &-content {
-      flex: 1;
-
-      h4 {
-        font-size: font-size('md');
-        margin-bottom: spacing('1');
-        font-weight: 500;
-      }
-
       p {
         font-size: font-size('sm');
       }
+    }
+    &-title {
+      font-size: font-size('base');
+      font-weight: 600;
     }
   }
 }
@@ -74,7 +71,7 @@ $_mw-alert-colors: (
 @each $name, $col in $_mw-alert-colors {
   .mw-alert-#{$name} {
     background: var(--mw-#{$name}-background);
-    border-left: 4px solid #{$col};
+    border-left: 6px solid #{$col};
     color: #{$col};
   }
 }
