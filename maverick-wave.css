@@ -1712,7 +1712,8 @@ pre code {
 .mw-list-link {
   list-style: none;
 }
-.mw-list-link button {
+.mw-list-link a {
+  cursor: pointer;
   font-size: inherit;
   font-weight: 500;
   background: transparent;
@@ -1720,7 +1721,7 @@ pre code {
   padding: 0;
   color: var(--mw-text-muted-color);
 }
-.mw-list-link button:hover:not(:disabled) {
+.mw-list-link a:hover:not(:disabled) {
   color: var(--mw-primary-color);
   text-decoration: underline;
 }
