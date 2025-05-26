@@ -46,16 +46,16 @@
   list-style: none;
 
   button {
-   font-size: inherit;
-   font-weight: 500;
-   background: transparent;
-  border: none;
-  padding: 0;
-  color: var(--mw-text-muted-color);
-  &:hover:not(:disabled) {
-    color: var(--mw-primary-color);
-    text-decoration: underline;
-  }
+    font-size: inherit;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--mw-text-muted-color);
+    &:hover:not(:disabled) {
+      color: var(--mw-primary-color);
+      text-decoration: underline;
+    }
   }
 }
 
