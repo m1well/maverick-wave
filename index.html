@@ -156,7 +156,6 @@
           <a href="#typography" class="mw-btn mw-btn-primary">Typography</a>
           <a href="#colors" class="mw-btn mw-btn-primary">Main Colors</a>
           <a href="#utilities" class="mw-btn mw-btn-primary">Utilities</a>
-          <a href="#login" class="mw-btn mw-btn-primary">Login</a>
           <a href="#header-utilities" class="mw-btn mw-btn-primary"
             >Header Utilities</a
           >
@@ -180,11 +179,6 @@
           @@include('./src/partials/utilities-container.html')
         </div>
 
-        <!-- Login container -->
-        <div id="login" class="mw-container">
-          @@include('./src/partials/login-container.html')
-        </div>
-
         <!-- Header Utilities container -->
         <div id="header-utilities" class="mw-container">
           @@include('./src/partials/header-utilities-container.html')
@@ -196,9 +190,9 @@
         </div>
       </section>
 
-      <!-- Layout & navigation section -->
-      <section id="layout-navigation">
-        <h2 class="mw-section-title">Layout & Navigation</h2>
+      <!-- Layout section -->
+      <section id="layout">
+        <h2 class="mw-section-title">Layout</h2>
         <div class="mw-section-nav">
           <a href="#grid" class="mw-btn mw-btn-primary">Grid System</a>
           <a href="#cards" class="mw-btn mw-btn-primary">Cards</a>
@@ -300,6 +294,33 @@
         </div>
       </section>
 
+      <!-- Components section -->
+      <section id="form-elements">
+        <h2 class="mw-section-title">Form & Elements</h2>
+        <div class="mw-section-nav">
+          <a href="#form-elements" class="mw-btn mw-btn-primary"
+            >Form Elements</a
+          >
+          <a href="#form" class="mw-btn mw-btn-primary">Form</a>
+          <a href="#login" class="mw-btn mw-btn-primary">Login</a>
+        </div>
+
+        <!-- Form elements container -->
+        <div id="form-elements" class="mw-container">
+          @@include('./src/partials/form-elements-container.html')
+        </div>
+
+        <!-- Form container -->
+        <div id="form" class="mw-container">
+          @@include('./src/partials/form-container.html')
+        </div>
+
+        <!-- Login container -->
+        <div id="login" class="mw-container">
+          @@include('./src/partials/login-container.html')
+        </div>
+      </section>
+
       <!-- Data & display section -->
       <section id="data-display">
         <h2 class="mw-section-title">Data & Display</h2>
@@ -343,7 +364,7 @@
       document.addEventListener('DOMContentLoaded', () => {
         const loginCard = document.querySelector('.mw-login');
         const form = document.querySelector('.mw-login-form');
-        const btn = form.querySelector('a[type="submit"]');
+        const btn = form.querySelector('.mw-btn-primary');
 
         btn.addEventListener('click', (e) => {
           e.preventDefault();

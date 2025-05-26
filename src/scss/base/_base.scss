@@ -30,6 +30,13 @@
   --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
 
+  // form
+  --mw-form-elements-background: #{map.get(
+      $base-colors,
+      'form-elements-background'
+    )};
+  --mw-form-elements-color: #{map.get($base-colors, 'form-elements-color')};
+
   // Status colors
   --mw-success-color: #{map.get($status-colors, 'success-color')};
   --mw-success-info-background: #{map.get(

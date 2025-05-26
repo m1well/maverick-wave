@@ -38,7 +38,7 @@ $_mw-card-addon-colors: (
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-primary-text-color);
-    background-color: var(--mw-primary-color);
+    background: var(--mw-primary-color);
     border-radius: radius('md');
     white-space: nowrap;
     z-index: 10;
@@ -55,7 +55,7 @@ $_mw-card-addon-colors: (
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-primary-text-color);
-    background-color: var(--mw-primary-color);
+    background: var(--mw-primary-color);
     border-radius: radius('xs');
     white-space: nowrap;
     width: 220px;
@@ -253,7 +253,7 @@ $_mw-card-addon-colors: (
         transform: translateX(-50%);
         width: 90%;
         height: 2px;
-        background-color: var(--mw-secondary-color);
+        background: var(--mw-secondary-color);
         opacity: 0.6;
       }
     }
@@ -285,6 +285,6 @@ $_mw-card-addon-colors: (
 
 @each $name, $col in $_mw-card-addon-colors {
   .mw-card-addon-#{$name} {
-    background-color: #{$col};
+    background: #{$col};
   }
 }

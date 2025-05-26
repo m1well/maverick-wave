@@ -26,7 +26,7 @@
     position: relative;
     flex-shrink: 0;
 
-    a {
+    button {
       display: inline-block;
       text-decoration: none;
     }
@@ -66,6 +66,7 @@
     margin: spacing('0');
     padding: spacing('0');
     gap: spacing('6');
+    align-items: center;
 
     @include media-down('xl') {
       gap: spacing('3');
@@ -80,7 +81,7 @@
 
   &-item {
     position: relative;
-    margin-left: spacing('5');
+    padding-left: spacing('4');
 
     @include media-down('md') {
       width: 100%;
@@ -91,6 +92,7 @@
   &-link {
     position: relative;
     font-weight: 500;
+    font-size: inherit;
     transition: var(--mw-transition);
     color: var(--mw-header-navbar-list-color);
 

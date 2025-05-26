@@ -41,7 +41,7 @@
       li {
         margin-bottom: spacing('2');
 
-        a {
+        button {
           color: var(--mw-text-muted-color);
           transition: var(--mw-transition);
 
@@ -59,7 +59,7 @@
     gap: spacing('8');
     margin: spacing('2') auto spacing('5') auto;
 
-    a {
+    button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -111,7 +111,7 @@
   @include media-down('md') {
     .mw-social-links {
       gap: spacing('6');
-      a {
+      button {
         width: 40px;
         height: 40px;
         font-size: font-size('md');
@@ -133,7 +133,7 @@
 
     .mw-social-links {
       gap: spacing('4');
-      a {
+      button {
         width: 34px;
         height: 34px;
         font-size: font-size('md');

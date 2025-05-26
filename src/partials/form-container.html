@@ -1,0 +1,118 @@
+<h3 class="mw-section-subtitle">Form</h3>
+
+<div class="mw-card mw-card-simple">
+  <h3 class="mw-card-title">Example User Profile Form</h3>
+  <div class="mw-form">
+    <!-- two‐column grid for basic fields -->
+    <div class="mw-form-group">
+      <div class="mw-grid-2 mw-gap-4">
+        <label for="firstName">
+          <span>First Name</span>
+          <input
+            id="firstName"
+            type="text"
+            class="mw-input"
+            placeholder="Jane"
+          />
+        </label>
+        <label for="lastName">
+          <span>Last Name</span>
+          <input id="lastName" type="text" class="mw-input" placeholder="Doe" />
+        </label>
+
+        <label for="email">
+          <span>Email Address</span>
+          <input
+            id="email"
+            type="email"
+            class="mw-input"
+            placeholder="jane.doe@example.com"
+          />
+        </label>
+
+        <label for="country">
+          <span>Country</span>
+          <select id="country" class="mw-select">
+            <option value="" disabled selected>Select country</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>Germany</option>
+            <option>Australia</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <!-- gender radio group -->
+    <div class="mw-grid-2">
+      <div class="mw-form-group">
+        <p class="mw-text-muted mw-mb-2">Gender</p>
+        <div class="mw-radio-group mw-radio-group-inline">
+          <label class="mw-radio">
+            <input type="radio" name="gender" value="female" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Female</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="gender" value="male" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Male</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="gender" value="other" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Other</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- interests checkbox group -->
+      <div class="mw-form-group">
+        <p class="mw-text-muted mw-mb-2">Interests</p>
+        <div class="mw-checkbox-group mw-checkbox-group-inline">
+          <label class="mw-checkbox">
+            <input type="checkbox" name="interests" value="coding" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Coding</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" name="interests" value="music" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Music</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" name="interests" value="sports" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Sports</div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- age slider -->
+    <div class="mw-form-group">
+      <label>
+        <span>Volume Level</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-percent" data-value="30"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-info"
+            min="1"
+            max="100"
+            value="30"
+          />
+        </div>
+      </label>
+    </div>
+
+    <div class="mw-form-actions">
+      <p class="mw-form-actions-hint">
+        This hint and these actions buttons could also be centered, start on the
+        left or full width.
+      </p>
+      <button type="reset" class="mw-btn mw-btn-outline">Reset</button>
+      <button type="submit" class="mw-btn mw-btn-primary">Submit</button>
+    </div>
+  </div>
+</div>

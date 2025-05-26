@@ -14,26 +14,33 @@
       />
     </div>
     <p class="mw-login-error-message">Login failed. Please try again.</p>
-    <form class="mw-login-form" action="#" method="POST">
-      <label>
-        <span>Email</span>
-        <input
-          type="email"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-      </label>
-      <label>
-        <span>Password</span>
-        <input
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-      </label>
-      <a type="submit" class="mw-btn mw-btn-primary">Login</a>
-    </form>
+    <div class="mw-form">
+      <div class="mw-grid-1 mw-gap-4">
+        <label for="email">
+          <span>Email</span>
+          <input
+            id="email"
+            type="email"
+            class="mw-input"
+            placeholder="you@example.com"
+            required
+          />
+        </label>
+        <label for="password">
+          <span>Password</span>
+          <input
+            id="password"
+            type="password"
+            class="mw-input"
+            placeholder="••••••••"
+            required
+          />
+        </label>
+      </div>
+
+      <div class="mw-form-actions mw-form-actions-full-width">
+        <button type="submit" class="mw-btn mw-btn-primary">Login</button>
+      </div>
+    </div>
   </div>
 </div>
