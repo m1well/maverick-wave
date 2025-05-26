@@ -14,7 +14,7 @@ $info-color: #17a2b8;
 $gray-color: #565656;
 $dark-background: #0b111a;
 $dark-text-color: #d6dbdf;
-$light-background: #d0d2db;
+$light-background: #d2d1e1;
 $light-text-color: #1a1a1d;
 
 // Base colors that don't change between themes
@@ -63,7 +63,9 @@ $base-colors: (
       $alpha: -0.3
     ),
   'secondary-text-color': $dark-text-color,
-  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.7),
+  'gray-background': color.adjust($gray-color, $lightness: +12%, $alpha: -0.4),
+  'form-elements-background': color.adjust($light-background, $lightness: +15%),
+  'form-elements-color': color.adjust($light-text-color, $lightness: -2%),
 );
 
 $status-colors: (
@@ -97,7 +99,7 @@ $status-colors: (
 $dark-theme-colors: (
   'page-background': $dark-background,
   'hero-overlay-background': color.adjust($dark-background, $alpha: -0.7),
-  'card-background': color.adjust($dark-background, $lightness: +6%),
+  'card-background': color.adjust($dark-background, $lightness: +5%),
   'footer-background': color.adjust($dark-background, $lightness: +3%),
   'border': color.adjust($dark-background, $lightness: +15%),
   'shadow': color.adjust($dark-text-color, $alpha: -0.7),
@@ -109,7 +111,7 @@ $dark-theme-colors: (
 $light-theme-colors: (
   'page-background': $light-background,
   'hero-overlay-background': color.adjust($light-background, $alpha: -0.7),
-  'card-background': color.adjust($light-background, $lightness: +5%),
+  'card-background': color.adjust($light-background, $lightness: +7%),
   'footer-background': color.adjust($light-background, $lightness: -2%),
   'border': color.adjust($light-background, $lightness: -13%),
   'shadow': color.adjust($light-text-color, $alpha: -0.7),

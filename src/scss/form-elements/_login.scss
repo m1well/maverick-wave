@@ -10,7 +10,7 @@
   overflow: hidden;
   width: min(390px, 80vw);
   margin: spacing('2') auto;
-  padding: spacing('7') spacing('6');
+  padding: spacing('6');
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -51,44 +51,7 @@
     }
   }
 
-  &-form {
-    display: flex;
-    flex-direction: column;
-    gap: spacing('4');
-
-    label {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      font-size: font-size('md');
-      color: var(--mw-text-muted-color);
-
-      span {
-        margin-bottom: spacing('1');
-      }
-
-      input {
-        padding: spacing('2') spacing('3');
-        border: 1px solid var(--mw-border);
-        border-radius: radius('sm');
-        font-size: font-size('sm');
-        transition: var(--mw-transition);
-        background-color: white;
-
-        &:focus {
-          outline: none;
-          border-color: var(--mw-primary-color);
-        }
-      }
-
-      @include media-down('sm') {
-        font-size: font-size('sm');
-      }
-    }
-
-    .mw-btn {
-      width: 100%;
-      margin-top: spacing('5');
-    }
+  &.mw-form-actions {
+    width: 100%;
   }
 }

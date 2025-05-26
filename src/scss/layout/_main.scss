@@ -44,7 +44,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background-color: var(--mw-hero-overlay-background);
+        background: var(--mw-hero-overlay-background);
         backdrop-filter: blur(2px);
         z-index: 2;
         pointer-events: none;

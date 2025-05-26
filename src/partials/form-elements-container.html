@@ -1,0 +1,516 @@
+<h3 class="mw-section-subtitle">Form Elements</h3>
+
+<div class="mw-grid-1 mw-gap-4">
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Input with different Sizes</h3>
+    <div class="mw-grid-4 mw-gap-4 mw-mt-4">
+      <!-- Default -->
+      <label for="input-default">
+        <span>Default</span>
+        <input
+          id="input-default"
+          type="text"
+          class="mw-input"
+          placeholder="Default size"
+        />
+      </label>
+      <!-- Small -->
+      <label for="input-sm">
+        <span>Small</span>
+        <input
+          id="input-sm"
+          type="text"
+          class="mw-input mw-input-sm"
+          placeholder="Small size"
+        />
+      </label>
+      <!-- Large -->
+      <label for="input-lg">
+        <span>Large</span>
+        <input
+          id="input-lg"
+          type="text"
+          class="mw-input mw-input-lg"
+          placeholder="Large size"
+        />
+      </label>
+      <!-- X-Large -->
+      <label for="input-xl">
+        <span>Extra Large</span>
+        <input
+          id="input-xl"
+          type="text"
+          class="mw-input mw-input-xl mw-form-element"
+          placeholder="XL size"
+        />
+      </label>
+      <!-- Disabled -->
+      <label for="input-default">
+        <span>Disabled</span>
+        <input
+          disabled
+          id="input-default"
+          type="text"
+          class="mw-input"
+          placeholder="Default size"
+        />
+      </label>
+      <!-- Error -->
+      <label for="input-default">
+        <span>Error</span>
+        <input
+          id="input-default"
+          type="text"
+          class="mw-input mw-form-element-error"
+          placeholder="Default size"
+        />
+      </label>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Select with Different Sizes</h3>
+    <div class="mw-grid-4 mw-gap-4 mw-mt-4">
+      <!-- Default -->
+      <label for="select-default">
+        <span>Default</span>
+        <select id="select-default" class="mw-select">
+          <option value="" disabled selected>Select an option</option>
+          <option>Option One</option>
+          <option>Option Two</option>
+          <option>Option Three</option>
+        </select>
+      </label>
+      <!-- Small -->
+      <label for="select-sm">
+        <span>Small</span>
+        <select id="select-sm" class="mw-select mw-select-sm">
+          <option value="" disabled selected>Small select</option>
+          <option>One</option>
+          <option>Two</option>
+        </select>
+      </label>
+      <!-- Large -->
+      <label for="select-lg">
+        <span>Large</span>
+        <select id="select-lg" class="mw-select mw-select-lg">
+          <option value="" disabled selected>Large select</option>
+          <option>Alpha</option>
+          <option>Beta</option>
+          <option>Gamma</option>
+        </select>
+      </label>
+      <!-- X-Large -->
+      <label for="select-xl">
+        <span>Extra Large</span>
+        <select id="select-xl" class="mw-select mw-select-xl">
+          <option value="" disabled selected>XL select</option>
+          <option>Red</option>
+          <option>Green</option>
+          <option>Blue</option>
+        </select>
+      </label>
+      <!-- Disabled -->
+      <label for="select-default">
+        <span>Disabled</span>
+        <select id="select-default" disabled class="mw-select">
+          <option value="" disabled selected>Select an option</option>
+          <option>Option One</option>
+          <option>Option Two</option>
+          <option>Option Three</option>
+        </select>
+      </label>
+      <!-- Disabled -->
+      <label for="select-default">
+        <span>Error</span>
+        <select id="select-default" class="mw-select mw-form-element-error">
+          <option value="" disabled selected>Select an option</option>
+          <option>Option One</option>
+          <option>Option Two</option>
+          <option>Option Three</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Checkboxes</h3>
+    <div class="mw-grid-4 mw-gap-4 mw-mt-4">
+      <!-- Default vertical -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Default</h5>
+        <div class="mw-checkbox-group">
+          <label class="mw-checkbox">
+            <input type="checkbox" name="cb1" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Option A</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" name="cb1" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Option B</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Inline small -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Small & Inline</h5>
+        <div class="mw-checkbox-group mw-checkbox-group-inline">
+          <label class="mw-checkbox mw-checkbox-sm">
+            <input type="checkbox" name="cb2" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Agree</div>
+          </label>
+          <label class="mw-checkbox mw-checkbox-sm">
+            <input type="checkbox" name="cb2" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Subscribe</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Large & colored -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Large &amp; Colored</h5>
+        <div class="mw-checkbox-group mw-checkbox-group">
+          <label class="mw-checkbox mw-checkbox-lg mw-checkbox-success">
+            <input type="checkbox" name="cb3" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Success</div>
+          </label>
+          <label class="mw-checkbox mw-checkbox-lg mw-checkbox-danger">
+            <input type="checkbox" name="cb3" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Danger</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- XL Disabled -->
+      <div>
+        <h5 class="mw-mb-2">XL Disabled</h5>
+        <div class="mw-checkbox-group mw-checkbox-group">
+          <label class="mw-checkbox mw-checkbox-xl mw-checkbox-disabled">
+            <input type="checkbox" name="cb4" disabled />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Unavailable</div>
+          </label>
+          <label class="mw-checkbox mw-checkbox-xl">
+            <input type="checkbox" name="cb4" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Available</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Error</h5>
+        <div class="mw-checkbox-group mw-form-element-error">
+          <label class="mw-checkbox">
+            <input type="checkbox" name="cb1" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Option A</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" name="cb1" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Option B</div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Radio Buttons with different sizes and colors</h3>
+
+    <div class="mw-grid-4 mw-gap-4 mw-mt-4">
+      <!-- Default (vertical) -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Default</h5>
+        <div class="mw-radio-group">
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option A</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option B</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option C</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Small Inline -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Small & Inline</h5>
+        <div class="mw-radio-group mw-radio-group-inline">
+          <label class="mw-radio mw-radio-sm">
+            <input type="radio" name="opt2" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Yes</div>
+          </label>
+          <label class="mw-radio mw-radio-sm">
+            <input type="radio" name="opt2" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">No</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Large & Colored -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Large &amp; Colored</h5>
+        <div class="mw-radio-group mw-radio-group">
+          <label class="mw-radio mw-radio-lg mw-radio-success">
+            <input type="radio" name="opt3" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Success</div>
+          </label>
+          <label class="mw-radio mw-radio-lg mw-radio-danger">
+            <input type="radio" name="opt3" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Danger</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- XL & Disabled -->
+      <div>
+        <h5 class="mw-mb-2">XL Disabled</h5>
+        <div class="mw-radio-group mw-radio-group">
+          <label class="mw-radio mw-radio-xl mw-radio-disabled">
+            <input type="radio" name="opt4" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Unavailable</div>
+          </label>
+          <label class="mw-radio mw-radio-xl">
+            <input type="radio" name="opt4" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Available</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Error -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Error</h5>
+        <div class="mw-radio-group mw-form-element-error">
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option A</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option B</div>
+          </label>
+          <label class="mw-radio">
+            <input type="radio" name="opt1" />
+            <div class="mw-radio-button"></div>
+            <div class="mw-radio-label">Option C</div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Ultimate Sliders</h3>
+    <!-- First row: default & disabled -->
+    <div class="mw-grid-2 mw-gap-4 mw-mb-4">
+      <label>
+        <span>Volume Control</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-numeric" data-value="3"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-primary"
+            min="0"
+            max="10"
+            value="3"
+          />
+        </div>
+      </label>
+      <label>
+        <span>Muted (Disabled)</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-percent" data-value="30"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-primary"
+            min="0"
+            max="100"
+            value="30"
+            disabled
+          />
+        </div>
+      </label>
+
+      <!-- Second row: small info & large success -->
+      <label>
+        <span>Screen Brightness</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-percent" data-value="50"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-info mw-slider-sm"
+            min="0"
+            max="100"
+            value="50"
+          />
+        </div>
+      </label>
+      <label>
+        <span>Upload Progress</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-percent" data-value="70"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-success mw-slider-lg"
+            min="0"
+            max="100"
+            value="70"
+          />
+        </div>
+      </label>
+
+      <!-- Third row: error -->
+      <label>
+        <span>Error</span>
+        <div class="mw-slider-container mw-form-element-error">
+          <div class="mw-slider-value mw-slider-percent" data-value="50"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-info mw-slider-sm"
+            min="0"
+            max="100"
+            value="50"
+          />
+        </div>
+      </label>
+    </div>
+
+    <!-- Single: extra large danger -->
+    <div class="mw-mb-4">
+      <label>
+        <span>Temperature Threshold</span>
+        <div class="mw-slider-container">
+          <div class="mw-slider-value mw-slider-percent" data-value="40"></div>
+          <input
+            type="range"
+            class="mw-slider mw-slider-danger mw-slider-xl"
+            min="0"
+            max="100"
+            value="40"
+          />
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Textarea with Different Sizes</h3>
+    <div class="mw-grid-4 mw-gap-4 mw-mt-4">
+      <!-- Default -->
+      <label for="textarea-default">
+        <span>Default</span>
+        <textarea
+          id="textarea-default"
+          class="mw-textarea"
+          rows="8"
+          placeholder="Default size... (8 rows)"
+        ></textarea>
+      </label>
+
+      <!-- Small -->
+      <label for="textarea-sm">
+        <span>Small</span>
+        <textarea
+          id="textarea-sm"
+          rows="5"
+          class="mw-textarea mw-textarea-sm"
+          placeholder="Small size... (5 rows)"
+        ></textarea>
+      </label>
+
+      <!-- Large -->
+      <label for="textarea-lg">
+        <span>Large</span>
+        <textarea
+          id="textarea-lg"
+          rows="5"
+          class="mw-textarea mw-textarea-lg"
+          placeholder="Large size... (5 rows)"
+        ></textarea>
+      </label>
+
+      <!-- X-Large -->
+      <label for="textarea-xl">
+        <span>Extra Large</span>
+        <textarea
+          id="textarea-xl"
+          rows="5"
+          class="mw-textarea mw-textarea-xl"
+          placeholder="XL size... (5 rows)"
+        ></textarea>
+      </label>
+
+      <!-- Error -->
+      <label for="textarea-error">
+        <span>Error</span>
+        <textarea
+          id="textarea-error"
+          rows="3"
+          class="mw-textarea mw-form-element-error"
+          placeholder="This element has an error... (3 rows)"
+        ></textarea>
+      </label>
+
+      <!-- Disabled -->
+      <label for="textarea-default">
+        <span>Disabled</span>
+        <textarea
+          id="textarea-default"
+          class="mw-textarea mw-textarea-resizable-vertical"
+          rows="5"
+          disabled
+          placeholder="Default size... (5 rows)"
+        ></textarea>
+      </label>
+
+      <!-- Resizable vertical -->
+      <label for="textarea-default">
+        <span>Resizable vertical</span>
+        <textarea
+          id="textarea-default"
+          class="mw-textarea mw-textarea-resizable-vertical"
+          rows="5"
+          placeholder="Default size... (5 rows)"
+        ></textarea>
+      </label>
+    </div>
+    <div class="mw-grid-1 mw-gap-4 mw-mt-4">
+      <!-- Resizable horizontal -->
+      <label for="textarea-default">
+        <span>Resizable horizontal</span>
+        <textarea
+          id="textarea-default"
+          class="mw-textarea mw-textarea-resizable-horizontal"
+          rows="5"
+          placeholder="Default size... (5 rows)"
+        ></textarea>
+      </label>
+    </div>
+  </div>
+</div>

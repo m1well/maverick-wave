@@ -15,6 +15,7 @@
     initTabs();
     initAlerts();
     initLocalhostIndicator();
+    initFormSliders();
   });
 
   // ===== Gallery Component =====
@@ -378,5 +379,35 @@
         header.prepend(indicator);
       }
     }
+  }
+
+  function initFormSliders() {
+    document.querySelectorAll('.mw-slider-container').forEach((wrapper) => {
+      const slider = wrapper.querySelector('.mw-slider');
+      const badge = wrapper.querySelector('.mw-slider-value');
+      if (!slider || !badge) return;
+
+      const update = () => {
+        const val = Number(slider.value);
+        const max = Number(slider.max) || 100;
+        const pct = Math.round((val / max) * 100);
+
+        // update track‐fill
+        slider.style.setProperty('--value', pct + '%');
+
+        // decide what to show in the badge
+        if (badge.classList.contains('mw-slider-numeric')) {
+          // raw number
+          badge.setAttribute('data-value', val);
+        } else {
+          // percentage
+          badge.setAttribute('data-value', pct);
+        }
+      };
+
+      slider.addEventListener('input', update);
+
+      update();
+    });
   }
 })();

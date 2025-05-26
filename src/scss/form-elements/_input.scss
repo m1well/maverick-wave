@@ -1,0 +1,37 @@
+@use '../abstracts' as *;
+
+.mw-input {
+  width: 100%;
+  padding: spacing('2') spacing('3');
+  font-size: font-size('sm');
+  background: var(--mw-form-elements-background);
+  color: var(--mw-form-elements-color);
+  border: 2px solid var(--mw-border);
+  border-radius: radius('sm');
+  transition: var(--mw-transition);
+
+  &:focus {
+    outline: none;
+    border: 3px solid var(--mw-primary-color);
+  }
+
+  &-sm {
+    padding: spacing('1') spacing('2');
+    font-size: font-size('xs');
+  }
+  &-lg {
+    padding: spacing('3') spacing('4');
+    font-size: font-size('base');
+  }
+  &-xl {
+    padding: spacing('4') spacing('5');
+    font-size: font-size('md');
+  }
+
+  // disabled state
+  &:disabled {
+    background: var(--mw-gray-background);
+    color: var(--mw-text-muted-color);
+    cursor: not-allowed;
+  }
+}

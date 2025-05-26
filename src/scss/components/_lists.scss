@@ -45,16 +45,17 @@
 .mw-list-link {
   list-style: none;
 
-  a {
-    background: transparent;
-    color: var(--mw-text-muted-color);
-    padding: spacing('0');
-
-    &:hover {
-      color: var(--mw-primary-color);
-      text-decoration: underline;
-      cursor: pointer;
-    }
+  button {
+   font-size: inherit;
+   font-weight: 500;
+   background: transparent;
+  border: none;
+  padding: 0;
+  color: var(--mw-text-muted-color);
+  &:hover:not(:disabled) {
+    color: var(--mw-primary-color);
+    text-decoration: underline;
+  }
   }
 }
 

@@ -1,0 +1,169 @@
+// _slider.scss
+@use '../abstracts' as *;
+
+// color map
+$_mw-slider-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  info: var(--mw-info-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+.mw-slider {
+  --value: 0%;
+  --fill: var(--mw-primary-color);
+  --track: var(--mw-gray-background);
+
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(
+    to right,
+    var(--fill) 0,
+    var(--fill) var(--value),
+    var(--track) var(--value),
+    var(--track) 100%
+  );
+  border-radius: radius('sm');
+  appearance: none;
+  cursor: pointer;
+  margin-top: 0.35rem;
+
+  // thumb
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: spacing('5');
+    height: spacing('5');
+    background: var(--fill);
+    border: 2px solid var(--mw-border);
+    border-radius: 50%;
+    margin-top: spacing('0');
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+  &::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+  }
+
+  &::-moz-range-thumb {
+    width: spacing('5');
+    height: spacing('5');
+    border: 2px solid var(--fill);
+    border-radius: 50%;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+  &::-moz-range-thumb:hover {
+    transform: scale(1.1);
+  }
+
+  // track styling for Firefox
+  &::-moz-range-track {
+    background: transparent;
+  }
+
+  // IE
+  &::-ms-fill-lower {
+    background: var(--fill);
+  }
+  &::-ms-fill-upper {
+    background: var(--track);
+  }
+  &::-ms-thumb {
+    width: spacing('5');
+    height: spacing('5');
+    border: 2px solid var(--fill);
+    border-radius: 50%;
+  }
+
+  // sizes
+  &-sm {
+    height: 6px;
+    &::-webkit-slider-thumb {
+      width: spacing('4');
+      height: spacing('4');
+    }
+    &::-moz-range-thumb {
+      width: spacing('4');
+      height: spacing('4');
+    }
+    &::-ms-thumb {
+      width: spacing('4');
+      height: spacing('4');
+    }
+  }
+  &-lg {
+    height: 16px;
+    margin-top: 0.35rem;
+    &::-webkit-slider-thumb {
+      width: spacing('6');
+      height: spacing('6');
+    }
+    &::-moz-range-thumb {
+      width: spacing('6');
+      height: spacing('6');
+    }
+    &::-ms-thumb {
+      width: spacing('6');
+      height: spacing('6');
+    }
+  }
+  &-xl {
+    height: 22px;
+    margin-top: 0.45rem;
+    &::-webkit-slider-thumb {
+      width: spacing('7');
+      height: spacing('7');
+    }
+    &::-moz-range-thumb {
+      width: spacing('7');
+      height: spacing('7');
+    }
+    &::-ms-thumb {
+      width: spacing('7');
+      height: spacing('7');
+    }
+  }
+
+  // disabled
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  // color variants
+  @each $name, $col in $_mw-slider-colors {
+    &-#{$name} {
+      --fill: #{$col};
+    }
+  }
+}
+
+.mw-slider-container {
+  position: relative;
+  width: 100%;
+  line-height: 0.9;
+  padding-bottom: 0.4rem;
+
+  // the badge in top-right
+  .mw-slider-value {
+    position: absolute;
+    top: -17px;
+    right: 0;
+    font-size: font-size('sm');
+    color: var(--mw-text-muted-color);
+    pointer-events: none;
+
+    // 1–10 numeric style
+    &.mw-slider-numeric::after {
+      content: attr(data-value) '/10';
+    }
+    // percentage style
+    &.mw-slider-percent::after {
+      content: attr(data-value) '%';
+    }
+  }
+}

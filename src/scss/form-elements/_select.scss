@@ -1,0 +1,54 @@
+@use '../abstracts' as *;
+
+.mw-select {
+  width: 100%;
+  padding: spacing('2') spacing('3');
+  padding-right: spacing('6');
+  font-size: font-size('sm');
+  background: var(--mw-form-elements-background);
+  color: var(--mw-form-elements-color);
+  border: 2px solid var(--mw-border);
+  border-radius: radius('sm');
+  transition: var(--mw-transition);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right spacing('3') center;
+  background-size: spacing('3') spacing('3');
+
+  &:focus {
+    outline: none;
+    border: 3px solid var(--mw-primary-color);
+  }
+
+  // size modifiers
+  &-sm {
+    padding: spacing('1') spacing('2');
+    padding-right: spacing('5');
+    font-size: font-size('xs');
+    background-position: right spacing('2') center;
+    background-size: spacing('2') spacing('2');
+  }
+  &-lg {
+    padding: spacing('3') spacing('4');
+    padding-right: spacing('7');
+    font-size: font-size('base');
+    background-position: right spacing('4') center;
+    background-size: spacing('4') spacing('4');
+  }
+  &-xl {
+    padding: spacing('4') spacing('5');
+    padding-right: spacing('8');
+    font-size: font-size('md');
+    background-position: right spacing('5') center;
+    background-size: spacing('5') spacing('5');
+  }
+
+  // disabled state
+  &:disabled {
+    background: var(--mw-gray-background);
+    color: var(--mw-text-muted-color);
+    cursor: not-allowed;
+  }
+}
