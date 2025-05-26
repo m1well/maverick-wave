@@ -3517,7 +3517,7 @@ pre code {
   gap: 3rem;
   margin: 0.5rem auto 1.5rem auto;
 }
-.mw-footer .mw-social-links button {
+.mw-footer .mw-social-links a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3531,7 +3531,7 @@ pre code {
   border: 1px solid var(--mw-primary-color-hover);
   box-shadow: 0 3px 10px var(--mw-shadow);
 }
-.mw-footer .mw-social-links button:hover {
+.mw-footer .mw-social-links a:hover {
   background: var(--mw-primary-color);
   color: var(--mw-primary-text-color);
   transform: translateY(-3px);
