@@ -45,7 +45,8 @@
 .mw-list-link {
   list-style: none;
 
-  button {
+  a {
+    cursor: pointer;
     font-size: inherit;
     font-weight: 500;
     background: transparent;
