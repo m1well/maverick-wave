@@ -41,12 +41,37 @@
       li {
         margin-bottom: spacing('2');
 
-        button {
+        a {
+          display: inline-block;
+          position: relative;
           color: var(--mw-text-muted-color);
-          transition: var(--mw-transition);
+          text-decoration: none;
+          padding-bottom: 2px;
+
+          // subtle default underline via box‐shadow
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 1px;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            opacity: 0.4;
+            transform: scaleX(1);
+            transform-origin: left;
+            transition:
+              transform 0.2s ease,
+              opacity 0.2s ease;
+          }
 
           &:hover {
             color: var(--mw-primary-color);
+            &::after {
+              opacity: 1;
+              height: 2px;
+              transform: scaleX(1.1);
+            }
           }
         }
       }
