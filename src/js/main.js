@@ -285,13 +285,19 @@
             pageYOffset >= sectionTop &&
             pageYOffset < sectionTop + sectionHeight
           ) {
-            current = section.getAttribute('id');
+            current = section
+              .getAttribute('id')
+              .replace('#', '')
+              .replace('/', '');
           }
         });
 
         navLinks.forEach((link) => {
           link.classList.remove('active');
-          if (link.getAttribute('href') === `#${current}`) {
+          if (
+            link.getAttribute('href').replace('#', '').replace('/', '') === current
+          ) {
+            console.log('NOW')
             link.classList.add('active');
           }
         });
