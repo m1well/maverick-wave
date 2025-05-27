@@ -17,18 +17,10 @@
     width: 90%;
   }
 
-  // when it contains a full-width child
-  @supports (selector(:has(> .mw-container-full))) {
-    &:has(> .mw-container-full) {
-      width: 100%;
-      margin: spacing('0');
-      padding: spacing('0');
-    }
-  }
-
   // add a hero part for a full size background picture
-  @supports (selector(:has(> .mw-hero))) {
-    &:has(> .mw-hero) {
+  @supports (selector(:has(.mw-hero))) {
+    // if it has *any* descendant .mw-hero
+    &:has(.mw-hero) {
       position: relative;
       width: 100%;
       min-height: 100vh;
