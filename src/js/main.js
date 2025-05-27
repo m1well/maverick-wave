@@ -295,9 +295,10 @@
         navLinks.forEach((link) => {
           link.classList.remove('active');
           if (
-            link.getAttribute('href').replace('#', '').replace('/', '') === current
+            link.getAttribute('href').replace('#', '').replace('/', '') ===
+            current
           ) {
-            console.log('NOW')
+            console.log('NOW');
             link.classList.add('active');
           }
         });

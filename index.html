@@ -127,230 +127,224 @@
 
     <main class="mw-main">
       <!-- Home section -->
-      <section id="home">
-        <div class="mw-container">
+      <div class="mw-container">
+        <section id="home">
           @@include('./src/partials/home-container.html')
-        </div>
-      </section>
+        </section>
+      </div>
 
       <!-- Get started section -->
-      <section id="get-started">
-        <h2 class="mw-section-title">Get started</h2>
-        <div class="mw-container">
+      <div class="mw-container">
+        <section id="get-started">
+          <h2 class="mw-section-title">Get started</h2>
           @@include('./src/partials/get-started-container.html')
-        </div>
-      </section>
+        </section>
+      </div>
 
       <!-- Documentation section -->
-      <section id="documentation">
-        <h2 class="mw-section-title">Documentation</h2>
-        <div class="mw-container">
+      <div class="mw-container">
+        <section id="documentation">
+          <h2 class="mw-section-title">Documentation</h2>
           @@include('./src/partials/documentation-container.html')
-        </div>
-      </section>
+        </section>
+      </div>
 
       <!-- Foundations section -->
-      <section id="foundations">
-        <h2 class="mw-section-title">Foundations</h2>
-        <div class="mw-section-nav">
-          <a href="#typography" class="mw-btn mw-btn-primary">Typography</a>
-          <a href="#colors" class="mw-btn mw-btn-primary">Main Colors</a>
-          <a href="#utilities" class="mw-btn mw-btn-primary">Utilities</a>
-          <a href="#header-utilities" class="mw-btn mw-btn-primary"
-            >Header Utilities</a
-          >
-          <a href="#coming-soon" class="mw-btn mw-btn-primary"
-            >Coming Soon Banner</a
-          >
-        </div>
+      <div class="mw-container">
+        <section id="foundations">
+          <h2 class="mw-section-title">Foundations</h2>
+          <div class="mw-section-nav">
+            <a href="#typography" class="mw-btn mw-btn-primary">Typography</a>
+            <a href="#colors" class="mw-btn mw-btn-primary">Main Colors</a>
+            <a href="#utilities" class="mw-btn mw-btn-primary">Utilities</a>
+            <a href="#header-utilities" class="mw-btn mw-btn-primary"
+              >Header Utilities</a
+            >
+            <a href="#coming-soon" class="mw-btn mw-btn-primary"
+              >Coming Soon Banner</a
+            >
+          </div>
 
-        <!-- Typography container -->
-        <div id="typography" class="mw-container">
-          @@include('./src/partials/typography-container.html')
-        </div>
+          <!-- Typography container -->
+          <div id="typography">
+            @@include('./src/partials/typography-container.html')
+          </div>
 
-        <!-- Colors container -->
-        <div id="colors" class="mw-container">
-          @@include('./src/partials/colors-container.html')
-        </div>
+          <!-- Colors container -->
+          <div id="colors">
+            @@include('./src/partials/colors-container.html')
+          </div>
 
-        <!-- Utilities container -->
-        <div id="utilities" class="mw-container">
-          @@include('./src/partials/utilities-container.html')
-        </div>
+          <!-- Utilities container -->
+          <div id="utilities">
+            @@include('./src/partials/utilities-container.html')
+          </div>
 
-        <!-- Header Utilities container -->
-        <div id="header-utilities" class="mw-container">
-          @@include('./src/partials/header-utilities-container.html')
-        </div>
+          <!-- Header Utilities container -->
+          <div id="header-utilities">
+            @@include('./src/partials/header-utilities-container.html')
+          </div>
 
-        <!-- Coming Soon container -->
-        <div id="coming-soon" class="mw-container">
-          @@include('./src/partials/coming-soon-container.html')
-        </div>
-      </section>
+          <!-- Coming Soon container -->
+          <div id="coming-soon">
+            @@include('./src/partials/coming-soon-container.html')
+          </div>
+        </section>
+      </div>
 
       <!-- Layout section -->
-      <section id="layout">
-        <h2 class="mw-section-title">Layout</h2>
-        <div class="mw-section-nav">
-          <a href="#grid" class="mw-btn mw-btn-primary">Grid System</a>
-          <a href="#cards" class="mw-btn mw-btn-primary">Cards</a>
-          <a href="#panels" class="mw-btn mw-btn-primary">Panels</a>
-          <a href="#tabs" class="mw-btn mw-btn-primary">Tabs</a>
-          <a href="#accordions" class="mw-btn mw-btn-primary">Accordions</a>
-          <a href="#lists" class="mw-btn mw-btn-primary">Lists</a>
-        </div>
+      <div class="mw-container">
+        <section id="layout">
+          <h2 class="mw-section-title">Layout</h2>
+          <div class="mw-section-nav">
+            <a href="#grid" class="mw-btn mw-btn-primary">Grid System</a>
+            <a href="#cards" class="mw-btn mw-btn-primary">Cards</a>
+            <a href="#panels" class="mw-btn mw-btn-primary">Panels</a>
+            <a href="#tabs" class="mw-btn mw-btn-primary">Tabs</a>
+            <a href="#accordions" class="mw-btn mw-btn-primary">Accordions</a>
+            <a href="#lists" class="mw-btn mw-btn-primary">Lists</a>
+          </div>
 
-        <!-- Grid container -->
-        <div id="grid" class="mw-container">
-          @@include('./src/partials/grid-container.html')
-        </div>
+          <!-- Grid container -->
+          <div id="grid">@@include('./src/partials/grid-container.html')</div>
 
-        <!-- Cards container -->
-        <div id="cards" class="mw-container">
-          @@include('./src/partials/cards-container.html')
-        </div>
+          <!-- Cards container -->
+          <div id="cards">@@include('./src/partials/cards-container.html')</div>
 
-        <!-- Panels container -->
-        <div id="panels" class="mw-container">
-          @@include('./src/partials/panels-container.html')
-        </div>
+          <!-- Panels container -->
+          <div id="panels">
+            @@include('./src/partials/panels-container.html')
+          </div>
 
-        <!-- Tabs container -->
-        <div id="tabs" class="mw-container">
-          @@include('./src/partials/tabs-container.html')
-        </div>
+          <!-- Tabs container -->
+          <div id="tabs">@@include('./src/partials/tabs-container.html')</div>
 
-        <!-- Accordions contaier -->
-        <div id="accordions" class="mw-container">
-          @@include('./src/partials/accordions-container.html')
-        </div>
+          <!-- Accordions contaier -->
+          <div id="accordions">
+            @@include('./src/partials/accordions-container.html')
+          </div>
 
-        <!-- Lists container -->
-        <div id="lists" class="mw-container">
-          @@include('./src/partials/lists-container.html')
-        </div>
-      </section>
+          <!-- Lists container -->
+          <div id="lists">@@include('./src/partials/lists-container.html')</div>
+        </section>
+      </div>
 
       <!-- Components section -->
-      <section id="components">
-        <h2 class="mw-section-title">Components</h2>
-        <div class="mw-section-nav">
-          <a href="#buttons" class="mw-btn mw-btn-primary">Buttons</a>
-          <a href="#progress" class="mw-btn mw-btn-primary">Progress Bars</a>
-          <a href="#spinners" class="mw-btn mw-btn-primary">Loading Spinners</a>
-          <a href="#avatars" class="mw-btn mw-btn-primary">Avatars</a>
-          <a href="#tags" class="mw-btn mw-btn-primary">Tags</a>
-          <a href="#ratings" class="mw-btn mw-btn-primary">Ratings</a>
-          <a href="#info" class="mw-btn mw-btn-primary">Info</a>
-          <a href="#alerts" class="mw-btn mw-btn-primary">Alerts</a>
-          <a href="#code" class="mw-btn mw-btn-primary">Code</a>
-        </div>
+      <div class="mw-container">
+        <section id="components">
+          <h2 class="mw-section-title">Components</h2>
+          <div class="mw-section-nav">
+            <a href="#buttons" class="mw-btn mw-btn-primary">Buttons</a>
+            <a href="#progress" class="mw-btn mw-btn-primary">Progress Bars</a>
+            <a href="#spinners" class="mw-btn mw-btn-primary"
+              >Loading Spinners</a
+            >
+            <a href="#avatars" class="mw-btn mw-btn-primary">Avatars</a>
+            <a href="#tags" class="mw-btn mw-btn-primary">Tags</a>
+            <a href="#ratings" class="mw-btn mw-btn-primary">Ratings</a>
+            <a href="#info" class="mw-btn mw-btn-primary">Info</a>
+            <a href="#alerts" class="mw-btn mw-btn-primary">Alerts</a>
+            <a href="#code" class="mw-btn mw-btn-primary">Code</a>
+          </div>
 
-        <!-- Buttons container -->
-        <div id="buttons" class="mw-container">
-          @@include('./src/partials/buttons-container.html')
-        </div>
+          <!-- Buttons container -->
+          <div id="buttons">
+            @@include('./src/partials/buttons-container.html')
+          </div>
 
-        <!-- Progress container -->
-        <div id="progress" class="mw-container">
-          @@include('./src/partials/progress-container.html')
-        </div>
+          <!-- Progress container -->
+          <div id="progress">
+            @@include('./src/partials/progress-container.html')
+          </div>
 
-        <!-- Spinners container -->
-        <div id="spinners" class="mw-container">
-          @@include('./src/partials/spinners-container.html')
-        </div>
+          <!-- Spinners container -->
+          <div id="spinners">
+            @@include('./src/partials/spinners-container.html')
+          </div>
 
-        <!-- Avatars container -->
-        <div id="avatars" class="mw-container">
-          @@include('./src/partials/avatars-container.html')
-        </div>
+          <!-- Avatars container -->
+          <div id="avatars">
+            @@include('./src/partials/avatars-container.html')
+          </div>
 
-        <!-- Tags container -->
-        <div id="tags" class="mw-container">
-          @@include('./src/partials/tags-container.html')
-        </div>
+          <!-- Tags container -->
+          <div id="tags">@@include('./src/partials/tags-container.html')</div>
 
-        <!-- Ratings container -->
-        <div id="ratings" class="mw-container">
-          @@include('./src/partials/ratings-container.html')
-        </div>
+          <!-- Ratings container -->
+          <div id="ratings">
+            @@include('./src/partials/ratings-container.html')
+          </div>
 
-        <!-- Info container -->
-        <div id="info" class="mw-container">
-          @@include('./src/partials/info-container.html')
-        </div>
+          <!-- Info container -->
+          <div id="info">@@include('./src/partials/info-container.html')</div>
 
-        <!-- Alerts container -->
-        <div id="alerts" class="mw-container">
-          @@include('./src/partials/alerts-container.html')
-        </div>
+          <!-- Alerts container -->
+          <div id="alerts">
+            @@include('./src/partials/alerts-container.html')
+          </div>
 
-        <!-- Code container -->
-        <div id="code" class="mw-container">
-          @@include('./src/partials/code-container.html')
-        </div>
-      </section>
+          <!-- Code container -->
+          <div id="code">@@include('./src/partials/code-container.html')</div>
+        </section>
+      </div>
 
       <!-- Components section -->
-      <section id="form-elements">
-        <h2 class="mw-section-title">Form & Elements</h2>
-        <div class="mw-section-nav">
-          <a href="#form-elements" class="mw-btn mw-btn-primary"
-            >Form Elements</a
-          >
-          <a href="#form" class="mw-btn mw-btn-primary">Form</a>
-          <a href="#login" class="mw-btn mw-btn-primary">Login</a>
-        </div>
+      <div class="mw-container">
+        <section id="form-elements">
+          <h2 class="mw-section-title">Form & Elements</h2>
+          <div class="mw-section-nav">
+            <a href="#form-elements" class="mw-btn mw-btn-primary"
+              >Form Elements</a
+            >
+            <a href="#form" class="mw-btn mw-btn-primary">Form</a>
+            <a href="#login" class="mw-btn mw-btn-primary">Login</a>
+          </div>
 
-        <!-- Form elements container -->
-        <div id="form-elements" class="mw-container">
-          @@include('./src/partials/form-elements-container.html')
-        </div>
+          <!-- Form elements container -->
+          <div id="form-elements">
+            @@include('./src/partials/form-elements-container.html')
+          </div>
 
-        <!-- Form container -->
-        <div id="form" class="mw-container">
-          @@include('./src/partials/form-container.html')
-        </div>
+          <!-- Form container -->
+          <div id="form">@@include('./src/partials/form-container.html')</div>
 
-        <!-- Login container -->
-        <div id="login" class="mw-container">
-          @@include('./src/partials/login-container.html')
-        </div>
-      </section>
+          <!-- Login container -->
+          <div id="login">@@include('./src/partials/login-container.html')</div>
+        </section>
+      </div>
 
       <!-- Data & display section -->
-      <section id="data-display">
-        <h2 class="mw-section-title">Data & Display</h2>
-        <div class="mw-section-nav">
-          <a href="#tables" class="mw-btn mw-btn-primary">Tables</a>
-          <a href="#timelines" class="mw-btn mw-btn-primary">Timelines</a>
-          <a href="#gallery" class="mw-btn mw-btn-primary">Image Gallery</a>
-          <a href="#blog-posts" class="mw-btn mw-btn-primary">Blog Posts</a>
-        </div>
+      <div class="mw-container">
+        <section id="data-display">
+          <h2 class="mw-section-title">Data & Display</h2>
+          <div class="mw-section-nav">
+            <a href="#tables" class="mw-btn mw-btn-primary">Tables</a>
+            <a href="#timelines" class="mw-btn mw-btn-primary">Timelines</a>
+            <a href="#gallery" class="mw-btn mw-btn-primary">Image Gallery</a>
+            <a href="#blog-posts" class="mw-btn mw-btn-primary">Blog Posts</a>
+          </div>
 
-        <!-- Tables container -->
-        <div id="tables" class="mw-container">
-          @@include('./src/partials/tables-container.html')
-        </div>
+          <!-- Tables container -->
+          <div id="tables">
+            @@include('./src/partials/tables-container.html')
+          </div>
 
-        <!-- Timeline container -->
-        <div id="timelines" class="mw-container">
-          @@include('./src/partials/timelines-container.html')
-        </div>
+          <!-- Timeline container -->
+          <div id="timelines">
+            @@include('./src/partials/timelines-container.html')
+          </div>
 
-        <!-- Gallery container-->
-        <div id="gallery" class="mw-container">
-          @@include('./src/partials/gallery-container.html')
-        </div>
+          <!-- Gallery container-->
+          <div id="gallery">
+            @@include('./src/partials/gallery-container.html')
+          </div>
 
-        <!-- Blogposts container-->
-        <div id="blog-posts" class="mw-container">
-          @@include('./src/partials/blog-posts-container.html')
-        </div>
-      </section>
+          <!-- Blogposts container-->
+          <div id="blog-posts">
+            @@include('./src/partials/blog-posts-container.html')
+          </div>
+        </section>
+      </div>
     </main>
 
     <!-- Footer -->

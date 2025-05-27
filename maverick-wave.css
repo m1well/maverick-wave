@@ -4076,15 +4076,8 @@ pre code {
     width: 90%;
   }
 }
-@supports (selector(:has(> .mw-container-full))) {
-  .mw-container:has(> .mw-container-full) {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-}
-@supports (selector(:has(> .mw-hero))) {
-  .mw-container:has(> .mw-hero) {
+@supports (selector(:has(.mw-hero))) {
+  .mw-container:has(.mw-hero) {
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -4095,7 +4088,7 @@ pre code {
     background-position: center;
     background-image: var(--mw-hero-background);
   }
-  .mw-container:has(> .mw-hero)::before {
+  .mw-container:has(.mw-hero)::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -4104,7 +4097,7 @@ pre code {
     z-index: 2;
     pointer-events: none;
   }
-  .mw-container:has(> .mw-hero) > * {
+  .mw-container:has(.mw-hero) > * {
     position: relative;
     z-index: 3;
   }
