@@ -62,7 +62,10 @@
       $dark-theme-colors,
       'text-muted-color'
     )};
-  --mw-header-navbar-list-ative-color: #{map.get($base-colors, 'primary-color')};
+  --mw-header-navbar-list-active-color: #{map.get(
+      $base-colors,
+      'primary-color'
+    )};
   --mw-header-burgerbutton-color: #{map.get($dark-theme-colors, 'text-color')};
   --mw-header-border: #{map.get($base-colors, 'primary-color-hover')};
 
