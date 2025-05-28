@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - big update with buttons
 - different flex grid ratios
 
+### Changes
+
+- progress bars update
+
 ## [1.21.0] - 2025-05-23
 
 ### Changed

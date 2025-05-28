@@ -359,18 +359,18 @@
         const loginCard = document.querySelector('.mw-login');
         const form = document.querySelector('.mw-login-form');
         if (form) {
-        const btn = form.querySelector('.mw-btn-primary');
-        if (btn) {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          loginCard.classList.remove('mw-login-error');
-          void loginCard.offsetWidth;
-          loginCard.classList.add('mw-login-error');
-          setTimeout(() => {
-            loginCard.classList.remove('mw-login-error');
-          }, 4000);
-        });
-        }
+          const btn = form.querySelector('.mw-btn-primary');
+          if (btn) {
+            btn.addEventListener('click', (e) => {
+              e.preventDefault();
+              loginCard.classList.remove('mw-login-error');
+              void loginCard.offsetWidth;
+              loginCard.classList.add('mw-login-error');
+              setTimeout(() => {
+                loginCard.classList.remove('mw-login-error');
+              }, 4000);
+            });
+          }
         }
       });
     </script>
