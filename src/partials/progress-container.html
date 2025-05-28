@@ -1,6 +1,6 @@
 <h3 class="mw-section-subtitle">Progress Bars</h3>
 
-<div class="mw-grid-3">
+<div class="mw-grid-2">
   <div>
     <h3 class="mw-mb-4">Basic Progress Bars</h3>
     <div class="mw-card mw-card-simple">
@@ -11,7 +11,7 @@
           <span class="mw-progress-value mw-progress-percent">75</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 75%"></div>
+          <div class="mw-progress-fill" data-value="75"></div>
         </div>
       </div>
 
@@ -22,7 +22,7 @@
           <span class="mw-progress-value">50</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 50%"></div>
+          <div class="mw-progress-fill" data-value="50"></div>
         </div>
       </div>
 
@@ -33,7 +33,7 @@
           <span class="mw-progress-value mw-progress-numeric">7</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 70%"></div>
+          <div class="mw-progress-fill" data-value="70"></div>
         </div>
       </div>
 
@@ -42,7 +42,7 @@
         class="mw-progress-container mw-progress-inline-label mw-mt-1 mw-mb-5"
       >
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill mw-progress-primary" style="width: 55%">
+          <div class="mw-progress-fill mw-progress-primary" data-value="55">
             55%
           </div>
         </div>
@@ -62,7 +62,7 @@
         <div class="mw-progress-bar">
           <div
             class="mw-progress-fill mw-progress-primary"
-            style="width: 60%"
+             data-value="60"
           ></div>
         </div>
       </div>
@@ -76,7 +76,7 @@
         <div class="mw-progress-bar">
           <div
             class="mw-progress-fill mw-progress-secondary"
-            style="width: 50%"
+             data-value="50"
           ></div>
         </div>
       </div>
@@ -90,7 +90,7 @@
         <div class="mw-progress-bar">
           <div
             class="mw-progress-fill mw-progress-success"
-            style="width: 100%"
+             data-value="100"
           ></div>
         </div>
       </div>
@@ -104,7 +104,7 @@
         <div class="mw-progress-bar">
           <div
             class="mw-progress-fill mw-progress-warning"
-            style="width: 30%"
+             data-value="30"
           ></div>
         </div>
       </div>
@@ -118,7 +118,7 @@
         <div class="mw-progress-bar">
           <div
             class="mw-progress-fill mw-progress-danger"
-            style="width: 15%"
+             data-value="15"
           ></div>
         </div>
       </div>
@@ -135,7 +135,7 @@
           <span class="mw-progress-value mw-progress-percent">65</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 65%"></div>
+          <div class="mw-progress-fill" data-value="65"></div>
         </div>
       </div>
 
@@ -146,7 +146,7 @@
           <span class="mw-progress-value mw-progress-percent">65</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 65%"></div>
+          <div class="mw-progress-fill" data-value="60"></div>
         </div>
       </div>
 
@@ -157,9 +157,70 @@
           <span class="mw-progress-value mw-progress-percent">65</span>
         </div>
         <div class="mw-progress-bar">
-          <div class="mw-progress-fill" style="width: 65%"></div>
+          <div class="mw-progress-fill" data-value="65"></div>
         </div>
       </div>
     </div>
   </div>
+
+  <div>
+    <h3 class="mw-mb-4">Skill Levels</h3>
+    <div class="mw-card mw-card-simple">
+      <!-- React → Junior (25%) -->
+      <div class="mw-progress-container mw-mb-5">
+        <div class="mw-progress-barinfo">
+          <span class="mw-progress-label">React</span>
+          <span class="mw-progress-value">Junior</span>
+        </div>
+        <div class="mw-progress-bar">
+          <div
+            class="mw-progress-fill mw-progress-secondary"
+            data-value="25"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Java → Professional (50%) -->
+      <div class="mw-progress-container mw-mb-5">
+        <div class="mw-progress-barinfo">
+          <span class="mw-progress-label">Java</span>
+          <span class="mw-progress-value">Professional</span>
+        </div>
+        <div class="mw-progress-bar">
+          <div
+            class="mw-progress-fill mw-progress-secondary"
+            data-value="50"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Python → Senior (70%) -->
+      <div class="mw-progress-container mw-mb-5">
+        <div class="mw-progress-barinfo">
+          <span class="mw-progress-label">Python</span>
+          <span class="mw-progress-value">Senior</span>
+        </div>
+        <div class="mw-progress-bar">
+          <div
+            class="mw-progress-fill mw-progress-secondary"
+            data-value="70"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Go → Expert (90%) -->
+      <div class="mw-progress-container">
+        <div class="mw-progress-barinfo">
+          <span class="mw-progress-label">Go</span>
+          <span class="mw-progress-value">Expert</span>
+        </div>
+        <div class="mw-progress-bar">
+          <div
+            class="mw-progress-fill mw-progress-secondary"
+            data-value="90"
+          ></div>
+        </div>
+      </div>
+    </div>
+
 </div>

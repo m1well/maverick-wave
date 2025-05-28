@@ -215,18 +215,25 @@
 
   // ===== Progress Bars =====
   function initProgressBars() {
-    const progressBars = document.querySelectorAll('.mw-progress-fill');
-    if (progressBars.length === 0) return;
+const fills = document.querySelectorAll('.mw-progress-fill');
+  if (!fills.length) return;
 
-    setTimeout(() => {
-      progressBars.forEach((bar) => {
-        const width = bar.style.width;
-        bar.style.width = '0';
-        setTimeout(() => {
-          bar.style.width = width;
-        }, 100);
-      });
-    }, 500);
+  const obs = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const bar = entry.target;
+      const pct = bar.dataset.value || 0;
+      // trigger the CSS transition
+      bar.style.width = pct + '%';
+      // stop observing this one
+      observer.unobserve(bar);
+    });
+  }, {
+    root: null,
+    threshold: 0.2,
+  });
+
+  fills.forEach(bar => obs.observe(bar));
   }
 
   // ===== Smooth Scrolling =====
@@ -298,7 +305,6 @@
             link.getAttribute('href').replace('#', '').replace('/', '') ===
             current
           ) {
-            console.log('NOW');
             link.classList.add('active');
           }
         });
