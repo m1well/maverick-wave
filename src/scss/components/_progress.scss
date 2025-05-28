@@ -32,6 +32,9 @@ $_mw-progress-colors: (
 
   &-value {
     color: var(--mw-text-muted-color);
+    @include media-down('sm') {
+      font-size: font-size('xs');
+    }
 
     // numeric values from 1-10
     &.mw-progress-numeric {

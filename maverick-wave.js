@@ -215,25 +215,28 @@
 
   // ===== Progress Bars =====
   function initProgressBars() {
-const fills = document.querySelectorAll('.mw-progress-fill');
-  if (!fills.length) return;
+    const fills = document.querySelectorAll('.mw-progress-fill');
+    if (!fills.length) return;
 
-  const obs = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const bar = entry.target;
-      const pct = bar.dataset.value || 0;
-      // trigger the CSS transition
-      bar.style.width = pct + '%';
-      // stop observing this one
-      observer.unobserve(bar);
-    });
-  }, {
-    root: null,
-    threshold: 0.2,
-  });
+    const obs = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const bar = entry.target;
+          const pct = bar.dataset.value || 0;
+          // trigger the CSS transition
+          bar.style.width = pct + '%';
+          // stop observing this one
+          observer.unobserve(bar);
+        });
+      },
+      {
+        root: null,
+        threshold: 0.2,
+      }
+    );
 
-  fills.forEach(bar => obs.observe(bar));
+    fills.forEach((bar) => obs.observe(bar));
   }
 
   // ===== Smooth Scrolling =====

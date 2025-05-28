@@ -1921,6 +1921,11 @@ pre code {
 .mw-progress-value {
   color: var(--mw-text-muted-color);
 }
+@media (max-width: 576px) {
+  .mw-progress-value {
+    font-size: 0.8rem;
+  }
+}
 .mw-progress-value.mw-progress-numeric::after {
   content: "/10";
 }
