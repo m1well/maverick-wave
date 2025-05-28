@@ -62,7 +62,8 @@ $_mw-progress-colors: (
     height: 100%;
     background: var(--mw-secondary-color);
     border-radius: radius('sm');
-    transition: width 1.5s ease-in-out;
+    width: 0;
+    transition: width 1.9s ease-in-out;
   }
 
   // Sizes

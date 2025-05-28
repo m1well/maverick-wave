@@ -1940,7 +1940,8 @@ pre code {
   height: 100%;
   background: var(--mw-secondary-color);
   border-radius: 5px;
-  transition: width 1.5s ease-in-out;
+  width: 0;
+  transition: width 1.9s ease-in-out;
 }
 .mw-progress-sm .mw-progress-bar {
   height: 6px;
@@ -2551,11 +2552,15 @@ pre code {
 .mw-theme-toggle.active .mw-theme-toggle-slider {
   left: 35px;
 }
+.mw-theme-toggle.active .mw-theme-toggle-icon {
+  left: 2px;
+}
 .mw-theme-toggle-icon {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.1rem;
+  top: -2px;
+  left: 3px;
+  font-size: 1rem;
+  transform: rotate(16deg);
 }
 
 @keyframes mw-slide-in-left {
@@ -4058,7 +4063,7 @@ pre code {
   }
 }
 .mw-home-content-fade {
-  animation: fadeIn 2.5s ease-in;
+  animation: fadeIn 1.7s ease-in;
 }
 .mw-home-text {
   width: min(75%, 700px);
