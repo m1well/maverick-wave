@@ -17,7 +17,7 @@ $_mw-progress-colors: (
   &-barinfo {
     display: flex;
     justify-content: space-between;
-    margin: spacing('3') spacing('1') spacing('1') spacing('1');
+    margin: spacing('3') spacing('2') spacing('1') spacing('1');
     font-size: font-size('sm');
 
     // hide info, if this class is available
@@ -32,6 +32,9 @@ $_mw-progress-colors: (
 
   &-value {
     color: var(--mw-text-muted-color);
+    pointer-events: none;
+    align-content: end;
+
     @include media-down('sm') {
       font-size: font-size('xs');
     }
