@@ -3715,6 +3715,11 @@ pre code {
 
 .mw-grid-1 {
   grid-template-columns: 1fr;
+  justify-items: stretch;
+}
+.mw-grid-1 > * {
+  width: 100% !important;
+  max-width: none !important;
 }
 
 .mw-grid-2 {
