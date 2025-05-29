@@ -86,23 +86,35 @@
 
   &-meta {
     display: flex;
-    gap: spacing('5');
+    flex-wrap: wrap;
+    align-items: center;
     margin-bottom: spacing('6');
     font-size: font-size('sm');
     color: var(--mw-text-muted-color);
+    row-gap: spacing('1');
 
     @include media-down('sm') {
       flex-direction: column;
-      gap: spacing('3');
+      gap: spacing('2');
+      margin-top: spacing('5');
+      align-items: start;
     }
 
     &-item {
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      row-gap: spacing('1');
       gap: spacing('2');
+      &:not(:first-child) {
+        margin-left: spacing('9');
+        @include media-down('sm') {
+          margin-left: spacing('0');
+        }
+      }
 
       i {
         color: var(--mw-primary-color);
+        flex-shrink: 0;
       }
     }
   }
