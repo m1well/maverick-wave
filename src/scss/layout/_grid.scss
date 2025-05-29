@@ -14,6 +14,12 @@
 .mw-grid-1 {
   @extend %grid-base;
   grid-template-columns: 1fr;
+
+  justify-items: stretch;
+  > * {
+    width: 100% !important;
+    max-width: none !important;
+  }
 }
 
 .mw-grid-2 {
