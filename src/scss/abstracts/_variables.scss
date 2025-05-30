@@ -111,7 +111,7 @@ $dark-theme-colors: (
 $light-theme-colors: (
   'page-background': $light-background,
   'hero-overlay-background': color.adjust($light-background, $alpha: -0.7),
-  'card-background': color.adjust($light-background, $lightness: +7%),
+  'card-background': color.adjust($light-background, $lightness: +6%),
   'footer-background': color.adjust($light-background, $lightness: -2%),
   'border': color.adjust($light-background, $lightness: -13%),
   'shadow': color.adjust($light-text-color, $alpha: -0.7),
