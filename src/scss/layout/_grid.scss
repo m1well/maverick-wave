@@ -6,7 +6,11 @@
   gap: spacing('5');
 }
 
-// Individual grid classes
+%grid-base-lg {
+  display: grid;
+  gap: spacing('8'); // Larger spacing
+}
+
 .mw-grid {
   @extend %grid-base;
 }
@@ -35,7 +39,7 @@
   @extend %grid-base;
   grid-template-columns: repeat(3, 1fr);
 
-  @include media-down('lg') {
+  @include media-down('md') {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -78,54 +82,200 @@
   }
 }
 
+// flexible grid system with column spans
+.mw-grid-flex {
+  @extend %grid-base;
+
+  // Default: 12-column grid (you can adjust this base)
+  grid-template-columns: repeat(12, 1fr);
+
+  // At MD breakpoint and below, force single column
+  @include media-down('md') {
+    grid-template-columns: 1fr;
+
+    // Reset all spans to full width
+    > * {
+      grid-column: 1 / -1 !important;
+    }
+  }
+}
+
+// Column span utilities
+@for $i from 1 through 12 {
+  .mw-col-span-#{$i} {
+    grid-column: span #{$i};
+  }
+}
+
+// Responsive auto grid
 .mw-grid-auto {
   @extend %grid-base;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+  // Ensure children don't override the grid behavior
+  > * {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0; // Prevents overflow issues
+  }
 }
 
-.mw-flex-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: spacing('5');
+// Alternative with different minimum widths
+.mw-grid-auto-sm {
+  @extend %grid-base;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
 
-  &-item {
-    flex: 1;
-    min-width: 0;
+.mw-grid-auto-lg {
+  @extend %grid-base;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
 
-    @include media-down('sm') {
-      min-width: 100%;
+.mw-grid-lg {
+  @extend %grid-base-lg;
+}
+
+.mw-grid-1-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: 1fr;
+  justify-items: stretch;
+  > * {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+.mw-grid-2-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(2, 1fr);
+  @include media-down('md') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-3-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(3, 1fr);
+  @include media-down('lg') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-4-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(4, 1fr);
+  @include media-down('xl') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-5-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(5, 1fr);
+  @include media-down('xl') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @include media-down('lg') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-down('md') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include media-down('sm') {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mw-grid-auto-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+// Flexible grids with large spacing
+.mw-grid-flex-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: repeat(12, 1fr);
+
+  @include media-down('md') {
+    grid-template-columns: 1fr;
+    > * {
+      grid-column: 1 / -1 !important;
     }
   }
+}
 
-  // 10% / 90% helpers
-  &-item-10 {
-    flex: 1 1 0;
-  }
-  &-item-90 {
-    flex: 9 1 0;
-  }
+// Base stack - items keep their natural width
+.mw-grid-stack {
+  @extend %grid-base;
+  grid-template-columns: 1fr;
+  justify-items: start; // Items keep natural width, aligned left
 
-  // 20% / 80% helpers
-  &-item-20 {
-    flex: 1 1 0;
+  // Remove the forced width from grid-1
+  > * {
+    width: auto;
+    max-width: none;
   }
-  &-item-80 {
-    flex: 4 1 0;
-  }
+}
 
-  // 25% / 75% helpers
-  &-item-25 {
-    flex: 1 1 0;
-  }
-  &-item-75 {
-    flex: 3 1 0;
-  }
+// Stack variants with different alignments
+.mw-grid-stack-center {
+  @extend %grid-base;
+  grid-template-columns: 1fr;
+  justify-items: center; // Items centered horizontally
 
-  // 33% / 66% helpers
-  &-item-33 {
-    flex: 1 1 0;
+  > * {
+    width: auto;
+    max-width: none;
   }
-  &-item-66 {
-    flex: 2 1 0;
+}
+
+.mw-grid-stack-end {
+  @extend %grid-base;
+  grid-template-columns: 1fr;
+  justify-items: end; // Items aligned right
+
+  > * {
+    width: auto;
+    max-width: none;
+  }
+}
+
+.mw-grid-stack-stretch {
+  @extend %grid-base;
+  grid-template-columns: 1fr;
+  justify-items: stretch; // Same as grid-1 (full width)
+
+  > * {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+// Large spacing variants
+.mw-grid-stack-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: 1fr;
+  justify-items: start;
+
+  > * {
+    width: auto;
+    max-width: none;
+  }
+}
+
+.mw-grid-stack-center-lg {
+  @extend %grid-base-lg;
+  grid-template-columns: 1fr;
+  justify-items: center;
+
+  > * {
+    width: auto;
+    max-width: none;
   }
 }
