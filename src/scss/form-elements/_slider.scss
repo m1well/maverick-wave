@@ -152,10 +152,15 @@ $_mw-slider-colors: (
   .mw-slider-value {
     position: absolute;
     top: -17px;
-    right: 0;
+    right: 7px;
     font-size: font-size('sm');
     color: var(--mw-text-muted-color);
     pointer-events: none;
+
+    @include media-down('sm') {
+      font-size: font-size('xs');
+      top: -15px;
+    }
 
     // 1–10 numeric style
     &.mw-slider-numeric::after {
