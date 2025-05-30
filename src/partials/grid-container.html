@@ -1,8 +1,11 @@
 <h3 class="mw-section-subtitle">Grid System</h3>
 
 <p class="mw-mb-4">
-  MaverickWave CSS framework provides a flexible grid system that adapts to
-  different screen sizes, making responsive layouts simple to implement.
+  MaverickWave CSS framework provides a simple grid system that adapts to
+  different screen sizes, making responsive layouts simple to implement. It also
+  has an advanced grid system with custom column spans. Perfect for complex
+  layouts that need different column widths. Automatically stacks to single
+  column on mobile devices.
 </p>
 
 <h3 class="mw-mb-4">Grid with 1 Column</h3>
@@ -40,62 +43,129 @@
   <div class="mw-card mw-card-simple">Column 5</div>
 </div>
 
-<h3 class="mw-mb-4">Auto Grid</h3>
-<div class="mw-grid-auto mw-mb-6">
-  <div class="mw-card mw-card-simple">Auto Column 1</div>
-  <div class="mw-card mw-card-simple">Auto Column 2</div>
-  <div class="mw-card mw-card-simple">Auto Column 3</div>
-  <div class="mw-card mw-card-simple">Auto Column 4</div>
-  <div class="mw-card mw-card-simple">Auto Column 5</div>
+<h3 class="mw-mb-3">Flexible Grid with Column Spans</h3>
+<p class="mw-mb-2 mw-text-sm mw-text-muted">
+  12-column grid with custom spans: 2 columns + 4 columns + 1 column
+</p>
+<div class="mw-grid-flex mw-mb-6">
+  <div class="mw-col-span-2 mw-card mw-card-simple">Span 2 Columns</div>
+  <div class="mw-col-span-4 mw-card mw-card-simple">Span 4 Columns</div>
+  <div class="mw-col-span-1 mw-card mw-card-simple">1 col</div>
 </div>
 
-<h3 class="mw-mb-4">Flex Grid Row</h3>
-<div class="mw-flex-grid mw-mb-6">
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 1</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 2</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 3</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 4</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 5</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 6</div>
-  <div class="mw-flex-grid-item mw-card mw-card-simple">Flex 7</div>
+<h3 class="mw-mb-3">Mixed Column Spans</h3>
+<p class="mw-mb-2 mw-text-sm mw-text-muted">
+  Various column combinations: 3 + 6 + 3 columns
+</p>
+<div class="mw-grid-flex mw-mb-6">
+  <div class="mw-col-span-3 mw-card mw-card-simple">Span 3 Columns</div>
+  <div class="mw-col-span-6 mw-card mw-card-simple">
+    Span 6 Columns (Main Content)
+  </div>
+  <div class="mw-col-span-3 mw-card mw-card-simple">Span 3 Columns</div>
 </div>
 
-<h3 class="mw-mb-4">Flex Grid 10/90 Row</h3>
-<div class="mw-flex-grid mw-mb-6">
-  <div class="mw-flex-grid-item mw-flex-grid-item-10 mw-card mw-card-simple">
-    Flex 1
-  </div>
-  <div class="mw-flex-grid-item mw-flex-grid-item-90 mw-card mw-card-simple">
-    Flex 2
-  </div>
-</div>
-
-<h3 class="mw-mb-4">Flex Grid 20/80 Row</h3>
-<div class="mw-flex-grid mw-mb-6">
-  <div class="mw-flex-grid-item mw-flex-grid-item-20 mw-card mw-card-simple">
-    Flex 1
-  </div>
-  <div class="mw-flex-grid-item mw-flex-grid-item-80 mw-card mw-card-simple">
-    Flex 2
+<h3 class="mw-mb-3">Asymmetric Layout</h3>
+<p class="mw-mb-2 mw-text-sm mw-text-muted">
+  Sidebar + content layout: 4 + 8 columns
+</p>
+<div class="mw-grid-flex mw-mb-6">
+  <div class="mw-col-span-4 mw-card mw-card-simple">Sidebar (4 cols)</div>
+  <div class="mw-col-span-8 mw-card mw-card-simple">
+    Main Content Area (8 cols)
   </div>
 </div>
 
-<h3 class="mw-mb-4">Flex Grid 25/75 Row</h3>
-<div class="mw-flex-grid mw-mb-6">
-  <div class="mw-flex-grid-item mw-flex-grid-item-25 mw-card mw-card-simple">
-    Flex 1
-  </div>
-  <div class="mw-flex-grid-item mw-flex-grid-item-75 mw-card mw-card-simple">
-    Flex 2
+<h3 class="mw-mb-3">Auto Grid (Responsive Card Layout)</h3>
+<p class="mw-mb-2 mw-text-sm mw-text-muted">
+  Perfect for unknown number of items. Cards maintain minimum 300px width and
+  automatically wrap to new rows. Great for product listings, galleries, or any
+  dynamic content.
+</p>
+<div class="mw-grid-auto-sm mw-mb-6">
+  <div class="mw-card mw-card-simple">Product Card</div>
+  <div class="mw-card mw-card-simple">Service Card</div>
+  <div class="mw-card mw-card-simple">Team Member</div>
+  <div class="mw-card mw-card-simple">Portfolio Item</div>
+  <div class="mw-card mw-card-simple">Blog Post</div>
+  <div class="mw-card mw-card-simple">Feature</div>
+</div>
+
+<h3 class="mw-mb-4">Grid with 3 Columns - Default Spacing</h3>
+<div class="mw-grid-3 mw-mb-6">
+  <div class="mw-card mw-card-simple">Column 1</div>
+  <div class="mw-card mw-card-simple">Column 2</div>
+  <div class="mw-card mw-card-simple">Column 3</div>
+</div>
+
+<h3 class="mw-mb-4">Grid with 3 Columns - Large Spacing</h3>
+<div class="mw-grid-3-lg mw-mb-6">
+  <div class="mw-card mw-card-simple">Column 1</div>
+  <div class="mw-card mw-card-simple">Column 2</div>
+  <div class="mw-card mw-card-simple">Column 3</div>
+</div>
+
+<h3 class="mw-mb-4">Flexible Grid - Default Spacing</h3>
+<div class="mw-grid-flex mw-mb-6">
+  <div class="mw-col-span-4 mw-card mw-card-simple">4 Columns</div>
+  <div class="mw-col-span-8 mw-card mw-card-simple">8 Columns</div>
+</div>
+
+<h3 class="mw-mb-4">Flexible Grid - Large Spacing</h3>
+<div class="mw-grid-flex-lg mw-mb-6">
+  <div class="mw-col-span-4 mw-card mw-card-simple">4 Columns</div>
+  <div class="mw-col-span-8 mw-card mw-card-simple">8 Columns</div>
+</div>
+
+<h3 class="mw-mb-4">Auto Grid - Large Spacing</h3>
+<div class="mw-grid-auto-lg mw-mb-6">
+  <div class="mw-card mw-card-simple">Auto 1</div>
+  <div class="mw-card mw-card-simple">Auto 2</div>
+  <div class="mw-card mw-card-simple">Auto 3</div>
+  <div class="mw-card mw-card-simple">Auto 4</div>
+</div>
+
+<h3 class="mw-mb-4">Grid Stack - Natural Width (Left Aligned)</h3>
+<div class="mw-grid-stack mw-mb-6">
+  <button class="mw-btn mw-btn-primary">Small Button</button>
+  <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
+  <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
+  <div class="mw-card mw-card-simple" style="width: 200px">
+    Fixed Width Card
   </div>
 </div>
 
-<h3 class="mw-mb-4">Flex Grid 33/66 Row</h3>
-<div class="mw-flex-grid mw-mb-6">
-  <div class="mw-flex-grid-item mw-flex-grid-item-33 mw-card mw-card-simple">
-    Flex 1
+<h3 class="mw-mb-4">Grid Stack - Centered</h3>
+<div class="mw-grid-stack-center mw-mb-6">
+  <button class="mw-btn mw-btn-primary">Small Button</button>
+  <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
+  <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
+  <div class="mw-card mw-card-simple" style="width: 200px">
+    Fixed Width Card
   </div>
-  <div class="mw-flex-grid-item mw-flex-grid-item-66 mw-card mw-card-simple">
-    Flex 2
+</div>
+
+<h3 class="mw-mb-4">Grid Stack - Right Aligned</h3>
+<div class="mw-grid-stack-end mw-mb-6">
+  <button class="mw-btn mw-btn-primary">Small Button</button>
+  <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
+  <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
+  <div class="mw-card mw-card-simple" style="width: 200px">
+    Fixed Width Card
   </div>
+</div>
+
+<h3 class="mw-mb-4">Grid Stack - Full Width (Same as Grid-1)</h3>
+<div class="mw-grid-stack-stretch mw-mb-6">
+  <button class="mw-btn mw-btn-primary">Small Button</button>
+  <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
+  <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
+  <div class="mw-card mw-card-simple">Full Width Card</div>
+</div>
+
+<h3 class="mw-mb-4">Grid Stack - Large Spacing & Centered</h3>
+<div class="mw-grid-stack-center-lg mw-mb-6">
+  <button class="mw-btn mw-btn-primary">Button 1</button>
+  <button class="mw-btn mw-btn-secondary">Button 2</button>
+  <div class="mw-card mw-card-simple" style="width: 300px">Centered Card</div>
 </div>
