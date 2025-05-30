@@ -3496,10 +3496,16 @@ pre code {
 .mw-slider-container .mw-slider-value {
   position: absolute;
   top: -17px;
-  right: 0;
+  right: 7px;
   font-size: 0.9rem;
   color: var(--mw-text-muted-color);
   pointer-events: none;
+}
+@media (max-width: 576px) {
+  .mw-slider-container .mw-slider-value {
+    font-size: 0.8rem;
+    top: -15px;
+  }
 }
 .mw-slider-container .mw-slider-value.mw-slider-numeric::after {
   content: attr(data-value) "/10";
