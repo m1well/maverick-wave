@@ -244,6 +244,13 @@
   height: 20px;
   position: relative;
   margin-right: spacing('2');
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  
+  // Ensure it's treated as an interactive element
+  touch-action: manipulation;
 
   @include media-down('md') {
     display: block;

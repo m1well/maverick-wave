@@ -4225,6 +4225,11 @@ pre code {
   height: 20px;
   position: relative;
   margin-right: 0.5rem;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 @media (max-width: 768px) {
   .mw-menu-btn {
