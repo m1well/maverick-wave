@@ -237,80 +237,93 @@
 
 // Mobile menu button
 .mw-menu-btn {
-  display: none;
+  // Button reset
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  z-index: 1000; // higher than the mobile navbar
+  outline: none;
+
+  // Layout
+  display: none;
   width: 30px;
-  height: 20px;
+  height: 30px;
   position: relative;
-  margin-right: spacing('2');
+  margin-right: spacing('0');
+
+  // iOS
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
   user-select: none;
-  
-  // Ensure it's treated as an interactive element
   touch-action: manipulation;
 
-  @include media-down('md') {
-    display: block;
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: 2px;
   }
 
-  // For compact navbar at xl breakpoint
+  @include media-down('md') {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .mw-navbar-compact & {
     @include media-down('xl') {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      // Only change position when menu is open
       &.open {
         position: absolute;
         top: 25px;
         right: 5%;
-        z-index: 1001; // Higher z-index when open
+        z-index: 1001;
       }
     }
   }
+}
 
-  &-burger {
-    width: 30px;
-    height: 3px;
-    background: var(--mw-header-burgerbutton-color);
-    border-radius: radius('sm');
-    transition: var(--mw-transition);
+.mw-menu-btn-burger {
+  width: 24px;
+  height: 2px;
+  background: var(--mw-header-burgerbutton-color);
+  border-radius: 1px;
+  position: relative;
+  transition: var(--mw-transition);
+
+  &::before,
+  &::after {
+    content: '';
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background: var(--mw-header-burgerbutton-color);
+    border-radius: 1px;
+    transition: var(--mw-transition);
+  }
 
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      width: 30px;
-      height: spacing('1');
-      border-radius: radius('sm');
-      transition: var(--mw-transition);
-    }
+  &::before {
+    top: -8px;
+  }
+
+  &::after {
+    bottom: -8px;
+  }
+
+  // Open state
+  .mw-menu-btn.open & {
+    background: transparent;
 
     &::before {
-      transform: translateY(-10px);
+      top: 0;
+      transform: rotate(45deg);
     }
 
     &::after {
-      transform: translateY(10px);
-    }
-  }
-
-  &.open {
-    .mw-menu-btn-burger {
-      background: transparent;
-
-      &::before {
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        transform: rotate(-45deg);
-      }
+      bottom: 0;
+      transform: rotate(-45deg);
     }
   }
 }
