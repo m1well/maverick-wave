@@ -207,10 +207,16 @@
 
     if (!menuBtn || !navbar) return;
 
-    menuBtn.addEventListener('click', function () {
+    function toggleMenu(e) {
+      e.preventDefault();
+      e.stopPropagation();
       menuBtn.classList.toggle('open');
       navbar.classList.toggle('open');
-    });
+    }
+
+    // Add multiple event listeners for better iOS compatibility
+    menuBtn.addEventListener('click', toggleMenu);
+    menuBtn.addEventListener('touchstart', toggleMenu, { passive: false });
   }
 
   // ===== Progress Bars =====
