@@ -71,6 +71,7 @@
 
     &:hover {
       color: var(--mw-primary-color);
+
       &::after {
         opacity: 1;
         height: 2px;
@@ -112,4 +113,282 @@
     color: var(--mw-primary-color);
     padding-right: spacing('4');
   }
+}
+
+// Base item list - flexible container for any content
+.mw-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: spacing('3');
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// Horizontal item list
+.mw-item-list-horizontal {
+  @extend .mw-item-list;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @include media-down('sm') {
+    flex-direction: column;
+  }
+}
+
+// Interactive card list
+.mw-item-list-cards {
+  @extend .mw-item-list;
+  gap: spacing('3');
+
+  > * {
+    position: relative;
+  }
+}
+
+// Sliding border list
+.mw-item-list-slide {
+  @extend .mw-item-list;
+
+  > * {
+    position: relative;
+    border-radius: radius('sm');
+    padding: spacing('3') spacing('4');
+    border-left: 4px solid transparent;
+    background: var(--mw-primary-background);
+    transition: all 0.5s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--mw-primary-color);
+      transition: width 0.5s ease;
+    }
+    &:hover {
+      padding-left: spacing('5');
+      background: var(--mw-primary-background-hover);
+
+      &::before {
+        width: 4px;
+      }
+    }
+  }
+}
+
+// Secondary variant
+.mw-item-list-slide-secondary {
+  @extend .mw-item-list-slide;
+
+  > * {
+    background: var(--mw-secondary-background);
+
+    &::before {
+      background: var(--mw-secondary-color);
+    }
+
+    &:hover {
+      background: var(--mw-secondary-background-hover);
+    }
+  }
+}
+
+// Compact item list
+.mw-item-list-compact {
+  @extend .mw-item-list;
+  gap: spacing('0');
+
+  > * {
+    padding: spacing('2');
+    border-bottom: 1px solid var(--mw-border);
+    transition: background-color 0.2s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      color: var(--mw-primary-text-color);
+    }
+
+    // Handle nested compact lists
+    &:has(.mw-item-list-compact) {
+      padding-bottom: spacing('0');
+
+      &:hover {
+        background: none;
+        color: var(--mw-text-color);
+      }
+    }
+  }
+
+  // Nested compact lists styling
+  .mw-item-list-compact {
+    margin-top: spacing('2');
+    margin-left: spacing('4');
+    border-left: 2px solid var(--mw-border);
+    border-radius: 0;
+
+    > * {
+      padding: spacing('1') spacing('3');
+      border-bottom: 1px solid var(--mw-border);
+      font-size: font-size('sm');
+
+      &:hover {
+        background: var(--mw-primary-color-hover);
+        margin-left: spacing('-1');
+        padding-left: spacing('4');
+        border-left: 2px solid var(--mw-primary-color);
+      }
+    }
+  }
+}
+
+// Interactive menu list
+.mw-item-list-menu {
+  @extend .mw-item-list;
+  gap: spacing('0');
+  border: 1px solid var(--mw-border);
+  border-radius: radius('lg');
+  overflow: hidden;
+
+  > * {
+    padding: spacing('3');
+    border-bottom: 1px solid var(--mw-border);
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      color: var(--mw-primary-text-color);
+      padding-left: spacing('4');
+    }
+
+    &:active {
+      background: var(--mw-primary-color-hover);
+    }
+  }
+}
+
+// Simple scrollable list
+.mw-item-list-scroll {
+  @extend .mw-item-list;
+  gap: 0;
+  max-height: 300px; // Default height, can be overridden
+  overflow-y: auto;
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+  background: var(--mw-card-background);
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--mw-primary-color-hover);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mw-border);
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--mw-text-muted-color);
+    }
+  }
+
+  // Firefox scrollbar styling
+  scrollbar-width: thin;
+  scrollbar-color: var(--mw-border) var(--mw-gray-background);
+
+  > * {
+    padding: spacing('2') spacing('3');
+    border-bottom: 1px solid var(--mw-border);
+    transition: all 0.2s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      cursor: pointer;
+    }
+
+    &:active {
+      background: var(--mw-primary-color);
+    }
+  }
+}
+
+// Height variants
+.mw-item-list-scroll-sm {
+  @extend .mw-item-list-scroll;
+  max-height: 200px;
+}
+
+.mw-item-list-scroll-lg {
+  @extend .mw-item-list-scroll;
+  max-height: 400px;
+}
+
+.mw-item-list-scroll-xl {
+  @extend .mw-item-list-scroll;
+  max-height: 500px;
+}
+
+// Always visible scrollbar variant
+.mw-item-list-scroll-visible {
+  @extend .mw-item-list-scroll;
+
+  // Force scrollbar to always be visible
+  overflow-y: scroll !important;
+  scrollbar-gutter: stable;
+
+  // Webkit browsers (Chrome, Safari, Edge)
+  &::-webkit-scrollbar {
+    width: 12px;
+    background: var(--mw-bg-subtle, #f8f9fa);
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--mw-bg-subtle, #f8f9fa);
+    border-radius: 6px;
+    margin: 4px 0;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mw-text-muted-color, #6c757d);
+    border-radius: 6px;
+    border: 2px solid var(--mw-bg-subtle, #f8f9fa);
+    min-height: 30px; // Ensure thumb has minimum size
+
+    &:hover {
+      background: var(--mw-primary-color, #007bff);
+    }
+
+    &:active {
+      background: var(--mw-primary-dark, #0056b3);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: var(--mw-bg-subtle, #f8f9fa);
+  }
+
+  // Firefox
+  scrollbar-width: auto;
+  scrollbar-color: var(--mw-text-muted-color, #6c757d)
+    var(--mw-bg-subtle, #f8f9fa);
 }
