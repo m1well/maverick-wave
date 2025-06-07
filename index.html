@@ -202,7 +202,8 @@
             <a href="#panels" class="mw-btn mw-btn-primary">Panels</a>
             <a href="#tabs" class="mw-btn mw-btn-primary">Tabs</a>
             <a href="#accordions" class="mw-btn mw-btn-primary">Accordions</a>
-            <a href="#lists" class="mw-btn mw-btn-primary">Lists</a>
+            <a href="#html-lists" class="mw-btn mw-btn-primary">HTML Lists</a>
+            <a href="#item-lists" class="mw-btn mw-btn-primary">Item Lists</a>
           </div>
 
           <!-- Grid container -->
@@ -224,8 +225,15 @@
             @@include('./src/partials/accordions-container.html')
           </div>
 
-          <!-- Lists container -->
-          <div id="lists">@@include('./src/partials/lists-container.html')</div>
+          <!-- HTML Lists container -->
+          <div id="html-lists">
+            @@include('./src/partials/html-lists-container.html')
+          </div>
+
+          <!-- Item Lists container -->
+          <div id="item-lists">
+            @@include('./src/partials/item-lists-container.html')
+          </div>
         </section>
       </div>
 
