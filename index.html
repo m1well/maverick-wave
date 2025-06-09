@@ -202,6 +202,7 @@
             <a href="#panels" class="mw-btn mw-btn-primary">Panels</a>
             <a href="#tabs" class="mw-btn mw-btn-primary">Tabs</a>
             <a href="#accordions" class="mw-btn mw-btn-primary">Accordions</a>
+            <a href="#modals" class="mw-btn mw-btn-primary">Modals</a>
             <a href="#html-lists" class="mw-btn mw-btn-primary">HTML Lists</a>
             <a href="#item-lists" class="mw-btn mw-btn-primary">Item Lists</a>
           </div>
@@ -223,6 +224,11 @@
           <!-- Accordions contaier -->
           <div id="accordions">
             @@include('./src/partials/accordions-container.html')
+          </div>
+
+          <!-- Modals container -->
+          <div id="modals">
+            @@include('./src/partials/modals-container.html')
           </div>
 
           <!-- HTML Lists container -->
@@ -328,6 +334,7 @@
           <div class="mw-section-nav">
             <a href="#meta-info" class="mw-btn mw-btn-primary">Meta Info</a>
             <a href="#tables" class="mw-btn mw-btn-primary">Tables</a>
+            <a href="#pagination" class="mw-btn mw-btn-primary">Pagination</a>
             <a href="#timelines" class="mw-btn mw-btn-primary">Timelines</a>
             <a href="#gallery" class="mw-btn mw-btn-primary">Image Gallery</a>
             <a href="#blog-posts" class="mw-btn mw-btn-primary">Blog Posts</a>
@@ -341,6 +348,11 @@
           <!-- Tables container -->
           <div id="tables">
             @@include('./src/partials/tables-container.html')
+          </div>
+
+          <!-- Pagination container -->
+          <div id="pagination">
+            @@include('./src/partials/pagination-container.html')
           </div>
 
           <!-- Timeline container -->
@@ -387,6 +399,15 @@
           }
         }
       });
+
+      // for the modals
+      function openModal(modalId) {
+        document.getElementById(modalId).classList.add('mw-modal-open');
+      }
+
+      function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('mw-modal-open');
+      }
     </script>
   </body>
 </html>

@@ -1,0 +1,112 @@
+@use '../abstracts' as *;
+
+// Modal overlay - hidden by default
+.mw-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--mw-gray-background);
+  backdrop-filter: blur(2px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: spacing('3');
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  // Show modal when class is added
+  &.mw-modal-open {
+    display: flex;
+    opacity: 1;
+  }
+}
+
+// Modal container
+.mw-modal {
+  background: var(--mw-card-background);
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  box-shadow: 0 25px 50px var(--mw-shadow);
+  max-width: 450px;
+  width: 100%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.9) translateY(spacing('4'));
+  transition: transform 0.5s ease;
+
+  .mw-modal-open & {
+    transform: scale(1) translateY(0);
+  }
+
+  &.mw-modal-sm {
+    max-width: 350px;
+  }
+  &.mw-modal-lg {
+    max-width: 650px;
+  }
+}
+
+// Modal sections
+.mw-modal-header {
+  padding: spacing('3') spacing('5');
+  border-bottom: 1px solid var(--mw-primary-color-hover);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: spacing('0');
+    line-height: 1.2;
+  }
+}
+
+.mw-modal-body {
+  padding: spacing('4') spacing('5');
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mw-modal-footer {
+  padding: spacing('3') spacing('5');
+  border-top: 1px solid var(--mw-primary-color-hover);
+  display: flex;
+  gap: spacing('2');
+  justify-content: flex-end;
+}
+
+// Close button
+.mw-modal-close {
+  background: none;
+  border: none;
+  font-size: font-size('md');
+  cursor: pointer;
+  padding: spacing('1') spacing('3');
+  border-radius: radius('sm');
+  border: 1px solid var(--mw-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mw-text-color);
+
+  &:hover {
+    background: var(--mw-primary-color-hover);
+  }
+}
+
+// Backdrop for click-outside-to-close
+.mw-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  cursor: pointer;
+}
