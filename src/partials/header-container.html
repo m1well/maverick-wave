@@ -5,7 +5,30 @@
 </div>
 
 <div class="mw-header-actions">
-  <div class="mw-theme-toggle">
+  <nav class="mw-navbar mw-navbar-medium">
+    <ul class="mw-navbar-list">
+      <li class="mw-navbar-item">
+        <a href="#get-started" class="mw-navbar-link">Get Started</a>
+      </li>
+      <li class="mw-navbar-item">
+        <a href="#foundations" class="mw-navbar-link">Foundations</a>
+      </li>
+      <li class="mw-navbar-item">
+        <a href="#layout" class="mw-navbar-link">Layout</a>
+      </li>
+      <li class="mw-navbar-item">
+        <a href="#components" class="mw-navbar-link">Components</a>
+      </li>
+      <li class="mw-navbar-item">
+        <a href="#form-elements" class="mw-navbar-link">Form</a>
+      </li>
+      <li class="mw-navbar-item">
+        <a href="#data-display" class="mw-navbar-link">Data & Display</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="mw-theme-toggle mw-ml-5">
     <div class="mw-theme-toggle-slider">
       <div class="mw-theme-toggle-icon">
         <i class="fas fa-moon"></i>
@@ -13,30 +36,13 @@
     </div>
   </div>
 
-  <div class="mw-menu-btn">
-    <button class="mw-menu-btn-burger" type="button"></button>
-  </div>
+  <!-- Login Button -->
+  <button class="mw-login-btn" onclick="openModal('loginModal')">
+    <i class="fas fa-user"></i>
+  </button>
 
-  <nav class="mw-navbar">
-    <ul class="mw-navbar-list">
-      <li class="mw-navbar-item">
-        <a href="#get-started" class="mw-navbar-link"> Get Started </a>
-      </li>
-      <li class="mw-navbar-item">
-        <a href="#foundations" class="mw-navbar-link"> Foundations </a>
-      </li>
-      <li class="mw-navbar-item">
-        <a href="#layout" class="mw-navbar-link"> Layout </a>
-      </li>
-      <li class="mw-navbar-item">
-        <a href="#components" class="mw-navbar-link"> Components </a>
-      </li>
-      <li class="mw-navbar-item">
-        <a href="#form-elements" class="mw-navbar-link"> Form </a>
-      </li>
-      <li class="mw-navbar-item">
-        <a href="#data-display" class="mw-navbar-link"> Data & Display </a>
-      </li>
-    </ul>
-  </nav>
+  <!-- Burger Menu Button -->
+  <div class="mw-menu-btn">
+    <div class="mw-menu-btn-burger"></div>
+  </div>
 </div>

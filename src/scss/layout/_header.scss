@@ -1,4 +1,3 @@
-@use 'sass:color';
 @use '../abstracts' as *;
 
 .mw-header {
@@ -32,7 +31,7 @@
     }
 
     img {
-      height: 45px;
+      height: 42px;
       width: auto;
       max-width: 100%;
       display: block;
@@ -42,21 +41,133 @@
   .mw-header-actions {
     display: flex;
     align-items: center;
+    gap: spacing('2');
   }
 
+  // Login button styling
+  .mw-login-btn {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+    border: none;
+    border-radius: radius('md');
+    font-size: font-size('md');
+    cursor: pointer;
+    transition: var(--mw-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 50px;
+    flex-shrink: 0;
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    @include media-down('sm') {
+      min-height: 36px;
+      min-width: 36px;
+    }
+  }
+
+  // Updated burger button to look like primary button
   .mw-menu-btn {
-    z-index: z-index('header') + 4;
+    background: var(--mw-primary-color);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: radius('md');
+    transition: var(--mw-transition);
+    height: 40px;
+    width: 50px;
+    display: none;
     position: relative;
-    margin-left: spacing('3');
+    flex-shrink: 0;
+
+    // iOS
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    touch-action: manipulation;
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mw-primary-color);
+      outline-offset: 2px;
+    }
+
+    &.open {
+      background: var(--mw-secondary-color);
+      position: fixed;
+      top: 14px;
+      right: 6%;
+      z-index: z-index('header') + 10;
+
+      &:hover {
+        background: var(--mw-secondary-color-hover);
+      }
+
+      // Transform the burger to X
+      .mw-menu-btn-burger {
+        background: transparent;
+
+        &::before {
+          top: 0;
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          bottom: 0;
+          transform: rotate(-45deg);
+        }
+      }
+    }
   }
 
-  .mw-menu-btn-burger,
-  .mw-menu-btn-burger::before,
-  .mw-menu-btn-burger::after {
-    background: var(--mw-header-burgerbutton-color);
+  .mw-menu-btn-burger {
+    width: 18px;
+    height: 2px;
+    background: var(--mw-primary-text-color);
+    border-radius: 1px;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      background: var(--mw-primary-text-color);
+      border-radius: 1px;
+      transition: all 0.3s ease;
+    }
+
+    &::before {
+      top: -6px;
+    }
+
+    &::after {
+      bottom: -6px;
+    }
   }
 }
 
+// Navbar with built-in auto-detection
 .mw-navbar {
   display: flex;
 
@@ -65,28 +176,20 @@
     list-style: none;
     margin: spacing('0');
     padding: spacing('0');
-    gap: spacing('6');
+    gap: spacing('3');
     align-items: center;
+    flex-wrap: nowrap;
+    overflow: hidden;
 
-    @include media-down('xl') {
-      gap: spacing('3');
-    }
-
-    @include media-down('md') {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: spacing('0');
+    @include media-down('lg') {
+      gap: spacing('2');
     }
   }
 
   &-item {
     position: relative;
-    padding-left: spacing('4');
-
-    @include media-down('md') {
-      width: 100%;
-      margin: spacing('0');
-    }
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   &-link {
@@ -123,207 +226,209 @@
       transform: scaleX(1);
       opacity: 1;
     }
-
-    @include media-down('md') {
-      display: block;
-      padding: spacing('3') spacing('0');
-      border-bottom: 1px solid var(--mw-header-border);
-
-      &.active::after {
-        display: none;
-      }
-    }
   }
 
-  @include media-down('lg') {
-    margin-left: auto;
-
-    .mw-navbar-list {
-      display: flex;
-      align-items: center;
-      gap: spacing('4');
-    }
-  }
-
+  // Auto-responsive behavior based on nav item count
+  // Default behavior (1-3 items): collapse at md
   @include media-down('md') {
-    position: fixed;
-    top: spacing('0');
-    right: spacing('0');
-    width: 80%;
-    padding-left: spacing('3');
-    max-width: 230px;
-    height: 100dvh;
-    background: var(--mw-header-background);
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    z-index: z-index('header') + 3;
+    .mw-navbar-list {
+      display: none;
+    }
 
     &.open {
-      transform: translateX(0);
-    }
-
-    .mw-navbar-list {
-      padding-top: 80px;
-    }
-  }
-}
-
-// Compact navbar variant that collapses to burger menu earlier
-.mw-navbar-compact {
-  .mw-navbar {
-    @include media-down('xl') {
-      background: var(--mw-header-background);
       position: fixed;
-      top: spacing('0');
-      right: -100%;
-      width: 30%;
-      max-width: 220px;
+      top: 0;
+      right: 0;
+      width: 80%;
+      max-width: 280px;
       height: 100dvh;
-      padding: 80px 20px 20px;
-      transition: var(--mw-transition);
-      box-shadow: -5px 0 15px var(--mw-shadow);
+      background: var(--mw-header-background);
+      transform: translateX(0);
+      transition: transform 0.3s ease;
+      z-index: z-index('header') + 3;
       border-left: 1px solid var(--mw-header-border);
-      overflow-y: auto;
-      z-index: 998; // important: smaller than the X button
-
-      &.open {
-        right: spacing('0');
-      }
 
       .mw-navbar-list {
+        display: flex;
         flex-direction: column;
         align-items: flex-start;
         gap: spacing('0');
+        padding-top: 80px;
+        padding-left: spacing('3');
+        padding-right: spacing('3');
+        height: 100%;
+        overflow-y: auto;
       }
 
       .mw-navbar-item {
+        width: 100%;
         margin: spacing('0');
       }
 
       .mw-navbar-link {
         display: block;
-        padding: spacing('2') spacing('0');
+        padding: spacing('3') spacing('0');
         border-bottom: 1px solid var(--mw-header-border);
+        width: 100%;
 
-        &.active::after {
+        &::after {
           display: none;
+        }
+
+        &.active {
+          color: var(--mw-primary-color);
+          font-weight: 600;
         }
       }
     }
-
-    &-list {
-      gap: spacing('2');
-    }
-
-    &-item {
-      margin-left: spacing('3');
-      font-size: font-size('sm');
-    }
   }
 
-  .mw-logo {
-    display: flex !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  // Show burger menu button at larger breakpoint
-  .mw-menu-btn {
-    @include media-down('xl') {
-      display: block;
-    }
-  }
-}
-
-// Mobile menu button
-.mw-menu-btn {
-  // Button reset
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  outline: none;
-
-  // Layout
-  display: none;
-  width: 30px;
-  height: 30px;
-  position: relative;
-  margin-right: spacing('0');
-
-  // iOS
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  user-select: none;
-  touch-action: manipulation;
-
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
-    outline-offset: 2px;
-  }
-
-  @include media-down('md') {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mw-navbar-compact & {
-    @include media-down('xl') {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  // Medium (4-5 items): collapse at lg
+  &.mw-navbar-medium {
+    @include media-down('lg') {
+      .mw-navbar-list {
+        display: none;
+      }
 
       &.open {
-        position: absolute;
-        top: 25px;
-        right: 5%;
-        z-index: 1001;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        max-width: 280px;
+        height: 100dvh;
+        background: var(--mw-header-background);
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+        z-index: z-index('header') + 3;
+        border-left: 1px solid var(--mw-header-border);
+
+        .mw-navbar-list {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: spacing('0');
+          padding-top: 80px;
+          padding-left: spacing('3');
+          padding-right: spacing('3');
+          height: 100%;
+          overflow-y: auto;
+        }
+
+        .mw-navbar-item {
+          width: 100%;
+          margin: spacing('0');
+        }
+
+        .mw-navbar-link {
+          display: block;
+          padding: spacing('3') spacing('0');
+          border-bottom: 1px solid var(--mw-header-border);
+          width: 100%;
+
+          &::after {
+            display: none;
+          }
+
+          &.active {
+            color: var(--mw-primary-color);
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  // Large (6+ items): collapse at xl
+  &.mw-navbar-large {
+    @include media-down('xl') {
+      .mw-navbar-list {
+        display: none;
+      }
+
+      &.open {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 80%;
+        max-width: 280px;
+        height: 100dvh;
+        background: var(--mw-header-background);
+        transform: translateX(0);
+        transition: transform 0.3s ease;
+        z-index: z-index('header') + 3;
+        border-left: 1px solid var(--mw-header-border);
+
+        .mw-navbar-list {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: spacing('0');
+          padding-top: 80px;
+          padding-left: spacing('3');
+          padding-right: spacing('3');
+          height: 100%;
+          overflow-y: auto;
+        }
+
+        .mw-navbar-item {
+          width: 100%;
+          margin: spacing('0');
+        }
+
+        .mw-navbar-link {
+          display: block;
+          padding: spacing('3') spacing('0');
+          border-bottom: 1px solid var(--mw-header-border);
+          width: 100%;
+
+          &::after {
+            display: none;
+          }
+
+          &.active {
+            color: var(--mw-primary-color);
+            font-weight: 600;
+          }
+        }
       }
     }
   }
 }
 
-.mw-menu-btn-burger {
-  width: 24px;
-  height: 2px;
-  background: var(--mw-header-burgerbutton-color);
-  border-radius: 1px;
-  position: relative;
-  transition: var(--mw-transition);
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 24px;
-    height: 2px;
-    background: var(--mw-header-burgerbutton-color);
-    border-radius: 1px;
-    transition: var(--mw-transition);
-  }
-
-  &::before {
-    top: -8px;
-  }
-
-  &::after {
-    bottom: -8px;
-  }
-
-  // Open state
-  .mw-menu-btn.open & {
-    background: transparent;
-
-    &::before {
-      top: 0;
-      transform: rotate(45deg);
+// Show burger button based on navbar size
+.mw-navbar {
+  // Default (1-3 items): show burger at md
+  @include media-down('md') {
+    ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
+    ~ .mw-theme-toggle ~ .mw-menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
+  }
 
-    &::after {
-      bottom: 0;
-      transform: rotate(-45deg);
+  &.mw-navbar-medium {
+    // 4-5 items: show burger at lg
+    @include media-down('lg') {
+      ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
+      ~ .mw-theme-toggle ~ .mw-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  &.mw-navbar-large {
+    // 6+ items: show burger at xl
+    @include media-down('xl') {
+      ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
+      ~ .mw-theme-toggle ~ .mw-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 }
