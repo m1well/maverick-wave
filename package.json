@@ -1,8 +1,8 @@
 {
   "name": "maverick-wave",
-  "version": "1.21.23",
+  "version": "2.0.0",
   "config": {
-    "version_short": "1.21"
+    "version_short": "2.0"
   },
   "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
   "main": "src/js/main.js",
@@ -38,7 +38,6 @@
     "autoprefixer": "^10.4.21",
     "del": "^8.0.0",
     "gulp": "^5.0.0",
-    "gulp-clean": "^0.4.0",
     "gulp-clean-css": "^4.3.0",
     "gulp-file-include": "^2.3.0",
     "gulp-postcss": "^10.0.0",
@@ -47,8 +46,7 @@
     "gulp-terser": "^2.1.0",
     "http-server": "^14.1.1",
     "prettier": "^3.5.3",
-    "rimraf": "^6.0.1",
-    "sass": "^1.87.0",
+    "sass": "^1.89.0",
     "through2": "^4.0.2"
   }
 }
