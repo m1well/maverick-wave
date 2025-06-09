@@ -4141,7 +4141,6 @@ pre code {
 @media (max-width: 576px) {
   .mw-grid-2 {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
   }
 }
 
@@ -4156,7 +4155,6 @@ pre code {
 @media (max-width: 576px) {
   .mw-grid-3 {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 }
 
@@ -4171,7 +4169,6 @@ pre code {
 @media (max-width: 576px) {
   .mw-grid-4 {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 }
 
@@ -4196,7 +4193,6 @@ pre code {
 @media (max-width: 375px) {
   .mw-grid-5 {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
 }
 
@@ -4206,7 +4202,6 @@ pre code {
 @media (max-width: 768px) {
   .mw-grid-flex {
     grid-template-columns: 1fr;
-    gap: 1rem;
   }
   .mw-grid-flex > * {
     grid-column: 1/-1 !important;
@@ -4372,7 +4367,6 @@ pre code {
 
 .mw-grid-stack {
   grid-template-columns: 1fr;
-  gap: 1rem;
   justify-items: start;
 }
 .mw-grid-stack > * {
@@ -4382,7 +4376,6 @@ pre code {
 
 .mw-grid-stack-center {
   grid-template-columns: 1fr;
-  gap: 1rem;
   justify-items: center;
 }
 .mw-grid-stack-center > * {
@@ -4391,7 +4384,6 @@ pre code {
 
 .mw-grid-stack-end {
   grid-template-columns: 1fr;
-  gap: 1rem;
   justify-items: end;
 }
 .mw-grid-stack-end > * {
@@ -4401,7 +4393,6 @@ pre code {
 
 .mw-grid-stack-stretch {
   grid-template-columns: 1fr;
-  gap: 1rem;
   justify-items: stretch;
 }
 .mw-grid-stack-stretch > * {
