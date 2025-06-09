@@ -16,19 +16,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-      margin: spacing('0');
-      line-height: 1.2;
-    }
+    margin: spacing('0');
   }
 
   &-body {
-    padding: spacing('4') spacing('5');
+    padding: spacing('3') spacing('5');
     flex: 1;
     overflow-y: auto;
 
