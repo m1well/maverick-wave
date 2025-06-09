@@ -1,0 +1,136 @@
+<h3 class="mw-section-subtitle">Simple Modals</h3>
+<p class="mw-text-muted mw-mb-6">
+  JavaScript-controlled modals - perfect for e.g. Angular apps using class
+  toggling.
+</p>
+
+<!-- Modal Triggers -->
+<div class="mw-grid-3 mw-mb-8">
+  <button onclick="openModal('modal-basic')" class="mw-btn mw-btn-primary">
+    Open Basic Modal
+  </button>
+  <button onclick="openModal('modal-confirm')" class="mw-btn mw-btn-secondary">
+    Open Confirmation
+  </button>
+  <button onclick="openModal('modal-form')" class="mw-btn mw-btn-outline">
+    Open Form Modal
+  </button>
+</div>
+
+<!-- Basic Modal -->
+<div id="modal-basic" class="mw-modal-overlay">
+  <div class="mw-modal">
+    <div class="mw-modal-header">
+      <h4 class="mw-modal-title">JavaScript Modal</h4>
+      <button onclick="closeModal('modal-basic')" class="mw-modal-close">
+        &#120299;
+      </button>
+    </div>
+    <div class="mw-modal-body">
+      <p>This modal works with minimal JavaScript - perfect for Angular!</p>
+      <p>
+        Uses CSS classes for show/hide animations that you can easily control
+        from Angular components.
+      </p>
+    </div>
+    <div class="mw-modal-footer">
+      <button onclick="closeModal('modal-basic')" class="mw-btn mw-btn-outline">
+        Cancel
+      </button>
+      <button onclick="closeModal('modal-basic')" class="mw-btn mw-btn-primary">
+        Confirm
+      </button>
+    </div>
+  </div>
+  <!-- Click outside to close -->
+  <div class="mw-modal-backdrop" onclick="closeModal('modal-basic')"></div>
+</div>
+
+<!-- Confirmation Modal -->
+<div id="modal-confirm" class="mw-modal-overlay">
+  <div class="mw-modal mw-modal-sm">
+    <div class="mw-modal-header">
+      <h3 class="mw-modal-title">Delete Confirmation</h3>
+      <button onclick="closeModal('modal-confirm')" class="mw-modal-close">
+        &#120299;
+      </button>
+    </div>
+    <div class="mw-modal-body">
+      <p class="mw-text-center">
+        <strong>Are you really sure you want to delete this item?</strong>
+      </p>
+      <p class="mw-text-center mw-text-muted">This action cannot be undone.</p>
+    </div>
+    <div class="mw-modal-footer">
+      <button
+        onclick="closeModal('modal-confirm')"
+        class="mw-btn mw-btn-outline"
+      >
+        Cancel
+      </button>
+      <button
+        onclick="closeModal('modal-confirm')"
+        class="mw-btn mw-btn-secondary"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+  <div class="mw-modal-backdrop" onclick="closeModal('modal-confirm')"></div>
+</div>
+
+<!-- Form Modal -->
+<div id="modal-form" class="mw-modal-overlay">
+  <div class="mw-modal mw-modal-lg">
+    <div class="mw-modal-header">
+      <h3 class="mw-modal-title">Contact Form</h3>
+      <button onclick="closeModal('modal-form')" class="mw-modal-close">
+        &#120299;
+      </button>
+    </div>
+    <div class="mw-modal-body">
+      <div class="mw-mb-4">
+        <label for="modal-name">
+          <span>Name</span>
+          <input
+            id="modal-name"
+            type="text"
+            class="mw-input-sm"
+            placeholder="Your Name"
+          />
+        </label>
+      </div>
+      <div class="mw-mb-4">
+        <label for="modal-email">
+          <span>Email</span>
+          <input
+            id="modal-email"
+            type="email"
+            class="mw-input-sm"
+            placeholder="Your Email"
+          />
+        </label>
+      </div>
+      <div class="mw-mb-4">
+        <label for="modal-message">
+          <span>Message</span>
+          <textarea
+            id="modal-message"
+            rows="5"
+            class="mw-textarea mw-textarea-sm"
+            placeholder="Your message..."
+          ></textarea>
+        </label>
+      </div>
+    </div>
+    <div class="mw-modal-footer">
+      <button onclick="closeModal('modal-form')" class="mw-btn mw-btn-outline">
+        Cancel
+      </button>
+      <button onclick="closeModal('modal-form')" class="mw-btn mw-btn-primary">
+        Send Message
+      </button>
+    </div>
+  </div>
+  <div class="mw-modal-backdrop" onclick="closeModal('modal-form')"></div>
+</div>

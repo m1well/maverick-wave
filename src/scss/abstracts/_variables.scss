@@ -63,7 +63,7 @@ $base-colors: (
       $alpha: -0.3
     ),
   'secondary-text-color': $dark-text-color,
-  'gray-background': color.adjust($gray-color, $lightness: +12%, $alpha: -0.4),
+  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.4),
   'form-elements-background': color.adjust($light-background, $lightness: +15%),
   'form-elements-color': color.adjust($light-text-color, $lightness: -2%),
 );

@@ -16,6 +16,7 @@
     initAlerts();
     initLocalhostIndicator();
     initFormSliders();
+    initModals();
   });
 
   // ===== Gallery Component =====
@@ -404,6 +405,7 @@
     }
   }
 
+  // ===== Form Sliders =====
   function initFormSliders() {
     document.querySelectorAll('.mw-slider-container').forEach((wrapper) => {
       const slider = wrapper.querySelector('.mw-slider');
@@ -431,6 +433,20 @@
       slider.addEventListener('input', update);
 
       update();
+    });
+  }
+
+  // ===== Modals =====
+  function initModals() {
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.mw-modal-close').forEach((button) => {
+        button.addEventListener('click', function () {
+          const modal = this.closest('.mw-modal-overlay');
+          if (modal) {
+            modal.classList.remove('mw-modal-open');
+          }
+        });
+      });
     });
   }
 })();

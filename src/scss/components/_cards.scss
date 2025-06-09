@@ -151,10 +151,8 @@ $_mw-card-addon-colors: (
 
   &-footer {
     display: flex;
-    /* remove or change this: */
-    // justify-content: space-between;
     justify-content: flex-start;
-    align-items: center;
+    align-items: stretch;
     gap: spacing('3');
     flex-shrink: 0;
     text-wrap: balance;
@@ -165,17 +163,24 @@ $_mw-card-addon-colors: (
       text-align: right;
     }
 
-    // responsive stacking stays the same
+    // Ensure buttons maintain their size
+    .mw-btn {
+      flex-shrink: 0;
+    }
+
     @include media-down('lg') {
       flex-direction: column;
-      align-items: flex-start;
-      gap: spacing('3');
+      align-items: stretch;
+      gap: spacing('2');
 
       > * {
         width: 100%;
-        &.mw-btn {
-          text-align: center;
-        }
+      }
+
+      .mw-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

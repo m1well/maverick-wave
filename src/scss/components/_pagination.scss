@@ -1,0 +1,100 @@
+@use '../abstracts' as *;
+
+.mw-pagination {
+  border: 1px solid var(--mw-border);
+  border-radius: radius('lg');
+  background: var(--mw-card-background);
+  overflow: hidden;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: spacing('3');
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+  }
+
+  &-nav {
+    background: none;
+    border: none;
+    color: var(--mw-primary-text-color);
+    cursor: pointer;
+    padding: spacing('1') spacing('3');
+    border-radius: radius('sm');
+    border: 1px solid var(--mw-primary-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    font-size: font-size('lg');
+
+    &:hover {
+      background: var(--mw-primary-color-hover);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &-title {
+    flex: 1;
+    text-align: center;
+    font-weight: font-weight('semibold');
+    font-size: font-size('lg');
+    margin: 0;
+  }
+
+  &-content {
+    padding: spacing('4');
+    min-height: 200px;
+    transition: all 0.3s ease;
+
+    &.mw-pagination-loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+
+  @include media-down('sm') {
+    &-nav {
+      font-size: font-size('md');
+    }
+    &-title {
+      font-size: font-size('md');
+    }
+  }
+}
+
+// Optional: Add slide animation
+.mw-pagination-slide-left {
+  animation: slideLeft 0.3s ease;
+}
+
+.mw-pagination-slide-right {
+  animation: slideRight 0.3s ease;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

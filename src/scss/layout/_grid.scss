@@ -32,6 +32,7 @@
 
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('3');
   }
 }
 
@@ -45,6 +46,7 @@
 
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('3');
   }
 }
 
@@ -58,6 +60,7 @@
 
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('3');
   }
 }
 
@@ -75,10 +78,12 @@
 
   @include media-down('sm') {
     grid-template-columns: repeat(2, 1fr);
+    gap: spacing('4');
   }
 
   @include media-down('xs') {
     grid-template-columns: 1fr;
+    gap: spacing('3');
   }
 }
 
@@ -92,6 +97,7 @@
   // At MD breakpoint and below, force single column
   @include media-down('md') {
     grid-template-columns: 1fr;
+    gap: spacing('3');
 
     // Reset all spans to full width
     > * {
@@ -150,6 +156,7 @@
   grid-template-columns: repeat(2, 1fr);
   @include media-down('md') {
     grid-template-columns: 1fr;
+    gap: spacing('5');
   }
 }
 
@@ -161,6 +168,7 @@
   }
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('5');
   }
 }
 
@@ -172,6 +180,7 @@
   }
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('5');
   }
 }
 
@@ -186,9 +195,11 @@
   }
   @include media-down('md') {
     grid-template-columns: repeat(2, 1fr);
+    gap: spacing('6');
   }
   @include media-down('sm') {
     grid-template-columns: 1fr;
+    gap: spacing('5');
   }
 }
 
@@ -204,6 +215,7 @@
 
   @include media-down('md') {
     grid-template-columns: 1fr;
+    gap: spacing('5');
     > * {
       grid-column: 1 / -1 !important;
     }
@@ -214,6 +226,7 @@
 .mw-grid-stack {
   @extend %grid-base;
   grid-template-columns: 1fr;
+  gap: spacing('3');
   justify-items: start; // Items keep natural width, aligned left
 
   // Remove the forced width from grid-1
@@ -227,10 +240,10 @@
 .mw-grid-stack-center {
   @extend %grid-base;
   grid-template-columns: 1fr;
+  gap: spacing('3');
   justify-items: center; // Items centered horizontally
 
   > * {
-    width: auto;
     max-width: none;
   }
 }
@@ -238,6 +251,7 @@
 .mw-grid-stack-end {
   @extend %grid-base;
   grid-template-columns: 1fr;
+  gap: spacing('3');
   justify-items: end; // Items aligned right
 
   > * {
@@ -249,6 +263,7 @@
 .mw-grid-stack-stretch {
   @extend %grid-base;
   grid-template-columns: 1fr;
+  gap: spacing('3');
   justify-items: stretch; // Same as grid-1 (full width)
 
   > * {
@@ -261,6 +276,7 @@
 .mw-grid-stack-lg {
   @extend %grid-base-lg;
   grid-template-columns: 1fr;
+  gap: spacing('5');
   justify-items: start;
 
   > * {
@@ -272,10 +288,10 @@
 .mw-grid-stack-center-lg {
   @extend %grid-base-lg;
   grid-template-columns: 1fr;
+  gap: spacing('5');
   justify-items: center;
 
   > * {
-    width: auto;
     max-width: none;
   }
 }

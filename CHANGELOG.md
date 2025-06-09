@@ -10,13 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- big update
+- modals
+- pagination
 - item lists
-- big update with form and form-elements
-- big update with buttons
+- form and form-elements
 - different flex grid ratios
 
 ### Changes
 
+- sizing sizing sizing
 - complete grid rework
 - progress bars update
 
