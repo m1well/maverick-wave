@@ -4473,12 +4473,9 @@ pre code {
   width: 50px;
   flex-shrink: 0;
 }
-.mw-header .mw-login-btn:hover {
+.mw-header .mw-login-btn:hover:not(:disabled) {
   background: var(--mw-primary-color-hover);
   transform: translateY(-1px);
-}
-.mw-header .mw-login-btn:active {
-  transform: translateY(0);
 }
 .mw-header .mw-login-btn:disabled {
   color: var(--mw-text-muted-color);
