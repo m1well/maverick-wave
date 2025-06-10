@@ -68,11 +68,6 @@
     &:active {
       transform: translateY(0);
     }
-
-    @include media-down('sm') {
-      min-height: 36px;
-      min-width: 36px;
-    }
   }
 
   // Updated burger button to look like primary button
@@ -176,7 +171,7 @@
     list-style: none;
     margin: spacing('0');
     padding: spacing('0');
-    gap: spacing('3');
+    gap: spacing('4');
     align-items: center;
     flex-wrap: nowrap;
     overflow: hidden;
@@ -270,13 +265,14 @@
         padding: spacing('3') spacing('0');
         border-bottom: 1px solid var(--mw-header-border);
         width: 100%;
+        text-align: left;
 
         &::after {
           display: none;
         }
 
         &.active {
-          color: var(--mw-primary-color);
+          color: var(--mw-header-navbar-list-active-color);
           font-weight: 600;
         }
       }
@@ -325,13 +321,14 @@
           padding: spacing('3') spacing('0');
           border-bottom: 1px solid var(--mw-header-border);
           width: 100%;
+          text-align: left;
 
           &::after {
             display: none;
           }
 
           &.active {
-            color: var(--mw-primary-color);
+            color: var(--mw-header-navbar-list-active-color);
             font-weight: 600;
           }
         }
@@ -381,13 +378,14 @@
           padding: spacing('3') spacing('0');
           border-bottom: 1px solid var(--mw-header-border);
           width: 100%;
+          text-align: left;
 
           &::after {
             display: none;
           }
 
           &.active {
-            color: var(--mw-primary-color);
+            color: var(--mw-header-navbar-list-active-color);
             font-weight: 600;
           }
         }
