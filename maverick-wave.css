@@ -4480,6 +4480,10 @@ pre code {
 .mw-header .mw-login-btn:active {
   transform: translateY(0);
 }
+.mw-header .mw-login-btn:disabled {
+  color: var(--mw-text-muted-color);
+  cursor: not-allowed;
+}
 .mw-header .mw-menu-btn {
   background: var(--mw-primary-color);
   border: none;
