@@ -4565,7 +4565,7 @@ pre code {
   gap: 1rem;
   align-items: center;
   flex-wrap: nowrap;
-  overflow: hidden;
+  overflow: visible;
 }
 @media (max-width: 992px) {
   .mw-navbar-list {
