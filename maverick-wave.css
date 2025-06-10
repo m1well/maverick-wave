@@ -4602,8 +4602,8 @@ pre code {
   color: var(--mw-header-navbar-list-active-color);
 }
 .mw-navbar-link:hover::after, .mw-navbar-link.active::after {
-  transform: scaleX(1);
-  opacity: 1;
+  transform: scaleX(1) !important;
+  opacity: 1 !important;
 }
 @media (max-width: 768px) {
   .mw-navbar .mw-navbar-list {
