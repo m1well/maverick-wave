@@ -60,13 +60,9 @@
     width: 50px;
     flex-shrink: 0;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--mw-primary-color-hover);
       transform: translateY(-1px);
-    }
-
-    &:active {
-      transform: translateY(0);
     }
 
     &:disabled {
