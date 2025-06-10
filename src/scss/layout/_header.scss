@@ -68,6 +68,11 @@
     &:active {
       transform: translateY(0);
     }
+
+    &:disabled {
+      color: var(--mw-text-muted-color);
+      cursor: not-allowed;
+    }
   }
 
   // Updated burger button to look like primary button
