@@ -17,6 +17,7 @@
     initLocalhostIndicator();
     initFormSliders();
     initModals();
+    initLoginButton();
   });
 
   // ===== Gallery Component =====
@@ -438,15 +439,33 @@
 
   // ===== Modals =====
   function initModals() {
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.mw-modal-close').forEach((button) => {
-        button.addEventListener('click', function () {
-          const modal = this.closest('.mw-modal-overlay');
-          if (modal) {
-            modal.classList.remove('mw-modal-open');
-          }
-        });
+    document.querySelectorAll('.mw-modal-close').forEach((button) => {
+      button.addEventListener('click', function () {
+        const modal = this.closest('.mw-modal-overlay');
+        if (modal) {
+          modal.classList.remove('mw-modal-open');
+        }
       });
     });
+  }
+
+  // ===== Login Button =====
+  function initLoginButton() {
+    const loginButton = document.querySelector('.mw-login-btn');
+
+    if (loginButton) {
+      loginButton.addEventListener('click', function () {
+        const icon = this.querySelector('i');
+
+        // Toggle between fa-user-lock and fa-user-tag
+        if (icon.classList.contains('fa-lock')) {
+          icon.classList.remove('fa-lock');
+          icon.classList.add('fa-lock-open');
+        } else {
+          icon.classList.remove('fa-lock-open');
+          icon.classList.add('fa-lock');
+        }
+      });
+    }
   }
 })();
