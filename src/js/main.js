@@ -303,21 +303,23 @@
             pageYOffset >= sectionTop &&
             pageYOffset < sectionTop + sectionHeight
           ) {
-            current = section
-              .getAttribute('id')
-              .replace('#', '')
-              .replace('/', '');
+            // Section ID is just the plain ID, no # or /
+            current = section.getAttribute('id');
           }
         });
 
         navLinks.forEach((link) => {
           link.classList.remove('active');
-          if (
-            link.getAttribute('href') &&
-            link.getAttribute('href').replace('#', '').replace('/', '') ===
-              current
-          ) {
-            link.classList.add('active');
+
+          const href = link.getAttribute('href');
+          if (href) {
+            const hashIndex = href.indexOf('#');
+            if (hashIndex !== -1) {
+              const linkTarget = href.substring(hashIndex + 1);
+              if (linkTarget === current) {
+                link.classList.add('active');
+              }
+            }
           }
         });
       }, 100)
