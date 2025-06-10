@@ -453,7 +453,7 @@
 
   // ===== Login Button =====
   function initLoginButton() {
-    const loginButton = document.querySelector('.mw-login-btn');
+    const loginButton = document.getElementById('login-button');
 
     if (loginButton) {
       loginButton.addEventListener('click', function () {
