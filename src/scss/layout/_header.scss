@@ -174,7 +174,7 @@
     gap: spacing('4');
     align-items: center;
     flex-wrap: nowrap;
-    overflow: hidden;
+    overflow: visible;
 
     @include media-down('lg') {
       gap: spacing('2');
