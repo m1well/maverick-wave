@@ -804,9 +804,11 @@ blockquote::after {
 }
 .mw-blog-post-content-markdown ul ul {
   list-style: circle;
+  margin: 0.2rem 0.2rem 0.5rem 0.75rem;
 }
 .mw-blog-post-content-markdown ul ul ul {
   list-style: square;
+  margin: 0.2rem 0.2rem 0.5rem 0.75rem;
 }
 .mw-blog-post-content-markdown ul,
 .mw-blog-post-content-markdown ol {
