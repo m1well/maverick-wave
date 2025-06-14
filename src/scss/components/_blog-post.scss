@@ -210,8 +210,10 @@
       list-style: disc;
       ul {
         list-style: circle;
+        margin: spacing('1') spacing('1') spacing('2') spacing('3');
         ul {
           list-style: square;
+          margin: spacing('1') spacing('1') spacing('2') spacing('3');
         }
       }
     }
