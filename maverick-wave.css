@@ -933,6 +933,117 @@ blockquote::after {
   font-size: 1.1rem;
 }
 
+.mw-button-bar {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 1px solid var(--mw-border);
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+.mw-button-bar:hover {
+  border-color: var(--mw-primary-color-hover);
+}
+@media (max-width: 576px) {
+  .mw-button-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .mw-button-bar .mw-btn {
+    width: 96%;
+    min-width: 200px;
+  }
+}
+
+.mw-button-bar-left {
+  justify-content: flex-start;
+}
+
+.mw-button-bar-right {
+  justify-content: flex-end;
+}
+
+.mw-button-bar-between {
+  justify-content: space-between;
+}
+@media (max-width: 640px) {
+  .mw-button-bar-between {
+    justify-content: center;
+  }
+}
+
+.mw-button-bar-primary .mw-btn:not([class*=mw-btn-secondary]):not([class*=mw-btn-outline]):not([class*=mw-btn-link]) {
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
+}
+.mw-button-bar-primary .mw-btn:not([class*=mw-btn-secondary]):not([class*=mw-btn-outline]):not([class*=mw-btn-link]):hover:not(:disabled) {
+  background: var(--mw-primary-color-hover);
+}
+
+.mw-button-bar-secondary .mw-btn:not([class*=mw-btn-primary]):not([class*=mw-btn-outline]):not([class*=mw-btn-link]) {
+  background: var(--mw-secondary-color);
+  color: var(--mw-primary-text-color);
+}
+.mw-button-bar-secondary .mw-btn:not([class*=mw-btn-primary]):not([class*=mw-btn-outline]):not([class*=mw-btn-link]):hover:not(:disabled) {
+  background: var(--mw-secondary-color-hover);
+}
+
+.mw-button-bar-outline .mw-btn:not([class*=mw-btn-primary]):not([class*=mw-btn-secondary]):not([class*=mw-btn-link]) {
+  background: transparent;
+  border-color: var(--mw-primary-color);
+  color: var(--mw-primary-color);
+}
+.mw-button-bar-outline .mw-btn:not([class*=mw-btn-primary]):not([class*=mw-btn-secondary]):not([class*=mw-btn-link]):hover:not(:disabled) {
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
+}
+
+.mw-button-bar-nav {
+  justify-content: space-between;
+}
+.mw-button-bar-nav .mw-btn:first-child:not([class*=mw-btn-]),
+.mw-button-bar-nav .mw-btn:last-child:not([class*=mw-btn-]) {
+  background: transparent;
+  border-color: var(--mw-primary-color);
+  color: var(--mw-primary-color);
+}
+.mw-button-bar-nav .mw-btn:first-child:not([class*=mw-btn-]):hover:not(:disabled),
+.mw-button-bar-nav .mw-btn:last-child:not([class*=mw-btn-]):hover:not(:disabled) {
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
+}
+.mw-button-bar-nav .mw-btn:not(:first-child):not(:last-child):not([class*=mw-btn-]) {
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
+}
+.mw-button-bar-nav .mw-btn:not(:first-child):not(:last-child):not([class*=mw-btn-]):hover:not(:disabled) {
+  background: var(--mw-primary-color-hover);
+}
+
+.mw-button-bar-sm {
+  gap: 0.5rem;
+}
+@media (max-width: 576px) {
+  .mw-button-bar-sm {
+    gap: 0.2rem;
+  }
+}
+
+.mw-button-bar-lg {
+  gap: 1rem;
+}
+.mw-button-bar-lg .mw-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+}
+@media (max-width: 576px) {
+  .mw-button-bar-lg {
+    gap: 0.75rem;
+  }
+}
+
 .mw-card {
   background: var(--mw-card-background);
   border-radius: 5px 20px 5px 20px;
