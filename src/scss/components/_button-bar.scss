@@ -1,0 +1,139 @@
+@use '../abstracts' as *;
+
+// Base button bar
+.mw-button-bar {
+  display: flex;
+  gap: spacing('3');
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+  padding: spacing('2');
+
+  &:hover {
+    border-color: var(--mw-primary-color-hover);
+  }
+
+  @include media-down('sm') {
+    flex-direction: column;
+    gap: spacing('2');
+
+    .mw-btn {
+      width: 96%;
+      min-width: 200px;
+    }
+  }
+}
+
+// Alignment variants
+.mw-button-bar-left {
+  justify-content: flex-start;
+}
+
+.mw-button-bar-right {
+  justify-content: flex-end;
+}
+
+.mw-button-bar-between {
+  justify-content: space-between;
+
+  @media (max-width: 640px) {
+    justify-content: center;
+  }
+}
+
+// Primary button bar (applies primary styling to all buttons)
+.mw-button-bar-primary {
+  .mw-btn:not([class*='mw-btn-secondary']):not([class*='mw-btn-outline']):not(
+      [class*='mw-btn-link']
+    ) {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-color-hover);
+    }
+  }
+}
+
+// Secondary button bar (applies secondary styling to all buttons)
+.mw-button-bar-secondary {
+  .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-outline']):not(
+      [class*='mw-btn-link']
+    ) {
+    background: var(--mw-secondary-color);
+    color: var(--mw-primary-text-color);
+
+    &:hover:not(:disabled) {
+      background: var(--mw-secondary-color-hover);
+    }
+  }
+}
+
+// Outline button bar
+.mw-button-bar-outline {
+  .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-secondary']):not(
+      [class*='mw-btn-link']
+    ) {
+    background: transparent;
+    border-color: var(--mw-primary-color);
+    color: var(--mw-primary-color);
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
+    }
+  }
+}
+
+// Mixed button bar for navigation (common pattern)
+.mw-button-bar-nav {
+  justify-content: space-between;
+
+  // First and last buttons get outline style
+  .mw-btn:first-child:not([class*='mw-btn-']),
+  .mw-btn:last-child:not([class*='mw-btn-']) {
+    background: transparent;
+    border-color: var(--mw-primary-color);
+    color: var(--mw-primary-color);
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
+    }
+  }
+
+  // Middle button(s) get primary style
+  .mw-btn:not(:first-child):not(:last-child):not([class*='mw-btn-']) {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-color-hover);
+    }
+  }
+}
+
+// Compact variant with smaller spacing
+.mw-button-bar-sm {
+  gap: spacing('2');
+
+  @include media-down('sm') {
+    gap: spacing('1');
+  }
+}
+
+// Large variant with bigger spacing and larger buttons
+.mw-button-bar-lg {
+  gap: spacing('4');
+
+  .mw-btn {
+    padding: spacing('3') spacing('5');
+    font-size: font-size('md');
+  }
+
+  @include media-down('sm') {
+    gap: spacing('3');
+  }
+}
