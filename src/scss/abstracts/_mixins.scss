@@ -36,8 +36,8 @@
 }
 
 @mixin media-between($min, $max) {
-  $min-width: map.get($mw-breakpoints, $min);
-  $max-width: map.get($mw-breakpoints, $max) - 1px;
+  $min-width: map.get(v.$breakpoints, $min);
+  $max-width: map.get(v.$breakpoints, $max) - 1px;
 
   @media (min-width: $min-width) and (max-width: $max-width) {
     @content;

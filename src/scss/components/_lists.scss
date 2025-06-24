@@ -83,9 +83,8 @@
 
 // Dot lists
 .mw-list-dot {
-  list-style: disc;
   padding-left: spacing('4');
-  list-style-position: inside;
+  list-style: disc inside;
 
   li {
     padding-left: spacing('0');
