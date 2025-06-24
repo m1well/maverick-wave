@@ -106,6 +106,7 @@
         .version-corner {
           right: 4%;
         }
+
         .color-swatch {
           margin: 0 auto 7px auto;
           width: 92%;
@@ -127,31 +128,31 @@
 
     <main class="mw-main">
       <!-- Home section -->
-      <div class="mw-container">
-        <section id="home">
+      <section id="home">
+        <div class="mw-container">
           @@include('./src/partials/home-container.html')
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Get started section -->
-      <div class="mw-container">
-        <section id="get-started">
+      <section id="get-started">
+        <div class="mw-container">
           <h2 class="mw-section-title">Get started</h2>
           @@include('./src/partials/get-started-container.html')
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Documentation section -->
-      <div class="mw-container">
-        <section id="documentation">
+      <section id="documentation" class="mw-section-alternate">
+        <div class="mw-container">
           <h2 class="mw-section-title">Documentation</h2>
           @@include('./src/partials/documentation-container.html')
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Foundations section -->
-      <div class="mw-container">
-        <section id="foundations">
+      <section id="foundations">
+        <div class="mw-container">
           <h2 class="mw-section-title">Foundations</h2>
           <div class="mw-button-bar mw-button-bar-primary">
             <a href="#typography" class="mw-btn">Typography</a>
@@ -185,12 +186,12 @@
           <div id="coming-soon">
             @@include('./src/partials/coming-soon-container.html')
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Layout section -->
-      <div class="mw-container">
-        <section id="layout">
+      <section id="layout" class="mw-section-alternate">
+        <div class="mw-container">
           <h2 class="mw-section-title">Layout</h2>
           <div class="mw-button-bar mw-button-bar-primary">
             <a href="#grid" class="mw-btn">Grid System</a>
@@ -236,12 +237,12 @@
           <div id="item-lists">
             @@include('./src/partials/item-lists-container.html')
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Components section -->
-      <div class="mw-container">
-        <section id="components">
+      <section id="components">
+        <div class="mw-container">
           <h2 class="mw-section-title">Components</h2>
           <div class="mw-button-bar mw-button-bar-primary">
             <a href="#buttons" class="mw-btn">Buttons</a>
@@ -299,13 +300,13 @@
 
           <!-- Code container -->
           <div id="code">@@include('./src/partials/code-container.html')</div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Components section -->
-      <div class="mw-container">
-        <section id="form-elements">
-          <h2 class="mw-section-title">Form & Elements</h2>
+      <section id="forms">
+        <div class="mw-container">
+          <h2 class="mw-section-title">Forms</h2>
           <div class="mw-button-bar mw-button-bar-primary">
             <a href="#form-elements" class="mw-btn">Form Elements</a>
             <a href="#form" class="mw-btn">Form</a>
@@ -322,12 +323,12 @@
 
           <!-- Login container -->
           <div id="login">@@include('./src/partials/login-container.html')</div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <!-- Data & display section -->
-      <div class="mw-container">
-        <section id="data-display">
+      <section id="data-display">
+        <div class="mw-container">
           <h2 class="mw-section-title">Data & Display</h2>
           <div class="mw-button-bar mw-button-bar-primary">
             <a href="#meta-info" class="mw-btn">Meta Info</a>
@@ -367,8 +368,8 @@
           <div id="blog-posts">
             @@include('./src/partials/blog-posts-container.html')
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
