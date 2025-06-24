@@ -1,4 +1,3 @@
-@use 'sass:color';
 @use '../abstracts' as *;
 
 // System Font Stacks
@@ -114,6 +113,12 @@ blockquote {
   padding: spacing('4');
   margin: spacing('2') spacing('1');
   border-left: 2px solid var(--mw-secondary-background-hover);
+  border-radius: radius('none') radius('sm') radius('sm') radius('none');
+  background: color-mix(
+    in srgb,
+    var(--mw-secondary-background) 85%,
+    transparent
+  );
 
   &:hover {
     &::before,
