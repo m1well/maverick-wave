@@ -79,10 +79,10 @@ section {
   &.mw-section-alternate {
     --s: 5px; // size
     --c1: var(--mw-page-background);
-    --c2: color-mix(in srgb, var(--mw-gray-background) 55%, transparent);
+    --c2: var(--mw-section-alternate-pattern);
     --g: var(--c2) -5% 5%, var(--c1) 0 45%;
     background:
-      linear-gradient(90deg, #0000 10%, var(--c1) 0 40%, #0000 0),
+      linear-gradient(0deg, #0000 10%, var(--c1) 0 40%, #0000 0),
       repeating-linear-gradient(-45deg, var(--g)) var(--c1);
     background-size: var(--s) var(--s);
   }
