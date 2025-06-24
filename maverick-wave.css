@@ -242,6 +242,8 @@ blockquote {
   padding: 1rem;
   margin: 0.5rem 0.2rem;
   border-left: 2px solid var(--mw-secondary-background-hover);
+  border-radius: 0 5px 5px 0;
+  background: color-mix(in srgb, var(--mw-secondary-background) 85%, transparent);
 }
 blockquote:hover::before, blockquote:hover::after {
   opacity: 0.7;
@@ -626,7 +628,7 @@ blockquote::after {
   padding: 0.75rem 1.5rem;
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: 5px 30px 5px 30px;
-  box-shadow: var(--mw-border) 0px 30px 60px -18px inset, var(--mw-border) 0px 18px 36px -18px inset;
+  box-shadow: var(--mw-border) 0 30px 60px -18px inset, var(--mw-border) 0 18px 36px -18px inset;
 }
 @keyframes pageReveal {
   0% {
@@ -1048,7 +1050,6 @@ blockquote::after {
 .mw-card {
   background: var(--mw-card-background);
   border-radius: 5px 20px 5px 20px;
-  padding: 0;
   padding: 1rem 0 0.5rem 0;
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
@@ -1897,9 +1898,8 @@ pre code {
 }
 
 .mw-list-dot {
-  list-style: disc;
   padding-left: 1rem;
-  list-style-position: inside;
+  list-style: disc inside;
 }
 .mw-list-dot li {
   padding-left: 0;
@@ -2263,7 +2263,6 @@ pre code {
 
 .mw-modal-close {
   background: none;
-  border: none;
   font-size: 1.1rem;
   cursor: pointer;
   padding: 0.2rem 0.75rem;
@@ -2304,7 +2303,6 @@ pre code {
 }
 .mw-pagination-nav {
   background: none;
-  border: none;
   color: var(--mw-primary-text-color);
   cursor: pointer;
   padding: 0.2rem 0.75rem;
@@ -2719,8 +2717,6 @@ pre code {
 
 .mw-spinner-container, .mw-spinner-container-overlay {
   display: flex;
-  justify-content: center;
-  align-items: center;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -3837,8 +3833,7 @@ pre code {
 
 .mw-select {
   width: 100%;
-  padding: 0.5rem 0.75rem;
-  padding-right: 2rem;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
   font-size: 0.9rem;
   background: var(--mw-form-elements-background);
   color: var(--mw-form-elements-color);
@@ -3857,22 +3852,19 @@ pre code {
   border: 3px solid var(--mw-primary-color);
 }
 .mw-select-sm {
-  padding: 0.2rem 0.5rem;
-  padding-right: 1.5rem;
+  padding: 0.2rem 1.5rem 0.2rem 0.5rem;
   font-size: 0.8rem;
   background-position: right 0.5rem center;
   background-size: 0.5rem 0.5rem;
 }
 .mw-select-lg {
-  padding: 0.75rem 1rem;
-  padding-right: 2.5rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   font-size: 1rem;
   background-position: right 1rem center;
   background-size: 1rem 1rem;
 }
 .mw-select-xl {
-  padding: 1rem 1.5rem;
-  padding-right: 3rem;
+  padding: 1rem 3rem 1rem 1.5rem;
   font-size: 1.1rem;
   background-position: right 1.5rem center;
   background-size: 1.5rem 1.5rem;
@@ -4041,8 +4033,6 @@ pre code {
   border-radius: 5px;
   transition: var(--mw-transition);
   resize: none;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
 }
 .mw-textarea:focus {
   outline: none;
@@ -4918,9 +4908,8 @@ pre code {
 }
 .mw-home-text {
   width: min(75%, 700px);
-  margin: 0 auto;
   position: relative;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
 }
 @media (max-width: 576px) {
   .mw-home-text {

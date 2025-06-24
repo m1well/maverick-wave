@@ -23,9 +23,8 @@
 
   &-text {
     width: min(75%, 700px);
-    margin: spacing('0') auto;
     position: relative;
-    margin-bottom: spacing('4');
+    margin: spacing('0') auto spacing('4');
     @include media-down('sm') {
       width: 85%;
     }

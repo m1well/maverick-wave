@@ -12,7 +12,6 @@ $_mw-card-addon-colors: (
 .mw-card {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  padding: spacing('0');
   padding: spacing('4') spacing('0') spacing('2') spacing('0');
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);

@@ -7,8 +7,8 @@
   animation: pageReveal 1.6s ease-out forwards;
   border-radius: radius('sm') radius('2xl') radius('sm') radius('2xl');
   box-shadow:
-    var(--mw-border) 0px 30px 60px -18px inset,
-    var(--mw-border) 0px 18px 36px -18px inset;
+    var(--mw-border) 0 30px 60px -18px inset,
+    var(--mw-border) 0 18px 36px -18px inset;
 
   @keyframes pageReveal {
     0% {

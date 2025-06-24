@@ -12,8 +12,6 @@
   border-radius: radius('sm');
   transition: var(--mw-transition);
   resize: none;
-  padding: spacing('2') spacing('3');
-  font-size: font-size('sm');
 
   &:focus {
     outline: none;

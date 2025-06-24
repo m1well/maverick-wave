@@ -60,7 +60,7 @@
   --mw-info-color: #{map.get($status-colors, 'info-color')};
   --mw-info-info-background: #{map.get($status-colors, 'info-info-background')};
 
-  // Header/navbar colors (they are fixed, but you can change them seperately)
+  // Header/navbar colors (they are fixed, but you can change them separately)
   --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};
   --mw-header-navbar-list-color: #{map.get(
       $dark-theme-colors,

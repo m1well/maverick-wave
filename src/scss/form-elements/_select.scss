@@ -2,8 +2,7 @@
 
 .mw-select {
   width: 100%;
-  padding: spacing('2') spacing('3');
-  padding-right: spacing('6');
+  padding: spacing('2') spacing('6') spacing('2') spacing('3');
   font-size: font-size('sm');
   background: var(--mw-form-elements-background);
   color: var(--mw-form-elements-color);
@@ -24,22 +23,19 @@
 
   // size modifiers
   &-sm {
-    padding: spacing('1') spacing('2');
-    padding-right: spacing('5');
+    padding: spacing('1') spacing('5') spacing('1') spacing('2');
     font-size: font-size('xs');
     background-position: right spacing('2') center;
     background-size: spacing('2') spacing('2');
   }
   &-lg {
-    padding: spacing('3') spacing('4');
-    padding-right: spacing('7');
+    padding: spacing('3') spacing('7') spacing('3') spacing('4');
     font-size: font-size('base');
     background-position: right spacing('4') center;
     background-size: spacing('4') spacing('4');
   }
   &-xl {
-    padding: spacing('4') spacing('5');
-    padding-right: spacing('8');
+    padding: spacing('4') spacing('8') spacing('4') spacing('5');
     font-size: font-size('md');
     background-position: right spacing('5') center;
     background-size: spacing('5') spacing('5');
