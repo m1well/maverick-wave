@@ -95,6 +95,7 @@ th {
   --mw-secondary-info-background: rgba(149.4157635468, 39.1517241379, 12.7842364532, 0.7);
   --mw-secondary-text-color: #d6dbdf;
   --mw-gray-background: rgba(98.75, 98.75, 98.75, 0.6);
+  --mw-section-alternate-pattern: rgba(86, 86, 86, 0.45);
   --mw-form-elements-background: hsl(243.75, 21.0526315789%, 100.0980392157%);
   --mw-form-elements-color: rgb(21.1781818182, 21.1781818182, 23.6218181818);
   --mw-success-color: #28a745;
@@ -5064,9 +5065,9 @@ section {
 section.mw-section-alternate {
   --s: 5px;
   --c1: var(--mw-page-background);
-  --c2: color-mix(in srgb, var(--mw-gray-background) 55%, transparent);
+  --c2: var(--mw-section-alternate-pattern);
   --g: var(--c2) -5% 5%, var(--c1) 0 45%;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 10%, var(--c1) 0 40%, rgba(0, 0, 0, 0) 0), repeating-linear-gradient(-45deg, var(--g)) var(--c1);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0) 10%, var(--c1) 0 40%, rgba(0, 0, 0, 0) 0), repeating-linear-gradient(-45deg, var(--g)) var(--c1);
   background-size: var(--s) var(--s);
 }
 

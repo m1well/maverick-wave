@@ -29,6 +29,10 @@
     )};
   --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
+  --mw-section-alternate-pattern: #{map.get(
+      $base-colors,
+      'section-alternate-pattern'
+    )};
 
   // form
   --mw-form-elements-background: #{map.get(
