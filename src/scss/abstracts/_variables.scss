@@ -22,8 +22,8 @@ $base-colors: (
   'primary-color': $primary-color,
   'primary-color-hover': color.adjust(
       $primary-color,
-      $lightness: -2%,
-      $alpha: -0.2
+      $lightness: -3%,
+      $alpha: -0.3
     ),
   'primary-background': color.adjust(
       $primary-color,
@@ -44,8 +44,8 @@ $base-colors: (
   'secondary-color': $secondary-color,
   'secondary-color-hover': color.adjust(
       $secondary-color,
-      $lightness: -2%,
-      $alpha: -0.3
+      $lightness: -3%,
+      $alpha: -0.4
     ),
   'secondary-background': color.adjust(
       $secondary-color,
