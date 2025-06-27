@@ -1,6 +1,13 @@
 (function () {
   'use strict';
 
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      console.log('Link clicked:', this.getAttribute('href'));
+      console.log('preventDefault called:', e.defaultPrevented);
+    });
+  });
+
   // Initialize all components when DOM is ready
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
@@ -250,48 +257,19 @@
 
   // ===== Smooth Scrolling =====
   function initSmoothScrolling() {
-    const menuBtn = document.querySelector('.mw-menu-btn');
-    const nav = document.querySelector('.mw-navbar');
-
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
 
         const targetElement = document.querySelector(targetId);
+        if (!targetElement) return;
 
-        if (targetElement) {
-          e.preventDefault();
-
-          // Calculate dynamic header height
-          const header = document.querySelector('.mw-header');
-
-          const headerHeight = header ? header.offsetHeight : 0;
-          const additionalOffset = 5;
-
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition =
-            elementPosition + window.scrollY - headerHeight;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-
-          if (menuBtn && nav) {
-            menuBtn.classList.remove('open');
-            nav.classList.remove('open');
-          }
-
-          document.querySelectorAll('.mw-navbar-link').forEach((link) => {
-            link.classList.remove('active');
-          });
-
-          if (this.classList.contains('mw-navbar-link')) {
-            this.classList.add('active');
-          }
-        } else {
-          console.warn(`Target element ${targetId} not found`);
+        const menuBtn = document.querySelector('.mw-menu-btn');
+        const nav = document.querySelector('.mw-navbar');
+        if (menuBtn && nav) {
+          menuBtn.classList.remove('open');
+          nav.classList.remove('open');
         }
       });
     });
@@ -314,8 +292,8 @@
           const sectionHeight = section.clientHeight;
 
           if (
-            pageYOffset >= sectionTop &&
-            pageYOffset < sectionTop + sectionHeight
+            scrollY >= sectionTop &&
+            scrollY < sectionTop + sectionHeight
           ) {
             // Section ID is just the plain ID, no # or /
             current = section.getAttribute('id');

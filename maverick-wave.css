@@ -9,13 +9,8 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 60px;
   min-width: 333px;
-}
-@media (min-width: 768px) {
-  html {
-    scroll-padding-top: 80px;
-  }
+  scroll-padding-top: 70px;
 }
 
 body {
