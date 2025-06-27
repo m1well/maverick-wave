@@ -263,8 +263,15 @@
         if (targetElement) {
           e.preventDefault();
 
+          // Calculate dynamic header height
+          const header = document.querySelector('.mw-header');
+
+          const headerHeight = header ? header.offsetHeight : 0;
+          const additionalOffset = 5;
+
           const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.scrollY - 80;
+          const offsetPosition =
+            elementPosition + window.scrollY - headerHeight;
 
           window.scrollTo({
             top: offsetPosition,
