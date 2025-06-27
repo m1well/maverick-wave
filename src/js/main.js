@@ -264,7 +264,7 @@
           e.preventDefault();
 
           const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.scrollY - 70;
+          const offsetPosition = elementPosition + window.scrollY - 80;
 
           window.scrollTo({
             top: offsetPosition,
