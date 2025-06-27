@@ -1,0 +1,119 @@
+@use '../abstracts' as *;
+
+.mw-image-slider {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: spacing('1') auto;
+  border-radius: radius('md');
+  overflow: hidden;
+
+  // Heights variables for consistency
+  $height-lg: 370px;
+  $height-md: 320px;
+  $height-sm: 250px;
+
+  &-base {
+    position: relative;
+    width: 100%;
+    height: $height-lg;
+
+    @include media-down('md') {
+      height: $height-md;
+    }
+
+    @include media-down('sm') {
+      height: $height-sm;
+    }
+  }
+
+  &-base-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $height-lg;
+    pointer-events: none;
+
+    @include media-down('md') {
+      height: $height-md;
+    }
+
+    @include media-down('sm') {
+      height: $height-sm;
+    }
+  }
+
+  &-overlay-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: translateX(100%);
+    transition: transform 0.9s cubic-bezier(0.2, 0, 0.7, 1);
+    z-index: 10;
+    pointer-events: auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  // Fixed: Direct selectors for grid classes
+  &-controls-grid-3 {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: spacing('3');
+    padding: spacing('2') spacing('3');
+    background: var(--mw-card-background);
+    z-index: 20;
+    width: 100%;
+
+    @include media-down('md') {
+      gap: spacing('2');
+      padding: spacing('2');
+    }
+
+    @include media-down('sm') {
+      padding: spacing('2');
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &-controls-grid-2 {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing('3');
+    padding: spacing('2') spacing('3');
+    background: var(--mw-card-background);
+    z-index: 20;
+    width: 100%;
+
+    @include media-down('md') {
+      gap: spacing('2');
+      padding: spacing('2');
+    }
+
+    @include media-down('sm') {
+      padding: spacing('2');
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -18,6 +18,7 @@
     initFormSliders();
     initModals();
     initLoginButton();
+    initImageSliders();
   });
 
   // ===== Gallery Component =====
@@ -255,29 +256,35 @@
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
-        if (targetId === '#') return; // Skip empty anchors
+        if (targetId === '#') return;
 
         const targetElement = document.querySelector(targetId);
 
         if (targetElement) {
           e.preventDefault();
 
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.scrollY - 70;
+
           window.scrollTo({
-            top: targetElement.offsetTop - 80,
+            top: offsetPosition,
             behavior: 'smooth',
           });
 
-          // Close mobile menu if open
           if (menuBtn && nav) {
             menuBtn.classList.remove('open');
             nav.classList.remove('open');
           }
 
-          // Update active link
           document.querySelectorAll('.mw-navbar-link').forEach((link) => {
             link.classList.remove('active');
           });
-          this.classList.add('active');
+
+          if (this.classList.contains('mw-navbar-link')) {
+            this.classList.add('active');
+          }
+        } else {
+          console.warn(`Target element ${targetId} not found`);
         }
       });
     });
@@ -469,5 +476,47 @@
         }
       });
     }
+  }
+
+  // ===== Login Button =====
+  function initImageSliders() {
+    const sliders = document.querySelectorAll('.mw-image-slider');
+
+    sliders.forEach((slider) => {
+      const overlayImages = slider.querySelectorAll(
+        '.mw-image-slider-overlay-image'
+      );
+      const buttons = slider.querySelectorAll('button[data-index]');
+
+      if (!overlayImages.length || !buttons.length) return;
+
+      let current = 0;
+
+      function updateSliderView() {
+        overlayImages.forEach((img) => {
+          const imgIndex = parseInt(img.dataset.index);
+          img.classList.toggle('active', imgIndex === current);
+        });
+
+        buttons.forEach((btn) => {
+          const btnIndex = parseInt(btn.dataset.index);
+          btn.classList.toggle('active', btnIndex === current);
+        });
+      }
+
+      function goToSlide(index) {
+        current = index;
+        updateSliderView();
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const index = parseInt(button.dataset.index);
+          goToSlide(index);
+        });
+      });
+
+      updateSliderView();
+    });
   }
 })();

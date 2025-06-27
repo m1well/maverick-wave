@@ -83,13 +83,13 @@ th {
 
 :root {
   --mw-primary-color: #1031bb;
-  --mw-primary-color-hover: rgba(15.1960591133, 46.5379310345, 177.6039408867, 0.8);
+  --mw-primary-color-hover: rgba(14.79408867, 45.3068965517, 172.90591133, 0.7);
   --mw-primary-background: rgba(12.7842364532, 39.1517241379, 149.4157635468, 0.2);
   --mw-primary-background-hover: rgba(14.3921182266, 44.075862069, 168.2078817734, 0.5);
   --mw-primary-info-background: rgba(15.5980295567, 47.7689655172, 182.3019704433, 0.7);
   --mw-primary-text-color: #d6dbdf;
   --mw-secondary-color: #bb3110;
-  --mw-secondary-color-hover: rgba(177.6039408867, 46.5379310345, 15.1960591133, 0.7);
+  --mw-secondary-color-hover: rgba(172.90591133, 45.3068965517, 14.79408867, 0.6);
   --mw-secondary-background: rgba(149.4157635468, 39.1517241379, 12.7842364532, 0.2);
   --mw-secondary-background-hover: rgba(172.90591133, 45.3068965517, 14.79408867, 0.4);
   --mw-secondary-info-background: rgba(149.4157635468, 39.1517241379, 12.7842364532, 0.7);
@@ -110,7 +110,7 @@ th {
   --mw-header-navbar-list-color: rgb(139.5260273973, 153.6082191781, 164.8739726027);
   --mw-header-navbar-list-active-color: #1031bb;
   --mw-header-burgerbutton-color: #d6dbdf;
-  --mw-header-border: rgba(15.1960591133, 46.5379310345, 177.6039408867, 0.8);
+  --mw-header-border: rgba(14.79408867, 45.3068965517, 172.90591133, 0.7);
   --mw-dark-page-background: #0b111a;
   --mw-dark-hero-overlay-background: rgba(11, 17, 26, 0.3);
   --mw-dark-card-background: rgb(18.5810810811, 28.7162162162, 43.9189189189);
@@ -871,9 +871,6 @@ blockquote::after {
   font-family: inherit;
   font-size: inherit;
 }
-.mw-btn:hover:not(:disabled) {
-  filter: brightness(1.1);
-}
 .mw-btn:disabled {
   cursor: not-allowed;
   opacity: 0.6;
@@ -886,6 +883,10 @@ blockquote::after {
 .mw-btn-primary:hover:not(:disabled) {
   background: var(--mw-primary-color-hover);
 }
+.mw-btn-primary.active:not(:disabled) {
+  background: var(--mw-primary-color-hover);
+  border: 2px solid var(--mw-primary-color);
+}
 
 .mw-btn-secondary {
   background: var(--mw-secondary-color);
@@ -894,6 +895,10 @@ blockquote::after {
 .mw-btn-secondary:hover:not(:disabled) {
   background: var(--mw-secondary-color-hover);
 }
+.mw-btn-secondary.active:not(:disabled) {
+  background: var(--mw-secondary-color-hover);
+  border: 2px solid var(--mw-secondary-color);
+}
 
 .mw-btn-outline {
   background: transparent;
@@ -901,6 +906,10 @@ blockquote::after {
   color: var(--mw-primary-color);
 }
 .mw-btn-outline:hover:not(:disabled) {
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
+}
+.mw-btn-outline.active:not(:disabled) {
   background: var(--mw-primary-color);
   color: var(--mw-primary-text-color);
 }
@@ -1624,6 +1633,118 @@ pre code {
   .mw-coming-soon-text, .mw-coming-soon-icon {
     letter-spacing: 0.5rem;
     font-size: 1.3rem;
+  }
+}
+
+.mw-image-slider {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0.2rem auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mw-image-slider-base {
+  position: relative;
+  width: 100%;
+  height: 370px;
+}
+@media (max-width: 768px) {
+  .mw-image-slider-base {
+    height: 320px;
+  }
+}
+@media (max-width: 576px) {
+  .mw-image-slider-base {
+    height: 250px;
+  }
+}
+.mw-image-slider-base-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mw-image-slider-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 370px;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .mw-image-slider-overlay {
+    height: 320px;
+  }
+}
+@media (max-width: 576px) {
+  .mw-image-slider-overlay {
+    height: 250px;
+  }
+}
+.mw-image-slider-overlay-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  transition: transform 0.9s cubic-bezier(0.2, 0, 0.7, 1);
+  z-index: 10;
+  pointer-events: auto;
+}
+.mw-image-slider-overlay-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mw-image-slider-overlay-image.active {
+  transform: translateX(0);
+}
+.mw-image-slider-controls-grid-3 {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--mw-card-background);
+  z-index: 20;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .mw-image-slider-controls-grid-3 {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .mw-image-slider-controls-grid-3 {
+    padding: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.mw-image-slider-controls-grid-2 {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--mw-card-background);
+  z-index: 20;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .mw-image-slider-controls-grid-2 {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .mw-image-slider-controls-grid-2 {
+    padding: 0.5rem;
+    grid-template-columns: 1fr;
   }
 }
 

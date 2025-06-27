@@ -18,10 +18,6 @@
   font-family: inherit;
   font-size: inherit;
 
-  &:hover:not(:disabled) {
-    filter: brightness(1.1);
-  }
-
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
@@ -35,6 +31,10 @@
   &:hover:not(:disabled) {
     background: var(--mw-primary-color-hover);
   }
+  &.active:not(:disabled) {
+    background: var(--mw-primary-color-hover);
+    border: 2px solid var(--mw-primary-color);
+  }
 }
 .mw-btn-secondary {
   background: var(--mw-secondary-color);
@@ -42,12 +42,20 @@
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color-hover);
   }
+  &.active:not(:disabled) {
+    background: var(--mw-secondary-color-hover);
+    border: 2px solid var(--mw-secondary-color);
+  }
 }
 .mw-btn-outline {
   background: transparent;
   border-color: var(--mw-primary-color);
   color: var(--mw-primary-color);
   &:hover:not(:disabled) {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+  }
+  &.active:not(:disabled) {
     background: var(--mw-primary-color);
     color: var(--mw-primary-text-color);
   }
