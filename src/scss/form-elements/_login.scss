@@ -8,9 +8,9 @@
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  min-width: min(400px, 80%);
+  width: min(420px, 85%);
   margin: spacing('2') auto;
-  padding: spacing('6');
+  padding: spacing('5');
   display: flex;
   flex-direction: column;
   align-items: stretch;
