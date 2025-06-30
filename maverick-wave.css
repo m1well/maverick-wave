@@ -4970,24 +4970,21 @@ pre code {
 }
 
 @media (max-width: 768px) {
-  .mw-navbar ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-  .mw-navbar ~ .mw-theme-toggle ~ .mw-menu-btn {
+  .mw-navbar ~ .mw-menu-btn {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 }
 @media (max-width: 992px) {
-  .mw-navbar.mw-navbar-medium ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-  .mw-navbar.mw-navbar-medium ~ .mw-theme-toggle ~ .mw-menu-btn {
+  .mw-navbar.mw-navbar-medium ~ .mw-menu-btn {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 }
 @media (max-width: 1200px) {
-  .mw-navbar.mw-navbar-large ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-  .mw-navbar.mw-navbar-large ~ .mw-theme-toggle ~ .mw-menu-btn {
+  .mw-navbar.mw-navbar-large ~ .mw-menu-btn {
     display: flex;
     align-items: center;
     justify-content: center;

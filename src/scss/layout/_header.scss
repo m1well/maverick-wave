@@ -399,8 +399,7 @@
 .mw-navbar {
   // Default (1-3 items): show burger at md
   @include media-down('md') {
-    ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-    ~ .mw-theme-toggle ~ .mw-menu-btn {
+    ~ .mw-menu-btn {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -410,8 +409,7 @@
   &.mw-navbar-medium {
     // 4-5 items: show burger at lg
     @include media-down('lg') {
-      ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-      ~ .mw-theme-toggle ~ .mw-menu-btn {
+      ~ .mw-menu-btn {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -422,8 +420,7 @@
   &.mw-navbar-large {
     // 6+ items: show burger at xl
     @include media-down('xl') {
-      ~ .mw-theme-toggle ~ .mw-login-btn ~ .mw-menu-btn,
-      ~ .mw-theme-toggle ~ .mw-menu-btn {
+      ~ .mw-menu-btn {
         display: flex;
         align-items: center;
         justify-content: center;
