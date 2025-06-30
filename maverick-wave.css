@@ -3772,7 +3772,7 @@ pre code {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(390px, 80vw);
+  width: min(400px, 80%);
   margin: 0.5rem auto;
   padding: 2rem;
   display: flex;
@@ -5052,7 +5052,7 @@ pre code {
 }
 
 .mw-container {
-  width: min(88%, 1100px);
+  width: min(1100px, 88%);
   margin: 0 auto;
   padding: 0;
 }
@@ -5090,6 +5090,7 @@ pre code {
 
 .mw-content {
   margin-top: 3rem;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
