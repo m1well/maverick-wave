@@ -146,7 +146,7 @@ $_border-width-simple: 3px;
   &::before {
     content: '';
     position: absolute;
-    left: 95px;
+    left: 100px;
     top: 0;
     width: $_border-width-simple;
     height: 100%;
@@ -165,7 +165,7 @@ $_border-width-simple: 3px;
     position: absolute;
     width: 120px;
     top: 0;
-    left: -15px;
+    left: -10px;
     text-align: center;
     font-size: font-size('sm');
     padding: spacing('1');
@@ -177,7 +177,7 @@ $_border-width-simple: 3px;
 
   &-content {
     padding: spacing('0');
-    margin-left: 113px;
+    margin-left: 120px;
     text-align: left;
     opacity: 0;
   }
@@ -192,19 +192,20 @@ $_border-width-simple: 3px;
 
   @include media-down('sm') {
     &::before {
-      left: spacing('1');
+      left: spacing('0');
     }
 
     &-date {
       position: absolute;
-      width: 110px;
+      width: 115px;
       font-size: font-size('xs');
       line-height: 1.1;
     }
 
     &-content {
       margin-top: spacing('7');
-      margin-left: spacing('4');
+      margin-left: spacing('3');
+      width: auto;
     }
   }
 }

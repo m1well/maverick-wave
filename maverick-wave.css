@@ -3441,7 +3441,7 @@ pre code {
 .mw-timeline-simple::before {
   content: "";
   position: absolute;
-  left: 95px;
+  left: 100px;
   top: 0;
   width: 3px;
   height: 100%;
@@ -3458,7 +3458,7 @@ pre code {
   position: absolute;
   width: 120px;
   top: 0;
-  left: -15px;
+  left: -10px;
   text-align: center;
   font-size: 0.9rem;
   padding: 0.2rem;
@@ -3469,7 +3469,7 @@ pre code {
 }
 .mw-timeline-simple-content {
   padding: 0;
-  margin-left: 113px;
+  margin-left: 120px;
   text-align: left;
   opacity: 0;
 }
@@ -3515,17 +3515,18 @@ pre code {
 }
 @media (max-width: 576px) {
   .mw-timeline-simple::before {
-    left: 0.2rem;
+    left: 0;
   }
   .mw-timeline-simple-date {
     position: absolute;
-    width: 110px;
+    width: 115px;
     font-size: 0.8rem;
     line-height: 1.1;
   }
   .mw-timeline-simple-content {
     margin-top: 2.5rem;
-    margin-left: 1rem;
+    margin-left: 0.75rem;
+    width: auto;
   }
 }
 
