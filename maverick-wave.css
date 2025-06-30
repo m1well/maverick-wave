@@ -5004,6 +5004,7 @@ pre code {
   }
 }
 .mw-home {
+  justify-items: center;
   align-items: center;
   text-align: center;
 }
