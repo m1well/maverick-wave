@@ -8,7 +8,7 @@
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(400px, 80%);
+  min-width: min(400px, 80%);
   margin: spacing('2') auto;
   padding: spacing('6');
   display: flex;

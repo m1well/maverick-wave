@@ -3772,7 +3772,7 @@ pre code {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(400px, 80%);
+  min-width: min(400px, 80%);
   margin: 0.5rem auto;
   padding: 2rem;
   display: flex;
