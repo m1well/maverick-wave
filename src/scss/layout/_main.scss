@@ -9,7 +9,7 @@
 }
 
 .mw-container {
-  width: min(88%, 1100px);
+  width: min(1100px, 88%);
   margin: spacing('0') auto;
   padding: spacing('0');
 
@@ -54,6 +54,7 @@
 // if you dont want to use mw-home - use mw-content
 .mw-content {
   margin-top: spacing('8');
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;

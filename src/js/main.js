@@ -291,10 +291,7 @@
           const sectionTop = section.offsetTop - 100;
           const sectionHeight = section.clientHeight;
 
-          if (
-            scrollY >= sectionTop &&
-            scrollY < sectionTop + sectionHeight
-          ) {
+          if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
             // Section ID is just the plain ID, no # or /
             current = section.getAttribute('id');
           }
