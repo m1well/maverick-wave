@@ -24,7 +24,7 @@
     initLocalhostIndicator();
     initFormSliders();
     initModals();
-    initLoginButton();
+    initHeaderLoginButton();
     initImageSliders();
   });
 
@@ -441,7 +441,7 @@
   }
 
   // ===== Login Button =====
-  function initLoginButton() {
+  function initHeaderLoginButton() {
     const loginButton = document.getElementById('login-button');
 
     if (loginButton) {

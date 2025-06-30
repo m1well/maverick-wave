@@ -3784,33 +3784,33 @@ pre code {
     padding: 2.5rem 1rem;
   }
 }
-.mw-login-error {
-  border: 2px solid var(--mw-danger-color);
-}
-.mw-login-error .mw-login-error-message {
-  display: block;
-}
-.mw-login-error-message {
-  display: none;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.9rem;
-  color: var(--mw-danger-color);
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 10;
-}
 .mw-login-logo {
-  margin-bottom: 4.5rem;
-  position: relative;
+  margin-bottom: 3rem;
 }
 .mw-login-logo img {
   display: block;
   margin: 0 auto;
   height: 60px;
   object-fit: contain;
+}
+.mw-login-message {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  color: var(--mw-text-muted-color);
+}
+.mw-login-message-info {
+  color: var(--mw-info-color);
+}
+.mw-login-message-error {
+  color: var(--mw-danger-color);
+}
+.mw-login-message + .mw-login-message {
+  margin-top: -0.75rem;
+}
+.mw-login-error {
+  border: 2px solid var(--mw-danger-color);
 }
 .mw-login.mw-form-actions {
   width: 100%;
