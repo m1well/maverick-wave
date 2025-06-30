@@ -3772,7 +3772,7 @@ pre code {
   border: 1px solid var(--mw-border);
   position: relative;
   overflow: hidden;
-  width: min(420px, 85%);
+  width: min(330px, 85%);
   margin: 0.5rem auto;
   padding: 1.5rem;
   display: flex;
@@ -5004,12 +5004,7 @@ pre code {
   }
 }
 .mw-home {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
 }
 .mw-home-content, .mw-home-content-fade {
   padding: 2rem 0.5rem;
@@ -5046,9 +5041,11 @@ pre code {
 .mw-main {
   margin: 0;
   padding: 0;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  justify-content: center;
+  text-align: center;
 }
 
 .mw-container {
@@ -5089,11 +5086,7 @@ pre code {
 }
 
 .mw-content {
-  margin: 3rem 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
+  margin-top: 4.5rem;
 }
 
 .mw-section-title {
