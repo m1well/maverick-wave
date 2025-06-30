@@ -19,36 +19,41 @@
     padding: spacing('7') spacing('4');
   }
 
-  &-error {
-    border: 2px solid var(--mw-danger-color);
-
-    .mw-login-error-message {
-      display: block; // show the message
-    }
-  }
-
-  &-error-message {
-    display: none; // hide by default
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: font-size('sm');
-    color: var(--mw-danger-color);
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 10;
-  }
-
   &-logo {
-    margin-bottom: spacing('9');
-    position: relative;
+    margin-bottom: spacing('8');
+
     img {
       display: block;
       margin: spacing('0') auto;
       height: 60px;
       object-fit: contain;
     }
+  }
+
+  &-message {
+    font-size: font-size('sm');
+    text-align: center;
+    margin-bottom: spacing('6');
+    line-height: 1.5;
+    color: var(--mw-text-muted-color);
+
+    // Variants
+    &-info {
+      color: var(--mw-info-color);
+    }
+
+    &-error {
+      color: var(--mw-danger-color);
+    }
+
+    // Multiple messages spacing
+    & + & {
+      margin-top: spacing('-3');
+    }
+  }
+
+  &-error {
+    border: 2px solid var(--mw-danger-color);
   }
 
   &.mw-form-actions {
