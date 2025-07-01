@@ -1055,7 +1055,7 @@ blockquote::after {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: 0;
+  margin: 0.2rem;
   padding: 0.5rem 0;
 }
 .mw-breadcrumbs-list {
@@ -1078,7 +1078,7 @@ blockquote::after {
   border-radius: 0 10px 10px 0;
 }
 .mw-breadcrumbs-item a {
-  background-color: var(--mw-card-background);
+  background: var(--mw-card-background);
   color: var(--mw-text-muted-color);
   display: inline-flex;
   justify-content: center;
@@ -1104,7 +1104,7 @@ blockquote::after {
 }
 .mw-breadcrumbs-item.mw-breadcrumbs-current a, .mw-breadcrumbs-item:last-child a {
   color: var(--mw-text-color);
-  background-color: var(--mw-primary-color-light);
+  background: var(--mw-primary-color-light);
   border-color: var(--mw-primary-color);
   cursor: default;
   pointer-events: none;
@@ -1119,13 +1119,6 @@ blockquote::after {
     font-size: 0.8rem;
     height: 2rem;
     padding: 0 0.75rem;
-  }
-  .mw-breadcrumbs.mw-breadcrumbs-collapse .mw-breadcrumbs-item:not(:first-child):not(:last-child):not(:nth-last-child(2)) {
-    display: none;
-  }
-  .mw-breadcrumbs.mw-breadcrumbs-collapse .mw-breadcrumbs-item:nth-last-child(2) a::before {
-    content: "...";
-    margin-right: 0.2rem;
   }
 }
 @media (max-width: 992px) {
