@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin: spacing('0');
+  margin: spacing('1');
   padding: spacing('2') spacing('0');
 
   &-list {
@@ -20,7 +20,6 @@
 
     &:first-child {
       margin-left: 0;
-
       a {
         border-radius: radius('md') 0 0 radius('md');
       }
@@ -33,7 +32,7 @@
     }
 
     a {
-      background-color: var(--mw-card-background);
+      background: var(--mw-card-background);
       color: var(--mw-text-muted-color);
       display: inline-flex;
       justify-content: center;
@@ -63,11 +62,11 @@
       }
     }
 
-    // Active page styling
+    // Current page styling
     &.mw-breadcrumbs-current a,
     &:last-child a {
       color: var(--mw-text-color);
-      background-color: var(--mw-primary-color-light);
+      background: var(--mw-primary-color-light);
       border-color: var(--mw-primary-color);
       cursor: default;
       pointer-events: none;
@@ -89,20 +88,6 @@
       font-size: font-size('xs');
       height: spacing('6');
       padding: spacing('0') spacing('3');
-    }
-
-    // Collapse middle items on small screens
-    &.mw-breadcrumbs-collapse {
-      .mw-breadcrumbs-item:not(:first-child):not(:last-child):not(
-          :nth-last-child(2)
-        ) {
-        display: none;
-      }
-
-      .mw-breadcrumbs-item:nth-last-child(2) a::before {
-        content: '...';
-        margin-right: spacing('1');
-      }
     }
   }
 
