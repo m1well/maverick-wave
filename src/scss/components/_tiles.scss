@@ -64,7 +64,6 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  text-align: center;
 
   &:hover {
     transform: translateY(-3px);
@@ -96,6 +95,7 @@
     margin-bottom: spacing('4');
     color: var(--mw-text-color);
     line-height: 1.2;
+    text-align: center;
 
     @include media-down('md') {
       font-size: font-size('xl');
