@@ -5383,10 +5383,10 @@ pre code {
 }
 
 .mw-content-centered {
+  min-height: 100dvh;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  flex: 1;
 }
 
 .mw-section-title {
