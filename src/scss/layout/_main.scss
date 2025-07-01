@@ -6,7 +6,6 @@
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .mw-container {
@@ -27,6 +26,7 @@
       min-height: 100dvh;
       display: flex;
       align-items: center;
+      justify-content: center;
       background-size: cover;
       background-position: center;
       background-image: var(--mw-hero-background);
@@ -52,5 +52,13 @@
 }
 
 .mw-content {
+  flex: 1;
   padding-top: spacing('8');
+}
+
+.mw-content-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
