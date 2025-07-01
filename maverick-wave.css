@@ -5083,6 +5083,10 @@ pre code {
   }
 }
 
+.mw-content {
+  padding-top: 3rem;
+}
+
 .mw-section-title {
   font-size: 2.2rem;
   margin-bottom: 2.5rem;
