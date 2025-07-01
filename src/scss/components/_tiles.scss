@@ -127,17 +127,12 @@
   }
 
   &-footer {
-    margin-top: auto;
+    margin-top: spacing('2');
     padding-top: spacing('2');
     border-top: 1px solid var(--mw-border);
     font-size: font-size('xs');
     color: var(--mw-text-muted-color);
     text-align: right;
-
-    .mw-btn {
-      width: 100%;
-      margin: spacing('0');
-    }
   }
 
   // Size variants
@@ -167,14 +162,10 @@
         font-size: font-size('xs');
       }
     }
-
-    .mw-tile-footer {
-      padding-top: spacing('1');
-    }
   }
 
   &-lg {
-    padding: spacing('6');
+    padding: spacing('5');
 
     .mw-tile-img {
       width: 120px;
@@ -203,27 +194,19 @@
         font-size: font-size('md');
       }
     }
-
-    .mw-tile-footer {
-      padding-top: spacing('3');
-    }
   }
 }
 
 // Responsive adjustments
 @include media-down('sm') {
   .mw-tile {
-    padding: spacing('3');
+    padding: spacing('4');
     text-align: left;
 
     &-img {
       width: 60px;
       height: 60px;
       margin: spacing('0') auto spacing('2');
-    }
-
-    &-header {
-      text-align: center;
     }
 
     &-body {
