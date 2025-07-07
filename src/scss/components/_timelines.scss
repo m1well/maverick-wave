@@ -129,7 +129,7 @@ $_border-width-simple: 3px;
     &-content {
       width: auto;
       padding: spacing('2');
-      margin-top: spacing('2');
+      margin-top: spacing('1');
       margin-left: spacing('6') !important;
       text-align: left !important;
       opacity: 1;
@@ -156,7 +156,7 @@ $_border-width-simple: 3px;
 
   &-step {
     position: relative;
-    margin: spacing('4') spacing('0');
+    margin: spacing('5') spacing('0');
     display: flex;
     align-items: flex-start;
   }
@@ -203,7 +203,7 @@ $_border-width-simple: 3px;
     }
 
     &-content {
-      margin-top: spacing('7');
+      margin-top: 2.1rem;
       margin-left: spacing('3');
       width: auto;
     }
