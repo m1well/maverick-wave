@@ -9,7 +9,7 @@
 
 html {
   scroll-behavior: smooth;
-  min-width: 333px;
+  min-width: 375px;
   scroll-padding-top: 70px;
 }
 
@@ -2501,7 +2501,7 @@ pre code {
   background: none;
   color: var(--mw-primary-text-color);
   cursor: pointer;
-  padding: 0.2rem 0.75rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 5px;
   border: 1px solid var(--mw-primary-text-color);
   display: flex;
@@ -3699,7 +3699,7 @@ pre code {
   .mw-timeline-big-content {
     width: auto;
     padding: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 0.2rem;
     margin-left: 2rem !important;
     text-align: left !important;
     opacity: 1;
@@ -3724,7 +3724,7 @@ pre code {
 }
 .mw-timeline-simple-step {
   position: relative;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   display: flex;
   align-items: flex-start;
 }
@@ -3798,7 +3798,7 @@ pre code {
     line-height: 1.1;
   }
   .mw-timeline-simple-content {
-    margin-top: 2.5rem;
+    margin-top: 2.1rem;
     margin-left: 0.75rem;
     width: auto;
   }
@@ -5321,14 +5321,9 @@ pre code {
 }
 
 .mw-container {
-  width: min(1100px, 88%);
+  width: min(1100px, 87%);
   margin: 0 auto;
   padding: 0;
-}
-@media (max-width: 375px) {
-  .mw-container {
-    width: 90%;
-  }
 }
 @supports (selector(:has(.mw-hero))) {
   .mw-container:has(.mw-hero) {
