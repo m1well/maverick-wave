@@ -97,12 +97,12 @@
 @include media-down('lg') {
   .mw-gallery {
     &-slide img {
-      height: 500px;
+      height: 470px;
     }
     &-navi {
       padding: spacing('4') spacing('2');
       font-size: font-size('3xl');
-      height: calc(500px * 0.9);
+      height: calc(470px * 0.9);
     }
   }
 }
@@ -110,10 +110,10 @@
 @include media-down('md') {
   .mw-gallery {
     &-slide img {
-      height: 400px;
+      height: 380px;
     }
     &-navi {
-      height: calc(400px * 0.9);
+      height: calc(380px * 0.9);
     }
     &-desc {
       font-size: font-size('sm');
@@ -124,12 +124,12 @@
 @include media-down('sm') {
   .mw-gallery {
     &-slide img {
-      height: 280px;
+      height: 270px;
     }
     &-navi {
       padding: spacing('3') spacing('1');
       font-size: font-size('2xl');
-      height: calc(280px * 0.9);
+      height: calc(270px * 0.9);
       border-radius: radius('sm');
       width: 12%;
     }
