@@ -26,7 +26,107 @@
     initModals();
     initHeaderLoginButton();
     initImageSliders();
+    initCheckboxLists(); // Add checkbox list initialization
   });
+
+  // ===== Checkbox Lists =====
+  function initCheckboxLists() {
+    const checkboxLists = document.querySelectorAll(
+      '.mw-item-list-checkbox, .mw-item-list-checkbox-scroll'
+    );
+
+    checkboxLists.forEach((list) => {
+      const listItems = list.querySelectorAll('li');
+
+      listItems.forEach((item) => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        const label = item.querySelector('.mw-checkbox');
+
+        if (!checkbox || !label) return;
+
+        // Set initial state based on checkbox checked property
+        if (checkbox.checked) {
+          item.classList.add('mw-selected');
+        }
+
+        // Add click handler to the entire list item
+        item.addEventListener('click', function (e) {
+          // Don't double-trigger if clicking directly on checkbox or label
+          if (
+            e.target === checkbox ||
+            e.target.closest('.mw-checkbox') === label
+          ) {
+            return;
+          }
+
+          toggleCheckbox(this);
+        });
+
+        // Add change handler to the checkbox itself
+        checkbox.addEventListener('change', function () {
+          const listItem = this.closest('li');
+          if (this.checked) {
+            listItem.classList.add('mw-selected');
+          } else {
+            listItem.classList.remove('mw-selected');
+          }
+
+          // Dispatch custom event
+          listItem.dispatchEvent(
+            new CustomEvent('checkboxToggle', {
+              detail: { checked: this.checked, item: listItem },
+            })
+          );
+        });
+
+        // Add label click handler
+        label.addEventListener('click', function (e) {
+          // Let the default checkbox behavior handle the toggle
+          // Just ensure the visual state is updated
+          setTimeout(() => {
+            const listItem = this.closest('li');
+            const checkbox = this.querySelector('input[type="checkbox"]');
+
+            if (checkbox.checked) {
+              listItem.classList.add('mw-selected');
+            } else {
+              listItem.classList.remove('mw-selected');
+            }
+          }, 0);
+        });
+      });
+    });
+
+    // Listen for custom events (optional - for debugging or external handling)
+    document.addEventListener('checkboxToggle', function (event) {
+      console.log('Checkbox toggled:', event.detail.checked, event.detail.item);
+    });
+  }
+
+  // Global function for manual checkbox toggling (for onclick attributes)
+  window.toggleCheckbox = function (listItem) {
+    const checkbox = listItem.querySelector('input[type="checkbox"]');
+    if (!checkbox) return;
+
+    const isChecked = checkbox.checked;
+
+    // Toggle checkbox
+    checkbox.checked = !isChecked;
+
+    // Add/remove selected class for visual feedback
+    if (checkbox.checked) {
+      listItem.classList.add('mw-selected');
+    } else {
+      listItem.classList.remove('mw-selected');
+    }
+
+    // Dispatch custom event for external handling
+    listItem.dispatchEvent(
+      new CustomEvent('checkboxToggle', {
+        detail: { checked: checkbox.checked, item: listItem },
+      })
+    );
+  };
 
   // ===== Gallery Component =====
   function initGalleries() {
@@ -460,7 +560,7 @@
     }
   }
 
-  // ===== Login Button =====
+  // ===== Image Sliders =====
   function initImageSliders() {
     const sliders = document.querySelectorAll('.mw-image-slider');
 
