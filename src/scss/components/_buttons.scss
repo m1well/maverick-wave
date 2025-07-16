@@ -33,7 +33,7 @@
   }
   &.active:not(:disabled) {
     background: var(--mw-primary-color-hover);
-    border: 2px solid var(--mw-primary-color);
+    border: 1px solid var(--mw-primary-color);
   }
 }
 .mw-btn-secondary {
@@ -44,7 +44,7 @@
   }
   &.active:not(:disabled) {
     background: var(--mw-secondary-color-hover);
-    border: 2px solid var(--mw-secondary-color);
+    border: 1px solid var(--mw-secondary-color);
   }
 }
 .mw-btn-outline {
