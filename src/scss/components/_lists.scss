@@ -395,7 +395,7 @@
 
   > * {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: spacing('2') spacing('3');
     border-bottom: 1px solid var(--mw-border);
     cursor: pointer;
@@ -415,23 +415,97 @@
       transform: scale(0.98);
     }
 
-    // Checkbox styling integration
     .mw-checkbox {
-      margin-right: spacing('3');
-      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: spacing('2');
+      flex: 1;
 
-      // Remove default gap since we're controlling spacing
-      gap: 0;
-
-      .mw-checkbox-box {
-        margin-right: spacing('2');
+      // Hide native checkbox
+      input[type='checkbox'] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        margin: spacing('0');
       }
 
-      .mw-checkbox-label {
-        font-size: font-size('sm');
-        color: var(--mw-text-color);
+      // Visual checkbox (the label)
+      .mw-checkbox-box {
+        position: relative;
+        flex-shrink: 0;
+        width: spacing('4');
+        height: spacing('4');
+        border: 2px solid var(--mw-border);
+        border-radius: radius('sm');
+        background: var(--mw-form-elements-background);
+        transition: var(--mw-transition);
+        margin-top: spacing('0.5');
         cursor: pointer;
+        display: block;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: spacing('2');
+          height: spacing('1');
+          border-left: 2px solid var(--mw-primary-color);
+          border-bottom: 2px solid var(--mw-primary-color);
+          transform: translate(-50%, -60%) rotate(-45deg) scale(0);
+          transform-origin: center;
+          transition: var(--mw-transition);
+        }
+      }
+
+      // Checked state
+      input[type='checkbox']:checked + .mw-checkbox-box {
+        border-color: var(--mw-primary-color);
+
+        &::after {
+          transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+        }
+      }
+
+      .mw-checkbox-content {
+        display: flex;
+        flex-direction: column;
+        gap: spacing('1');
         flex: 1;
+
+        .mw-checkbox-header {
+          font-size: font-size('sm');
+          font-weight: 600;
+          color: var(--mw-text-color);
+          line-height: 1.3;
+          margin: spacing('0');
+        }
+
+        .mw-checkbox-label {
+          font-size: font-size('xs');
+          color: var(--mw-text-muted-color);
+          line-height: 1.4;
+          margin: spacing('0');
+        }
+      }
+
+      // When only label exists (no header)
+      &:not(:has(.mw-checkbox-header)) {
+        align-items: center;
+
+        .mw-checkbox-box {
+          margin-top: spacing('0');
+        }
+
+        .mw-checkbox-content {
+          gap: spacing('0');
+        }
+
+        .mw-checkbox-label {
+          font-size: font-size('sm');
+          color: var(--mw-text-color);
+        }
       }
     }
 
@@ -449,13 +523,36 @@
       padding: spacing('1') spacing('3');
 
       .mw-checkbox {
+        gap: spacing('1');
+
         .mw-checkbox-box {
           width: spacing('3');
           height: spacing('3');
+          margin-top: spacing('1');
         }
 
-        .mw-checkbox-label {
-          font-size: font-size('xs');
+        .mw-checkbox-content {
+          gap: spacing('1');
+
+          .mw-checkbox-header {
+            font-size: font-size('xs');
+            font-weight: 600;
+          }
+
+          .mw-checkbox-label {
+            font-size: font-size('2xs');
+          }
+        }
+
+        // When only label exists in compact
+        &:not(:has(.mw-checkbox-header)) {
+          .mw-checkbox-box {
+            margin-top: 0;
+          }
+
+          .mw-checkbox-label {
+            font-size: font-size('xs');
+          }
         }
       }
     }
@@ -467,13 +564,36 @@
       padding: spacing('4') spacing('4');
 
       .mw-checkbox {
+        gap: spacing('3');
+
         .mw-checkbox-box {
           width: spacing('5');
           height: spacing('5');
+          margin-top: spacing('1');
         }
 
-        .mw-checkbox-label {
-          font-size: font-size('base');
+        .mw-checkbox-content {
+          gap: spacing('1');
+
+          .mw-checkbox-header {
+            font-size: font-size('base');
+            font-weight: 600;
+          }
+
+          .mw-checkbox-label {
+            font-size: font-size('sm');
+          }
+        }
+
+        // When only label exists in large
+        &:not(:has(.mw-checkbox-header)) {
+          .mw-checkbox-box {
+            margin-top: spacing('0');
+          }
+
+          .mw-checkbox-label {
+            font-size: font-size('base');
+          }
         }
       }
     }
