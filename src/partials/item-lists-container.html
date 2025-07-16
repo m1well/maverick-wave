@@ -95,41 +95,39 @@
 <div class="mw-grid-3-lg">
   <div>
     <h4 class="mw-mb-3">Basic Checkbox List</h4>
-    <ul class="mw-item-list-checkbox mw-mb-6">
+    <ul class="mw-item-list-checkbox">
       <li onclick="toggleCheckbox(this)">
-        <label class="mw-checkbox">
-          <input type="checkbox" />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">📋 Task Management</span>
-        </label>
+        <div class="mw-checkbox">
+          <input type="checkbox" id="task-mgmt" />
+          <label for="task-mgmt" class="mw-checkbox-box"></label>
+          <div class="mw-checkbox-content">
+            <h4 class="mw-checkbox-header">📋 Task Management</h4>
+            <p class="mw-checkbox-label">
+              Organize and track your daily tasks and projects
+            </p>
+          </div>
+        </div>
       </li>
       <li onclick="toggleCheckbox(this)">
-        <label class="mw-checkbox">
-          <input type="checkbox" checked />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">📊 Analytics Dashboard</span>
-        </label>
-      </li>
-      <li onclick="toggleCheckbox(this)" class="mw-selected">
-        <label class="mw-checkbox">
-          <input type="checkbox" checked />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">👥 User Management</span>
-        </label>
+        <div class="mw-checkbox">
+          <input type="checkbox" id="analytics" checked />
+          <label for="analytics" class="mw-checkbox-box"></label>
+          <div class="mw-checkbox-content">
+            <h4 class="mw-checkbox-header">📊 Analytics Dashboard</h4>
+            <p class="mw-checkbox-label">
+              View detailed reports and performance metrics
+            </p>
+          </div>
+        </div>
       </li>
       <li onclick="toggleCheckbox(this)">
-        <label class="mw-checkbox">
-          <input type="checkbox" />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">⚙️ System Settings</span>
-        </label>
-      </li>
-      <li onclick="toggleCheckbox(this)">
-        <label class="mw-checkbox">
-          <input type="checkbox" />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">🔒 Security Center</span>
-        </label>
+        <div class="mw-checkbox">
+          <input type="checkbox" id="simple-option" />
+          <label for="simple-option" class="mw-checkbox-box"></label>
+          <div class="mw-checkbox-content">
+            <p class="mw-checkbox-label">📧 Email Notifications</p>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
