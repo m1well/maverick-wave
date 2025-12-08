@@ -63,7 +63,7 @@ pre {
   }
 
   &-filename {
-    font-weight: 500;
+    font-weight: font-weight('medium');
     margin-right: spacing('2');
 
     @include media-down('sm') {
@@ -142,7 +142,7 @@ pre {
     &::before {
       content: '$ ';
       color: #6bdd6b;
-      font-weight: bold;
+      font-weight: font-weight('medium');
     }
 
     &.mw-terminal-output::before {

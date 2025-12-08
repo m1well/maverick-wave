@@ -30,7 +30,7 @@
     h3 {
       margin: spacing('0');
       font-size: font-size('md');
-      font-weight: 500;
+      font-weight: font-weight('medium');
 
       @include media-down('sm') {
         font-size: font-size('sm');

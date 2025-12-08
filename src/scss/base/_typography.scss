@@ -42,7 +42,7 @@ h6 {
   font-family: var(--mw-font-family-heading);
   line-height: 1.2;
   margin-bottom: spacing('4');
-  font-weight: 600;
+  font-weight: font-weight('medium');
 }
 
 h1 {
@@ -75,12 +75,12 @@ h4 {
 
 h5 {
   font-size: font-size('md');
-  font-weight: 500;
+  font-weight: font-weight('medium');
 }
 
 h6 {
   font-size: font-size('sm');
-  font-weight: 500;
+  font-weight: font-weight('medium');
 }
 
 // Paragraphs
@@ -176,15 +176,19 @@ blockquote {
   }
 
   &-bold {
-    font-weight: 700;
+    font-weight: font-weight('bold');
   }
 
   &-medium {
-    font-weight: 500;
+    font-weight: font-weight('medium');
   }
 
   &-normal {
-    font-weight: 400;
+    font-weight: font-weight('normal');
+  }
+
+  &-light {
+    font-weight: font-weight('light');
   }
 
   &-italic {

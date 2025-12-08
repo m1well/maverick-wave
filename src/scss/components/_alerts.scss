@@ -25,7 +25,7 @@
 
   &-title {
     font-size: font-size('md');
-    font-weight: 700;
+    font-weight: font-weight('bold');
   }
 
   &-close {
@@ -54,7 +54,7 @@
     }
     &-title {
       font-size: font-size('base');
-      font-weight: 600;
+      font-weight: font-weight('medium');
     }
   }
 }

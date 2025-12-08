@@ -27,7 +27,7 @@ $_mw-progress-colors: (
   }
 
   &-label {
-    font-weight: 500;
+    font-weight: font-weight('medium');
   }
 
   &-value {
@@ -94,7 +94,7 @@ $_mw-progress-colors: (
       align-items: center;
       padding-left: spacing('5');
       font-size: font-size('xs');
-      font-weight: 500;
+      font-weight: font-weight('medium');
       color: var(--mw-primary-text-color);
     }
   }
