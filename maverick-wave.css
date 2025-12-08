@@ -3806,6 +3806,12 @@ pre code {
 .mw-timeline-big-step.active .mw-timeline-big-date-container .mw-timeline-big-date-sub {
   color: var(--mw-primary-text-color);
 }
+@media (max-width: 576px) {
+  .mw-timeline-big-step.active .mw-timeline-big-date-container {
+    transform: scale(1.05);
+    left: 2px;
+  }
+}
 .mw-timeline-big-date-container {
   position: absolute;
   min-width: 330px;

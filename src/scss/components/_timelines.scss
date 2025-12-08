@@ -87,6 +87,11 @@ $_border-width-simple: 3px;
         .mw-timeline-big-date-sub {
           color: var(--mw-primary-text-color);
         }
+
+        @include media-down('sm') {
+          transform: scale(1.05);
+          left: 2px;
+        }
       }
     }
   }
