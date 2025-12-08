@@ -91,7 +91,7 @@
   // Tile header
   &-header {
     font-size: font-size('2xl');
-    font-weight: 600;
+    font-weight: font-weight('medium');
     margin-bottom: spacing('4');
     color: var(--mw-text-color);
     line-height: 1.2;

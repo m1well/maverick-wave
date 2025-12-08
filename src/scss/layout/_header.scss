@@ -190,7 +190,7 @@
 
   &-link {
     position: relative;
-    font-weight: 500;
+    font-weight: font-weight('medium');
     font-size: inherit;
     transition: var(--mw-transition);
     color: var(--mw-header-navbar-list-color);
@@ -274,7 +274,7 @@
 
         &.active {
           color: var(--mw-header-navbar-list-active-color);
-          font-weight: 600;
+          font-weight: font-weight('medium');
         }
       }
     }
@@ -330,7 +330,7 @@
 
           &.active {
             color: var(--mw-header-navbar-list-active-color);
-            font-weight: 600;
+            font-weight: font-weight('medium');
           }
         }
       }
@@ -387,7 +387,7 @@
 
           &.active {
             color: var(--mw-header-navbar-list-active-color);
-            font-weight: 600;
+            font-weight: font-weight('medium');
           }
         }
       }

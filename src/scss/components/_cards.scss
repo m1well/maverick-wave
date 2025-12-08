@@ -44,7 +44,7 @@ $_mw-card-addon-colors: (
     pointer-events: none;
     text-align: center;
     opacity: 0.9;
-    font-weight: 600;
+    font-weight: font-weight('medium');
   }
 
   &-ribbon {
@@ -63,7 +63,7 @@ $_mw-card-addon-colors: (
     transform: rotate(25deg);
     text-align: center;
     opacity: 0.75;
-    font-weight: 600;
+    font-weight: font-weight('medium');
     @include media-down('sm') {
       font-size: font-size('2xs');
     }

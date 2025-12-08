@@ -55,7 +55,7 @@
     content: '×'; // Unicode × character
     font-size: 12px;
     line-height: 1;
-    font-weight: bold;
+    font-weight: font-weight('bold');
   }
 }
 

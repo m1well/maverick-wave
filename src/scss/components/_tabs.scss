@@ -23,7 +23,7 @@
   &-nav-item {
     padding: spacing('3');
     cursor: pointer;
-    font-weight: 500;
+    font-weight: font-weight('medium');
     color: var(--mw-text-muted-color);
     border-bottom: 2px solid transparent;
     transition: all 0.3s ease;

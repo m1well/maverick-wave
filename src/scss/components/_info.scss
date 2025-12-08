@@ -17,7 +17,7 @@ $_mw-info-colors: (
   padding: spacing('2') spacing('4');
   margin: spacing('1');
   font-size: font-size('base');
-  font-weight: 500;
+  font-weight: font-weight('medium');
   color: var(--mw-text-color);
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
@@ -36,29 +36,29 @@ $_mw-info-colors: (
   &-sm {
     padding: spacing('1') spacing('3');
     font-size: font-size('sm');
-    font-weight: 400;
+    font-weight: font-weight('normal');
   }
   &-lg {
     padding: spacing('3') spacing('5');
     font-size: font-size('lg');
-    font-weight: 500;
+    font-weight: font-weight('medium');
   }
   &-xl {
     padding: spacing('4') spacing('6');
     font-size: font-size('xl');
-    font-weight: 600;
+    font-weight: font-weight('medium');
   }
 
   // counter variant: big number + small label
   &-counter {
     .mw-info-value {
       font-size: font-size('4xl');
-      font-weight: 700;
+      font-weight: font-weight('bold');
       line-height: 1.4;
     }
     .mw-info-label {
       font-size: font-size('sm');
-      font-weight: 500;
+      font-weight: font-weight('medium');
       opacity: 0.8;
       min-width: 5rem;
       text-align: center;

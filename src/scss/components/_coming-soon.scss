@@ -24,7 +24,7 @@
 
   &-text {
     font-size: font-size('3xl');
-    font-weight: 700;
+    font-weight: font-weight('bold');
     color: var(--mw-text-muted-color);
     text-transform: uppercase;
     letter-spacing: spacing('3');

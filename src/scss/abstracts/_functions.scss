@@ -11,6 +11,11 @@
   @return map.get(v.$font-sizes, $key);
 }
 
+// Function to get a font weight from the font-weights map
+@function font-weight($key) {
+  @return map.get(v.$font-weights, $key);
+}
+
 // Function to get a spacing value from the spacing map
 @function spacing($key) {
   @return map.get(v.$spacing, $key);

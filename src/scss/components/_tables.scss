@@ -16,7 +16,7 @@
   }
 
   th {
-    font-weight: 600;
+    font-weight: font-weight('medium');
     color: var(--mw-primary-text-color);
     background: var(--mw-primary-color);
   }
@@ -81,7 +81,7 @@
       // Add the column header as a label
       &::before {
         content: attr(data-label);
-        font-weight: 600;
+        font-weight: font-weight('medium');
         color: var(--mw-text-color);
         flex: 1;
         text-align: left;
