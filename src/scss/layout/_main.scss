@@ -58,3 +58,60 @@
   flex-direction: column;
   justify-content: center;
 }
+
+// tooltip - use it everywhere you want
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: var(--mw-gray-background);
+    color: var(--mw-primary-text-color);
+    padding: spacing('1') spacing('2');
+    font-size: font-size('xs');
+    border-radius: radius('xs');
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+    margin-bottom: spacing('2');
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  // small triangle on the bottom
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    border: 6px solid transparent;
+    border-top-color: var(--mw-gray-background);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+    margin-bottom: -4px;
+    z-index: 100;
+  }
+
+  // Hover effect
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+}
