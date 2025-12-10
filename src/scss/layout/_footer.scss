@@ -67,6 +67,7 @@
 
           &:hover {
             color: var(--mw-primary-color);
+
             &::after {
               opacity: 1;
               height: 2px;
@@ -81,10 +82,19 @@
   .mw-social-links {
     display: flex;
     justify-content: center;
-    gap: spacing('8');
+    align-items: center;
+    column-gap: spacing('8');
+    row-gap: spacing('4');
     margin: spacing('2') auto spacing('5') auto;
 
+    // modifier for more elements
+    &.mod-wrap {
+      flex-wrap: wrap;
+      width: 510px;
+    }
+
     a {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -97,11 +107,13 @@
       transition: var(--mw-transition);
       border: 1px solid var(--mw-primary-color-hover);
       box-shadow: 0 3px 10px var(--mw-shadow);
+      text-decoration: none;
 
       &:hover {
         background: var(--mw-primary-color);
         color: var(--mw-primary-text-color);
         transform: translateY(-3px);
+        border-color: var(--mw-primary-color);
       }
     }
   }
@@ -133,9 +145,23 @@
     margin: spacing('1') auto spacing('0') auto;
   }
 
+  @include media-down('lg') {
+    .mw-social-links {
+      &.mod-wrap {
+        width: 420px;
+      }
+    }
+  }
+
   @include media-down('md') {
     .mw-social-links {
-      gap: spacing('6');
+      column-gap: spacing('6');
+      row-gap: spacing('3');
+
+      &.mod-wrap {
+        width: 330px;
+      }
+
       button {
         width: 40px;
         height: 40px;
@@ -158,6 +184,14 @@
 
     .mw-social-links {
       gap: spacing('4');
+
+      &.mod-wrap {
+        column-gap: spacing('6');
+        row-gap: spacing('3');
+        max-width: 100%;
+        padding: spacing('0') spacing('4');
+      }
+
       button {
         width: 34px;
         height: 34px;
