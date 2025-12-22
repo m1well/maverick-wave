@@ -137,7 +137,7 @@ $_border-width-simple: 3px;
 
   &-event {
     display: inline-block;
-    max-width: 90%;
+    max-width: 85%;
     margin-top: spacing('4');
     padding: spacing('2') spacing('3');
     background: var(--mw-card-background);
@@ -230,11 +230,18 @@ $_border-width-simple: 3px;
       opacity: 1;
     }
     &-event {
-      max-width: 95%;
+      width: 90%;
       border-right: none !important;
       border-left: 2px solid var(--mw-secondary-color) !important;
       border-radius: radius('sm') !important;
       text-align: left !important;
+      &-date {
+        font-size: font-size('xs');
+      }
+      &-title {
+        font-size: font-size('sm');
+        line-height: 1.1;
+      }
     }
   }
 }
