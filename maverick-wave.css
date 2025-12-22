@@ -3846,7 +3846,7 @@ pre code {
 }
 .mw-timeline-big-event {
   display: inline-block;
-  max-width: 90%;
+  max-width: 85%;
   margin-top: 1rem;
   padding: 0.5rem 0.75rem;
   background: var(--mw-card-background);
@@ -4059,11 +4059,18 @@ pre code {
     opacity: 1;
   }
   .mw-timeline-big-event {
-    max-width: 95%;
+    width: 90%;
     border-right: none !important;
     border-left: 2px solid var(--mw-secondary-color) !important;
     border-radius: 5px !important;
     text-align: left !important;
+  }
+  .mw-timeline-big-event-date {
+    font-size: 0.8rem;
+  }
+  .mw-timeline-big-event-title {
+    font-size: 0.9rem;
+    line-height: 1.1;
   }
 }
 
