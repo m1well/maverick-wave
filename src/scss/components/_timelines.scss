@@ -131,6 +131,37 @@ $_border-width-simple: 3px;
     width: 48%;
     padding: spacing('9') spacing('2') spacing('1') spacing('2');
     opacity: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-event {
+    display: inline-block;
+    max-width: 90%;
+    margin-top: spacing('4');
+    padding: spacing('2') spacing('3');
+    background: var(--mw-card-background);
+    box-shadow: 0 2px 7px var(--mw-shadow);
+    border-radius: radius('sm');
+    position: relative;
+    clear: both;
+
+    &-date {
+      display: block;
+      font-size: font-size('sm');
+      font-weight: font-weight('bold');
+      color: var(--mw-text-color);
+      margin-bottom: spacing('1');
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    &-title {
+      font-size: font-size('base');
+      font-weight: font-weight('normal');
+      line-height: 1.2;
+      color: var(--mw-text-color);
+    }
   }
 
   // alternate + animation…
@@ -143,13 +174,29 @@ $_border-width-simple: 3px;
       @if $i % 2 != 0 {
         animation-name: mw-slide-in-left;
         margin-right: auto;
-        margin-left: 0;
+        margin-left: spacing('0');
         text-align: right;
+        align-items: flex-end;
+
+        .mw-timeline-big-event {
+          border-right: 2px solid var(--mw-secondary-color);
+          text-align: right;
+          border-top-right-radius: radius('none');
+          border-bottom-right-radius: radius('none');
+        }
       } @else {
         animation-name: mw-slide-in-right;
         margin-left: auto;
-        margin-right: 0;
+        margin-right: spacing('0');
         text-align: left;
+        align-items: flex-start;
+
+        .mw-timeline-big-event {
+          border-left: 2px solid var(--mw-secondary-color);
+          text-align: left;
+          border-top-left-radius: radius('none');
+          border-bottom-left-radius: radius('none');
+        }
       }
     }
   }
@@ -179,7 +226,15 @@ $_border-width-simple: 3px;
       margin-top: spacing('1');
       margin-left: spacing('6') !important;
       text-align: left !important;
+      align-items: flex-start !important;
       opacity: 1;
+    }
+    &-event {
+      max-width: 95%;
+      border-right: none !important;
+      border-left: 2px solid var(--mw-secondary-color) !important;
+      border-radius: radius('sm') !important;
+      text-align: left !important;
     }
   }
 }
