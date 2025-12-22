@@ -3846,7 +3846,7 @@ pre code {
 }
 .mw-timeline-big-event {
   display: inline-block;
-  max-width: 85%;
+  width: 87%;
   margin-top: 1rem;
   padding: 0.5rem 0.75rem;
   background: var(--mw-card-background);
@@ -4059,7 +4059,7 @@ pre code {
     opacity: 1;
   }
   .mw-timeline-big-event {
-    width: 90%;
+    width: 92%;
     border-right: none !important;
     border-left: 2px solid var(--mw-secondary-color) !important;
     border-radius: 5px !important;
