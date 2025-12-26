@@ -53,10 +53,11 @@
   }
 
   &-content {
-    max-height: 0;
+    height: spacing('0');
     overflow: hidden;
-    transition: max-height 0.9s ease;
+    transition: height 0.9s ease;
     background: var(--mw-card-background);
+    interpolate-size: allow-keywords;
 
     &-inner {
       padding: spacing('4');
@@ -67,7 +68,8 @@
     }
 
     &.active {
-      max-height: 450px;
+      height: auto;
+      max-height: 500px;
       overflow-y: auto;
 
       // Scrollbar styling
