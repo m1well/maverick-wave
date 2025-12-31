@@ -3939,7 +3939,6 @@ pre code {
 }
 .mw-timeline-big-date-container {
   position: absolute;
-  min-width: 330px;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
