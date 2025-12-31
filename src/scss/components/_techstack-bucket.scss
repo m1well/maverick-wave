@@ -1,0 +1,145 @@
+@use '../abstracts' as *;
+
+.mw-techstack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing('3');
+
+  // Base item
+  &-item {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    background: var(--mw-card-background);
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    padding: spacing('2');
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    color: var(--mw-text-color);
+    min-width: 50px;
+    min-height: 50px;
+
+    .mw-techstack-logo {
+      width: 35px;
+      height: 35px;
+    }
+
+    .mw-techstack-name {
+      font-size: font-size('sm');
+    }
+
+    .mw-techstack-desc {
+      font-size: font-size('xs');
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--mw-shadow);
+      border-color: var(--mw-primary-color);
+
+      .mw-techstack-logo {
+        transform: scale(1.1);
+      }
+
+      .mw-techstack-name {
+        color: var(--mw-primary-color);
+      }
+    }
+  }
+
+  // Small variant
+  &-item-sm {
+    padding: spacing('1') spacing('2');
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: radius('sm');
+
+    .mw-techstack-logo {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mw-techstack-info {
+      margin-left: spacing('2');
+      margin-right: spacing('1');
+    }
+
+    .mw-techstack-name {
+      font-size: font-size('xs');
+    }
+
+    .mw-techstack-desc {
+      display: none;
+    }
+  }
+
+  &-logo {
+    object-fit: contain;
+    border-radius: radius('sm');
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  &-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: spacing('3');
+    margin-right: spacing('2');
+    justify-content: center;
+  }
+
+  &-name {
+    font-weight: font-weight('bold');
+    line-height: 1.1;
+    transition: color 0.2s ease;
+  }
+
+  &-desc {
+    color: var(--mw-text-muted-color);
+    margin-top: 2px;
+    line-height: 1.1;
+  }
+}
+
+// Bucket container
+.mw-techstack-bucket {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing('2');
+  padding: spacing('3');
+  position: relative;
+  margin-top: spacing('2');
+  border-left: 1px solid var(--mw-dark-border);
+  border-right: 1px solid var(--mw-dark-border);
+  border-bottom: 4px solid var(--mw-dark-border);
+  border-top: 1px dashed transparent;
+  border-radius: radius('none') radius('none') radius('xl') radius('xl');
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--mw-dark-border) 0%,
+      transparent 25%,
+      transparent 75%,
+      var(--mw-dark-border) 100%
+    );
+  }
+
+  // Variant dashed - completely closed
+  &-dashed {
+    background: transparent;
+    border: 2px dashed var(--mw-border);
+    border-radius: radius('lg');
+    border-top: 2px dashed var(--mw-border);
+
+    &::before {
+      display: none;
+    }
+  }
+}
