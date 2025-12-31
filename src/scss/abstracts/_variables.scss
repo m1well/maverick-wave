@@ -71,25 +71,25 @@ $base-colors: (
 
 $status-colors: (
   'success-color': $success-color,
-  'success-background': color.adjust(
+  'success-info-background': color.adjust(
       $success-color,
       $lightness: -8%,
       $alpha: -0.2
     ),
   'warning-color': $warning-color,
-  'warning-background': color.adjust(
+  'warning-info-background': color.adjust(
       $warning-color,
       $lightness: -8%,
       $alpha: -0.2
     ),
   'danger-color': $danger-color,
-  'danger-background': color.adjust(
+  'danger-info-background': color.adjust(
       $danger-color,
       $lightness: -8%,
       $alpha: -0.2
     ),
   'info-color': $info-color,
-  'info-background': color.adjust($info-color, $lightness: -8%, $alpha: -0.2),
+  'info-info-background': color.adjust($info-color, $lightness: -8%, $alpha: -0.2),
 );
 
 // Dark theme colors
