@@ -43,22 +43,13 @@
 
   // Status colors
   --mw-success-color: #{map.get($status-colors, 'success-color')};
-  --mw-success-info-background: #{map.get(
-      $status-colors,
-      'success-info-background'
-    )};
+  --mw-success-background: #{map.get($status-colors, 'success-background')};
   --mw-warning-color: #{map.get($status-colors, 'warning-color')};
-  --mw-warning-info-background: #{map.get(
-      $status-colors,
-      'warning-info-background'
-    )};
+  --mw-warning-background: #{map.get($status-colors, 'warning-background')};
   --mw-danger-color: #{map.get($status-colors, 'danger-color')};
-  --mw-danger-info-background: #{map.get(
-      $status-colors,
-      'danger-info-background'
-    )};
+  --mw-danger-background: #{map.get($status-colors, 'danger-background')};
   --mw-info-color: #{map.get($status-colors, 'info-color')};
-  --mw-info-info-background: #{map.get($status-colors, 'info-info-background')};
+  --mw-info-background: #{map.get($status-colors, 'info-background')};
 
   // Header/navbar colors (they are fixed, but you can change them separately)
   --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};
