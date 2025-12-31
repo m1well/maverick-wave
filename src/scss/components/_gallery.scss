@@ -1,5 +1,11 @@
 @use '../abstracts' as *;
 
+.mw-gallery-container {
+  max-width: 1100px;
+  border-radius: radius('md');
+  margin: spacing('1') auto;
+}
+
 .mw-gallery {
   position: relative;
   overflow: hidden;
