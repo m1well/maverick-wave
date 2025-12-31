@@ -55,8 +55,8 @@
     border-radius: radius('sm');
 
     .mw-techstack-logo {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
     }
 
     .mw-techstack-info {
@@ -109,10 +109,10 @@
   padding: spacing('3');
   position: relative;
   margin-top: spacing('2');
-  border-left: 1px solid var(--mw-dark-border);
-  border-right: 1px solid var(--mw-dark-border);
+  border-left: 2px solid var(--mw-dark-border);
+  border-right: 2px solid var(--mw-dark-border);
   border-bottom: 4px solid var(--mw-dark-border);
-  border-top: 1px dashed transparent;
+  border-top: 2px dashed transparent;
   border-radius: radius('none') radius('none') radius('xl') radius('xl');
 
   &::before {
