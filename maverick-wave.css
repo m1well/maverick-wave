@@ -1836,6 +1836,12 @@ pre code {
   }
 }
 
+.mw-gallery-container {
+  max-width: 1100px;
+  border-radius: 10px;
+  margin: 0.2rem auto;
+}
+
 .mw-gallery {
   position: relative;
   overflow: hidden;
