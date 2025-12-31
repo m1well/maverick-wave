@@ -94,13 +94,13 @@ th {
   --mw-form-elements-background: hsl(243.75, 21.0526315789%, 100.0980392157%);
   --mw-form-elements-color: rgb(21.1781818182, 21.1781818182, 23.6218181818);
   --mw-success-color: #28a745;
-  --mw-success-info-background: ;
+  --mw-success-info-background: rgba(32.115942029, 134.084057971, 55.4, 0.8);
   --mw-warning-color: #d4a310;
-  --mw-warning-info-background: ;
+  --mw-warning-info-background: rgba(174.0631578947, 133.8315789474, 13.1368421053, 0.8);
   --mw-danger-color: #d72537;
-  --mw-danger-info-background: ;
+  --mw-danger-info-background: rgba(180.1904761905, 31.0095238095, 46.0952380952, 0.8);
   --mw-info-color: #17a2b8;
-  --mw-info-info-background: ;
+  --mw-info-info-background: rgba(18.4666666667, 130.0695652174, 147.7333333333, 0.8);
   --mw-header-background: rgb(15.5486486486, 24.0297297297, 36.7513513514);
   --mw-header-navbar-list-color: rgb(139.5260273973, 153.6082191781, 164.8739726027);
   --mw-header-navbar-list-active-color: #1031bb;
