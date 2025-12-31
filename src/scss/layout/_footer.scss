@@ -183,7 +183,7 @@
     }
 
     .mw-social-links {
-      gap: spacing('4');
+      gap: spacing('3');
 
       &.mod-wrap {
         column-gap: spacing('6');
@@ -193,8 +193,8 @@
       }
 
       button {
-        width: 34px;
-        height: 34px;
+        width: 33px;
+        height: 33px;
         font-size: font-size('md');
       }
     }
