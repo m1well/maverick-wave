@@ -89,7 +89,11 @@ $status-colors: (
       $alpha: -0.2
     ),
   'info-color': $info-color,
-  'info-info-background': color.adjust($info-color, $lightness: -8%, $alpha: -0.2),
+  'info-info-background': color.adjust(
+      $info-color,
+      $lightness: -8%,
+      $alpha: -0.2
+    ),
 );
 
 // Dark theme colors

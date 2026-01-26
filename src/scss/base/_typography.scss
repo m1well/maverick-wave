@@ -171,6 +171,10 @@ blockquote {
     color: var(--mw-secondary-color);
   }
 
+  &-danger {
+    color: var(--mw-danger-color);
+  }
+
   &-muted {
     color: var(--mw-text-muted-color);
   }
