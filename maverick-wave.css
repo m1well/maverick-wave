@@ -276,6 +276,9 @@ blockquote::after {
 .mw-text-secondary {
   color: var(--mw-secondary-color);
 }
+.mw-text-danger {
+  color: var(--mw-danger-color);
+}
 .mw-text-muted {
   color: var(--mw-text-muted-color);
 }

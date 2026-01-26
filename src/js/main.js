@@ -26,7 +26,7 @@
     initModals();
     initHeaderLoginButton();
     initImageSliders();
-    initCheckboxLists(); // Add checkbox list initialization
+    initCheckboxLists();
   });
 
   // ===== Checkbox Lists =====
@@ -51,14 +51,12 @@
 
         // Add click handler to the entire list item
         item.addEventListener('click', function (e) {
-          // Don't double-trigger if clicking directly on checkbox or label
           if (
             e.target === checkbox ||
             e.target.closest('.mw-checkbox') === label
           ) {
             return;
           }
-
           toggleCheckbox(this);
         });
 
@@ -81,8 +79,6 @@
 
         // Add label click handler
         label.addEventListener('click', function (e) {
-          // Let the default checkbox behavior handle the toggle
-          // Just ensure the visual state is updated
           setTimeout(() => {
             const listItem = this.closest('li');
             const checkbox = this.querySelector('input[type="checkbox"]');
@@ -186,7 +182,7 @@
       });
 
       initDots();
-      updateSliderPosition(); // Initial layout
+      updateSliderPosition();
     }
   }
 
@@ -289,7 +285,7 @@
       rgbArray = rgb.match(/rgb?\((\d+),\s*(\d+),\s*(\d+)\)/);
     }
 
-    if (!rgbArray) return rgb; // Return original if not RGB format
+    if (!rgbArray) return rgb;
 
     const r = parseInt(rgbArray[1], 10).toString(16).padStart(2, '0');
     const g = parseInt(rgbArray[2], 10).toString(16).padStart(2, '0');
@@ -392,7 +388,6 @@
           const sectionHeight = section.clientHeight;
 
           if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-            // Section ID is just the plain ID, no # or /
             current = section.getAttribute('id');
           }
         });
@@ -475,7 +470,6 @@
 
   // ===== Utility Functions =====
   function initLocalhostIndicator() {
-    // add these class somewhere (best at the header) to activate
     const activated = document.querySelector(
       '.mw-localhost-indicator-activated'
     );
@@ -490,8 +484,6 @@
       if (isLocalhost) {
         const indicator = document.createElement('div');
         indicator.className = 'mw-localhost-indicator-pulse';
-
-        // Add the indicator as the first child of the header
         header.prepend(indicator);
       }
     }
@@ -514,10 +506,8 @@
 
         // decide what to show in the badge
         if (badge.classList.contains('mw-slider-numeric')) {
-          // raw number
           badge.setAttribute('data-value', val);
         } else {
-          // percentage
           badge.setAttribute('data-value', pct);
         }
       };
