@@ -2644,7 +2644,7 @@ pre code {
   box-shadow: 0 25px 50px var(--mw-shadow);
   max-width: 450px;
   width: 100%;
-  max-height: 80vh;
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
   transform: scale(0.9) translateY(1rem);
@@ -2655,9 +2655,15 @@ pre code {
 }
 .mw-modal.mw-modal-sm {
   max-width: 350px;
+  max-height: 70vh;
 }
 .mw-modal.mw-modal-lg {
-  max-width: 650px;
+  max-width: 600px;
+  max-height: 80vh;
+}
+.mw-modal.mw-modal-xl {
+  max-width: 790px;
+  max-height: 85vh;
 }
 
 .mw-modal-header {
