@@ -3,8 +3,7 @@
 .mw-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem; // special - because spacing 1 and 2 doesnt look good
-  margin: spacing('1');
+  gap: spacing('2'); // spacing(2) ist meistens ~0.5rem, was gut passt
 }
 
 // Tag item
@@ -13,101 +12,119 @@
   align-items: center;
   background: var(--mw-primary-background);
   color: var(--mw-text-color);
-  padding: spacing('1') spacing('2');
+  font-weight: font-weight('medium');
+  padding: spacing('1') spacing('3');
   border-radius: radius('xl');
   font-size: font-size('xs');
-  border: 1px solid var(--mw-primary-color);
-  transition: var(--mw-transition);
+  border: 1px solid var(--mw-border);
+  transition: all 0.2s ease;
+  user-select: none;
 
   &:hover {
     background: var(--mw-primary-background-hover);
-    cursor: default;
   }
 
   // Removable tag styling
   &.mw-tags-removable {
     padding-right: spacing('1');
-
-    &:hover {
-      cursor: default; // Keep default cursor on tag hover
-    }
   }
 }
 
-// Close button for removable tags
+// Close button - pure CSS
 .mw-tags-remove {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   margin-left: spacing('2');
   border-radius: radius('full');
-  background: rgba(255, 255, 255, 0.5); // fixed color
-  transition: var(--mw-transition);
+  background: rgba(40, 40, 40, 0.8); // fixed color
   cursor: pointer;
+  transition: var(--mw-transition);
+  position: relative;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.8); // fixed color
+    background: var(--mw-danger-color);
+    &::before,
+    &::after {
+      background-color: rgba(240, 240, 240, 0.9); // fixed color
+    }
+  }
+
+  // The X
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: rgba(240, 240, 240, 0.7); // fixed color
+    border-radius: 1px;
+    transition: background-color 0.2s;
   }
 
   &::before {
-    content: '×'; // Unicode × character
-    font-size: 12px;
-    line-height: 1;
-    font-weight: font-weight('bold');
+    transform: rotate(45deg);
   }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.mw-tags-icon {
+  display: inline-flex;
+  margin-right: spacing('1');
+  font-size: 1.1em;
 }
 
 // Color variants
 .mw-tags-primary .mw-tags-item {
-  background: var(--mw-primary-background);
+  background-color: var(--mw-primary-background);
   border-color: var(--mw-primary-color);
-
   &:hover {
     background: var(--mw-primary-background-hover);
   }
 }
 
 .mw-tags-secondary .mw-tags-item {
-  background: var(--mw-secondary-background);
+  background-color: var(--mw-secondary-background);
   border-color: var(--mw-secondary-color);
-
   &:hover {
     background: var(--mw-secondary-background-hover);
   }
 }
 
-// Size variants
-.mw-tags-sm .mw-tags-item {
-  font-size: font-size('2xs');
-  padding: 3px 8px;
-
-  .mw-tags-remove {
-    width: 14px;
-    height: 14px;
-
-    &::before {
-      font-size: font-size('2xs');
-    }
+.mw-tags-success .mw-tags-item {
+  background-color: var(--mw-success-info-background);
+  border-color: var(--mw-success-color);
+  &:hover {
+    background: var(--mw-success-info-background-hover);
   }
 }
 
+.mw-tags-info .mw-tags-item {
+  background-color: var(--mw-info-info-background);
+  border-color: var(--mw-info-color);
+  &:hover {
+    background: var(--mw-info-info-background-hover);
+  }
+}
+
+// Size variants
 .mw-tags-lg .mw-tags-item {
   font-size: font-size('sm');
-  padding: 6px 12px;
+  padding: spacing('1') spacing('3');
 
   .mw-tags-remove {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
 
-    &::before {
-      font-size: font-size('sm');
+    &::before,
+    &::after {
+      width: 12px;
+      height: 2px;
     }
   }
-}
-
-// Icon
-.mw-tags-icon {
-  margin-right: spacing('1');
 }
