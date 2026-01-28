@@ -23,10 +23,11 @@ $_mw-checkbox-colors: (
 
   &-inline {
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    gap: spacing('6');
+    gap: spacing('2') spacing('6');
     @include media-down('sm') {
-      gap: spacing('4');
+      gap: spacing('2') spacing('4');
     }
   }
 }
