@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.27.0] - 2026-01-27
 
+### Added
+
+- tags rework
+
 ### Changed
 
 - modal sizes

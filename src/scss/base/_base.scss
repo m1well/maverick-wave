@@ -47,6 +47,10 @@
       $status-colors,
       'success-info-background'
     )};
+  --mw-success-info-background-hover: #{map.get(
+      $status-colors,
+      'success-info-background-hover'
+    )};
   --mw-warning-color: #{map.get($status-colors, 'warning-color')};
   --mw-warning-info-background: #{map.get(
       $status-colors,
@@ -59,6 +63,10 @@
     )};
   --mw-info-color: #{map.get($status-colors, 'info-color')};
   --mw-info-info-background: #{map.get($status-colors, 'info-info-background')};
+  --mw-info-info-background-hover: #{map.get(
+      $status-colors,
+      'info-info-background-hover'
+    )};
 
   // Header/navbar colors (they are fixed, but you can change them separately)
   --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};

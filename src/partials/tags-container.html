@@ -1,90 +1,144 @@
-<h3 class="mw-section-subtitle">Tags</h3>
+<h3 class="mw-section-subtitle">Tag System</h3>
 
-<div class="mw-grid-3">
+<div class="mw-grid-3 mw-gap-6">
+  <!-- COLUMN 1: Basic & Status -->
   <div>
-    <h3 class="mw-mb-4">Basic Tags</h3>
+    <h3 class="mw-card-title mw-mb-4">Status & Types</h3>
     <div class="mw-card mw-card-simple">
-      <h4 class="mw-mb-2">Default Tags</h4>
-      <div class="mw-tags mw-my-3">
-        <span class="mw-tags-item">HTML</span>
-        <span class="mw-tags-item">CSS</span>
-        <span class="mw-tags-item">JavaScript</span>
-        <span class="mw-tags-item">React</span>
-        <span class="mw-tags-item">Node.js</span>
+      <!-- Basic -->
+      <h5 class="mw-text-medium mw-mb-2">Default</h5>
+      <div class="mw-tags mw-mb-4">
+        <span class="mw-tags-item">Frontend</span>
+        <span class="mw-tags-item">Backend</span>
+        <span class="mw-tags-item">DevOps</span>
       </div>
 
-      <h4 class="mw-mb-2 mw-mt-4">Primary Tags</h4>
-      <div class="mw-tags mw-tags-primary mw-my-3">
-        <span class="mw-tags-item">HTML</span>
-        <span class="mw-tags-item">CSS</span>
-        <span class="mw-tags-item">JavaScript</span>
+      <!-- Primary (Main Tech) -->
+      <h5 class="mw-text-medium mw-mb-2">Primary</h5>
+      <div class="mw-tags mw-tags-primary mw-mb-4">
+        <span class="mw-tags-item">Angular</span>
+        <span class="mw-tags-item">Spring Boot</span>
+        <span class="mw-tags-item">Kotlin</span>
       </div>
 
-      <h4 class="mw-mb-2 mw-mt-4">Secondary Tags</h4>
-      <div class="mw-tags mw-tags-secondary mw-my-3">
-        <span class="mw-tags-item">HTML</span>
-        <span class="mw-tags-item">CSS</span>
-        <span class="mw-tags-item">JavaScript</span>
+      <!-- Success (Status) -->
+      <h5 class="mw-text-medium mw-mb-2">Success</h5>
+      <div class="mw-tags mw-tags-success mw-mb-4">
+        <span class="mw-tags-item">
+          <i class="fas fa-check mw-tags-icon"></i>Completed
+        </span>
+        <span class="mw-tags-item">Deployed</span>
+        <span class="mw-tags-item">Stable</span>
+      </div>
+
+      <!-- Info (Metadata) -->
+      <h5 class="mw-text-medium mw-mb-2">Info</h5>
+      <div class="mw-tags mw-tags-info mw-mb-4">
+        <span class="mw-tags-item">v2.4.0</span>
+        <span class="mw-tags-item">
+          <i class="fas fa-info-circle mw-tags-icon"></i>Beta
+        </span>
+        <span class="mw-tags-item">Documentation</span>
+      </div>
+
+      <!-- Secondary (Tools) -->
+      <h5 class="mw-text-medium mw-mb-2">Secondary</h5>
+      <div class="mw-tags mw-tags-secondary">
+        <span class="mw-tags-item">Docker</span>
+        <span class="mw-tags-item">Kubernetes</span>
+        <span class="mw-tags-item">Git</span>
       </div>
     </div>
   </div>
 
+  <!-- COLUMN 2: Sizes & Icons -->
   <div>
-    <h3 class="mw-mb-4">Tag Sizes & Icons</h3>
+    <h3 class="mw-card-title mw-mb-4">Sizes & Formatting</h3>
     <div class="mw-card mw-card-simple">
-      <h4 class="mw-mb-2">Small Tags</h4>
-      <div class="mw-tags mw-tags-sm mw-my-3">
-        <span class="mw-tags-item">Small</span>
-        <span class="mw-tags-item">Tag</span>
-        <span class="mw-tags-item">Size</span>
-      </div>
-
-      <h4 class="mw-mb-2 mw-mt-4">Default Size</h4>
-      <div class="mw-tags mw-my-3">
-        <span class="mw-tags-item">Default</span>
-        <span class="mw-tags-item">Tag</span>
-        <span class="mw-tags-item">Size</span>
-      </div>
-
-      <h4 class="mw-mb-2 mw-mt-4">Large Tags</h4>
-      <div class="mw-tags mw-tags-lg mw-my-3">
-        <span class="mw-tags-item">Large</span>
-        <span class="mw-tags-item">Tag</span>
-        <span class="mw-tags-item">Size</span>
-      </div>
-
-      <h4 class="mw-mb-2 mw-mt-4">Tags with Icons</h4>
-      <div class="mw-tags mw-my-3">
-        <span class="mw-tags-item"
-          ><i class="fas fa-code mw-tags-icon"></i>HTML</span
-        >
-        <span class="mw-tags-item"
-          ><i class="fab fa-css3 mw-tags-icon"></i>CSS</span
-        >
-        <span class="mw-tags-item"
-          ><i class="fab fa-js mw-tags-icon"></i>JavaScript</span
-        >
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h3 class="mw-mb-4">Action Tags</h3>
-    <div class="mw-card mw-card-simple">
-      <h4 class="mw-mb-2">Closable Tags</h4>
-      <div class="mw-tags mw-tags-primary mw-my-3">
+      <!-- Default -->
+      <h5 class="mw-text-medium mw-mb-2">Default Size</h5>
+      <div class="mw-tags mw-mb-4">
+        <span class="mw-tags-item">Typescript</span>
+        <span class="mw-tags-item">
+          <i class="fas fa-cube mw-tags-icon"></i>Components
+        </span>
         <span class="mw-tags-item mw-tags-removable">
-          Frontend
+          filter: active
+          <span class="mw-tags-remove"></span>
+        </span>
+      </div>
+
+      <!-- Large (Categories) -->
+      <h5 class="mw-text-medium mw-mb-2">Large (Categories)</h5>
+      <div class="mw-tags mw-tags-lg mw-mb-4">
+        <span class="mw-tags-item">Web Development</span>
+        <span class="mw-tags-item">Design System</span>
+      </div>
+
+      <!-- With Details -->
+      <h5 class="mw-text-medium mw-mb-2">With Details</h5>
+      <div class="mw-tags">
+        <span class="mw-tags-item">
+          <i class="fab fa-npm mw-tags-icon"></i>
+          npm install
+          <span class="mw-text-muted mw-ml-1 mw-text-xs">(latest)</span>
+        </span>
+        <span class="mw-tags-item">
+          <i class="fas fa-code-branch mw-tags-icon"></i>
+          main
+          <span class="mw-text-muted mw-ml-1 mw-text-xs">(protected)</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 3: Interaction -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Interactive Tags</h3>
+    <div class="mw-card mw-card-simple">
+      <h5 class="mw-text-medium mw-mb-2">Removable Input (Primary)</h5>
+      <div class="mw-tags mw-tags-primary mw-mb-4">
+        <span class="mw-tags-item mw-tags-removable">
+          React
           <span
             class="mw-tags-remove"
-            onclick="this.parentElement.remove()"
+            onclick="this.closest('.mw-tags-item').remove()"
           ></span>
         </span>
         <span class="mw-tags-item mw-tags-removable">
-          Design
+          Vue.js
           <span
             class="mw-tags-remove"
-            onclick="this.parentElement.remove()"
+            onclick="this.closest('.mw-tags-item').remove()"
+          ></span>
+        </span>
+      </div>
+
+      <h5 class="mw-text-medium mw-mb-2">Removable Status (Success)</h5>
+      <div class="mw-tags mw-tags-success mw-mb-4">
+        <span class="mw-tags-item mw-tags-removable">
+          <i class="fas fa-user-check mw-tags-icon"></i>Online
+          <span
+            class="mw-tags-remove"
+            onclick="this.closest('.mw-tags-item').remove()"
+          ></span>
+        </span>
+        <span class="mw-tags-item mw-tags-removable">
+          Available
+          <span
+            class="mw-tags-remove"
+            onclick="this.closest('.mw-tags-item').remove()"
+          ></span>
+        </span>
+      </div>
+
+      <h5 class="mw-text-medium mw-mb-2">Large Removable</h5>
+      <div class="mw-tags mw-tags-lg mw-tags-info">
+        <span class="mw-tags-item mw-tags-removable">
+          Filter: Architecture
+          <span
+            class="mw-tags-remove"
+            onclick="this.closest('.mw-tags-item').remove()"
           ></span>
         </span>
       </div>
