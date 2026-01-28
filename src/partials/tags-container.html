@@ -64,7 +64,11 @@
         </span>
         <span class="mw-tags-item mw-tags-removable">
           filter: active
-          <span class="mw-tags-remove"></span>
+          <button
+            type="button"
+            class="mw-tags-remove"
+            onclick="this.closest('.mw-tags-item').remove()"
+          ></button>
         </span>
       </div>
 
@@ -100,17 +104,19 @@
       <div class="mw-tags mw-tags-primary mw-mb-4">
         <span class="mw-tags-item mw-tags-removable">
           React
-          <span
+          <button
+            type="button"
             class="mw-tags-remove"
             onclick="this.closest('.mw-tags-item').remove()"
-          ></span>
+          ></button>
         </span>
         <span class="mw-tags-item mw-tags-removable">
           Vue.js
-          <span
+          <button
+            type="button"
             class="mw-tags-remove"
             onclick="this.closest('.mw-tags-item').remove()"
-          ></span>
+          ></button>
         </span>
       </div>
 
@@ -118,17 +124,19 @@
       <div class="mw-tags mw-tags-success mw-mb-4">
         <span class="mw-tags-item mw-tags-removable">
           <i class="fas fa-user-check mw-tags-icon"></i>Online
-          <span
+          <button
+            type="button"
             class="mw-tags-remove"
             onclick="this.closest('.mw-tags-item').remove()"
-          ></span>
+          ></button>
         </span>
         <span class="mw-tags-item mw-tags-removable">
           Available
-          <span
+          <button
+            type="button"
             class="mw-tags-remove"
             onclick="this.closest('.mw-tags-item').remove()"
-          ></span>
+          ></button>
         </span>
       </div>
 
@@ -136,10 +144,11 @@
       <div class="mw-tags mw-tags-lg mw-tags-info">
         <span class="mw-tags-item mw-tags-removable">
           Filter: Architecture
-          <span
+          <button
+            type="button"
             class="mw-tags-remove"
             onclick="this.closest('.mw-tags-item').remove()"
-          ></span>
+          ></button>
         </span>
       </div>
     </div>

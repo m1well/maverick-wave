@@ -1,84 +1,108 @@
-<h3 class="mw-section-subtitle">Alerts</h3>
+<h3 class="mw-section-subtitle">Alerts System</h3>
 
-<div class="mw-grid-2">
+<div class="mw-grid-2 mw-gap-4">
+  <!-- Primary: System Notifications -->
   <div class="mw-alert mw-alert-primary">
     <div class="mw-alert-icon">
       <i class="fas fa-info-circle"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Primary Alert</span>
-      <p>This is a primary alert—providing important information to users.</p>
+      <span class="mw-alert-title">System Update</span>
+      <p>Please note that maintenance is scheduled for tonight at 02:00 AM.</p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 
+  <!-- Secondary: Generic Info -->
   <div class="mw-alert mw-alert-secondary">
     <div class="mw-alert-icon">
       <i class="fas fa-bell"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Secondary Alert</span>
-      <p>
-        This is a secondary alert—useful for notifications that don't require
-        immediate attention.
-      </p>
+      <span class="mw-alert-title">Notification</span>
+      <p>You have unread messages in your inbox.</p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 
+  <!-- Success: Actions -->
   <div class="mw-alert mw-alert-success">
     <div class="mw-alert-icon">
       <i class="fas fa-check-circle"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Success Alert</span>
-      <p>
-        This is a success alert—confirming that an action has been completed
-        successfully.
-      </p>
+      <span class="mw-alert-title">Profile Updated</span>
+      <p>Your settings have been saved successfully.</p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 
+  <!-- Warning: Caution needed -->
   <div class="mw-alert mw-alert-warning">
     <div class="mw-alert-icon">
       <i class="fas fa-exclamation-triangle"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Warning Alert</span>
+      <span class="mw-alert-title">Storage Low</span>
       <p>
-        This is a warning alert—highlighting potential issues that require
-        attention.
+        You are running out of storage space (95% used). Consider upgrading your
+        plan.
       </p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 
+  <!-- Danger: Critical Errors -->
   <div class="mw-alert mw-alert-danger">
     <div class="mw-alert-icon">
       <i class="fas fa-times-circle"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Danger Alert</span>
+      <span class="mw-alert-title">Connection Failed</span>
       <p>
-        This is a danger alert—indicating critical issues that need immediate
-        attention.
+        Could not connect to database. Please check your credentials and try
+        again.
       </p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 
+  <!-- Info: Context / Tips -->
   <div class="mw-alert mw-alert-info">
     <div class="mw-alert-icon">
-      <i class="fas fa-info-circle"></i>
+      <i class="fas fa-lightbulb"></i>
     </div>
     <div class="mw-alert-content">
-      <span class="mw-alert-title">Info Alert</span>
+      <span class="mw-alert-title">Did you know?</span>
       <p>
-        This is an info alert—providing helpful context or additional
-        information to users.
+        You can use keyboard shortcuts to navigate faster. Press
+        <strong>?</strong> to see help.
       </p>
     </div>
-    <button type="button" class="mw-alert-close">&times;</button>
+    <button
+      type="button"
+      class="mw-alerts-close"
+      onclick="this.closest('.mw-alert').remove()"
+    ></button>
   </div>
 </div>

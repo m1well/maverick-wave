@@ -70,7 +70,7 @@
     bottom: 100%;
     left: 50%;
     transform: translateX(-50%) translateY(-10px);
-    background: var(--mw-gray-background);
+    background: var(--mw-gray-background-darker);
     color: var(--mw-primary-text-color);
     padding: spacing('1') spacing('2');
     font-size: font-size('xs');
@@ -95,7 +95,7 @@
     left: 50%;
     transform: translateX(-50%) translateY(-10px);
     border: 6px solid transparent;
-    border-top-color: var(--mw-gray-background);
+    border-top-color: var(--mw-gray-background-darker);
     opacity: 0;
     visibility: hidden;
     transition:

@@ -30,7 +30,7 @@
   }
 }
 
-// Close button - pure CSS
+// Remove button - pure CSS
 .mw-tags-remove {
   display: inline-flex;
   align-items: center;
@@ -39,16 +39,18 @@
   height: 18px;
   margin-left: spacing('2');
   border-radius: radius('full');
-  background: rgba(40, 40, 40, 0.8); // fixed color
+  background: var(--mw-gray-background-darker);
   cursor: pointer;
   transition: var(--mw-transition);
   position: relative;
+  opacity: 0.8;
 
   &:hover {
+    opacity: 1;
     background: var(--mw-danger-color);
     &::before,
     &::after {
-      background-color: rgba(240, 240, 240, 0.9); // fixed color
+      background-color: var(--mw-primary-text-color);
     }
   }
 
@@ -59,7 +61,7 @@
     position: absolute;
     width: 10px;
     height: 2px;
-    background-color: rgba(240, 240, 240, 0.7); // fixed color
+    background-color: var(--mw-primary-text-color);
     border-radius: 1px;
     transition: background-color 0.2s;
   }
