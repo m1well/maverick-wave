@@ -39,7 +39,7 @@
   height: 18px;
   margin-left: spacing('2');
   border-radius: radius('full');
-  background: var(--mw-gray-background-darker);
+  background: var(--mw-gray-background-richer);
   cursor: pointer;
   transition: var(--mw-transition);
   position: relative;
@@ -48,10 +48,6 @@
   &:hover {
     opacity: 1;
     background: var(--mw-danger-color);
-    &::before,
-    &::after {
-      background-color: var(--mw-primary-text-color);
-    }
   }
 
   // The X
@@ -61,7 +57,7 @@
     position: absolute;
     width: 10px;
     height: 2px;
-    background-color: var(--mw-primary-text-color);
+    background-color: var(--mw-dark-text-color);
     border-radius: 1px;
     transition: background-color 0.2s;
   }

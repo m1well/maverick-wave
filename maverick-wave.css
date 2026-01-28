@@ -90,7 +90,7 @@ th {
   --mw-secondary-info-background: rgba(149.4157635468, 39.1517241379, 12.7842364532, 0.7);
   --mw-secondary-text-color: #d6dbdf;
   --mw-gray-background: rgba(98.75, 98.75, 98.75, 0.6);
-  --mw-gray-background-darker: rgba(75.8, 75.8, 75.8, 0.8);
+  --mw-gray-background-richer: rgba(88.55, 88.55, 88.55, 0.9);
   --mw-section-alternate-pattern: rgba(86, 86, 86, 0.45);
   --mw-form-elements-background: hsl(243.75, 21.0526315789%, 100.0980392157%);
   --mw-form-elements-color: rgb(21.1781818182, 21.1781818182, 23.6218181818);
@@ -490,7 +490,7 @@ blockquote::after {
   justify-content: center;
   width: 22px;
   height: 22px;
-  background: var(--mw-gray-background-darker);
+  background: var(--mw-gray-background-richer);
   margin-left: 0.75rem;
   margin-top: -0.2rem;
   border-radius: 50%;
@@ -503,7 +503,7 @@ blockquote::after {
   position: absolute;
   width: 14px;
   height: 2px;
-  background-color: var(--mw-primary-text-color);
+  background-color: var(--mw-dark-text-color);
   opacity: 0.8;
   border-radius: 1px;
   transition: opacity 0.2s;
@@ -3508,7 +3508,7 @@ pre code {
   height: 18px;
   margin-left: 0.5rem;
   border-radius: 50%;
-  background: var(--mw-gray-background-darker);
+  background: var(--mw-gray-background-richer);
   cursor: pointer;
   transition: var(--mw-transition);
   position: relative;
@@ -3518,15 +3518,12 @@ pre code {
   opacity: 1;
   background: var(--mw-danger-color);
 }
-.mw-tags-remove:hover::before, .mw-tags-remove:hover::after {
-  background-color: var(--mw-primary-text-color);
-}
 .mw-tags-remove::before, .mw-tags-remove::after {
   content: "";
   position: absolute;
   width: 10px;
   height: 2px;
-  background-color: var(--mw-primary-text-color);
+  background-color: var(--mw-dark-text-color);
   border-radius: 1px;
   transition: background-color 0.2s;
 }
@@ -5992,8 +5989,8 @@ pre code {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background: var(--mw-gray-background-darker);
-  color: var(--mw-primary-text-color);
+  background: var(--mw-gray-background-richer);
+  color: var(--mw-dark-text-color);
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
   border-radius: 2px;
@@ -6013,7 +6010,7 @@ pre code {
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   border: 6px solid transparent;
-  border-top-color: var(--mw-gray-background-darker);
+  border-top-color: var(--mw-gray-background-richer);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s, transform 0.2s;

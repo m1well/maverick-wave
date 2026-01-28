@@ -29,9 +29,9 @@
     )};
   --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
-  --mw-gray-background-darker: #{map.get(
+  --mw-gray-background-richer: #{map.get(
       $base-colors,
-      'gray-background-darker'
+      'gray-background-richer'
     )};
   --mw-section-alternate-pattern: #{map.get(
       $base-colors,

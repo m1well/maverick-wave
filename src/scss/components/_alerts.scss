@@ -64,7 +64,7 @@
   justify-content: center;
   width: 22px;
   height: 22px;
-  background: var(--mw-gray-background-darker);
+  background: var(--mw-gray-background-richer);
   margin-left: spacing('3');
   margin-top: spacing('-1');
   border-radius: radius('full');
@@ -79,7 +79,7 @@
     position: absolute;
     width: 14px;
     height: 2px;
-    background-color: var(--mw-primary-text-color);
+    background-color: var(--mw-dark-text-color);
     opacity: 0.8;
     border-radius: 1px;
     transition: opacity 0.2s;
