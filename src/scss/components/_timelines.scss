@@ -320,7 +320,9 @@ $_border-width-simple: 3px;
 
     &-date {
       position: absolute;
-      max-width: 250px;
+      min-width: 120px;
+      width: auto;
+      max-width: 260px;
       font-size: font-size('xs');
       line-height: 1;
     }
