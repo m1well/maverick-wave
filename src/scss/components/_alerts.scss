@@ -2,21 +2,32 @@
 
 .mw-alert {
   position: relative;
-  padding: spacing('3') spacing('4');
-  border-radius: radius('md');
-  margin-bottom: spacing('4');
+  overflow: hidden;
+
   display: flex;
   align-items: flex-start;
+
+  padding: spacing('3') spacing('4');
+  margin-bottom: spacing('4');
+  border-radius: radius('md');
+
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
   box-shadow: 0 2px 5px var(--mw-shadow);
+
+  &-icon,
+  &-content,
+  .mw-alert-close {
+    position: relative;
+    z-index: 2;
+  }
 
   &-icon {
     flex-shrink: 0;
     margin-right: spacing('3');
     font-size: font-size('xl');
     line-height: 1.2;
-    margin-top: spacing('2');
+    margin-top: spacing('1');
   }
 
   &-content {
@@ -84,9 +95,11 @@
     transition: opacity 0.2s;
   }
 
-  &:hover::before,
-  &:hover::after {
-    opacity: 1;
+  &:hover {
+    &::before,
+    &::after {
+      opacity: 1;
+    }
   }
 
   &::before {
@@ -107,13 +120,21 @@ $_mw-alert-colors: (
   danger: var(--mw-danger-color),
 );
 
-// Color Variants
+// Color variants
 @each $name, $col in $_mw-alert-colors {
   .mw-alert-#{$name} {
-    background: var(--mw-#{$name}-info-background);
-
     border: 1px solid rgba($col, 0.2);
     border-left: 4px solid #{$col};
+
+    // Color layer
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--mw-#{$name}-info-background);
+      z-index: 0;
+      pointer-events: none;
+    }
 
     .mw-alert-icon {
       color: #{$col};
