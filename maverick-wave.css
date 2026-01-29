@@ -1149,7 +1149,7 @@ blockquote::after {
   text-decoration: none;
   font-size: 1.1rem;
   border: 2px solid var(--mw-border);
-  height: 2.5rem;
+  height: 2.6rem;
   padding: 0 1.5rem;
   border-radius: 0;
   transform: skew(-30deg);
@@ -4000,7 +4000,7 @@ pre code {
 }
 .mw-timeline-big-step {
   position: relative;
-  margin: 2.5rem 0;
+  margin: 2.6rem 0;
   display: flex;
   align-items: flex-start;
 }
@@ -4333,6 +4333,9 @@ pre code {
   z-index: 10;
 }
 .mw-timeline-simple-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   padding: 0;
   margin-left: 120px;
   text-align: left;
@@ -4391,7 +4394,7 @@ pre code {
     line-height: 1;
   }
   .mw-timeline-simple-content {
-    margin-top: 2.1rem;
+    margin-top: 2.6rem;
     margin-left: 0.75rem;
     width: auto;
   }
@@ -4650,11 +4653,11 @@ pre code {
 }
 @media (max-width: 375px) {
   .mw-login {
-    padding: 2.5rem 1rem;
+    padding: 2.6rem 1rem;
   }
 }
 .mw-login-logo {
-  margin-bottom: 3rem;
+  margin-bottom: 3.3rem;
 }
 .mw-login-logo img {
   display: block;
@@ -4843,13 +4846,13 @@ pre code {
   background-size: 0.5rem 0.5rem;
 }
 .mw-select-lg {
-  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  padding: 0.75rem 2.6rem 0.75rem 1rem;
   font-size: 1rem;
   background-position: right 1rem center;
   background-size: 1rem 1rem;
 }
 .mw-select-xl {
-  padding: 1rem 3rem 1rem 1.5rem;
+  padding: 1rem 3.3rem 1rem 1.5rem;
   font-size: 1.1rem;
   background-position: right 1.5rem center;
   background-size: 1.5rem 1.5rem;
@@ -4946,16 +4949,16 @@ pre code {
   margin-top: 0.45rem;
 }
 .mw-slider-xl::-webkit-slider-thumb {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
 }
 .mw-slider-xl::-moz-range-thumb {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
 }
 .mw-slider-xl::-ms-thumb {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
 }
 .mw-slider:disabled {
   opacity: 0.3;
@@ -5056,7 +5059,7 @@ pre code {
 .mw-footer {
   background: var(--mw-footer-background);
   padding: 2rem 0 1rem 0;
-  margin-top: 2.5rem;
+  margin-top: 2.6rem;
   border-top: 1px solid var(--mw-primary-color-hover);
 }
 .mw-footer-top {
@@ -5123,7 +5126,7 @@ pre code {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 3rem;
+  column-gap: 3.3rem;
   row-gap: 1rem;
   margin: 0.5rem auto 2rem auto;
 }
@@ -5236,7 +5239,7 @@ pre code {
 
 .mw-grid-stack-center-lg, .mw-grid-stack-lg, .mw-grid-flex-lg, .mw-grid-auto-lg, .mw-grid-5-lg, .mw-grid-4-lg, .mw-grid-3-lg, .mw-grid-2-lg, .mw-grid-1-lg, .mw-grid-lg {
   display: grid;
-  gap: 3rem;
+  gap: 3.3rem;
 }
 
 .mw-grid-1 {
@@ -5972,7 +5975,7 @@ pre code {
 
 .mw-content {
   flex: 1;
-  padding-top: 2.5rem;
+  padding-top: 2.6rem;
 }
 
 .mw-content-centered {
@@ -6028,7 +6031,7 @@ pre code {
 
 .mw-section-title {
   font-size: 2.2rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.6rem;
   text-align: center;
   position: relative;
 }
@@ -6050,7 +6053,7 @@ pre code {
 
 .mw-section-subtitle {
   font-size: 1.8rem;
-  margin: 3rem 0 2rem 0;
+  margin: 3.3rem 0 2rem 0;
   text-align: center;
   position: relative;
 }
@@ -6094,7 +6097,7 @@ pre code {
   }
 }
 section {
-  padding: 2.5rem 0;
+  padding: 2.6rem 0;
   position: relative;
 }
 section.mw-section-alternate {
@@ -6593,63 +6596,63 @@ section.mw-section-alternate {
 }
 
 .mw-m-7 {
-  margin: 2.5rem;
+  margin: 2.6rem;
 }
 
 .mw-mt-7 {
-  margin-top: 2.5rem;
+  margin-top: 2.6rem;
 }
 
 .mw-mb-7 {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.6rem;
 }
 
 .mw-ml-7 {
-  margin-left: 2.5rem;
+  margin-left: 2.6rem;
 }
 
 .mw-mr-7 {
-  margin-right: 2.5rem;
+  margin-right: 2.6rem;
 }
 
 .mw-mx-7 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
+  margin-left: 2.6rem;
+  margin-right: 2.6rem;
 }
 
 .mw-my-7 {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-top: 2.6rem;
+  margin-bottom: 2.6rem;
 }
 
 .mw-m-8 {
-  margin: 3rem;
+  margin: 3.3rem;
 }
 
 .mw-mt-8 {
-  margin-top: 3rem;
+  margin-top: 3.3rem;
 }
 
 .mw-mb-8 {
-  margin-bottom: 3rem;
+  margin-bottom: 3.3rem;
 }
 
 .mw-ml-8 {
-  margin-left: 3rem;
+  margin-left: 3.3rem;
 }
 
 .mw-mr-8 {
-  margin-right: 3rem;
+  margin-right: 3.3rem;
 }
 
 .mw-mx-8 {
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-left: 3.3rem;
+  margin-right: 3.3rem;
 }
 
 .mw-my-8 {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 3.3rem;
+  margin-bottom: 3.3rem;
 }
 
 .mw-m-9 {
@@ -7103,63 +7106,63 @@ section.mw-section-alternate {
 }
 
 .mw-p-7 {
-  padding: 2.5rem;
+  padding: 2.6rem;
 }
 
 .mw-pt-7 {
-  padding-top: 2.5rem;
+  padding-top: 2.6rem;
 }
 
 .mw-pb-7 {
-  padding-bottom: 2.5rem;
+  padding-bottom: 2.6rem;
 }
 
 .mw-pl-7 {
-  padding-left: 2.5rem;
+  padding-left: 2.6rem;
 }
 
 .mw-pr-7 {
-  padding-right: 2.5rem;
+  padding-right: 2.6rem;
 }
 
 .mw-px-7 {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: 2.6rem;
+  padding-right: 2.6rem;
 }
 
 .mw-py-7 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
+  padding-top: 2.6rem;
+  padding-bottom: 2.6rem;
 }
 
 .mw-p-8 {
-  padding: 3rem;
+  padding: 3.3rem;
 }
 
 .mw-pt-8 {
-  padding-top: 3rem;
+  padding-top: 3.3rem;
 }
 
 .mw-pb-8 {
-  padding-bottom: 3rem;
+  padding-bottom: 3.3rem;
 }
 
 .mw-pl-8 {
-  padding-left: 3rem;
+  padding-left: 3.3rem;
 }
 
 .mw-pr-8 {
-  padding-right: 3rem;
+  padding-right: 3.3rem;
 }
 
 .mw-px-8 {
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-left: 3.3rem;
+  padding-right: 3.3rem;
 }
 
 .mw-py-8 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 3.3rem;
+  padding-bottom: 3.3rem;
 }
 
 .mw-p-9 {
@@ -7340,20 +7343,20 @@ section.mw-section-alternate {
 }
 
 .mw-gap-7 {
-  gap: 2.5rem;
+  gap: 2.6rem;
 }
 @media (max-width: 576px) {
   .mw-gap-7 {
-    gap: 1.875rem;
+    gap: 1.95rem;
   }
 }
 
 .mw-gap-8 {
-  gap: 3rem;
+  gap: 3.3rem;
 }
 @media (max-width: 576px) {
   .mw-gap-8 {
-    gap: 2.25rem;
+    gap: 2.475rem;
   }
 }
 

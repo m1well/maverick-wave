@@ -8,7 +8,7 @@
 
 %grid-base-lg {
   display: grid;
-  gap: spacing('8'); // Larger spacing
+  gap: spacing('8');
 }
 
 .mw-grid {
@@ -116,7 +116,7 @@
   > * {
     width: auto !important;
     max-width: none !important;
-    min-width: 0; // Prevents overflow issues
+    min-width: 0;
   }
 }
 
@@ -233,7 +233,7 @@
 .mw-grid-stack-center {
   @extend %grid-base;
   grid-template-columns: 1fr;
-  justify-items: center; // Items centered horizontally
+  justify-items: center;
 
   > * {
     max-width: none;
@@ -243,7 +243,7 @@
 .mw-grid-stack-end {
   @extend %grid-base;
   grid-template-columns: 1fr;
-  justify-items: end; // Items aligned right
+  justify-items: end;
 
   > * {
     width: auto;
@@ -254,7 +254,7 @@
 .mw-grid-stack-stretch {
   @extend %grid-base;
   grid-template-columns: 1fr;
-  justify-items: stretch; // Same as grid-1 (full width)
+  justify-items: stretch;
 
   > * {
     width: 100%;
