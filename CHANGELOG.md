@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - status background colors
+- alert backgrounds
 
 ## [2.29.0] - 2026-01-29
 
