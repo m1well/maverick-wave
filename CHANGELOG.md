@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - simple timeline date
+- global spacing 7 and 8
 
 ## [2.28.0] - 2026-01-28
 
