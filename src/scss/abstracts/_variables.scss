@@ -78,36 +78,36 @@ $status-colors: (
   'success-color': $success-color,
   'success-info-background': color.adjust(
       $success-color,
-      $lightness: -5%,
-      $alpha: -0.5
+      $lightness: -9%,
+      $alpha: -0.1
     ),
   'success-info-background-hover': color.adjust(
       $success-color,
-      $lightness: -1%,
-      $alpha: -0.4
+      $lightness: +4%,
+      $alpha: -0.3
     ),
   'warning-color': $warning-color,
   'warning-info-background': color.adjust(
       $warning-color,
-      $lightness: -5%,
-      $alpha: -0.5
+      $lightness: -9%,
+      $alpha: -0.1
     ),
   'danger-color': $danger-color,
   'danger-info-background': color.adjust(
       $danger-color,
-      $lightness: -5%,
-      $alpha: -0.5
+      $lightness: -9%,
+      $alpha: -0.1
     ),
   'info-color': $info-color,
   'info-info-background': color.adjust(
       $info-color,
-      $lightness: -5%,
-      $alpha: -0.5
+      $lightness: -9%,
+      $alpha: -0.1
     ),
   'info-info-background-hover': color.adjust(
       $info-color,
-      $lightness: -1%,
-      $alpha: -0.4
+      $lightness: +4%,
+      $alpha: -0.3
     ),
 );
 
