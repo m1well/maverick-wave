@@ -4329,7 +4329,8 @@ pre code {
   border-radius: 10px;
   border: 3px solid var(--mw-primary-color);
   background: var(--mw-card-background);
-  line-height: 1.2;
+  line-height: 1.1;
+  z-index: 10;
 }
 .mw-timeline-simple-content {
   padding: 0;
@@ -4383,9 +4384,9 @@ pre code {
   }
   .mw-timeline-simple-date {
     position: absolute;
-    width: 115px;
+    max-width: 250px;
     font-size: 0.8rem;
-    line-height: 1.1;
+    line-height: 1;
   }
   .mw-timeline-simple-content {
     margin-top: 2.1rem;

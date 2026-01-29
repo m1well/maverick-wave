@@ -294,7 +294,8 @@ $_border-width-simple: 3px;
     border-radius: radius('md');
     border: $_border-width-simple solid var(--mw-primary-color);
     background: var(--mw-card-background);
-    line-height: 1.2;
+    line-height: 1.1;
+    z-index: 10;
   }
 
   &-content {
@@ -319,9 +320,9 @@ $_border-width-simple: 3px;
 
     &-date {
       position: absolute;
-      width: 115px;
+      max-width: 250px;
       font-size: font-size('xs');
-      line-height: 1.1;
+      line-height: 1;
     }
 
     &-content {
