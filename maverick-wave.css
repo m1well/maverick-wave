@@ -4389,6 +4389,7 @@ pre code {
     max-width: 260px;
     font-size: 0.8rem;
     line-height: 1;
+    padding: 0.2rem 0.5rem;
   }
   .mw-timeline-simple-content {
     margin-top: 2.1rem;

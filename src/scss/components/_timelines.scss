@@ -325,6 +325,7 @@ $_border-width-simple: 3px;
       max-width: 260px;
       font-size: font-size('xs');
       line-height: 1;
+      padding: spacing('1') spacing('2');
     }
 
     &-content {
