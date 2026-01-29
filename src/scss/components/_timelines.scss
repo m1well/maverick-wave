@@ -290,7 +290,7 @@ $_border-width-simple: 3px;
     left: -10px;
     text-align: center;
     font-size: font-size('sm');
-    padding: spacing('1');
+    padding: spacing('2');
     border-radius: radius('md');
     border: $_border-width-simple solid var(--mw-primary-color);
     background: var(--mw-card-background);
@@ -325,7 +325,6 @@ $_border-width-simple: 3px;
       max-width: 260px;
       font-size: font-size('xs');
       line-height: 1;
-      padding: spacing('1') spacing('2');
     }
 
     &-content {
