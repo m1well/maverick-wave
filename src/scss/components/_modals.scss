@@ -9,7 +9,7 @@
   bottom: 0;
   background: var(--mw-gray-background);
   backdrop-filter: blur(2px);
-  z-index: z-index('modal');
+  z-index: z-index('modal')-10;
   display: none;
   align-items: center;
   justify-content: center;
@@ -36,6 +36,7 @@
   flex-direction: column;
   transform: scale(0.9) translateY(spacing('4'));
   transition: transform 0.5s ease;
+  z-index: z-index('modal');
 
   .mw-modal-open & {
     transform: scale(1) translateY(0);
@@ -112,6 +113,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: z-index('modal')-10;
+  z-index: z-index('modal')-5;
   cursor: pointer;
 }

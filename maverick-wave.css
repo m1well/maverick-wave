@@ -2729,7 +2729,7 @@ pre code {
   bottom: 0;
   background: var(--mw-gray-background);
   backdrop-filter: blur(2px);
-  z-index: 500;
+  z-index: 490;
   display: none;
   align-items: center;
   justify-content: center;
@@ -2753,6 +2753,7 @@ pre code {
   flex-direction: column;
   transform: scale(0.9) translateY(1rem);
   transition: transform 0.5s ease;
+  z-index: 500;
 }
 .mw-modal-open .mw-modal {
   transform: scale(1) translateY(0);
@@ -2822,7 +2823,7 @@ pre code {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 490;
+  z-index: 495;
   cursor: pointer;
 }
 
