@@ -77,7 +77,7 @@ $_border-width-simple: 3px;
       .mw-timeline-big-date-container {
         background: var(--mw-primary-color);
         border-color: var(--mw-primary-color);
-        z-index: 2;
+        z-index: z-index('lift');
         transform: translateX(-50%) scale(1.1);
         animation: mw-pulse-ring-big 2s infinite;
 
@@ -272,7 +272,7 @@ $_border-width-simple: 3px;
       .mw-timeline-simple-date {
         background: var(--mw-primary-color);
         color: var(--mw-primary-text-color);
-        z-index: 2;
+        z-index: z-index('lift');
         transform: scale(1.1);
         animation: mw-pulse-ring-simple 2s infinite;
 
@@ -295,7 +295,7 @@ $_border-width-simple: 3px;
     border: $_border-width-simple solid var(--mw-primary-color);
     background: var(--mw-card-background);
     line-height: 1.1;
-    z-index: 10;
+    z-index: z-index('card');
   }
 
   &-content {

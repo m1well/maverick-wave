@@ -42,7 +42,7 @@
     padding: spacing('5') spacing('2');
     font-size: font-size('5xl');
     cursor: pointer;
-    z-index: 3;
+    z-index: z-index('menu');
     user-select: none;
     border-radius: radius('md');
     display: flex;
@@ -57,12 +57,12 @@
 
     &-prev {
       left: 3px;
-      z-index: 5;
+      z-index: z-index('menu');
     }
 
     &-next {
       right: 3px;
-      z-index: 5;
+      z-index: z-index('menu');
     }
   }
 

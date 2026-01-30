@@ -18,7 +18,7 @@
     font-size: font-size('3xl');
     transition: var(--mw-transition);
     position: relative;
-    z-index: 2;
+    z-index: z-index('lift');
     color: var(--mw-text-muted-color);
   }
 
@@ -29,7 +29,7 @@
     text-transform: uppercase;
     letter-spacing: spacing('3');
     position: relative;
-    z-index: 2;
+    z-index: z-index('lift');
     transition: var(--mw-transition);
     text-align: center;
   }
@@ -47,7 +47,7 @@
       var(--mw-secondary-color) 100%
     );
     opacity: 0;
-    z-index: 1;
+    z-index: z-index('lift');
     transition: opacity 0.9s ease;
   }
 

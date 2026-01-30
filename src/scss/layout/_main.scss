@@ -34,14 +34,14 @@
         inset: 0;
         background: var(--mw-hero-overlay-background);
         backdrop-filter: blur(2px);
-        z-index: 2;
+        z-index: z-index('lift');
         pointer-events: none;
       }
 
       // your actual content should sit above the overlay
       > * {
         position: relative;
-        z-index: 3;
+        z-index: z-index('card');
       }
     }
   }
@@ -83,7 +83,7 @@
       opacity 0.2s,
       transform 0.2s;
     margin-bottom: spacing('2');
-    z-index: 100;
+    z-index: z-index('tooltip');
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
 
@@ -102,7 +102,7 @@
       opacity 0.2s,
       transform 0.2s;
     margin-bottom: -4px;
-    z-index: 100;
+    z-index: z-index('tooltip');
   }
 
   // Hover effect

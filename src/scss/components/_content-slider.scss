@@ -59,7 +59,7 @@
     height: 100%;
     transform: translateX(100%);
     transition: transform 0.9s cubic-bezier(0.2, 0, 0.7, 1);
-    z-index: 10;
+    z-index: z-index('card');
     pointer-events: auto;
 
     img {
@@ -82,7 +82,7 @@
     gap: spacing('3');
     padding: spacing('2') spacing('3');
     background: var(--mw-card-background);
-    z-index: 20;
+    z-index: z-index('menu');
     width: 100%;
 
     @include media-down('md') {
@@ -103,7 +103,7 @@
     gap: spacing('3');
     padding: spacing('2') spacing('3');
     background: var(--mw-card-background);
-    z-index: 20;
+    z-index: z-index('menu');
     width: 100%;
 
     @include media-down('md') {

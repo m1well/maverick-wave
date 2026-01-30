@@ -9,7 +9,7 @@
   bottom: 0;
   background: var(--mw-gray-background);
   backdrop-filter: blur(2px);
-  z-index: 9999;
+  z-index: z-index('modal');
   display: none;
   align-items: center;
   justify-content: center;
@@ -112,6 +112,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;
+  z-index: z-index('modal')-10;
   cursor: pointer;
 }

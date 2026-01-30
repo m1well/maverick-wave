@@ -19,6 +19,7 @@ $_mw-card-addon-colors: (
   position: relative;
   overflow: hidden;
   margin: spacing('0');
+  z-index: z-index('card');
 
   &-simple {
     padding: spacing('4');
@@ -40,7 +41,7 @@ $_mw-card-addon-colors: (
     background: var(--mw-primary-color);
     border-radius: radius('md');
     white-space: nowrap;
-    z-index: 10;
+    z-index: z-index('card') + 5;
     pointer-events: none;
     text-align: center;
     opacity: 0.9;
@@ -58,7 +59,7 @@ $_mw-card-addon-colors: (
     border-radius: radius('xs');
     white-space: nowrap;
     width: 220px;
-    z-index: 10;
+    z-index: z-index('card') + 5;
     pointer-events: none;
     transform: rotate(25deg);
     text-align: center;
@@ -89,7 +90,7 @@ $_mw-card-addon-colors: (
       height: 100%;
       object-fit: cover;
       transition: var(--mw-transition);
-      z-index: 3;
+      z-index: z-index('card') + 2;
     }
 
     &:hover img {
