@@ -76,7 +76,7 @@ $_mw-avatar-colors: (
 
       &:hover {
         transform: translateY(-5px);
-        z-index: 1;
+        z-index: z-index('lift');
       }
 
       &:last-child {

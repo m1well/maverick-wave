@@ -449,7 +449,7 @@ blockquote::after {
 .mw-alert-icon, .mw-alert-content,
 .mw-alert .mw-alert-close {
   position: relative;
-  z-index: 2;
+  z-index: 905;
 }
 .mw-alert-icon {
   flex-shrink: 0;
@@ -533,7 +533,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-primary-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-primary .mw-alert-icon {
@@ -549,7 +549,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-secondary-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-secondary .mw-alert-icon {
@@ -565,7 +565,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-info-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-info .mw-alert-icon {
@@ -581,7 +581,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-success-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-success .mw-alert-icon {
@@ -597,7 +597,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-warning-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-warning .mw-alert-icon {
@@ -613,7 +613,7 @@ blockquote::after {
   position: absolute;
   inset: 0;
   background: var(--mw-danger-info-background);
-  z-index: 0;
+  z-index: 900;
   pointer-events: none;
 }
 .mw-alert-danger .mw-alert-icon {
@@ -676,7 +676,7 @@ blockquote::after {
 }
 .mw-avatar-group .mw-avatar:hover {
   transform: translateY(-5px);
-  z-index: 1;
+  z-index: 3;
 }
 .mw-avatar-group .mw-avatar:last-child {
   margin-right: 0;
@@ -1208,7 +1208,7 @@ blockquote::after {
   outline: 0;
   color: var(--mw-primary-color);
   border-color: var(--mw-primary-color);
-  z-index: 1;
+  z-index: 3;
 }
 .mw-breadcrumbs-item a > * {
   transform: skew(30deg);
@@ -1252,6 +1252,7 @@ blockquote::after {
   position: relative;
   overflow: hidden;
   margin: 0;
+  z-index: 10;
 }
 .mw-card-simple {
   padding: 1rem;
@@ -1271,7 +1272,7 @@ blockquote::after {
   background: var(--mw-primary-color);
   border-radius: 10px;
   white-space: nowrap;
-  z-index: 10;
+  z-index: 15;
   pointer-events: none;
   text-align: center;
   opacity: 0.9;
@@ -1288,7 +1289,7 @@ blockquote::after {
   border-radius: 2px;
   white-space: nowrap;
   width: 220px;
-  z-index: 10;
+  z-index: 15;
   pointer-events: none;
   transform: rotate(25deg);
   text-align: center;
@@ -1318,7 +1319,7 @@ blockquote::after {
   height: 100%;
   object-fit: cover;
   transition: var(--mw-transition);
-  z-index: 3;
+  z-index: 12;
 }
 .mw-card-img:hover img, .mw-card-img-contain:hover img {
   transform: scale(1.05);
@@ -1771,7 +1772,7 @@ pre code {
   font-size: 2.2rem;
   transition: var(--mw-transition);
   position: relative;
-  z-index: 2;
+  z-index: 3;
   color: var(--mw-text-muted-color);
 }
 .mw-coming-soon-text {
@@ -1781,7 +1782,7 @@ pre code {
   text-transform: uppercase;
   letter-spacing: 0.75rem;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   transition: var(--mw-transition);
   text-align: center;
 }
@@ -1794,7 +1795,7 @@ pre code {
   height: 100%;
   background: linear-gradient(125deg, var(--mw-primary-color) 40%, var(--mw-secondary-color) 100%);
   opacity: 0;
-  z-index: 1;
+  z-index: 3;
   transition: opacity 0.9s ease;
 }
 .mw-coming-soon:hover {
@@ -1904,7 +1905,7 @@ pre code {
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background: var(--mw-card-background);
-  z-index: 20;
+  z-index: 30;
   width: 100%;
 }
 @media (max-width: 768px) {
@@ -1926,7 +1927,7 @@ pre code {
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background: var(--mw-card-background);
-  z-index: 20;
+  z-index: 30;
   width: 100%;
 }
 @media (max-width: 768px) {
@@ -1981,7 +1982,7 @@ pre code {
   padding: 1.5rem 0.5rem;
   font-size: 3rem;
   cursor: pointer;
-  z-index: 3;
+  z-index: 30;
   user-select: none;
   border-radius: 10px;
   display: flex;
@@ -1995,11 +1996,11 @@ pre code {
 }
 .mw-gallery-navi-prev {
   left: 3px;
-  z-index: 5;
+  z-index: 30;
 }
 .mw-gallery-navi-next {
   right: 3px;
-  z-index: 5;
+  z-index: 30;
 }
 .mw-gallery-desc {
   text-align: left;
@@ -2671,7 +2672,7 @@ pre code {
   width: 100%;
   height: 4px;
   background: var(--mw-warning-color);
-  z-index: 10;
+  z-index: 490;
   animation: pulse-indicator 4s infinite;
 }
 
@@ -2728,7 +2729,7 @@ pre code {
   bottom: 0;
   background: var(--mw-gray-background);
   backdrop-filter: blur(2px);
-  z-index: 9999;
+  z-index: 500;
   display: none;
   align-items: center;
   justify-content: center;
@@ -2821,7 +2822,7 @@ pre code {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;
+  z-index: 490;
   cursor: pointer;
 }
 
@@ -3270,7 +3271,7 @@ pre code {
   backdrop-filter: blur(2px);
   display: flex;
   height: 100%;
-  z-index: 95;
+  z-index: 300;
 }
 
 @keyframes mw-spin {
@@ -4055,7 +4056,7 @@ pre code {
 .mw-timeline-big-step.active .mw-timeline-big-date-container {
   background: var(--mw-primary-color);
   border-color: var(--mw-primary-color);
-  z-index: 2;
+  z-index: 3;
   transform: translateX(-50%) scale(1.1);
   animation: mw-pulse-ring-big 2s infinite;
 }
@@ -4357,7 +4358,7 @@ pre code {
 .mw-timeline-simple-step.active .mw-timeline-simple-date {
   background: var(--mw-primary-color);
   color: var(--mw-primary-text-color);
-  z-index: 2;
+  z-index: 3;
   transform: scale(1.1);
   animation: mw-pulse-ring-simple 2s infinite;
 }
@@ -6012,12 +6013,12 @@ pre code {
     inset: 0;
     background: var(--mw-hero-overlay-background);
     backdrop-filter: blur(2px);
-    z-index: 2;
+    z-index: 3;
     pointer-events: none;
   }
   .mw-container:has(.mw-hero) > * {
     position: relative;
-    z-index: 3;
+    z-index: 10;
   }
 }
 
@@ -6054,7 +6055,7 @@ pre code {
   visibility: hidden;
   transition: opacity 0.2s, transform 0.2s;
   margin-bottom: 0.5rem;
-  z-index: 100;
+  z-index: 700;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 [data-tooltip]::after {
@@ -6069,7 +6070,7 @@ pre code {
   visibility: hidden;
   transition: opacity 0.2s, transform 0.2s;
   margin-bottom: -4px;
-  z-index: 100;
+  z-index: 700;
 }
 [data-tooltip]:hover::before, [data-tooltip]:hover::after {
   opacity: 1;

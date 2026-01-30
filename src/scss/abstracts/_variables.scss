@@ -212,8 +212,12 @@ $transition-default: all 0.3s ease;
 
 // Z-index
 $z-index: (
-  'base': 1,
-  'menu': 10,
+  'lift': 3,
+  'card': 10,
+  'menu': 30,
   'header': 100,
-  'modal': 1000,
+  'spinner': 300,
+  'modal': 500,
+  'tooltip': 700,
+  'alert': 900,
 );

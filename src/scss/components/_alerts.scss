@@ -19,7 +19,7 @@
   &-content,
   .mw-alert-close {
     position: relative;
-    z-index: 2;
+    z-index: z-index('alert') + 5;
   }
 
   &-icon {
@@ -132,7 +132,7 @@ $_mw-alert-colors: (
       position: absolute;
       inset: 0;
       background: var(--mw-#{$name}-info-background);
-      z-index: 0;
+      z-index: z-index('alert');
       pointer-events: none;
     }
 
