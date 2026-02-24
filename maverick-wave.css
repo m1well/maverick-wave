@@ -3302,7 +3302,7 @@ pre code {
   }
 }
 .mw-table {
-  width: 100%;
+  width: 98%;
   margin: 0.2rem;
   border-collapse: collapse;
   background: var(--mw-card-background);
@@ -3860,6 +3860,7 @@ pre code {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 .mw-tile:hover {
   transform: translateY(-3px);
@@ -4086,6 +4087,7 @@ pre code {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  cursor: none;
 }
 .mw-timeline-big-date-main {
   font-size: 0.9rem;
@@ -4114,6 +4116,7 @@ pre code {
   border-radius: 5px;
   position: relative;
   clear: both;
+  cursor: none;
 }
 .mw-timeline-big-event-date {
   display: block;
@@ -4381,6 +4384,7 @@ pre code {
   background: var(--mw-card-background);
   line-height: 1.1;
   z-index: 10;
+  cursor: none;
 }
 .mw-timeline-simple-content {
   display: flex;
