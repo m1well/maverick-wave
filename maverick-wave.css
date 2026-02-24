@@ -4087,7 +4087,7 @@ pre code {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  cursor: none;
+  cursor: default;
 }
 .mw-timeline-big-date-main {
   font-size: 0.9rem;
@@ -4116,7 +4116,7 @@ pre code {
   border-radius: 5px;
   position: relative;
   clear: both;
-  cursor: none;
+  cursor: default;
 }
 .mw-timeline-big-event-date {
   display: block;
@@ -4384,7 +4384,7 @@ pre code {
   background: var(--mw-card-background);
   line-height: 1.1;
   z-index: 10;
-  cursor: none;
+  cursor: default;
 }
 .mw-timeline-simple-content {
   display: flex;
