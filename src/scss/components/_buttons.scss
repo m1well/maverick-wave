@@ -97,8 +97,8 @@
   width: 18px;
   height: 18px;
   border-radius: radius('full');
-  background: var(--mw-gray-background-richer);
-  color: var(--mw-text-color);
+  background: var(--mw-gray-color);
+  color: var(--mw-white-color);
   border: none;
   opacity: 0.8;
   padding: 0;
@@ -126,21 +126,21 @@
   &:hover:not(:disabled) {
     opacity: 1;
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-white-color);
   }
 }
 
 .mw-btn-mini-primary {
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-white-color);
   }
 }
 
 .mw-btn-mini-secondary {
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-white-color);
   }
 }
 

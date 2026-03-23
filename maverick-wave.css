@@ -89,8 +89,9 @@ th {
   --mw-secondary-background-hover: rgba(172.90591133, 45.3068965517, 14.79408867, 0.4);
   --mw-secondary-info-background: rgba(149.4157635468, 39.1517241379, 12.7842364532, 0.7);
   --mw-secondary-text-color: #d6dbdf;
+  --mw-white-color: ;
+  --mw-gray-color: #565656;
   --mw-gray-background: rgba(98.75, 98.75, 98.75, 0.6);
-  --mw-gray-background-richer: rgba(88.55, 88.55, 88.55, 0.9);
   --mw-section-alternate-pattern: rgba(86, 86, 86, 0.45);
   --mw-form-elements-background: hsl(243.75, 21.0526315789%, 100.0980392157%);
   --mw-form-elements-color: rgb(21.1781818182, 21.1781818182, 23.6218181818);
@@ -1028,8 +1029,8 @@ blockquote::after {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--mw-gray-background-richer);
-  color: var(--mw-text-color);
+  background: var(--mw-gray-color);
+  color: var(--mw-white-color);
   border: none;
   opacity: 0.8;
   padding: 0;
@@ -1055,17 +1056,17 @@ blockquote::after {
 .mw-btn-mini:hover:not(:disabled) {
   opacity: 1;
   background: var(--mw-primary-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-white-color);
 }
 
 .mw-btn-mini-primary:hover:not(:disabled) {
   background: var(--mw-primary-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-white-color);
 }
 
 .mw-btn-mini-secondary:hover:not(:disabled) {
   background: var(--mw-secondary-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-white-color);
 }
 
 .mw-btn-mini-danger:hover:not(:disabled) {
@@ -6048,7 +6049,7 @@ pre code {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
-  background: var(--mw-gray-background-richer);
+  background: var(--mw-gray-color);
   color: var(--mw-dark-text-color);
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
@@ -6069,7 +6070,7 @@ pre code {
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   border: 6px solid transparent;
-  border-top-color: var(--mw-gray-background-richer);
+  border-top-color: var(--mw-gray-color);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s, transform 0.2s;
