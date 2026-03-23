@@ -3,7 +3,7 @@
 .mw-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: spacing('2'); // spacing(2) ist meistens ~0.5rem, was gut passt
+  gap: spacing('2');
 }
 
 // Tag item
@@ -32,43 +32,8 @@
 
 // Remove button - pure CSS
 .mw-tags-remove {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  margin-left: spacing('2');
-  border-radius: radius('full');
-  background: var(--mw-gray-background-richer);
-  cursor: pointer;
-  transition: var(--mw-transition);
-  position: relative;
-  opacity: 0.8;
-
-  &:hover {
-    opacity: 1;
-    background: var(--mw-danger-color);
-  }
-
-  // The X
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    width: 10px;
-    height: 2px;
-    background-color: var(--mw-dark-text-color);
-    border-radius: 1px;
-    transition: background-color 0.2s;
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
-  }
+  flex-shrink: 0;
+  margin-left: spacing('3');
 }
 
 .mw-tags-icon {
@@ -119,10 +84,10 @@
     width: 22px;
     height: 22px;
 
-    &::before,
-    &::after {
-      width: 12px;
-      height: 2px;
+    i,
+    fa-icon,
+    svg {
+      font-size: 0.8rem !important;
     }
   }
 }
