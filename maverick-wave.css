@@ -1071,12 +1071,12 @@ blockquote::after {
 
 .mw-btn-mini-danger:hover:not(:disabled) {
   background: var(--mw-danger-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-white-color);
 }
 
 .mw-btn-mini-success:hover:not(:disabled) {
   background: var(--mw-success-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-white-color);
 }
 
 .mw-button-bar {
@@ -6050,7 +6050,7 @@ pre code {
   left: 50%;
   transform: translateX(-50%) translateY(-10px);
   background: var(--mw-gray-color);
-  color: var(--mw-dark-text-color);
+  color: var(--mw-white-color);
   padding: 0.2rem 0.5rem;
   font-size: 0.8rem;
   border-radius: 2px;

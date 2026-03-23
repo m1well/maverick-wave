@@ -147,13 +147,13 @@
 .mw-btn-mini-danger {
   &:hover:not(:disabled) {
     background: var(--mw-danger-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-white-color);
   }
 }
 
 .mw-btn-mini-success {
   &:hover:not(:disabled) {
     background: var(--mw-success-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-white-color);
   }
 }
