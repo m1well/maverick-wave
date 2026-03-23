@@ -1039,6 +1039,7 @@ blockquote::after {
   transition: var(--mw-transition);
   text-decoration: none;
   box-sizing: border-box;
+  margin-left: 0.2rem;
 }
 .mw-btn-mini i,
 .mw-btn-mini fa-icon,
