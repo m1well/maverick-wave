@@ -28,6 +28,7 @@
       'secondary-info-background'
     )};
   --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
+  --mw-white-color: #{map.get($base-colors, 'white-color')};
   --mw-gray-color: #{map.get($base-colors, 'gray-color')};
   --mw-gray-background: #{map.get($base-colors, 'gray-background')};
   --mw-section-alternate-pattern: #{map.get(
