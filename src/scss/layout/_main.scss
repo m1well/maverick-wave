@@ -62,7 +62,6 @@
 // tooltip - use it everywhere you want
 [data-tooltip] {
   position: relative;
-  cursor: pointer;
 
   &::before {
     content: attr(data-tooltip);
