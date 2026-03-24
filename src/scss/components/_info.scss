@@ -66,11 +66,78 @@ $_mw-info-colors: (
   }
 }
 
-// generate color modifiers
+// Info like mini-buttons
+.mw-info-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: radius('full');
+  background: var(--mw-gray-color);
+  color: var(--mw-white-color);
+  border: none;
+  padding: 0;
+  line-height: 1;
+  font-weight: bold;
+  cursor: default;
+  box-sizing: border-box;
+
+  i,
+  fa-icon,
+  svg,
+  [class*='fa-'],
+  [class*='fas-'] {
+    font-size: 0.7rem;
+  }
+
+  &-sm {
+    width: 16px;
+    height: 16px;
+    i,
+    fa-icon,
+    svg,
+    [class*='fa-'],
+    [class*='fas-'] {
+      font-size: 0.6rem;
+    }
+  }
+
+  &-lg {
+    width: 24px;
+    height: 24px;
+    i,
+    fa-icon,
+    svg,
+    [class*='fa-'],
+    [class*='fas-'] {
+      font-size: 0.8rem;
+    }
+  }
+
+  &-xl {
+    width: 32px;
+    height: 32px;
+    i,
+    fa-icon,
+    svg,
+    [class*='fa-'],
+    [class*='fas-'] {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Generate color modifiers
 @each $name, $col in $_mw-info-colors {
   .mw-info-#{$name} {
     background: var(--mw-#{$name}-info-background);
     border-color: #{$col};
     border-left: 6px solid #{$col};
+  }
+
+  .mw-info-mini-#{$name} {
+    background: #{$col};
+    color: var(--mw-primary-text-color, #fff);
   }
 }
