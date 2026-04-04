@@ -68,6 +68,12 @@ $_size-xl: spacing('6');
     }
   }
 
+  // focus-visible state
+  input[type='radio']:focus-visible + .mw-radio-button {
+    box-shadow: 0 0 0 2px var(--mw-primary-background);
+    border-color: var(--mw-primary-color);
+  }
+
   input[type='radio']:checked + .mw-radio-button {
     border-color: var(--mw-primary-color);
   }

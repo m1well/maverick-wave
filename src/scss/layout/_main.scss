@@ -83,7 +83,7 @@
       transform 0.2s;
     margin-bottom: spacing('2');
     z-index: z-index('tooltip');
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px var(--mw-shadow);
   }
 
   // small triangle on the bottom

@@ -1,0 +1,174 @@
+@use '../abstracts' as *;
+
+$_mw-toggle-colors: (
+  primary: var(--mw-primary-color),
+  secondary: var(--mw-secondary-color),
+  success: var(--mw-success-color),
+  warning: var(--mw-warning-color),
+  danger: var(--mw-danger-color),
+);
+
+// Track dimensions
+$_track-w: 44px;
+$_track-h: 24px;
+$_knob-size: 18px;
+$_knob-offset: 3px;
+$_knob-travel: calc(#{$_track-w} - #{$_knob-size} - #{$_knob-offset * 2});
+
+$_track-w-sm: 34px;
+$_track-h-sm: 18px;
+$_knob-size-sm: 12px;
+$_knob-travel-sm: calc(
+  #{$_track-w-sm} - #{$_knob-size-sm} - #{$_knob-offset * 2}
+);
+
+$_track-w-lg: 56px;
+$_track-h-lg: 30px;
+$_knob-size-lg: 22px;
+$_knob-offset-lg: 4px;
+$_knob-travel-lg: calc(
+  #{$_track-w-lg} - #{$_knob-size-lg} - #{$_knob-offset-lg * 2}
+);
+
+.mw-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: spacing('2');
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+
+  // Hide native checkbox
+  input[type='checkbox'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: spacing('0');
+  }
+
+  // The switch track
+  .mw-toggle-track {
+    --toggle-fill: var(--mw-primary-color);
+
+    position: relative;
+    width: $_track-w;
+    height: $_track-h;
+    background: var(--mw-border);
+    border-radius: radius('lg');
+    transition:
+      background 0.25s ease,
+      box-shadow 0.25s ease;
+    flex-shrink: 0;
+
+    // The sliding knob
+    &::after {
+      content: '';
+      position: absolute;
+      top: $_knob-offset;
+      left: $_knob-offset;
+      width: $_knob-size;
+      height: $_knob-size;
+      background: var(--mw-white-color);
+      border-radius: radius('full');
+      transition: transform 0.25s ease;
+      box-shadow: 0 1px 4px var(--mw-shadow);
+    }
+  }
+
+  input[type='checkbox']:checked + .mw-toggle-track {
+    background: var(--toggle-fill);
+
+    &::after {
+      transform: translateX($_knob-travel);
+    }
+  }
+
+  input[type='checkbox']:focus-visible + .mw-toggle-track {
+    box-shadow: 0 0 0 2px var(--mw-primary-background);
+  }
+
+  .mw-toggle-label {
+    font-size: font-size('sm');
+    color: var(--mw-text-color);
+    line-height: 1.3;
+  }
+
+  // Size variants
+  &-sm {
+    .mw-toggle-track {
+      width: $_track-w-sm;
+      height: $_track-h-sm;
+
+      &::after {
+        width: $_knob-size-sm;
+        height: $_knob-size-sm;
+      }
+    }
+
+    input[type='checkbox']:checked + .mw-toggle-track::after {
+      transform: translateX($_knob-travel-sm);
+    }
+
+    .mw-toggle-label {
+      font-size: font-size('xs');
+    }
+  }
+
+  &-lg {
+    .mw-toggle-track {
+      width: $_track-w-lg;
+      height: $_track-h-lg;
+
+      &::after {
+        top: $_knob-offset-lg;
+        left: $_knob-offset-lg;
+        width: $_knob-size-lg;
+        height: $_knob-size-lg;
+      }
+    }
+
+    input[type='checkbox']:checked + .mw-toggle-track::after {
+      transform: translateX($_knob-travel-lg);
+    }
+
+    .mw-toggle-label {
+      font-size: font-size('base');
+    }
+  }
+
+  // Color variants
+  @each $name, $col in $_mw-toggle-colors {
+    &-#{$name} .mw-toggle-track {
+      --toggle-fill: #{$col};
+    }
+  }
+
+  // Disabled
+  &-disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+
+    input[type='checkbox'] {
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Group layout
+.mw-toggle-group {
+  display: flex;
+  flex-direction: column;
+  gap: spacing('3');
+
+  &-inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: spacing('2') spacing('6');
+
+    @include media-down('sm') {
+      gap: spacing('2') spacing('4');
+    }
+  }
+}

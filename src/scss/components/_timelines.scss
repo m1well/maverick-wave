@@ -213,7 +213,7 @@ $_border-width-simple: 3px;
       left: 2px;
       transform: none;
       width: 310px;
-      justify-content: left;
+      justify-content: flex-start;
     }
     &-date-sub {
       margin-left: spacing('1');

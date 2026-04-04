@@ -66,7 +66,6 @@
     &.mw-breadcrumbs-current a,
     &:last-child a {
       color: var(--mw-text-color);
-      background: var(--mw-primary-color-light);
       border-color: var(--mw-primary-color);
       cursor: default;
       pointer-events: none;

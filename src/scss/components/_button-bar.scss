@@ -38,7 +38,7 @@
 .mw-button-bar-between {
   justify-content: space-between;
 
-  @media (max-width: 640px) {
+  @include media-down('sm') {
     justify-content: center;
   }
 }

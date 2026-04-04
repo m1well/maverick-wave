@@ -1,0 +1,141 @@
+<h3 class="mw-section-subtitle">Form Field Pattern</h3>
+
+<div class="mw-grid-2 mw-gap-6">
+  <!-- LEFT: mw-field wrapper -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Field Wrapper (mw-field)</h3>
+    <div class="mw-card mw-card-simple">
+      <p class="mw-text-muted mw-text-sm mw-mb-4">
+        The <code>mw-field</code> wrapper groups label, input, hint, and error
+        message as a single unit — the recommended pattern for Angular reactive
+        forms.
+      </p>
+
+      <!-- Normal field with hint -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label mw-required" for="ff-email"
+          >Email address</label
+        >
+        <input
+          id="ff-email"
+          type="email"
+          class="mw-input"
+          placeholder="user@example.com"
+        />
+        <span class="mw-field-hint"
+          >We'll never share your email with anyone.</span
+        >
+      </div>
+
+      <!-- Field in error state -->
+      <div class="mw-field mw-field-has-error mw-mb-4">
+        <label class="mw-field-label mw-required" for="ff-email-err"
+          >Email address</label
+        >
+        <input
+          id="ff-email-err"
+          type="email"
+          class="mw-input"
+          value="not-an-email"
+        />
+        <span class="mw-field-error">
+          <i class="fas fa-exclamation-circle"></i>
+          Please enter a valid email address.
+        </span>
+      </div>
+
+      <!-- Select field with hint -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ff-country">Country</label>
+        <select id="ff-country" class="mw-select">
+          <option value="" disabled selected>Select a country</option>
+          <option>Germany</option>
+          <option>Austria</option>
+          <option>Switzerland</option>
+        </select>
+        <span class="mw-field-hint"
+          >Your billing country for tax purposes.</span
+        >
+      </div>
+
+      <!-- Textarea with character hint -->
+      <div class="mw-field">
+        <label class="mw-field-label mw-required" for="ff-bio">Bio</label>
+        <textarea
+          id="ff-bio"
+          class="mw-textarea"
+          rows="3"
+          placeholder="Tell us about yourself..."
+        ></textarea>
+        <span class="mw-field-hint">Maximum 500 characters.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Angular validation simulation + readonly -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Validation & Readonly States</h3>
+    <div class="mw-card mw-card-simple">
+      <p class="mw-text-muted mw-text-sm mw-mb-4">
+        Angular adds <code>.ng-invalid.ng-touched</code> and
+        <code>.ng-valid.ng-touched.ng-dirty</code>
+        automatically. The styles below are applied by the framework.
+      </p>
+
+      <!-- Simulated ng-invalid ng-touched -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label mw-required" for="ff-username"
+          >Username (invalid &amp; touched)</label
+        >
+        <input
+          id="ff-username"
+          type="text"
+          class="mw-input ng-invalid ng-touched"
+          value=""
+          placeholder="Required"
+        />
+        <span class="mw-field-error">
+          <i class="fas fa-exclamation-circle"></i> Username is required.
+        </span>
+      </div>
+
+      <!-- Simulated ng-valid ng-touched ng-dirty -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label mw-required" for="ff-password"
+          >Password (valid &amp; dirty)</label
+        >
+        <input
+          id="ff-password"
+          type="password"
+          class="mw-input ng-valid ng-touched ng-dirty"
+          value="secret123"
+        />
+        <span class="mw-field-hint">Looks good!</span>
+      </div>
+
+      <!-- Readonly -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ff-account-id"
+          >Account ID (readonly)</label
+        >
+        <input
+          id="ff-account-id"
+          type="text"
+          class="mw-input"
+          readonly
+          value="USR-00042"
+        />
+        <span class="mw-field-hint">This value cannot be changed.</span>
+      </div>
+
+      <!-- Disabled -->
+      <div class="mw-field">
+        <label class="mw-field-label" for="ff-plan">Plan (disabled)</label>
+        <select id="ff-plan" class="mw-select" disabled>
+          <option>Enterprise</option>
+        </select>
+        <span class="mw-field-hint">Contact support to change your plan.</span>
+      </div>
+    </div>
+  </div>
+</div>

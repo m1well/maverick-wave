@@ -64,6 +64,7 @@ $base-colors: (
     ),
   'secondary-text-color': $dark-text-color,
   'gray-color': $gray-color,
+  'white-color': $dark-text-color,
   'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.4),
   'section-alternate-pattern': color.adjust($gray-color, $alpha: -0.55),
   'form-elements-background': color.adjust($light-background, $lightness: +15%),
@@ -173,7 +174,9 @@ $spacing: (
   '7': 2.6rem,
   '8': 3.3rem,
   '9': 4.5rem,
-  '10': 6.5rem,
+  '10': 6rem,
+  '11': 8.5rem,
+  '12': 11rem,
 );
 
 // Breakpoints

@@ -1,106 +1,244 @@
 <h3 class="mw-section-subtitle">Form</h3>
 
 <div class="mw-card mw-card-simple">
-  <h3 class="mw-card-title">Example User Profile Form</h3>
+  <h3 class="mw-card-title">Example - User Profile Settings</h3>
   <div class="mw-form">
-    <!-- two‐column grid for basic fields -->
+    <!-- Personal information -->
     <div class="mw-form-group">
+      <p class="mw-text-muted mw-mb-3">Personal Information</p>
       <div class="mw-grid-2">
-        <label for="firstName">
-          <span>First Name</span>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="firstName"
+            >First Name</label
+          >
           <input
             id="firstName"
             type="text"
             class="mw-input"
             placeholder="Jane"
           />
-        </label>
-        <label for="lastName">
-          <span>Last Name</span>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="lastName"
+            >Last Name</label
+          >
           <input id="lastName" type="text" class="mw-input" placeholder="Doe" />
-        </label>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="email"
+            >Email Address</label
+          >
+          <div class="mw-input-group">
+            <span class="mw-input-group-prefix"
+              ><i class="fas fa-envelope"></i
+            ></span>
+            <input
+              id="email"
+              type="email"
+              class="mw-input"
+              placeholder="jane.doe@example.com"
+            />
+          </div>
+          <span class="mw-field-hint">Used for login and notifications.</span>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label" for="website">Personal Website</label>
+          <div class="mw-input-group">
+            <span class="mw-input-group-prefix">https://</span>
+            <input
+              id="website"
+              type="text"
+              class="mw-input"
+              placeholder="your-domain.com"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <label for="email">
-          <span>Email Address</span>
+    <!-- Account settings -->
+    <div class="mw-form-group">
+      <p class="mw-text-muted mw-mb-3">Account Settings</p>
+      <div class="mw-grid-2">
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="username"
+            >Username</label
+          >
+          <div class="mw-input-group">
+            <span class="mw-input-group-prefix">@</span>
+            <input
+              id="username"
+              type="text"
+              class="mw-input"
+              placeholder="jane_doe"
+            />
+          </div>
+          <span class="mw-field-hint">Visible on your public profile.</span>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="role">Role</label>
+          <select id="role" class="mw-select">
+            <option value="" disabled selected>Select a role</option>
+            <option>Developer</option>
+            <option>Designer</option>
+            <option>Product Manager</option>
+            <option>DevOps Engineer</option>
+            <option>QA Engineer</option>
+          </select>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label" for="account-id">Account ID</label>
           <input
-            id="email"
-            type="email"
+            id="account-id"
+            type="text"
             class="mw-input"
-            placeholder="jane.doe@example.com"
+            readonly
+            value="USR-00042"
           />
-        </label>
-
-        <label for="country">
-          <span>Country</span>
+          <span class="mw-field-hint"
+            >This value is assigned and cannot be changed.</span
+          >
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="country"
+            >Country</label
+          >
           <select id="country" class="mw-select">
             <option value="" disabled selected>Select country</option>
+            <option>Germany</option>
+            <option>Austria</option>
+            <option>Switzerland</option>
             <option>United States</option>
             <option>Canada</option>
-            <option>Germany</option>
-            <option>Australia</option>
           </select>
-        </label>
-      </div>
-    </div>
-
-    <!-- gender radio group -->
-    <div class="mw-grid-2">
-      <div class="mw-form-group">
-        <p class="mw-text-muted mw-mb-2">Gender</p>
-        <div class="mw-radio-group mw-radio-group-inline">
-          <label class="mw-radio">
-            <input type="radio" name="gender" value="female" />
-            <div class="mw-radio-button"></div>
-            <div class="mw-radio-label">Female</div>
-          </label>
-          <label class="mw-radio">
-            <input type="radio" name="gender" value="male" />
-            <div class="mw-radio-button"></div>
-            <div class="mw-radio-label">Male</div>
-          </label>
-          <label class="mw-radio">
-            <input type="radio" name="gender" value="other" />
-            <div class="mw-radio-button"></div>
-            <div class="mw-radio-label">Other</div>
-          </label>
-        </div>
-      </div>
-
-      <!-- interests checkbox group -->
-      <div class="mw-form-group">
-        <p class="mw-text-muted mw-mb-2">Interests</p>
-        <div class="mw-checkbox-group mw-checkbox-group-inline">
-          <label class="mw-checkbox">
-            <input type="checkbox" name="interests" value="coding" />
-            <div class="mw-checkbox-box"></div>
-            <div class="mw-checkbox-label">Coding</div>
-          </label>
-          <label class="mw-checkbox">
-            <input type="checkbox" name="interests" value="music" />
-            <div class="mw-checkbox-box"></div>
-            <div class="mw-checkbox-label">Music</div>
-          </label>
-          <label class="mw-checkbox">
-            <input type="checkbox" name="interests" value="sports" />
-            <div class="mw-checkbox-box"></div>
-            <div class="mw-checkbox-label">Sports</div>
-          </label>
         </div>
       </div>
     </div>
 
-    <!-- age slider -->
+    <!-- Profile details -->
     <div class="mw-form-group">
+      <p class="mw-text-muted mw-mb-3">Profile Details</p>
+      <div class="mw-grid-2">
+        <!-- Gender radio -->
+        <div>
+          <p class="mw-text-muted mw-text-sm mw-mb-2">Gender</p>
+          <div class="mw-radio-group mw-radio-group-inline">
+            <label class="mw-radio">
+              <input type="radio" name="gender" value="female" />
+              <div class="mw-radio-button"></div>
+              <div class="mw-radio-label">Female</div>
+            </label>
+            <label class="mw-radio">
+              <input type="radio" name="gender" value="male" />
+              <div class="mw-radio-button"></div>
+              <div class="mw-radio-label">Male</div>
+            </label>
+            <label class="mw-radio">
+              <input type="radio" name="gender" value="other" />
+              <div class="mw-radio-button"></div>
+              <div class="mw-radio-label">Other</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Interests checkboxes -->
+        <div>
+          <p class="mw-text-muted mw-text-sm mw-mb-2">Interests</p>
+          <div class="mw-checkbox-group mw-checkbox-group-inline">
+            <label class="mw-checkbox">
+              <input type="checkbox" name="interests" value="coding" />
+              <div class="mw-checkbox-box"></div>
+              <div class="mw-checkbox-label">Coding</div>
+            </label>
+            <label class="mw-checkbox">
+              <input type="checkbox" name="interests" value="design" />
+              <div class="mw-checkbox-box"></div>
+              <div class="mw-checkbox-label">Design</div>
+            </label>
+            <label class="mw-checkbox">
+              <input type="checkbox" name="interests" value="devops" />
+              <div class="mw-checkbox-box"></div>
+              <div class="mw-checkbox-label">DevOps</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Bio textarea -->
+        <div class="mw-field" style="grid-column: 1 / -1">
+          <label class="mw-field-label" for="bio">Bio</label>
+          <textarea
+            id="bio"
+            class="mw-textarea"
+            rows="3"
+            placeholder="Tell us a bit about yourself..."
+          ></textarea>
+          <span class="mw-field-hint"
+            >Maximum 500 characters. Shown on your public profile.</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification preferences -->
+    <div class="mw-form-group">
+      <p class="mw-text-muted mw-mb-3">Notification Preferences</p>
+      <div class="mw-grid-2">
+        <div>
+          <p class="mw-text-muted mw-text-sm mw-mb-3">Channels</p>
+          <div class="mw-toggle-group">
+            <label class="mw-toggle">
+              <input type="checkbox" checked />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">Email notifications</span>
+            </label>
+            <label class="mw-toggle">
+              <input type="checkbox" />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">Push notifications</span>
+            </label>
+            <label class="mw-toggle mw-toggle-warning">
+              <input type="checkbox" checked />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">SMS alerts (costs may apply)</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <p class="mw-text-muted mw-text-sm mw-mb-3">Account</p>
+          <div class="mw-toggle-group">
+            <label class="mw-toggle mw-toggle-success">
+              <input type="checkbox" checked />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">Profile publicly visible</span>
+            </label>
+            <label class="mw-toggle">
+              <input type="checkbox" checked />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">Weekly digest email</span>
+            </label>
+            <label class="mw-toggle mw-toggle-danger">
+              <input type="checkbox" />
+              <div class="mw-toggle-track"></div>
+              <span class="mw-toggle-label">Allow data for analytics</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience slider -->
+    <div class="mw-form-group">
+      <p class="mw-text-muted mw-mb-3">Experience</p>
       <label>
-        <span>Volume Level</span>
+        <span>Years of professional experience</span>
         <div class="mw-slider-container">
-          <div class="mw-slider-value mw-slider-percent" data-value="30"></div>
+          <div class="mw-slider-value mw-slider-numeric" data-value="3"></div>
           <input
             type="range"
-            class="mw-slider mw-slider-info"
-            min="1"
-            max="100"
-            value="30"
+            class="mw-slider mw-slider-primary"
+            min="0"
+            max="10"
+            value="3"
           />
         </div>
       </label>
@@ -108,11 +246,12 @@
 
     <div class="mw-form-actions">
       <p class="mw-form-actions-hint">
-        This hint and these actions buttons could also be centered, start on the
-        left or full width.
+        Changes are saved to your account immediately after clicking Save.
       </p>
       <button type="reset" class="mw-btn mw-btn-outline">Reset</button>
-      <button type="submit" class="mw-btn mw-btn-primary">Submit</button>
+      <button type="submit" class="mw-btn mw-btn-primary">
+        <i class="fas fa-save"></i> Save Profile
+      </button>
     </div>
   </div>
 </div>
