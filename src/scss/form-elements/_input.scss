@@ -46,6 +46,23 @@
     font-size: font-size('md');
   }
 
+  // Date / time inputs — style the native picker indicator
+  &[type='date'],
+  &[type='time'],
+  &[type='datetime-local'] {
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.55;
+      padding: 0;
+      margin-left: spacing('1');
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
   // disabled state
   &:disabled {
     background: var(--mw-gray-background);

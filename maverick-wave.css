@@ -5123,6 +5123,16 @@ pre code {
   padding: 1rem 1.5rem;
   font-size: 1.1rem;
 }
+.mw-input[type=date]::-webkit-calendar-picker-indicator, .mw-input[type=time]::-webkit-calendar-picker-indicator, .mw-input[type=datetime-local]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.55;
+  padding: 0;
+  margin-left: 0.2rem;
+  transition: opacity 0.2s ease;
+}
+.mw-input[type=date]::-webkit-calendar-picker-indicator:hover, .mw-input[type=time]::-webkit-calendar-picker-indicator:hover, .mw-input[type=datetime-local]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
 .mw-input:disabled {
   background: var(--mw-gray-background);
   color: var(--mw-text-muted-color);
