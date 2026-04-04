@@ -13,6 +13,7 @@ const { deleteAsync } = require('del');
 
 // Paths
 const paths = {
+  root: '.',
   src: 'src',
   dist: 'dist',
   scss: 'src/scss/**/*.scss',
@@ -55,8 +56,10 @@ gulp.task('scss-release', function () {
   return gulp
     .src(paths.scss)
     .pipe(sass().on('error', sass.logError))
-    .pipe(rename('maverick-wave.css'))
-    .pipe(gulp.dest(path.join('.')));
+    .pipe(postcss([autoprefixer()]))
+    .pipe(cleanCSS())
+    .pipe(rename('maverick-wave.min.css'))
+    .pipe(gulp.dest(path.join(paths.root)));
 });
 
 // Copy JavaScript files
@@ -70,8 +73,9 @@ gulp.task('js-build', function () {
 gulp.task('js-release', function () {
   return gulp
     .src(paths.js)
-    .pipe(rename('maverick-wave.js'))
-    .pipe(gulp.dest(path.join('.')));
+    .pipe(terser())
+    .pipe(rename('maverick-wave.min.js'))
+    .pipe(gulp.dest(path.join(paths.root)));
 });
 
 // Copy assets
@@ -124,7 +128,7 @@ gulp.task('inject-build-info', function () {
 
 // clean - remove dist and maverick-wave.css & maverick-wave.js
 gulp.task('clean', async function () {
-  await deleteAsync(['dist', 'maverick-wave.css', 'maverick-wave.js'], {
+  await deleteAsync(['dist', 'maverick-wave.min.css', 'maverick-wave.min.js'], {
     force: true,
   });
 });
