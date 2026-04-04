@@ -21,6 +21,7 @@
     flex-shrink: 0;
     transition: var(--mw-transition);
     line-height: 1;
+    cursor: default;
   }
 
   .mw-input-group-prefix {
@@ -54,12 +55,16 @@
     }
   }
 
-  // Highlight prefix when inner input is focused
+  // Highlight prefix/suffix when inner input is focused
   &:focus-within {
     .mw-input-group-prefix,
     .mw-input-group-suffix {
       border-color: var(--mw-primary-color);
     }
+  }
+
+  .mw-input:focus {
+    box-shadow: none;
   }
 
   // Button as suffix/prefix (e.g. search button, copy button)

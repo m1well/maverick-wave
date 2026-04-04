@@ -58,13 +58,6 @@ toggleTheme() {
 
 ## Angular Reactive Forms Integration
 
-MaverickWave auto-styles Angular form state classes:
-
-| Angular class                   | Visual effect                                    |
-| ------------------------------- | ------------------------------------------------ |
-| `.ng-invalid.ng-touched`        | Red border + error ring on input/select/textarea |
-| `.ng-valid.ng-touched.ng-dirty` | Green border on input/select/textarea            |
-
 Use the `mw-field` wrapper to group label + control + hint/error:
 
 ```html
