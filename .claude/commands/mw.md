@@ -122,6 +122,50 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 <!-- Sizes: mw-input-group-sm / mw-input-group-lg -->
 ```
 
+### Date, Time & DateTime
+
+```html
+<!-- Date -->
+<div class="mw-input-group">
+  <span class="mw-input-group-prefix"
+    ><i class="fas fa-calendar-days"></i
+  ></span>
+  <input type="date" class="mw-input" formControlName="appointmentDate" />
+</div>
+
+<!-- Time -->
+<div class="mw-input-group">
+  <span class="mw-input-group-prefix"><i class="fas fa-clock"></i></span>
+  <input type="time" class="mw-input" formControlName="startTime" />
+</div>
+
+<!-- DateTime-local -->
+<div class="mw-input-group">
+  <span class="mw-input-group-prefix"
+    ><i class="fas fa-calendar-days"></i
+  ></span>
+  <input type="datetime-local" class="mw-input" formControlName="mainSlot" />
+</div>
+
+<!-- With mw-field wrapper (recommended for forms) -->
+<div class="mw-field">
+  <label class="mw-field-label mw-required" for="mainSlot">Main Slot</label>
+  <div class="mw-input-group">
+    <span class="mw-input-group-prefix"
+      ><i class="fas fa-calendar-days"></i
+    ></span>
+    <input
+      id="mainSlot"
+      type="datetime-local"
+      class="mw-input"
+      formControlName="mainSlot"
+    />
+  </div>
+</div>
+
+<!-- Sizes: combine mw-input-group-sm/lg with mw-input-sm/lg -->
+```
+
 ### Select
 
 ```html
