@@ -27,7 +27,7 @@ The result is a framework that balances utility with simplicity, offering develo
 
 ## Installation & Usage
 
-### 1. CDN (jsDelivr — GitHub)
+### 1. CDN (jsDelivr)
 
 ```html
 <!DOCTYPE html>
@@ -38,18 +38,17 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@v2.36.1/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@3.0.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-
-    <script src="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@v2.36.1/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.0.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
 
-Always pin to a specific version tag (e.g., `@v2.36.1`) in production for stability.
+Always pin to a specific version (e.g., `@3.0.0`) in production for stability.
 
 ### 2. Direct Download
 
