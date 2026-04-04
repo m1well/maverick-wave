@@ -5158,6 +5158,7 @@ pre code {
   flex-shrink: 0;
   transition: var(--mw-transition);
   line-height: 1;
+  cursor: default;
 }
 .mw-input-group .mw-input-group-prefix {
   border-right: none;
@@ -5184,6 +5185,9 @@ pre code {
 .mw-input-group:focus-within .mw-input-group-prefix,
 .mw-input-group:focus-within .mw-input-group-suffix {
   border-color: var(--mw-primary-color);
+}
+.mw-input-group .mw-input:focus {
+  box-shadow: none;
 }
 .mw-input-group .mw-btn {
   border-radius: 0;
