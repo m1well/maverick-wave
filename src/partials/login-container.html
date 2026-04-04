@@ -1,7 +1,7 @@
 <h3 class="mw-section-subtitle">Login</h3>
 
 <p class="mw-text-muted mw-my-0">
-  Click “Log In” to simulate a failure and see the red border. It will
+  Click "Login" to simulate a failure and see the red border. It will
   automatically clear after 4 seconds.
 </p>
 
@@ -11,34 +11,50 @@
       <img src="https://m1well.com/images/header_logo.svg" alt="Your Logo" />
     </div>
     <div class="mw-login-message">
-      This is an internal area that can only be accessed with a code.
+      This is an internal area that can only be accessed with a valid account.
     </div>
     <div class="mw-form" id="login-form">
       <div class="mw-grid-1">
-        <label for="login-email">
-          <span>Email</span>
-          <input
-            id="login-email"
-            type="email"
-            class="mw-input"
-            placeholder="you@example.com"
-            required
-          />
-        </label>
-        <label for="login-password">
-          <span>Password</span>
-          <input
-            id="login-password"
-            type="password"
-            class="mw-input"
-            placeholder="••••••••"
-            required
-          />
-        </label>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="login-email"
+            >Email</label
+          >
+          <div class="mw-input-group">
+            <span class="mw-input-group-prefix"
+              ><i class="fas fa-envelope"></i
+            ></span>
+            <input
+              id="login-email"
+              type="email"
+              class="mw-input"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+        </div>
+        <div class="mw-field">
+          <label class="mw-field-label mw-required" for="login-password"
+            >Password</label
+          >
+          <div class="mw-input-group">
+            <span class="mw-input-group-prefix"
+              ><i class="fas fa-lock"></i
+            ></span>
+            <input
+              id="login-password"
+              type="password"
+              class="mw-input"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+        </div>
       </div>
 
       <div class="mw-form-actions mw-form-actions-full-width">
-        <button type="submit" class="mw-btn mw-btn-primary">Login</button>
+        <button type="submit" class="mw-btn mw-btn-primary">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
       </div>
     </div>
   </div>

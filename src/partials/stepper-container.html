@@ -1,0 +1,107 @@
+<h3 class="mw-section-subtitle">Stepper</h3>
+
+<div class="mw-grid-2 mw-gap-6">
+  <!-- LEFT: Horizontal steppers -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Horizontal</h3>
+    <div class="mw-card mw-card-simple">
+      <h5 class="mw-text-medium mw-mb-4">In Progress (step 2 active)</h5>
+      <div class="mw-stepper mw-mb-5">
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="mw-stepper-label mw-done">Account</span>
+        </div>
+        <div class="mw-stepper-connector mw-done"></div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator mw-active">2</div>
+          <span class="mw-stepper-label mw-active">Details</span>
+        </div>
+        <div class="mw-stepper-connector"></div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator">3</div>
+          <span class="mw-stepper-label">Payment</span>
+        </div>
+        <div class="mw-stepper-connector"></div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator">4</div>
+          <span class="mw-stepper-label">Confirm</span>
+        </div>
+      </div>
+
+      <h5 class="mw-text-medium mw-mb-4">Completed</h5>
+      <div class="mw-stepper">
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="mw-stepper-label mw-done">Setup</span>
+        </div>
+        <div class="mw-stepper-connector mw-done"></div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="mw-stepper-label mw-done">Review</span>
+        </div>
+        <div class="mw-stepper-connector mw-done"></div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <span class="mw-stepper-label mw-done">Deploy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Vertical stepper -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Vertical</h3>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-stepper-vertical">
+        <div class="mw-stepper-step mw-done">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="mw-stepper-content">
+            <p class="mw-stepper-content-title">Project Initialized</p>
+            <p class="mw-stepper-content-desc">
+              Repository created and base structure set up.
+            </p>
+          </div>
+        </div>
+        <div class="mw-stepper-step mw-done">
+          <div class="mw-stepper-indicator mw-done">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="mw-stepper-content">
+            <p class="mw-stepper-content-title">Dependencies Installed</p>
+            <p class="mw-stepper-content-desc">
+              All npm packages resolved successfully.
+            </p>
+          </div>
+        </div>
+        <div class="mw-stepper-step mw-active">
+          <div class="mw-stepper-indicator mw-active">3</div>
+          <div class="mw-stepper-content">
+            <p class="mw-stepper-content-title">Running Tests</p>
+            <p class="mw-stepper-content-desc">
+              Unit and integration tests in progress...
+            </p>
+          </div>
+        </div>
+        <div class="mw-stepper-step">
+          <div class="mw-stepper-indicator">4</div>
+          <div class="mw-stepper-content">
+            <p class="mw-stepper-content-title">Deploy to Production</p>
+            <p class="mw-stepper-content-desc">
+              Awaiting test completion before release.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

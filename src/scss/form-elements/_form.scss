@@ -66,6 +66,57 @@
   }
 
   &-element-error {
-    border: 3px solid var(--mw-danger-color) !important;
+    border: 3px solid var(--mw-danger-color);
+  }
+}
+
+// ===== Form Field — label + input + hint + error as a unit =====
+// Designed e.g. for Angular reactive forms pattern:
+//   <div class="mw-field">
+//     <label class="mw-field-label mw-required">Email</label>
+//     <input class="mw-input" formControlName="email">
+//     <span class="mw-field-hint">We'll never share your email</span>
+//     <span class="mw-field-error">Please enter a valid email</span>
+//   </div>
+.mw-field {
+  display: flex;
+  flex-direction: column;
+  gap: spacing('1');
+
+  &-label {
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+    color: var(--mw-text-color);
+  }
+
+  // Required field asterisk — add class mw-required or attribute data-required
+  &-label.mw-required::after,
+  &-label[data-required='true']::after {
+    content: ' *';
+    color: var(--mw-danger-color);
+    font-weight: font-weight('bold');
+  }
+
+  &-hint {
+    font-size: font-size('xs');
+    color: var(--mw-text-muted-color);
+  }
+
+  &-error {
+    font-size: font-size('xs');
+    color: var(--mw-danger-color);
+    display: flex;
+    align-items: center;
+    gap: spacing('1');
+  }
+
+  // When the field itself is in error state
+  &.mw-field-has-error {
+    .mw-input,
+    .mw-select,
+    .mw-textarea {
+      border-color: var(--mw-danger-color);
+      box-shadow: 0 0 0 2px var(--mw-danger-info-background);
+    }
   }
 }

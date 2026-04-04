@@ -15,10 +15,16 @@
   background-repeat: no-repeat;
   background-position: right spacing('3') center;
   background-size: spacing('3') spacing('3');
+  font-family: inherit;
+
+  &:hover:not(:focus):not(:disabled) {
+    border-color: var(--mw-gray-color);
+  }
 
   &:focus {
     outline: none;
-    border: 3px solid var(--mw-primary-color);
+    border-color: var(--mw-primary-color);
+    box-shadow: 0 0 0 2px var(--mw-primary-background);
   }
 
   // size modifiers

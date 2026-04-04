@@ -1,0 +1,90 @@
+@use '../abstracts' as *;
+
+@keyframes mw-skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Base skeleton element
+.mw-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--mw-card-background) 25%,
+    var(--mw-gray-background) 50%,
+    var(--mw-card-background) 75%
+  );
+  background-size: 200% 100%;
+  animation: mw-skeleton-shimmer 1.5s infinite linear;
+  border-radius: radius('sm');
+  display: block;
+}
+
+// Text line
+.mw-skeleton-text {
+  height: 1em;
+  width: 100%;
+  margin-bottom: spacing('2');
+
+  &:last-child {
+    width: 65%;
+  }
+}
+
+// Heading
+.mw-skeleton-title {
+  height: 1.4em;
+  width: 45%;
+  margin-bottom: spacing('3');
+}
+
+// Circle (avatar placeholder)
+.mw-skeleton-circle {
+  border-radius: radius('full');
+  width: spacing('8');
+  height: spacing('8');
+  flex-shrink: 0;
+}
+
+// Rectangle (image/banner placeholder)
+.mw-skeleton-rect {
+  width: 100%;
+  height: 180px;
+}
+
+// Size variants for rect
+.mw-skeleton-rect-sm {
+  height: 100px;
+}
+
+.mw-skeleton-rect-lg {
+  height: 260px;
+}
+
+// Card wrapper with built-in padding and border
+.mw-skeleton-card {
+  display: flex;
+  flex-direction: column;
+  gap: spacing('2');
+  padding: spacing('4');
+  background: var(--mw-card-background);
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+}
+
+// Row layout helper (avatar + text lines side by side)
+.mw-skeleton-row {
+  display: flex;
+  align-items: flex-start;
+  gap: spacing('3');
+
+  .mw-skeleton-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: spacing('2');
+  }
+}

@@ -1,8 +1,6 @@
 # MaverickWave
 
-&#x20;
-
-A lightweight, modern CSS framework for building responsive websites with elegance and speed. MaverickWave provides a clean foundation with a streamlined approach, suitable for projects ranging from personal portfolios to corporate websites and e-commerce platforms.
+A lightweight, modern CSS framework for building responsive websites with elegance and speed. MaverickWave provides a clean foundation suitable for projects ranging from personal portfolios to corporate websites and e-commerce platforms.
 
 While AI tools helped kickstart the development of some components and provided initial structure, approximately 80% of the codebase required manual refinement and customization. The framework has been meticulously crafted to ensure:
 
@@ -19,58 +17,17 @@ The result is a framework that balances utility with simplicity, offering develo
 ## Features
 
 - Responsive Grid System
-- Comprehensive set of UI Components (Buttons, Cards, Avatars, Tabs, etc.)
-- Utility-First Classes for rapid development
-- Easy Customization via CSS Variables
-- Built-in Light & Dark Mode support
-- SCSS Source Files available for advanced customization
-- Minimal JavaScript footprint
+- 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Ratings, Stepper, Skeleton Loader, Empty State, Divider, and more
+- Form Elements: Input, Select, Textarea, Checkbox, Radio, Toggle, Input Group, with `mw-field` wrapper pattern for Angular Reactive Forms
+- Utility Classes for spacing, flex, display, and typography
+- Easy Customization via CSS Custom Properties
+- Built-in Light & Dark Mode with optional theme switching
+- SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
+- Minimal JavaScript footprint (single vanilla JS file, no dependencies)
 
 ## Installation & Usage
 
-Choose the method that best suits your project:
-
-### 1. Using npm (currently not available!!!)
-
-Install the package:
-
-```bash
-npm install maverick-wave
-```
-
-Include in your project:
-
-**CSS:**
-
-```javascript
-// Example in main JS file (React, Vue, etc.)
-import 'maverick-wave/dist/maverick-wave.min.css';
-```
-
-```css
-/* Example in main CSS/SCSS file */
-@import 'node_modules/maverick-wave/dist/maverick-wave.min.css';
-```
-
-**SCSS (Recommended for customization):**
-
-```scss
-// Override variables if needed *before* importing
-// $primary-color: #your-color;
-
-@import 'node_modules/maverick-wave/scss/main.scss';
-```
-
-**JavaScript (Optional):**
-
-```javascript
-import 'maverick-wave/dist/maverick-wave.min.js';
-// Or include via <script> tag (see below)
-```
-
-### 2. Using CDN (jsDelivr)
-
-Include the CSS and JS files directly in your HTML:
+### 1. CDN (jsDelivr — GitHub)
 
 ```html
 <!DOCTYPE html>
@@ -79,25 +36,24 @@ Include the CSS and JS files directly in your HTML:
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My MaverickWave Project</title>
-    <!-- Replace @latest with a specific version (e.g., @v1.0.0) -->
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@latest/dist/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@v2.36.1/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@latest/dist/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/m1well/maverick-wave@v2.36.1/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
 
-**Note:** Always use a specific version tag (e.g., `@1.0.0`) instead of `@latest` in production for stability.
+Always pin to a specific version tag (e.g., `@v2.36.1`) in production for stability.
 
-### 3. Direct Download
+### 2. Direct Download
 
-Download the `maverick-wave.min.css` and `maverick-wave.min.js` files from the latest release and include them manually:
+Download `maverick-wave.min.css` and `maverick-wave.min.js` from the [latest release](https://github.com/m1well/maverick-wave/releases) and include them manually:
 
 ```html
 <link rel="stylesheet" href="path/to/maverick-wave.min.css" />
@@ -106,112 +62,129 @@ Download the `maverick-wave.min.css` and `maverick-wave.min.js` files from the l
 
 ## Customization
 
-MaverickWave is built with CSS custom properties, making customization simple.
+### CSS Custom Properties
 
-Example:
+Override framework variables in your own stylesheet (load it **after** `maverick-wave.min.css`):
 
 ```css
 :root {
   --mw-primary-color: #your-brand-color;
   --mw-secondary-color: #your-secondary-color;
-  /* and other colors.... */
+  --mw-dark-page-background: #1a1a2e;
+  --mw-dark-card-background: #2a2a4a;
   --mw-font-family-base: 'Your Font Name', sans-serif;
 }
 ```
 
-For deeper customization, import the SCSS source files (via npm) and modify the SCSS variables before the `@import` statement.
+### SCSS Source
 
-## Development (Contributing)
+For full control, clone the repository and integrate `src/scss/main.scss` into your Sass build (Dart Sass required). MaverickWave uses modern `@use`/`@forward` syntax. Set your variable overrides before the `@use` statement:
 
-This section is for those who want to contribute to the MaverickWave framework itself.
+```scss
+// your styles.scss
+
+// Optional: choose theme mode ('switchable' | 'dark' | 'light')
+$mw-theme-mode: 'switchable';
+
+// Override base colors
+$primary-color: #e94560;
+$secondary-color: #f39c12;
+$dark-background: #1f1f2e;
+$light-background: #f8f9fa;
+
+// Import the framework
+@use 'path/to/maverick-wave/src/scss/main';
+```
+
+### Angular Integration
+
+Copy `maverick-wave.min.css` and `maverick-wave.min.js` into your Angular project (e.g. `src/assets/`) and reference them in `angular.json`:
+
+```json
+"styles": ["src/assets/maverick-wave.min.css", "src/styles.scss"],
+"scripts": ["src/assets/maverick-wave.min.js"]
+```
+
+MaverickWave automatically styles Angular Reactive Forms state classes (`.ng-invalid.ng-touched`, `.ng-valid.ng-touched.ng-dirty`). Use the `mw-field` wrapper pattern:
+
+```html
+<div
+  class="mw-field"
+  [class.mw-field-has-error]="email.invalid && email.touched"
+>
+  <label class="mw-field-label mw-required" for="email">Email</label>
+  <input id="email" type="email" class="mw-input" formControlName="email" />
+  <span class="mw-field-error" *ngIf="email.invalid && email.touched">
+    <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+    address.
+  </span>
+</div>
+```
+
+## Development
 
 ### Prerequisites
 
-- Node.js (v14 or newer recommended)
+- Node.js v18 or newer
 - npm
 - Git
 
 ### Setup
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/m1well/maverick-wave.git
 cd maverick-wave
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
 ### Development Commands
 
-**Run the Showcase:**
-
 ```bash
-npm run start # to start the gulp watcher
-npm run showcase # to start the http-server for the dist folder
+npm run start     # Start Gulp watcher (recompiles on changes)
+npm run showcase  # Serve the built dist/ on http://localhost:8888
+npm run build     # Full clean build → dist/
+npm run format    # Format all source files with Prettier
+npm run release   # Build non-minified release files to project root
 ```
-
-Access at `http://localhost:8888`.
-
-**Build the Framework:**
-
-```bash
-npm run build
-```
-
-Compiles SCSS/JS and builds the showcase HTML into `/dist/`.
-
-**Format Code:**
-
-```bash
-npm run format
-```
-
-Formats code using Prettier.
 
 ## Project Structure
 
 ```
 maverick-wave/
-├── dist/                   # Compiled CSS/JS files and showcase HTML
-├── src/                    # Source files
-│   ├── assets/             # Logos, favicons, etc.
-│   ├── js/                 # JavaScript source files
+├── dist/                   # Compiled output (CSS, JS, HTML showcase)
+├── src/
+│   ├── assets/             # Logos, favicons
+│   ├── js/                 # JavaScript source (single file)
 │   ├── partials/           # HTML partials for the showcase
-│   ├── scss/               # SCSS source files
-│   │    ├── abstracts/     # Variables, mixins, functions
-│   │    ├── base/          # Base styles, reset, typography
-│   │    ├── components/    # Individual component styles
-│   │    ├── layout/        # Containers, Grid, Header, Footer
-│   │    ├── utilities/     # Utility classes
-│   │    └── main.scss      # Main SCSS entry point
+│   └── scss/
+│       ├── abstracts/      # Variables, mixins, functions
+│       ├── base/           # Reset, typography
+│       ├── components/     # Component styles (one file per component)
+│       ├── form-elements/  # Input, select, checkbox, toggle, etc.
+│       ├── layout/         # Grid, container, header, footer
+│       ├── utilities/      # Spacing, flex, display helpers
+│       └── main.scss       # SCSS entry point
+├── .claude/
+│   └── commands/mw.md      # Claude Code slash command for Angular projects
 ├── .prettierrc.json        # Prettier configuration
-├── CHANGELOG.md            # Please write changelog here
 ├── gulpfile.js             # Gulp tasks configuration
-├── index.html              # Showcase entry HTML
-├── package.json            # Project configuration
-├── README.md               # This file
-└── release.sh              # Create a release (only for the author!)
+├── index.html              # Showcase entry point
+└── package.json
 ```
 
 ## Contribution
 
-Contributions are welcome! Please ensure your code is clean and consistent.
+Contributions are welcome!
 
 1. Fork the repository.
 2. Create a new branch for your feature or fix.
-3. Make your changes.
-4. Format the code (`npm run format`).
-5. Commit using Conventional Commits format (e.g., `feat: add new button component`).
-6. Push your branch and create a Pull Request.
+3. Make your changes and run `npm run format`.
+4. Commit using Conventional Commits (e.g., `feat: add new component`).
+5. Push and open a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License.
+MIT License
 
 ## Author
 

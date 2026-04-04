@@ -89,10 +89,6 @@ pre {
     overflow-x: auto;
 
     @include media-down('sm') {
-      padding: spacing('2');
-    }
-
-    @include media-down('sm') {
       font-size: font-size('2xs');
       padding: spacing('1');
 
@@ -120,11 +116,6 @@ pre {
   line-height: 1.5;
   overflow: auto;
   max-width: 100%;
-
-  @include media-down('sm') {
-    padding: spacing('2');
-    font-size: font-size('2xs');
-  }
 
   @include media-down('sm') {
     font-size: font-size('2xs');

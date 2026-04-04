@@ -1,0 +1,98 @@
+@use '../abstracts' as *;
+
+// Input with prefix and/or suffix (icon, text, button)
+.mw-input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+
+  // Shared styles for prefix and suffix
+  .mw-input-group-prefix,
+  .mw-input-group-suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: spacing('2') spacing('3');
+    background: var(--mw-gray-background);
+    border: 2px solid var(--mw-border);
+    color: var(--mw-text-muted-color);
+    font-size: font-size('sm');
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: var(--mw-transition);
+    line-height: 1;
+  }
+
+  .mw-input-group-prefix {
+    border-right: none;
+    border-radius: radius('sm') 0 0 radius('sm');
+  }
+
+  .mw-input-group-suffix {
+    border-left: none;
+    border-radius: 0 radius('sm') radius('sm') 0;
+  }
+
+  // The input loses its outer rounded corners
+  .mw-input {
+    flex: 1;
+    min-width: 0;
+    border-radius: 0;
+
+    &:first-child {
+      border-radius: radius('sm') 0 0 radius('sm');
+    }
+
+    &:last-child {
+      border-radius: 0 radius('sm') radius('sm') 0;
+    }
+
+    // When input is focused, also highlight adjacent prefix/suffix
+    &:focus + .mw-input-group-suffix,
+    &:focus-within ~ .mw-input-group-suffix {
+      border-color: var(--mw-primary-color);
+    }
+  }
+
+  // Highlight prefix when inner input is focused
+  &:focus-within {
+    .mw-input-group-prefix,
+    .mw-input-group-suffix {
+      border-color: var(--mw-primary-color);
+    }
+  }
+
+  // Button as suffix/prefix (e.g. search button, copy button)
+  .mw-btn {
+    border-radius: 0;
+    border: 2px solid var(--mw-border);
+    flex-shrink: 0;
+
+    &:first-child {
+      border-right: none;
+      border-radius: radius('sm') 0 0 radius('sm');
+    }
+
+    &:last-child {
+      border-left: none;
+      border-radius: 0 radius('sm') radius('sm') 0;
+    }
+  }
+
+  // Size variants — applied to the group, cascades to prefix/suffix
+  &-sm {
+    .mw-input-group-prefix,
+    .mw-input-group-suffix {
+      padding: spacing('1') spacing('2');
+      font-size: font-size('xs');
+    }
+  }
+
+  &-lg {
+    .mw-input-group-prefix,
+    .mw-input-group-suffix {
+      padding: spacing('3') spacing('4');
+      font-size: font-size('base');
+    }
+  }
+}

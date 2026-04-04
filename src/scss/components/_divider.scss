@@ -1,0 +1,70 @@
+@use '../abstracts' as *;
+
+// Base horizontal divider
+.mw-divider {
+  border: none;
+  border-top: 1px solid var(--mw-border);
+  margin: spacing('5') spacing('0');
+
+  &-thick {
+    border-top-width: 3px;
+  }
+
+  &-dashed {
+    border-top-style: dashed;
+  }
+
+  &-primary {
+    border-top-color: var(--mw-primary-color);
+  }
+
+  &-secondary {
+    border-top-color: var(--mw-secondary-color);
+  }
+}
+
+// Vertical divider (use inside a flex row)
+.mw-divider-vertical {
+  display: inline-block;
+  width: 1px;
+  background: var(--mw-border);
+  margin: spacing('0') spacing('3');
+  align-self: stretch;
+  border: none;
+  flex-shrink: 0;
+}
+
+// Divider with centered label text
+.mw-divider-text {
+  display: flex;
+  align-items: center;
+  gap: spacing('3');
+  margin: spacing('5') spacing('0');
+  border: none;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--mw-border);
+  }
+
+  span {
+    color: var(--mw-text-muted-color);
+    font-size: font-size('sm');
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  &.mw-divider-primary {
+    &::before,
+    &::after {
+      background: var(--mw-primary-color);
+    }
+
+    span {
+      color: var(--mw-primary-color);
+    }
+  }
+}

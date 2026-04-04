@@ -18,6 +18,11 @@
   font-family: inherit;
   font-size: inherit;
 
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: 2px;
+  }
+
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;

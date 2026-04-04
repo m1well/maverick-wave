@@ -6,6 +6,17 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-04-04
+
+### Added
+
+- started now with claude code integration
+- some additional components and form elements
+
+### Fixed
+
+- some minor fixes found by claude code
+
 ## [2.36.0] - 2026-03-24
 
 ### Fixed

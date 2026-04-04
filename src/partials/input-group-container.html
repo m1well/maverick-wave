@@ -1,0 +1,180 @@
+<h3 class="mw-section-subtitle">Input Group</h3>
+
+<div class="mw-grid-2 mw-gap-6">
+  <!-- LEFT: Prefix & Suffix examples -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Prefix & Suffix</h3>
+    <div class="mw-card mw-card-simple">
+      <!-- Icon prefix (search) -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-search">Search</label>
+        <div class="mw-input-group">
+          <span class="mw-input-group-prefix"
+            ><i class="fas fa-search"></i
+          ></span>
+          <input
+            id="ig-search"
+            type="text"
+            class="mw-input"
+            placeholder="Search projects..."
+          />
+        </div>
+      </div>
+
+      <!-- Text prefix (URL) -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-website">Website</label>
+        <div class="mw-input-group">
+          <span class="mw-input-group-prefix">https://</span>
+          <input
+            id="ig-website"
+            type="text"
+            class="mw-input"
+            placeholder="your-domain.com"
+          />
+        </div>
+      </div>
+
+      <!-- Currency prefix + suffix -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-price">Price</label>
+        <div class="mw-input-group">
+          <span class="mw-input-group-prefix"
+            ><i class="fas fa-euro-sign"></i
+          ></span>
+          <input
+            id="ig-price"
+            type="number"
+            class="mw-input"
+            placeholder="0.00"
+          />
+          <span class="mw-input-group-suffix">EUR</span>
+        </div>
+      </div>
+
+      <!-- Suffix icon -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-email">Email</label>
+        <div class="mw-input-group">
+          <input
+            id="ig-email"
+            type="email"
+            class="mw-input"
+            placeholder="user@example.com"
+          />
+          <span class="mw-input-group-suffix"
+            ><i class="fas fa-envelope"></i
+          ></span>
+        </div>
+      </div>
+
+      <!-- @ prefix -->
+      <div class="mw-field">
+        <label class="mw-field-label" for="ig-username">Username</label>
+        <div class="mw-input-group">
+          <span class="mw-input-group-prefix">@</span>
+          <input
+            id="ig-username"
+            type="text"
+            class="mw-input"
+            placeholder="your_handle"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: With buttons & sizes -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">With Buttons & Sizes</h3>
+    <div class="mw-card mw-card-simple">
+      <!-- Input + search button -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-search-btn"
+          >Search with action</label
+        >
+        <div class="mw-input-group">
+          <input
+            id="ig-search-btn"
+            type="text"
+            class="mw-input"
+            placeholder="Keyword..."
+          />
+          <button type="button" class="mw-btn mw-btn-primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Copy URL -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-share">Share link</label>
+        <div class="mw-input-group">
+          <input
+            id="ig-share"
+            type="text"
+            class="mw-input"
+            value="https://maverick-wave.m1well.com"
+            readonly
+          />
+          <button
+            type="button"
+            class="mw-btn mw-btn-outline"
+            onclick="
+              navigator.clipboard?.writeText('https://maverick-wave.m1well.com')
+            "
+          >
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Small size -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-tag">Small</label>
+        <div class="mw-input-group mw-input-group-sm">
+          <span class="mw-input-group-prefix"><i class="fas fa-tag"></i></span>
+          <input
+            id="ig-tag"
+            type="text"
+            class="mw-input mw-input-sm"
+            placeholder="Tag name"
+          />
+        </div>
+      </div>
+
+      <!-- Large size -->
+      <div class="mw-field mw-mb-4">
+        <label class="mw-field-label" for="ig-password">Large</label>
+        <div class="mw-input-group mw-input-group-lg">
+          <span class="mw-input-group-prefix"><i class="fas fa-lock"></i></span>
+          <input
+            id="ig-password"
+            type="password"
+            class="mw-input mw-input-lg"
+            placeholder="Password"
+          />
+        </div>
+      </div>
+
+      <!-- Prefix + Suffix button -->
+      <div class="mw-field">
+        <label class="mw-field-label" for="ig-message">Message</label>
+        <div class="mw-input-group">
+          <span class="mw-input-group-prefix"
+            ><i class="fas fa-comment"></i
+          ></span>
+          <input
+            id="ig-message"
+            type="text"
+            class="mw-input"
+            placeholder="Type a message..."
+          />
+          <button type="button" class="mw-btn mw-btn-primary">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

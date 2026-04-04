@@ -72,9 +72,9 @@
     <h3 class="mw-card-title">Select with Different Sizes</h3>
     <div class="mw-grid-4 mw-mt-4">
       <!-- Default -->
-      <label for="select-default">
+      <label for="select-default-1">
         <span>Default</span>
-        <select id="select-default" class="mw-select">
+        <select id="select-default-1" class="mw-select">
           <option value="" disabled selected>Select an option</option>
           <option>Option One</option>
           <option>Option Two</option>
@@ -111,9 +111,9 @@
         </select>
       </label>
       <!-- Disabled -->
-      <label for="select-default">
+      <label for="select-default-2">
         <span>Disabled</span>
-        <select id="select-default" disabled class="mw-select">
+        <select id="select-default-2" disabled class="mw-select">
           <option value="" disabled selected>Select an option</option>
           <option>Option One</option>
           <option>Option Two</option>
@@ -121,9 +121,9 @@
         </select>
       </label>
       <!-- Disabled -->
-      <label for="select-default">
+      <label for="select-default-3">
         <span>Error</span>
-        <select id="select-default" class="mw-select mw-form-element-error">
+        <select id="select-default-3" class="mw-select mw-form-element-error">
           <option value="" disabled selected>Select an option</option>
           <option>Option One</option>
           <option>Option Two</option>
@@ -423,10 +423,10 @@
     <h3 class="mw-card-title">Textarea with Different Sizes</h3>
     <div class="mw-grid-4 mw-mt-4">
       <!-- Default -->
-      <label for="textarea-default">
+      <label for="textarea-default-1">
         <span>Default</span>
         <textarea
-          id="textarea-default"
+          id="textarea-default-1"
           class="mw-textarea"
           rows="8"
           placeholder="Default size... (8 rows)"
@@ -478,10 +478,10 @@
       </label>
 
       <!-- Disabled -->
-      <label for="textarea-default">
+      <label for="textarea-default-2">
         <span>Disabled</span>
         <textarea
-          id="textarea-default"
+          id="textarea-default-2"
           class="mw-textarea mw-textarea-resizable-vertical"
           rows="5"
           disabled
@@ -490,10 +490,10 @@
       </label>
 
       <!-- Resizable vertical -->
-      <label for="textarea-default">
+      <label for="textarea-default-3">
         <span>Resizable vertical</span>
         <textarea
-          id="textarea-default"
+          id="textarea-default-3"
           class="mw-textarea mw-textarea-resizable-vertical"
           rows="5"
           placeholder="Default size... (5 rows)"
@@ -503,15 +503,93 @@
 
     <div class="mw-grid-1 mw-mt-4">
       <!-- Resizable horizontal -->
-      <label for="textarea-default">
+      <label for="textarea-default-4">
         <span>Resizable horizontal</span>
         <textarea
-          id="textarea-default"
+          id="textarea-default-4"
           class="mw-textarea mw-textarea-resizable-horizontal"
           rows="5"
           placeholder="Default size... (5 rows)"
         ></textarea>
       </label>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Toggle Switch</h3>
+    <div class="mw-grid-4-lg mw-mt-4">
+      <!-- Default -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Default</h5>
+        <div class="mw-toggle-group">
+          <label class="mw-toggle">
+            <input type="checkbox" />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Email notifications</span>
+          </label>
+          <label class="mw-toggle">
+            <input type="checkbox" checked />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Dark mode</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Small & Inline -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Small & Inline</h5>
+        <div class="mw-toggle-group mw-toggle-group-inline">
+          <label class="mw-toggle mw-toggle-sm">
+            <input type="checkbox" checked />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">API</span>
+          </label>
+          <label class="mw-toggle mw-toggle-sm">
+            <input type="checkbox" />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Logs</span>
+          </label>
+          <label class="mw-toggle mw-toggle-sm">
+            <input type="checkbox" checked />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Metrics</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Large & Colored -->
+      <div class="mw-mb-6">
+        <h5 class="mw-mb-2">Large &amp; Colored</h5>
+        <div class="mw-toggle-group">
+          <label class="mw-toggle mw-toggle-lg mw-toggle-success">
+            <input type="checkbox" checked />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Feature enabled</span>
+          </label>
+          <label class="mw-toggle mw-toggle-lg mw-toggle-danger">
+            <input type="checkbox" checked />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Maintenance mode</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Disabled -->
+      <div>
+        <h5 class="mw-mb-2">Disabled</h5>
+        <div class="mw-toggle-group">
+          <label class="mw-toggle mw-toggle-disabled">
+            <input type="checkbox" disabled />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Unavailable (off)</span>
+          </label>
+          <label class="mw-toggle mw-toggle-disabled">
+            <input type="checkbox" checked disabled />
+            <div class="mw-toggle-track"></div>
+            <span class="mw-toggle-label">Unavailable (on)</span>
+          </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>

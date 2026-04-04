@@ -284,7 +284,7 @@
   border-radius: radius('lg');
   overflow: hidden;
   background: var(--mw-card-background);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--mw-shadow);
 
   > * {
     padding: spacing('3') spacing('4');
@@ -633,7 +633,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--mw-bg-subtle);
+    background: var(--mw-text-muted-color);
     border-radius: 3px;
   }
 
@@ -649,5 +649,5 @@
   }
 
   scrollbar-width: thin;
-  scrollbar-color: var(--mw-text-muted-color) var(--mw-bg-subtle);
+  scrollbar-color: var(--mw-text-muted-color);
 }

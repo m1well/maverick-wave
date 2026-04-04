@@ -1,13 +1,6 @@
 (function () {
   'use strict';
 
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', function (e) {
-      console.log('Link clicked:', this.getAttribute('href'));
-      console.log('preventDefault called:', e.defaultPrevented);
-    });
-  });
-
   // Initialize all components when DOM is ready
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
