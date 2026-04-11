@@ -16,7 +16,7 @@
     background: var(--mw-gray-background);
     border: 2px solid var(--mw-border);
     color: var(--mw-text-muted-color);
-    font-size: font-size('sm');
+    font-size: font-size('xs');
     white-space: nowrap;
     flex-shrink: 0;
     transition: var(--mw-transition);
@@ -97,7 +97,7 @@
     .mw-input-group-prefix,
     .mw-input-group-suffix {
       padding: spacing('3') spacing('4');
-      font-size: font-size('base');
+      font-size: font-size('sm');
     }
   }
 }

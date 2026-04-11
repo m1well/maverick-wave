@@ -3,7 +3,7 @@
 .mw-select {
   width: 100%;
   padding: spacing('2') spacing('6') spacing('2') spacing('3');
-  font-size: font-size('sm');
+  font-size: font-size('xs');
   background: var(--mw-form-elements-background);
   color: var(--mw-form-elements-color);
   border: 2px solid var(--mw-border);
@@ -16,6 +16,7 @@
   background-position: right spacing('3') center;
   background-size: spacing('3') spacing('3');
   font-family: inherit;
+  line-height: 1.5;
 
   &:hover:not(:focus):not(:disabled) {
     border-color: var(--mw-gray-color);
@@ -36,15 +37,9 @@
   }
   &-lg {
     padding: spacing('3') spacing('7') spacing('3') spacing('4');
-    font-size: font-size('base');
+    font-size: font-size('sm');
     background-position: right spacing('4') center;
     background-size: spacing('4') spacing('4');
-  }
-  &-xl {
-    padding: spacing('4') spacing('8') spacing('4') spacing('5');
-    font-size: font-size('md');
-    background-position: right spacing('5') center;
-    background-size: spacing('5') spacing('5');
   }
 
   // disabled state

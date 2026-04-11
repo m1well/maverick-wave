@@ -21,6 +21,10 @@
   &-1 {
     flex: 1;
   }
+
+  &-shrink-0 {
+    flex-shrink: 0;
+  }
 }
 
 // Justify content
@@ -43,6 +47,10 @@
 
   &-around {
     justify-content: space-around;
+  }
+
+  &-evenly {
+    justify-content: space-evenly;
   }
 }
 

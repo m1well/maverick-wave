@@ -9,7 +9,7 @@
 
   th,
   td {
-    padding: spacing('2') spacing('3');
+    padding: spacing('2');
     text-align: left;
     border: 1px solid var(--mw-border);
     color: var(--mw-text-muted-color);
@@ -19,6 +19,7 @@
     font-weight: font-weight('medium');
     color: var(--mw-primary-text-color);
     background: var(--mw-primary-color);
+    user-select: none;
   }
 
   // Zebra striping
@@ -36,7 +37,7 @@
   @include media-down('sm') {
     th,
     td {
-      padding: spacing('1') spacing('3');
+      padding: spacing('1') spacing('2');
       font-size: font-size('xs');
     }
   }
@@ -69,6 +70,7 @@
       margin-bottom: spacing('3');
       box-shadow: 0 5px 7px var(--mw-shadow);
       background: var(--mw-card-background);
+      cursor: text;
     }
 
     // Style each cell as a row in the card

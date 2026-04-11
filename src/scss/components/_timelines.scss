@@ -2,12 +2,12 @@
 
 $_border-width-big: 4px;
 $_border-width-simple: 3px;
+$_simple-date-width: 110px;
 
-// shared keyframes
 @keyframes mw-slide-in-left {
   from {
     opacity: 0;
-    transform: translateX(-100px);
+    transform: translateX(-60px);
   }
   to {
     opacity: 1;
@@ -18,7 +18,7 @@ $_border-width-simple: 3px;
 @keyframes mw-slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(100px);
+    transform: translateX(60px);
   }
   to {
     opacity: 1;
@@ -50,12 +50,14 @@ $_border-width-simple: 3px;
   }
 }
 
+// Big
 .mw-timeline-big {
   position: relative;
   margin: spacing('1') auto;
   padding: spacing('5') 0;
   width: min(96%, 900px);
 
+  // Center vertical line
   &::before {
     content: '';
     position: absolute;
@@ -68,39 +70,15 @@ $_border-width-simple: 3px;
   }
 
   &-step {
-    position: relative;
-    margin: spacing('7') 0;
     display: flex;
-    align-items: flex-start;
-
-    &.active {
-      .mw-timeline-big-date-container {
-        background: var(--mw-primary-color);
-        border-color: var(--mw-primary-color);
-        z-index: z-index('lift');
-        transform: translateX(-50%) scale(1.1);
-        animation: mw-pulse-ring-big 2s infinite;
-
-        .mw-timeline-big-date-main {
-          color: var(--mw-primary-text-color);
-        }
-        .mw-timeline-big-date-sub {
-          color: var(--mw-primary-text-color);
-        }
-
-        @include media-down('sm') {
-          transform: scale(1.05);
-          left: 2px;
-        }
-      }
-    }
+    flex-direction: column;
+    align-items: center;
+    margin: spacing('7') 0;
   }
 
   &-date-container {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    z-index: z-index('card');
     border: $_border-width-big solid var(--mw-primary-color);
     background: var(--mw-card-background);
     border-radius: radius('md');
@@ -110,6 +88,8 @@ $_border-width-simple: 3px;
     justify-content: center;
     gap: spacing('2');
     cursor: default;
+    transition: transform 0.2s ease;
+    margin-bottom: spacing('4');
   }
 
   &-date-main {
@@ -119,29 +99,26 @@ $_border-width-simple: 3px;
   }
 
   &-date-sub {
-    margin-left: spacing('2');
     font-size: font-size('xs');
     color: var(--mw-text-muted-color);
+    margin-left: spacing('2');
   }
 
   &-content {
-    width: 48%;
-    padding: spacing('9') spacing('2') spacing('1') spacing('2');
-    opacity: 0;
+    width: 50%;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    animation-duration: 0.9s;
+    animation-fill-mode: forwards;
   }
 
   &-event {
-    display: inline-block;
-    width: 87%;
     margin-top: spacing('4');
     padding: spacing('2') spacing('3');
     background: var(--mw-card-background);
     box-shadow: 0 2px 7px var(--mw-shadow);
     border-radius: radius('sm');
-    position: relative;
-    clear: both;
     cursor: default;
 
     &-date {
@@ -162,98 +139,126 @@ $_border-width-simple: 3px;
     }
   }
 
-  // alternate + animation…
+  // Odd steps: content on the left
+  &-step:nth-child(odd) &-content {
+    align-self: flex-start;
+    padding-right: spacing('5');
+    text-align: right;
+    align-items: flex-end;
+    animation-name: mw-slide-in-left;
+
+    .mw-timeline-big-event {
+      border-right: 2px solid var(--mw-secondary-color);
+      border-top-right-radius: radius('none');
+      border-bottom-right-radius: radius('none');
+      text-align: right;
+    }
+  }
+
+  // Even steps: content on the right
+  &-step:nth-child(even) &-content {
+    align-self: flex-end;
+    padding-left: spacing('5');
+    text-align: left;
+    align-items: flex-start;
+    animation-name: mw-slide-in-right;
+
+    .mw-timeline-big-event {
+      border-left: 2px solid var(--mw-secondary-color);
+      border-top-left-radius: radius('none');
+      border-bottom-left-radius: radius('none');
+      text-align: left;
+    }
+  }
+
+  // Staggered animation delays
   @for $i from 1 through 10 {
     &-step:nth-child(#{$i}) &-content {
-      animation-duration: 0.9s;
-      animation-fill-mode: forwards;
       animation-delay: $i * 0.3s;
+    }
+  }
 
-      @if $i % 2 != 0 {
-        animation-name: mw-slide-in-left;
-        margin-right: auto;
-        margin-left: spacing('0');
-        text-align: right;
-        align-items: flex-end;
+  // Active step
+  &-step.active &-date-container {
+    background: var(--mw-primary-color);
+    border-color: var(--mw-primary-color);
+    transform: scale(1.1);
+    animation: mw-pulse-ring-big 2s infinite;
 
-        .mw-timeline-big-event {
-          border-right: 2px solid var(--mw-secondary-color);
-          text-align: right;
-          border-top-right-radius: radius('none');
-          border-bottom-right-radius: radius('none');
-        }
-      } @else {
-        animation-name: mw-slide-in-right;
-        margin-left: auto;
-        margin-right: spacing('0');
-        text-align: left;
-        align-items: flex-start;
-
-        .mw-timeline-big-event {
-          border-left: 2px solid var(--mw-secondary-color);
-          text-align: left;
-          border-top-left-radius: radius('none');
-          border-bottom-left-radius: radius('none');
-        }
-      }
+    .mw-timeline-big-date-main,
+    .mw-timeline-big-date-sub {
+      color: var(--mw-primary-text-color);
     }
   }
 
   @include media-down('sm') {
+    // Line moves to the left
     &::before {
-      left: 14px;
+      left: 0;
       transform: none;
     }
+
     &-step {
-      display: block;
-      margin: spacing('6') spacing('0');
+      align-items: flex-start;
+      padding-left: spacing('5');
+      margin: spacing('5') 0;
     }
+
     &-date-container {
-      position: relative;
-      left: 2px;
-      transform: none;
-      width: 310px;
-      justify-content: flex-start;
+      margin-top: spacing('3');
+      left: -22px;
     }
-    &-date-sub {
-      margin-left: spacing('1');
+
+    &-step.active &-date-container {
+      transform: scale(1.05);
     }
-    &-content {
-      width: auto;
-      padding: spacing('2');
-      margin-top: spacing('1');
-      margin-left: spacing('6') !important;
-      text-align: left !important;
-      align-items: flex-start !important;
-      opacity: 1;
-    }
-    &-event {
-      width: 92%;
-      border-right: none !important;
-      border-left: 2px solid var(--mw-secondary-color) !important;
-      border-radius: radius('sm') !important;
-      text-align: left !important;
-      &-date {
-        font-size: font-size('xs');
+
+    // Override odd/even: content always full-width below the date
+    &-step:nth-child(odd) &-content,
+    &-step:nth-child(even) &-content {
+      align-self: stretch;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      text-align: left;
+      align-items: flex-start;
+
+      .mw-timeline-big-event {
+        border-right: none;
+        border-left: 2px solid var(--mw-secondary-color);
+        border-top-right-radius: radius('sm');
+        border-bottom-right-radius: radius('sm');
+        text-align: left;
       }
-      &-title {
-        font-size: font-size('sm');
-        line-height: 1.1;
-      }
+    }
+
+    &-date-main {
+      font-size: font-size('xs');
+    }
+
+    &-event-date {
+      font-size: font-size('xs');
+    }
+
+    &-event-title {
+      font-size: font-size('sm');
+      line-height: 1.1;
     }
   }
 }
 
+// Simple
 .mw-timeline-simple {
   position: relative;
   margin: spacing('1') auto;
   padding: spacing('3') 0;
   width: min(96%, 930px);
 
+  // Vertical line centered over the date column
   &::before {
     content: '';
     position: absolute;
-    left: 100px;
+    left: calc(#{$_simple-date-width} / 2);
     top: 0;
     width: $_border-width-simple;
     height: 100%;
@@ -262,31 +267,15 @@ $_border-width-simple: 3px;
   }
 
   &-step {
-    position: relative;
-    margin: spacing('5') spacing('0');
     display: flex;
     align-items: flex-start;
-
-    &.active {
-      .mw-timeline-simple-date {
-        background: var(--mw-primary-color);
-        color: var(--mw-primary-text-color);
-        z-index: z-index('lift');
-        transform: scale(1.1);
-        animation: mw-pulse-ring-simple 2s infinite;
-
-        @include media-down('sm') {
-          transform: scale(1.05);
-        }
-      }
-    }
+    gap: spacing('4');
+    margin: spacing('5') 0;
   }
 
   &-date {
-    position: absolute;
-    width: 120px;
-    top: 0;
-    left: -10px;
+    flex-shrink: 0;
+    width: $_simple-date-width;
     text-align: center;
     font-size: font-size('sm');
     padding: spacing('2');
@@ -294,21 +283,21 @@ $_border-width-simple: 3px;
     border: $_border-width-simple solid var(--mw-primary-color);
     background: var(--mw-card-background);
     line-height: 1.1;
+    position: relative;
     z-index: z-index('card');
     cursor: default;
+    transition: transform 0.2s ease;
   }
 
   &-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: spacing('3');
-    padding: spacing('0');
-    margin-left: 120px;
-    text-align: left;
     opacity: 0;
   }
 
-  // all steps slide in from right only
+  // Staggered animation
   @for $i from 1 through 10 {
     &-step:nth-child(#{$i}) &-content {
       animation: mw-slide-in-right 0.6s forwards;
@@ -316,24 +305,32 @@ $_border-width-simple: 3px;
     }
   }
 
+  // Active step
+  &-step.active &-date {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
+    transform: scale(1.1);
+    animation: mw-pulse-ring-simple 2s infinite;
+  }
+
   @include media-down('sm') {
     &::before {
-      left: spacing('0');
+      left: 0;
+      transform: none;
+    }
+
+    &-step {
+      flex-direction: column;
     }
 
     &-date {
-      position: absolute;
-      min-width: 120px;
       width: auto;
-      max-width: 260px;
       font-size: font-size('xs');
       line-height: 1;
     }
 
     &-content {
-      margin-top: spacing('7');
-      margin-left: spacing('3');
-      width: auto;
+      padding-left: spacing('3');
     }
   }
 }

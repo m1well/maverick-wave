@@ -25,7 +25,7 @@
 
 // Text line
 .mw-skeleton-text {
-  height: 1em;
+  height: 1rem;
   width: 100%;
   margin-bottom: spacing('2');
 
@@ -36,7 +36,7 @@
 
 // Heading
 .mw-skeleton-title {
-  height: 1.4em;
+  height: 1.4rem;
   width: 45%;
   margin-bottom: spacing('3');
 }
@@ -44,8 +44,8 @@
 // Circle (avatar placeholder)
 .mw-skeleton-circle {
   border-radius: radius('full');
-  width: spacing('8');
-  height: spacing('8');
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
 }
 
@@ -68,7 +68,7 @@
 .mw-skeleton-card {
   display: flex;
   flex-direction: column;
-  gap: spacing('2');
+  gap: spacing('3');
   padding: spacing('4');
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
@@ -85,6 +85,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: spacing('2');
+    gap: spacing('3');
   }
 }

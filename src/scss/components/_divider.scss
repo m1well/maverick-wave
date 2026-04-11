@@ -2,12 +2,14 @@
 
 // Base horizontal divider
 .mw-divider {
+  display: block;
+  width: 100%;
   border: none;
   border-top: 1px solid var(--mw-border);
   margin: spacing('5') spacing('0');
 
   &-thick {
-    border-top-width: 3px;
+    border-top-width: 4px;
   }
 
   &-dashed {
@@ -37,6 +39,7 @@
 // Divider with centered label text
 .mw-divider-text {
   display: flex;
+  width: 100%;
   align-items: center;
   gap: spacing('3');
   margin: spacing('5') spacing('0');

@@ -6,9 +6,9 @@
   text-align: center;
 
   &-content {
-    padding: spacing('6') spacing('4');
+    padding: spacing('6');
     @include media-down('sm') {
-      padding: spacing('9') spacing('3');
+      padding: spacing('9') spacing('4');
     }
 
     // choose mw-home-content or mw-home-content-fade

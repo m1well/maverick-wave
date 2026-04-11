@@ -34,12 +34,19 @@
 .mw-tags-remove {
   flex-shrink: 0;
   margin-left: spacing('3');
+
+  i,
+  fa-icon,
+  svg {
+    font-size: 0.7rem !important;
+  }
 }
 
 .mw-tags-icon {
   display: inline-flex;
-  margin-right: spacing('1');
-  font-size: 1.1em;
+  margin-left: spacing('1');
+  margin-right: spacing('2');
+  font-size: 0.9rem;
 }
 
 // Color variants
@@ -87,7 +94,7 @@
     i,
     fa-icon,
     svg {
-      font-size: 0.8rem !important;
+      font-size: 0.9rem !important;
     }
   }
 }

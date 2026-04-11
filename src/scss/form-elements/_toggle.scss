@@ -9,9 +9,9 @@ $_mw-toggle-colors: (
 );
 
 // Track dimensions
-$_track-w: 44px;
-$_track-h: 24px;
-$_knob-size: 18px;
+$_track-w: 42px;
+$_track-h: 22px;
+$_knob-size: 16px;
 $_knob-offset: 3px;
 $_knob-travel: calc(#{$_track-w} - #{$_knob-size} - #{$_knob-offset * 2});
 
@@ -89,7 +89,7 @@ $_knob-travel-lg: calc(
   }
 
   .mw-toggle-label {
-    font-size: font-size('sm');
+    font-size: font-size('xs');
     color: var(--mw-text-color);
     line-height: 1.3;
   }
@@ -133,7 +133,7 @@ $_knob-travel-lg: calc(
     }
 
     .mw-toggle-label {
-      font-size: font-size('base');
+      font-size: font-size('sm');
     }
   }
 

@@ -80,7 +80,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: spacing('3');
-    padding: spacing('2') spacing('3');
+    padding: spacing('3');
     background: var(--mw-card-background);
     z-index: z-index('menu');
     width: 100%;
@@ -91,7 +91,6 @@
     }
 
     @include media-down('sm') {
-      padding: spacing('2');
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -101,7 +100,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: spacing('3');
-    padding: spacing('2') spacing('3');
+    padding: spacing('3');
     background: var(--mw-card-background);
     z-index: z-index('menu');
     width: 100%;
@@ -112,7 +111,6 @@
     }
 
     @include media-down('sm') {
-      padding: spacing('2');
       grid-template-columns: 1fr;
     }
   }
