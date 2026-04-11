@@ -1,7 +1,7 @@
 @use 'sass:math';
 @use '../abstracts' as *;
 
-// ===== Horizontal Stepper =====
+// Horizontal
 .mw-stepper {
   display: flex;
   align-items: flex-start;
@@ -31,8 +31,8 @@
 
   // Step circle with number or icon
   &-indicator {
-    width: spacing('7');
-    height: spacing('7');
+    width: 28px;
+    height: 28px;
     border-radius: radius('full');
     border: 2px solid var(--mw-border);
     background: var(--mw-card-background);
@@ -63,7 +63,7 @@
     font-size: font-size('xs');
     color: var(--mw-text-muted-color);
     text-align: center;
-    line-height: 1.3;
+    line-height: 1.2;
     transition: color 0.3s ease;
 
     &.mw-active {
@@ -83,7 +83,7 @@
   }
 }
 
-// ===== Vertical Stepper =====
+// Vertical
 .mw-stepper-vertical {
   display: flex;
   flex-direction: column;
@@ -124,6 +124,7 @@
   // Content area next to the indicator
   .mw-stepper-content {
     flex: 1;
+    margin-left: spacing('1');
 
     &-title {
       font-size: font-size('base');

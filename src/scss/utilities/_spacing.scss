@@ -66,13 +66,15 @@
   }
 }
 
-// Gap utilities
+// Gap utilities (positive values only — negative gap is invalid CSS)
 @each $key, $value in $spacing {
-  .mw-gap-#{$key} {
-    gap: $value;
+  @if $value >= 0 {
+    .mw-gap-#{$key} {
+      gap: $value;
 
-    @include media-down('sm') {
-      gap: calc($value * 0.75);
+      @include media-down('sm') {
+        gap: calc($value * 0.75);
+      }
     }
   }
 }

@@ -11,7 +11,7 @@
   margin: spacing('1');
 
   &-header {
-    padding: spacing('3') spacing('5');
+    padding: spacing('4') spacing('5');
     border-bottom: 1px solid var(--mw-primary-color-hover);
     display: flex;
     justify-content: space-between;
@@ -20,7 +20,7 @@
   }
 
   &-body {
-    padding: spacing('3') spacing('5');
+    padding: spacing('4') spacing('5');
     flex: 1;
     overflow-y: auto;
 
@@ -41,7 +41,7 @@
   }
 
   &-footer {
-    padding: spacing('3') spacing('5');
+    padding: spacing('4') spacing('5');
     border-top: 1px solid var(--mw-primary-color-hover);
     display: flex;
     justify-content: flex-end;
@@ -69,7 +69,7 @@
 
     .mw-panel-body {
       overflow-y: auto;
-      max-height: calc(500px - 2 * spacing('4') - 2px);
+      max-height: calc(500px - #{2 * spacing('4')} - 2px);
     }
   }
 
@@ -77,24 +77,30 @@
   &-max-height {
     &-sm {
       max-height: 300px;
+      min-height: 0;
+      align-self: start;
       .mw-panel-body {
-        max-height: calc(300px - 2 * spacing('4') - 2px);
+        max-height: calc(300px - #{2 * spacing('4')} - 2px);
         overflow-y: auto;
       }
     }
 
     &-md {
       max-height: 500px;
+      min-height: 0;
+      align-self: start;
       .mw-panel-body {
-        max-height: calc(500px - 2 * spacing('4') - 2px);
+        max-height: calc(500px - #{2 * spacing('4')} - 2px);
         overflow-y: auto;
       }
     }
 
     &-lg {
       max-height: 700px;
+      min-height: 0;
+      align-self: start;
       .mw-panel-body {
-        max-height: calc(700px - 2 * spacing('4') - 2px);
+        max-height: calc(700px - #{2 * spacing('4')} - 2px);
         overflow-y: auto;
       }
     }

@@ -19,7 +19,8 @@
     background: none;
     color: var(--mw-primary-text-color);
     cursor: pointer;
-    padding: spacing('2') spacing('3');
+    padding: spacing('2') spacing('4');
+    margin: spacing('0') spacing('5');
     border-radius: radius('sm');
     border: 1px solid var(--mw-primary-text-color);
     display: flex;
@@ -67,7 +68,7 @@
   }
 }
 
-// Optional: Add slide animation
+// Optional slide animation
 .mw-pagination-slide-left {
   animation: slideLeft 0.3s ease;
 }

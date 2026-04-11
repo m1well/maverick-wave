@@ -3,11 +3,9 @@
 .mw-alert {
   position: relative;
   overflow: hidden;
-
   display: flex;
   align-items: flex-start;
-
-  padding: spacing('3') spacing('4');
+  padding: spacing('4') spacing('5');
   margin-bottom: spacing('4');
   border-radius: radius('md');
 
@@ -24,7 +22,7 @@
 
   &-icon {
     flex-shrink: 0;
-    margin-right: spacing('3');
+    margin-right: spacing('4');
     font-size: font-size('xl');
     line-height: 1.2;
     margin-top: spacing('1');

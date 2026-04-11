@@ -21,7 +21,7 @@
   }
 
   &-nav-item {
-    padding: spacing('3');
+    padding: spacing('3') spacing('4');
     cursor: pointer;
     font-weight: font-weight('medium');
     color: var(--mw-text-muted-color);
@@ -41,6 +41,7 @@
 
   &-content {
     flex: 1;
+    margin-top: spacing('1');
   }
 
   &-panel {
@@ -48,7 +49,7 @@
 
     &.active {
       display: block;
-      animation: fadeIn 1.4s ease;
+      animation: fadeIn 1.1s ease;
     }
   }
 
@@ -109,7 +110,7 @@
 
       @include media-down('sm') {
         width: 100%;
-        margin-top: spacing('4');
+        margin-top: spacing('3');
       }
     }
   }
@@ -118,12 +119,12 @@
   &-pills {
     .mw-tabs-nav {
       border-bottom: none;
-      gap: spacing('2');
+      gap: spacing('3');
     }
 
     .mw-tabs-nav-item {
-      border-radius: radius('2xl');
-      height: 40px;
+      border-radius: radius('xl');
+      padding: spacing('4') spacing('5');
       line-height: 0.9;
       border: 1px solid var(--mw-primary-color-hover);
       background: var(--mw-card-background);

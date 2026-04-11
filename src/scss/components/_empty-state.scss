@@ -6,13 +6,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: spacing('9') spacing('5');
+  padding: spacing('8') spacing('4');
 
   &-icon {
-    font-size: font-size('6xl');
+    font-size: font-size('5xl');
     color: var(--mw-text-muted-color);
-    opacity: 0.45;
-    margin-bottom: spacing('4');
+    opacity: 0.6;
+    margin-bottom: spacing('5');
     line-height: 1;
   }
 
@@ -20,7 +20,7 @@
     font-size: font-size('xl');
     font-weight: font-weight('medium');
     color: var(--mw-text-color);
-    margin-bottom: spacing('2');
+    margin-bottom: spacing('1');
   }
 
   &-desc {
@@ -53,21 +53,21 @@
   // Color variants (change icon color)
   &-primary .mw-empty-state-icon {
     color: var(--mw-primary-color);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   &-success .mw-empty-state-icon {
     color: var(--mw-success-color);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   &-warning .mw-empty-state-icon {
     color: var(--mw-warning-color);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   &-danger .mw-empty-state-icon {
     color: var(--mw-danger-color);
-    opacity: 0.6;
+    opacity: 0.7;
   }
 }

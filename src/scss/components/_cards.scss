@@ -12,7 +12,7 @@ $_mw-card-addon-colors: (
 .mw-card {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  padding: spacing('4') spacing('0') spacing('2') spacing('0');
+  padding: spacing('5') spacing('0') spacing('3') spacing('0');
   box-shadow: 0 5px 10px var(--mw-shadow);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
@@ -22,7 +22,7 @@ $_mw-card-addon-colors: (
   z-index: z-index('card');
 
   &-simple {
-    padding: spacing('4');
+    padding: spacing('5');
   }
 
   &:hover {
@@ -34,7 +34,7 @@ $_mw-card-addon-colors: (
   &-badge {
     position: absolute;
     top: spacing('2');
-    right: spacing('3');
+    right: spacing('4');
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-primary-text-color);
@@ -56,14 +56,13 @@ $_mw-card-addon-colors: (
     font-size: font-size('xs');
     color: var(--mw-primary-text-color);
     background: var(--mw-primary-color);
-    border-radius: radius('xs');
     white-space: nowrap;
     width: 220px;
     z-index: z-index('card') + 5;
     pointer-events: none;
     transform: rotate(25deg);
     text-align: center;
-    opacity: 0.75;
+    opacity: 0.8;
     font-weight: font-weight('medium');
     @include media-down('sm') {
       font-size: font-size('2xs');
@@ -110,7 +109,7 @@ $_mw-card-addon-colors: (
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: spacing('4') spacing('5') spacing('4') spacing('4');
+    padding: spacing('5');
   }
 
   &-title {
@@ -218,14 +217,12 @@ $_mw-card-addon-colors: (
 
   @include media-down('sm') {
     &-body {
-      padding: spacing('3');
+      padding: spacing('4');
     }
 
     // Adjust the image margin to match the new padding
     .mw-card-img {
       margin-bottom: spacing('2');
-      // margin: -#{spacing('4')} -#{spacing('4')} spacing('4');
-
       img {
         width: 100%;
       }
@@ -233,13 +230,13 @@ $_mw-card-addon-colors: (
   }
 
   &-stack {
-    padding: spacing('3');
+    padding: spacing('4') spacing('5');
     transition: all 0.4s ease;
 
     // Icon transition setup
     &-icon {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: radius('full');
       background: var(--mw-primary-color);
       color: var(--mw-primary-text-color);
@@ -255,20 +252,19 @@ $_mw-card-addon-colors: (
 
     // Add rotation on hover
     &:hover &-icon {
-      transform: rotate(33deg);
+      transform: rotate(25deg);
     }
 
     // Rest of your styles...
     &-header {
       display: flex;
       align-items: center;
-      margin-bottom: spacing('3');
       position: relative;
 
       &:after {
         content: '';
         position: absolute;
-        bottom: -#{spacing('4')};
+        bottom: spacing('-3');
         left: 48%;
         transform: translateX(-50%);
         width: 90%;
@@ -298,7 +294,7 @@ $_mw-card-addon-colors: (
     &-body {
       display: flex;
       flex-direction: column;
-      padding-top: spacing('3');
+      padding-top: spacing('5');
     }
 
     &-text {

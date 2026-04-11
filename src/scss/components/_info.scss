@@ -14,7 +14,7 @@ $_mw-info-colors: (
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: spacing('2') spacing('4');
+  padding: spacing('3') spacing('5');
   margin: spacing('1');
   font-size: font-size('base');
   font-weight: font-weight('medium');
@@ -39,18 +39,19 @@ $_mw-info-colors: (
     font-weight: font-weight('normal');
   }
   &-lg {
-    padding: spacing('3') spacing('5');
+    padding: spacing('4') spacing('6');
     font-size: font-size('lg');
     font-weight: font-weight('medium');
   }
   &-xl {
-    padding: spacing('4') spacing('6');
+    padding: spacing('5') spacing('8');
     font-size: font-size('xl');
     font-weight: font-weight('medium');
   }
 
   // counter variant: big number + small label
   &-counter {
+    min-width: spacing('12');
     .mw-info-value {
       font-size: font-size('4xl');
       font-weight: font-weight('bold');
@@ -59,8 +60,7 @@ $_mw-info-colors: (
     .mw-info-label {
       font-size: font-size('sm');
       font-weight: font-weight('medium');
-      opacity: 0.8;
-      min-width: 5rem;
+      opacity: 0.6;
       text-align: center;
     }
   }
@@ -99,7 +99,7 @@ $_mw-info-colors: (
     svg,
     [class*='fa-'],
     [class*='fas-'] {
-      font-size: 0.6rem;
+      font-size: 0.55rem;
     }
   }
 

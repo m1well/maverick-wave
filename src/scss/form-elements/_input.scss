@@ -39,11 +39,7 @@
   }
   &-lg {
     padding: spacing('3') spacing('4');
-    font-size: font-size('base');
-  }
-  &-xl {
-    padding: spacing('4') spacing('5');
-    font-size: font-size('md');
+    font-size: font-size('sm');
   }
 
   // Date / time inputs — style the native picker indicator

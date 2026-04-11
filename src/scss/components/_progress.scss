@@ -17,7 +17,7 @@ $_mw-progress-colors: (
   &-barinfo {
     display: flex;
     justify-content: space-between;
-    margin: spacing('3') spacing('2') spacing('1') spacing('1');
+    margin: spacing('3') spacing('2') spacing('1');
     font-size: font-size('sm');
 
     // hide info, if this class is available
@@ -79,20 +79,21 @@ $_mw-progress-colors: (
   }
 
   &-lg .mw-progress-bar {
-    height: 16px;
+    height: 15px;
     border-radius: radius('lg');
   }
 
   // With inner label
   &-inline-label {
     .mw-progress-bar {
-      height: 24px;
+      height: 22px;
+      user-select: none;
     }
 
     .mw-progress-fill {
       display: flex;
       align-items: center;
-      padding-left: spacing('5');
+      padding-left: spacing('6');
       font-size: font-size('xs');
       font-weight: font-weight('medium');
       color: var(--mw-primary-text-color);

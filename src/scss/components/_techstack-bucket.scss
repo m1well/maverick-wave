@@ -3,7 +3,7 @@
 .mw-techstack {
   display: flex;
   flex-wrap: wrap;
-  gap: spacing('3');
+  gap: spacing('4');
 
   // Base item
   &-item {
@@ -20,8 +20,8 @@
     min-height: 50px;
 
     .mw-techstack-logo {
-      width: 35px;
-      height: 35px;
+      width: 32px;
+      height: 32px;
     }
 
     .mw-techstack-name {
@@ -50,8 +50,8 @@
   // Small variant
   &-item-sm {
     padding: spacing('1') spacing('2');
-    min-width: 30px;
-    min-height: 30px;
+    min-width: 32px;
+    min-height: 32px;
     border-radius: radius('sm');
 
     .mw-techstack-logo {
@@ -105,6 +105,7 @@
 .mw-techstack-bucket {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: spacing('1');
   padding: spacing('3');
   position: relative;
@@ -112,16 +113,16 @@
   border-left: 2px solid var(--mw-dark-border);
   border-right: 2px solid var(--mw-dark-border);
   border-bottom: 4px solid var(--mw-dark-border);
-  border-top: 2px dashed transparent;
+  border-top: 2px solid transparent;
   border-radius: radius('none') radius('none') radius('xl') radius('xl');
 
   &::before {
     content: '';
     position: absolute;
-    top: -1px;
-    left: 0;
-    right: 0;
-    height: 1px;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    height: 2px;
     background: linear-gradient(
       90deg,
       var(--mw-dark-border) 0%,
@@ -135,7 +136,7 @@
   &-dashed {
     background: transparent;
     border: 2px dashed var(--mw-border);
-    border-radius: radius('lg');
+    border-radius: radius('xl');
     border-top: 2px dashed var(--mw-border);
 
     &::before {

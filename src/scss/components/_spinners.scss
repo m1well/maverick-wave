@@ -1,6 +1,6 @@
 @use '../abstracts' as *;
 
-$_size-default: 4rem;
+$_size-default: 4.5rem;
 $_size-sm: 2.5rem;
 $_size-lg: 7.5rem;
 
@@ -12,7 +12,7 @@ $_size-lg: 7.5rem;
   &-border {
     width: $_size-default;
     height: $_size-default;
-    border: 0.4rem solid var(--mw-gray-background);
+    border: 0.5rem solid var(--mw-gray-background);
     border-radius: radius('full');
     border-top-color: var(--mw-primary-color);
     animation: mw-spin 1.2s linear infinite;
@@ -28,7 +28,7 @@ $_size-lg: 7.5rem;
     &.mw-spinner-lg {
       width: $_size-lg;
       height: $_size-lg;
-      border-width: 0.6rem;
+      border-width: 0.7rem;
       animation: mw-spin 1s linear infinite;
     }
 
@@ -54,7 +54,7 @@ $_size-lg: 7.5rem;
       background: var(--mw-primary-color);
       border-radius: radius('full');
       display: inline-block;
-      margin: spacing('0') 0.2rem;
+      margin: spacing('0') spacing('2');
       animation: mw-bounce 1.4s infinite ease-in-out both;
 
       &:nth-child(1) {
@@ -74,7 +74,7 @@ $_size-lg: 7.5rem;
       > div {
         width: 0.75rem;
         height: 0.75rem;
-        margin: spacing('0') 0.1rem;
+        margin: spacing('0') spacing('1');
       }
     }
 
@@ -85,7 +85,7 @@ $_size-lg: 7.5rem;
       > div {
         width: 1.5rem;
         height: 1.5rem;
-        margin: spacing('0') 0.3rem;
+        margin: spacing('0') spacing('3');
       }
     }
 
@@ -110,7 +110,7 @@ $_size-lg: 7.5rem;
       width: $_size-default;
       height: $_size-default;
       border-radius: radius('full');
-      border: 0.4rem solid var(--mw-primary-color);
+      border: 0.5rem solid var(--mw-primary-color);
       border-color: var(--mw-primary-color) transparent var(--mw-primary-color)
         transparent;
       animation: mw-spin 1.5s linear infinite;
@@ -135,7 +135,7 @@ $_size-lg: 7.5rem;
       &:after {
         width: $_size-lg;
         height: $_size-lg;
-        border-width: 0.5rem;
+        border-width: 0.7rem;
       }
     }
 

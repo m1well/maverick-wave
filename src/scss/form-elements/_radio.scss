@@ -12,7 +12,6 @@ $_mw-radio-colors: (
 $_size-sm: spacing('3');
 $_size-default: spacing('4');
 $_size-lg: spacing('5');
-$_size-xl: spacing('6');
 
 .mw-radio-group {
   display: flex;
@@ -82,7 +81,7 @@ $_size-xl: spacing('6');
   }
 
   .mw-radio-label {
-    font-size: font-size('sm');
+    font-size: font-size('xs');
     color: var(--mw-text-color);
   }
 
@@ -102,16 +101,7 @@ $_size-xl: spacing('6');
       height: $_size-lg;
     }
     .mw-radio-label {
-      font-size: font-size('base');
-    }
-  }
-  &-xl {
-    .mw-radio-button {
-      width: $_size-xl;
-      height: $_size-xl;
-    }
-    .mw-radio-label {
-      font-size: font-size('md');
+      font-size: font-size('sm');
     }
   }
 

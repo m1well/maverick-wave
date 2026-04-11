@@ -2,7 +2,7 @@
 
 .mw-rating {
   display: inline-flex;
-  gap: spacing('2');
+  gap: spacing('3');
   font-size: font-size('2xl');
   padding: spacing('2') spacing('4');
 
@@ -16,7 +16,7 @@
   &-info {
     display: flex;
     justify-content: space-between;
-    margin: spacing('2') spacing('1') spacing('1') spacing('1');
+    margin: spacing('1');
     font-size: font-size('md');
   }
 

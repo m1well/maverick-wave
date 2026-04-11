@@ -126,7 +126,7 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
-.mw-grid-auto-lg {
+.mw-grid-auto-md {
   @extend %grid-base;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 }
@@ -266,7 +266,6 @@
 .mw-grid-stack-lg {
   @extend %grid-base-lg;
   grid-template-columns: 1fr;
-  gap: spacing('5');
   justify-items: start;
 
   > * {
@@ -278,7 +277,6 @@
 .mw-grid-stack-center-lg {
   @extend %grid-base-lg;
   grid-template-columns: 1fr;
-  gap: spacing('5');
   justify-items: center;
 
   > * {

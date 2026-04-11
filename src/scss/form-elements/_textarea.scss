@@ -5,7 +5,7 @@
   width: 100%;
   height: auto;
   padding: spacing('2') spacing('3');
-  font-size: font-size('sm');
+  font-size: font-size('xs');
   background: var(--mw-form-elements-background);
   color: var(--mw-form-elements-color);
   border: 2px solid var(--mw-border);
@@ -43,12 +43,7 @@
   &-lg {
     min-height: spacing('11');
     padding: spacing('3') spacing('4');
-    font-size: font-size('base');
-  }
-  &-xl {
-    min-height: spacing('12');
-    padding: spacing('4') spacing('5');
-    font-size: font-size('md');
+    font-size: font-size('sm');
   }
 
   &-resizable {
