@@ -304,9 +304,7 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 
 <!-- Panel (titled section) -->
 <div class="mw-panel">
-  <div class="mw-panel-header">
-    <h3 class="mw-panel-title">Panel Title</h3>
-  </div>
+  <h4 class="mw-panel-header">Panel Title</h4>
   <div class="mw-panel-body">...</div>
 </div>
 ```
