@@ -3,12 +3,12 @@
 // Base grid styles that apply to all grid types
 %grid-base {
   display: grid;
-  gap: spacing('5');
+  gap: spacing('6');
 }
 
 %grid-base-lg {
   display: grid;
-  gap: spacing('8');
+  gap: spacing('9');
 }
 
 .mw-grid {
@@ -148,9 +148,9 @@
 .mw-grid-2-lg {
   @extend %grid-base-lg;
   grid-template-columns: repeat(2, 1fr);
-  @include media-down('md') {
+  @include media-down('sm') {
     grid-template-columns: 1fr;
-    gap: spacing('5');
+    gap: spacing('6');
   }
 }
 
@@ -159,10 +159,11 @@
   grid-template-columns: repeat(3, 1fr);
   @include media-down('lg') {
     grid-template-columns: repeat(2, 1fr);
+    gap: spacing('7');
   }
   @include media-down('sm') {
     grid-template-columns: 1fr;
-    gap: spacing('5');
+    gap: spacing('6');
   }
 }
 
@@ -172,9 +173,12 @@
   @include media-down('xl') {
     grid-template-columns: repeat(2, 1fr);
   }
+  @include media-down('md') {
+    gap: spacing('7');
+  }
   @include media-down('sm') {
     grid-template-columns: 1fr;
-    gap: spacing('5');
+    gap: spacing('6');
   }
 }
 
@@ -189,11 +193,11 @@
   }
   @include media-down('md') {
     grid-template-columns: repeat(2, 1fr);
-    gap: spacing('6');
+    gap: spacing('7');
   }
   @include media-down('sm') {
     grid-template-columns: 1fr;
-    gap: spacing('5');
+    gap: spacing('6');
   }
 }
 
