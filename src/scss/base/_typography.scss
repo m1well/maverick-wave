@@ -110,7 +110,7 @@ blockquote {
   color: var(--mw-secondary-color);
   font-style: italic;
   position: relative;
-  padding: spacing('4');
+  padding: spacing('4') spacing('8');
   margin: spacing('2') spacing('1');
   border-left: 2px solid var(--mw-secondary-background-hover);
   border-radius: radius('none') radius('sm') radius('sm') radius('none');
@@ -138,14 +138,14 @@ blockquote {
 
   &::before {
     content: '"';
-    top: spacing('-2');
-    left: spacing('1');
+    top: spacing('-1');
+    left: spacing('2');
   }
 
   &::after {
     content: '"';
-    bottom: spacing('-5');
-    right: spacing('2');
+    bottom: spacing('-6');
+    right: spacing('4');
   }
 }
 
