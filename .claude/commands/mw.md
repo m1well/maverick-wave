@@ -68,10 +68,12 @@ Use the `mw-field` wrapper to group label + control + hint/error:
   <label class="mw-field-label mw-required" for="email">Email</label>
   <input id="email" type="email" class="mw-input" formControlName="email" />
   <span class="mw-field-hint">Used for account notifications.</span>
-  <span class="mw-field-error" *ngIf="email.invalid && email.touched">
+  @if (email.invalid && email.touched) {
+  <span class="mw-field-error">
     <i class="fas fa-exclamation-circle"></i>
     Please enter a valid email address.
   </span>
+  }
 </div>
 ```
 
@@ -85,7 +87,6 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 <input type="text" class="mw-input" />
 <input type="text" class="mw-input mw-input-sm" />
 <input type="text" class="mw-input mw-input-lg" />
-<input type="text" class="mw-input mw-input-xl" />
 ```
 
 ### Input Group (prefix / suffix / button)
@@ -166,13 +167,18 @@ Use the `mw-field` wrapper to group label + control + hint/error:
   <option value="" disabled selected>Choose...</option>
   <option value="a">Option A</option>
 </select>
+
+<!-- Sizes: mw-select-sm / mw-select-lg -->
 ```
 
 ### Textarea
 
 ```html
 <textarea class="mw-textarea" rows="4" placeholder="..."></textarea>
-<textarea class="mw-textarea mw-textarea-resizable-vertical"></textarea>
+<textarea class="mw-textarea mw-textarea-sm"></textarea>
+<textarea class="mw-textarea mw-textarea-lg"></textarea>
+
+<!-- Resize variants: mw-textarea-resizable / mw-textarea-resizable-vertical / mw-textarea-resizable-horizontal -->
 ```
 
 ### Checkbox
@@ -185,7 +191,8 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 </label>
 
 <!-- Color variants: mw-checkbox-primary / secondary / success / warning / danger / info -->
-<!-- Size variants: mw-checkbox-sm / mw-checkbox-lg / mw-checkbox-xl -->
+<!-- Size variants: mw-checkbox-sm / mw-checkbox-lg -->
+<!-- Disabled: add class mw-checkbox-disabled + disabled attr on input -->
 ```
 
 ### Radio
@@ -198,7 +205,8 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 </label>
 
 <!-- Color variants: mw-radio-primary / secondary / success / warning / danger / info -->
-<!-- Size variants: mw-radio-sm / mw-radio-lg / mw-radio-xl -->
+<!-- Size variants: mw-radio-sm / mw-radio-lg -->
+<!-- Disabled: add class mw-radio-disabled + disabled attr on input -->
 ```
 
 ### Toggle Switch
@@ -222,9 +230,11 @@ Use the `mw-field` wrapper to group label + control + hint/error:
   <label class="mw-field-label mw-required" for="name">Full Name</label>
   <input id="name" type="text" class="mw-input" formControlName="name" />
   <span class="mw-field-hint">As it appears on your ID.</span>
-  <span class="mw-field-error" *ngIf="name.invalid && name.touched">
+  @if (name.invalid && name.touched) {
+  <span class="mw-field-error">
     <i class="fas fa-exclamation-circle"></i> Name is required.
   </span>
+  }
 </div>
 ```
 
@@ -274,8 +284,8 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 <div class="mw-grid-4 mw-gap-4">...</div>
 <!-- 4-col grid -->
 
-<!-- Spacing: mw-mt-4, mw-mb-6, mw-mx-3, mw-my-2, mw-p-4, mw-px-6, mw-py-2 -->
-<!-- Gap values: 1–9 -->
+<!-- Spacing keys: -6 to 13 (e.g. mw-mt-4, mw-mb-6, mw-mx-3, mw-p-4, mw-px-6) -->
+<!-- Gap keys: 0–13 (negative values are invalid for gap and not generated) -->
 ```
 
 ---
@@ -312,12 +322,14 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 <div class="mw-alert mw-alert-danger">Error message.</div>
 
 <!-- Closable (handle dismiss in component) -->
-<div class="mw-alert mw-alert-primary" *ngIf="showAlert">
+@if (showAlert) {
+<div class="mw-alert mw-alert-primary">
   Message
   <button class="mw-btn mw-btn-link" (click)="showAlert = false">
     <i class="fas fa-times"></i>
   </button>
 </div>
+}
 ```
 
 ---
@@ -334,12 +346,14 @@ Use the `mw-field` wrapper to group label + control + hint/error:
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of items">
+      @for (item of items; track item.id) {
+      <tr>
         <td>{{ item.name }}</td>
         <td>
           <span class="mw-tag mw-tag-success">Active</span>
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </div>
@@ -396,9 +410,11 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 <div class="mw-spinner mw-spinner-sm mw-spinner-secondary"></div>
 
 <!-- With overlay (e.g., on async operations) -->
-<div class="mw-spinner-overlay" *ngIf="isLoading">
+@if (isLoading) {
+<div class="mw-spinner-overlay">
   <div class="mw-spinner mw-spinner-primary"></div>
 </div>
+}
 ```
 
 ---
@@ -407,14 +423,17 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 
 ```html
 <!-- Show while data is loading -->
-<div class="mw-skeleton-card" *ngIf="isLoading">
+@if (isLoading) {
+<div class="mw-skeleton-card">
   <span class="mw-skeleton mw-skeleton-title"></span>
   <span class="mw-skeleton mw-skeleton-text"></span>
   <span class="mw-skeleton mw-skeleton-text"></span>
 </div>
+}
 
 <!-- Avatar + text placeholder -->
-<div class="mw-skeleton-card" *ngIf="isLoading">
+@if (isLoading) {
+<div class="mw-skeleton-card">
   <div class="mw-skeleton-row">
     <span class="mw-skeleton mw-skeleton-circle"></span>
     <div class="mw-skeleton-body">
@@ -423,6 +442,7 @@ Use the `mw-field` wrapper to group label + control + hint/error:
     </div>
   </div>
 </div>
+}
 ```
 
 ---
@@ -505,6 +525,8 @@ Use the `mw-field` wrapper to group label + control + hint/error:
 
 ```typescript
 // component.ts
+private fb = inject(FormBuilder);
+
 form = this.fb.group({
   email: ['', [Validators.required, Validators.email]],
   name: ['', Validators.required],
@@ -526,19 +548,16 @@ get email() { return this.form.get('email')!; }
       <span class="mw-input-group-prefix"><i class="fas fa-envelope"></i></span>
       <input id="email" type="email" class="mw-input" formControlName="email" />
     </div>
-    <span
-      class="mw-field-error"
-      *ngIf="email.errors?.['required'] && email.touched"
-    >
+    @if (email.errors?.['required'] && email.touched) {
+    <span class="mw-field-error">
       <i class="fas fa-exclamation-circle"></i> Email is required.
     </span>
-    <span
-      class="mw-field-error"
-      *ngIf="email.errors?.['email'] && email.touched"
-    >
+    } @if (email.errors?.['email'] && email.touched) {
+    <span class="mw-field-error">
       <i class="fas fa-exclamation-circle"></i> Please enter a valid email
       address.
     </span>
+    }
   </div>
 
   <div class="mw-field">
@@ -564,17 +583,15 @@ get email() { return this.form.get('email')!; }
 ### Loading state pattern
 
 ```html
-<!-- Use skeleton while loading, then show real content -->
-<ng-container *ngIf="!isLoading; else loadingTpl">
-  <div class="mw-card mw-card-simple">
-    <!-- real content -->
-  </div>
-</ng-container>
-<ng-template #loadingTpl>
-  <div class="mw-skeleton-card">
-    <span class="mw-skeleton mw-skeleton-title"></span>
-    <span class="mw-skeleton mw-skeleton-text"></span>
-    <span class="mw-skeleton mw-skeleton-text"></span>
-  </div>
-</ng-template>
+@if (!isLoading) {
+<div class="mw-card mw-card-simple">
+  <!-- real content -->
+</div>
+} @else {
+<div class="mw-skeleton-card">
+  <span class="mw-skeleton mw-skeleton-title"></span>
+  <span class="mw-skeleton mw-skeleton-text"></span>
+  <span class="mw-skeleton mw-skeleton-text"></span>
+</div>
+}
 ```

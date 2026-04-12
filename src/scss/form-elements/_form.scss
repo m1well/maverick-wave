@@ -23,7 +23,7 @@
   }
 
   label {
-    font-size: font-size('md');
+    font-size: font-size('base');
     span {
       margin-bottom: spacing('1');
     }
@@ -84,7 +84,7 @@
   gap: spacing('1');
 
   &-label {
-    font-size: font-size('sm');
+    font-size: font-size('base');
     font-weight: font-weight('medium');
     color: var(--mw-text-color);
   }
