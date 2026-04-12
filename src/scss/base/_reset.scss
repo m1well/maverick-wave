@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 *,
 *::before,
 *::after {
@@ -10,13 +12,12 @@ html {
   scroll-behavior: smooth;
   min-width: 360px;
   scroll-padding-top: 70px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--mw-font-family-base);
   background: var(--mw-page-background);
-  color: var(--mw-text-color);
-  line-height: 1.6;
 
   &:has(.mw-modal-open) {
     overflow: hidden;
@@ -35,7 +36,7 @@ ul {
 }
 
 hr {
-  margin: 15px 0;
+  margin: spacing('3') 0;
   color: var(--mw-text-muted-color);
 }
 
@@ -57,19 +58,23 @@ textarea {
   font-family: inherit;
 }
 
-table,
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
 th,
 td {
   border: 1px solid var(--mw-border);
-  border-collapse: collapse;
-  padding: 3px 8px;
+  padding: spacing('1') spacing('2');
   text-align: left;
-  tr:nth-child(even) {
-    background: var(--mw-gray-background);
-  }
 }
 
 th {
   background: var(--mw-primary-color);
   color: var(--mw-primary-text-color);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--mw-gray-background);
 }

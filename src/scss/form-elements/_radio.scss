@@ -9,9 +9,9 @@ $_mw-radio-colors: (
   danger: var(--mw-danger-color),
 );
 
-$_size-sm: spacing('3');
-$_size-default: spacing('4');
-$_size-lg: spacing('5');
+$_size-sm: spacing('5');
+$_size-default: spacing('6');
+$_size-lg: spacing('7');
 
 .mw-radio-group {
   display: flex;
@@ -81,7 +81,7 @@ $_size-lg: spacing('5');
   }
 
   .mw-radio-label {
-    font-size: font-size('xs');
+    font-size: font-size('base');
     color: var(--mw-text-color);
   }
 
@@ -101,7 +101,7 @@ $_size-lg: spacing('5');
       height: $_size-lg;
     }
     .mw-radio-label {
-      font-size: font-size('sm');
+      font-size: font-size('md');
     }
   }
 

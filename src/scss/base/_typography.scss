@@ -98,7 +98,7 @@ kbd {
 pre {
   border: 1px solid var(--mw-border);
   background: var(--mw-card-background);
-  margin-bottom: 6px;
+  margin-bottom: spacing('2');
 }
 
 code {
@@ -171,8 +171,20 @@ blockquote {
     color: var(--mw-secondary-color);
   }
 
+  &-success {
+    color: var(--mw-success-color);
+  }
+
+  &-warning {
+    color: var(--mw-warning-color);
+  }
+
   &-danger {
     color: var(--mw-danger-color);
+  }
+
+  &-info {
+    color: var(--mw-info-color);
   }
 
   &-muted {

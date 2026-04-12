@@ -1,15 +1,17 @@
 // _checkbox.scss
 @use '../abstracts' as *;
 
-$_size-sm: spacing('3');
-$_size-default: spacing('4');
-$_size-lg: spacing('5');
+$_size-sm: spacing('5');
+$_size-default: spacing('6');
+$_size-lg: spacing('7');
 
 // Checkmark dimensions (not from spacing map — these are shape-drawing values)
-$_check-sm-w: 7px;
-$_check-sm-h: 4px;
-$_check-lg-w: 13px;
-$_check-lg-h: 7px;
+$_check-sm-w: 9px;
+$_check-sm-h: 6px;
+$_check-default-w: 14px;
+$_check-default-h: 8px;
+$_check-lg-w: 19px;
+$_check-lg-h: 10px;
 
 // 1) color map for checked state border & checkmark
 $_mw-checkbox-colors: (
@@ -69,8 +71,8 @@ $_mw-checkbox-colors: (
       position: absolute;
       top: 50%;
       left: 50%;
-      width: spacing('2');
-      height: spacing('1');
+      width: $_check-default-w;
+      height: $_check-default-h;
       border-left: 2px solid var(--mw-primary-color);
       border-bottom: 2px solid var(--mw-primary-color);
       transform: translate(-50%, -60%) rotate(-45deg) scale(0);
@@ -94,7 +96,7 @@ $_mw-checkbox-colors: (
   }
 
   .mw-checkbox-label {
-    font-size: font-size('xs');
+    font-size: font-size('base');
     color: var(--mw-text-color);
   }
 
@@ -124,7 +126,7 @@ $_mw-checkbox-colors: (
       border-width: 2px;
     }
     .mw-checkbox-label {
-      font-size: font-size('sm');
+      font-size: font-size('md');
     }
   }
 
