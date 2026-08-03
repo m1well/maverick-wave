@@ -12,7 +12,7 @@ $_size-lg: 7.5rem;
   &-border {
     width: $_size-default;
     height: $_size-default;
-    border: 0.5rem solid var(--mw-gray-background);
+    border: 0.5rem solid var(--mw-border);
     border-radius: radius('full');
     border-top-color: var(--mw-primary-color);
     animation: mw-spin 1.2s linear infinite;
@@ -167,7 +167,7 @@ $_size-lg: 7.5rem;
     left: spacing('0');
     right: spacing('0');
     bottom: spacing('0');
-    background: var(--mw-gray-background);
+    background: var(--mw-overlay-background);
     backdrop-filter: blur(2px);
     display: flex;
     height: 100%;

@@ -67,9 +67,9 @@
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 9px 21px var(--mw-shadow);
-    border-color: var(--mw-primary-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px var(--mw-shadow);
+    border-color: var(--mw-border-accent);
   }
 
   // Tile image

@@ -1,6 +1,6 @@
 {
   "name": "maverick-wave",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "config": {
     "version_short": "3.3"
   },
@@ -10,9 +10,11 @@
   "scripts": {
     "clean": "gulp clean",
     "format": "prettier --write \"**/*.{scss,js,json,html,md}\"",
+    "format:check": "prettier --check \"**/*.{scss,js,json,html,md}\"",
     "showcase": "http-server -c-1 -p 8888 dist",
     "start": "gulp",
     "build": "gulp clean && gulp build",
+    "verify": "node scripts/verify.js",
     "release": "gulp release"
   },
   "repository": {

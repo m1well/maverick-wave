@@ -1,0 +1,105 @@
+@use '../abstracts' as *;
+
+// Text utilities
+.mw-text {
+  &-center {
+    text-align: center;
+  }
+
+  &-left {
+    text-align: left;
+  }
+
+  &-right {
+    text-align: right;
+  }
+
+  // For money and other figures in tables: right-aligned, fixed-width digits
+  // so decimal places line up across rows, and never wrapped mid-number.
+  // Locale-agnostic - works for 1,204.50 and 1.204,50 alike, because the
+  // alignment comes from the right edge, not from the separator.
+  // `lining-nums` guards against fonts that default to old-style figures.
+  &-numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum';
+    white-space: nowrap;
+  }
+
+  &-primary {
+    color: var(--mw-primary-color);
+  }
+
+  &-secondary {
+    color: var(--mw-secondary-color);
+  }
+
+  &-success {
+    color: var(--mw-success-color);
+  }
+
+  &-warning {
+    color: var(--mw-warning-color);
+  }
+
+  &-danger {
+    color: var(--mw-danger-color);
+  }
+
+  &-info {
+    color: var(--mw-info-color);
+  }
+
+  &-muted {
+    color: var(--mw-text-muted-color);
+  }
+
+  &-bold {
+    font-weight: font-weight('bold');
+  }
+
+  &-medium {
+    font-weight: font-weight('medium');
+  }
+
+  &-normal {
+    font-weight: font-weight('normal');
+  }
+
+  &-light {
+    font-weight: font-weight('light');
+  }
+
+  &-italic {
+    font-style: italic;
+  }
+
+  &-color-dark {
+    color: var(--mw-dark-text-color);
+  }
+
+  &-color-light {
+    color: var(--mw-light-text-color);
+  }
+
+  @each $name, $size in $font-sizes {
+    &-#{$name} {
+      font-size: $size;
+    }
+  }
+}
+
+// Line height utilities
+.mw-leading {
+  &-tight {
+    line-height: 1.2;
+  }
+
+  &-normal {
+    line-height: 1.5;
+  }
+
+  &-loose {
+    line-height: 1.8;
+  }
+}

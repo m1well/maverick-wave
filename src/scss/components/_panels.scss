@@ -12,7 +12,7 @@
 
   &-header {
     padding: spacing('4') spacing('5');
-    border-bottom: 1px solid var(--mw-primary-color-hover);
+    border-bottom: 1px solid var(--mw-border-accent);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -42,7 +42,7 @@
 
   &-footer {
     padding: spacing('4') spacing('5');
-    border-top: 1px solid var(--mw-primary-color-hover);
+    border-top: 1px solid var(--mw-border-accent);
     display: flex;
     justify-content: flex-end;
     gap: spacing('3');
@@ -52,14 +52,14 @@
   &-primary {
     .mw-panel-header {
       background: var(--mw-primary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
   }
 
   &-secondary {
     .mw-panel-header {
       background: var(--mw-secondary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
   }
 

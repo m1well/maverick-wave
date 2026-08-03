@@ -1,135 +1,157 @@
-@use 'sass:map';
-@use 'sass:color';
+@use 'sass:string';
 
 $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
 
 $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d1?q=80&w=1300&auto=format&fit=crop') !default;
 
-$primary-color: #1031bb;
-$secondary-color: #bb3110;
-$success-color: #28a745;
-$warning-color: #d4a310;
-$danger-color: #d72537;
-$info-color: #17a2b8;
-$gray-color: #565656;
-$dark-background: #0b111a;
-$dark-text-color: #d6dbdf;
-$light-background: #d2d1e1;
-$light-text-color: #1a1a1d;
+// ---------------------------------------------------------------------------
+// Root colors
+//
+// These are the only values a project has to set. Every other tone is derived
+// from them at runtime via color-mix(), so overriding a root token in plain
+// CSS (:root { --mw-primary-color: ... }) cascades to all of its variants.
+// ---------------------------------------------------------------------------
+$primary-color: #1031bb !default;
+$secondary-color: #bb3110 !default;
+// Darkened a little so light button text stays readable on the solid surface
+$success-color: #218838 !default;
+$warning-color: #d4a310 !default;
+// Darkened a little so light button text stays readable on the solid surface
+$danger-color: #c82333 !default;
+$info-color: #17a2b8 !default;
+$gray-color: #565656 !default;
+$dark-background: #0b111a !default;
+$dark-text-color: #d6dbdf !default;
+$light-background: #d2d1e1 !default;
+$light-text-color: #1a1a1d !default;
+// Form controls stay light in both themes, so they get their own root value
+$form-elements-background: #efefef !default;
 
-// Base colors that don't change between themes
+// ---------------------------------------------------------------------------
+// Derivation helpers
+//
+// They emit color-mix() referring back to another --mw-* token instead of
+// baking a value at compile time.
+//
+// shade()/tint() mix `in hsl`, which behaves like color.adjust($lightness: ...)
+// and scales proportionally, so a derivation looks the same on every palette.
+// Mixing with black/white also lowers the saturation a little — that is why
+// hover tones read slightly softer than the base color. Alpha blending uses
+// `srgb` against `transparent`.
+// ---------------------------------------------------------------------------
+
+// Reference another token as-is
+@function token($name) {
+  @return string.unquote('var(--mw-#{$name})');
+}
+
+// Translucent variant of a token ($amount = remaining opacity)
+@function fade($name, $amount) {
+  @return string.unquote(
+    'color-mix(in srgb, var(--mw-#{$name}) #{$amount}, transparent)'
+  );
+}
+
+// Darker, fully opaque variant of a token
+@function shade($name, $amount) {
+  @return string.unquote(
+    'color-mix(in hsl, var(--mw-#{$name}), black #{$amount})'
+  );
+}
+
+// Lighter, fully opaque variant of a token
+@function tint($name, $amount) {
+  @return string.unquote(
+    'color-mix(in hsl, var(--mw-#{$name}), white #{$amount})'
+  );
+}
+
+// Uniform hover tone for every solid brand/status surface
+$hover-shift: 18%;
+
+// Base colors that don't change between themes.
+// Emitted as --mw-<key>.
 $base-colors: (
   'primary-color': $primary-color,
-  'primary-color-hover': color.adjust(
-      $primary-color,
-      $lightness: -3%,
-      $alpha: -0.3
-    ),
-  'primary-background': color.adjust(
-      $primary-color,
-      $lightness: -8%,
-      $alpha: -0.8
-    ),
-  'primary-background-hover': color.adjust(
-      $primary-color,
-      $lightness: -4%,
-      $alpha: -0.5
-    ),
-  'primary-info-background': color.adjust(
-      $primary-color,
-      $lightness: -1%,
-      $alpha: -0.3
-    ),
-  'primary-text-color': $dark-text-color,
+  'primary-color-hover': shade('primary-color', $hover-shift),
+  'primary-background': fade('primary-color', 20%),
+  'primary-background-hover': fade('primary-color', 50%),
+  'primary-info-background': fade('primary-color', 70%),
   'secondary-color': $secondary-color,
-  'secondary-color-hover': color.adjust(
-      $secondary-color,
-      $lightness: -3%,
-      $alpha: -0.4
-    ),
-  'secondary-background': color.adjust(
-      $secondary-color,
-      $lightness: -8%,
-      $alpha: -0.8
-    ),
-  'secondary-background-hover': color.adjust(
-      $secondary-color,
-      $lightness: -3%,
-      $alpha: -0.6
-    ),
-  'secondary-info-background': color.adjust(
-      $secondary-color,
-      $lightness: -8%,
-      $alpha: -0.3
-    ),
-  'secondary-text-color': $dark-text-color,
+  'secondary-color-hover': shade('secondary-color', $hover-shift),
+  'secondary-background': fade('secondary-color', 20%),
+  'secondary-background-hover': fade('secondary-color', 40%),
+  'secondary-info-background': fade('secondary-color-hover', 70%),
+  // Translucent accent line used for dividers, rules and outlines
+  'border-accent': fade('primary-color', 70%),
+  // Text on any solid colored surface — buttons of every variant, table and
+  // panel headers, badges, stepper dots. Deliberately not derived from a brand
+  // color, so retuning the palette never drags it along.
+  'accent-text-color': token('dark-text-color'),
   'gray-color': $gray-color,
-  'white-color': $dark-text-color,
-  'gray-background': color.adjust($gray-color, $lightness: +5%, $alpha: -0.4),
-  'section-alternate-pattern': color.adjust($gray-color, $alpha: -0.55),
-  'form-elements-background': color.adjust($light-background, $lightness: +15%),
-  'form-elements-color': color.adjust($light-text-color, $lightness: -2%),
+  // Subtle neutral surface: zebra rows, disabled fields, tracks, skeletons
+  'gray-background': fade('gray-color', 20%),
+  // Heavy scrim behind modals and blocking spinners
+  'overlay-background': fade('gray-color', 60%),
+  'section-alternate-pattern': fade('gray-color', 45%),
+  'form-elements-background': $form-elements-background,
+  'form-elements-color': shade('light-text-color', 18%),
 );
 
+// Status colors. Every status offers the same four tones.
+// Emitted as --mw-<key>.
 $status-colors: (
   'success-color': $success-color,
-  'success-info-background': color.adjust(
-      $success-color,
-      $lightness: -9%,
-      $alpha: -0.1
-    ),
-  'success-info-background-hover': color.adjust(
-      $success-color,
-      $lightness: +4%,
-      $alpha: -0.3
-    ),
+  'success-color-hover': shade('success-color', $hover-shift),
+  'success-info-background': fade('success-color-hover', 90%),
+  'success-info-background-hover': fade('success-color', 70%),
   'warning-color': $warning-color,
-  'warning-info-background': color.adjust(
-      $warning-color,
-      $lightness: -9%,
-      $alpha: -0.1
-    ),
+  'warning-color-hover': shade('warning-color', $hover-shift),
+  'warning-info-background': fade('warning-color-hover', 90%),
+  'warning-info-background-hover': fade('warning-color', 70%),
   'danger-color': $danger-color,
-  'danger-info-background': color.adjust(
-      $danger-color,
-      $lightness: -9%,
-      $alpha: -0.1
-    ),
+  'danger-color-hover': shade('danger-color', $hover-shift),
+  'danger-info-background': fade('danger-color-hover', 90%),
+  'danger-info-background-hover': fade('danger-color', 70%),
   'info-color': $info-color,
-  'info-info-background': color.adjust(
-      $info-color,
-      $lightness: -9%,
-      $alpha: -0.1
-    ),
-  'info-info-background-hover': color.adjust(
-      $info-color,
-      $lightness: +4%,
-      $alpha: -0.3
-    ),
+  'info-color-hover': shade('info-color', $hover-shift),
+  'info-info-background': fade('info-color-hover', 90%),
+  'info-info-background-hover': fade('info-color', 70%),
 );
 
-// Dark theme colors
+// Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
-  'hero-overlay-background': color.adjust($dark-background, $alpha: -0.7),
-  'card-background': color.adjust($dark-background, $lightness: +5%),
-  'footer-background': color.adjust($dark-background, $lightness: +3%),
-  'border': color.adjust($dark-background, $lightness: +15%),
-  'shadow': color.adjust($dark-text-color, $alpha: -0.7),
+  'hero-overlay-background': fade('dark-page-background', 30%),
+  'card-background': tint('dark-page-background', 5%),
+  'footer-background': tint('dark-page-background', 3%),
+  'border': tint('dark-page-background', 16%),
+  'shadow': fade('dark-text-color', 30%),
   'text-color': $dark-text-color,
-  'text-muted-color': color.adjust($dark-text-color, $lightness: -26%),
+  'text-muted-color': shade('dark-text-color', 30%),
 );
 
-// Light theme colors
+// Light theme colors. Emitted as --mw-light-<key>.
 $light-theme-colors: (
   'page-background': $light-background,
-  'hero-overlay-background': color.adjust($light-background, $alpha: -0.7),
-  'card-background': color.adjust($light-background, $lightness: +6%),
-  'footer-background': color.adjust($light-background, $lightness: -2%),
-  'border': color.adjust($light-background, $lightness: -13%),
-  'shadow': color.adjust($light-text-color, $alpha: -0.7),
+  'hero-overlay-background': fade('light-page-background', 30%),
+  'card-background': tint('light-page-background', 40%),
+  'footer-background': shade('light-page-background', 2%),
+  'border': shade('light-page-background', 15%),
+  'shadow': fade('light-text-color', 30%),
   'text-color': $light-text-color,
-  'text-muted-color': color.adjust($light-text-color, $lightness: +29%),
+  'text-muted-color': tint('light-text-color', 32%),
+);
+
+// Header/navbar colors. They stay dark in both themes but can be retuned on
+// their own. Emitted as --mw-header-<key>.
+$header-colors: (
+  'background': token('dark-footer-background'),
+  'text-color': token('dark-text-color'),
+  'navbar-list-color': token('dark-text-muted-color'),
+  'navbar-list-active-color': token('primary-color'),
+  'burgerbutton-color': token('dark-text-color'),
+  'border': token('border-accent'),
 );
 
 // Typography

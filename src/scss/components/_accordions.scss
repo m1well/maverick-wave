@@ -7,7 +7,7 @@
   margin: spacing('2');
 
   &-item {
-    border-bottom: 1px solid var(--mw-primary-color-hover);
+    border-bottom: 1px solid var(--mw-border-accent);
 
     &:last-child {
       border-bottom: none;
@@ -44,7 +44,7 @@
 
     &.active {
       background: var(--mw-primary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
 
       .mw-accordion-icon {
         transform: rotate(180deg);
@@ -61,7 +61,7 @@
 
     &-inner {
       padding: spacing('4');
-      border-top: 1px solid var(--mw-primary-color-hover);
+      border-top: 1px solid var(--mw-border-accent);
       @include media-down('sm') {
         font-size: font-size('sm');
       }

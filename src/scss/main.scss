@@ -1,3 +1,7 @@
+// Forwarded first so `@use 'main' with (...)` can configure the root colors,
+// $mw-theme-mode and $mw-hero-image before any layer consumes them.
+@forward 'abstracts/variables';
+
 @use 'base';
 @use 'components';
 @use 'form-elements';

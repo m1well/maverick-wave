@@ -15,6 +15,8 @@
           <th>Name</th>
           <th>Position</th>
           <th>Location</th>
+          <th>Status</th>
+          <th class="mw-text-numeric">Budget</th>
         </tr>
       </thead>
       <tbody>
@@ -23,21 +25,35 @@
           <td>John Doe</td>
           <td>Developer</td>
           <td>New York</td>
+          <td><span class="mw-tag mw-tag-success">Active</span></td>
+          <td class="mw-text-numeric">1,204.50</td>
         </tr>
         <tr>
           <td>2</td>
           <td>Jane Smith</td>
           <td>Designer</td>
           <td>London</td>
+          <td><span class="mw-tag mw-tag-warning">Pending</span></td>
+          <td class="mw-text-numeric">87.00</td>
         </tr>
         <tr>
           <td>3</td>
           <td>Bob Johnson</td>
           <td>Manager</td>
           <td>Berlin</td>
+          <td><span class="mw-tag mw-tag-muted">Draft</span></td>
+          <td class="mw-text-numeric">15,930.25</td>
         </tr>
       </tbody>
     </table>
+    <p class="mw-text-muted mw-mt-3">
+      The <strong>Budget</strong> column uses
+      <strong>mw-text-numeric</strong> &ndash; right-aligned with tabular,
+      lining digits. The alignment comes from the right edge, so it works the
+      same for <code>1,204.50</code> and <code>1.204,50</code>; only the number
+      of decimal places has to be consistent per column. For the input side
+      there is <strong>mw-input-numeric</strong>.
+    </p>
   </div>
 
   <div class="mw-card mw-card-simple mw-mb-6">
@@ -76,6 +92,120 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="mw-card mw-card-simple mw-mb-6">
+    <h4 class="mw-mb-2">Subtle Header &amp; Sticky Header</h4>
+    <p class="mw-text-muted">
+      <code>mw-table-subtle</code> keeps the header quiet - a full primary bar
+      across every column shouts louder than the data it labels.
+      <code>mw-table-sticky-head</code> keeps it visible while the body scrolls;
+      it needs a scroll container with a height limit, which
+      <code>mw-table-responsive-scroll</code> provides. Scroll inside the table
+      to see it. Its height comes from
+      <code>--mw-table-scroll-height</code> (400px, 260px below <code>sm</code>)
+      &mdash; override it per table with
+      <code>style="--mw-table-scroll-height: 250px"</code>.
+    </p>
+
+    <div class="mw-table-responsive-scroll">
+      <table class="mw-table mw-table-subtle mw-table-sticky-head">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th class="mw-text-numeric">Budget</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>John Doe</td>
+            <td>Developer</td>
+            <td class="mw-text-numeric">12,400</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Jane Smith</td>
+            <td>Designer</td>
+            <td class="mw-text-numeric">9,800</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Bob Johnson</td>
+            <td>Manager</td>
+            <td class="mw-text-numeric">21,050</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Alice Brown</td>
+            <td>Developer</td>
+            <td class="mw-text-numeric">11,300</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>Charlie Davis</td>
+            <td>Analyst</td>
+            <td class="mw-text-numeric">7,600</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Emma Wilson</td>
+            <td>Designer</td>
+            <td class="mw-text-numeric">10,150</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Frank Miller</td>
+            <td>Developer</td>
+            <td class="mw-text-numeric">13,900</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Grace Lee</td>
+            <td>Manager</td>
+            <td class="mw-text-numeric">19,700</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Henry Clark</td>
+            <td>Analyst</td>
+            <td class="mw-text-numeric">8,250</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>Ivy Turner</td>
+            <td>Developer</td>
+            <td class="mw-text-numeric">14,600</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Jack Morris</td>
+            <td>Designer</td>
+            <td class="mw-text-numeric">9,400</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Karen Hall</td>
+            <td>Manager</td>
+            <td class="mw-text-numeric">22,800</td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td>Liam Scott</td>
+            <td>Developer</td>
+            <td class="mw-text-numeric">12,950</td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td>Mia Adams</td>
+            <td>Analyst</td>
+            <td class="mw-text-numeric">7,900</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="mw-card mw-card-simple">

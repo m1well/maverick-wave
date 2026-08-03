@@ -42,6 +42,30 @@
     font-size: font-size('sm');
   }
 
+  // Numeric input for money and other figures - the entry counterpart to the
+  // `mw-text-numeric` utility, so a value looks the same while being typed and
+  // once it is rendered into a table.
+  //
+  // Pair it with `type="text" inputmode="decimal"`, not `type="number"`:
+  // number inputs change their value on scroll, and they reject a comma as
+  // decimal separator in most locales, which silently empties `.value` for
+  // anyone typing "1234,50".
+  &-numeric {
+    text-align: right;
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum';
+
+    // Suppress the native spinners if a `type="number"` slips through - their
+    // step of 1 is meaningless for an amount and the arrows are tiny.
+    appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+  }
+
   // Date / time inputs — style the native picker indicator
   &[type='date'],
   &[type='time'],

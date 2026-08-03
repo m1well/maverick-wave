@@ -69,7 +69,7 @@
     margin-top: spacing('2');
     background: var(--mw-card-background);
     border-radius: radius('md');
-    border: 1px solid var(--mw-primary-color-hover);
+    border: 1px solid var(--mw-border-accent);
   }
 
   &-dots {
@@ -86,7 +86,7 @@
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background: var(--mw-gray-background);
+    background: var(--mw-gray-color);
     cursor: pointer;
     transition: transform 0.4s ease;
 

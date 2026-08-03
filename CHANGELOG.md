@@ -6,6 +6,19 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2026-08-04
+
+### Added
+
+- Claude Code skill
+- some new elements
+
+### Changed
+
+- Big update!
+- A few claude code ideas from a few other private projects
+- Small fixes
+
 ## [3.3.0] - 2026-04-12
 
 ### Fixed

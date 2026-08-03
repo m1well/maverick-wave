@@ -67,7 +67,7 @@
         top: -24px;
         right: 13%;
         background: var(--mw-primary-color);
-        color: var(--mw-primary-text-color);
+        color: var(--mw-accent-text-color);
         font-size: 1.1rem;
         padding: 0.3rem 0.7rem;
         border-radius: 0.4rem;
@@ -128,14 +128,14 @@
 
     <main class="mw-main">
       <!-- Home section -->
-      <section id="home">
+      <section id="home" class="mw-section">
         <div class="mw-container">
           @@include('./src/partials/home-container.html')
         </div>
       </section>
 
       <!-- Get started section -->
-      <section id="get-started">
+      <section id="get-started" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Get started</h2>
           @@include('./src/partials/get-started-container.html')
@@ -143,7 +143,7 @@
       </section>
 
       <!-- Documentation section -->
-      <section id="documentation" class="mw-section-alternate">
+      <section id="documentation" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <h2 class="mw-section-title">Documentation</h2>
           @@include('./src/partials/documentation-container.html')
@@ -151,7 +151,7 @@
       </section>
 
       <!-- Foundations section -->
-      <section id="foundations">
+      <section id="foundations" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Foundations</h2>
           <nav class="mw-section-nav">
@@ -198,7 +198,7 @@
       </section>
 
       <!-- Layout section -->
-      <section id="layout" class="mw-section-alternate">
+      <section id="layout" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <h2 class="mw-section-title">Layout</h2>
           <nav class="mw-section-nav">
@@ -265,7 +265,7 @@
       </section>
 
       <!-- Components section -->
-      <section id="components">
+      <section id="components" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Components</h2>
           <nav class="mw-section-nav">
@@ -340,7 +340,7 @@
       </section>
 
       <!-- Forms section -->
-      <section id="forms" class="mw-section-alternate">
+      <section id="forms" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <h2 class="mw-section-title">Forms</h2>
           <nav class="mw-section-nav">
@@ -375,10 +375,11 @@
       </section>
 
       <!-- Data & display section -->
-      <section id="data-display">
+      <section id="data-display" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Data & Display</h2>
           <nav class="mw-section-nav">
+            <a href="#page-header" class="mw-section-btn">Page Header</a>
             <a href="#meta-info" class="mw-section-btn">Meta Info</a>
             <a href="#tables" class="mw-section-btn">Tables</a>
             <a href="#pagination" class="mw-section-btn">Pagination</a>
@@ -390,6 +391,11 @@
             <a href="#content-slider" class="mw-section-btn">Content Slider</a>
             <a href="#blog-posts" class="mw-section-btn">Blog Posts</a>
           </nav>
+
+          <!-- Page Header container -->
+          <div id="page-header">
+            @@include('./src/partials/page-header-container.html')
+          </div>
 
           <!-- Meta Info container -->
           <div id="meta-info">

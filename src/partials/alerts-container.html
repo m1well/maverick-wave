@@ -118,3 +118,29 @@
     </button>
   </div>
 </div>
+
+<h4 class="mw-mb-2 mw-mt-8">Toast Stack</h4>
+<p class="mw-text-muted mw-mb-3">
+  Alerts become toasts by putting them in a fixed, stacked container. Positions:
+  <code>mw-toast-stack-top-right</code> (default),
+  <code>mw-toast-stack-top-center</code>,
+  <code>mw-toast-stack-bottom-right</code>. Auto-dismiss stays the application's
+  job.
+</p>
+
+<div class="mw-card mw-card-simple">
+  <pre
+    class="mw-code-block"
+  ><code>&lt;div class="mw-toast-stack mw-toast-stack-top-right"&gt;
+  &lt;div class="mw-alert mw-alert-success"&gt;
+    &lt;div class="mw-alert-icon"&gt;&lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;&lt;/div&gt;
+    &lt;div class="mw-alert-content"&gt;Entry saved.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  <p class="mw-text-muted mw-text-sm">
+    The container is <code>position: fixed</code>, so it cannot be shown inline
+    here. Its width is capped at <code>min(380px, calc(100vw - 2rem))</code>, it
+    lets clicks pass through everywhere except on a toast, and the entry
+    animation respects <code>prefers-reduced-motion</code>.
+  </p>
+</div>

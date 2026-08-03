@@ -23,6 +23,8 @@ $_mw-avatar-colors: (
   height: 96px;
   flex-shrink: 0; // Prevents the avatar from shrinking
   flex-grow: 0; // Prevents the avatar from growing
+  // Scales with the avatar size; only takes effect on the initials variant
+  font-size: font-size('3xl');
 
   img {
     width: 100%;
@@ -36,29 +38,49 @@ $_mw-avatar-colors: (
     width: 32px;
     height: 32px;
     border-width: 2px;
+    // Small enough that wide pairs like "MW" still clear the circle
+    font-size: font-size('2xs');
   }
 
   &-sm {
     width: 64px;
     height: 64px;
     border-width: 2px;
+    font-size: font-size('xl');
   }
 
   &-lg {
     width: 144px;
     height: 144px;
     border-width: 5px;
+    font-size: font-size('5xl');
   }
 
   &-xl {
     width: 250px;
     height: 250px;
     border-width: 7px;
+    font-size: font-size('6xl');
   }
 
   // Square
   &-square {
     border-radius: radius('sm');
+  }
+
+  // Initials — for users without a picture. Centers its text content and puts
+  // the color on the background, so it stays combinable with the color
+  // variants below, which keep working on the border.
+  &-initials {
+    align-items: center;
+    justify-content: center;
+    background: var(--mw-primary-color);
+    color: var(--mw-accent-text-color);
+    font-weight: font-weight('bold');
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    user-select: none;
   }
 
   // Groups
@@ -75,7 +97,7 @@ $_mw-avatar-colors: (
       transition: transform 0.3s ease;
 
       &:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px);
         z-index: z-index('lift');
       }
 
@@ -119,5 +141,10 @@ $_mw-avatar-colors: (
 @each $name, $col in $_mw-avatar-colors {
   .mw-avatar-#{$name} {
     border-color: #{$col};
+  }
+
+  // On an initials avatar the same variant also tints the surface
+  .mw-avatar-initials.mw-avatar-#{$name} {
+    background: #{$col};
   }
 }

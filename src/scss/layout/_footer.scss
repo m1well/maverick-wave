@@ -5,7 +5,7 @@
   background: var(--mw-footer-background);
   padding: spacing('5') spacing('0');
   margin-top: spacing('6');
-  border-top: 1px solid var(--mw-primary-color-hover);
+  border-top: 1px solid var(--mw-border-accent);
 
   &-top {
     display: grid;
@@ -105,14 +105,14 @@
       color: var(--mw-text-color);
       font-size: font-size('xl');
       transition: var(--mw-transition);
-      border: 1px solid var(--mw-primary-color-hover);
+      border: 1px solid var(--mw-border-accent);
       box-shadow: 0 3px 10px var(--mw-shadow);
       text-decoration: none;
 
       &:hover {
         background: var(--mw-primary-color);
-        color: var(--mw-primary-text-color);
-        transform: translateY(-3px);
+        color: var(--mw-accent-text-color);
+        transform: translateY(-2px);
         border-color: var(--mw-primary-color);
       }
     }

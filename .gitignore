@@ -3,7 +3,7 @@ dist
 node_modules
 
 # dev
-dev
+.dev
 
 # macOS
 .DS_Store

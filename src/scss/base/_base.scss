@@ -1,122 +1,40 @@
-@use 'sass:map';
 @use '../abstracts' as *;
+
+// Active theme set and its token prefix, derived from $mw-theme-mode
+$_active-theme: $dark-theme-colors;
+$_active-prefix: 'dark';
+
+@if $mw-theme-mode == 'light' {
+  $_active-theme: $light-theme-colors;
+  $_active-prefix: 'light';
+}
 
 // CSS Variables for theming and overriding
 :root {
-  // Base colors
-  --mw-primary-color: #{map.get($base-colors, 'primary-color')};
-  --mw-primary-color-hover: #{map.get($base-colors, 'primary-color-hover')};
-  --mw-primary-background: #{map.get($base-colors, 'primary-background')};
-  --mw-primary-background-hover: #{map.get(
-      $base-colors,
-      'primary-background-hover'
-    )};
-  --mw-primary-info-background: #{map.get(
-      $base-colors,
-      'primary-info-background'
-    )};
-  --mw-primary-text-color: #{map.get($base-colors, 'primary-text-color')};
-  --mw-secondary-color: #{map.get($base-colors, 'secondary-color')};
-  --mw-secondary-color-hover: #{map.get($base-colors, 'secondary-color-hover')};
-  --mw-secondary-background: #{map.get($base-colors, 'secondary-background')};
-  --mw-secondary-background-hover: #{map.get(
-      $base-colors,
-      'secondary-background-hover'
-    )};
-  --mw-secondary-info-background: #{map.get(
-      $base-colors,
-      'secondary-info-background'
-    )};
-  --mw-secondary-text-color: #{map.get($base-colors, 'secondary-text-color')};
-  --mw-white-color: #{map.get($base-colors, 'white-color')};
-  --mw-gray-color: #{map.get($base-colors, 'gray-color')};
-  --mw-gray-background: #{map.get($base-colors, 'gray-background')};
-  --mw-section-alternate-pattern: #{map.get(
-      $base-colors,
-      'section-alternate-pattern'
-    )};
-
-  // form
-  --mw-form-elements-background: #{map.get(
-      $base-colors,
-      'form-elements-background'
-    )};
-  --mw-form-elements-color: #{map.get($base-colors, 'form-elements-color')};
+  // Brand and neutral colors
+  @each $name, $value in $base-colors {
+    --mw-#{$name}: #{$value};
+  }
 
   // Status colors
-  --mw-success-color: #{map.get($status-colors, 'success-color')};
-  --mw-success-info-background: #{map.get(
-      $status-colors,
-      'success-info-background'
-    )};
-  --mw-success-info-background-hover: #{map.get(
-      $status-colors,
-      'success-info-background-hover'
-    )};
-  --mw-warning-color: #{map.get($status-colors, 'warning-color')};
-  --mw-warning-info-background: #{map.get(
-      $status-colors,
-      'warning-info-background'
-    )};
-  --mw-danger-color: #{map.get($status-colors, 'danger-color')};
-  --mw-danger-info-background: #{map.get(
-      $status-colors,
-      'danger-info-background'
-    )};
-  --mw-info-color: #{map.get($status-colors, 'info-color')};
-  --mw-info-info-background: #{map.get($status-colors, 'info-info-background')};
-  --mw-info-info-background-hover: #{map.get(
-      $status-colors,
-      'info-info-background-hover'
-    )};
+  @each $name, $value in $status-colors {
+    --mw-#{$name}: #{$value};
+  }
 
-  // Header/navbar colors (they are fixed, but you can change them separately)
-  --mw-header-background: #{map.get($dark-theme-colors, 'footer-background')};
-  --mw-header-navbar-list-color: #{map.get(
-      $dark-theme-colors,
-      'text-muted-color'
-    )};
-  --mw-header-navbar-list-active-color: #{map.get(
-      $base-colors,
-      'primary-color'
-    )};
-  --mw-header-burgerbutton-color: #{map.get($dark-theme-colors, 'text-color')};
-  --mw-header-border: #{map.get($base-colors, 'primary-color-hover')};
+  // Header/navbar colors (fixed across themes, but overridable on their own)
+  @each $name, $value in $header-colors {
+    --mw-header-#{$name}: #{$value};
+  }
 
   // Dark theme colors
-  --mw-dark-page-background: #{map.get($dark-theme-colors, 'page-background')};
-  --mw-dark-hero-overlay-background: #{map.get(
-      $dark-theme-colors,
-      'hero-overlay-background'
-    )};
-  --mw-dark-card-background: #{map.get($dark-theme-colors, 'card-background')};
-  --mw-dark-footer-background: #{map.get(
-      $dark-theme-colors,
-      'footer-background'
-    )};
-  --mw-dark-border: #{map.get($dark-theme-colors, 'border')};
-  --mw-dark-shadow: #{map.get($dark-theme-colors, 'shadow')};
-  --mw-dark-text-color: #{map.get($dark-theme-colors, 'text-color')};
-  --mw-dark-text-muted-color: #{map.get($dark-theme-colors, 'text-muted-color')};
+  @each $name, $value in $dark-theme-colors {
+    --mw-dark-#{$name}: #{$value};
+  }
 
   // Light theme colors
-  --mw-light-page-background: #{map.get($light-theme-colors, 'page-background')};
-  --mw-light-hero-overlay-background: #{map.get(
-      $light-theme-colors,
-      'hero-overlay-background'
-    )};
-  --mw-light-card-background: #{map.get($light-theme-colors, 'card-background')};
-  --mw-light-footer-background: #{map.get(
-      $light-theme-colors,
-      'footer-background'
-    )};
-  --mw-light-border: #{map.get($light-theme-colors, 'border')};
-  --mw-light-shadow: #{map.get($light-theme-colors, 'shadow')};
-  --mw-light-text-color: #{map.get($light-theme-colors, 'text-color')};
-  --mw-light-text-muted-color: #{map.get(
-      $light-theme-colors,
-      'text-muted-color'
-    )};
+  @each $name, $value in $light-theme-colors {
+    --mw-light-#{$name}: #{$value};
+  }
 
   // Transitions
   --mw-transition: #{$transition-default};
@@ -127,39 +45,17 @@
   // hero background image
   --mw-hero-background: #{$mw-hero-image};
 
-  @if $mw-theme-mode == 'dark' or $mw-theme-mode == 'switchable' {
-    // Dark theme variables
-    --mw-page-background: var(--mw-dark-page-background);
-    --mw-hero-overlay-background: var(--mw-dark-hero-overlay-background);
-    --mw-card-background: var(--mw-dark-card-background);
-    --mw-footer-background: var(--mw-dark-footer-background);
-    --mw-border: var(--mw-dark-border);
-    --mw-shadow: var(--mw-dark-shadow);
-    --mw-text-color: var(--mw-dark-text-color);
-    --mw-text-muted-color: var(--mw-dark-text-muted-color);
-  } @else {
-    // Light theme variables
-    --mw-page-background: var(--mw-light-page-background);
-    --mw-hero-overlay-background: var(--mw-light-hero-overlay-background);
-    --mw-card-background: var(--mw-light-card-background);
-    --mw-footer-background: var(--mw-light-footer-background);
-    --mw-border: var(--mw-light-border);
-    --mw-shadow: var(--mw-light-shadow);
-    --mw-text-color: var(--mw-light-text-color);
-    --mw-text-muted-color: var(--mw-light-text-muted-color);
+  // Active theme — aliases onto the dark or light set above
+  @each $name, $value in $_active-theme {
+    --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
   }
 }
 
 @if $mw-theme-mode == 'switchable' {
   .mw-theme-light {
     // Light theme variables for switching
-    --mw-page-background: var(--mw-light-page-background);
-    --mw-hero-overlay-background: var(--mw-light-hero-overlay-background);
-    --mw-card-background: var(--mw-light-card-background);
-    --mw-footer-background: var(--mw-light-footer-background);
-    --mw-border: var(--mw-light-border);
-    --mw-shadow: var(--mw-light-shadow);
-    --mw-text-color: var(--mw-light-text-color);
-    --mw-text-muted-color: var(--mw-light-text-muted-color);
+    @each $name, $value in $light-theme-colors {
+      --mw-#{$name}: var(--mw-light-#{$name});
+    }
   }
 }
