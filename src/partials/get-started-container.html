@@ -97,8 +97,10 @@
         </p>
         <p>
           MaverickWave uses <code>@use</code> / <code>@forward</code> (modern
-          Sass module syntax). Override Sass variables <em>before</em> importing
-          the framework.
+          Sass module syntax). Pass your overrides through
+          <code>@use ... with (...)</code> &mdash; a plain assignment before the
+          <code>@use</code> has no effect, because the root colors are declared
+          with <code>!default</code>.
         </p>
 
         <h5 class="mw-mt-4">Theme Mode</h5>
@@ -120,26 +122,58 @@
         <h5 class="mw-mt-4">Example — your main SCSS file</h5>
         <pre class="mw-code-block"><code>// styles.scss
 
-// 1. Theme mode (optional, default is 'switchable')
-$mw-theme-mode: 'switchable';
+@use 'path/to/maverick-wave/src/scss/main' with (
+  // Theme mode (optional, default is 'switchable')
+  $mw-theme-mode: 'switchable',
 
-// 2. Override base color variables
-$primary-color: #e94560;
-$secondary-color: #f39c12;
+  // Root colors — everything else is derived from them at runtime
+  $primary-color: #e94560,
+  $secondary-color: #f39c12,
+  $dark-background: #1f1f2e,
+  $light-background: #f8f9fa,
+  $dark-text-color: #ffffff,
+  $light-text-color: #1c1c1c
+);
 
-// 3. Override background / text colors
-$dark-background: #1f1f2e;
-$light-background: #f8f9fa;
-$dark-text-color: #ffffff;
-$light-text-color: #1c1c1c;
-
-// 4. Import the framework (adjust path as needed)
-@use 'path/to/maverick-wave/src/scss/main';
-
-// 5. Your additional styles
+// Your additional styles
 body {
   // custom overrides
 }</code></pre>
+
+        <h5 class="mw-mt-4">Importing Only What You Need</h5>
+        <p>
+          Every layer forwards one module per file and no
+          <code>@extend</code> crosses a file boundary, so components can be
+          imported individually. Applications usually have no use for the
+          marketing components (<code>blog-post</code>, <code>gallery</code>,
+          <code>content-slider</code>, <code>techstack-bucket</code>,
+          <code>tiles</code>, <code>coming-soon</code>, <code>ratings</code>,
+          <code>home</code>).
+        </p>
+        <pre
+          class="mw-code-block"
+        ><code>// styles.scss — the configuration has to come first
+@use 'maverick-wave/src/scss/abstracts/variables' with (
+  $primary-color: #0f766e
+);
+
+@use 'maverick-wave/src/scss/base'; // required — carries the :root tokens
+@use 'maverick-wave/src/scss/layout/grid';
+@use 'maverick-wave/src/scss/layout/page-header';
+@use 'maverick-wave/src/scss/components/buttons';
+@use 'maverick-wave/src/scss/components/cards';
+@use 'maverick-wave/src/scss/components/modals';
+@use 'maverick-wave/src/scss/components/tables';
+@use 'maverick-wave/src/scss/components/tags';
+@use 'maverick-wave/src/scss/form-elements';
+@use 'maverick-wave/src/scss/utilities';</code></pre>
+        <p class="mw-text-warning">
+          <i class="fas fa-exclamation-triangle mw-mr-1"></i>
+          Without <code>base</code> every component renders without colors — it
+          carries the <code>:root</code> custom properties. A subset like the
+          one above compiles to roughly 98 kB raw / 15 kB gzipped, against 147
+          kB / 22.5 kB for the full build.
+        </p>
       </div>
     </div>
 
@@ -156,10 +190,18 @@ body {
 "styles": [
   "src/assets/maverick-wave.min.css",
   "src/styles.scss"
-],
-"scripts": [
-  "src/assets/maverick-wave.min.js"
 ]</code></pre>
+        <p class="mw-text-warning">
+          <i class="fas fa-exclamation-triangle mw-mr-1"></i>
+          <strong>No <code>"scripts"</code> entry for the JS file.</strong>
+          <code>maverick-wave.min.js</code> wires everything up once on
+          <code>DOMContentLoaded</code> and writes straight into the DOM &mdash;
+          in a SPA everything rendered afterwards stays uninitialized, and the
+          class toggles happen behind change detection. Rebuild the behaviors in
+          components; the state classes (<code>active</code>, <code>open</code>,
+          <code>mw-modal-open</code>, <code>mw-selected</code>) are the whole
+          contract.
+        </p>
         <p>
           Alternatively, use the CDN link directly in
           <code>src/index.html</code>:
@@ -167,23 +209,35 @@ body {
         <pre class="mw-code-block"><code>&lt;link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/maverick-wave@{{VERSION}}/maverick-wave.min.css"&gt;</code></pre>
         <p>
-          For SCSS integration, copy the <code>src/scss/</code> source into your
-          project and import it from <code>src/styles.scss</code>:
+          For SCSS integration, use the npm package (or a local copy of
+          <code>src/scss/</code>) from <code>src/styles.scss</code>:
         </p>
         <pre class="mw-code-block"><code>// src/styles.scss
-$primary-color: #3f51b5;
-$mw-theme-mode: 'switchable';
-
-@use 'maverick-wave/src/scss/main';</code></pre>
+@use 'maverick-wave/src/scss/main' with (
+  $primary-color: #3f51b5,
+  $mw-theme-mode: 'switchable'
+);</code></pre>
         <h5 class="mw-mt-4">Theme switching</h5>
-        <pre class="mw-code-block"><code>// app.component.ts
-toggleTheme() {
-  document.body.classList.toggle('mw-theme-light');
+        <p>
+          Light mode is one class on <code>&lt;body&gt;</code>. Keep it in a
+          service so the choice survives navigation:
+        </p>
+        <pre class="mw-code-block"><code>// theme.service.ts
+readonly light = signal(localStorage.getItem('mw-theme') === 'light');
+
+constructor() {
+  effect(() =&gt; {
+    const light = this.light();
+    document.body.classList.toggle('mw-theme-light', light);
+    localStorage.setItem('mw-theme', light ? 'light' : 'dark');
+  });
 }</code></pre>
         <h5 class="mw-mt-4">Reactive Forms</h5>
         <p>
-          MaverickWave automatically styles Angular form state classes. Use the
-          <code>mw-field</code> wrapper pattern:
+          The <code>mw-field</code> wrapper groups label, control, hint and
+          error. Bind the error state yourself &mdash; the framework does not
+          style Angular's <code>ng-invalid</code> / <code>ng-touched</code>
+          classes:
         </p>
         <pre
           class="mw-code-block"
@@ -206,10 +260,14 @@ toggleTheme() {
           use the CDN link in <code>index.html</code>:
         </p>
         <pre class="mw-code-block"><code>// main.jsx / index.js
-import './assets/maverick-wave.min.css';
-
-// If you need the JS functionality (accordion, tabs, etc.)
-import './assets/maverick-wave.min.js';</code></pre>
+import './assets/maverick-wave.min.css';</code></pre>
+        <p class="mw-text-warning">
+          <i class="fas fa-exclamation-triangle mw-mr-1"></i>
+          Do not import <code>maverick-wave.min.js</code> in a SPA &mdash; it
+          binds once on <code>DOMContentLoaded</code> and never sees anything
+          rendered later. Accordion, tabs, modal and theme toggle are class
+          toggles; bind them with <code>className</code> from state.
+        </p>
         <p>Example usage in a React component:</p>
         <pre class="mw-code-block"><code>function App() {
   return (

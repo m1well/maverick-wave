@@ -6,7 +6,7 @@
   justify-content: center;
   background: var(--mw-card-background);
   border-radius: radius('md');
-  border: 3px dashed var(--mw-primary-color-hover);
+  border: 3px dashed var(--mw-border-accent);
   overflow: hidden;
   position: relative;
   transition: var(--mw-transition);
@@ -51,16 +51,16 @@
   }
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     border-style: solid;
 
     .mw-coming-soon-icon {
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
       transform: rotate(27deg);
     }
 
     .mw-coming-soon-text {
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
       transform: scale(1.05);
     }
 

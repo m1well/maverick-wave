@@ -17,7 +17,7 @@
 
   th {
     font-weight: font-weight('medium');
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
     background: var(--mw-primary-color);
     user-select: none;
   }
@@ -125,5 +125,46 @@
 .mw-table-hover {
   tbody tr:hover {
     background: var(--mw-primary-background-hover);
+  }
+}
+
+// Quiet header for data-heavy views
+.mw-table-subtle {
+  th {
+    background: color-mix(
+      in srgb,
+      var(--mw-gray-color) 20%,
+      var(--mw-card-background)
+    );
+    color: var(--mw-text-color);
+    border-bottom: 2px solid var(--mw-border-accent);
+  }
+}
+
+// Header stays visible while the body scrolls
+.mw-table-sticky-head {
+  th {
+    position: sticky;
+    top: spacing('0');
+    z-index: z-index('lift');
+    box-shadow:
+      inset 0 1px 0 var(--mw-border),
+      inset 0 -1px 0 var(--mw-border);
+  }
+}
+
+.mw-table-responsive-scroll {
+  @extend .mw-table-responsive;
+  --mw-table-scroll-height: 400px;
+  max-height: var(--mw-table-scroll-height);
+  overflow-y: auto;
+
+  .mw-table {
+    margin-top: spacing('0');
+  }
+
+  // Rows get shorter on small screens
+  @include media-down('sm') {
+    --mw-table-scroll-height: 260px;
   }
 }

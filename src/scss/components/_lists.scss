@@ -224,8 +224,7 @@
     }
 
     &:hover {
-      background: var(--mw-primary-color-hover);
-      color: var(--mw-primary-text-color);
+      background: var(--mw-primary-background-hover);
       padding-left: spacing('4');
 
       &::before {
@@ -244,7 +243,6 @@
       padding-bottom: spacing('1');
 
       &:hover {
-        color: var(--mw-text-color);
         padding-left: spacing('4');
 
         &::before {
@@ -266,7 +264,7 @@
       font-size: font-size('sm');
 
       &:hover {
-        background: var(--mw-primary-color-hover);
+        background: var(--mw-primary-background-hover);
         padding-left: spacing('4');
         border-left: 3px solid var(--mw-primary-color);
       }
@@ -298,13 +296,13 @@
     }
 
     &:hover {
-      background: var(--mw-primary-color-hover);
-      color: var(--mw-primary-text-color);
+      background: var(--mw-primary-background-hover);
       padding-left: spacing('5');
     }
 
     &:active {
       background: var(--mw-primary-color);
+      color: var(--mw-accent-text-color);
       transform: scale(0.98);
     }
   }
@@ -327,7 +325,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: var(--mw-primary-color-hover);
+    background: var(--mw-primary-background);
     border-radius: 3px;
   }
 
@@ -356,12 +354,13 @@
     }
 
     &:hover {
-      background: var(--mw-primary-color-hover);
+      background: var(--mw-primary-background-hover);
       cursor: pointer;
     }
 
     &:active {
       background: var(--mw-primary-color);
+      color: var(--mw-accent-text-color);
     }
   }
 }
@@ -406,11 +405,12 @@
     }
 
     &:hover {
-      background: var(--mw-primary-color-hover);
+      background: var(--mw-primary-background-hover);
     }
 
     &:active {
       background: var(--mw-primary-color);
+      color: var(--mw-accent-text-color);
       transform: scale(0.98);
     }
 
@@ -609,11 +609,12 @@
 
   > * {
     &:hover {
-      background: var(--mw-secondary-color-hover);
+      background: var(--mw-secondary-background-hover);
     }
 
     &:active {
       background: var(--mw-secondary-color);
+      color: var(--mw-accent-text-color);
     }
 
     &.mw-selected {

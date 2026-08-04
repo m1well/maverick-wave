@@ -44,17 +44,18 @@
     font-weight: font-weight('bold');
     transition: var(--mw-transition);
     flex-shrink: 0;
+    user-select: none;
 
     &.mw-active {
       border-color: var(--mw-primary-color);
       background: var(--mw-primary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
 
     &.mw-done {
       border-color: var(--mw-success-color);
       background: var(--mw-success-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
   }
 

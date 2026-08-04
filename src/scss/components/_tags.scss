@@ -1,13 +1,24 @@
 @use '../abstracts' as *;
 
+// Colour variants
+$_mw-tag-colors: (
+  'primary': '',
+  'secondary': '',
+  'success': 'info-',
+  'warning': 'info-',
+  'danger': 'info-',
+  'info': 'info-',
+);
+
+// Container for tag *lists* - carries the colour for all its items
 .mw-tags {
   display: flex;
   flex-wrap: wrap;
   gap: spacing('2');
 }
 
-// Tag item
-.mw-tags-item {
+// Visual base, shared by the list item and the standalone tag
+%mw-tag-base {
   display: inline-flex;
   align-items: center;
   background: var(--mw-primary-background);
@@ -23,11 +34,21 @@
   &:hover {
     background: var(--mw-primary-background-hover);
   }
+}
+
+// Tag item - inside a `.mw-tags` container
+.mw-tags-item {
+  @extend %mw-tag-base;
 
   // Removable tag styling
   &.mw-tags-removable {
     padding-right: spacing('1');
   }
+}
+
+// Standalone tag - carries its colour directly, no container needed
+.mw-tag {
+  @extend %mw-tag-base;
 }
 
 // Remove button - pure CSS
@@ -49,41 +70,36 @@
   font-size: 0.9rem;
 }
 
-// Color variants
-.mw-tags-primary .mw-tags-item {
-  background-color: var(--mw-primary-background);
-  border-color: var(--mw-primary-color);
-  &:hover {
-    background: var(--mw-primary-background-hover);
+// Color variants - generated for the list form and the standalone form
+@each $name, $infix in $_mw-tag-colors {
+  .mw-tags-#{$name} .mw-tags-item,
+  .mw-tag-#{$name} {
+    background-color: var(--mw-#{$name}-#{$infix}background);
+    border-color: var(--mw-#{$name}-color);
+
+    &:hover {
+      background: var(--mw-#{$name}-#{$infix}background-hover);
+    }
   }
 }
 
-.mw-tags-secondary .mw-tags-item {
-  background-color: var(--mw-secondary-background);
-  border-color: var(--mw-secondary-color);
-  &:hover {
-    background: var(--mw-secondary-background-hover);
-  }
-}
+// Neutral variant for "draft" / "done" states.
+.mw-tags-muted .mw-tags-item,
+.mw-tag-muted {
+  background-color: var(--mw-gray-background);
+  border-color: var(--mw-border);
+  color: var(--mw-text-muted-color);
 
-.mw-tags-success .mw-tags-item {
-  background-color: var(--mw-success-info-background);
-  border-color: var(--mw-success-color);
   &:hover {
-    background: var(--mw-success-info-background-hover);
-  }
-}
-
-.mw-tags-info .mw-tags-item {
-  background-color: var(--mw-info-info-background);
-  border-color: var(--mw-info-color);
-  &:hover {
-    background: var(--mw-info-info-background-hover);
+    background-color: var(--mw-gray-background);
+    border-color: var(--mw-text-muted-color);
+    color: var(--mw-text-color);
   }
 }
 
 // Size variants
-.mw-tags-lg .mw-tags-item {
+.mw-tags-lg .mw-tags-item,
+.mw-tag-lg {
   font-size: font-size('sm');
   padding: spacing('1') spacing('3');
 

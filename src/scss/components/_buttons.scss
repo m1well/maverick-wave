@@ -32,7 +32,7 @@
 // Color variants
 .mw-btn-primary {
   background: var(--mw-primary-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color-hover);
   }
@@ -43,7 +43,7 @@
 }
 .mw-btn-secondary {
   background: var(--mw-secondary-color);
-  color: var(--mw-primary-text-color);
+  color: var(--mw-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color-hover);
   }
@@ -52,17 +52,40 @@
     border: 1px solid var(--mw-secondary-color);
   }
 }
+// Semantic variants for destructive / confirming actions
+.mw-btn-danger {
+  background: var(--mw-danger-color);
+  color: var(--mw-accent-text-color);
+  &:hover:not(:disabled) {
+    background: var(--mw-danger-color-hover);
+  }
+  &.active:not(:disabled) {
+    background: var(--mw-danger-color-hover);
+    border: 1px solid var(--mw-danger-color);
+  }
+}
+.mw-btn-success {
+  background: var(--mw-success-color);
+  color: var(--mw-accent-text-color);
+  &:hover:not(:disabled) {
+    background: var(--mw-success-color-hover);
+  }
+  &.active:not(:disabled) {
+    background: var(--mw-success-color-hover);
+    border: 1px solid var(--mw-success-color);
+  }
+}
 .mw-btn-outline {
   background: transparent;
   border-color: var(--mw-primary-color);
   color: var(--mw-primary-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
   }
   &.active:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
   }
 }
 .mw-btn-link {
@@ -103,7 +126,7 @@
   height: 18px;
   border-radius: radius('full');
   background: var(--mw-gray-color);
-  color: var(--mw-white-color);
+  color: var(--mw-accent-text-color);
   border: none;
   opacity: 0.8;
   padding: 0;
@@ -131,34 +154,34 @@
   &:hover:not(:disabled) {
     opacity: 1;
     background: var(--mw-primary-color);
-    color: var(--mw-white-color);
+    color: var(--mw-accent-text-color);
   }
 }
 
 .mw-btn-mini-primary {
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-white-color);
+    color: var(--mw-accent-text-color);
   }
 }
 
 .mw-btn-mini-secondary {
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color);
-    color: var(--mw-white-color);
+    color: var(--mw-accent-text-color);
   }
 }
 
 .mw-btn-mini-danger {
   &:hover:not(:disabled) {
     background: var(--mw-danger-color);
-    color: var(--mw-white-color);
+    color: var(--mw-accent-text-color);
   }
 }
 
 .mw-btn-mini-success {
   &:hover:not(:disabled) {
     background: var(--mw-success-color);
-    color: var(--mw-white-color);
+    color: var(--mw-accent-text-color);
   }
 }

@@ -7,7 +7,7 @@
 
   &-nav {
     display: flex;
-    border-bottom: 1px solid var(--mw-primary-color-hover);
+    border-bottom: 1px solid var(--mw-border-accent);
     margin-bottom: spacing('3');
     overflow-x: auto;
 
@@ -65,7 +65,7 @@
     .mw-tabs-nav {
       flex-direction: column;
       border-bottom: none;
-      border-right: 1px solid var(--mw-primary-color-hover);
+      border-right: 1px solid var(--mw-border-accent);
       margin-bottom: spacing('0');
       margin-right: spacing('3');
       min-width: 160px;
@@ -74,7 +74,7 @@
       @include media-down('sm') {
         flex-direction: row;
         border-right: none;
-        border-bottom: 1px solid var(--mw-primary-color-hover);
+        border-bottom: 1px solid var(--mw-border-accent);
         margin-right: spacing('0');
         margin-bottom: spacing('4');
         width: 100%;
@@ -126,12 +126,12 @@
       border-radius: radius('xl');
       padding: spacing('4') spacing('5');
       line-height: 0.9;
-      border: 1px solid var(--mw-primary-color-hover);
+      border: 1px solid var(--mw-border-accent);
       background: var(--mw-card-background);
 
       &.active {
         background: var(--mw-primary-color);
-        color: var(--mw-primary-text-color);
+        color: var(--mw-accent-text-color);
       }
     }
   }

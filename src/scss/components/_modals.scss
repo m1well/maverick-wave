@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--mw-gray-background);
+  background: var(--mw-overlay-background);
   backdrop-filter: blur(2px);
   z-index: z-index('modal')-10;
   display: none;
@@ -57,7 +57,7 @@
 // Modal sections
 .mw-modal-header {
   padding: spacing('3') spacing('5');
-  border-bottom: 1px solid var(--mw-primary-color-hover);
+  border-bottom: 1px solid var(--mw-border-accent);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,6 +72,12 @@
   }
 }
 
+// Explicit hook for the heading
+.mw-modal-title {
+  margin: spacing('0');
+  line-height: 1.2;
+}
+
 .mw-modal-body {
   padding: spacing('4') spacing('5');
   overflow-y: auto;
@@ -80,7 +86,7 @@
 
 .mw-modal-footer {
   padding: spacing('3') spacing('5');
-  border-top: 1px solid var(--mw-primary-color-hover);
+  border-top: 1px solid var(--mw-border-accent);
   display: flex;
   gap: spacing('2');
   justify-content: flex-end;
@@ -101,6 +107,7 @@
 
   &:hover {
     background: var(--mw-primary-color-hover);
+    color: var(--mw-accent-text-color);
   }
 }
 

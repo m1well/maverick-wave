@@ -40,19 +40,17 @@
         </p>
         <pre class="mw-code-block"><code>/* Your custom-styles.css */
   :root {
-    /* Override base colors */
-    --mw-primary-color: #e94560; 
+    /* Root colors — hover tones, translucent backgrounds and borders
+       are derived from them at runtime via color-mix() */
+    --mw-primary-color: #e94560;
     --mw-secondary-color: #f39c12;
-  
-    /* Override specific theme colors */
-    --mw-dark-page-background: #1a1a2e; 
-    --mw-light-card-background: #f0f0f5; 
-  
-    /* Override component variables */
-    --mw-alert-primary-bg: rgba(233, 69, 96, 0.15);
-  
-    /* Override font */
-    --mw-font-family-base: 'Your Custom Font', sans-serif; 
+
+    /* Theme colors */
+    --mw-dark-page-background: #1a1a2e;
+    --mw-light-page-background: #f0f0f5;
+
+    /* Font */
+    --mw-font-family-base: 'Your Custom Font', sans-serif;
   }</code></pre>
         <p>This method is flexible and doesn't require a Sass build process.</p>
 
@@ -61,24 +59,21 @@
         </h5>
         <p>
           If you integrate MaverickWave's SCSS source files into your project,
-          you can override the framework's default Sass variables
-          <em>before</em> importing it. This gives you deeper control and allows
-          derived colors (calculated using Sass functions like
-          <code>rgba()</code> or <code>color.adjust()</code> within the
-          framework) to automatically use your custom base colors.
+          pass your overrides through <code>@use ... with (...)</code>. A plain
+          assignment before the <code>@use</code> has no effect &mdash; the root
+          colors are declared with <code>!default</code>, which only the
+          configuration reaches.
         </p>
-        <pre class="mw-code-block"><code>// Your main.scss
-  
-  // Override Sass variables BEFORE importing
-  $primary-color: #e94560;
-  $font-family: 'Your Custom Font', sans-serif;
-  $mw-theme-mode: 'dark'; // Optionally set theme mode
-  
-  // Import MaverickWave
-  @import 'path/to/maverick-wave/scss/maverick-wave';</code></pre>
+        <pre class="mw-code-block"><code>// Your styles.scss
+
+  @use 'path/to/maverick-wave/src/scss/main' with (
+    $primary-color: #e94560,
+    $mw-theme-mode: 'dark' // 'switchable' | 'dark' | 'light'
+  );</code></pre>
         <p>
           This method requires you to have a Sass compiler set up in your
-          project.
+          project. Single components can be imported instead of
+          <code>main</code> &mdash; see the "Get Started" section.
         </p>
         <p class="mw-mt-4">
           <button

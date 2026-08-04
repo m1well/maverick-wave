@@ -1,0 +1,92 @@
+@use '../abstracts' as *;
+
+// Fixed, stacked container for `mw-alert`
+.mw-toast-stack {
+  position: fixed;
+  z-index: z-index('alert');
+  display: flex;
+  flex-direction: column;
+  gap: spacing('3');
+  width: min(380px, calc(100vw - #{2 * spacing('5')}));
+  max-height: calc(100vh - #{2 * spacing('5')});
+  overflow-y: auto;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+    margin-bottom: spacing('0');
+    animation: mw-toast-in 0.3s ease;
+  }
+
+  // Default position
+  top: spacing('5');
+  right: spacing('5');
+
+  // Positions
+  &-top-right {
+    top: spacing('5');
+    right: spacing('5');
+    bottom: auto;
+    left: auto;
+  }
+
+  &-top-center {
+    top: spacing('5');
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+  }
+
+  &-bottom-right {
+    bottom: spacing('5');
+    right: spacing('5');
+    top: auto;
+    left: auto;
+    flex-direction: column-reverse;
+
+    > * {
+      animation-name: mw-toast-in-up;
+    }
+  }
+
+  // On phones the stack spans the full width at the top
+  @include media-down('sm') {
+    left: spacing('5');
+    right: spacing('5');
+    width: auto;
+    transform: none;
+
+    &-bottom-right {
+      top: auto;
+    }
+  }
+}
+
+@keyframes mw-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mw-toast-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-toast-stack > * {
+    animation: none;
+  }
+}

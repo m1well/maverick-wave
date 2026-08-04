@@ -47,7 +47,7 @@
   // Login button styling
   .mw-login-btn {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
     border: none;
     border-radius: radius('md');
     font-size: font-size('md');
@@ -66,7 +66,9 @@
     }
 
     &:disabled {
-      color: var(--mw-text-muted-color);
+      // Same treatment as every other disabled button — a theme-bound text
+      // color would go dark on this always-primary surface in light mode
+      opacity: 0.6;
       cursor: not-allowed;
     }
   }
@@ -136,7 +138,7 @@
   .mw-menu-btn-burger {
     width: 18px;
     height: 2px;
-    background: var(--mw-primary-text-color);
+    background: var(--mw-header-burgerbutton-color);
     border-radius: 1px;
     position: relative;
     transition: all 0.3s ease;
@@ -148,7 +150,7 @@
       left: 0;
       width: 18px;
       height: 2px;
-      background: var(--mw-primary-text-color);
+      background: var(--mw-header-burgerbutton-color);
       border-radius: 1px;
       transition: all 0.3s ease;
     }
@@ -349,5 +351,77 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+// Profile button - avatar plus the signed-in name
+.mw-profile-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: spacing('3');
+  height: 40px;
+  padding: spacing('0') spacing('4') spacing('0') spacing('1');
+  background: transparent;
+  border: 1px solid var(--mw-header-border);
+  border-radius: radius('2xl');
+  color: var(--mw-header-text-color);
+  cursor: pointer;
+  transition: var(--mw-transition);
+  flex-shrink: 0;
+  max-width: 220px;
+
+  // The avatar brings spacing of its own that would break the pill shape
+  .mw-avatar {
+    margin: spacing('0');
+    box-shadow: none;
+    border-width: 0;
+  }
+
+  &-name {
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--mw-primary-background-hover);
+    border-color: var(--mw-primary-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  // Icon fallback for projects without initials
+  > i,
+  > svg,
+  > [class*='fa-'] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    font-size: font-size('xl');
+  }
+
+  @include media-down('md') {
+    padding: spacing('0');
+    width: 40px;
+    justify-content: center;
+    border-radius: radius('full');
+
+    .mw-profile-btn-name {
+      display: none;
+    }
   }
 }

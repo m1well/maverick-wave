@@ -1,3 +1,6 @@
+// 'variables' first: it is the only configurable module, and both 'functions'
+// and 'mixins' load it themselves. Forwarding it later would mean it is
+// already loaded by the time a `with (...)` configuration reaches it.
+@forward 'variables';
 @forward 'functions';
 @forward 'mixins';
-@forward 'variables';

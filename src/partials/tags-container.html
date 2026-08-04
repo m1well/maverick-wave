@@ -43,10 +43,35 @@
 
       <!-- Secondary (Tools) -->
       <h5 class="mw-text-medium mw-mb-2">Secondary</h5>
-      <div class="mw-tags mw-tags-secondary">
+      <div class="mw-tags mw-tags-secondary mw-mb-4">
         <span class="mw-tags-item">Docker</span>
         <span class="mw-tags-item">Kubernetes</span>
         <span class="mw-tags-item">Git</span>
+      </div>
+
+      <!-- Warning (Pending) -->
+      <h5 class="mw-text-medium mw-mb-2">Warning</h5>
+      <div class="mw-tags mw-tags-warning mw-mb-4">
+        <span class="mw-tags-item">
+          <i class="fas fa-clock mw-tags-icon"></i>Pending
+        </span>
+        <span class="mw-tags-item">Review</span>
+      </div>
+
+      <!-- Danger (Failed) -->
+      <h5 class="mw-text-medium mw-mb-2">Danger</h5>
+      <div class="mw-tags mw-tags-danger mw-mb-4">
+        <span class="mw-tags-item">
+          <i class="fas fa-xmark mw-tags-icon"></i>Failed
+        </span>
+        <span class="mw-tags-item">Deprecated</span>
+      </div>
+
+      <!-- Muted (Neutral) -->
+      <h5 class="mw-text-medium mw-mb-2">Muted</h5>
+      <div class="mw-tags mw-tags-muted">
+        <span class="mw-tags-item">Draft</span>
+        <span class="mw-tags-item">Archived</span>
       </div>
     </div>
   </div>
@@ -162,6 +187,35 @@
             <i class="fas fa-times"></i>
           </button>
         </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMN 4: Single tag -->
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Single Tag</h3>
+    <div class="mw-card mw-card-simple">
+      <p class="mw-text-muted mw-mb-4">
+        For a single status chip &ndash; e.g. in a table cell &ndash; use
+        <strong>mw-tag</strong>. It carries the colour itself, so no
+        <strong>mw-tags</strong> container is needed.
+      </p>
+
+      <h5 class="mw-text-medium mw-mb-2">Variants</h5>
+      <div class="mw-d-flex mw-flex-wrap mw-gap-2 mw-mb-4">
+        <span class="mw-tag mw-tag-primary">Primary</span>
+        <span class="mw-tag mw-tag-secondary">Secondary</span>
+        <span class="mw-tag mw-tag-success">Paid</span>
+        <span class="mw-tag mw-tag-info">Info</span>
+        <span class="mw-tag mw-tag-warning">Open</span>
+        <span class="mw-tag mw-tag-danger">Cancelled</span>
+        <span class="mw-tag mw-tag-muted">Draft</span>
+      </div>
+
+      <h5 class="mw-text-medium mw-mb-2">Large</h5>
+      <div class="mw-d-flex mw-flex-wrap mw-gap-2">
+        <span class="mw-tag mw-tag-success mw-tag-lg">Paid</span>
+        <span class="mw-tag mw-tag-muted mw-tag-lg">Draft</span>
       </div>
     </div>
   </div>

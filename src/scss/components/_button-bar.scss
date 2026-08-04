@@ -12,7 +12,7 @@
   padding: spacing('2');
 
   &:hover {
-    border-color: var(--mw-primary-color-hover);
+    border-color: var(--mw-border-accent);
   }
 
   @include media-down('sm') {
@@ -49,7 +49,7 @@
       [class*='mw-btn-link']
     ) {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
 
     &:hover:not(:disabled) {
       background: var(--mw-primary-color-hover);
@@ -63,7 +63,7 @@
       [class*='mw-btn-link']
     ) {
     background: var(--mw-secondary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
 
     &:hover:not(:disabled) {
       background: var(--mw-secondary-color-hover);
@@ -82,7 +82,7 @@
 
     &:hover:not(:disabled) {
       background: var(--mw-primary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
   }
 }
@@ -100,14 +100,14 @@
 
     &:hover:not(:disabled) {
       background: var(--mw-primary-color);
-      color: var(--mw-primary-text-color);
+      color: var(--mw-accent-text-color);
     }
   }
 
   // Middle button(s) get primary style
   .mw-btn:not(:first-child):not(:last-child):not([class*='mw-btn-']) {
     background: var(--mw-primary-color);
-    color: var(--mw-primary-text-color);
+    color: var(--mw-accent-text-color);
 
     &:hover:not(:disabled) {
       background: var(--mw-primary-color-hover);

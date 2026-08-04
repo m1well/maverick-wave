@@ -72,25 +72,29 @@
     </div>
   </div>
 
-  <!-- RIGHT: Angular validation simulation + readonly -->
+  <!-- RIGHT: error, single-control error, readonly, disabled -->
   <div>
     <h3 class="mw-card-title mw-mb-4">Validation & Readonly States</h3>
     <div class="mw-card mw-card-simple">
       <p class="mw-text-muted mw-text-sm mw-mb-4">
-        Angular adds <code>.ng-invalid.ng-touched</code> and
-        <code>.ng-valid.ng-touched.ng-dirty</code>
-        automatically. The styles below are applied by the framework.
+        The error look is not automatic: bind
+        <code>mw-field-has-error</code> to the control state (in Angular
+        <code>[class.mw-field-has-error]="c.invalid &amp;&amp; c.touched"</code
+        >). A control without a field wrapper &mdash; also a
+        <code>mw-checkbox-group</code>, <code>mw-radio-group</code> or
+        <code>mw-slider-container</code> &mdash; takes
+        <code>mw-form-element-error</code> instead.
       </p>
 
-      <!-- Simulated ng-invalid ng-touched -->
-      <div class="mw-field mw-mb-4">
+      <!-- Field wrapper in error state -->
+      <div class="mw-field mw-field-has-error mw-mb-4">
         <label class="mw-field-label mw-required" for="ff-username"
           >Username (invalid &amp; touched)</label
         >
         <input
           id="ff-username"
           type="text"
-          class="mw-input ng-invalid ng-touched"
+          class="mw-input"
           value=""
           placeholder="Required"
         />
@@ -99,18 +103,18 @@
         </span>
       </div>
 
-      <!-- Simulated ng-valid ng-touched ng-dirty -->
+      <!-- Single control without a wrapper -->
       <div class="mw-field mw-mb-4">
         <label class="mw-field-label mw-required" for="ff-password"
-          >Password (valid &amp; dirty)</label
+          >Password (single control error)</label
         >
         <input
           id="ff-password"
           type="password"
-          class="mw-input ng-valid ng-touched ng-dirty"
-          value="secret123"
+          class="mw-input mw-form-element-error"
+          value="123"
         />
-        <span class="mw-field-hint">Looks good!</span>
+        <span class="mw-field-hint">At least 8 characters.</span>
       </div>
 
       <!-- Readonly -->

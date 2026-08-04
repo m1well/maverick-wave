@@ -268,23 +268,35 @@
   }
 
   function rgbToHex(rgb) {
-    // Check if the color is in RGB/RGBA format
     if (!rgb || rgb === 'transparent') return '#000000';
 
-    let rgbArray;
-    if (rgb.startsWith('rgba')) {
-      rgbArray = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
-    } else {
-      rgbArray = rgb.match(/rgb?\((\d+),\s*(\d+),\s*(\d+)\)/);
+    const toHex = (v) =>
+      Math.max(0, Math.min(255, Math.round(v)))
+        .toString(16)
+        .padStart(2, '0');
+
+    const srgb = rgb.match(
+      /color\(srgb\s+([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+))?\)/
+    );
+    if (srgb) {
+      const hex =
+        '#' +
+        toHex(srgb[1] * 255) +
+        toHex(srgb[2] * 255) +
+        toHex(srgb[3] * 255);
+      const alpha = srgb[4] === undefined ? 1 : parseFloat(srgb[4]);
+      return (alpha < 1 ? `${hex} / ${alpha}` : hex).toUpperCase();
     }
 
+    const rgbArray = rgb.match(
+      /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/
+    );
     if (!rgbArray) return rgb;
 
-    const r = parseInt(rgbArray[1], 10).toString(16).padStart(2, '0');
-    const g = parseInt(rgbArray[2], 10).toString(16).padStart(2, '0');
-    const b = parseInt(rgbArray[3], 10).toString(16).padStart(2, '0');
-
-    return `#${r}${g}${b}`.toUpperCase();
+    const hex =
+      '#' + toHex(rgbArray[1]) + toHex(rgbArray[2]) + toHex(rgbArray[3]);
+    const alpha = rgbArray[4] === undefined ? 1 : parseFloat(rgbArray[4]);
+    return (alpha < 1 ? `${hex} / ${alpha}` : hex).toUpperCase();
   }
 
   // ===== Accordions =====
