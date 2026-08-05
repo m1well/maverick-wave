@@ -54,7 +54,7 @@ reactive form control.
 ```html
 <form class="mw-form">
   <div class="mw-form-group">
-    <p class="mw-text-muted mw-mb-3">Personal information</p>
+    <h4 class="mw-form-group-title">Personal information</h4>
     <div class="mw-grid-2">
       <div class="mw-field">...</div>
       <div class="mw-field">...</div>
@@ -74,6 +74,8 @@ reactive form control.
   when there is no real form element.
 - `mw-form-inline` lays the children out in a row.
 - `mw-form-group` is the bordered block for a titled group of fields.
+  `mw-form-group-title` is the heading hook inside it - put it on the `<h3>` /
+  `<h4>`, otherwise the heading keeps its full document-level size.
 - `mw-form-actions` is a right-aligned wrapping button row.
   `mw-form-actions-hint` is a full-width note above the buttons.
   Alignment variants: `mw-form-actions-left`, `mw-form-actions-center`,
