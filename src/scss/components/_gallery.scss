@@ -23,7 +23,7 @@
   &-slide {
     width: 100%;
     flex-shrink: 0;
-    aspect-ratio: var(--mw-gallery-ratio, 16 / 9);
+    aspect-ratio: 16 / 9;
 
     img {
       width: 100%;
@@ -38,15 +38,15 @@
     top: 50%;
     transform: translateY(-50%);
     width: 52px;
-    height: 92px;
+    height: 108px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: spacing('0');
     border: none;
     border-radius: radius('md');
-    background: rgb(0 0 0 / 35%);
-    color: var(--mw-accent-text-color);
+    background: rgb(0 0 0 / 40%);
+    color: rgb(255 255 255 / 75%);
     font-size: font-size('xl');
     line-height: 1;
     cursor: pointer;
@@ -62,7 +62,7 @@
     }
 
     &:hover {
-      background: rgb(0 0 0 / 80%);
+      background: rgb(0 0 0 / 85%);
     }
 
     &:focus-visible {
@@ -131,7 +131,7 @@
 @include media-down('sm') {
   .mw-gallery {
     &-slide {
-      aspect-ratio: var(4 / 3);
+      aspect-ratio: 4 / 3;
     }
     &-navi {
       width: 46px;
