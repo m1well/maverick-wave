@@ -128,7 +128,6 @@
   background: var(--mw-gray-color);
   color: var(--mw-accent-text-color);
   border: none;
-  opacity: 0.8;
   padding: 0;
   line-height: 1;
   font-weight: bold;
@@ -152,7 +151,6 @@
   }
 
   &:hover:not(:disabled) {
-    opacity: 1;
     background: var(--mw-primary-color);
     color: var(--mw-accent-text-color);
   }
