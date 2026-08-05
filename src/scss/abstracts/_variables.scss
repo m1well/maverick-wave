@@ -153,6 +153,9 @@ $header-colors: (
   'burgerbutton-color': token('dark-text-color'),
   'border': token('border-accent'),
 );
+// Drives the bar height, the anchor scroll offset and the mobile drawer padding.
+// 59px is the intrinsic height: 42px logo + 2 × spacing('3') + 1px border.
+$header-height: 62px;
 
 // Typography
 $font-family: 'Poppins', sans-serif;

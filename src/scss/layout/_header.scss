@@ -12,6 +12,13 @@
   padding: spacing('3') spacing('0');
   transition: var(--mw-transition);
 
+  // Flex, so the container stays vertically centered once the height token
+  // exceeds the intrinsic content height. min-height, so a too-small token
+  // never clips a taller logo or a wrapping action row.
+  display: flex;
+  align-items: center;
+  min-height: var(--mw-header-height);
+
   .mw-container {
     display: flex;
     justify-content: space-between;
@@ -162,10 +169,6 @@
   }
 }
 
-// Header bar height: 42px logo + 2 × spacing('3') padding + 1px border.
-// Overridable via --mw-header-height for projects with a taller bar.
-$_header-height: 59px;
-
 // Off-canvas drawer for the collapsed navbar (mobile only)
 @mixin navbar-off-canvas {
   position: fixed;
@@ -195,8 +198,7 @@ $_header-height: 59px;
     // Keeps a rubber-band scroll inside the panel from moving the page
     overscroll-behavior: contain;
     padding: calc(
-        var(--mw-header-height, #{$_header-height}) + #{spacing('6')} +
-          env(safe-area-inset-top)
+        var(--mw-header-height) + #{spacing('6')} + env(safe-area-inset-top)
       )
       spacing('4') calc(#{spacing('6')} + env(safe-area-inset-bottom));
   }

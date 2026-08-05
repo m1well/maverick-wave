@@ -45,6 +45,9 @@ $_active-prefix: 'dark';
   // hero background image
   --mw-hero-background: #{$mw-hero-image};
 
+  // header height
+  --mw-header-height: #{$header-height};
+
   // Active theme — aliases onto the dark or light set above
   @each $name, $value in $_active-theme {
     --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
