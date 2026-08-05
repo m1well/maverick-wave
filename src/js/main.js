@@ -318,6 +318,11 @@
 
     if (!menuBtn || !navbar) return;
 
+    function closeMenu() {
+      menuBtn.classList.remove('open');
+      navbar.classList.remove('open');
+    }
+
     function toggleMenu(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -328,6 +333,17 @@
     // Add multiple event listeners for better iOS compatibility
     menuBtn.addEventListener('click', toggleMenu);
     menuBtn.addEventListener('touchstart', toggleMenu, { passive: false });
+
+    // The scrim is a body pseudo-element, so its taps land on the document
+    document.addEventListener('click', function (e) {
+      if (!navbar.classList.contains('open')) return;
+      if (navbar.contains(e.target) || menuBtn.contains(e.target)) return;
+      closeMenu();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeMenu();
+    });
   }
 
   // ===== Progress Bars =====

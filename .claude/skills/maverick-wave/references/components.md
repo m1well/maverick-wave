@@ -222,7 +222,7 @@ via the header state. Content taller than 500px scrolls. Toggling is JS - see
 - Body scroll lock is automatic: the stylesheet uses
   `body:has(.mw-modal-open)`. Nothing to implement.
 - Sizes: `mw-modal-sm` 370px, default 550px, `mw-modal-lg` 680px,
-  `mw-modal-xl` 900px. Height is capped at 70-85vh, the body scrolls.
+  `mw-modal-xl` 900px. Height is capped at 80-92dvh, the body scrolls.
 - `mw-modal-backdrop` is the click-to-close surface; put the close handler on it.
 - `mw-modal-body` takes a `mw-form` directly - the form brings the field gaps,
   the body brings the padding.

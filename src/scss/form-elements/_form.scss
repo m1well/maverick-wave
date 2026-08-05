@@ -15,10 +15,19 @@
   &-group {
     display: flex;
     flex-direction: column;
-    padding: spacing('2');
-    gap: spacing('1');
+    padding: spacing('4');
+    gap: spacing('2');
     border-radius: radius('sm');
     border: 2px solid var(--mw-border);
+
+    // Explicit hook for the heading, mirrors mw-modal-title
+    &-title {
+      font-size: font-size('md');
+      font-weight: font-weight('bold');
+      color: var(--mw-text-color);
+      line-height: 1.2;
+      margin: spacing('0') spacing('0') spacing('1') spacing('0');
+    }
   }
 
   label {
