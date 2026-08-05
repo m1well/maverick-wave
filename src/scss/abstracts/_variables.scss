@@ -26,6 +26,8 @@ $light-background: #d2d1e1 !default;
 $light-text-color: #1a1a1d !default;
 // Form controls stay light in both themes, so they get their own root value
 $form-elements-background: #efefef !default;
+// Text on solid colored surfaces stays white in both themes
+$accent-text-color: #efefef !default;
 
 // ---------------------------------------------------------------------------
 // Derivation helpers
@@ -85,9 +87,11 @@ $base-colors: (
   // Translucent accent line used for dividers, rules and outlines
   'border-accent': fade('primary-color', 70%),
   // Text on any solid colored surface — buttons of every variant, table and
-  // panel headers, badges, stepper dots. Deliberately not derived from a brand
-  // color, so retuning the palette never drags it along.
-  'accent-text-color': token('dark-text-color'),
+  // panel headers, badges, tooltips, mini close buttons, stepper dots.
+  // Deliberately derived from neither a brand color nor a theme text color:
+  // it has to stay readable on a dark surface no matter how the palette or the
+  // active theme is retuned.
+  'accent-text-color': $accent-text-color,
   'gray-color': $gray-color,
   // Subtle neutral surface: zebra rows, disabled fields, tracks, skeletons
   'gray-background': fade('gray-color', 20%),
