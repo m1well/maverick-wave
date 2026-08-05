@@ -17,7 +17,7 @@ $secondary-color: #bb3110 !default;
 $success-color: #218838 !default;
 $warning-color: #d4a310 !default;
 // Darkened a little so light button text stays readable on the solid surface
-$danger-color: #c82333 !default;
+$danger-color: #db182f !default;
 $info-color: #17a2b8 !default;
 $gray-color: #565656 !default;
 $dark-background: #0b111a !default;
@@ -67,7 +67,7 @@ $form-elements-background: #efefef !default;
 }
 
 // Uniform hover tone for every solid brand/status surface
-$hover-shift: 18%;
+$hover-shift: 12%;
 
 // Base colors that don't change between themes.
 // Emitted as --mw-<key>.

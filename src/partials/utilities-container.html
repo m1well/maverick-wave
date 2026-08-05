@@ -11,6 +11,24 @@
     <div class="mw-card mw-card-simple mw-p-2">Small padding</div>
     <div class="mw-card mw-card-simple mw-p-4 mw-mt-4">Medium padding</div>
     <div class="mw-card mw-card-simple mw-p-6 mw-mt-4">Large padding</div>
+
+    <h4 class="mw-mt-6 mw-mb-2">Auto Margins</h4>
+    <p class="mw-text-muted mw-text-sm mw-mb-3">
+      Every margin utility also takes <code>auto</code> &mdash;
+      <code>mw-mx-auto</code> centers a block, <code>mw-ml-auto</code> pushes a
+      flex item to the far side.
+    </p>
+
+    <div class="mw-card mw-card-simple mw-mb-4">
+      <div class="mw-card mw-card-simple mw-mx-auto" style="width: 60%">
+        mw-mx-auto
+      </div>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-d-flex mw-items-center mw-gap-3">
+      <span>Left</span>
+      <span class="mw-tag mw-tag-primary mw-ml-auto">mw-ml-auto</span>
+    </div>
   </div>
 
   <div>
@@ -34,7 +52,7 @@
       </div>
     </div>
 
-    <div class="mw-card mw-card-simple">
+    <div class="mw-card mw-card-simple mw-mb-4">
       <h4 class="mw-mb-2">Alignment</h4>
       <div
         class="mw-d-flex mw-justify-center mw-items-center mw-gap-3"
@@ -44,12 +62,26 @@
         <div class="mw-card mw-card-simple mw-p-2">Centered</div>
       </div>
     </div>
+
+    <div class="mw-card mw-card-simple">
+      <h4 class="mw-mb-2">Align Self</h4>
+      <p class="mw-text-muted mw-text-sm mw-mb-3">
+        <code>mw-items-*</code> sets the rule for the whole container,
+        <code>mw-self-*</code> lets a single child break out of it.
+      </p>
+      <div class="mw-d-flex mw-items-stretch mw-gap-3" style="height: 130px">
+        <div class="mw-card mw-card-simple mw-p-2">stretch</div>
+        <div class="mw-card mw-card-simple mw-p-2 mw-self-start">start</div>
+        <div class="mw-card mw-card-simple mw-p-2 mw-self-center">center</div>
+        <div class="mw-card mw-card-simple mw-p-2 mw-self-end">end</div>
+      </div>
+    </div>
   </div>
 
   <div>
     <h3 class="mw-mb-4">Gap Utilities</h3>
     <div class="mw-card mw-card-simple">
-      <h4 class="mw-mb-3">Different Gap Sizes (from 0 - 10)</h4>
+      <h4 class="mw-mb-3">Different Gap Sizes (from 0 - 14)</h4>
 
       <div class="mw-mb-4">
         <p class="mw-mb-2">Small gap (gap-2)</p>

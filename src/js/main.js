@@ -119,64 +119,77 @@
 
   // ===== Gallery Component =====
   function initGalleries() {
-    const track = document.querySelector('.mw-gallery-track');
+    document.querySelectorAll('.mw-gallery').forEach((gallery) => {
+      // Dots and caption sit next to .mw-gallery, not inside it, so the
+      // container is the scope — with the parent as a fallback, otherwise a
+      // markup without the wrapper would silently stay dead
+      const scope =
+        gallery.closest('.mw-gallery-container') || gallery.parentElement;
+      if (scope) initGallery(scope, gallery);
+    });
+  }
 
-    if (track) {
-      const dots = document.querySelector('.mw-gallery-dots');
-      const slides = track.children;
-      const descBox = document.querySelector('.mw-gallery-desc');
-      const prevBtn = document.querySelector('.mw-gallery-navi-prev');
-      const nextBtn = document.querySelector('.mw-gallery-navi-next');
-      const sliderContainer = document.querySelector('.mw-gallery');
+  function initGallery(container, gallery) {
+    const track = gallery.querySelector('.mw-gallery-track');
+    if (!track || !track.children.length) return;
 
-      let current = 0;
+    const slides = track.children;
 
-      function updateSliderPosition() {
-        const slideWidth = sliderContainer.offsetWidth;
-        track.style.transform = `translateX(-${current * slideWidth}px)`;
-      }
+    // Everything below the track is optional — a gallery may well ship
+    // without arrows, dots or a caption, and a missing one must not throw
+    const dotsBox = container.querySelector('.mw-gallery-dots');
+    const descBox = container.querySelector('.mw-gallery-desc');
+    const prevBtn = gallery.querySelector('.mw-gallery-navi-prev');
+    const nextBtn = gallery.querySelector('.mw-gallery-navi-next');
 
-      function goToSlide(index) {
-        const total = slides.length;
-        current = (index + total) % total;
-        updateSliderPosition();
+    let current = 0;
 
-        document.querySelectorAll('.mw-gallery-dot').forEach((dot, i) => {
+    function goToSlide(index) {
+      const total = slides.length;
+      current = (index + total) % total;
+
+      // Percentages refer to the track's own width, which is one slide —
+      // so no measuring and nothing to recalculate on resize
+      track.style.transform = `translateX(-${current * 100}%)`;
+
+      if (dotsBox) {
+        dotsBox.querySelectorAll('.mw-gallery-dot').forEach((dot, i) => {
           dot.classList.toggle('mw-active', i === current);
         });
-
-        descBox.textContent = slides[current].dataset.desc;
       }
 
-      function initDots() {
-        for (let i = 0; i < slides.length; i++) {
-          const dot = document.createElement('span');
-          dot.className = 'mw-gallery-dot' + (i === 0 ? ' mw-active' : '');
-          dot.addEventListener('click', () => goToSlide(i));
-          dots.appendChild(dot);
-        }
+      if (descBox) {
+        descBox.textContent = slides[current].dataset.desc || '';
       }
+    }
 
+    if (dotsBox) {
+      for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('span');
+        dot.className = 'mw-gallery-dot' + (i === 0 ? ' mw-active' : '');
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsBox.appendChild(dot);
+      }
+    }
+
+    if (prevBtn)
       prevBtn.addEventListener('click', () => goToSlide(current - 1));
+    if (nextBtn)
       nextBtn.addEventListener('click', () => goToSlide(current + 1));
 
-      window.addEventListener('resize', updateSliderPosition);
+    // Optional: Swipe support
+    let startX = 0;
+    track.addEventListener(
+      'touchstart',
+      (e) => (startX = e.touches[0].clientX)
+    );
+    track.addEventListener('touchend', (e) => {
+      const delta = e.changedTouches[0].clientX - startX;
+      if (delta > 50) goToSlide(current - 1);
+      if (delta < -50) goToSlide(current + 1);
+    });
 
-      // Optional: Swipe support
-      let startX = 0;
-      track.addEventListener(
-        'touchstart',
-        (e) => (startX = e.touches[0].clientX)
-      );
-      track.addEventListener('touchend', (e) => {
-        const delta = e.changedTouches[0].clientX - startX;
-        if (delta > 50) goToSlide(current - 1);
-        if (delta < -50) goToSlide(current + 1);
-      });
-
-      initDots();
-      updateSliderPosition();
-    }
+    goToSlide(0);
   }
 
   // ===== Theme Toggle =====
