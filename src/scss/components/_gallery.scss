@@ -46,7 +46,7 @@
     border: none;
     border-radius: radius('md');
     background: rgb(0 0 0 / 40%);
-    color: rgb(255 255 255 / 75%);
+    color: var(--mw-accent-text-color);
     font-size: font-size('xl');
     line-height: 1;
     cursor: pointer;
