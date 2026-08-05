@@ -1,7 +1,15 @@
+@use 'sass:map';
 @use '../abstracts' as *;
 
+$_margin-values: map.merge(
+  $spacing,
+  (
+    'auto': auto,
+  )
+);
+
 // Margin utilities
-@each $key, $value in $spacing {
+@each $key, $value in $_margin-values {
   .mw-m-#{$key} {
     margin: $value;
   }
@@ -35,46 +43,44 @@
 
 // Padding utilities
 @each $key, $value in $spacing {
-  .mw-p-#{$key} {
-    padding: $value;
-  }
+  @if $value >= 0 {
+    .mw-p-#{$key} {
+      padding: $value;
+    }
 
-  .mw-pt-#{$key} {
-    padding-top: $value;
-  }
+    .mw-pt-#{$key} {
+      padding-top: $value;
+    }
 
-  .mw-pb-#{$key} {
-    padding-bottom: $value;
-  }
+    .mw-pb-#{$key} {
+      padding-bottom: $value;
+    }
 
-  .mw-pl-#{$key} {
-    padding-left: $value;
-  }
+    .mw-pl-#{$key} {
+      padding-left: $value;
+    }
 
-  .mw-pr-#{$key} {
-    padding-right: $value;
-  }
+    .mw-pr-#{$key} {
+      padding-right: $value;
+    }
 
-  .mw-px-#{$key} {
-    padding-left: $value;
-    padding-right: $value;
-  }
+    .mw-px-#{$key} {
+      padding-left: $value;
+      padding-right: $value;
+    }
 
-  .mw-py-#{$key} {
-    padding-top: $value;
-    padding-bottom: $value;
+    .mw-py-#{$key} {
+      padding-top: $value;
+      padding-bottom: $value;
+    }
   }
 }
 
-// Gap utilities (positive values only — negative gap is invalid CSS)
+// Gap utilities
 @each $key, $value in $spacing {
   @if $value >= 0 {
     .mw-gap-#{$key} {
       gap: $value;
-
-      @include media-down('sm') {
-        gap: calc($value * 0.75);
-      }
     }
   }
 }

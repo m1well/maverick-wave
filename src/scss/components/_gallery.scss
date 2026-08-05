@@ -14,17 +14,20 @@
   &-track {
     display: flex;
     transition: transform 0.3s ease;
-    height: 100%;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   &-slide {
     width: 100%;
     flex-shrink: 0;
-    height: 100%;
+    aspect-ratio: var(--mw-gallery-ratio, 16 / 9);
 
     img {
       width: 100%;
-      height: 580px;
+      height: 100%;
       object-fit: cover;
       display: block;
     }
@@ -34,32 +37,45 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(23, 23, 23, 0.8); // fixed color
-    background: rgba(240, 240, 240, 0.2); // fixed color
-    border: none;
-    font-size: font-size('5xl');
-    cursor: pointer;
-    z-index: z-index('menu');
-    user-select: none;
-    border-radius: radius('md');
+    width: 52px;
+    height: 92px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(580px * 0.9);
-    width: 8%;
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('md');
+    background: rgb(0 0 0 / 35%);
+    color: var(--mw-accent-text-color);
+    font-size: font-size('xl');
+    line-height: 1;
+    cursor: pointer;
+    z-index: z-index('lift');
+    user-select: none;
+    transition: var(--mw-transition);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: inherit;
+    }
 
     &:hover {
-      background: rgba(223, 223, 223, 0.4); // fixed color
+      background: rgb(0 0 0 / 80%);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mw-primary-color);
+      outline-offset: 2px;
     }
 
     &-prev {
-      left: 3px;
-      z-index: z-index('menu');
+      left: spacing('4');
     }
 
     &-next {
-      right: 3px;
-      z-index: z-index('menu');
+      right: spacing('4');
     }
   }
 
@@ -97,26 +113,8 @@
   }
 }
 
-@include media-down('lg') {
-  .mw-gallery {
-    &-slide img {
-      height: 470px;
-    }
-    &-navi {
-      font-size: font-size('3xl');
-      height: calc(470px * 0.9);
-    }
-  }
-}
-
 @include media-down('md') {
   .mw-gallery {
-    &-slide img {
-      height: 380px;
-    }
-    &-navi {
-      height: calc(380px * 0.9);
-    }
     &-desc {
       font-size: font-size('sm');
     }
@@ -132,14 +130,12 @@
 
 @include media-down('sm') {
   .mw-gallery {
-    &-slide img {
-      height: 270px;
+    &-slide {
+      aspect-ratio: var(4 / 3);
     }
     &-navi {
-      font-size: font-size('2xl');
-      height: calc(270px * 0.9);
-      border-radius: radius('sm');
-      width: 11%;
+      width: 46px;
+      height: 88px;
     }
     &-desc {
       font-size: font-size('xs');

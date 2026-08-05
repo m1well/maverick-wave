@@ -76,3 +76,22 @@
     align-items: stretch;
   }
 }
+
+// Align self — the per-item counterpart to .mw-items-*
+.mw-self {
+  &-start {
+    align-self: flex-start;
+  }
+
+  &-end {
+    align-self: flex-end;
+  }
+
+  &-center {
+    align-self: center;
+  }
+
+  &-stretch {
+    align-self: stretch;
+  }
+}
