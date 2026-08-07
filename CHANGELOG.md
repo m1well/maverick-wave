@@ -8,8 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| 4031dbb
 =======
+||||||| 0be20d9
+=======
+## [3.9.0] - 2026-08-07
+
+### Fixed
+
+- technical issues
+>>>>>>> main
 
 ## [3.8.0] - 2026-08-07
 
