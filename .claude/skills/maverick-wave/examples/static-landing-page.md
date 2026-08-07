@@ -15,7 +15,7 @@ wired up by hand.
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@3.4.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -169,7 +169,7 @@ wired up by hand.
           <h2 class="mw-section-title">Pricing</h2>
 
           <div class="mw-grid-3">
-            <div class="mw-card mw-card-content">
+            <div class="mw-card">
               <div class="mw-card-body">
                 <h3 class="mw-card-title">Starter</h3>
                 <hr class="mw-card-title-divider" />
@@ -187,7 +187,7 @@ wired up by hand.
               </div>
             </div>
 
-            <div class="mw-card mw-card-content">
+            <div class="mw-card">
               <div class="mw-card-badge mw-card-addon-success">Popular</div>
               <div class="mw-card-body">
                 <h3 class="mw-card-title">Team</h3>
@@ -206,7 +206,7 @@ wired up by hand.
               </div>
             </div>
 
-            <div class="mw-card mw-card-content">
+            <div class="mw-card">
               <div class="mw-card-ribbon mw-card-addon-primary">Enterprise</div>
               <div class="mw-card-body">
                 <h3 class="mw-card-title">Custom</h3>
@@ -332,7 +332,7 @@ wired up by hand.
       <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.4.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.js"></script>
     <script>
       // The only thing the shipped script does not cover: opening a modal.
       // Closing works through .mw-modal-close, the backdrop is wired above.

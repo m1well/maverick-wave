@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@3.4.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.4.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -149,8 +149,8 @@ Everything below is documented in `references/components.md` unless marked other
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
 `link`, `link-muted`, `sm`, `lg`) · `mw-btn-mini` · `mw-button-bar`
 
-**Containers** `mw-card` (+ `simple`, `content`, `lg`, `xl`, `stack`, badge,
-ribbon) · `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
+**Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon) ·
+`mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
 `mw-item-list` family
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
@@ -206,3 +206,12 @@ ribbon) · `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` 
    set.
 10. **Browser floor: `color-mix()`** - Chrome 111+, Safari 16.2+, Firefox 113+.
     Older browsers get no colours at all, not merely worse ones.
+11. **A component host between a container and its children breaks the layout,
+    silently.** Every `mw-*` flex or grid container styles its _children_ -
+    `mw-grid-*`, `mw-tags`, `mw-button-bar`, `mw-form-actions`, `mw-modal-footer`,
+    `mw-toast-stack`. In plain HTML the children are right there; in a SPA a
+    component host often sits in between and becomes the item instead, so it
+    shrinks to content width or swallows a whole grid row. Put `mw-d-contents` on
+    that host - it then generates no box and the children take the item role
+    back. Angular: `host: { class: 'mw-d-contents' }`. `mw-header` handles this
+    case on its own, the others do not.

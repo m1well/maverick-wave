@@ -61,7 +61,7 @@ Row of equally treated buttons, centered by default.
 ## Cards
 
 ```html
-<div class="mw-card mw-card-content">
+<div class="mw-card">
   <div class="mw-card-img">
     <img src="cover.jpg" alt="" />
   </div>
@@ -79,20 +79,26 @@ Row of equally treated buttons, centered by default.
 ```
 
 - `mw-card` is the shell; the hover lift is built in and has no modifier class.
+  It is a flex column by default, so `mw-card-footer` sticks to the bottom and
+  cards in a grid line up without any extra class.
 - `mw-card-simple` is the flat variant with even padding for arbitrary content.
-  Use it when you only need a padded surface.
-- `mw-card-content` turns the card into a flex column so `mw-card-footer` sticks
-  to the bottom - needed whenever cards sit next to each other in a grid.
-- Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px.
+  Use it when you only need a padded surface - it stays a block container, so
+  inline children keep flowing side by side.
+- Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px. Set
+  `--mw-card-img-height` on the card for any other height.
   `mw-card-img-contain` shows the whole image instead of cropping it.
-- In `mw-card-footer` the last child is pushed to the right; below `lg` the
-  footer stacks and children go full width.
+- In `mw-card-footer` the last child is pushed to the right when there is more
+  than one; below `lg` the footer stacks and children go full width.
 - `mw-card-badge` (top right corner) and `mw-card-ribbon` (diagonal banner) are
   absolutely positioned overlays; colour them with `mw-card-addon-primary`,
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
+- A card does not clip its content, so a tooltip or dropdown inside it can reach
+  outside. The exception is `mw-card-ribbon`: that banner has to be cut off at
+  the edge, so a card containing one switches to `overflow: hidden` and clips
+  everything else too.
 
 ```html
-<div class="mw-card mw-card-content">
+<div class="mw-card">
   <div class="mw-card-badge mw-card-addon-success">New</div>
   ...
 </div>
@@ -523,7 +529,7 @@ Both are chronicles (CV, changelog), not schedulable time axes.
       <div class="mw-timeline-big-date-sub">(3 years)</div>
     </div>
     <div class="mw-timeline-big-content">
-      <div class="mw-card mw-card-content">...</div>
+      <div class="mw-card">...</div>
       <div class="mw-timeline-big-event">
         <span class="mw-timeline-big-event-date">05/2023</span>
         <span class="mw-timeline-big-event-title">Certification</span>

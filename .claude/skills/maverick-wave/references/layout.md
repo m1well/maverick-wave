@@ -143,7 +143,11 @@ as the header's first child under the same condition.
 ```
 
 `data-tooltip="..."` is a global attribute hook, not a class - it works on any
-element and shows a tooltip above it on hover.
+element and shows a tooltip above it on hover or keyboard focus. It is pure CSS
+(a pseudo element on the trigger), which also means anything that clips its
+overflow cuts it off: a scroll container, or a card carrying a ribbon - plain
+cards do not clip. Close to the screen edge the bubble can run out of the
+viewport, so keep long tooltips off the outermost elements.
 
 ## Sections
 
@@ -271,11 +275,53 @@ Every one of them has a `-lg` twin with a wider gap (2.5rem instead of 1.35rem):
 automatically.
 
 **Display** - `mw-d-flex`, `mw-d-inline-flex`, `mw-d-block`, `mw-d-inline`,
-`mw-d-inline-block`, `mw-d-grid`, `mw-d-none`.
+`mw-d-inline-block`, `mw-d-grid`, `mw-d-none`, `mw-d-contents`.
 
 There are no responsive display variants. Show/hide per breakpoint is the
 application's job (media query in your own stylesheet, or `@if` in the
 template).
+
+### `mw-d-contents` - wrapper components inside a layout container
+
+Every flex or grid container here styles its **children**. Plain HTML puts them
+right there, a SPA usually does not:
+
+```html
+<!-- what the CSS expects -->
+<div class="mw-grid-2">
+  <div class="mw-card">…</div>
+  <div class="mw-card">…</div>
+</div>
+
+<!-- what a component tree produces - one item, not two -->
+<div class="mw-grid-2">
+  <app-card>…</app-card>
+  <app-card>…</app-card>
+</div>
+```
+
+Two cards side by side still work, because each host _is_ one item. It breaks
+when one host wraps several intended items, or when a host sits between the
+container and a single child that brings its own width - the host becomes the
+item and shrinks to content width. Nothing errors, the layout is just wrong.
+
+`mw-d-contents` on the host removes its box, so the children become the items:
+
+```typescript
+@Component({
+  selector: 'app-header',
+  host: { class: 'mw-d-contents' },
+  …
+})
+```
+
+The trade-off: an element with `display: contents` has no box, so background,
+padding, border and transforms on that host stop working. If you need those, keep
+the box and give it `width: 100%` (flex row) or `mw-flex-1` instead.
+
+`mw-header` already absorbs a wrapper on its own, no `mw-d-contents` needed
+there. The grid, tag, button-bar, form-action, modal-footer and toast containers
+do not.
 
 **Flex** - `mw-flex-row`, `mw-flex-column`, `mw-flex-wrap`, `mw-flex-nowrap`,
 `mw-flex-1`, `mw-flex-grow-1`, `mw-flex-shrink-0`,

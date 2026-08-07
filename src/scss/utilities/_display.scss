@@ -29,6 +29,12 @@
   &-none {
     display: none;
   }
+
+  // For a wrapper that must not become a flex/grid item itself - the element
+  // generates no box, so its children take over the item role
+  &-contents {
+    display: contents;
+  }
 }
 
 // Border radius

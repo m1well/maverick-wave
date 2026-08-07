@@ -59,7 +59,13 @@
   justify-content: center;
 }
 
-// tooltip - use it everywhere you want
+// tooltip - use it everywhere you want: put data-tooltip="..." on any element.
+// Pure CSS, no script needed. The flip side of that: it is a pseudo element on
+// the trigger, so an ancestor with `overflow: hidden` (a card, a scroll
+// container) cuts it off.
+$_mw-tooltip-arrow: 6px;
+$_mw-tooltip-gap: 8px;
+
 [data-tooltip] {
   position: relative;
 
@@ -68,49 +74,51 @@
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-10px);
+    transform: translateX(-50%);
+    margin-bottom: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+    max-width: min(280px, 90vw);
+    width: max-content;
+    padding: spacing('1') spacing('2');
     background: var(--mw-gray-color);
     color: var(--mw-accent-text-color);
-    padding: spacing('1') spacing('2');
     font-size: font-size('xs');
     border-radius: radius('xs');
-    white-space: nowrap;
+    box-shadow: 0 2px 5px var(--mw-shadow);
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
-    transition:
-      opacity 0.2s,
-      transform 0.2s;
-    margin-bottom: spacing('2');
+    transition: opacity 0.2s ease;
     z-index: z-index('tooltip');
-    box-shadow: 0 2px 5px var(--mw-shadow);
   }
 
-  // small triangle on the bottom
   &::after {
     content: '';
     position: absolute;
     bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    border: 6px solid transparent;
+    transform: translateX(-50%);
+    margin-bottom: $_mw-tooltip-gap;
+    border: $_mw-tooltip-arrow solid transparent;
+    border-bottom-width: 0;
     border-top-color: var(--mw-gray-color);
     opacity: 0;
     visibility: hidden;
-    transition:
-      opacity 0.2s,
-      transform 0.2s;
-    margin-bottom: -4px;
+    transition: opacity 0.2s ease;
     z-index: z-index('tooltip');
   }
 
-  // Hover effect
-  &:hover {
-    &::before,
-    &::after {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(0);
-    }
+  &:hover::before,
+  &:hover::after,
+  &:focus-visible::before,
+  &:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tooltip]::before,
+  [data-tooltip]::after {
+    transition: none;
   }
 }
