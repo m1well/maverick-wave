@@ -118,6 +118,17 @@
   font-size: font-size('md');
 }
 
+// In a row of buttons a two-letter label like "Ja" ends up half the width
+// of its neighbour, which reads as an accident
+.mw-modal-footer,
+.mw-form-actions,
+.mw-panel-footer,
+.mw-button-bar {
+  .mw-btn {
+    min-width: 80px;
+  }
+}
+
 .mw-btn-mini {
   display: inline-flex;
   align-items: center;
