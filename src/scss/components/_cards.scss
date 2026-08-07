@@ -187,7 +187,9 @@ $_mw-card-addon-colors: (
   &-footer {
     display: flex;
     justify-content: flex-start;
-    align-items: stretch;
+    // centered, so plain text next to a button sits on the button's centre
+    // line instead of being stretched to its height and starting at the top
+    align-items: center;
     gap: spacing('3');
     flex-shrink: 0;
     text-wrap: balance;
