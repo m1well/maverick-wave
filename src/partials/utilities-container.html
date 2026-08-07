@@ -115,3 +115,38 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-mb-4 mw-mt-6">Tooltips</h3>
+<p class="mw-text-muted">
+  Put <code>data-tooltip="..."</code> on any element - pure CSS, no script
+  needed. The bubble sits above the element on hover or keyboard focus and long
+  text wraps instead of running off in one endless line. It reaches outside a
+  card, because cards only clip their content when they carry a ribbon. What
+  does still cut it off: a scroll container, and the edge of the screen.
+</p>
+<div class="mw-card mw-card-simple">
+  <p class="mw-mb-4">
+    Works on inline elements too:
+    <a href="#utilities" data-tooltip="A link">a link</a>,
+    <code data-tooltip="Some code">a code span</code> or
+    <i class="fas fa-circle-info" data-tooltip="An icon"></i> an icon.
+  </p>
+  <div class="mw-d-flex mw-gap-4 mw-flex-wrap">
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline"
+      data-tooltip="Hover or focus me"
+    >
+      A button
+    </button>
+    <span class="mw-tag mw-tag-primary" data-tooltip="Tags work as well">
+      Tag
+    </span>
+    <span
+      class="mw-tag mw-tag-success"
+      data-tooltip="Long text wraps at 280px instead of running off the screen in one endless line"
+    >
+      Long text
+    </span>
+  </div>
+</div>

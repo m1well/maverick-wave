@@ -11,13 +11,19 @@
   border-bottom: 1px solid var(--mw-header-border);
   padding: spacing('3') spacing('0');
   transition: var(--mw-transition);
-
-  // Flex, so the container stays vertically centered once the height token
-  // exceeds the intrinsic content height. min-height, so a too-small token
-  // never clips a taller logo or a wrapping action row.
   display: flex;
   align-items: center;
   min-height: var(--mw-header-height);
+
+  // A component host (Angular, React) sitting between the header and its
+  // container would become the flex item and shrink to content width, leaving
+  // mw-container to center inside a far too narrow box. The container brings
+  // its own width and centering, so the wrapper only has to fill the line.
+  // Absolutely positioned children are out of flow and stay unaffected.
+  > *:not(.mw-container) {
+    flex: 1;
+    min-width: 0;
+  }
 
   .mw-container {
     display: flex;
