@@ -17,7 +17,7 @@
 
 .mw-grid-1 {
   @extend %grid-base;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
 
   justify-items: stretch;
   > * {
@@ -28,57 +28,57 @@
 
 .mw-grid-2 {
   @extend %grid-base;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .mw-grid-3 {
   @extend %grid-base;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
   @include media-down('md') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .mw-grid-4 {
   @extend %grid-base;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 
   @include media-down('lg') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .mw-grid-5 {
   @extend %grid-base;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 
   @include media-down('lg') {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   @include media-down('md') {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   @include media-down('sm') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @include media-down('xs') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -87,11 +87,11 @@
   @extend %grid-base;
 
   // Default: 12-column grid (you can adjust this base)
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
 
   // At MD breakpoint and below, force single column
   @include media-down('md') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
 
     // Reset all spans to full width
     > * {
@@ -110,7 +110,7 @@
 // Responsive auto grid
 .mw-grid-auto {
   @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
 
   // Ensure children don't override the grid behavior
   > * {
@@ -123,12 +123,12 @@
 // Alternative with different minimum widths
 .mw-grid-auto-sm {
   @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
 }
 
 .mw-grid-auto-md {
   @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
 }
 
 .mw-grid-lg {
@@ -137,7 +137,7 @@
 
 .mw-grid-1-lg {
   @extend %grid-base-lg;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: stretch;
   > * {
     width: 100% !important;
@@ -147,72 +147,72 @@
 
 .mw-grid-2-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: spacing('6');
   }
 }
 
 .mw-grid-3-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   @include media-down('lg') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: spacing('7');
   }
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: spacing('6');
   }
 }
 
 .mw-grid-4-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   @include media-down('xl') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @include media-down('md') {
     gap: spacing('7');
   }
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: spacing('6');
   }
 }
 
 .mw-grid-5-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   @include media-down('xl') {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   @include media-down('lg') {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   @include media-down('md') {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: spacing('7');
   }
   @include media-down('sm') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: spacing('6');
   }
 }
 
 .mw-grid-auto-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
 }
 
 // Flexible grids with large spacing
 .mw-grid-flex-lg {
   @extend %grid-base-lg;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
 
   @include media-down('md') {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: spacing('5');
     > * {
       grid-column: 1 / -1 !important;
@@ -223,7 +223,7 @@
 // Base stack - items keep their natural width
 .mw-grid-stack {
   @extend %grid-base;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start; // Items keep natural width, aligned left
 
   // Remove the forced width from grid-1
@@ -236,7 +236,7 @@
 // Stack variants with different alignments
 .mw-grid-stack-center {
   @extend %grid-base;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
 
   > * {
@@ -246,7 +246,7 @@
 
 .mw-grid-stack-end {
   @extend %grid-base;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: end;
 
   > * {
@@ -257,7 +257,7 @@
 
 .mw-grid-stack-stretch {
   @extend %grid-base;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: stretch;
 
   > * {
@@ -269,7 +269,7 @@
 // Large spacing variants
 .mw-grid-stack-lg {
   @extend %grid-base-lg;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start;
 
   > * {
@@ -280,7 +280,7 @@
 
 .mw-grid-stack-center-lg {
   @extend %grid-base-lg;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
 
   > * {
