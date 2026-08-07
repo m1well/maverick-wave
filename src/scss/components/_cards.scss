@@ -9,26 +9,50 @@ $_mw-card-addon-colors: (
   danger: var(--mw-danger-color),
 );
 
+// Fading rule used by the title divider and the stack header underline
+@mixin _card-divider-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--mw-secondary-color),
+    var(--mw-secondary-color),
+    var(--mw-gray-background),
+    transparent
+  );
+  opacity: 0.75;
+}
+
 .mw-card {
+  // flex column so the footer can be pushed to the bottom - no height: 100%,
+  // grid and flex items already stretch and it would blow up block parents
+  display: flex;
+  flex-direction: column;
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  padding: spacing('5') spacing('0') spacing('3') spacing('0');
   box-shadow: 0 5px 10px var(--mw-shadow);
-  transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
+  transition: var(--mw-transition);
   position: relative;
-  overflow: hidden;
-  margin: spacing('0');
-  z-index: z-index('card');
+  // deliberately not `overflow: hidden` - that would also cut off anything a
+  // child wants to show outside the card, a tooltip above a button being the
+  // common case. Images round their own corners below, and only the ribbon
+  // really needs the card to clip.
+  overflow: visible;
 
-  &-simple {
-    padding: spacing('5');
+  &:has(.mw-card-ribbon) {
+    overflow: hidden;
   }
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 7px 15px var(--mw-shadow);
     border-color: var(--mw-border-accent);
+  }
+
+  // Padded surface for arbitrary content - stays a block container so inline
+  // children keep flowing instead of turning into flex items
+  &-simple {
+    display: block;
+    padding: spacing('5');
   }
 
   &-badge {
@@ -38,10 +62,10 @@ $_mw-card-addon-colors: (
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-accent-text-color);
-    background: var(--mw-primary-color);
+    background: var(--mw-card-addon-color, var(--mw-primary-color));
     border-radius: radius('md');
     white-space: nowrap;
-    z-index: z-index('card') + 5;
+    z-index: 1;
     pointer-events: none;
     text-align: center;
     opacity: 0.9;
@@ -55,10 +79,10 @@ $_mw-card-addon-colors: (
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
     color: var(--mw-accent-text-color);
-    background: var(--mw-primary-color);
+    background: var(--mw-card-addon-color, var(--mw-primary-color));
     white-space: nowrap;
     width: 220px;
-    z-index: z-index('card') + 5;
+    z-index: 1;
     pointer-events: none;
     transform: rotate(25deg);
     text-align: center;
@@ -69,27 +93,18 @@ $_mw-card-addon-colors: (
     }
   }
 
-  // Content card variant - uses flex layout for footer positioning
-  &-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  &-img {
-    height: 210px;
+  &-img,
+  &-img-contain {
+    height: var(--mw-card-img-height, 210px);
     overflow: hidden;
-    top: 0;
-    left: 0;
-    margin-top: -1 * spacing('5');
     flex-shrink: 0;
+    border-radius: (radius('sm') - 1px) (radius('xl') - 1px) 0 0;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: var(--mw-transition);
-      z-index: z-index('card') + 2;
     }
 
     &:hover img {
@@ -97,11 +112,20 @@ $_mw-card-addon-colors: (
     }
   }
 
-  &-img-contain {
-    @extend .mw-card-img;
-    img {
-      object-fit: contain;
-      object-position: center;
+  &-img-contain img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  &-lg {
+    --mw-card-img-height: 340px;
+  }
+
+  &-xl {
+    --mw-card-img-height: 480px;
+
+    @include media-down('sm') {
+      --mw-card-img-height: 440px;
     }
   }
 
@@ -109,7 +133,20 @@ $_mw-card-addon-colors: (
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: spacing('5');
+    padding: spacing('7') spacing('5') spacing('6');
+
+    @include media-down('sm') {
+      padding: spacing('6') spacing('4') spacing('5');
+    }
+
+    > *:last-child:not(.mw-card-footer) {
+      margin-bottom: spacing('0');
+    }
+
+    .mw-card-footer {
+      margin-top: auto;
+      padding-top: spacing('5');
+    }
   }
 
   &-title {
@@ -124,15 +161,8 @@ $_mw-card-addon-colors: (
     height: 4px;
     margin: spacing('1') spacing('0') spacing('4') spacing('0');
     border: 0;
-    background-image: linear-gradient(
-      to right,
-      var(--mw-secondary-color),
-      var(--mw-secondary-color),
-      var(--mw-gray-background),
-      transparent
-    );
-    opacity: 0.75;
     width: 70%;
+    @include _card-divider-gradient;
   }
 
   &-subtitle {
@@ -154,15 +184,6 @@ $_mw-card-addon-colors: (
     }
   }
 
-  &-body > *:last-child:not(.mw-card-footer) {
-    margin-bottom: spacing('0');
-  }
-
-  &-body .mw-card-footer {
-    margin-top: auto;
-    padding-top: spacing('5');
-  }
-
   &-footer {
     display: flex;
     justify-content: flex-start;
@@ -171,7 +192,7 @@ $_mw-card-addon-colors: (
     flex-shrink: 0;
     text-wrap: balance;
 
-    /* push the last element all the way right */
+    /* push the last element all the way right - a single one included */
     > *:last-child {
       margin-left: auto;
       text-align: right;
@@ -199,41 +220,9 @@ $_mw-card-addon-colors: (
     }
   }
 
-  // Card sizes
-  &-lg {
-    .mw-card-img {
-      height: 340px;
-    }
-  }
-
-  &-xl {
-    .mw-card-img {
-      height: 480px;
-      @include media-down('sm') {
-        height: 440px;
-      }
-    }
-  }
-
-  @include media-down('sm') {
-    &-body {
-      padding: spacing('4');
-    }
-
-    // Adjust the image margin to match the new padding
-    .mw-card-img {
-      margin-bottom: spacing('2');
-      img {
-        width: 100%;
-      }
-    }
-  }
-
   &-stack {
     padding: spacing('4') spacing('5');
-    transition: all 0.4s ease;
 
-    // Icon transition setup
     &-icon {
       width: 38px;
       height: 38px;
@@ -247,15 +236,13 @@ $_mw-card-addon-colors: (
       font-size: font-size('md');
       flex-shrink: 0;
       box-shadow: 0 4px 8px var(--mw-shadow);
-      transition: transform 0.6s ease;
+      transition: var(--mw-transition);
     }
 
-    // Add rotation on hover
     &:hover &-icon {
       transform: rotate(25deg);
     }
 
-    // Rest of your styles...
     &-header {
       display: flex;
       align-items: center;
@@ -265,18 +252,11 @@ $_mw-card-addon-colors: (
         content: '';
         position: absolute;
         bottom: spacing('-3');
-        left: 48%;
+        left: 50%;
         transform: translateX(-50%);
         width: 90%;
         height: 2px;
-        background-image: linear-gradient(
-          to right,
-          var(--mw-secondary-color),
-          var(--mw-secondary-color),
-          var(--mw-gray-background),
-          transparent
-        );
-        opacity: 0.75;
+        @include _card-divider-gradient;
       }
     }
 
@@ -307,6 +287,22 @@ $_mw-card-addon-colors: (
 
 @each $name, $col in $_mw-card-addon-colors {
   .mw-card-addon-#{$name} {
-    background: #{$col};
+    --mw-card-addon-color: #{$col};
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-card,
+  .mw-card-img img,
+  .mw-card-img-contain img,
+  .mw-card-stack-icon {
+    transition: none;
+  }
+
+  .mw-card:hover,
+  .mw-card-img:hover img,
+  .mw-card-img-contain:hover img,
+  .mw-card-stack:hover .mw-card-stack-icon {
+    transform: none;
   }
 }
