@@ -98,10 +98,15 @@ $_mw-tag-colors: (
 }
 
 // Size variants
+// a little more air between the items instead of inside them
+.mw-tags-lg {
+  gap: spacing('3');
+}
+
 .mw-tags-lg .mw-tags-item,
 .mw-tag-lg {
   font-size: font-size('sm');
-  padding: spacing('1') spacing('3');
+  padding: spacing('2') spacing('3');
 
   .mw-tags-remove {
     width: 22px;
