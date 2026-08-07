@@ -197,6 +197,10 @@ Everything below is documented in `references/components.md` unless marked other
 7. **`--mw-text-muted-color` on a coloured surface is always wrong.** It follows
    the theme; buttons, table headers and badges do not. Use
    `--mw-accent-text-color` there, and `opacity` for disabled states.
+   `--mw-accent-text-color` is the text on a **brand** surface, so overriding it
+   for a light primary makes it dark everywhere it is used. The fixed grey
+   surfaces - tooltip, `mw-btn-mini`, `mw-info-mini`, gallery arrows - therefore
+   hardcode white and ignore the token.
 8. **`mw-card` already lifts on hover** and `mw-btn` already has `inline-flex`
    plus a gap for icons. Neither has a modifier class for it - adding one from
    memory produces markup that does nothing.
