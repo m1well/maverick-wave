@@ -2,6 +2,8 @@
 
 .mw-rating {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   gap: spacing('3');
   font-size: font-size('2xl');
   padding: spacing('2') spacing('4');
@@ -32,7 +34,7 @@
 
   &-icon {
     color: var(--mw-gray-color);
-    transition: color var(--mw-transition);
+    transition: var(--mw-transition);
     pointer-events: none;
   }
 }

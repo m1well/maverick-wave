@@ -87,8 +87,10 @@ Row of equally treated buttons, centered by default.
 - Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px. Set
   `--mw-card-img-height` on the card for any other height.
   `mw-card-img-contain` shows the whole image instead of cropping it.
-- In `mw-card-footer` the last child is pushed to the right when there is more
-  than one; below `lg` the footer stacks and children go full width.
+- `mw-card-footer` pushes its last child to the right - with a single child that
+  means it sits right, not left. Everything is vertically centered, so plain text
+  lines up with a button next to it. Below `lg` the footer stacks and children go
+  full width.
 - `mw-card-badge` (top right corner) and `mw-card-ribbon` (diagonal banner) are
   absolutely positioned overlays; colour them with `mw-card-addon-primary`,
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
