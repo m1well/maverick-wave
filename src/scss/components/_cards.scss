@@ -38,7 +38,8 @@ $_mw-card-addon-colors: (
   // really needs the card to clip.
   overflow: visible;
 
-  &:has(.mw-card-ribbon) {
+  // Direct child only - a card nested inside another one must not clip its host
+  &:has(> .mw-card-ribbon) {
     overflow: hidden;
   }
 

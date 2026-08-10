@@ -9,10 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| 4031dbb
 =======
 ||||||| 0be20d9
 =======
+||||||| da0294d
+=======
+## [3.10.0] - 2026-08-10
+
+### Added
+
+- kanban board
+
+>>>>>>> main
 ## [3.9.0] - 2026-08-07
 
 ### Fixed

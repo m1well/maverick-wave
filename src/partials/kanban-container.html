@@ -1,0 +1,771 @@
+<h3 class="mw-section-subtitle">Kanban</h3>
+
+<div class="mw-grid-1">
+  <div class="mw-card mw-card-simple mw-mb-6">
+    <h4 class="mw-mb-2">Default Board</h4>
+    <p class="mw-text-muted">
+      A board is a <code>mw-kanban</code> with one
+      <code>mw-kanban-column</code> per status. The board is a grid that gives
+      every lane the same width no matter how many there are.
+    </p>
+    <p class="mw-text-muted">
+      A ticket is a plain <code>mw-card</code> with
+      <code>mw-kanban-card</code> on top &ndash; title, text and a footer
+      holding the key, the assignee and four actions: move one lane left or
+      right, edit, delete. Its priority is the regular
+      <code>mw-card-ribbon</code>, which already brings its colour along through
+      <code>mw-card-addon-danger|warning|info</code>; a ticket without a
+      priority simply has no ribbon.
+    </p>
+    <p class="mw-text-muted">
+      Lanes are as tall as the fullest one, with
+      <code>--mw-kanban-column-min-height</code> as the floor &ndash; 120px by
+      default, 90px on a compact board. Raise it per board (<code
+        >style="--mw-kanban-column-min-height: 280px"</code
+      >) so a board that starts out empty still reads as a board.
+    </p>
+    <p class="mw-text-muted">
+      Descriptions are clamped to four lines, two on a compact board, so one
+      wordy ticket cannot dwarf the ones next to it.
+    </p>
+
+    <div
+      class="mw-kanban"
+      data-kanban-prefix="MW"
+      style="--mw-kanban-column-min-height: 390px"
+    >
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Backlog</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Backlog"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-info">Low</div>
+            <p class="mw-kanban-card-title">Dark mode for the export dialog</p>
+            <p class="mw-kanban-card-text">
+              The dialog still renders on a hard white sheet while the rest of
+              the app follows the theme. The print stylesheet forces a light
+              background on purpose, and that rule leaks into the preview pane
+              because both share the same wrapper class. Splitting the two is
+              probably enough, but the header and the footer of the dialog need
+              checking as well.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-104</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">tk</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-104 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-104 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-104"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-104"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="mw-card mw-kanban-card">
+            <p class="mw-kanban-card-title">Evaluate container queries</p>
+            <p class="mw-kanban-card-text">
+              Spike only &ndash; check whether the grid could drop a few
+              breakpoints.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-103</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">mw</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-103 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-103 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-103"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-103"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">In Progress</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to In Progress"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-danger">High</div>
+            <p class="mw-kanban-card-title">Sticky table header jitters</p>
+            <p class="mw-kanban-card-text">
+              On Safari the header shifts by a pixel while scrolling. Looks like
+              a subpixel rounding issue on the border, since it only shows up at
+              zoom levels that are not a multiple of 25 percent. Chrome and
+              Firefox are both clean, so a transform-based fix would likely cost
+              more than it buys us here.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-102</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">jd</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-102 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-102 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-102"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-102"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-warning">Medium</div>
+            <p class="mw-kanban-card-title">Range input on touch devices</p>
+            <p class="mw-kanban-card-text">
+              The thumb is too small to grab reliably; the track needs a bigger
+              hit area.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-101</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">mw</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-101 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-101 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-101"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-101"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Review</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Review"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-warning">Medium</div>
+            <p class="mw-kanban-card-title">Stepper: vertical variant</p>
+            <p class="mw-kanban-card-text">
+              Draws its own connector line, so the markup stays lighter than the
+              horizontal one.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-100</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">jd</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-100 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-100 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-100"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-100"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Done</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Done"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <p class="mw-kanban-card-title">Tooltips no longer clipped</p>
+            <p class="mw-kanban-card-text">
+              Cards stopped creating a stacking context, so tooltips can escape
+              their bounds again.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">MW-99</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">mw</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move MW-99 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move MW-99 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit MW-99"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete MW-99"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <form class="mw-kanban-composer">
+        <input
+          type="text"
+          class="mw-input mw-input-sm mw-kanban-composer-title"
+          placeholder="What needs to be done?"
+          aria-label="Ticket title"
+        />
+        <textarea
+          class="mw-textarea mw-kanban-composer-text"
+          rows="2"
+          placeholder="Details (optional)"
+          aria-label="Ticket description"
+        ></textarea>
+        <div class="mw-kanban-composer-row">
+          <select
+            class="mw-select mw-select-sm mw-kanban-composer-priority"
+            aria-label="Priority"
+          >
+            <option value="danger">High</option>
+            <option value="warning">Medium</option>
+            <option value="info">Low</option>
+            <option value="" selected>No priority</option>
+          </select>
+          <select
+            class="mw-select mw-select-sm mw-kanban-composer-assignee"
+            aria-label="Assignee"
+          >
+            <option value="" selected>Unassigned</option>
+            <option value="mw">MW</option>
+            <option value="jd">JD</option>
+            <option value="tk">TK</option>
+          </select>
+        </div>
+        <div class="mw-kanban-composer-actions">
+          <button
+            type="button"
+            class="mw-btn mw-btn-outline mw-btn-sm mw-kanban-composer-cancel"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mw-btn mw-btn-primary mw-btn-sm">
+            Save
+          </button>
+        </div>
+      </form>
+
+      <template class="mw-kanban-card-template">
+        <article class="mw-card mw-kanban-card">
+          <p class="mw-kanban-card-title">Title</p>
+          <p class="mw-kanban-card-text">Text</p>
+          <div class="mw-kanban-card-footer">
+            <span class="mw-kanban-card-id">MW-0</span>
+            <div class="mw-kanban-card-actions">
+              <div class="mw-avatar mw-avatar-xs mw-avatar-initials">me</div>
+              <button
+                type="button"
+                class="mw-kanban-action"
+                data-kanban-move="-1"
+                aria-label="Move MW-0 one lane left"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action"
+                data-kanban-move="1"
+                aria-label="Move MW-0 one lane right"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action mw-kanban-edit"
+                aria-label="Edit MW-0"
+              >
+                <i class="fas fa-pen"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                aria-label="Delete MW-0"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </div>
+
+    <p class="mw-text-muted mw-mt-6">
+      The JavaScript in this showcase keeps the lane counters up to date and
+      wires up the five actions. Everything else is CSS &ndash; in an Angular
+      app the ticket state lives in the app and the same markup is rendered from
+      it.
+    </p>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h4 class="mw-mb-2">Compact Board</h4>
+    <p class="mw-text-muted">
+      <code>mw-kanban-compact</code> tightens the padding and clamps the
+      description to two lines instead of four &ndash; for boards with many
+      lanes or a sidebar next to them. Same markup otherwise.
+    </p>
+
+    <div
+      class="mw-kanban mw-kanban-compact"
+      data-kanban-prefix="OPS"
+      style="--mw-kanban-column-min-height: 210px"
+    >
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Triage</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Triage"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-danger">High</div>
+            <p class="mw-kanban-card-title">Certificate expires in four days</p>
+            <p class="mw-kanban-card-text">
+              Renewal is automated on staging only, production still needs a
+              manual run.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">OPS-42</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">ops</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move OPS-42 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move OPS-42 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit OPS-42"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete OPS-42"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Scheduled</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Scheduled"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-warning">Medium</div>
+            <p class="mw-kanban-card-title">Rotate database credentials</p>
+            <p class="mw-kanban-card-text">
+              Window is Friday evening, the rollout script is already prepared.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">OPS-41</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">mw</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move OPS-41 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move OPS-41 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit OPS-41"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete OPS-41"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <div class="mw-kanban-column">
+        <div class="mw-kanban-column-header">
+          <h5 class="mw-kanban-title">Resolved</h5>
+          <span class="mw-kanban-count">0</span>
+          <button
+            type="button"
+            class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+            aria-label="Add ticket to Resolved"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <div class="mw-kanban-column-body">
+          <article class="mw-card mw-kanban-card">
+            <div class="mw-card-ribbon mw-card-addon-info">Low</div>
+            <p class="mw-kanban-card-title">Log shipping backlog drained</p>
+            <p class="mw-kanban-card-text">
+              Buffer size was the bottleneck, not the network.
+            </p>
+            <div class="mw-kanban-card-footer">
+              <span class="mw-kanban-card-id">OPS-40</span>
+              <div class="mw-kanban-card-actions">
+                <div class="mw-avatar mw-avatar-xs mw-avatar-initials">ops</div>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="-1"
+                  aria-label="Move OPS-40 one lane left"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action"
+                  data-kanban-move="1"
+                  aria-label="Move OPS-40 one lane right"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-edit"
+                  aria-label="Edit OPS-40"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button
+                  type="button"
+                  class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                  aria-label="Delete OPS-40"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <div class="mw-kanban-empty">No tickets</div>
+        </div>
+      </div>
+
+      <form class="mw-kanban-composer">
+        <input
+          type="text"
+          class="mw-input mw-input-sm mw-kanban-composer-title"
+          placeholder="What needs to be done?"
+          aria-label="Ticket title"
+        />
+        <textarea
+          class="mw-textarea mw-kanban-composer-text"
+          rows="2"
+          placeholder="Details (optional)"
+          aria-label="Ticket description"
+        ></textarea>
+        <div class="mw-kanban-composer-row">
+          <select
+            class="mw-select mw-select-sm mw-kanban-composer-priority"
+            aria-label="Priority"
+          >
+            <option value="danger">High</option>
+            <option value="warning">Medium</option>
+            <option value="info">Low</option>
+            <option value="" selected>No priority</option>
+          </select>
+          <select
+            class="mw-select mw-select-sm mw-kanban-composer-assignee"
+            aria-label="Assignee"
+          >
+            <option value="" selected>Unassigned</option>
+            <option value="ops">OPS</option>
+            <option value="mw">MW</option>
+          </select>
+        </div>
+        <div class="mw-kanban-composer-actions">
+          <button
+            type="button"
+            class="mw-btn mw-btn-outline mw-btn-sm mw-kanban-composer-cancel"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="mw-btn mw-btn-primary mw-btn-sm">
+            Save
+          </button>
+        </div>
+      </form>
+
+      <template class="mw-kanban-card-template">
+        <article class="mw-card mw-kanban-card">
+          <p class="mw-kanban-card-title">Title</p>
+          <p class="mw-kanban-card-text">Text</p>
+          <div class="mw-kanban-card-footer">
+            <span class="mw-kanban-card-id">OPS-0</span>
+            <div class="mw-kanban-card-actions">
+              <div class="mw-avatar mw-avatar-xs mw-avatar-initials">me</div>
+              <button
+                type="button"
+                class="mw-kanban-action"
+                data-kanban-move="-1"
+                aria-label="Move OPS-0 one lane left"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action"
+                data-kanban-move="1"
+                aria-label="Move OPS-0 one lane right"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action mw-kanban-edit"
+                aria-label="Edit OPS-0"
+              >
+                <i class="fas fa-pen"></i>
+              </button>
+              <button
+                type="button"
+                class="mw-kanban-action mw-kanban-action-danger mw-kanban-delete"
+                aria-label="Delete OPS-0"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      </template>
+    </div>
+  </div>
+</div>
