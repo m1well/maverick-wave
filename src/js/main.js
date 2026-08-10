@@ -20,6 +20,7 @@
     initHeaderLoginButton();
     initImageSliders();
     initCheckboxLists();
+    initKanbanBoards();
   });
 
   // ===== Checkbox Lists =====
@@ -624,5 +625,220 @@
 
       updateSliderView();
     });
+  }
+
+  // ===== Kanban Boards =====
+  function initKanbanBoards() {
+    document.querySelectorAll('.mw-kanban').forEach(initKanbanBoard);
+  }
+
+  function initKanbanBoard(board) {
+    const columns = Array.from(board.querySelectorAll('.mw-kanban-column'));
+    const composer = board.querySelector('.mw-kanban-composer');
+    const template = board.querySelector('.mw-kanban-card-template');
+    const ticketPrefix = board.dataset.kanbanPrefix || 'MW';
+    const titleField = composer.querySelector('.mw-kanban-composer-title');
+    const textField = composer.querySelector('.mw-kanban-composer-text');
+    const priorityField = composer.querySelector(
+      '.mw-kanban-composer-priority'
+    );
+    const assigneeField = composer.querySelector(
+      '.mw-kanban-composer-assignee'
+    );
+
+    let editing = null;
+
+    function refresh() {
+      columns.forEach(function (column, index) {
+        const cards = column.querySelectorAll('.mw-kanban-card');
+        const counter = column.querySelector('.mw-kanban-count');
+        if (counter) counter.textContent = cards.length;
+
+        column
+          .querySelectorAll('[data-kanban-move]')
+          .forEach(function (button) {
+            const target = index + parseInt(button.dataset.kanbanMove, 10);
+            button.disabled = target < 0 || target >= columns.length;
+          });
+      });
+    }
+
+    function nextTicketId() {
+      const numbers = Array.from(
+        board.querySelectorAll('.mw-kanban-card-id')
+      ).map(function (element) {
+        return parseInt(element.textContent.split('-').pop(), 10) || 0;
+      });
+
+      return ticketPrefix + '-' + (Math.max(0, ...numbers) + 1);
+    }
+
+    function cardRibbonTone(card) {
+      const ribbon = card.querySelector('.mw-card-ribbon');
+      if (!ribbon) return '';
+
+      const tone = Array.from(ribbon.classList).find(function (name) {
+        return name.indexOf('mw-card-addon-') === 0;
+      });
+
+      return tone ? tone.replace('mw-card-addon-', '') : '';
+    }
+
+    function setPriority(card, option) {
+      const current = card.querySelector('.mw-card-ribbon');
+      if (current) current.remove();
+      if (!option || !option.value) return;
+
+      const ribbon = document.createElement('div');
+      ribbon.className = 'mw-card-ribbon mw-card-addon-' + option.value;
+      ribbon.textContent = option.textContent;
+      card.prepend(ribbon);
+    }
+
+    function cardAssignee(card) {
+      const avatar = card.querySelector('.mw-avatar-initials');
+      return avatar ? avatar.textContent.trim() : '';
+    }
+
+    function cardText(card, selector) {
+      const element = card.querySelector(selector);
+      return element ? element.textContent.replace(/\s+/g, ' ').trim() : '';
+    }
+
+    function setAssignee(card, initials) {
+      const actions = card.querySelector('.mw-kanban-card-actions');
+      const current = actions.querySelector('.mw-avatar');
+
+      if (!initials) {
+        if (current) current.remove();
+        return;
+      }
+
+      const avatar = current || document.createElement('div');
+      avatar.className = 'mw-avatar mw-avatar-xs mw-avatar-initials';
+      avatar.textContent = initials;
+      if (!current) actions.prepend(avatar);
+    }
+
+    function openComposer(column, card) {
+      closeComposer();
+      editing = card || null;
+
+      titleField.value = card ? cardText(card, '.mw-kanban-card-title') : '';
+      textField.value = card ? cardText(card, '.mw-kanban-card-text') : '';
+      priorityField.value = card ? cardRibbonTone(card) : '';
+      assigneeField.value = card ? cardAssignee(card) : '';
+
+      if (card) {
+        card.classList.add('mw-kanban-editing');
+        card.before(composer);
+      } else {
+        column.querySelector('.mw-kanban-column-body').prepend(composer);
+      }
+
+      composer.classList.add('mw-active');
+      titleField.focus();
+    }
+
+    function closeComposer() {
+      composer.classList.remove('mw-active');
+      if (editing) editing.classList.remove('mw-kanban-editing');
+      editing = null;
+    }
+
+    function saveComposer() {
+      const title = titleField.value.trim();
+      if (!title) {
+        titleField.focus();
+        return;
+      }
+
+      const card =
+        editing || template.content.firstElementChild.cloneNode(true);
+      card.querySelector('.mw-kanban-card-title').textContent = title;
+      card.querySelector('.mw-kanban-card-text').textContent =
+        textField.value.trim();
+      setPriority(card, priorityField.selectedOptions[0]);
+      setAssignee(card, assigneeField.value);
+
+      if (!editing) {
+        const ticketId = nextTicketId();
+        card.classList.add('mw-kanban-card-in');
+        card.querySelector('.mw-kanban-card-id').textContent = ticketId;
+        // The template labels carry a placeholder key - swap in the real one
+        card.querySelectorAll('[aria-label]').forEach(function (button) {
+          button.setAttribute(
+            'aria-label',
+            button.getAttribute('aria-label').replace(/[A-Z]+-\d+/, ticketId)
+          );
+        });
+        composer.before(card);
+      }
+
+      closeComposer();
+      refresh();
+    }
+
+    function moveCard(card, offset) {
+      const current = card.closest('.mw-kanban-column');
+      const target = columns[columns.indexOf(current) + offset];
+      if (!target) return;
+
+      target.querySelector('.mw-kanban-column-body').appendChild(card);
+      refresh();
+    }
+
+    board.addEventListener('click', function (event) {
+      const moveButton = event.target.closest('[data-kanban-move]');
+      if (moveButton) {
+        moveCard(
+          moveButton.closest('.mw-kanban-card'),
+          parseInt(moveButton.dataset.kanbanMove, 10)
+        );
+
+        if (moveButton.disabled) {
+          const sibling = moveButton.parentElement.querySelector(
+            '[data-kanban-move]:not(:disabled)'
+          );
+          if (sibling) sibling.focus();
+        }
+        return;
+      }
+
+      const editButton = event.target.closest('.mw-kanban-edit');
+      if (editButton) {
+        const card = editButton.closest('.mw-kanban-card');
+        openComposer(card.closest('.mw-kanban-column'), card);
+        return;
+      }
+
+      const deleteButton = event.target.closest('.mw-kanban-delete');
+      if (deleteButton) {
+        const card = deleteButton.closest('.mw-kanban-card');
+        if (card === editing) closeComposer();
+        card.remove();
+        refresh();
+        return;
+      }
+
+      const addButton = event.target.closest('.mw-kanban-add');
+      if (addButton) {
+        openComposer(addButton.closest('.mw-kanban-column'), null);
+        return;
+      }
+
+      if (event.target.closest('.mw-kanban-composer-cancel')) closeComposer();
+    });
+
+    composer.addEventListener('submit', function (event) {
+      event.preventDefault();
+      saveComposer();
+    });
+
+    composer.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeComposer();
+    });
+
+    refresh();
   }
 })();

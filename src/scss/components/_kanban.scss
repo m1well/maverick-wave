@@ -1,0 +1,368 @@
+@use '../abstracts' as *;
+
+// Pixel-precise shape values — no fractional keys in the spacing map
+$_mw-kanban-action-size: 26px;
+$_mw-kanban-action-size-touch: 32px;
+// Room the ribbon needs in the top right corner of a ticket
+$_mw-kanban-ribbon-clearance: 66px;
+$_mw-kanban-ribbon-clearance-compact: 58px;
+
+@keyframes mw-kanban-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Board
+// ---------------------------------------------------------------------------
+.mw-kanban {
+  // Board surface — drop it with .mw-kanban-plain or override per board.
+  --mw-kanban-background: color-mix(
+    in srgb,
+    var(--mw-gray-color) 40%,
+    transparent
+  );
+  --mw-kanban-lane-border: 1px dashed
+    color-mix(in srgb, var(--mw-text-muted-color) 40%, transparent);
+  // Keeps an empty lane from collapsing onto its header — raise it per board
+  // to give a board that starts out empty some presence
+  --mw-kanban-column-min-height: 120px;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: spacing('4');
+  padding: spacing('4');
+  background: var(--mw-kanban-background);
+  border-radius: radius('md');
+
+  // Two lanes side by side stay readable, four do not
+  @include media-down('lg') {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include media-down('sm') {
+    grid-template-columns: minmax(0, 1fr);
+    gap: spacing('3');
+    padding: spacing('3');
+  }
+}
+
+// Board without its own surface — for pages that already sit on a panel
+.mw-kanban-plain {
+  --mw-kanban-background: transparent;
+  padding: spacing('0');
+}
+
+// Lane
+.mw-kanban-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: spacing('4') spacing('3');
+  border: var(--mw-kanban-lane-border);
+  border-radius: radius('sm');
+}
+
+.mw-kanban-column-header {
+  display: flex;
+  align-items: center;
+  gap: spacing('3');
+  margin-bottom: spacing('4');
+}
+
+.mw-kanban-title {
+  flex: 1;
+  min-width: 0;
+  margin: spacing('0');
+  font-size: font-size('sm');
+  font-weight: font-weight('bold');
+  color: var(--mw-text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mw-kanban-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  padding: spacing('0') spacing('2');
+  border-radius: radius('xl');
+  background: var(--mw-gray-background);
+  border: 1px solid var(--mw-border);
+  color: var(--mw-text-muted-color);
+  font-size: font-size('xs');
+  font-weight: font-weight('medium');
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+// Sits on .mw-btn — this only trims it down to the header's line height
+.mw-kanban-add {
+  padding: spacing('1') spacing('3');
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mw-kanban-column-body {
+  display: flex;
+  flex-direction: column;
+  gap: spacing('3');
+  // Fills the lane the grid stretched, so the empty state stays centred in it
+  flex: 1;
+  min-height: var(--mw-kanban-column-min-height);
+}
+
+// Ticket — a plain .mw-card, only smaller
+.mw-kanban-card {
+  padding: spacing('4');
+
+  &.mw-kanban-card-in {
+    animation: mw-kanban-card-in 0.25s ease;
+  }
+}
+
+// The card ribbon carries the priority, including its color
+.mw-kanban-card .mw-card-ribbon {
+  top: 10px;
+  right: -34px;
+  width: 120px;
+  padding: spacing('0') spacing('3');
+  font-size: font-size('2xs');
+  opacity: 1;
+}
+
+// Keeps the first lines clear of the ribbon - only where there is one
+.mw-kanban-card:has(> .mw-card-ribbon) .mw-kanban-card-title {
+  padding-right: $_mw-kanban-ribbon-clearance;
+}
+
+.mw-kanban-card-title {
+  margin: spacing('0') spacing('0') spacing('2');
+  font-size: font-size('base');
+  font-weight: font-weight('medium');
+  color: var(--mw-text-color);
+  line-height: 1.35;
+}
+
+// Caps the description so a wordy ticket cannot dwarf the ones next to it
+.mw-kanban-card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: spacing('0');
+  font-size: font-size('sm');
+  color: var(--mw-text-muted-color);
+  line-height: 1.45;
+}
+
+// Footer — ticket key on the left, assignee and the action buttons on the right
+.mw-kanban-card-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: spacing('2');
+  margin-top: spacing('4');
+  padding-top: spacing('3');
+  border-top: 1px solid var(--mw-border);
+}
+
+// Monospaced so keys of equal length line up across cards
+.mw-kanban-card-id {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: font-size('xs');
+  color: var(--mw-text-muted-color);
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.mw-kanban-card-actions {
+  display: flex;
+  align-items: center;
+  gap: spacing('2');
+  margin-left: auto;
+  flex-shrink: 0;
+
+  // The global avatar margin would push the buttons off the card
+  .mw-avatar {
+    margin: spacing('0');
+  }
+}
+
+// Move, edit and delete all share one button shape
+.mw-kanban-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $_mw-kanban-action-size;
+  height: $_mw-kanban-action-size;
+  padding: spacing('0');
+  border: 1px solid var(--mw-border);
+  border-radius: radius('sm');
+  background: transparent;
+  color: var(--mw-text-muted-color);
+  font-size: font-size('xs');
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--mw-transition);
+
+  &:hover:not(:disabled) {
+    background: var(--mw-primary-color);
+    border-color: var(--mw-primary-color);
+    color: var(--mw-accent-text-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  // Comfortable tap target where there is no mouse
+  @include media-down('md') {
+    width: $_mw-kanban-action-size-touch;
+    height: $_mw-kanban-action-size-touch;
+  }
+}
+
+.mw-kanban-action-danger:hover:not(:disabled) {
+  background: var(--mw-danger-color);
+  border-color: var(--mw-danger-color);
+}
+
+// Composer — one per board, moved into whichever lane it is needed in
+.mw-kanban-composer {
+  display: none;
+  flex-direction: column;
+  gap: spacing('3');
+  padding: spacing('4');
+  background: var(--mw-card-background);
+  border: 1px dashed var(--mw-primary-color);
+  // Same silhouette as a ticket, so it reads as one being written
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+
+  &.mw-active {
+    display: flex;
+    animation: mw-kanban-card-in 0.2s ease;
+  }
+
+  // Three lines of description without a scrollbar
+  .mw-textarea {
+    min-height: 66px;
+  }
+}
+
+// Priority and assignee side by side, stacked once the lane gets too narrow
+.mw-kanban-composer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: spacing('3');
+
+  > * {
+    flex: 1 1 104px;
+  }
+}
+
+.mw-kanban-composer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: spacing('3');
+}
+
+// The ticket being edited steps aside for the composer that replaces it
+.mw-kanban-editing {
+  display: none;
+}
+
+// Empty lane placeholder
+.mw-kanban-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: spacing('5') spacing('3');
+  color: var(--mw-text-muted-color);
+  font-size: font-size('sm');
+  text-align: center;
+}
+
+.mw-kanban-column-body:has(.mw-kanban-card, .mw-kanban-composer.mw-active)
+  .mw-kanban-empty {
+  display: none;
+}
+
+// Compact board — for many lanes or a board next to a sidebar
+.mw-kanban-compact {
+  --mw-kanban-column-min-height: 90px;
+
+  .mw-kanban-column {
+    padding: spacing('3');
+  }
+
+  .mw-kanban-column-header {
+    margin-bottom: spacing('3');
+  }
+
+  .mw-kanban-column-body {
+    gap: spacing('2');
+  }
+
+  .mw-kanban-card {
+    padding: spacing('3');
+  }
+
+  .mw-kanban-card .mw-card-ribbon {
+    top: 8px;
+    right: -36px;
+    width: 110px;
+  }
+
+  .mw-kanban-card:has(> .mw-card-ribbon) .mw-kanban-card-title {
+    padding-right: $_mw-kanban-ribbon-clearance-compact;
+  }
+
+  .mw-kanban-card-title {
+    font-size: font-size('sm');
+  }
+
+  // Tighter than the four lines a regular board allows
+  .mw-kanban-card-text {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .mw-kanban-card-footer {
+    margin-top: spacing('3');
+    padding-top: spacing('2');
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-kanban-card,
+  .mw-kanban-move {
+    transition: none;
+  }
+
+  .mw-kanban-card.mw-kanban-card-in {
+    animation: none;
+  }
+}
