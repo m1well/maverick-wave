@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -114,6 +114,8 @@ bundled. Load it yourself or override the token.
 | Gallery dot                                                       | `mw-active`                         |
 | Stepper indicator / label / connector / step                      | `mw-active`, `mw-done`              |
 | Checkbox list item (`li`)                                         | `mw-selected`                       |
+| Kanban composer (open)                                            | `mw-active`                         |
+| Kanban ticket being edited                                        | `mw-kanban-editing`                 |
 | Modal overlay                                                     | `mw-modal-open`                     |
 | Alert, after dismissal                                            | `mw-alert-closed` (`display: none`) |
 | Field wrapper in error                                            | `mw-field-has-error`                |
@@ -154,9 +156,10 @@ Everything below is documented in `references/components.md` unless marked other
 `mw-item-list` family
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
-`hover`, responsive wrappers) · `mw-tag` / `mw-tags` · `mw-info` /
-`mw-info-mini` / `mw-info-counter` · `mw-progress-bar` · `mw-rating` ·
-`mw-meta-header` · `mw-stepper` · `mw-timeline-big` / `mw-timeline-simple`
+`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) · `mw-tag` /
+`mw-tags` · `mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
+`mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
+`mw-timeline-simple`
 
 **Feedback** `mw-alert` · `mw-toast-stack` · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`

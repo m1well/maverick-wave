@@ -357,12 +357,8 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mw-kanban-card,
-  .mw-kanban-move {
-    transition: none;
-  }
-
-  .mw-kanban-card.mw-kanban-card-in {
+  .mw-kanban-card.mw-kanban-card-in,
+  .mw-kanban-composer.mw-active {
     animation: none;
   }
 }

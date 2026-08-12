@@ -10,12 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ||||||| 4031dbb
 =======
 ||||||| 0be20d9
 =======
 ||||||| da0294d
 =======
+||||||| 15e4c7d
+=======
+## [3.11.0] - 2026-08-12
+
+### Fixed
+
+- footer color
+
+>>>>>>> main
 ## [3.10.0] - 2026-08-10
 
 ### Added

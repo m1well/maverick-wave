@@ -2,7 +2,6 @@
 
 .mw-alert {
   position: relative;
-  overflow: hidden;
   display: flex;
   align-items: flex-start;
   padding: spacing('4') spacing('5');
@@ -12,13 +11,6 @@
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
   box-shadow: 0 2px 5px var(--mw-shadow);
-
-  &-icon,
-  &-content,
-  .mw-alert-close {
-    position: relative;
-    z-index: z-index('alert') + 5;
-  }
 
   &-icon {
     flex-shrink: 0;
@@ -83,18 +75,12 @@ $_mw-alert-colors: (
 // Color variants
 @each $name, $col in $_mw-alert-colors {
   .mw-alert-#{$name} {
-    border: 1px solid rgba($col, 0.2);
+    background-image: linear-gradient(
+      var(--mw-#{$name}-info-background),
+      var(--mw-#{$name}-info-background)
+    );
+    border: 1px solid color-mix(in srgb, #{$col} 20%, transparent);
     border-left: 4px solid #{$col};
-
-    // Color layer
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--mw-#{$name}-info-background);
-      z-index: z-index('alert');
-      pointer-events: none;
-    }
 
     .mw-alert-icon {
       color: #{$col};

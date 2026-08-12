@@ -96,8 +96,9 @@ Row of equally treated buttons, centered by default.
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
 - A card does not clip its content, so a tooltip or dropdown inside it can reach
   outside. The exception is `mw-card-ribbon`: that banner has to be cut off at
-  the edge, so a card containing one switches to `overflow: hidden` and clips
-  everything else too.
+  the edge, so a card with one as its **direct child** switches to
+  `overflow: hidden` and clips everything else too. A ribbon deeper inside - on
+  a card nested in another card - does not make the outer one clip.
 
 ```html
 <div class="mw-card">
@@ -364,6 +365,150 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
   </table>
 </div>
 ```
+
+## Kanban
+
+A board is a grid of equally wide lanes; a ticket is a plain `mw-card` with
+`mw-kanban-card` on top. Everything except the counters and the composer is CSS.
+
+```html
+<div class="mw-kanban" style="--mw-kanban-column-min-height: 390px">
+  <div class="mw-kanban-column">
+    <div class="mw-kanban-column-header">
+      <h5 class="mw-kanban-title">In Progress</h5>
+      <span class="mw-kanban-count">2</span>
+      <button
+        type="button"
+        class="mw-btn mw-btn-secondary mw-btn-sm mw-kanban-add"
+        aria-label="Add ticket to In Progress"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+
+    <div class="mw-kanban-column-body">
+      <article class="mw-card mw-kanban-card">
+        <div class="mw-card-ribbon mw-card-addon-danger">High</div>
+        <p class="mw-kanban-card-title">Sticky table header jitters</p>
+        <p class="mw-kanban-card-text">
+          On Safari the header shifts by a pixel.
+        </p>
+        <div class="mw-kanban-card-footer">
+          <span class="mw-kanban-card-id">MW-102</span>
+          <div class="mw-kanban-card-actions">
+            <div class="mw-avatar mw-avatar-xs mw-avatar-initials">jd</div>
+            <button
+              type="button"
+              class="mw-kanban-action"
+              aria-label="Move MW-102 one lane left"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <button
+              type="button"
+              class="mw-kanban-action"
+              aria-label="Move MW-102 one lane right"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+            <button
+              type="button"
+              class="mw-kanban-action"
+              aria-label="Edit MW-102"
+            >
+              <i class="fas fa-pen"></i>
+            </button>
+            <button
+              type="button"
+              class="mw-kanban-action mw-kanban-action-danger"
+              aria-label="Delete MW-102"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <div class="mw-kanban-empty">No tickets</div>
+    </div>
+  </div>
+  ...
+</div>
+```
+
+| Class                     | Role                                                                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| `mw-kanban`               | Board. Grid, one column per lane, same width for all of them                             |
+| `mw-kanban-plain`         | Board without its own surface or padding - for a board that already sits on a panel      |
+| `mw-kanban-compact`       | Tighter padding, description clamped to 2 lines instead of 4, lane floor 90px            |
+| `mw-kanban-column`        | Lane: dashed border, flex column                                                         |
+| `mw-kanban-column-header` | Title + counter + add button in one row                                                  |
+| `mw-kanban-title`         | Lane title, uppercase, truncates                                                         |
+| `mw-kanban-count`         | Ticket counter pill                                                                      |
+| `mw-kanban-add`           | Sits **on** `mw-btn` - only trims it to the header line height                           |
+| `mw-kanban-column-body`   | Ticket stack; fills the lane so the empty state stays centred                            |
+| `mw-kanban-card`          | Ticket. Needs `mw-card` next to it                                                       |
+| `mw-kanban-card-title`    | Ticket title                                                                             |
+| `mw-kanban-card-text`     | Description, clamped to 4 lines (2 on a compact board)                                   |
+| `mw-kanban-card-footer`   | Rule + key on the left, avatar and actions on the right                                  |
+| `mw-kanban-card-id`       | Ticket key, monospaced so equal-length keys line up across cards                         |
+| `mw-kanban-card-actions`  | Right-hand group; resets the avatar margin                                               |
+| `mw-kanban-action`        | 26px square icon button (32px below `md`), `mw-kanban-action-danger` turns the hover red |
+| `mw-kanban-empty`         | Placeholder; hides itself as soon as the lane holds a ticket or an open composer         |
+| `mw-kanban-card-in`       | One-shot entry animation for a freshly created ticket                                    |
+
+- **Priority is the regular `mw-card-ribbon`** and brings its own colour through
+  `mw-card-addon-danger|warning|info`. It has to be a **direct child** of the
+  card - that is what reserves the space next to the title. No ribbon means no
+  priority; there is no separate priority class.
+- Lanes are as tall as the fullest one, with `--mw-kanban-column-min-height` as
+  the floor (120px, 90px compact). Raise it per board so a board that starts out
+  empty still reads as a board.
+- Board surface and lane border are `--mw-kanban-background` and
+  `--mw-kanban-lane-border` - set them on the board, or drop the surface with
+  `mw-kanban-plain`.
+- Responsive: below `lg` the lanes reflow into two columns, below `sm` into one.
+- The actions are ordinary buttons - which of them exist is your decision. Give
+  every one an `aria-label` naming the ticket; the icon alone has no accessible
+  name.
+
+### Composer
+
+The inline form for creating and editing a ticket. One per board, moved into the
+lane it is needed in.
+
+```html
+<form class="mw-kanban-composer mw-active">
+  <input type="text" class="mw-input mw-input-sm mw-kanban-composer-title" />
+  <textarea class="mw-textarea mw-kanban-composer-text" rows="2"></textarea>
+  <div class="mw-kanban-composer-row">
+    <select class="mw-select mw-select-sm mw-kanban-composer-priority">
+      ...
+    </select>
+    <select class="mw-select mw-select-sm mw-kanban-composer-assignee">
+      ...
+    </select>
+  </div>
+  <div class="mw-kanban-composer-actions">
+    <button type="button" class="mw-btn mw-btn-outline mw-btn-sm">
+      Cancel
+    </button>
+    <button type="submit" class="mw-btn mw-btn-primary mw-btn-sm">Save</button>
+  </div>
+</form>
+```
+
+- **`mw-kanban-composer` is `display: none` until it also carries `mw-active`.**
+  Rendering it conditionally is not enough - the class has to be there too, or
+  the form stays invisible.
+- `mw-kanban-composer-row` puts priority and assignee side by side and stacks
+  them once the lane gets too narrow; `mw-kanban-composer-actions` is the button
+  row and gives its buttons the same 80px floor as a modal footer.
+- The `-title`, `-text`, `-priority`, `-assignee` and `-cancel` classes carry no
+  styling of their own beyond a min-height on the textarea - they are the hooks
+  the shipped JS queries. In a SPA you bind the controls yourself and can drop
+  them.
+- `mw-kanban-editing` hides the ticket the composer is currently replacing.
 
 ## Tags
 
