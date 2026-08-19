@@ -1,24 +1,5 @@
 @use '../abstracts' as *;
 
-// System Font Stacks
-$font-family-base:
-  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu,
-  Cantarell, 'Helvetica Neue', sans-serif;
-
-$font-family-heading:
-  system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
-
-$font-family-mono:
-  SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-  monospace;
-
 :root {
   --mw-font-family-base: #{$font-family-base};
   --mw-font-family-heading: #{$font-family-heading};
