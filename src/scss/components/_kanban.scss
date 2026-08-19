@@ -182,7 +182,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 
 // Monospaced so keys of equal length line up across cards
 .mw-kanban-card-id {
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-family: var(--mw-font-family-mono);
   font-size: font-size('xs');
   color: var(--mw-text-muted-color);
   letter-spacing: 0.03em;

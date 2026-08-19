@@ -245,9 +245,10 @@ Tile sizes: `mw-tile-sm`, `mw-tile-lg`.
 </div>
 ```
 
-Open state = `active` (no prefix) on header **and** content. The icon rotates
-via the header state. Content taller than 500px scrolls. Toggling is JS - see
-`references/javascript.md`.
+Open state = `mw-active` on header **and** content (bare `active` still works
+but is deprecated). The icon rotates via the **header** state - putting the
+class on the icon instead does nothing. Content taller than 500px scrolls.
+Toggling is JS - see `references/javascript.md`.
 
 ## Tabs
 
@@ -916,8 +917,8 @@ Both are chronicles (CV, changelog), not schedulable time axes.
 </div>
 ```
 
-The current step gets `active` (no prefix). Any card fits into the content
-wrapper.
+The current step gets `mw-active` (bare `active` still works but is
+deprecated). Any card fits into the content wrapper.
 
 ## Avatars
 

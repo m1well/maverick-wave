@@ -84,8 +84,10 @@ The framework styles icon slots but ships no icons. Examples use FontAwesome
 
 ### Fonts
 
-`--mw-font-family-base` defaults to `'Poppins', sans-serif`, but no font is
-bundled. Load it yourself or override the token.
+No font is bundled. The defaults are system stacks - `--mw-font-family-base`
+and `-heading` resolve to the platform UI font, `-mono` to Fira Code with the
+system monospace stack behind it. Load a font yourself and either set the three
+`$font-family-*` variables in SCSS or override the tokens in CSS.
 
 ## Naming rules
 

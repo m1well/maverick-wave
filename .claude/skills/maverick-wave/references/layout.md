@@ -92,7 +92,8 @@ its children are styled through descendant selectors:
   Pick the class by how many links you have.
 - Below the breakpoint the list is hidden and `mw-menu-btn` appears. Opening the
   drawer means adding `open` to **both** `mw-menu-btn` and `mw-navbar`.
-- The active link carries `active` (no prefix).
+- The active link carries `mw-active` (bare `active` still works but is
+  deprecated).
 - `mw-profile-btn` is the signed-in pill, next to or instead of the login button:
 
 ```html

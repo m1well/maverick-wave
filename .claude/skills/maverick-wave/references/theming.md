@@ -55,7 +55,7 @@ a palette switch meant setting 41 variables.
 | `--mw-page-background`, `--mw-card-background`, `--mw-footer-background`, `--mw-border`, `--mw-shadow`, `--mw-text-color`, `--mw-text-muted-color`, `--mw-hero-overlay-background` | The **active theme** - aliases pointing at the `--mw-dark-*` or `--mw-light-*` set                                                                                       |
 | `--mw-header-*`                                                                                                                                                                    | Header chrome: `background`, `text-color`, `navbar-list-color`, `navbar-list-active-color`, `burgerbutton-color`, `border` - dark in both themes                         |
 | `--mw-form-elements-background`, `--mw-form-elements-color`                                                                                                                        | Form controls stay light in both themes and therefore have their own pair                                                                                                |
-| `--mw-font-family-base`, `-heading`, `-mono`                                                                                                                                       | Font stacks (default: system stacks - no font is bundled)                                                                                                                |
+| `--mw-font-family-base`, `-heading`, `-mono`                                                                                                                                       | Font stacks - system stacks by default (`-mono` leads with Fira Code); no font is bundled. Configurable in SCSS, see below                                               |
 | `--mw-hero-background`                                                                                                                                                             | Hero image (`url(...)`)                                                                                                                                                  |
 | `--mw-transition`                                                                                                                                                                  | Global transition (`all 0.3s ease`)                                                                                                                                      |
 | `--mw-card-img-height`                                                                                                                                                             | Per-card image height (default `210px`; `mw-card-lg`/`-xl` set it to 340px/480px)                                                                                        |
@@ -117,9 +117,26 @@ effect, because the root colours are declared with `!default`.
   $light-background: #d2d1e1,
   $light-text-color: #1a1a1d,
   $form-elements-background: #efefef,
-  $mw-hero-image: url('/assets/hero.jpg')
+  $mw-hero-image: url('/assets/hero.jpg'),
+  $font-family-base: (
+    'Inter',
+    sans-serif,
+  ),
+  $font-family-heading: (
+    'Inter',
+    sans-serif,
+  ),
+  $font-family-mono: (
+    'JetBrains Mono',
+    monospace,
+  )
 );
 ```
+
+The three font stacks are the one place where the parentheses matter: a
+comma-separated stack is a Sass list, and without them the commas would read as
+further arguments to `with (...)`. A single family (`$font-family-base: 'Inter'`)
+needs none.
 
 `$mw-theme-mode: 'dark'` or `'light'` compiles a single theme - the other set of
 variables is omitted and `mw-theme-light` has no effect. The theme toggle

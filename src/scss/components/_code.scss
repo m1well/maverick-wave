@@ -2,7 +2,7 @@
 
 code,
 pre {
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-family: var(--mw-font-family-mono);
   font-size: font-size('xs');
   border-radius: radius('sm');
 }
@@ -49,7 +49,7 @@ pre {
   &-header {
     padding: spacing('2') spacing('4');
     border-bottom: 1px solid var(--mw-border);
-    font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+    font-family: var(--mw-font-family-mono);
     font-size: font-size('xs');
     color: var(--mw-text-muted-color);
     display: flex;
@@ -111,7 +111,7 @@ pre {
   border-radius: radius('sm');
   padding: spacing('4');
   margin: spacing('1');
-  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-family: var(--mw-font-family-mono);
   font-size: font-size('xs');
   line-height: 1.5;
   overflow: auto;
