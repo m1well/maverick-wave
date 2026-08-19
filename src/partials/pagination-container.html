@@ -1,27 +1,64 @@
 <h3 class="mw-section-subtitle">Simple Pagination</h3>
 <p class="mw-text-muted">
-  This is without functionality here - but you can easily use it with vanilla JS
-  or frameworks like Angular etc.
+  The same frame as a calendar - an arrow on each side of the title, content
+  below - but the body is yours. Not a page-number list; the paging itself is
+  your job, <code>mw-pagination-loading</code> dims the body while the next page
+  is on its way.
 </p>
 
-<div class="mw-pagination" id="weekPagination">
+<div class="mw-pagination mw-my-6" id="weekPagination">
   <div class="mw-pagination-header">
-    <button class="mw-pagination-nav" id="prevBtn" onclick="navigateWeek(-1)">
-      <i class="fas fa-arrow-left"></i>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-pagination-nav"
+      data-pagination-nav="-1"
+      aria-label="Previous week"
+    >
+      <i class="fas fa-chevron-left"></i>
     </button>
 
-    <h3 class="mw-pagination-title" id="weekTitle">Week 10</h3>
+    <div class="mw-pagination-title" aria-live="polite">Week 10</div>
 
-    <button class="mw-pagination-nav" id="nextBtn" onclick="navigateWeek(1)">
-      <i class="fas fa-arrow-right"></i>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-pagination-nav"
+      data-pagination-nav="1"
+      aria-label="Next week"
+    >
+      <i class="fas fa-chevron-right"></i>
     </button>
   </div>
 
-  <div class="mw-pagination-content" id="weekContent">
-    <h4>Week 10 Content</h4>
-    <p>
-      This is the content for week 10. You can put any content here - text,
-      forms, images, etc.
+  <div class="mw-pagination-content">
+    <h4 class="mw-mb-2">Week 10 Content</h4>
+    <p class="mw-text-muted">
+      Put anything in here - text, a form, a table, a chart. The frame only
+      gives it a title and two arrows.
     </p>
   </div>
 </div>
+
+<script>
+  // Showcase only: the framework ships no pagination JS, this just proves the
+  // two arrows are ordinary buttons
+  (function () {
+    const pager = document.getElementById('weekPagination');
+    if (!pager) return;
+
+    const title = pager.querySelector('.mw-pagination-title');
+    const heading = pager.querySelector('.mw-pagination-content h4');
+    let week = 10;
+
+    pager.addEventListener('click', (event) => {
+      const nav = event.target.closest('[data-pagination-nav]');
+      if (!nav) return;
+
+      week = Math.min(
+        52,
+        Math.max(1, week + Number(nav.dataset.paginationNav))
+      );
+      title.textContent = 'Week ' + week;
+      heading.textContent = 'Week ' + week + ' Content';
+    });
+  })();
+</script>

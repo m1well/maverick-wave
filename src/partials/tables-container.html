@@ -15,7 +15,7 @@
           <th>Name</th>
           <th>Position</th>
           <th>Location</th>
-          <th class="mw-text-numeric">Budget</th>
+          <th class="mw-text-currency">Budget</th>
         </tr>
       </thead>
       <tbody>
@@ -24,31 +24,33 @@
           <td>John Doe</td>
           <td>Developer</td>
           <td>New York</td>
-          <td class="mw-text-numeric">1,204.50</td>
+          <td class="mw-text-currency">1,204.50</td>
         </tr>
         <tr>
           <td>2</td>
           <td>Jane Smith</td>
           <td>Designer</td>
           <td>London</td>
-          <td class="mw-text-numeric">87.00</td>
+          <td class="mw-text-currency">87.00</td>
         </tr>
         <tr>
           <td>3</td>
           <td>Bob Johnson</td>
           <td>Manager</td>
           <td>Berlin</td>
-          <td class="mw-text-numeric">15,930.25</td>
+          <td class="mw-text-currency">15,930.25</td>
         </tr>
       </tbody>
     </table>
     <p class="mw-text-muted mw-mt-3">
       The <strong>Budget</strong> column uses
-      <strong>mw-text-numeric</strong> &ndash; right-aligned with tabular,
-      lining digits. The alignment comes from the right edge, so it works the
-      same for <code>1,204.50</code> and <code>1.204,50</code>; only the number
-      of decimal places has to be consistent per column. For the input side
-      there is <strong>mw-input-numeric</strong>.
+      <strong>mw-text-currency</strong> &ndash; right-aligned with tabular,
+      lining digits and no wrapping mid-number. The alignment comes from the
+      right edge, so it works the same for <code>1,204.50</code> and
+      <code>1.204,50</code>; only the number of decimal places has to be
+      consistent per column. If you only want the fixed-width digits without the
+      alignment, use <strong>mw-text-numeric</strong>. For the input side there
+      is <strong>mw-input-numeric</strong>.
     </p>
   </div>
 
@@ -111,7 +113,7 @@
             <th>#</th>
             <th>Name</th>
             <th>Position</th>
-            <th class="mw-text-numeric">Budget</th>
+            <th class="mw-text-currency">Budget</th>
           </tr>
         </thead>
         <tbody>
@@ -119,89 +121,159 @@
             <td>1</td>
             <td>John Doe</td>
             <td>Developer</td>
-            <td class="mw-text-numeric">12,400</td>
+            <td class="mw-text-currency">12,400</td>
           </tr>
           <tr>
             <td>2</td>
             <td>Jane Smith</td>
             <td>Designer</td>
-            <td class="mw-text-numeric">9,800</td>
+            <td class="mw-text-currency">9,800</td>
           </tr>
           <tr>
             <td>3</td>
             <td>Bob Johnson</td>
             <td>Manager</td>
-            <td class="mw-text-numeric">21,050</td>
+            <td class="mw-text-currency">21,050</td>
           </tr>
           <tr>
             <td>4</td>
             <td>Alice Brown</td>
             <td>Developer</td>
-            <td class="mw-text-numeric">11,300</td>
+            <td class="mw-text-currency">11,300</td>
           </tr>
           <tr>
             <td>5</td>
             <td>Charlie Davis</td>
             <td>Analyst</td>
-            <td class="mw-text-numeric">7,600</td>
+            <td class="mw-text-currency">7,600</td>
           </tr>
           <tr>
             <td>6</td>
             <td>Emma Wilson</td>
             <td>Designer</td>
-            <td class="mw-text-numeric">10,150</td>
+            <td class="mw-text-currency">10,150</td>
           </tr>
           <tr>
             <td>7</td>
             <td>Frank Miller</td>
             <td>Developer</td>
-            <td class="mw-text-numeric">13,900</td>
+            <td class="mw-text-currency">13,900</td>
           </tr>
           <tr>
             <td>8</td>
             <td>Grace Lee</td>
             <td>Manager</td>
-            <td class="mw-text-numeric">19,700</td>
+            <td class="mw-text-currency">19,700</td>
           </tr>
           <tr>
             <td>9</td>
             <td>Henry Clark</td>
             <td>Analyst</td>
-            <td class="mw-text-numeric">8,250</td>
+            <td class="mw-text-currency">8,250</td>
           </tr>
           <tr>
             <td>10</td>
             <td>Ivy Turner</td>
             <td>Developer</td>
-            <td class="mw-text-numeric">14,600</td>
+            <td class="mw-text-currency">14,600</td>
           </tr>
           <tr>
             <td>11</td>
             <td>Jack Morris</td>
             <td>Designer</td>
-            <td class="mw-text-numeric">9,400</td>
+            <td class="mw-text-currency">9,400</td>
           </tr>
           <tr>
             <td>12</td>
             <td>Karen Hall</td>
             <td>Manager</td>
-            <td class="mw-text-numeric">22,800</td>
+            <td class="mw-text-currency">22,800</td>
           </tr>
           <tr>
             <td>13</td>
             <td>Liam Scott</td>
             <td>Developer</td>
-            <td class="mw-text-numeric">12,950</td>
+            <td class="mw-text-currency">12,950</td>
           </tr>
           <tr>
             <td>14</td>
             <td>Mia Adams</td>
             <td>Analyst</td>
-            <td class="mw-text-numeric">7,900</td>
+            <td class="mw-text-currency">7,900</td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="mw-card mw-card-simple mw-mb-6">
+    <h4 class="mw-mb-2">Scroll Hint</h4>
+    <p class="mw-text-muted mw-mb-4">
+      <strong>mw-table-responsive-hint</strong> fades the right edge, so it is
+      visible that more columns are hiding behind it. The wrapper below is
+      capped at 520px to force the overflow; normally the viewport does that.
+    </p>
+
+    <div
+      class="mw-table-responsive mw-table-responsive-hint"
+      style="max-width: 520px"
+    >
+      <table class="mw-table mw-table-compact">
+        <thead>
+          <tr>
+            <th>Invoice</th>
+            <th>Customer</th>
+            <th>Issued</th>
+            <th>Due</th>
+            <th>Status</th>
+            <th class="mw-text-currency">Net</th>
+            <th class="mw-text-currency">VAT</th>
+            <th class="mw-text-currency">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026-0042</td>
+            <td>Fischer GmbH</td>
+            <td>19.08.2026</td>
+            <td>19.09.2026</td>
+            <td><span class="mw-tag mw-tag-warning">Open</span></td>
+            <td class="mw-text-currency">1,012.18</td>
+            <td class="mw-text-currency">192.32</td>
+            <td class="mw-text-currency">1,204.50</td>
+          </tr>
+          <tr>
+            <td>2026-0041</td>
+            <td>Wagner AG</td>
+            <td>12.08.2026</td>
+            <td>12.09.2026</td>
+            <td><span class="mw-tag mw-tag-success">Paid</span></td>
+            <td class="mw-text-currency">73.11</td>
+            <td class="mw-text-currency">13.89</td>
+            <td class="mw-text-currency">87.00</td>
+          </tr>
+          <tr>
+            <td>2026-0040</td>
+            <td>Schmidt &amp; Partner</td>
+            <td>02.08.2026</td>
+            <td>02.09.2026</td>
+            <td><span class="mw-tag mw-tag-neutral">XRechnung</span></td>
+            <td class="mw-text-currency">13,386.76</td>
+            <td class="mw-text-currency">2,543.49</td>
+            <td class="mw-text-currency">15,930.25</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mw-text-muted mw-mt-3">
+      Opt-in, unlike the automatic hint on a tab bar, and by a different
+      mechanism: a table paints its own opaque surface, so the gradient trick
+      used there would sit behind the rows and never show. A mask sits in front
+      and does show - but a mask has no <code>local</code> attachment, so it
+      cannot fade away once the last column is reached. Put the class on the
+      tables you know overflow, leave it off the ones that fit.
+    </p>
   </div>
 
   <div class="mw-card mw-card-simple">

@@ -1,15 +1,23 @@
 <h3 class="mw-section-subtitle">Tabs</h3>
+<p class="mw-text-muted mw-mb-6">
+  A tab bar scrolls sideways when it runs out of room, and now it says so: a
+  shadow appears on whichever side still has tabs behind it, and disappears once
+  that end is reached. Four gradients, no scroll listener. The fade colour comes
+  from <code>--mw-scroll-hint-cover</code> and follows the surface - inside a
+  card it fades into the card, on the page into the page. Seven tabs on a phone
+  used to mean the seventh was simply never found.
+</p>
 
 <h3 class="mw-mb-4">Default Tabs</h3>
 <div class="mw-tabs mw-mb-6">
   <div class="mw-tabs-nav">
-    <div class="mw-tabs-nav-item active" data-tab="tab1">Features</div>
+    <div class="mw-tabs-nav-item mw-active" data-tab="tab1">Features</div>
     <div class="mw-tabs-nav-item" data-tab="tab2">Specifications</div>
     <div class="mw-tabs-nav-item" data-tab="tab3">Reviews</div>
     <div class="mw-tabs-nav-item" data-tab="tab4">Support</div>
   </div>
   <div class="mw-tabs-content">
-    <div class="mw-tabs-panel active" id="tab1">
+    <div class="mw-tabs-panel mw-active" id="tab1">
       <div class="mw-card mw-card-simple">
         <h4>Key Features</h4>
         <p>
@@ -81,13 +89,15 @@
 <h3 class="mw-mb-4">Vertical Tabs</h3>
 <div class="mw-tabs mw-tabs-vertical mw-mb-6">
   <div class="mw-tabs-nav">
-    <div class="mw-tabs-nav-item active" data-tab="vtab1">Getting Started</div>
+    <div class="mw-tabs-nav-item mw-active" data-tab="vtab1">
+      Getting Started
+    </div>
     <div class="mw-tabs-nav-item" data-tab="vtab2">Configuration</div>
     <div class="mw-tabs-nav-item" data-tab="vtab3">Customization</div>
     <div class="mw-tabs-nav-item" data-tab="vtab4">Best Practices</div>
   </div>
   <div class="mw-tabs-content">
-    <div class="mw-tabs-panel active" id="vtab1">
+    <div class="mw-tabs-panel mw-active" id="vtab1">
       <div class="mw-card mw-card-simple">
         <h4>Getting Started Guide</h4>
         <p>Begin by creating a new project folder:</p>
@@ -221,13 +231,13 @@ href="path/maverick-wave.min.css"&gt;</code></pre>
 <h3 class="mw-mb-4">Pills Style Tabs</h3>
 <div class="mw-tabs mw-tabs-pills">
   <div class="mw-tabs-nav">
-    <div class="mw-tabs-nav-item active" data-tab="ptab1">Dashboard</div>
+    <div class="mw-tabs-nav-item mw-active" data-tab="ptab1">Dashboard</div>
     <div class="mw-tabs-nav-item" data-tab="ptab2">Profile</div>
     <div class="mw-tabs-nav-item" data-tab="ptab3">Messages</div>
     <div class="mw-tabs-nav-item" data-tab="ptab4">Settings</div>
   </div>
   <div class="mw-tabs-content">
-    <div class="mw-tabs-panel active" id="ptab1">
+    <div class="mw-tabs-panel mw-active" id="ptab1">
       <div class="mw-card mw-card-simple">
         <h4>Dashboard Overview</h4>
         <p>

@@ -37,7 +37,7 @@ The framework's own toggle markup, driven by the service:
 ```html
 <div
   class="mw-theme-toggle"
-  [class.active]="theme.light()"
+  [class.mw-active]="theme.light()"
   (click)="theme.toggle()"
 >
   <div class="mw-theme-toggle-slider">
@@ -205,13 +205,16 @@ export class ConfirmDialogComponent {
         <div class="mw-accordion-item">
           <div
             class="mw-accordion-header"
-            [class.active]="openIndex() === i"
+            [class.mw-active]="openIndex() === i"
             (click)="toggle(i)"
           >
             <h3>{{ item.question }}</h3>
             <i class="fas fa-chevron-down mw-accordion-icon"></i>
           </div>
-          <div class="mw-accordion-content" [class.active]="openIndex() === i">
+          <div
+            class="mw-accordion-content"
+            [class.mw-active]="openIndex() === i"
+          >
             <div class="mw-accordion-content-inner">{{ item.answer }}</div>
           </div>
         </div>
@@ -241,7 +244,7 @@ export class FaqComponent {
     @for (tab of tabs; track tab.key) {
     <div
       class="mw-tabs-nav-item"
-      [class.active]="active() === tab.key"
+      [class.mw-active]="active() === tab.key"
       (click)="active.set(tab.key)"
     >
       {{ tab.label }}
@@ -249,8 +252,12 @@ export class FaqComponent {
     }
   </div>
   <div class="mw-tabs-content">
-    <div class="mw-tabs-panel" [class.active]="active() === 'details'">…</div>
-    <div class="mw-tabs-panel" [class.active]="active() === 'history'">…</div>
+    <div class="mw-tabs-panel" [class.mw-active]="active() === 'details'">
+      …
+    </div>
+    <div class="mw-tabs-panel" [class.mw-active]="active() === 'history'">
+      …
+    </div>
   </div>
 </div>
 ```
@@ -281,7 +288,7 @@ on every navigation.
                   <a
                     class="mw-navbar-link"
                     [routerLink]="item.path"
-                    routerLinkActive="active"
+                    routerLinkActive="mw-active"
                   >
                     {{ item.label }}
                   </a>
@@ -324,7 +331,7 @@ export class HeaderComponent {
 }
 ```
 
-`routerLinkActive="active"` replaces the scroll spy - the framework only cares
+`routerLinkActive="mw-active"` replaces the scroll spy - the framework only cares
 about the class name.
 
 ## Progress bar

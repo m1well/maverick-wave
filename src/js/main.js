@@ -1,6 +1,23 @@
 (function () {
   'use strict';
 
+  // State classes: `mw-active` is the documented spelling, plain `active` is
+  // the one older markup uses. Both are styled, so turning a state *off* has
+  // to clear both - otherwise a stale `active` from the HTML would keep a
+  // second tab lit.
+  function setActive(el, on) {
+    if (!el) return;
+    el.classList.toggle('mw-active', on);
+    if (!on) el.classList.remove('active');
+  }
+
+  function isActive(el) {
+    return (
+      !!el &&
+      (el.classList.contains('mw-active') || el.classList.contains('active'))
+    );
+  }
+
   // Initialize all components when DOM is ready
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
@@ -21,6 +38,7 @@
     initImageSliders();
     initCheckboxLists();
     initKanbanBoards();
+    initCalendars();
   });
 
   // ===== Checkbox Lists =====
@@ -213,11 +231,7 @@
         icon.className = themeMode === 'light' ? 'fas fa-sun' : 'fas fa-moon';
       }
       // Adjust toggle 'active' state if needed (assuming 'active' shows sun)
-      if (themeMode === 'light') {
-        themeToggle.classList.add('active');
-      } else {
-        themeToggle.classList.remove('active');
-      }
+      setActive(themeToggle, themeMode === 'light');
 
       // Disable existing toggle visually and functionally
       themeToggle.style.opacity = '0.4';
@@ -243,7 +257,7 @@
     const applyTheme = (lightMode) => {
       // Use toggle's second argument for cleaner class switching
       body.classList.toggle('mw-theme-light', lightMode);
-      themeToggle.classList.toggle('active', lightMode);
+      setActive(themeToggle, lightMode);
       if (icon) {
         icon.className = lightMode ? 'fas fa-sun' : 'fas fa-moon';
       }
@@ -318,9 +332,9 @@
     const accordionHeaders = document.querySelectorAll('.mw-accordion-header');
     accordionHeaders.forEach((header) => {
       header.addEventListener('click', function () {
-        this.classList.toggle('active');
-        const content = this.nextElementSibling;
-        if (content) content.classList.toggle('active');
+        const open = !isActive(this);
+        setActive(this, open);
+        setActive(this.nextElementSibling, open);
       });
     });
   }
@@ -428,7 +442,7 @@
         });
 
         navLinks.forEach((link) => {
-          link.classList.remove('active');
+          setActive(link, false);
 
           const href = link.getAttribute('href');
           if (href) {
@@ -436,7 +450,7 @@
             if (hashIndex !== -1) {
               const linkTarget = href.substring(hashIndex + 1);
               if (linkTarget === current) {
-                link.classList.add('active');
+                setActive(link, true);
               }
             }
           }
@@ -457,20 +471,19 @@
         tabsContainer
           .querySelectorAll('.mw-tabs-nav-item')
           .forEach((navItem) => {
-            navItem.classList.remove('active');
+            setActive(navItem, false);
           });
 
-        this.classList.add('active');
+        setActive(this, true);
 
         const tabId = this.getAttribute('data-tab');
         if (!tabId) return;
 
         tabsContainer.querySelectorAll('.mw-tabs-panel').forEach((panel) => {
-          panel.classList.remove('active');
+          setActive(panel, false);
         });
 
-        const targetPanel = document.getElementById(tabId);
-        if (targetPanel) targetPanel.classList.add('active');
+        setActive(document.getElementById(tabId), true);
       });
     });
   }
@@ -601,13 +614,11 @@
 
       function updateSliderView() {
         overlayImages.forEach((img) => {
-          const imgIndex = parseInt(img.dataset.index);
-          img.classList.toggle('active', imgIndex === current);
+          setActive(img, parseInt(img.dataset.index) === current);
         });
 
         buttons.forEach((btn) => {
-          const btnIndex = parseInt(btn.dataset.index);
-          btn.classList.toggle('active', btnIndex === current);
+          setActive(btn, parseInt(btn.dataset.index) === current);
         });
       }
 
@@ -840,5 +851,288 @@
     });
 
     refresh();
+  }
+  // ===== Calendars =====
+  function initCalendars() {
+    document.querySelectorAll('[data-calendar]').forEach(initCalendar);
+  }
+
+  // Status dots come in as {"2026-08-19": ["success", "warning"]}
+  function parseCalendarMarkers(raw) {
+    if (!raw) return {};
+
+    try {
+      return JSON.parse(raw);
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function initCalendar(calendar) {
+    const grid = calendar.querySelector('.mw-calendar-grid');
+    const title = calendar.querySelector('.mw-calendar-title');
+    if (!grid) return;
+
+    const weekMode = calendar.dataset.calendar === 'week';
+    const markers = parseCalendarMarkers(calendar.dataset.calendarMarkers);
+    // Falls back to the document language, so a German page gets German day
+    // names without configuring anything
+    const locale =
+      calendar.dataset.calendarLocale ||
+      document.documentElement.lang ||
+      undefined;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let cursor = calendar.dataset.calendarDate
+      ? new Date(calendar.dataset.calendarDate + 'T00:00:00')
+      : new Date(today);
+    let selected = calendar.dataset.calendarSelected || '';
+
+    // Monday first: that is what ISO weeks use, and it keeps the weekend
+    // together as one block on the right
+    function startOfWeek(date) {
+      const result = new Date(date);
+      result.setDate(result.getDate() - ((result.getDay() + 6) % 7));
+      return result;
+    }
+
+    // Local date key - toISOString() would shift the day across a timezone
+    function dateKey(date) {
+      return (
+        date.getFullYear() +
+        '-' +
+        String(date.getMonth() + 1).padStart(2, '0') +
+        '-' +
+        String(date.getDate()).padStart(2, '0')
+      );
+    }
+
+    // ISO 8601: the week owning the Thursday owns the number
+    function weekNumber(date) {
+      const thursday = startOfWeek(date);
+      thursday.setDate(thursday.getDate() + 3);
+
+      const firstThursday = startOfWeek(new Date(thursday.getFullYear(), 0, 4));
+      firstThursday.setDate(firstThursday.getDate() + 3);
+
+      return 1 + Math.round((thursday - firstThursday) / 604800000);
+    }
+
+    function headline() {
+      if (!weekMode) {
+        return cursor.toLocaleDateString(locale, {
+          month: 'long',
+          year: 'numeric',
+        });
+      }
+
+      const from = startOfWeek(cursor);
+      const to = new Date(from);
+      to.setDate(to.getDate() + 6);
+
+      // The month is only spelled out twice when the week straddles two of them
+      const fromLabel = from.toLocaleDateString(locale, {
+        day: 'numeric',
+        month: from.getMonth() === to.getMonth() ? undefined : 'short',
+      });
+      const toLabel = to.toLocaleDateString(locale, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      });
+
+      return 'Week ' + weekNumber(from) + ' · ' + fromLabel + ' - ' + toLabel;
+    }
+
+    function isWeekend(date) {
+      const weekday = date.getDay();
+      return weekday === 0 || weekday === 6;
+    }
+
+    function renderWeekdays() {
+      const day = startOfWeek(new Date());
+
+      for (let index = 0; index < 7; index++) {
+        const cell = document.createElement('div');
+        cell.className = 'mw-calendar-weekday';
+        if (isWeekend(day)) cell.classList.add('mw-calendar-weekend');
+        // Decorative: every day button already carries its weekday in the label
+        cell.setAttribute('aria-hidden', 'true');
+        cell.textContent = day.toLocaleDateString(locale, { weekday: 'short' });
+        grid.appendChild(cell);
+        day.setDate(day.getDate() + 1);
+      }
+    }
+
+    function renderDay(date, month) {
+      const key = dateKey(date);
+      const cell = document.createElement('button');
+
+      cell.type = 'button';
+      cell.className = 'mw-calendar-day';
+      cell.tabIndex = -1;
+      cell.dataset.calendarDay = key;
+      cell.setAttribute('aria-pressed', key === selected ? 'true' : 'false');
+      // The bare number is not an accessible name - the arrows only announce
+      // where you are going, not where you landed
+      cell.setAttribute(
+        'aria-label',
+        date.toLocaleDateString(locale, {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })
+      );
+
+      if (isWeekend(date)) cell.classList.add('mw-calendar-weekend');
+      if (!weekMode && date.getMonth() !== month) {
+        cell.classList.add('mw-calendar-adjacent');
+      }
+      if (key === dateKey(today)) {
+        cell.classList.add('mw-calendar-today');
+        cell.setAttribute('aria-current', 'date');
+      }
+      if (key === selected) cell.classList.add('mw-selected');
+
+      const number = document.createElement('span');
+      number.className = 'mw-calendar-date';
+      number.textContent = date.getDate();
+      cell.appendChild(number);
+
+      const tones = [].concat(markers[key] || []);
+      if (tones.length) {
+        const dots = document.createElement('span');
+        dots.className = 'mw-calendar-dots';
+
+        tones.forEach(function (tone) {
+          const dot = document.createElement('span');
+          dot.className = tone
+            ? 'mw-calendar-dot mw-calendar-dot-' + tone
+            : 'mw-calendar-dot';
+          dots.appendChild(dot);
+        });
+
+        cell.appendChild(dots);
+      }
+
+      return cell;
+    }
+
+    // A month always gets six rows. Rendering only the rows it needs would make
+    // the calendar - and everything below it - jump on every month change.
+    function render() {
+      const month = cursor.getMonth();
+      const cells = weekMode ? 7 : 42;
+      const date = weekMode
+        ? startOfWeek(cursor)
+        : startOfWeek(new Date(cursor.getFullYear(), month, 1));
+
+      grid.innerHTML = '';
+      renderWeekdays();
+
+      for (let index = 0; index < cells; index++) {
+        grid.appendChild(renderDay(date, month));
+        date.setDate(date.getDate() + 1);
+      }
+
+      if (title) title.textContent = headline();
+      setTabStop();
+    }
+
+    // One tab stop for the whole grid; the arrow keys move inside it
+    function setTabStop() {
+      const cell =
+        grid.querySelector('.mw-selected') ||
+        grid.querySelector('.mw-calendar-today') ||
+        grid.querySelector('.mw-calendar-day:not(.mw-calendar-adjacent)') ||
+        grid.querySelector('.mw-calendar-day');
+
+      if (cell) cell.tabIndex = 0;
+    }
+
+    function select(key) {
+      selected = key === selected ? '' : key;
+
+      grid.querySelectorAll('.mw-calendar-day').forEach(function (cell) {
+        const active = cell.dataset.calendarDay === selected;
+        cell.classList.toggle('mw-selected', active);
+        cell.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      calendar.dispatchEvent(
+        new CustomEvent('mw-calendar-select', {
+          bubbles: true,
+          detail: { date: selected },
+        })
+      );
+    }
+
+    function step(offset) {
+      if (weekMode) {
+        cursor.setDate(cursor.getDate() + offset * 7);
+      } else {
+        // Snap to the first - stepping on from the 31st would skip February
+        cursor = new Date(cursor.getFullYear(), cursor.getMonth() + offset, 1);
+      }
+
+      render();
+    }
+
+    function focusDate(date) {
+      const key = dateKey(date);
+      let cell = grid.querySelector('[data-calendar-day="' + key + '"]');
+
+      // Walked off the rendered range - turn the page and look again
+      if (!cell) {
+        cursor = new Date(date);
+        render();
+        cell = grid.querySelector('[data-calendar-day="' + key + '"]');
+      }
+
+      if (!cell) return;
+
+      grid.querySelectorAll('.mw-calendar-day').forEach(function (other) {
+        other.tabIndex = -1;
+      });
+      cell.tabIndex = 0;
+      cell.focus();
+    }
+
+    calendar.addEventListener('click', function (event) {
+      const navButton = event.target.closest('[data-calendar-nav]');
+      if (navButton) {
+        step(parseInt(navButton.dataset.calendarNav, 10));
+        return;
+      }
+
+      const dayButton = event.target.closest('.mw-calendar-day');
+      if (dayButton && !dayButton.disabled) {
+        select(dayButton.dataset.calendarDay);
+      }
+    });
+
+    grid.addEventListener('keydown', function (event) {
+      const offsets = {
+        ArrowLeft: -1,
+        ArrowRight: 1,
+        ArrowUp: -7,
+        ArrowDown: 7,
+      };
+      const offset = offsets[event.key];
+      if (!offset) return;
+
+      const current = event.target.closest('.mw-calendar-day');
+      if (!current) return;
+
+      event.preventDefault();
+      const target = new Date(current.dataset.calendarDay + 'T00:00:00');
+      target.setDate(target.getDate() + offset);
+      focusDate(target);
+    });
+
+    render();
   }
 })();

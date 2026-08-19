@@ -42,6 +42,7 @@
       transform: rotate(0deg);
     }
 
+    &.mw-active,
     &.active {
       background: var(--mw-primary-color);
       color: var(--mw-accent-text-color);
@@ -67,6 +68,7 @@
       }
     }
 
+    &.mw-active,
     &.active {
       height: auto;
       max-height: 500px;

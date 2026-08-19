@@ -93,11 +93,24 @@
         border: 1px solid var(--mw-border);
       }
 
+      /* A calendar fills its container; across the full page that stretches the
+         cells to 150px, so the demos get a realistic column instead */
+      .calendar-demo {
+        max-width: 520px;
+        margin-inline: auto;
+      }
+
       /* Medium screens */
       @media (max-width: 992px) {
         .version-corner {
           right: 7%;
           font-size: 1rem;
+        }
+
+        /* Two calendars side by side squeeze their cells below md, so they
+           stack one breakpoint earlier than mw-grid-2 would on its own */
+        .calendar-demos {
+          grid-template-columns: minmax(0, 1fr);
         }
       }
 
@@ -346,6 +359,7 @@
           <nav class="mw-section-nav">
             <a href="#form-elements" class="mw-section-btn">Form Elements</a>
             <a href="#input-group" class="mw-section-btn">Input Group</a>
+            <a href="#segmented" class="mw-section-btn">Segmented Control</a>
             <a href="#form-field" class="mw-section-btn">Field Pattern</a>
             <a href="#form" class="mw-section-btn">Form</a>
             <a href="#login" class="mw-section-btn">Login</a>
@@ -359,6 +373,11 @@
           <!-- Input Group container -->
           <div id="input-group">
             @@include('./src/partials/input-group-container.html')
+          </div>
+
+          <!-- Segmented control container -->
+          <div id="segmented">
+            @@include('./src/partials/segmented-container.html')
           </div>
 
           <!-- Form Field pattern container -->
@@ -383,6 +402,7 @@
             <a href="#meta-info" class="mw-section-btn">Meta Info</a>
             <a href="#tables" class="mw-section-btn">Tables</a>
             <a href="#kanban" class="mw-section-btn">Kanban</a>
+            <a href="#calendar" class="mw-section-btn">Calendar</a>
             <a href="#pagination" class="mw-section-btn">Pagination</a>
             <a href="#timelines" class="mw-section-btn">Timelines</a>
             <a href="#gallery" class="mw-section-btn">Image Gallery</a>
@@ -411,6 +431,11 @@
           <!-- Kanban container -->
           <div id="kanban">
             @@include('./src/partials/kanban-container.html')
+          </div>
+
+          <!-- Calendar container -->
+          <div id="calendar">
+            @@include('./src/partials/calendar-container.html')
           </div>
 
           <!-- Pagination container -->

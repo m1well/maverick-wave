@@ -95,3 +95,20 @@
     align-self: stretch;
   }
 }
+
+// The most common row in any app: what it is on the left, the value or the
+// action on the right, and on a narrow screen the right half drops below.
+// The `flex-wrap` is the part everyone forgets.
+.mw-row-split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: spacing('2') spacing('5');
+}
+
+// Same row for content of unequal height - an icon beside text, a button
+// beside a heading. Baseline alignment would hang those off the text.
+.mw-row-split-center {
+  align-items: center;
+}

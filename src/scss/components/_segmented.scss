@@ -1,0 +1,85 @@
+@use '../abstracts' as *;
+
+// Two or three positions of *one* switch - income/expense on a booking form,
+// offer/quote on a document form.
+//
+// Deliberately not a `.mw-button-bar`: that one stacks below 576px and gives
+// every button 96% width, which is right for a row of independent actions and
+// wrong here. Stacked, two positions of a switch look like two buttons you
+// could press both of. This one stays horizontal at every width.
+.mw-segmented {
+  display: inline-flex;
+  width: 100%;
+  gap: spacing('1');
+  padding: spacing('1');
+  background: var(--mw-surface-muted);
+  border: 1px solid var(--mw-border);
+  border-radius: radius('sm');
+}
+
+// Equal shares, so the switch reads as one control and not as a row of labels
+.mw-segmented-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing('2');
+  padding: spacing('2') spacing('3');
+  border: 1px solid transparent;
+  border-radius: radius('xs');
+  background: transparent;
+  color: var(--mw-text-muted-color);
+  font-family: inherit;
+  font-size: font-size('sm');
+  font-weight: font-weight('medium');
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: var(--mw-transition);
+
+  &:hover:not(:disabled):not(.mw-active):not(.active) {
+    color: var(--mw-text-color);
+  }
+
+  // Inset, because an outline outside the item would be clipped by the frame
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: -2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.mw-active,
+  &.active {
+    background: var(--mw-primary-color);
+    border-color: var(--mw-primary-color);
+    color: var(--mw-accent-text-color);
+  }
+}
+
+// Secondary tone for a switch that is not the primary decision on the form
+.mw-segmented-secondary .mw-segmented-item {
+  &.mw-active,
+  &.active {
+    background: var(--mw-secondary-color);
+    border-color: var(--mw-secondary-color);
+  }
+}
+
+// Sits inline next to a label instead of filling the row. Equal shares are the
+// point of the full-width control; here they would clip the longest label to
+// the width of the shortest, so the items follow their own content instead.
+.mw-segmented-auto {
+  width: auto;
+
+  .mw-segmented-item {
+    flex: 0 1 auto;
+  }
+}

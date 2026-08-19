@@ -48,6 +48,16 @@ $_active-prefix: 'dark';
   // header height
   --mw-header-height: #{$header-height};
 
+  // Layout knobs. A good default is not enough here: what reads as generous on
+  // a landing page costs visible content in an application with a sticky
+  // header. Same framework, two different right answers.
+  --mw-container-width: min(1200px, 89%);
+  // Below 'sm' the percentage turns into wasted margin - 89% of a 375px screen
+  // leaves 41px of nothing on a card that has to fit amount, status and two
+  // labels into one row. A fixed gutter uses the width instead.
+  --mw-container-width-sm: calc(100% - #{spacing('5')} * 2);
+  --mw-section-padding-block: #{spacing('7')};
+
   // Active theme — aliases onto the dark or light set above
   @each $name, $value in $_active-theme {
     --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
@@ -61,4 +71,15 @@ $_active-prefix: 'dark';
       --mw-#{$name}: var(--mw-light-#{$name});
     }
   }
+}
+
+// Anything that draws its own surface re-points the cover colour of a scroll
+// hint, so a tab bar or a wide table inside a card fades into the card and not
+// into the page behind it. Inherited, so nesting keeps working.
+.mw-card,
+.mw-panel,
+.mw-modal,
+.mw-tile,
+.mw-calendar:not(.mw-calendar-plain) {
+  --mw-scroll-hint-cover: var(--mw-card-background);
 }

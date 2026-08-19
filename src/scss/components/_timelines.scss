@@ -179,6 +179,7 @@ $_simple-date-width: 110px;
   }
 
   // Active step
+  &-step.mw-active &-date-container,
   &-step.active &-date-container {
     background: var(--mw-primary-color);
     border-color: var(--mw-primary-color);
@@ -209,6 +210,7 @@ $_simple-date-width: 110px;
       left: -22px;
     }
 
+    &-step.mw-active &-date-container,
     &-step.active &-date-container {
       transform: scale(1.05);
     }
@@ -306,6 +308,7 @@ $_simple-date-width: 110px;
   }
 
   // Active step
+  &-step.mw-active &-date,
   &-step.active &-date {
     background: var(--mw-primary-color);
     color: var(--mw-accent-text-color);

@@ -127,3 +127,38 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-mb-4 mw-mt-6">Plain Buttons</h3>
+<p class="mw-text-muted">
+  <code>mw-btn-plain</code> is for everywhere a <code>&lt;button&gt;</code> is
+  the right element and a button is the wrong look - a calendar day, a time in a
+  request row, a modal backdrop. It brings nothing but the focus ring and the
+  pointer; everything else it inherits. Not the same as
+  <code>mw-btn-link</code>, which is a button dressed as a link with a colour
+  and a minimum width of its own.
+</p>
+<div class="mw-card mw-card-simple">
+  <p class="mw-mb-4">
+    Booked for
+    <button type="button" class="mw-btn-plain mw-text-bold">14:30</button>
+    on
+    <button type="button" class="mw-btn-plain mw-text-bold">19.09.2026</button>
+    &ndash; both are real buttons, reachable by tab.
+  </p>
+  <div class="mw-d-flex mw-gap-4 mw-flex-wrap">
+    <button type="button" class="mw-btn mw-btn-link">mw-btn-link</button>
+    <button type="button" class="mw-btn-plain">mw-btn-plain</button>
+    <button type="button" class="mw-btn-plain" disabled>disabled</button>
+  </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Touch Targets</h3>
+<p class="mw-text-muted">
+  On a coarse pointer or below 768px the compact controls grow to a size a thumb
+  can actually hit: <code>mw-btn-sm</code>, <code>mw-input-sm</code> and
+  <code>mw-select-sm</code> to 2.5rem, a tab to 2.75rem, a calendar day to 44px.
+  WCAG 2.5.8 puts the floor at 24px, and that is a floor, not a goal.
+  <code>mw-btn-mini</code> keeps its 18px circle - it sits in tag rows and table
+  cells where a bigger one would shift the layout - and grows its hit area to
+  28px instead. Nothing to switch on; resize this page or open it on a phone.
+</p>

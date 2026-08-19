@@ -243,6 +243,7 @@
     }
 
     // Last, so the current page keeps its look while being hovered
+    &.mw-active,
     &.active {
       color: var(--mw-header-navbar-list-active-color);
       background: var(--mw-primary-background);
@@ -358,11 +359,13 @@
     }
 
     &:hover,
+    &.mw-active,
     &.active {
       color: var(--mw-header-navbar-list-active-color);
     }
 
     &:hover::after,
+    &.mw-active::after,
     &.active::after {
       transform: scaleX(1) !important;
       opacity: 1 !important;

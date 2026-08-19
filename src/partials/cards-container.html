@@ -276,6 +276,49 @@
   </div>
 </div>
 
+<h3 class="mw-mb-4 mw-mt-6">Note Above the Actions</h3>
+<p class="mw-text-muted">
+  <code>mw-actions-note</code> puts one right-aligned, muted line above a row of
+  actions - what the buttons apply to, why one of them is disabled, or that
+  something cannot be taken back. It goes straight into the action row and needs
+  no wrapper: the line takes the full width and pushes the buttons below it. It
+  works the same way in <code>mw-card-footer</code>,
+  <code>mw-modal-footer</code>, <code>mw-form-actions</code> and
+  <code>mw-panel-footer</code>.
+</p>
+<div class="mw-grid-2-lg">
+  <div class="mw-card">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Subscription</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        The plan stays active until the end of the current billing period.
+      </p>
+      <div class="mw-card-footer">
+        <p class="mw-actions-note">Renews on 19 September 2026.</p>
+        <button type="button" class="mw-btn mw-btn-outline">Change plan</button>
+        <button type="button" class="mw-btn mw-btn-primary">Keep it</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-card">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Export</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        Every invoice of the selected period, as one ZIP archive.
+      </p>
+      <div class="mw-card-footer">
+        <p class="mw-actions-note">128 invoices, roughly 40 MB.</p>
+        <button type="button" class="mw-btn mw-btn-primary">
+          Start export
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h3 class="mw-mb-4 mw-mt-6">Card Variations</h3>
 <div class="mw-grid-3">
   <div class="mw-card">

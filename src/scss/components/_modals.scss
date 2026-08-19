@@ -29,7 +29,7 @@
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
   box-shadow: 0 25px 50px var(--mw-shadow);
-  max-width: 550px;
+  max-width: 520px;
   width: 100%;
   max-height: 85dvh;
   display: flex;
@@ -40,16 +40,20 @@
     transform: scale(1) translateY(0);
   }
 
+  // The four widths grow by a roughly even step (150 / 200 / 240px) so each
+  // size is recognisably a size. Before, default and lg sat 130px apart - the
+  // smallest gap of the four, right in the middle of the scale, which made the
+  // two read as the same modal rendered twice.
   &.mw-modal-sm {
     max-width: 370px;
     max-height: 80dvh;
   }
   &.mw-modal-lg {
-    max-width: 680px;
+    max-width: 720px;
     max-height: 90dvh;
   }
   &.mw-modal-xl {
-    max-width: 900px;
+    max-width: 960px;
     max-height: 92dvh;
   }
 }
@@ -111,7 +115,10 @@
   }
 }
 
-// Backdrop for click-outside-to-close
+// Backdrop for click-outside-to-close.
+// The cursor says it is clickable, so it should also be reachable by keyboard -
+// which means it wants to be a <button>. These four lines clear the browser
+// defaults that come with one; on a <div> they change nothing.
 .mw-modal-backdrop {
   position: absolute;
   top: 0;
@@ -120,4 +127,8 @@
   bottom: 0;
   z-index: z-index('modal')-5;
   cursor: pointer;
+  appearance: none;
+  padding: 0;
+  background: none;
+  border: 0;
 }

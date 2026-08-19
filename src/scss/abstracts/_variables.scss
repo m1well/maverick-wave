@@ -95,6 +95,10 @@ $base-colors: (
   'gray-color': $gray-color,
   // Subtle neutral surface: zebra rows, disabled fields, tracks, skeletons
   'gray-background': fade('gray-color', 20%),
+  // Same surface under the name people reach for when they want a slightly
+  // set-off area *inside* a card - hint block, framed paragraph, form summary.
+  // An alias on purpose: one tone, two names, so nobody invents a third.
+  'surface-muted': token('gray-background'),
   // Heavy scrim behind modals and blocking spinners
   'overlay-background': fade('gray-color', 60%),
   'section-alternate-pattern': fade('gray-color', 45%),

@@ -9,9 +9,13 @@
 }
 
 .mw-container {
-  width: min(1200px, 89%);
+  width: var(--mw-container-width);
   margin: spacing('0') auto;
   padding: spacing('0');
+
+  @include media-down('sm') {
+    width: var(--mw-container-width-sm);
+  }
 
   // add a hero part for a full size background picture
   @supports (selector(:has(.mw-hero))) {

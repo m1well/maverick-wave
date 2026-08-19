@@ -35,6 +35,12 @@
   justify-content: flex-end;
 }
 
+// Explicit counterpart to the three above - it matches the default, but nobody
+// should have to look that up to find out
+.mw-button-bar-center {
+  justify-content: center;
+}
+
 .mw-button-bar-between {
   justify-content: space-between;
 

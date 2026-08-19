@@ -11,6 +11,11 @@
     margin-bottom: spacing('3');
     overflow-x: auto;
 
+    // Seven tabs, three of them visible, and nothing saying so - whoever is
+    // looking for the seventh never finds the page. The hint appears only on
+    // the side that still has tabs behind it.
+    @include scroll-hint;
+
     @include media-down('sm') {
       flex-wrap: nowrap;
       -webkit-overflow-scrolling: touch;
@@ -33,6 +38,7 @@
       color: var(--mw-primary-color);
     }
 
+    &.mw-active,
     &.active {
       color: var(--mw-primary-color);
       border-bottom-color: var(--mw-primary-color);
@@ -47,6 +53,7 @@
   &-panel {
     display: none;
 
+    &.mw-active,
     &.active {
       display: block;
       animation: fadeIn 1.1s ease;
@@ -70,6 +77,8 @@
       margin-right: spacing('3');
       min-width: 160px;
       max-width: 200px;
+      // Stacked, so nothing scrolls sideways and the hint would be a lie
+      background-image: none;
 
       @include media-down('sm') {
         flex-direction: row;
@@ -82,6 +91,9 @@
         min-width: 100%;
         overflow-x: auto;
         display: flex;
+
+        // Horizontal again down here, so it comes back
+        @include scroll-hint;
       }
     }
 
@@ -89,6 +101,7 @@
       border-bottom: none;
       border-right: 2px solid transparent;
 
+      &.mw-active,
       &.active {
         border-right-color: var(--mw-primary-color);
       }
@@ -98,6 +111,7 @@
         border-bottom: 2px solid transparent;
         flex-shrink: 0;
 
+        &.mw-active,
         &.active {
           border-right-color: transparent;
           border-bottom-color: var(--mw-primary-color);
@@ -129,6 +143,7 @@
       border: 1px solid var(--mw-border-accent);
       background: var(--mw-card-background);
 
+      &.mw-active,
       &.active {
         background: var(--mw-primary-color);
         color: var(--mw-accent-text-color);

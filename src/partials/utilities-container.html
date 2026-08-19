@@ -116,6 +116,87 @@
   </div>
 </div>
 
+<h3 class="mw-mb-4 mw-mt-6">Split Rows</h3>
+<p class="mw-text-muted">
+  The most common row in any interface: what it is on the left, the value or the
+  action on the right. <code>mw-row-split</code> wraps, so on a narrow screen
+  the right half drops below instead of squashing the left one.
+  <code>mw-row-split-center</code> switches from baseline to center alignment,
+  for a row that mixes text with a button or an icon.
+</p>
+<div class="mw-grid-2-lg">
+  <div class="mw-card mw-card-simple">
+    <div class="mw-row-split mw-mb-4">
+      <strong>Invoice 2026-0042</strong>
+      <span class="mw-text-currency">1,204.50</span>
+    </div>
+    <div class="mw-row-split mw-mb-4">
+      <span class="mw-text-muted">Due date</span>
+      <span>19.09.2026</span>
+    </div>
+    <div class="mw-row-split">
+      <span class="mw-text-muted">Status</span>
+      <span class="mw-tag mw-tag-neutral">XRechnung</span>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <div class="mw-row-split mw-row-split-center mw-mb-4">
+      <h4>Team members</h4>
+      <button type="button" class="mw-btn mw-btn-sm mw-btn-primary">
+        <i class="fas fa-plus"></i>
+        Add
+      </button>
+    </div>
+    <div class="mw-row-split mw-row-split-center">
+      <span><i class="fas fa-user mw-mr-2"></i>Alex Fischer</span>
+      <button
+        type="button"
+        class="mw-btn-mini mw-btn-mini-danger"
+        aria-label="Remove Alex Fischer"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Numbers</h3>
+<p class="mw-text-muted">
+  <code>mw-text-numeric</code> gives fixed-width digits and nothing else - for a
+  clock, a counter or an ID that must not jitter while it changes.
+  <code>mw-text-currency</code> adds right alignment and prevents wrapping
+  mid-number, which is what a money column in a table wants.
+</p>
+<div class="mw-card mw-card-simple">
+  <div class="mw-row-split mw-mb-4">
+    <span>Elapsed <code>mw-text-numeric</code></span>
+    <span class="mw-text-numeric">00:11:38</span>
+  </div>
+  <div class="mw-row-split">
+    <span>Total <code>mw-text-currency</code></span>
+    <span class="mw-text-currency">15,930.25</span>
+  </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Screen Reader Only</h3>
+<p class="mw-text-muted">
+  <code>mw-sr-only</code> hides text visually but keeps it in the accessibility
+  tree - the label an icon-only button still owes its user.
+  <code>display: none</code> would not do: it drops the element out of that tree
+  as well. The two buttons below look identical; only one of them says what it
+  does.
+</p>
+<div class="mw-card mw-card-simple">
+  <div class="mw-d-flex mw-items-center mw-gap-4">
+    <button type="button" class="mw-btn mw-btn-outline mw-btn-sm">
+      <i class="fas fa-trash"></i>
+      <span class="mw-sr-only">Delete invoice 2026-0042</span>
+    </button>
+    <code>&lt;span class="mw-sr-only"&gt;Delete invoice&lt;/span&gt;</code>
+  </div>
+</div>
+
 <h3 class="mw-mb-4 mw-mt-6">Tooltips</h3>
 <p class="mw-text-muted">
   Put <code>data-tooltip="..."</code> on any element - pure CSS, no script

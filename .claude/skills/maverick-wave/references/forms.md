@@ -62,7 +62,7 @@ reactive form control.
   </div>
 
   <div class="mw-form-actions">
-    <p class="mw-form-actions-hint">Changes are saved immediately.</p>
+    <p class="mw-actions-note">Changes are saved immediately.</p>
     <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
     <button type="submit" class="mw-btn mw-btn-primary">Save</button>
   </div>
@@ -77,9 +77,13 @@ reactive form control.
   `mw-form-group-title` is the heading hook inside it - put it on the `<h3>` /
   `<h4>`, otherwise the heading keeps its full document-level size.
 - `mw-form-actions` is a right-aligned wrapping button row.
-  `mw-form-actions-hint` is a full-width note above the buttons.
-  Alignment variants: `mw-form-actions-left`, `mw-form-actions-center`,
-  `mw-form-actions-full-width` (stacked, buttons at 100% - login forms).
+  `mw-actions-note` is a full-width note above the buttons and works the same
+  way in a modal, card or panel footer (`references/components.md`). The
+  alignment variants steer it along: `mw-form-actions-left`,
+  `mw-form-actions-center`, `mw-form-actions-full-width` (stacked, buttons at
+  100% - login forms).
+  `mw-form-actions-hint` is the old name for the note and still styled, but new
+  markup should use `mw-actions-note`.
 - Put multi-column layouts inside a group with `mw-grid-2` etc. and let a field
   span everything with `style="grid-column: 1 / -1"`.
 

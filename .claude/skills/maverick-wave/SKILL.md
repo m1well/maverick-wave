@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -99,30 +99,39 @@ bundled. Load it yourself or override the token.
 - Size variants: `-sm`, `-lg`, sometimes `-xs` / `-xl`. The unsuffixed class is
   the medium size.
 
-### State classes are not uniform - this is the single most common source of bugs
+### State classes
 
-| Component                                                         | State class                         |
-| ----------------------------------------------------------------- | ----------------------------------- |
-| Accordion header + content                                        | `active` (no prefix)                |
-| Tabs nav item + panel                                             | `active` (no prefix)                |
-| Navbar link                                                       | `active` (no prefix)                |
-| Timeline step (`mw-timeline-big-step`, `mw-timeline-simple-step`) | `active` (no prefix)                |
-| Image slider overlay image + control button                       | `active` (no prefix)                |
-| Button, pressed/selected look                                     | `active` (no prefix)                |
-| Theme toggle                                                      | `active` (no prefix)                |
-| Burger button + navbar drawer                                     | `open` (no prefix)                  |
-| Gallery dot                                                       | `mw-active`                         |
-| Stepper indicator / label / connector / step                      | `mw-active`, `mw-done`              |
-| Checkbox list item (`li`)                                         | `mw-selected`                       |
-| Kanban composer (open)                                            | `mw-active`                         |
-| Kanban ticket being edited                                        | `mw-kanban-editing`                 |
-| Modal overlay                                                     | `mw-modal-open`                     |
-| Alert, after dismissal                                            | `mw-alert-closed` (`display: none`) |
-| Field wrapper in error                                            | `mw-field-has-error`                |
-| Single form control in error                                      | `mw-form-element-error`             |
+Since 4.0.0 there is one spelling for "this one is on": **`mw-active`**. It
+works on every component that previously wanted a bare `active` - accordion,
+tabs, navbar link, timeline step, image slider, button, theme toggle, segmented
+control - alongside gallery dot, stepper and kanban composer, which used it all
+along. Write `mw-active` and stop looking things up.
 
-Angular: `[class.active]="isOpen"` and `[class.mw-active]="i === current"` - the
-binding target must match the table exactly.
+The unprefixed `active` is still styled everywhere it used to be, so existing
+markup keeps working, but it is deprecated. The shipped `main.js` clears both
+when it switches a state off, precisely so a stale `active` in the HTML cannot
+leave a second tab lit.
+
+The classes that mean something _other_ than "on" keep their own names:
+
+| Component                                    | State class                         |
+| -------------------------------------------- | ----------------------------------- |
+| Anything switchable, "on"                    | `mw-active` (`active` deprecated)   |
+| Burger button + navbar drawer                | `open` (no prefix)                  |
+| Stepper indicator / label / connector / step | `mw-active`, `mw-done`              |
+| Checkbox list item (`li`)                    | `mw-selected`                       |
+| Calendar day, picked                         | `mw-selected`                       |
+| Kanban ticket being edited                   | `mw-kanban-editing`                 |
+| Modal overlay                                | `mw-modal-open`                     |
+| Alert, after dismissal                       | `mw-alert-closed` (`display: none`) |
+| Field wrapper in error                       | `mw-field-has-error`                |
+| Single form control in error                 | `mw-form-element-error`             |
+
+`mw-active` and `mw-selected` are not the same thing and not interchangeable:
+active is the one of several that is currently showing, selected is a choice the
+user made and can undo.
+
+Angular: `[class.mw-active]="i === current"`.
 
 ## Scales
 
@@ -149,14 +158,16 @@ keys at all (negative gap is invalid CSS and is not generated).
 Everything below is documented in `references/components.md` unless marked otherwise.
 
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
-`link`, `link-muted`, `sm`, `lg`) · `mw-btn-mini` · `mw-button-bar`
+`link`, `link-muted`, `plain`, `sm`, `lg`) · `mw-btn-mini` · `mw-button-bar`
+(+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note`
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon) ·
 `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
 `mw-item-list` family
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
-`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) · `mw-tag` /
+`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
+`mw-calendar` (+ `compact`, `plain`) · `mw-tag` /
 `mw-tags` · `mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
 `mw-timeline-simple`
@@ -176,7 +187,12 @@ Everything below is documented in `references/components.md` unless marked other
 `mw-input-group` · `mw-form` / `mw-form-group` / `mw-form-actions` · `mw-login`
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
-`mw-section` · `mw-page-header` · `mw-grid-*` · `mw-hero` · `mw-footer`
+`mw-section` · `mw-page-header` · `mw-grid-*` · `mw-row-split` · `mw-hero` ·
+`mw-footer`
+
+**Utilities** (`references/layout.md`) `mw-sr-only` · `mw-row-split`
+(+ `center`) · `mw-text-numeric` / `mw-text-currency` · spacing, flex, display,
+text
 
 ## Pitfalls
 
@@ -213,7 +229,20 @@ Everything below is documented in `references/components.md` unless marked other
    set.
 10. **Browser floor: `color-mix()`** - Chrome 111+, Safari 16.2+, Firefox 113+.
     Older browsers get no colours at all, not merely worse ones.
-11. **A component host between a container and its children breaks the layout,
+11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
+    `mw-btn-sm`, `mw-input-sm`, `mw-select-sm` and `mw-textarea-sm` get a 2.5rem
+    minimum height, a tab 2.75rem, a calendar day 44px. `mw-btn-mini` keeps its
+    18px circle - it sits in tag rows and table cells where a bigger one would
+    shift the layout - and grows its _hit area_ to 28px via a pseudo-element.
+    Nothing to switch on, and no reason to write the media query again in an app.
+12. **`mw-empty-state` has a `-desc`, not a `-text`.** The parts are
+    `mw-empty-state-icon`, `-title`, `-desc`, plus the size variant
+    `mw-empty-state-sm`. Invented names fail silently, as always.
+13. **`mw-text-numeric` gives digits, `mw-text-currency` gives a money column.**
+    The first is only `tabular-nums` - for a clock, a counter, an ID. The second
+    adds right alignment and `nowrap`. Before 4.0.0 the first did both, which
+    is why people wrote the declaration out by hand.
+14. **A component host between a container and its children breaks the layout,
     silently.** Every `mw-*` flex or grid container styles its _children_ -
     `mw-grid-*`, `mw-tags`, `mw-button-bar`, `mw-form-actions`, `mw-modal-footer`,
     `mw-toast-stack`. In plain HTML the children are right there; in a SPA a

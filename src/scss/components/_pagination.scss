@@ -1,83 +1,70 @@
 @use '../abstracts' as *;
 
+// Same shape as a calendar: a header with an arrow on each side of the title,
+// content below. Both are "one page of something, with a way to the next one",
+// so they get the same frame - only the body differs.
 .mw-pagination {
-  border: 1px solid var(--mw-border);
-  border-radius: radius('lg');
+  padding: spacing('5');
   background: var(--mw-card-background);
-  overflow: hidden;
-
-  &-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: spacing('3');
-    background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
-  }
-
-  &-nav {
-    background: none;
-    color: var(--mw-accent-text-color);
-    cursor: pointer;
-    padding: spacing('2') spacing('4');
-    margin: spacing('0') spacing('5');
-    border-radius: radius('sm');
-    border: 1px solid var(--mw-accent-text-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease;
-    font-size: font-size('lg');
-
-    &:hover {
-      background: var(--mw-primary-color-hover);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
-
-  &-title {
-    flex: 1;
-    text-align: center;
-    font-weight: font-weight('medium');
-    font-size: font-size('lg');
-    margin: 0;
-  }
-
-  &-content {
-    padding: spacing('4');
-    min-height: 200px;
-    transition: all 0.3s ease;
-
-    &.mw-pagination-loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-  }
-
-  @include media-down('sm') {
-    &-nav {
-      font-size: font-size('md');
-    }
-    &-title {
-      font-size: font-size('md');
-    }
-  }
+  border: 1px solid var(--mw-border);
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  box-shadow: 0 5px 10px var(--mw-shadow);
 }
 
-// Optional slide animation
+// The calendar gets its separation from the weekday row - here there is
+// nothing between the title and the body, so it needs a rule of its own
+.mw-pagination-header {
+  display: flex;
+  align-items: center;
+  gap: spacing('3');
+  margin-bottom: spacing('5');
+  padding-bottom: spacing('4');
+  border-bottom: 1px solid var(--mw-border);
+}
+
+// Takes the space between the two arrows so the label stays optically centred
+// no matter how long it is
+.mw-pagination-title {
+  flex: 1;
+  min-width: 0;
+  margin: spacing('0');
+  text-align: center;
+  font-size: font-size('md');
+  font-weight: font-weight('medium');
+  color: var(--mw-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Sits on .mw-btn - this only squares it off around the chevron
+.mw-pagination-nav {
+  padding: spacing('2') spacing('4');
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.mw-pagination-content {
+  min-height: 200px;
+  transition: var(--mw-transition);
+}
+
+// Dims the body while the next page is on its way
+.mw-pagination-content.mw-pagination-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+// Optional directional transitions for the swap
 .mw-pagination-slide-left {
-  animation: slideLeft 0.3s ease;
+  animation: mw-pagination-slide-left 0.3s ease;
 }
 
 .mw-pagination-slide-right {
-  animation: slideRight 0.3s ease;
+  animation: mw-pagination-slide-right 0.3s ease;
 }
 
-@keyframes slideLeft {
+@keyframes mw-pagination-slide-left {
   from {
     transform: translateX(20px);
     opacity: 0;
@@ -88,7 +75,7 @@
   }
 }
 
-@keyframes slideRight {
+@keyframes mw-pagination-slide-right {
   from {
     transform: translateX(-20px);
     opacity: 0;
@@ -96,5 +83,22 @@
   to {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@include media-down('sm') {
+  .mw-pagination {
+    padding: spacing('4') spacing('3');
+  }
+
+  .mw-pagination-title {
+    font-size: font-size('base');
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-pagination-slide-left,
+  .mw-pagination-slide-right {
+    animation: none;
   }
 }

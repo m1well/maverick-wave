@@ -1,0 +1,54 @@
+@use '../abstracts' as *;
+
+// ---------------------------------------------------------------------------
+// Touch targets
+//
+// WCAG 2.5.8 puts the floor at 24x24 CSS px, and that is a floor, not a goal.
+// The compact sizes are right on a pointing device and too small on a thumb,
+// so they only grow where the input actually is coarse.
+//
+// `pointer: coarse` *or* narrow, not just narrow: a tablet in landscape is
+// wide and still operated with a finger. Loaded last, so these win over the
+// component defaults without needing extra specificity.
+// ---------------------------------------------------------------------------
+@media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+  .mw-btn-sm {
+    min-height: 2.5rem;
+  }
+
+  .mw-input-sm,
+  .mw-select-sm,
+  .mw-textarea-sm {
+    min-height: 2.5rem;
+  }
+
+  // A tab strip is the one navigation a phone has no fallback for
+  .mw-tabs-nav-item {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .mw-segmented-item {
+    min-height: 2.5rem;
+  }
+
+  .mw-calendar-day {
+    min-height: 44px;
+  }
+
+  // The 18px silhouette stays: mini buttons sit in tag rows and table cells,
+  // where growing the circle would shift the layout around them. Only the hit
+  // area grows, to 28px - clear of the 24px floor. The extra margin keeps two
+  // neighbouring hit areas from overlapping.
+  .mw-btn-mini {
+    position: relative;
+    margin-left: spacing('4');
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+    }
+  }
+}
