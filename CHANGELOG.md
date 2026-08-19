@@ -6,54 +6,13 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-||||||| 4031dbb
-=======
-||||||| 0be20d9
-=======
-||||||| da0294d
-=======
-||||||| 15e4c7d
-=======
-||||||| 19a1edb
-=======
+## [4.1.0] - 2026-08-19
+
+### Fixed
+
+- changelog
+
 ## [4.0.0] - 2026-08-19
-
-### Added
-
-- mw-sr-only
-- mw-row-split (+ center)
-- mw-btn-plain
-- mw-tag-neutral / mw-tags-neutral
-- mw-button-bar-center
-- mw-segmented (+ secondary, auto)
-- mw-text-currency
-- mw-table-responsive-hint
-- mw-actions-note
-- scroll hint on the tab bar, no JavaScript needed
-- touch targets grow on a coarse pointer or below 768px
-- tokens: --mw-surface-muted, --mw-container-width, --mw-container-width-sm,
-  --mw-section-padding-block, --mw-calendar-dot, --mw-scroll-hint-cover
-
-### Changed
-
-- **Breaking:** mw-text-numeric is now digits only - use mw-text-currency for a
-  money column
-- **Breaking:** mw-container drops to a 1rem gutter below 576px instead of 89%
-- mw-active is the state class everywhere; bare active still works but is
-  deprecated
-- calendar dot colour comes from --mw-calendar-dot, tone classes are presets
-- mw-modal-backdrop works as a button without a reset
-- modal widths evenly stepped: 370 / 520 / 720 / 960px
-- mw-form-actions-hint is now mw-actions-note and works in modal, card and
-  panel footers too; the old name stays as an alias
-
-## [3.12.0] - 2026-08-19
 
 ### Added
 
@@ -64,43 +23,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - pagination frame now matches the calendar
 - big update with the needs of another project
 
->>>>>>> main
 ## [3.11.0] - 2026-08-12
 
 ### Fixed
 
 - footer color
 
->>>>>>> main
 ## [3.10.0] - 2026-08-10
 
 ### Added
 
 - kanban board
 
->>>>>>> main
 ## [3.9.0] - 2026-08-07
 
 ### Fixed
 
 - technical issues
->>>>>>> main
 
 ## [3.8.0] - 2026-08-07
 
 ### Fixed
 
 - technical issues
-
-> > > > > > > main
-||||||| 4031dbb
-=======
-## [3.8.0] - 2026-08-07
-
-### Fixed
-
-- technical issues
->>>>>>> main
 
 ## [3.7.0] - 2026-08-07
 
