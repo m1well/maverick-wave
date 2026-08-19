@@ -510,6 +510,133 @@ lane it is needed in.
   them.
 - `mw-kanban-editing` hides the ticket the composer is currently replacing.
 
+## Calendar
+
+A card-shaped surface with a header and a seven column grid. A month is six
+rows, a week is one - same classes, same cell size, the only difference is how
+many cells you render. Which page is on screen is application state: the shipped
+JS renders it from `data-calendar`, an Angular app renders the same markup
+itself.
+
+```html
+<div
+  class="mw-calendar"
+  data-calendar="month"
+  data-calendar-markers='{"2026-08-19": ["success", "warning"]}'
+>
+  <div class="mw-calendar-header">
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+      data-calendar-nav="-1"
+      aria-label="Previous month"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="mw-calendar-title" aria-live="polite">August 2026</div>
+
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+      data-calendar-nav="1"
+      aria-label="Next month"
+    >
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <div class="mw-calendar-grid">
+    <div class="mw-calendar-weekday" aria-hidden="true">Mon</div>
+    ...
+    <div class="mw-calendar-weekday mw-calendar-weekend" aria-hidden="true">
+      Sat
+    </div>
+
+    <button
+      type="button"
+      class="mw-calendar-day mw-calendar-adjacent"
+      aria-label="Monday, 27 July 2026"
+    >
+      <span class="mw-calendar-date">27</span>
+    </button>
+
+    <button
+      type="button"
+      class="mw-calendar-day mw-calendar-today"
+      aria-current="date"
+      aria-pressed="false"
+      aria-label="Wednesday, 19 August 2026"
+    >
+      <span class="mw-calendar-date">19</span>
+      <span class="mw-calendar-dots">
+        <span class="mw-calendar-dot mw-calendar-dot-success"></span>
+        <span class="mw-calendar-dot mw-calendar-dot-warning"></span>
+      </span>
+    </button>
+    ...
+  </div>
+
+  <div class="mw-calendar-legend">
+    <span class="mw-calendar-legend-item">
+      <span class="mw-calendar-dot mw-calendar-dot-success"></span>
+      Slots free
+    </span>
+    ...
+  </div>
+</div>
+```
+
+| Class                     | Role                                                                                            |
+| ------------------------- | ----------------------------------------------------------------------------------------------- |
+| `mw-calendar`             | Surface. Same border, radius and shadow as a card, without the hover lift                       |
+| `mw-calendar-plain`       | Drops the surface - for a calendar already sitting on a card or panel                           |
+| `mw-calendar-compact`     | Date picker density: dots hidden, 29px cells, tighter header and labels                         |
+| `mw-calendar-header`      | Arrow, title, arrow                                                                             |
+| `mw-calendar-nav`         | Sits **on** `mw-btn` - only squares it off around the chevron                                   |
+| `mw-calendar-title`       | Takes the space between the arrows, stays optically centred                                     |
+| `mw-calendar-grid`        | The seven column grid; weekday labels and day cells are its only children                       |
+| `mw-calendar-weekday`     | Column label. Decorative - the day buttons carry the weekday themselves                         |
+| `mw-calendar-day`         | One day. A `button`, so `:disabled` gives you an unavailable day                                |
+| `mw-calendar-date`        | The number                                                                                      |
+| `mw-calendar-adjacent`    | Day of the neighbouring month - muted, still readable                                           |
+| `mw-calendar-weekend`     | Saturday/Sunday. Tinted cell; on the label it turns the text secondary                          |
+| `mw-calendar-today`       | Outlined in the secondary colour, bold                                                          |
+| `mw-selected`             | Filled with the primary colour                                                                  |
+| `mw-calendar-dots`        | Dot row, absolutely placed at the bottom of the cell                                            |
+| `mw-calendar-dot`         | 6px dot, neutral. Toned by `-primary`, `-secondary`, `-success`, `-warning`, `-danger`, `-info` |
+| `mw-calendar-legend`      | Rule plus a row of dot/label pairs below the grid                                               |
+| `mw-calendar-legend-item` | One dot/label pair                                                                              |
+
+- **Today is outlined in secondary, the picked day is filled with primary.** Two
+  different colours on purpose: an outline and a fill in the same colour read as
+  two states of the same thing. Do not give one day both.
+- The dots are positioned absolutely, so a day without any keeps the exact same
+  height and its number sits on the same line as every other. Two or three per
+  day stay readable, more do not. A dot on a picked day keeps its status colour;
+  only the untoned one flips to the accent text colour.
+- **Render the days spilling in from the neighbouring month.** An empty first
+  row reads like a broken calendar, not like a short month. `mw-calendar-adjacent`
+  is what pushes them back.
+- A month gets six rows even when five would do, so the calendar - and
+  everything under it - keeps its height while you page through.
+- Cell height is fixed (44px, 29px compact), width follows the container. No
+  aspect ratio: a full-width calendar would otherwise grow rows several hundred
+  pixels tall. A calendar therefore wants a column, not the full page width -
+  give it one, or cap it.
+- **A week has no class of its own.** Render seven cells instead of forty-two
+  and you have one; everything else is identical.
+- `mw-calendar-compact` hides the dots and shortens the cell - the dots are what
+  a full cell needs its height for, so the two go together. It costs about a
+  third of the calendar height and leaves a plain date picker; drop the legend
+  there, it has nothing left to explain. 29px is below a comfortable tap target,
+  so keep it for pointer-first surfaces. Its grid gap drops to 2px as well, which
+  puts the space back into the cells.
+- Give every day an `aria-label` with the full date - the bare number is not an
+  accessible name. The weekday labels are `aria-hidden`, they would only repeat
+  it. With a `button` per day, keep one tab stop for the grid (roving
+  `tabindex`) instead of 42.
+
 ## Tags
 
 Two forms, picked by count - see also the pitfall list in `SKILL.md`.
@@ -803,23 +930,46 @@ The last item takes `mw-breadcrumbs-current` on the `li` and
 
 ## Pagination
 
-A titled content frame with prev/next controls - not a page-number list.
+A titled content frame with prev/next controls - not a page-number list. Same
+surface and header as `mw-calendar`; only the body differs, and the body is
+yours.
 
 ```html
 <div class="mw-pagination">
   <div class="mw-pagination-header">
-    <button class="mw-pagination-nav"><i class="fas fa-arrow-left"></i></button>
-    <h3 class="mw-pagination-title">Week 10</h3>
-    <button class="mw-pagination-nav">
-      <i class="fas fa-arrow-right"></i>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-pagination-nav"
+      aria-label="Previous week"
+    >
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <div class="mw-pagination-title" aria-live="polite">Week 10</div>
+
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-btn-sm mw-pagination-nav"
+      aria-label="Next week"
+    >
+      <i class="fas fa-chevron-right"></i>
     </button>
   </div>
+
   <div class="mw-pagination-content">...</div>
 </div>
 ```
 
-`mw-pagination-loading` on the container dims the content while it swaps;
-`mw-pagination-slide-left` / `-slide-right` are the directional transitions.
+- `mw-pagination-nav` sits **on** `mw-btn` - it only squares the button off
+  around the chevron. The arrows carry no accessible name of their own, so give
+  each one an `aria-label`; `aria-live="polite"` on the title is what tells a
+  screen reader where you landed.
+- `mw-pagination-loading` goes on `mw-pagination-content` (not on the
+  container) and dims it while the next page is on its way.
+- `mw-pagination-slide-left` / `-slide-right` are the directional transitions,
+  also on the content.
+- The body has a 200px floor so a short page does not collapse the frame. Paging
+  is application state - the framework ships no JavaScript for it.
 
 ## Divider
 

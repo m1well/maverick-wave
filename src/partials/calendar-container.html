@@ -1,0 +1,186 @@
+<h3 class="mw-section-subtitle">Calendar</h3>
+<p class="mw-text-muted">
+  Month, compact and week share every class - a week is seven cells instead of
+  forty-two, <code>mw-calendar-compact</code> drops the dots and a third of the
+  height. The status dots come in as
+  <code>data-calendar-markers='{"2026-08-19": ["success", "warning"]}'</code>.
+</p>
+
+<div class="mw-grid-2 calendar-demos mw-my-6">
+  <div>
+    <h4 class="mw-mb-2">Month</h4>
+    <div
+      class="mw-calendar calendar-demo"
+      id="calendar-month"
+      data-calendar="month"
+      data-calendar-locale="en-GB"
+    >
+      <div class="mw-calendar-header">
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="-1"
+          aria-label="Previous month"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="mw-calendar-title" aria-live="polite"></div>
+
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="1"
+          aria-label="Next month"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="mw-calendar-grid"></div>
+
+      <div class="mw-calendar-legend">
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-success"></span>
+          Slots free
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-warning"></span>
+          Almost booked
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-danger"></span>
+          Fully booked
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-info"></span>
+          Public holiday
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h4 class="mw-mb-2">Compact Month</h4>
+    <div
+      class="mw-calendar mw-calendar-compact calendar-demo"
+      id="calendar-compact"
+      data-calendar="month"
+      data-calendar-locale="en-GB"
+    >
+      <div class="mw-calendar-header">
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="-1"
+          aria-label="Previous month"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="mw-calendar-title" aria-live="polite"></div>
+
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="1"
+          aria-label="Next month"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="mw-calendar-grid"></div>
+    </div>
+  </div>
+
+  <div>
+    <h4 class="mw-mb-2">Week</h4>
+    <div
+      class="mw-calendar calendar-demo"
+      id="calendar-week"
+      data-calendar="week"
+      data-calendar-locale="en-GB"
+    >
+      <div class="mw-calendar-header">
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="-1"
+          aria-label="Previous week"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="mw-calendar-title" aria-live="polite"></div>
+
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
+          data-calendar-nav="1"
+          aria-label="Next week"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="mw-calendar-grid"></div>
+
+      <div class="mw-calendar-legend">
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-success"></span>
+          Slots free
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-warning"></span>
+          Almost booked
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-danger"></span>
+          Fully booked
+        </span>
+        <span class="mw-calendar-legend-item">
+          <span class="mw-calendar-dot mw-calendar-dot-info"></span>
+          Public holiday
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Showcase only: the demo markers hang off today, so the dots stay in view no
+  // matter when this page is opened. A real page ships them as a literal.
+  (function () {
+    const markers = {};
+
+    const add = (offset, tones) => {
+      const date = new Date();
+      date.setDate(date.getDate() + offset);
+      const key =
+        date.getFullYear() +
+        '-' +
+        String(date.getMonth() + 1).padStart(2, '0') +
+        '-' +
+        String(date.getDate()).padStart(2, '0');
+      markers[key] = tones;
+    };
+
+    add(-6, ['danger']);
+    add(-4, ['success']);
+    add(-1, ['warning', 'info']);
+    add(0, ['success', 'warning']);
+    add(1, ['success']);
+    add(2, ['info']);
+    add(3, ['danger', 'warning', 'success']);
+    add(5, ['secondary']);
+    add(8, ['success']);
+    add(11, ['warning']);
+    add(14, ['danger']);
+
+    const encoded = JSON.stringify(markers);
+    document.querySelectorAll('[data-calendar]').forEach((calendar) => {
+      calendar.dataset.calendarMarkers = encoded;
+    });
+  })();
+</script>

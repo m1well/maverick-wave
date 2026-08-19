@@ -1,0 +1,285 @@
+@use '../abstracts' as *;
+
+// Pixel-precise shape values
+$_mw-calendar-dot-size: 5px;
+$_mw-calendar-dot-gap: 3px;
+$_mw-calendar-cell-height: 38px;
+$_mw-calendar-cell-height-compact: 29px;
+$_mw-calendar-grid-gap: 4px;
+$_mw-calendar-grid-gap-sm: 3px;
+$_mw-calendar-grid-gap-compact: 3px;
+
+$_mw-calendar-dot-tones: (
+  'primary': var(--mw-primary-color),
+  'secondary': var(--mw-secondary-color),
+  'success': var(--mw-success-color),
+  'warning': var(--mw-warning-color),
+  'danger': var(--mw-danger-color),
+  'info': var(--mw-info-color),
+);
+
+// Same silhouette as a card, but without the hover lift
+.mw-calendar {
+  display: block;
+  padding: spacing('5');
+  background: var(--mw-card-background);
+  border: 1px solid var(--mw-border);
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  box-shadow: 0 5px 10px var(--mw-shadow);
+}
+
+// Calendar without its own surface - for one that already sits on a card
+.mw-calendar-plain {
+  padding: spacing('0');
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.mw-calendar-header {
+  display: flex;
+  align-items: center;
+  gap: spacing('3');
+  margin-bottom: spacing('5');
+}
+
+// Takes the space between the two arrows so the label stays optically centred
+.mw-calendar-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-size: font-size('md');
+  font-weight: font-weight('medium');
+  color: var(--mw-text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Sits on .mw-btn - this only squares it off around the chevron
+.mw-calendar-nav {
+  padding: spacing('2') spacing('4');
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+// Grid
+.mw-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: $_mw-calendar-grid-gap;
+}
+
+.mw-calendar-weekday {
+  padding-bottom: spacing('2');
+  text-align: center;
+  font-size: font-size('2xs');
+  font-weight: font-weight('bold');
+  color: var(--mw-text-muted-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Saturday and Sunday read like a wall calendar - the label carries the
+// weekend, the cell below only gets a faint tint
+.mw-calendar-weekday.mw-calendar-weekend {
+  color: var(--mw-danger-color);
+}
+
+// A fixed row height instead of an aspect ratio
+.mw-calendar-day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: $_mw-calendar-cell-height;
+  padding: spacing('1');
+  border: 1px solid transparent;
+  border-radius: radius('sm');
+  background: transparent;
+  color: var(--mw-text-color);
+  font: inherit;
+  font-size: font-size('sm');
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--mw-transition);
+}
+
+.mw-calendar-day.mw-calendar-weekend {
+  background: var(--mw-gray-background);
+}
+
+// Days spilling in from the neighbouring month stay readable but clearly step
+// back - leaving them out would make the first and last row look broken
+.mw-calendar-day.mw-calendar-adjacent {
+  color: var(--mw-text-muted-color);
+  opacity: 0.5;
+}
+
+.mw-calendar-day:hover:not(:disabled):not(.mw-selected) {
+  background: var(--mw-primary-background);
+  border-color: var(--mw-border-accent);
+}
+
+.mw-calendar-day:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--mw-primary-background);
+  border-color: var(--mw-primary-color);
+}
+
+// Today gets the outline, the selection gets the fill - both at once would be
+// indistinguishable. Secondary, so it never reads as a selection.
+.mw-calendar-day.mw-calendar-today {
+  border-color: var(--mw-secondary-color);
+  font-weight: font-weight('bold');
+}
+
+.mw-calendar-day.mw-selected {
+  background: var(--mw-primary-color);
+  border-color: var(--mw-primary-color);
+  color: var(--mw-accent-text-color);
+  opacity: 1;
+}
+
+// A day that cannot be picked stays legible
+.mw-calendar-day:disabled {
+  cursor: not-allowed;
+  color: var(--mw-text-muted-color);
+  opacity: 0.4;
+}
+
+// Own element so the dots can be positioned against it
+.mw-calendar-date {
+  line-height: 1;
+}
+
+// Status dots
+.mw-calendar-dots {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $_mw-calendar-dot-gap;
+  pointer-events: none;
+}
+
+.mw-calendar-dot {
+  width: $_mw-calendar-dot-size;
+  height: $_mw-calendar-dot-size;
+  border-radius: radius('full');
+  background: var(--mw-text-muted-color);
+  flex-shrink: 0;
+}
+
+@each $name, $color in $_mw-calendar-dot-tones {
+  .mw-calendar-dot-#{$name} {
+    background: #{$color};
+  }
+}
+
+// Only the untoned dot would drown in the selected fill
+.mw-calendar-day.mw-selected .mw-calendar-dot:not([class*='mw-calendar-dot-']) {
+  background: var(--mw-accent-text-color);
+}
+
+// Compact month - date picker density
+.mw-calendar-compact {
+  padding: spacing('4');
+
+  .mw-calendar-header {
+    margin-bottom: spacing('4');
+  }
+
+  .mw-calendar-title {
+    font-size: font-size('base');
+  }
+
+  .mw-calendar-nav {
+    padding: spacing('1') spacing('3');
+  }
+
+  .mw-calendar-weekday {
+    padding-bottom: spacing('1');
+    font-size: font-size('3xs');
+  }
+
+  // The gap the cells give up here goes straight back into their width
+  .mw-calendar-grid {
+    gap: $_mw-calendar-grid-gap-compact;
+  }
+
+  .mw-calendar-day {
+    min-height: $_mw-calendar-cell-height-compact;
+    font-size: font-size('xs');
+  }
+
+  // Hidden rather than forbidden, so the same markup works in both densities
+  .mw-calendar-dots {
+    display: none;
+  }
+
+  .mw-calendar-legend {
+    margin-top: spacing('4');
+    padding-top: spacing('3');
+  }
+}
+
+// Legend - explains what the dots stand for
+.mw-calendar-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: spacing('3') spacing('5');
+  margin-top: spacing('5');
+  padding-top: spacing('4');
+  border-top: 1px solid var(--mw-border);
+}
+
+.mw-calendar-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: spacing('1');
+  font-size: font-size('xs');
+  color: var(--mw-text-muted-color);
+}
+
+// The legend dot is a plain .mw-calendar-dot, only outside of a cell
+.mw-calendar-legend-item .mw-calendar-dot {
+  position: static;
+}
+
+@include media-down('sm') {
+  .mw-calendar {
+    padding: spacing('4') spacing('3');
+  }
+
+  .mw-calendar-grid {
+    gap: $_mw-calendar-grid-gap-sm;
+  }
+
+  .mw-calendar-weekday {
+    font-size: font-size('3xs');
+  }
+
+  .mw-calendar-title {
+    font-size: font-size('base');
+  }
+
+  // Four legend entries wrap onto three lines at this width otherwise
+  .mw-calendar-legend {
+    gap: spacing('2') spacing('4');
+    margin-top: spacing('4');
+    padding-top: spacing('3');
+  }
+
+  .mw-calendar-legend-item {
+    font-size: font-size('2xs');
+  }
+}

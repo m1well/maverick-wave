@@ -114,6 +114,7 @@ bundled. Load it yourself or override the token.
 | Gallery dot                                                       | `mw-active`                         |
 | Stepper indicator / label / connector / step                      | `mw-active`, `mw-done`              |
 | Checkbox list item (`li`)                                         | `mw-selected`                       |
+| Calendar day, picked                                              | `mw-selected`                       |
 | Kanban composer (open)                                            | `mw-active`                         |
 | Kanban ticket being edited                                        | `mw-kanban-editing`                 |
 | Modal overlay                                                     | `mw-modal-open`                     |
@@ -156,7 +157,8 @@ Everything below is documented in `references/components.md` unless marked other
 `mw-item-list` family
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
-`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) · `mw-tag` /
+`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
+`mw-calendar` (+ `compact`, `plain`) · `mw-tag` /
 `mw-tags` · `mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
 `mw-timeline-simple`
