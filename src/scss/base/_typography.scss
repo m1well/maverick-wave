@@ -1,9 +1,10 @@
+@use 'sass:meta';
 @use '../abstracts' as *;
 
 :root {
-  --mw-font-family-base: #{$font-family-base};
-  --mw-font-family-heading: #{$font-family-heading};
-  --mw-font-family-mono: #{$font-family-mono};
+  --mw-font-family-base: #{meta.inspect($font-family-base)};
+  --mw-font-family-heading: #{meta.inspect($font-family-heading)};
+  --mw-font-family-mono: #{meta.inspect($font-family-mono)};
 }
 
 // Base font settings
