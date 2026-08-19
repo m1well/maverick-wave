@@ -19,9 +19,27 @@ exhaustive: what is not named does not exist.
 - Sizes: `mw-btn-sm`, `mw-btn-lg`
 - `mw-btn` is `inline-flex` with a gap - icons need no wrapper and no extra class
 - `disabled` gets `opacity: .6` and `not-allowed`; there is no disabled class
-- `active` (no prefix) gives the pressed/selected look on the coloured variants
+- `mw-active` gives the pressed/selected look on the coloured variants
 - `mw-btn-link` still has the button padding - `mw-p-0` makes it read as inline
   text
+- On a coarse pointer or below 768px `mw-btn-sm` grows to a 2.5rem minimum
+  height on its own
+
+### `mw-btn-plain` - a button with no button in it
+
+For everywhere a `<button>` is the right element and a button is the wrong look:
+a calendar day, a time in a request row, a settings tab, a modal backdrop.
+
+```html
+<button type="button" class="mw-btn-plain">14:30</button>
+```
+
+It clears `appearance`, background, border, padding and margin, inherits font
+and colour, and keeps exactly two things: the pointer and the focus ring. Used
+on its own - `mw-btn` is neither needed nor wanted next to it.
+
+Not the same as `mw-btn-link`, which is a button dressed as a link and brings
+its own colour and minimum width.
 
 **Destructive actions use `mw-btn-danger`.** `mw-btn-secondary` is a brand
 colour, not a semantic one.
@@ -54,9 +72,56 @@ Row of equally treated buttons, centered by default.
 - Colouring: `mw-button-bar-primary`, `-secondary`, `-outline` style the bare
   `mw-btn` children, so the buttons carry no variant class themselves.
   `mw-button-bar-nav` mixes them for prev/center/next navigation.
-- Alignment: `mw-button-bar-left`, `-right` (default is centered),
-  `mw-button-bar-between` pushes first and last apart.
+- Alignment: `mw-button-bar-left`, `-right`, `-center` (which is also the
+  default), `mw-button-bar-between` pushes first and last apart.
 - Sizes: `mw-button-bar-sm`, `mw-button-bar-lg`.
+- Below 576px it stacks and gives every button 96% width. Right for a row of
+  independent actions - wrong for a switch, see below.
+
+### `mw-actions-note` - one line above a row of actions
+
+```html
+<div class="mw-modal-footer">
+  <p class="mw-actions-note">This action cannot be undone.</p>
+  <button class="mw-btn mw-btn-outline">Cancel</button>
+  <button class="mw-btn mw-btn-danger">Delete</button>
+</div>
+```
+
+Right-aligned, muted, one size smaller. For what the buttons apply to, why one
+of them is disabled, or that something cannot be taken back.
+
+- Works in `mw-modal-footer`, `mw-card-footer`, `mw-form-actions` and
+  `mw-panel-footer`. It is a child of the action row, not a wrapper around it:
+  the line takes the full width and pushes the buttons onto the row below.
+- Only rows that actually carry a note start wrapping, so adding one changes
+  nothing anywhere else.
+- Inside `mw-form-actions` the alignment variants steer it as well -
+  `mw-form-actions-left` makes the note left-aligned too.
+- `mw-form-actions-hint` is the old, form-only name for the same thing. Still
+  styled, but use `mw-actions-note`: the hint name is wrong the moment the line
+  sits in a modal.
+
+### Segmented control
+
+Two or three positions of **one** switch: income/expense, offer/quote, a period
+picker.
+
+```html
+<div class="mw-segmented">
+  <button type="button" class="mw-segmented-item mw-active">Income</button>
+  <button type="button" class="mw-segmented-item">Expense</button>
+</div>
+```
+
+- Stays horizontal at every width and splits the row into equal shares - which
+  is the whole point. Stacked in a `mw-button-bar`, two positions of a switch
+  look like two buttons you could press both of.
+- Active position: `mw-active` on the item.
+- `mw-segmented-secondary` switches the active fill to the secondary colour,
+  `mw-segmented-auto` shrinks the control to its content instead of filling the
+  row. `disabled` works on an item.
+- Items reach a 2.5rem minimum height on a coarse pointer.
 
 ## Cards
 
@@ -169,11 +234,11 @@ Tile sizes: `mw-tile-sm`, `mw-tile-lg`.
 ```html
 <div class="mw-accordion">
   <div class="mw-accordion-item">
-    <div class="mw-accordion-header active">
+    <div class="mw-accordion-header mw-active">
       <h3>Question</h3>
       <i class="fas fa-chevron-down mw-accordion-icon"></i>
     </div>
-    <div class="mw-accordion-content active">
+    <div class="mw-accordion-content mw-active">
       <div class="mw-accordion-content-inner">Answer</div>
     </div>
   </div>
@@ -189,11 +254,11 @@ via the header state. Content taller than 500px scrolls. Toggling is JS - see
 ```html
 <div class="mw-tabs">
   <div class="mw-tabs-nav">
-    <div class="mw-tabs-nav-item active" data-tab="tab1">Details</div>
+    <div class="mw-tabs-nav-item mw-active" data-tab="tab1">Details</div>
     <div class="mw-tabs-nav-item" data-tab="tab2">History</div>
   </div>
   <div class="mw-tabs-content">
-    <div class="mw-tabs-panel active" id="tab1">...</div>
+    <div class="mw-tabs-panel mw-active" id="tab1">...</div>
     <div class="mw-tabs-panel" id="tab2">...</div>
   </div>
 </div>
@@ -202,8 +267,15 @@ via the header state. Content taller than 500px scrolls. Toggling is JS - see
 - Variants: `mw-tabs-vertical` (nav on the left, horizontal again below `sm`),
   `mw-tabs-pills`.
 - `data-tab` matches the panel `id` - that pairing is only needed for the
-  shipped JS. In a SPA, bind `active` yourself and drop the attribute.
-- The nav scrolls horizontally on small screens instead of wrapping.
+  shipped JS. In a SPA, bind `mw-active` yourself and drop the attribute.
+- The nav scrolls horizontally instead of wrapping, and says so: a shadow shows
+  on whichever side still has tabs behind it and disappears once that end is
+  reached. Pure CSS, no scroll listener. The fade colour comes from
+  `--mw-scroll-hint-cover`, which is preset to the page background and
+  re-pointed to the card background inside `mw-card`, `mw-panel`, `mw-modal`,
+  `mw-tile` and `mw-calendar` - override it if the strip sits on some other
+  surface.
+- Tab items reach a 2.75rem minimum height on a coarse pointer.
 
 ## Modal
 
@@ -215,9 +287,10 @@ via the header state. Content taller than 500px scrolls. Toggling is JS - see
       <button class="mw-modal-close" type="button">&#120299;</button>
     </div>
     <div class="mw-modal-body">
-      <p>This cannot be undone.</p>
+      <p>Invoice 2026-0042 will be removed.</p>
     </div>
     <div class="mw-modal-footer">
+      <p class="mw-actions-note">This action cannot be undone.</p>
       <button class="mw-btn mw-btn-outline">Cancel</button>
       <button class="mw-btn mw-btn-danger">Delete</button>
     </div>
@@ -230,11 +303,12 @@ via the header state. Content taller than 500px scrolls. Toggling is JS - see
   class is the whole open/close mechanism.
 - Body scroll lock is automatic: the stylesheet uses
   `body:has(.mw-modal-open)`. Nothing to implement.
-- Sizes: `mw-modal-sm` 370px, default 550px, `mw-modal-lg` 680px,
-  `mw-modal-xl` 900px. Height is capped at 80-92dvh, the body scrolls.
+- Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
+  `mw-modal-xl` 960px. Height is capped at 80-92dvh, the body scrolls.
 - `mw-modal-backdrop` is the click-to-close surface; put the close handler on it.
 - `mw-modal-body` takes a `mw-form` directly - the form brings the field gaps,
   the body brings the padding.
+- `mw-actions-note` is the muted line above the buttons - see below.
 
 Angular: `<div class="mw-modal-overlay" [class.mw-modal-open]="isOpen()">`.
 
@@ -355,8 +429,16 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
 | `mw-table-hover`             | Stronger row hover                                                                                                      |
 | `mw-table-cards`             | Below `md` every row becomes a card; keep `<thead>` (hidden via CSS) and give each cell a `data-label`                  |
 | `mw-table-responsive`        | Wrapper, horizontal scroll                                                                                              |
+| `mw-table-responsive-hint`   | On top of the wrapper: a soft right edge showing there are more columns. Opt-in - see below                             |
 | `mw-table-responsive-scroll` | Wrapper with a height cap (`--mw-table-scroll-height`, 400px / 260px below `sm`) and vertical scroll                    |
 | `mw-table-sticky-head`       | Header stays put while the body scrolls - only works inside a height-limited wrapper, i.e. `mw-table-responsive-scroll` |
+
+`mw-table-responsive-hint` is opt-in, unlike the automatic hint on a tab bar,
+and works differently for a reason: a table paints its own opaque surface, so
+the gradient trick used on `mw-tabs-nav` would sit _behind_ the rows and never
+show. A mask sits in front and does show - but a mask has no `local` attachment,
+so it cannot fade away once the last column is reached. Put the class on the
+tables you know overflow, leave it off the ones that fit.
 
 ```html
 <div class="mw-table-responsive-scroll" style="--mw-table-scroll-height: 250px">
@@ -587,26 +669,26 @@ itself.
 </div>
 ```
 
-| Class                     | Role                                                                                            |
-| ------------------------- | ----------------------------------------------------------------------------------------------- |
-| `mw-calendar`             | Surface. Same border, radius and shadow as a card, without the hover lift                       |
-| `mw-calendar-plain`       | Drops the surface - for a calendar already sitting on a card or panel                           |
-| `mw-calendar-compact`     | Date picker density: dots hidden, 29px cells, tighter header and labels                         |
-| `mw-calendar-header`      | Arrow, title, arrow                                                                             |
-| `mw-calendar-nav`         | Sits **on** `mw-btn` - only squares it off around the chevron                                   |
-| `mw-calendar-title`       | Takes the space between the arrows, stays optically centred                                     |
-| `mw-calendar-grid`        | The seven column grid; weekday labels and day cells are its only children                       |
-| `mw-calendar-weekday`     | Column label. Decorative - the day buttons carry the weekday themselves                         |
-| `mw-calendar-day`         | One day. A `button`, so `:disabled` gives you an unavailable day                                |
-| `mw-calendar-date`        | The number                                                                                      |
-| `mw-calendar-adjacent`    | Day of the neighbouring month - muted, still readable                                           |
-| `mw-calendar-weekend`     | Saturday/Sunday. Tinted cell; on the label it turns the text secondary                          |
-| `mw-calendar-today`       | Outlined in the secondary colour, bold                                                          |
-| `mw-selected`             | Filled with the primary colour                                                                  |
-| `mw-calendar-dots`        | Dot row, absolutely placed at the bottom of the cell                                            |
-| `mw-calendar-dot`         | 6px dot, neutral. Toned by `-primary`, `-secondary`, `-success`, `-warning`, `-danger`, `-info` |
-| `mw-calendar-legend`      | Rule plus a row of dot/label pairs below the grid                                               |
-| `mw-calendar-legend-item` | One dot/label pair                                                                              |
+| Class                     | Role                                                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mw-calendar`             | Surface. Same border, radius and shadow as a card, without the hover lift                                                                           |
+| `mw-calendar-plain`       | Drops the surface - for a calendar already sitting on a card or panel                                                                               |
+| `mw-calendar-compact`     | Date picker density: dots hidden, 29px cells, tighter header and labels                                                                             |
+| `mw-calendar-header`      | Arrow, title, arrow                                                                                                                                 |
+| `mw-calendar-nav`         | Sits **on** `mw-btn` - only squares it off around the chevron                                                                                       |
+| `mw-calendar-title`       | Takes the space between the arrows, stays optically centred                                                                                         |
+| `mw-calendar-grid`        | The seven column grid; weekday labels and day cells are its only children                                                                           |
+| `mw-calendar-weekday`     | Column label. Decorative - the day buttons carry the weekday themselves                                                                             |
+| `mw-calendar-day`         | One day. A `button`, so `:disabled` gives you an unavailable day                                                                                    |
+| `mw-calendar-date`        | The number                                                                                                                                          |
+| `mw-calendar-adjacent`    | Day of the neighbouring month - muted, still readable                                                                                               |
+| `mw-calendar-weekend`     | Saturday/Sunday. Tinted cell; on the label it turns the text secondary                                                                              |
+| `mw-calendar-today`       | Outlined in the secondary colour, bold                                                                                                              |
+| `mw-selected`             | Filled with the primary colour                                                                                                                      |
+| `mw-calendar-dots`        | Dot row, absolutely placed at the bottom of the cell                                                                                                |
+| `mw-calendar-dot`         | 5px dot. Colour comes from `--mw-calendar-dot`; the `-primary`, `-secondary`, `-success`, `-warning`, `-danger`, `-info` classes are presets for it |
+| `mw-calendar-legend`      | Rule plus a row of dot/label pairs below the grid                                                                                                   |
+| `mw-calendar-legend-item` | One dot/label pair                                                                                                                                  |
 
 - **Today is outlined in secondary, the picked day is filled with primary.** Two
   different colours on purpose: an outline and a fill in the same colour read as
@@ -615,15 +697,21 @@ itself.
   height and its number sits on the same line as every other. Two or three per
   day stay readable, more do not. A dot on a picked day keeps its status colour;
   only the untoned one flips to the accent text colour.
+- **What a dot means belongs to the caller.** The same calendar reads "request
+  pending / booked / time offered" in a scheduling app and something entirely
+  different on a public booking page, so the colour is a custom property, not a
+  fixed set: `style="--mw-calendar-dot: #7a4fd4"` on the dot, or on the cell to
+  colour all of its dots. The six tone classes are named presets for exactly
+  that property - use them when they fit, ignore them when they do not.
 - **Render the days spilling in from the neighbouring month.** An empty first
   row reads like a broken calendar, not like a short month. `mw-calendar-adjacent`
   is what pushes them back.
 - A month gets six rows even when five would do, so the calendar - and
   everything under it - keeps its height while you page through.
-- Cell height is fixed (44px, 29px compact), width follows the container. No
-  aspect ratio: a full-width calendar would otherwise grow rows several hundred
-  pixels tall. A calendar therefore wants a column, not the full page width -
-  give it one, or cap it.
+- Cell height is fixed (38px, 44px on a coarse pointer, 29px compact), width
+  follows the container. No aspect ratio: a full-width calendar would otherwise
+  grow rows several hundred pixels tall. A calendar therefore wants a column,
+  not the full page width - give it one, or cap it.
 - **A week has no class of its own.** Render seven cells instead of forty-two
   and you have one; everything else is identical.
 - `mw-calendar-compact` hides the dots and shortens the cell - the dots are what
@@ -648,8 +736,14 @@ Two forms, picked by count - see also the pitfall list in `SKILL.md`.
 ```
 
 Variants: `mw-tag-primary`, `-secondary`, `-success`, `-info`, `-warning`,
-`-danger`, `-muted`. Size: `mw-tag-lg`. `mw-tag-muted` is the neutral tone for
-states that should not shout (draft, archived).
+`-danger`, `-muted`, `-neutral`. Size: `mw-tag-lg`.
+
+`mw-tag-muted` and `mw-tag-neutral` are not the same and the difference carries
+meaning. **Muted** means the label steps back - draft, archived, a shortcoming
+("no e-invoice"). **Neutral** is an identifier with no judgement attached and
+keeps the normal text colour - a customer number, a document type, a price on a
+category ("XRechnung" is a property, not a verdict). Both are also available on
+the list container: `mw-tags-muted`, `mw-tags-neutral`.
 
 **List** - the container carries the colour for all its items:
 
@@ -797,7 +891,7 @@ Both are chronicles (CV, changelog), not schedulable time axes.
 
 ```html
 <div class="mw-timeline-big">
-  <div class="mw-timeline-big-step active">
+  <div class="mw-timeline-big-step mw-active">
     <div class="mw-timeline-big-date-container">
       <div class="mw-timeline-big-date-main">01/2023 - today</div>
       <div class="mw-timeline-big-date-sub">(3 years)</div>
@@ -813,7 +907,7 @@ Both are chronicles (CV, changelog), not schedulable time axes.
 </div>
 
 <div class="mw-timeline-simple">
-  <div class="mw-timeline-simple-step active">
+  <div class="mw-timeline-simple-step mw-active">
     <div class="mw-timeline-simple-date">2024-03-22</div>
     <div class="mw-timeline-simple-content">
       <div class="mw-card mw-card-simple">...</div>
@@ -1017,12 +1111,12 @@ shipped JS, as is the track transform. In a SPA, render the dots and set
     <img class="mw-image-slider-base-image" src="base.jpg" alt="" />
   </div>
   <div class="mw-image-slider-overlay">
-    <div class="mw-image-slider-overlay-image active" data-index="1">
+    <div class="mw-image-slider-overlay-image mw-active" data-index="1">
       <img src="a.jpg" alt="" />
     </div>
   </div>
   <div class="mw-image-slider-controls-grid-3">
-    <button class="mw-btn mw-btn-primary active" data-index="0">Base</button>
+    <button class="mw-btn mw-btn-primary mw-active" data-index="0">Base</button>
   </div>
 </div>
 ```

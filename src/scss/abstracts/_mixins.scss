@@ -43,3 +43,37 @@
     @content;
   }
 }
+
+// Scroll hint for a horizontally scrollable strip - a tab bar, a wide table.
+//
+// Four gradient layers in two pairs. The cover pair is attached to the content
+// (`local`) and therefore scrolls out of the way once that edge is reached;
+// the shadow pair stays on the frame (`scroll`). Net effect: a shadow shows
+// only on the side that still has something hidden behind it. No JavaScript,
+// no scroll listener.
+//
+// The cover has to match whatever the strip sits on, which is why it reads a
+// token: preset to the page, re-pointed inside cards, panels and modals.
+@mixin scroll-hint {
+  background-image:
+    linear-gradient(
+      to right,
+      var(--mw-scroll-hint-cover, var(--mw-page-background)) 20%,
+      transparent
+    ),
+    linear-gradient(
+      to left,
+      var(--mw-scroll-hint-cover, var(--mw-page-background)) 20%,
+      transparent
+    ),
+    linear-gradient(to right, var(--mw-shadow), transparent),
+    linear-gradient(to left, var(--mw-shadow), transparent);
+  background-position: left, right, left, right;
+  background-repeat: no-repeat;
+  background-size:
+    2.5rem 100%,
+    2.5rem 100%,
+    0.9rem 100%,
+    0.9rem 100%;
+  background-attachment: local, local, scroll, scroll;
+}

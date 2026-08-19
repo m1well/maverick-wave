@@ -1,6 +1,23 @@
 (function () {
   'use strict';
 
+  // State classes: `mw-active` is the documented spelling, plain `active` is
+  // the one older markup uses. Both are styled, so turning a state *off* has
+  // to clear both - otherwise a stale `active` from the HTML would keep a
+  // second tab lit.
+  function setActive(el, on) {
+    if (!el) return;
+    el.classList.toggle('mw-active', on);
+    if (!on) el.classList.remove('active');
+  }
+
+  function isActive(el) {
+    return (
+      !!el &&
+      (el.classList.contains('mw-active') || el.classList.contains('active'))
+    );
+  }
+
   // Initialize all components when DOM is ready
   document.addEventListener('DOMContentLoaded', function () {
     // Initialize all components
@@ -214,11 +231,7 @@
         icon.className = themeMode === 'light' ? 'fas fa-sun' : 'fas fa-moon';
       }
       // Adjust toggle 'active' state if needed (assuming 'active' shows sun)
-      if (themeMode === 'light') {
-        themeToggle.classList.add('active');
-      } else {
-        themeToggle.classList.remove('active');
-      }
+      setActive(themeToggle, themeMode === 'light');
 
       // Disable existing toggle visually and functionally
       themeToggle.style.opacity = '0.4';
@@ -244,7 +257,7 @@
     const applyTheme = (lightMode) => {
       // Use toggle's second argument for cleaner class switching
       body.classList.toggle('mw-theme-light', lightMode);
-      themeToggle.classList.toggle('active', lightMode);
+      setActive(themeToggle, lightMode);
       if (icon) {
         icon.className = lightMode ? 'fas fa-sun' : 'fas fa-moon';
       }
@@ -319,9 +332,9 @@
     const accordionHeaders = document.querySelectorAll('.mw-accordion-header');
     accordionHeaders.forEach((header) => {
       header.addEventListener('click', function () {
-        this.classList.toggle('active');
-        const content = this.nextElementSibling;
-        if (content) content.classList.toggle('active');
+        const open = !isActive(this);
+        setActive(this, open);
+        setActive(this.nextElementSibling, open);
       });
     });
   }
@@ -429,7 +442,7 @@
         });
 
         navLinks.forEach((link) => {
-          link.classList.remove('active');
+          setActive(link, false);
 
           const href = link.getAttribute('href');
           if (href) {
@@ -437,7 +450,7 @@
             if (hashIndex !== -1) {
               const linkTarget = href.substring(hashIndex + 1);
               if (linkTarget === current) {
-                link.classList.add('active');
+                setActive(link, true);
               }
             }
           }
@@ -458,20 +471,19 @@
         tabsContainer
           .querySelectorAll('.mw-tabs-nav-item')
           .forEach((navItem) => {
-            navItem.classList.remove('active');
+            setActive(navItem, false);
           });
 
-        this.classList.add('active');
+        setActive(this, true);
 
         const tabId = this.getAttribute('data-tab');
         if (!tabId) return;
 
         tabsContainer.querySelectorAll('.mw-tabs-panel').forEach((panel) => {
-          panel.classList.remove('active');
+          setActive(panel, false);
         });
 
-        const targetPanel = document.getElementById(tabId);
-        if (targetPanel) targetPanel.classList.add('active');
+        setActive(document.getElementById(tabId), true);
       });
     });
   }
@@ -602,13 +614,11 @@
 
       function updateSliderView() {
         overlayImages.forEach((img) => {
-          const imgIndex = parseInt(img.dataset.index);
-          img.classList.toggle('active', imgIndex === current);
+          setActive(img, parseInt(img.dataset.index) === current);
         });
 
         buttons.forEach((btn) => {
-          const btnIndex = parseInt(btn.dataset.index);
-          btn.classList.toggle('active', btnIndex === current);
+          setActive(btn, parseInt(btn.dataset.index) === current);
         });
       }
 

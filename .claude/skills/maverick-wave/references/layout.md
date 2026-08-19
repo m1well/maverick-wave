@@ -26,7 +26,11 @@
 - `mw-main` is a full-height flex column - the footer stays at the bottom on
   short pages.
 - `mw-container` is `min(1200px, 89%)`, horizontally centered. Nest it inside
-  every full-bleed band (header, section, footer), never around them.
+  every full-bleed band (header, section, footer), never around them. Below
+  576px it switches to a fixed 1rem gutter instead of the percentage - 89% of a
+  375px screen leaves 41px of nothing on a card that has to fit an amount, a
+  status and two labels into one row. Both widths are tokens,
+  `--mw-container-width` and `--mw-container-width-sm`.
 - `mw-content` (`flex: 1` + top padding) is the alternative to `mw-section` when
   a page has one single content area. `mw-content-centered` centers it
   vertically over the full viewport - login pages, error pages.
@@ -59,7 +63,7 @@ its children are styled through descendant selectors:
       <nav class="mw-navbar mw-navbar-medium">
         <ul class="mw-navbar-list">
           <li class="mw-navbar-item">
-            <a href="#start" class="mw-navbar-link active">Start</a>
+            <a href="#start" class="mw-navbar-link mw-active">Start</a>
           </li>
           <li class="mw-navbar-item">
             <a href="#docs" class="mw-navbar-link">Docs</a>
@@ -153,7 +157,7 @@ viewport, so keep long tooltips off the outermost elements.
 
 | Class                               | Use                                                                        |
 | ----------------------------------- | -------------------------------------------------------------------------- |
-| `mw-section`                        | Vertical rhythm (1.75rem top/bottom) for a page band                       |
+| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 1.75rem    |
 | `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                     |
 | `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages |
 | `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                     |
@@ -276,6 +280,47 @@ automatically.
 
 **Display** - `mw-d-flex`, `mw-d-inline-flex`, `mw-d-block`, `mw-d-inline`,
 `mw-d-inline-block`, `mw-d-grid`, `mw-d-none`, `mw-d-contents`.
+
+**Numbers** - `mw-text-numeric` is fixed-width digits and nothing else, for a
+clock, a counter or an ID that must not jitter while it changes.
+`mw-text-currency` adds right alignment and `nowrap` on top, which is what a
+money column in a table wants. Do not reach for `mw-text-currency` just to get
+the digits - that was the old behaviour of `mw-text-numeric` and the reason
+people wrote `font-variant-numeric` out by hand.
+
+### `mw-row-split` - the row with two ends
+
+The most common layout in any application: what it is on the left, the value or
+the action on the right, wrapping to two lines when it runs out of room. Card
+header, section header, key figure, week row.
+
+```html
+<div class="mw-row-split">
+  <strong>Invoice 2026-0042</strong>
+  <span class="mw-text-currency">1,204.50</span>
+</div>
+```
+
+Five declarations you would otherwise write again in every component -
+including the `flex-wrap` everyone forgets, which is what keeps the left half
+from being squashed on a phone.
+
+`mw-row-split` aligns on the baseline, which is right for text against text. Add
+`mw-row-split-center` when the two sides differ in height - a heading beside a
+button, a label beside an icon.
+
+### `mw-sr-only` - text for screen readers only
+
+```html
+<button type="button" class="mw-btn mw-btn-outline">
+  <i class="fas fa-trash"></i>
+  <span class="mw-sr-only">Delete invoice 2026-0042</span>
+</button>
+```
+
+Wherever an icon carries the whole message. Not `display: none` and not
+`visibility: hidden` - both drop the element out of the accessibility tree,
+which is precisely what must not happen.
 
 There are no responsive display variants. Show/hide per breakpoint is the
 application's job (media query in your own stylesheet, or `@if` in the

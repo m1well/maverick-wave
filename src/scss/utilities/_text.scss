@@ -14,12 +14,24 @@
     text-align: right;
   }
 
-  // For money and other figures in tables: right-aligned, fixed-width digits
-  // so decimal places line up across rows, and never wrapped mid-number.
-  // Locale-agnostic - works for 1,204.50 and 1.204,50 alike, because the
-  // alignment comes from the right edge, not from the separator.
-  // `lining-nums` guards against fonts that default to old-style figures.
+  // Fixed-width digits, nothing else. For anything where figures have to line
+  // up vertically or must not jitter while they count: a clock, a counter, a
+  // key figure, an ID. `lining-nums` guards against fonts that default to
+  // old-style figures.
+  //
+  // Deliberately without alignment: bundling `text-align: right` in here meant
+  // that whoever only wanted the digits could not use the class and wrote the
+  // declaration out by hand instead.
   &-numeric {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum';
+  }
+
+  // For money and other figures in tables: the digits from above, plus
+  // right-aligned and never wrapped mid-number. Locale-agnostic - it works for
+  // 1,204.50 and 1.204,50 alike, because the alignment comes from the right
+  // edge, not from the separator.
+  &-currency {
     text-align: right;
     font-variant-numeric: tabular-nums lining-nums;
     font-feature-settings: 'tnum', 'lnum';

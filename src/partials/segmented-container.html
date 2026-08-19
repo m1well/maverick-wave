@@ -1,0 +1,66 @@
+<h3 class="mw-section-subtitle">Segmented Control</h3>
+
+<p class="mw-text-muted mw-mb-6">
+  Two or three positions of <em>one</em> switch - income or expense, offer or
+  quote. Deliberately not a <strong>mw-button-bar</strong>: that one stacks
+  below 576px and gives every button 96% width, which is right for a row of
+  independent actions and wrong here. Stacked, two positions of a switch look
+  like two buttons you could press both of. A segmented control stays horizontal
+  at every width and splits the row into equal shares.
+</p>
+
+<div class="mw-grid-2-lg">
+  <div>
+    <h3 class="mw-mb-4">Two Positions</h3>
+    <div class="mw-card mw-card-simple">
+      <label class="mw-field-label mw-d-block mw-mb-2">Booking type</label>
+      <div class="mw-segmented mw-mb-6">
+        <button type="button" class="mw-segmented-item mw-active">
+          <i class="fas fa-arrow-down"></i>
+          Income
+        </button>
+        <button type="button" class="mw-segmented-item">
+          <i class="fas fa-arrow-up"></i>
+          Expense
+        </button>
+      </div>
+
+      <label class="mw-field-label mw-d-block mw-mb-2">Document</label>
+      <div class="mw-segmented">
+        <button type="button" class="mw-segmented-item">Offer</button>
+        <button type="button" class="mw-segmented-item mw-active">Quote</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Three Positions & Variants</h3>
+    <div class="mw-card mw-card-simple">
+      <label class="mw-field-label mw-d-block mw-mb-2">Period</label>
+      <div class="mw-segmented mw-mb-6">
+        <button type="button" class="mw-segmented-item">Day</button>
+        <button type="button" class="mw-segmented-item mw-active">Week</button>
+        <button type="button" class="mw-segmented-item">Month</button>
+      </div>
+
+      <label class="mw-field-label mw-d-block mw-mb-2">
+        Secondary tone &ndash; <code>mw-segmented-secondary</code>
+      </label>
+      <div class="mw-segmented mw-segmented-secondary mw-mb-6">
+        <button type="button" class="mw-segmented-item mw-active">List</button>
+        <button type="button" class="mw-segmented-item">Grid</button>
+      </div>
+
+      <label class="mw-field-label mw-d-block mw-mb-2">
+        Inline &ndash; <code>mw-segmented-auto</code>
+      </label>
+      <div class="mw-segmented mw-segmented-auto">
+        <button type="button" class="mw-segmented-item mw-active">All</button>
+        <button type="button" class="mw-segmented-item">Open</button>
+        <button type="button" class="mw-segmented-item" disabled>
+          Archived
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -170,23 +170,28 @@ $_mw-calendar-dot-tones: (
   pointer-events: none;
 }
 
+// What a dot means belongs to the caller: the same calendar reads "request
+// pending / booked / time offered" in one app and something else entirely on a
+// public booking page. So the colour is a property, settable per cell, and the
+// tone classes below are just named presets for it.
 .mw-calendar-dot {
   width: $_mw-calendar-dot-size;
   height: $_mw-calendar-dot-size;
   border-radius: radius('full');
-  background: var(--mw-text-muted-color);
+  background: var(--mw-calendar-dot, var(--mw-text-muted-color));
   flex-shrink: 0;
 }
 
 @each $name, $color in $_mw-calendar-dot-tones {
   .mw-calendar-dot-#{$name} {
-    background: #{$color};
+    --mw-calendar-dot: #{$color};
   }
 }
 
-// Only the untoned dot would drown in the selected fill
+// Only the untoned dot would drown in the selected fill. An inline
+// --mw-calendar-dot on the dot itself still wins over this.
 .mw-calendar-day.mw-selected .mw-calendar-dot:not([class*='mw-calendar-dot-']) {
-  background: var(--mw-accent-text-color);
+  --mw-calendar-dot: var(--mw-accent-text-color);
 }
 
 // Compact month - date picker density

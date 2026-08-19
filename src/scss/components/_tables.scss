@@ -56,6 +56,22 @@
   }
 }
 
+// Scroll hint for a table that is known to be wider than its frame.
+//
+// Opt-in, unlike the one on the tab bar, and by a different mechanism. A table
+// paints its own opaque surface, so the gradient trick used on `.mw-tabs-nav`
+// would sit behind the rows and never show. A mask sits in front of the
+// content and works - but masks have no `local` attachment, so it cannot
+// disappear once the last column is reached. Hence the extra class: only put
+// it on a table that really does overflow.
+.mw-table-responsive-hint {
+  mask-image: linear-gradient(
+    to right,
+    #000 calc(100% - 2.5rem),
+    transparent 100%
+  );
+}
+
 // Card view for mobile - clean and simple approach
 .mw-table-cards {
   @include media-down('md') {

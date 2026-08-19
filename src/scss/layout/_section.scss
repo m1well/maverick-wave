@@ -106,7 +106,7 @@
 
 // Additional spacing for the whole section
 .mw-section {
-  padding: spacing('7') spacing('0');
+  padding: var(--mw-section-padding-block) spacing('0');
   position: relative;
 }
 

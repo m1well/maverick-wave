@@ -5,6 +5,25 @@
   height. The status dots come in as
   <code>data-calendar-markers='{"2026-08-19": ["success", "warning"]}'</code>.
 </p>
+<p class="mw-text-muted">
+  What a dot <em>means</em> belongs to the caller: the same calendar reads
+  &ldquo;request pending / booked / time offered&rdquo; in a scheduling app and
+  something else entirely on a public booking page. So the colour is a property,
+  <code>--mw-calendar-dot</code>, settable per dot or inherited from the cell -
+  <code>mw-calendar-dot-success</code> and friends are named presets for it, not
+  the only way in.
+</p>
+<div class="mw-card mw-card-simple mw-mb-6">
+  <div class="mw-row-split mw-row-split-center">
+    <span>Any colour, set on the dot itself</span>
+    <span class="mw-d-flex mw-items-center mw-gap-3">
+      <span class="mw-calendar-dot" style="--mw-calendar-dot: #7a4fd4"></span>
+      <span class="mw-calendar-dot" style="--mw-calendar-dot: #d47a4f"></span>
+      <span class="mw-calendar-dot mw-calendar-dot-success"></span>
+      <code>--mw-calendar-dot</code>
+    </span>
+  </div>
+</div>
 
 <div class="mw-grid-2 calendar-demos mw-my-6">
   <div>

@@ -46,13 +46,9 @@
     position: relative;
     text-align: right;
 
-    // hint text above the buttons
-    &-hint {
-      width: 100%;
-      font-size: font-size('sm');
-      color: var(--mw-text-muted-color);
-      margin-bottom: spacing('0');
-    }
+    // The note above the buttons is `.mw-actions-note` (see _buttons.scss), so
+    // it looks the same in a form, a modal, a panel and a card. Only its
+    // alignment is the form's business, because a form row can be re-aligned.
 
     // full-width stacked
     &-full-width {
@@ -65,11 +61,21 @@
     &-center {
       justify-content: center;
       text-align: center;
+
+      .mw-actions-note,
+      .mw-form-actions-hint {
+        text-align: center;
+      }
     }
 
     &-left {
       justify-content: flex-start;
       text-align: left;
+
+      .mw-actions-note,
+      .mw-form-actions-hint {
+        text-align: left;
+      }
     }
   }
 

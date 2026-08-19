@@ -36,6 +36,7 @@
   &:hover:not(:disabled) {
     background: var(--mw-primary-color-hover);
   }
+  &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-primary-color-hover);
     border: 1px solid var(--mw-primary-color);
@@ -47,6 +48,7 @@
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color-hover);
   }
+  &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-secondary-color-hover);
     border: 1px solid var(--mw-secondary-color);
@@ -59,6 +61,7 @@
   &:hover:not(:disabled) {
     background: var(--mw-danger-color-hover);
   }
+  &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-danger-color-hover);
     border: 1px solid var(--mw-danger-color);
@@ -70,6 +73,7 @@
   &:hover:not(:disabled) {
     background: var(--mw-success-color-hover);
   }
+  &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-success-color-hover);
     border: 1px solid var(--mw-success-color);
@@ -83,6 +87,7 @@
     background: var(--mw-primary-color);
     color: var(--mw-accent-text-color);
   }
+  &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-primary-color);
     color: var(--mw-accent-text-color);
@@ -108,6 +113,36 @@
   }
 }
 
+// A button that brings nothing but its operability - settings tabs, calendar
+// days, the time in a request row, a modal backdrop. Everywhere a <button> is
+// the right element and a button is the wrong look.
+//
+// Not the same as `mw-btn-link`: that one is a button dressed as a link, with
+// its own colour and a min-width. This one has no look at all.
+.mw-btn-plain {
+  display: inline-flex;
+  align-items: center;
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--mw-primary-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
 // Size modifiers
 .mw-btn-sm {
   padding: spacing('1') spacing('3');
@@ -128,6 +163,38 @@
   .mw-btn {
     min-width: 80px;
   }
+}
+
+// A line of text above a row of actions - "This action cannot be undone", what
+// a save applies to, why a button is disabled.
+//
+// It goes *inside* the action row, so no extra wrapper is needed: a full-width
+// flex line pushes the buttons onto the row below. Only rows that actually
+// carry a note start wrapping, so nothing existing changes its behaviour.
+//
+// `mw-form-actions-hint` was the form-only version of this and stays as an
+// alias - the name is wrong the moment the same line sits in a modal.
+.mw-modal-footer,
+.mw-form-actions,
+.mw-panel-footer,
+.mw-card-footer {
+  &:has(.mw-actions-note),
+  &:has(.mw-form-actions-hint) {
+    flex-wrap: wrap;
+    // The column gap between buttons is too tight to double as the gap to the
+    // line above them
+    row-gap: spacing('3');
+  }
+}
+
+.mw-actions-note,
+.mw-form-actions-hint {
+  flex: 1 0 100%;
+  margin: spacing('0');
+  text-align: right;
+  font-size: font-size('sm');
+  color: var(--mw-text-muted-color);
+  text-wrap: pretty;
 }
 
 .mw-btn-mini {

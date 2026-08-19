@@ -216,7 +216,7 @@ export class ProjectFormComponent {
   </div>
 
   <div class="mw-form-actions">
-    <p class="mw-form-actions-hint">Fields marked with * are required.</p>
+    <p class="mw-actions-note">Fields marked with * are required.</p>
     <button type="button" class="mw-btn mw-btn-outline" (click)="form.reset()">
       Reset
     </button>

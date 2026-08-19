@@ -97,6 +97,22 @@ $_mw-tag-colors: (
   }
 }
 
+// Neutral variant for plain identifiers - a customer number, a document type,
+// a price on a category. `muted` means "steps back", this one means "no
+// judgement attached": on an invoice card "XRechnung" is a property, while
+// "no e-invoice" is a shortcoming, and the two must not look alike.
+.mw-tags-neutral .mw-tags-item,
+.mw-tag-neutral {
+  background-color: var(--mw-surface-muted);
+  border-color: var(--mw-border);
+  color: var(--mw-text-color);
+
+  &:hover {
+    background-color: var(--mw-surface-muted);
+    border-color: var(--mw-border-accent);
+  }
+}
+
 // Size variants
 // a little more air between the items instead of inside them
 .mw-tags-lg {

@@ -15,7 +15,7 @@ wired up by hand.
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -234,11 +234,11 @@ wired up by hand.
 
           <div class="mw-accordion">
             <div class="mw-accordion-item">
-              <div class="mw-accordion-header active">
+              <div class="mw-accordion-header mw-active">
                 <h3>Where is the data stored?</h3>
                 <i class="fas fa-chevron-down mw-accordion-icon"></i>
               </div>
-              <div class="mw-accordion-content active">
+              <div class="mw-accordion-content mw-active">
                 <div class="mw-accordion-content-inner">
                   <p>In Frankfurt, in our own data centre.</p>
                 </div>
@@ -332,7 +332,7 @@ wired up by hand.
       <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.10.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.js"></script>
     <script>
       // The only thing the shipped script does not cover: opening a modal.
       // Closing works through .mw-modal-close, the backdrop is wired above.
