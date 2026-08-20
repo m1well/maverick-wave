@@ -434,6 +434,104 @@
   </div>
 
   <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Prefilled Values</h3>
+    <p class="mw-text-muted mw-text-sm mw-mt-3">
+      Add <code>mw-prefilled</code> to any control whose value was not typed in
+      this session - loaded from an existing record, restored from a draft,
+      filled with a default. The corner triangle scales with the control size
+      and stays visible on readonly and disabled controls. It is decoration
+      only, so repeat the information in a <code>mw-field-hint</code> for screen
+      readers.
+    </p>
+    <div class="mw-grid-4 mw-mt-4">
+      <!-- Small -->
+      <label for="prefilled-input-sm">
+        <span>Small</span>
+        <input
+          id="prefilled-input-sm"
+          type="text"
+          class="mw-input mw-input-sm mw-prefilled"
+          value="Max Mustermann"
+        />
+      </label>
+      <!-- Default -->
+      <label for="prefilled-input">
+        <span>Default</span>
+        <input
+          id="prefilled-input"
+          type="text"
+          class="mw-input mw-prefilled"
+          value="Max Mustermann"
+        />
+      </label>
+      <!-- Large -->
+      <label for="prefilled-input-lg">
+        <span>Large</span>
+        <input
+          id="prefilled-input-lg"
+          type="text"
+          class="mw-input mw-input-lg mw-prefilled"
+          value="Max Mustermann"
+        />
+      </label>
+      <!-- Readonly -->
+      <label for="prefilled-input-readonly">
+        <span>Readonly</span>
+        <input
+          id="prefilled-input-readonly"
+          type="text"
+          class="mw-input mw-prefilled"
+          readonly
+          value="USR-00042"
+        />
+      </label>
+    </div>
+    <div class="mw-grid-4 mw-mt-4">
+      <!-- Select small -->
+      <label for="prefilled-select-sm">
+        <span>Select small</span>
+        <select
+          id="prefilled-select-sm"
+          class="mw-select mw-select-sm mw-prefilled"
+        >
+          <option selected>Germany</option>
+          <option>Austria</option>
+        </select>
+      </label>
+      <!-- Select default -->
+      <label for="prefilled-select">
+        <span>Select default</span>
+        <select id="prefilled-select" class="mw-select mw-prefilled">
+          <option selected>Germany</option>
+          <option>Austria</option>
+        </select>
+      </label>
+      <!-- Select large -->
+      <label for="prefilled-select-lg">
+        <span>Select large</span>
+        <select
+          id="prefilled-select-lg"
+          class="mw-select mw-select-lg mw-prefilled"
+        >
+          <option selected>Germany</option>
+          <option>Austria</option>
+        </select>
+      </label>
+      <!-- Textarea -->
+      <label for="prefilled-textarea">
+        <span>Textarea</span>
+        <textarea
+          id="prefilled-textarea"
+          class="mw-textarea mw-prefilled"
+          rows="3"
+        >
+Imported from the previous application.</textarea
+        >
+      </label>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
     <h3 class="mw-card-title">Toggle Switch</h3>
     <div class="mw-grid-4-lg mw-mt-4">
       <!-- Default -->

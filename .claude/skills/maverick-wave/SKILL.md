@@ -186,7 +186,8 @@ Everything below is documented in `references/components.md` unless marked other
 
 **Forms** (`references/forms.md`) `mw-field` · `mw-input` · `mw-select` ·
 `mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
-`mw-input-group` · `mw-form` / `mw-form-group` / `mw-form-actions` · `mw-login`
+`mw-input-group` · `mw-prefilled` · `mw-form` / `mw-form-group` /
+`mw-form-actions` · `mw-login`
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
 `mw-section` · `mw-page-header` · `mw-grid-*` · `mw-row-split` · `mw-hero` ·

@@ -1,6 +1,6 @@
 @use '../abstracts' as *;
 
-// Pixel-precise shape values — no fractional keys in the spacing map
+// Pixel-precise shape values - no fractional keys in the spacing map
 $_mw-kanban-action-size: 26px;
 $_mw-kanban-action-size-touch: 32px;
 // Room the ribbon needs in the top right corner of a ticket
@@ -22,7 +22,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 // Board
 // ---------------------------------------------------------------------------
 .mw-kanban {
-  // Board surface — drop it with .mw-kanban-plain or override per board.
+  // Board surface - drop it with .mw-kanban-plain or override per board.
   --mw-kanban-background: color-mix(
     in srgb,
     var(--mw-gray-color) 40%,
@@ -30,7 +30,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   );
   --mw-kanban-lane-border: 1px dashed
     color-mix(in srgb, var(--mw-text-muted-color) 40%, transparent);
-  // Keeps an empty lane from collapsing onto its header — raise it per board
+  // Keeps an empty lane from collapsing onto its header - raise it per board
   // to give a board that starts out empty some presence
   --mw-kanban-column-min-height: 120px;
 
@@ -55,7 +55,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   }
 }
 
-// Board without its own surface — for pages that already sit on a panel
+// Board without its own surface - for pages that already sit on a panel
 .mw-kanban-plain {
   --mw-kanban-background: transparent;
   padding: spacing('0');
@@ -108,7 +108,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   flex-shrink: 0;
 }
 
-// Sits on .mw-btn — this only trims it down to the header's line height
+// Sits on .mw-btn - this only trims it down to the header's line height
 .mw-kanban-add {
   padding: spacing('1') spacing('3');
   line-height: 1;
@@ -124,7 +124,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   min-height: var(--mw-kanban-column-min-height);
 }
 
-// Ticket — a plain .mw-card, only smaller
+// Ticket - a plain .mw-card, only smaller
 .mw-kanban-card {
   padding: spacing('4');
 
@@ -169,7 +169,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   line-height: 1.45;
 }
 
-// Footer — ticket key on the left, assignee and the action buttons on the right
+// Footer - ticket key on the left, assignee and the action buttons on the right
 .mw-kanban-card-footer {
   display: flex;
   align-items: center;
@@ -247,7 +247,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   border-color: var(--mw-danger-color);
 }
 
-// Composer — one per board, moved into whichever lane it is needed in
+// Composer - one per board, moved into whichever lane it is needed in
 .mw-kanban-composer {
   display: none;
   flex-direction: column;
@@ -310,7 +310,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   display: none;
 }
 
-// Compact board — for many lanes or a board next to a sidebar
+// Compact board - for many lanes or a board next to a sidebar
 .mw-kanban-compact {
   --mw-kanban-column-min-height: 90px;
 

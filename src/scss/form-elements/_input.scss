@@ -27,7 +27,7 @@
   }
 
   &:read-only {
-    background: var(--mw-gray-background);
+    background-color: var(--mw-gray-background);
     color: var(--mw-text-muted-color);
     cursor: default;
     box-shadow: none;
@@ -66,7 +66,7 @@
     }
   }
 
-  // Date / time inputs — style the native picker indicator
+  // Date / time inputs - style the native picker indicator
   &[type='date'],
   &[type='time'],
   &[type='datetime-local'] {
@@ -85,7 +85,7 @@
 
   // disabled state
   &:disabled {
-    background: var(--mw-gray-background);
+    background-color: var(--mw-gray-background);
     color: var(--mw-text-muted-color);
     cursor: not-allowed;
   }

@@ -52,7 +52,7 @@ const css = read(CSS);
 const html = read(HTML);
 if (!css || !html) {
   console.error(
-    'dist/ is missing or incomplete — run `npm run build` before `npm run verify`.'
+    'dist/ is missing or incomplete - run `npm run build` before `npm run verify`.'
   );
   process.exit(1);
 }
@@ -76,7 +76,7 @@ for (const t of [...tokensUsed].sort()) {
 for (const t of [...tokensDefined].sort()) {
   if (!tokensUsed.has(t) && !TOKEN_ALLOWLIST.has(t)) {
     errors.push(
-      `token defined but never used: ${t} — overriding it would do nothing`
+      `token defined but never used: ${t} - overriding it would do nothing`
     );
   }
 }
@@ -86,7 +86,7 @@ for (const t of [...tokensDefined].sort()) {
 const classesInCss = new Set(all(css, /\.(mw-[a-z0-9-]+)/g));
 
 // Classes the JS adds at runtime, or queries as a hook, count as legitimate
-// targets — including selector strings like '.mw-foo' and '[class~="mw-foo"]'
+// targets - including selector strings like '.mw-foo' and '[class~="mw-foo"]'
 const classesInJs = new Set(all(js, /\.?(mw-[a-z0-9-]+)/g));
 
 const classesInMarkup = new Map(); // class -> where it was seen
@@ -99,7 +99,7 @@ for (const attr of html.matchAll(/class\s*=\s*"([^"]*)"/g)) {
 }
 // The docs name classes as `mw-foo` in prose and code fences. A trailing hyphen
 // means a family was written as a stem (`mw-btn-mini-` + variants), never a real
-// class — skip those instead of reporting them as missing.
+// class - skip those instead of reporting them as missing.
 for (const c of all(docs, /[`."'\s](mw-[a-z0-9-]+)/g)) {
   if (c.endsWith('-')) continue;
   if (!classesInMarkup.has(c)) classesInMarkup.set(c, 'docs');
@@ -130,7 +130,7 @@ for (const w of warnings) console.log(`  warn   ${w}`);
 for (const e of errors) console.error(`  ERROR  ${e}`);
 
 console.log(
-  `\nverify: ${tokensDefined.size} tokens, ${classesInCss.size} classes checked — ` +
+  `\nverify: ${tokensDefined.size} tokens, ${classesInCss.size} classes checked - ` +
     (errors.length ? `${label(errors.length, 'error')}` : 'clean')
 );
 

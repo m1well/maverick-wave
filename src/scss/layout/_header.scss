@@ -79,7 +79,7 @@
     }
 
     &:disabled {
-      // Same treatment as every other disabled button — a theme-bound text
+      // Same treatment as every other disabled button - a theme-bound text
       // color would go dark on this always-primary surface in light mode
       opacity: 0.6;
       cursor: not-allowed;

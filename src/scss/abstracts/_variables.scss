@@ -37,7 +37,7 @@ $accent-text-color: #efefef !default;
 //
 // shade()/tint() mix `in hsl`, which behaves like color.adjust($lightness: ...)
 // and scales proportionally, so a derivation looks the same on every palette.
-// Mixing with black/white also lowers the saturation a little — that is why
+// Mixing with black/white also lowers the saturation a little - that is why
 // hover tones read slightly softer than the base color. Alpha blending uses
 // `srgb` against `transparent`.
 // ---------------------------------------------------------------------------
@@ -86,7 +86,7 @@ $base-colors: (
   'secondary-info-background': fade('secondary-color-hover', 70%),
   // Translucent accent line used for dividers, rules and outlines
   'border-accent': fade('primary-color', 70%),
-  // Text on any solid colored surface — buttons of every variant, table and
+  // Text on any solid colored surface - buttons of every variant, table and
   // panel headers, badges, tooltips, mini close buttons, stepper dots.
   // Deliberately derived from neither a brand color nor a theme text color:
   // it has to stay readable on a dark surface no matter how the palette or the
@@ -276,3 +276,8 @@ $z-index: (
   'tooltip': 700,
   'alert': 900,
 );
+
+// Native select arrow, drawn as a background layer because `appearance: none`
+// removes the OS one. Shared, because any control that adds a second
+// background layer (see `.mw-prefilled`) has to restate the whole list.
+$select-arrow-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath fill='%23666' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");

@@ -7,7 +7,7 @@
     <div class="mw-card mw-card-simple">
       <p class="mw-text-muted mw-text-sm mw-mb-4">
         The <code>mw-field</code> wrapper groups label, input, hint, and error
-        message as a single unit — the recommended pattern for Angular reactive
+        message as a single unit - the recommended pattern for Angular reactive
         forms.
       </p>
 
@@ -80,9 +80,9 @@
         The error look is not automatic: bind
         <code>mw-field-has-error</code> to the control state (in Angular
         <code>[class.mw-field-has-error]="c.invalid &amp;&amp; c.touched"</code
-        >). A control without a field wrapper &mdash; also a
+        >). A control without a field wrapper - also a
         <code>mw-checkbox-group</code>, <code>mw-radio-group</code> or
-        <code>mw-slider-container</code> &mdash; takes
+        <code>mw-slider-container</code> - takes
         <code>mw-form-element-error</code> instead.
       </p>
 
@@ -133,12 +133,28 @@
       </div>
 
       <!-- Disabled -->
-      <div class="mw-field">
+      <div class="mw-field mw-mb-4">
         <label class="mw-field-label" for="ff-plan">Plan (disabled)</label>
         <select id="ff-plan" class="mw-select" disabled>
           <option>Enterprise</option>
         </select>
         <span class="mw-field-hint">Contact support to change your plan.</span>
+      </div>
+
+      <!-- Prefilled -->
+      <div class="mw-field">
+        <label class="mw-field-label" for="ff-company">Company</label>
+        <input
+          id="ff-company"
+          type="text"
+          class="mw-input mw-prefilled"
+          value="ACME GmbH"
+          aria-describedby="ff-company-hint"
+        />
+        <span class="mw-field-hint" id="ff-company-hint"
+          >Prefilled from your account - marked with
+          <code>mw-prefilled</code>.</span
+        >
       </div>
     </div>
   </div>

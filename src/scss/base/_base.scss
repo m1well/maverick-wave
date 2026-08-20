@@ -58,7 +58,7 @@ $_active-prefix: 'dark';
   --mw-container-width-sm: calc(100% - #{spacing('5')} * 2);
   --mw-section-padding-block: #{spacing('7')};
 
-  // Active theme — aliases onto the dark or light set above
+  // Active theme - aliases onto the dark or light set above
   @each $name, $value in $_active-theme {
     --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
   }
