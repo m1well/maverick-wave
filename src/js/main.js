@@ -140,7 +140,7 @@
   function initGalleries() {
     document.querySelectorAll('.mw-gallery').forEach((gallery) => {
       // Dots and caption sit next to .mw-gallery, not inside it, so the
-      // container is the scope — with the parent as a fallback, otherwise a
+      // container is the scope - with the parent as a fallback, otherwise a
       // markup without the wrapper would silently stay dead
       const scope =
         gallery.closest('.mw-gallery-container') || gallery.parentElement;
@@ -154,7 +154,7 @@
 
     const slides = track.children;
 
-    // Everything below the track is optional — a gallery may well ship
+    // Everything below the track is optional - a gallery may well ship
     // without arrows, dots or a caption, and a missing one must not throw
     const dotsBox = container.querySelector('.mw-gallery-dots');
     const descBox = container.querySelector('.mw-gallery-desc');
@@ -167,7 +167,7 @@
       const total = slides.length;
       current = (index + total) % total;
 
-      // Percentages refer to the track's own width, which is one slide —
+      // Percentages refer to the track's own width, which is one slide -
       // so no measuring and nothing to recalculate on resize
       track.style.transform = `translateX(-${current * 100}%)`;
 

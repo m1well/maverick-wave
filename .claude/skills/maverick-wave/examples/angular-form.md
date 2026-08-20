@@ -238,6 +238,10 @@ export class ProjectFormComponent {
   container - use `mw-form-element-error` instead.
 - **`disabled`/`readonly` are attributes**, not classes. With reactive forms use
   `control.disable()`; the muted look comes from the `:disabled` selector.
+- **Prefilled values** take `mw-prefilled` on the control, not on the wrapper.
+  In an edit form that starts from `patchValue()`, bind it to your own flag:
+  `[class.mw-prefilled]="loaded() && !form.controls.name.dirty"`. Repeat the
+  information in the `mw-field-hint`, the marker itself is decoration.
 - **The slider needs two bindings**: `data-value` for the badge text,
   `--value` for the filled part of the track.
 - **A spinner inside a button** needs its shape class (`mw-spinner-border`) plus

@@ -98,7 +98,7 @@
         <p>
           MaverickWave uses <code>@use</code> / <code>@forward</code> (modern
           Sass module syntax). Pass your overrides through
-          <code>@use ... with (...)</code> &mdash; a plain assignment before the
+          <code>@use ... with (...)</code> - a plain assignment before the
           <code>@use</code> has no effect, because the root colors are declared
           with <code>!default</code>.
         </p>
@@ -107,11 +107,11 @@
         <p>Set <code>$mw-theme-mode</code> to control theme behavior:</p>
         <ul>
           <li>
-            <code>'switchable'</code> (default) — dark base, toggleable to light
+            <code>'switchable'</code> (default) - dark base, toggleable to light
             via <code>.mw-theme-light</code> on <code>&lt;body&gt;</code>
           </li>
-          <li><code>'dark'</code> — compile dark theme only</li>
-          <li><code>'light'</code> — compile light theme only</li>
+          <li><code>'dark'</code> - compile dark theme only</li>
+          <li><code>'light'</code> - compile light theme only</li>
         </ul>
         <p class="mw-text-warning">
           <i class="fas fa-exclamation-triangle mw-mr-1"></i>
@@ -119,14 +119,14 @@
           dark appearance regardless of theme mode.
         </p>
 
-        <h5 class="mw-mt-4">Example — your main SCSS file</h5>
+        <h5 class="mw-mt-4">Example - your main SCSS file</h5>
         <pre class="mw-code-block"><code>// styles.scss
 
 @use 'path/to/maverick-wave/src/scss/main' with (
   // Theme mode (optional, default is 'switchable')
   $mw-theme-mode: 'switchable',
 
-  // Root colors — everything else is derived from them at runtime
+  // Root colors - everything else is derived from them at runtime
   $primary-color: #e94560,
   $secondary-color: #f39c12,
   $dark-background: #1f1f2e,
@@ -152,12 +152,12 @@ body {
         </p>
         <pre
           class="mw-code-block"
-        ><code>// styles.scss — the configuration has to come first
+        ><code>// styles.scss - the configuration has to come first
 @use 'maverick-wave/src/scss/abstracts/variables' with (
   $primary-color: #0f766e
 );
 
-@use 'maverick-wave/src/scss/base'; // required — carries the :root tokens
+@use 'maverick-wave/src/scss/base'; // required - carries the :root tokens
 @use 'maverick-wave/src/scss/layout/grid';
 @use 'maverick-wave/src/scss/layout/page-header';
 @use 'maverick-wave/src/scss/components/buttons';
@@ -169,7 +169,7 @@ body {
 @use 'maverick-wave/src/scss/utilities';</code></pre>
         <p class="mw-text-warning">
           <i class="fas fa-exclamation-triangle mw-mr-1"></i>
-          Without <code>base</code> every component renders without colors — it
+          Without <code>base</code> every component renders without colors - it
           carries the <code>:root</code> custom properties. A subset like the
           one above compiles to roughly 98 kB raw / 15 kB gzipped, against 147
           kB / 22.5 kB for the full build.
@@ -195,9 +195,9 @@ body {
           <i class="fas fa-exclamation-triangle mw-mr-1"></i>
           <strong>No <code>"scripts"</code> entry for the JS file.</strong>
           <code>maverick-wave.min.js</code> wires everything up once on
-          <code>DOMContentLoaded</code> and writes straight into the DOM &mdash;
-          in a SPA everything rendered afterwards stays uninitialized, and the
-          class toggles happen behind change detection. Rebuild the behaviors in
+          <code>DOMContentLoaded</code> and writes straight into the DOM - in a
+          SPA everything rendered afterwards stays uninitialized, and the class
+          toggles happen behind change detection. Rebuild the behaviors in
           components; the state classes (<code>active</code>, <code>open</code>,
           <code>mw-modal-open</code>, <code>mw-selected</code>) are the whole
           contract.
@@ -235,8 +235,8 @@ constructor() {
         <h5 class="mw-mt-4">Reactive Forms</h5>
         <p>
           The <code>mw-field</code> wrapper groups label, control, hint and
-          error. Bind the error state yourself &mdash; the framework does not
-          style Angular's <code>ng-invalid</code> / <code>ng-touched</code>
+          error. Bind the error state yourself - the framework does not style
+          Angular's <code>ng-invalid</code> / <code>ng-touched</code>
           classes:
         </p>
         <pre
@@ -263,10 +263,10 @@ constructor() {
 import './assets/maverick-wave.min.css';</code></pre>
         <p class="mw-text-warning">
           <i class="fas fa-exclamation-triangle mw-mr-1"></i>
-          Do not import <code>maverick-wave.min.js</code> in a SPA &mdash; it
-          binds once on <code>DOMContentLoaded</code> and never sees anything
-          rendered later. Accordion, tabs, modal and theme toggle are class
-          toggles; bind them with <code>className</code> from state.
+          Do not import <code>maverick-wave.min.js</code> in a SPA - it binds
+          once on <code>DOMContentLoaded</code> and never sees anything rendered
+          later. Accordion, tabs, modal and theme toggle are class toggles; bind
+          them with <code>className</code> from state.
         </p>
         <p>Example usage in a React component:</p>
         <pre class="mw-code-block"><code>function App() {
@@ -321,7 +321,7 @@ import './assets/maverick-wave.min.css';</code></pre>
   </p>
   <pre
     class="mw-code-block"
-  ><code>/* your-custom-styles.css — load AFTER maverick-wave.min.css */
+  ><code>/* your-custom-styles.css - load AFTER maverick-wave.min.css */
 :root {
   --mw-font-family-base: 'Your Custom Font', system-ui, sans-serif;
   --mw-font-family-heading: 'Your Custom Font', system-ui, sans-serif;

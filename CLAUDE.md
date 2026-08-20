@@ -21,21 +21,21 @@ There are no test or lint scripts.
 
 ## Architecture
 
-**Build pipeline** — `gulpfile.js` orchestrates everything: SCSS compilation (autoprefixed, minified), JS minification via Terser, HTML templating via `gulp-file-include`, asset copying, and build-info injection (`{{VERSION}}`, `{{LAST_BUILD_DATE}}`, `{{LAST_BUILD_YEAR}}` placeholders replaced in HTML at build time).
+**Build pipeline** - `gulpfile.js` orchestrates everything: SCSS compilation (autoprefixed, minified), JS minification via Terser, HTML templating via `gulp-file-include`, asset copying, and build-info injection (`{{VERSION}}`, `{{LAST_BUILD_DATE}}`, `{{LAST_BUILD_YEAR}}` placeholders replaced in HTML at build time).
 
 **SCSS layers** (`src/scss/`) follow an ITCSS-inspired structure:
 
-- `abstracts/` — CSS custom properties, mixins, SCSS functions (color variant generation)
-- `base/` — Reset, element defaults, typography
-- `components/` — Self-contained component styles (25+ files, one per component)
-- `form-elements/` — Form input/select/checkbox-specific styles
-- `layout/` — Grid, container, header/footer, section
-- `utilities/` — Spacing, flex, display utility classes
-- `main.scss` — Entry point using `@use`/`@forward` (not `@import`)
+- `abstracts/` - CSS custom properties, mixins, SCSS functions (color variant generation)
+- `base/` - Reset, element defaults, typography
+- `components/` - Self-contained component styles (25+ files, one per component)
+- `form-elements/` - Form input/select/checkbox-specific styles
+- `layout/` - Grid, container, header/footer, section
+- `utilities/` - Spacing, flex, display utility classes
+- `main.scss` - Entry point using `@use`/`@forward` (not `@import`)
 
-**JavaScript** (`src/js/main.js`) — Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery slider, theme toggle (persisted to localStorage), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs, alerts/toasts, modals, range inputs.
+**JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery slider, theme toggle (persisted to localStorage), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs, alerts/toasts, modals, range inputs.
 
-**HTML showcase** (`index.html` + `src/partials/`) — The top-level `index.html` uses `@@include()` syntax to pull in 40+ partials from `src/partials/`. These compile into `dist/index.html`.
+**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 40+ partials from `src/partials/`. These compile into `dist/index.html`.
 
 ## Naming Conventions
 

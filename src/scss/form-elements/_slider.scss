@@ -145,7 +145,7 @@ $_mw-slider-colors: (
       top: -15px;
     }
 
-    // 1–10 numeric style
+    // 1-10 numeric style
     &.mw-slider-numeric::after {
       content: attr(data-value) '/10';
     }

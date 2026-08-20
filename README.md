@@ -63,8 +63,8 @@ Download `maverick-wave.min.css` and `maverick-wave.min.js` from the [latest rel
 
 ### CSS Custom Properties
 
-There are thirteen root color tokens. Everything else — hover tones, translucent
-backgrounds, borders, muted text — is derived from them at runtime with
+There are thirteen root color tokens. Everything else - hover tones, translucent
+backgrounds, borders, muted text - is derived from them at runtime with
 `color-mix()`, so overriding a root token is enough. Load your stylesheet
 **after** `maverick-wave.min.css`:
 
@@ -121,7 +121,7 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
 );
 ```
 
-> Plain variable assignments before `@use` have no effect — the framework
+> Plain variable assignments before `@use` have no effect - the framework
 > declares its root colors with `!default`, which only `@use ... with` feeds.
 
 ### Importing Only What You Need
@@ -133,7 +133,7 @@ have no use for the marketing components (`blog-post`, `gallery`,
 `home`), and Angular bundle budgets notice the difference.
 
 ```scss
-// styles.scss — configuration first, then pick
+// styles.scss - configuration first, then pick
 @use 'maverick-wave/src/scss/abstracts/variables' with (
   $primary-color: #0f766e
 );
@@ -154,7 +154,7 @@ have no use for the marketing components (`blog-post`, `gallery`,
 A typical application subset like the one above compiles to roughly 98 kB raw /
 15 kB gzipped, against 147 kB / 22.5 kB for the full build.
 
-> **`base` is not optional.** It carries the `:root` custom properties — without
+> **`base` is not optional.** It carries the `:root` custom properties - without
 > it every component renders without colors. If you bring your own reset, use
 > `@use 'maverick-wave/src/scss/base/base'` for the token block alone.
 > The `with (...)` configuration has to be the first statement in the file,
@@ -174,7 +174,7 @@ above):
 > are never initialized, and the theme toggle mutates the DOM behind Angular's
 > change detection. The behaviors it covers (accordion, tabs, modal close, mobile
 > nav, scroll spy, theme toggle, progress bars, sliders, alerts, galleries) are a
-> few lines each in a component — the framework's state classes are the whole
+> few lines each in a component - the framework's state classes are the whole
 > contract. Theme switching, for example, is a single class on `<body>`:
 
 ```typescript
@@ -183,7 +183,7 @@ document.body.classList.toggle('mw-theme-light', isLight);
 ```
 
 The `mw-field` wrapper groups label, control, hint and error. Bind the error
-state yourself — the framework does not style Angular's `ng-invalid` /
+state yourself - the framework does not style Angular's `ng-invalid` /
 `ng-touched` classes:
 
 ```html
@@ -202,8 +202,8 @@ state yourself — the framework does not style Angular's `ng-invalid` /
 </div>
 ```
 
-A complete usage guide for AI coding assistants — every component, token,
-integration pattern and example — ships with the package as a Claude Code skill
+A complete usage guide for AI coding assistants - every component, token,
+integration pattern and example - ships with the package as a Claude Code skill
 in `.claude/skills/maverick-wave/`.
 
 ## Development

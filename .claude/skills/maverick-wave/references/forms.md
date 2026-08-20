@@ -170,6 +170,33 @@ Sizes: `mw-textarea-sm`, `mw-textarea-lg`. Resizing is off by default; enable it
 with `mw-textarea-resizable`, `mw-textarea-resizable-vertical` or
 `mw-textarea-resizable-horizontal`.
 
+## Prefilled values
+
+`mw-prefilled` marks a control whose value did not come from the user in this
+session - loaded from an existing record, restored from a draft, filled with a
+default. It draws a small triangle into the top left corner of the control.
+
+```html
+<input type="text" class="mw-input mw-prefilled" value="Max Mustermann" />
+<select class="mw-select mw-select-sm mw-prefilled">
+  ...
+</select>
+<textarea class="mw-textarea mw-prefilled" rows="3"></textarea>
+```
+
+- Works on `mw-input`, `mw-select` and `mw-textarea`, and goes on the control
+  itself, not on the `mw-field` wrapper - so it also works in an input group or
+  on a standalone control.
+- The triangle follows the size modifier (`mw-input-sm`, `mw-select-lg`, ...)
+  and stays visible on `readonly` and `disabled` controls.
+- Colour is `--mw-info-color`, deliberately not primary or danger: it is an
+  information about the value, not a state or an error.
+- Decoration only. Screen readers do not see it, so put the same information in
+  an `mw-field-hint` and reference it with `aria-describedby`.
+- It is drawn as a background layer, not a pseudo element (`input` and `select`
+  never render `::before`/`::after`). A rule that sets the `background`
+  shorthand on the same control wipes it - use `background-color` there.
+
 ## Checkbox
 
 The native input is hidden; `mw-checkbox-box` is the visible control, so the

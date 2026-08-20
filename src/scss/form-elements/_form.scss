@@ -84,7 +84,7 @@
   }
 }
 
-// ===== Form Field — label + input + hint + error as a unit =====
+// ===== Form Field - label + input + hint + error as a unit =====
 // Designed e.g. for Angular reactive forms pattern:
 //   <div class="mw-field">
 //     <label class="mw-field-label mw-required">Email</label>
@@ -103,7 +103,7 @@
     color: var(--mw-text-color);
   }
 
-  // Required field asterisk — add class mw-required or attribute data-required
+  // Required field asterisk - add class mw-required or attribute data-required
   &-label.mw-required::after,
   &-label[data-required='true']::after {
     content: ' *';

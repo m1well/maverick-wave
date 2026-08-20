@@ -1,0 +1,65 @@
+@use '../abstracts' as *;
+
+// ===== Prefilled marker =====
+// Marks a control whose value did not come from the user in this session -
+// loaded from an existing record, restored from a draft, filled with a
+// default. Add `mw-prefilled` to the control itself, not to the wrapper, so
+// it also works outside `mw-field` (input groups, standalone selects).
+
+$_marker-sm: 10px;
+$_marker-base: 12px;
+$_marker-lg: 14px;
+
+// 135deg puts the hard edge on the anti-diagonal, which fills the top left
+// half of the background box - a right triangle pointing into the corner.
+$_marker-image: linear-gradient(
+  135deg,
+  var(--mw-info-color) 50%,
+  transparent 50%
+);
+
+@mixin _marker($size) {
+  background-image: $_marker-image;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: $size $size;
+}
+
+// A select already paints its arrow, so adding a layer means restating both.
+@mixin _marker-select($size, $arrow-inset, $arrow-size) {
+  background-image: $_marker-image, $select-arrow-image;
+  background-repeat: no-repeat;
+  background-position:
+    left top,
+    right $arrow-inset center;
+  background-size:
+    $size $size,
+    $arrow-size $arrow-size;
+}
+
+.mw-prefilled {
+  @include _marker($_marker-base);
+
+  &.mw-input-sm,
+  &.mw-textarea-sm {
+    @include _marker($_marker-sm);
+  }
+
+  &.mw-input-lg,
+  &.mw-textarea-lg {
+    @include _marker($_marker-lg);
+  }
+
+  // Selects last: each size restates the arrow layer it would otherwise lose.
+  &.mw-select {
+    @include _marker-select($_marker-base, spacing('3'), spacing('3'));
+  }
+
+  &.mw-select-sm {
+    @include _marker-select($_marker-sm, spacing('2'), spacing('2'));
+  }
+
+  &.mw-select-lg {
+    @include _marker-select($_marker-lg, spacing('4'), spacing('4'));
+  }
+}

@@ -68,7 +68,7 @@ $_mw-avatar-colors: (
     border-radius: radius('sm');
   }
 
-  // Initials — for users without a picture. Centers its text content and puts
+  // Initials - for users without a picture. Centers its text content and puts
   // the color on the background, so it stays combinable with the color
   // variants below, which keep working on the border.
   &-initials {
