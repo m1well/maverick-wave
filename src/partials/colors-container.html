@@ -3,10 +3,12 @@
 <!-- the hex code string is getting updated via javascript! -->
 
 <p class="mw-text-muted mw-mb-6">
-  These twelve are the only colors you ever set. Everything else - hover tones,
-  translucent backgrounds, borders, muted text - is derived from them at runtime
-  with <code>color-mix()</code>, so overriding a root token cascades to all of
-  its variants.
+  These thirteen are the only colors you ever set. Everything else - hover
+  tones, translucent backgrounds, borders, muted text, the card and footer
+  surfaces, the ink variant the dark theme needs - is derived from them at
+  runtime with
+  <code>color-mix()</code> and relative color syntax, so overriding a root token
+  cascades to all of its variants.
 </p>
 
 <div class="mw-grid-auto-sm">
@@ -135,4 +137,74 @@
       <p class="mw-text-muted">#000000</p>
     </div>
   </div>
+
+  <div class="mw-card mw-card-simple color-card">
+    <div class="mw-text-center">
+      <div
+        class="color-swatch"
+        style="background: var(--mw-form-elements-background)"
+      ></div>
+      <p>Form Elements</p>
+      <p class="mw-text-muted">#000000</p>
+    </div>
+  </div>
 </div>
+
+<h3 class="mw-section-subtitle">Fill or Ink</h3>
+
+<p class="mw-text-muted mw-mb-6">
+  Every brand and status colour comes in two tokens.
+  <code>--mw-primary-color</code> is the exact colour, for anything it
+  <strong>fills</strong> - buttons, badges, bars - with
+  <code>--mw-accent-text-color</code> on top.
+  <code>--mw-primary-text-color</code> is the same colour as ink
+  <strong>on</strong> a theme surface: text, icons, focus rings, accent borders.
+  A colour picked to carry a label is by definition too dark or too light to be
+  read on the page it sits on. The ink token clamps OKLch lightness - at least
+  0.68 on the dark page, at most 0.55 on the light one - and keeps hue and
+  chroma, so it works for any palette: a dark colour gets lifted, a very light
+  one deepened, and a colour already in range passes through untouched. Toggle
+  the theme and watch the second row.
+</p>
+
+<div class="mw-grid-auto-sm mw-mb-6">
+  <div class="mw-card mw-card-simple">
+    <p class="mw-mb-3"><strong>Fill</strong> - <code>--mw-*-color</code></p>
+    <div class="mw-tags">
+      <span class="mw-tag mw-tag-primary">Primary</span>
+      <span class="mw-tag mw-tag-secondary">Secondary</span>
+    </div>
+    <p class="mw-mt-4">
+      <button class="mw-btn mw-btn-primary">Primary</button>
+      <button class="mw-btn mw-btn-secondary">Secondary</button>
+    </p>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <p class="mw-mb-3"><strong>Ink</strong> - <code>--mw-*-text-color</code></p>
+    <p class="mw-text-primary">Primary text, links and icons</p>
+    <p class="mw-text-secondary">Secondary accent</p>
+    <p class="mw-text-success">Success</p>
+    <p class="mw-text-warning">Warning</p>
+    <p class="mw-text-danger">Danger</p>
+    <p class="mw-text-info">Info</p>
+  </div>
+</div>
+
+<p class="mw-text-muted">
+  Tinted surfaces follow one rule as well:
+  <code>--mw-*-background</code> is 20% of the colour,
+  <code>--mw-*-background-hover</code> 45%. Both stay close enough to the
+  surface underneath that <code>--mw-text-color</code> keeps working on top -
+  which is what makes an alert, badge or tag readable in either theme.
+</p>
+
+<p class="mw-text-muted">
+  The surfaces work the same way. Card, footer and border scale the page
+  background's OKLch lightness and chroma by one factor and keep the hue, so a
+  tinted page hands its tint down instead of graying out. A card always steps
+  <strong>away from the text colour</strong> - darker than the page in the dark
+  theme, lighter in the light one - so content sits on the cleaner surface. That
+  is also why the dark page background is not near-black: the surfaces below it
+  need somewhere to go.
+</p>

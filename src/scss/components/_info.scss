@@ -78,7 +78,7 @@ button.mw-info {
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
   }
 }
@@ -149,8 +149,8 @@ button.mw-info {
 @each $name, $col in $_mw-info-colors {
   .mw-info-#{$name} {
     background: var(--mw-#{$name}-info-background);
-    border-color: #{$col};
-    border-left: 6px solid #{$col};
+    border-color: var(--mw-#{$name}-text-color);
+    border-left: 6px solid var(--mw-#{$name}-text-color);
   }
 
   .mw-info-mini-#{$name} {

@@ -52,22 +52,22 @@
 
   // Color variants (change icon color)
   &-primary .mw-empty-state-icon {
-    color: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
     opacity: 0.7;
   }
 
   &-success .mw-empty-state-icon {
-    color: var(--mw-success-color);
+    color: var(--mw-success-text-color);
     opacity: 0.7;
   }
 
   &-warning .mw-empty-state-icon {
-    color: var(--mw-warning-color);
+    color: var(--mw-warning-text-color);
     opacity: 0.7;
   }
 
   &-danger .mw-empty-state-icon {
-    color: var(--mw-danger-color);
+    color: var(--mw-danger-text-color);
     opacity: 0.7;
   }
 }

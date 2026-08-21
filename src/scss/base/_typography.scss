@@ -47,7 +47,7 @@ h3 {
   font-size: font-size('xl');
 
   &.mw-accent {
-    color: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
   }
 }
 
@@ -89,7 +89,7 @@ code {
 }
 
 blockquote {
-  color: var(--mw-secondary-color);
+  color: var(--mw-secondary-text-color);
   font-style: italic;
   position: relative;
   padding: spacing('4') spacing('8');

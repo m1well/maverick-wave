@@ -230,8 +230,9 @@ text
    backgrounds and borders are derived with `color-mix()` at runtime. Setting
    `--mw-primary-color-hover` by hand is usually a sign the base token was not
    set.
-10. **Browser floor: `color-mix()`** - Chrome 111+, Safari 16.2+, Firefox 113+.
-    Older browsers get no colours at all, not merely worse ones.
+10. **Browser floor: `color-mix()` and `oklch(from ...)`** - Chrome 119+,
+    Safari 16.4+, Firefox 128+. Both carry the derived tones, so older browsers
+    get no colours at all, not merely worse ones.
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
     `mw-btn-sm`, `mw-input-sm`, `mw-select-sm` and `mw-textarea-sm` get a 2.5rem
     minimum height, a tab 2.75rem, a calendar day 44px. `mw-btn-mini` keeps its

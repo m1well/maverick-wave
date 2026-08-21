@@ -50,7 +50,7 @@
       left: spacing('0');
       width: 200px;
       height: 5px;
-      background: var(--mw-primary-color);
+      background: var(--mw-primary-text-color);
     }
   }
 
@@ -112,7 +112,7 @@
       }
 
       i {
-        color: var(--mw-primary-color);
+        color: var(--mw-primary-text-color);
         flex-shrink: 0;
       }
     }
@@ -196,7 +196,7 @@
       }
 
       &:hover {
-        color: var(--mw-primary-color);
+        color: var(--mw-primary-text-color);
         &::after {
           opacity: 1;
           height: 2px;
@@ -248,7 +248,7 @@
   &-footer {
     margin-top: spacing('6');
     padding-top: spacing('4');
-    border-top: 1px solid var(--mw-secondary-color);
+    border-top: 1px solid var(--mw-secondary-text-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -260,7 +260,7 @@
 
     &-button {
       transition: var(--mw-transition);
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
 
       &:hover {
         transform: translateX(-7px);

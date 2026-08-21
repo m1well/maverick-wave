@@ -43,7 +43,7 @@
 @for $i from 1 through 5 {
   .mw-rating[data-rating='#{$i}'] {
     & .mw-rating-icon:nth-child(-n + #{$i}) {
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
     }
   }
 }

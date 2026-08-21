@@ -28,7 +28,7 @@ $_simple-date-width: 110px;
 
 @keyframes mw-pulse-ring-big {
   0% {
-    box-shadow: 0 0 0 0 var(--mw-primary-color);
+    box-shadow: 0 0 0 0 var(--mw-primary-text-color);
   }
   70% {
     box-shadow: 0 0 0 13px transparent;
@@ -40,7 +40,7 @@ $_simple-date-width: 110px;
 
 @keyframes mw-pulse-ring-simple {
   0% {
-    box-shadow: 0 0 0 0 var(--mw-primary-color);
+    box-shadow: 0 0 0 0 var(--mw-primary-text-color);
   }
   70% {
     box-shadow: 0 0 0 5px transparent;
@@ -65,7 +65,7 @@ $_simple-date-width: 110px;
     top: 0;
     width: $_border-width-big;
     height: 100%;
-    background: var(--mw-primary-color);
+    background: var(--mw-primary-text-color);
     transform: translateX(-50%);
   }
 
@@ -79,7 +79,7 @@ $_simple-date-width: 110px;
   &-date-container {
     position: relative;
     z-index: z-index('card');
-    border: $_border-width-big solid var(--mw-primary-color);
+    border: $_border-width-big solid var(--mw-primary-text-color);
     background: var(--mw-card-background);
     border-radius: radius('md');
     padding: spacing('3') spacing('4');
@@ -148,7 +148,7 @@ $_simple-date-width: 110px;
     animation-name: mw-slide-in-left;
 
     .mw-timeline-big-event {
-      border-right: 2px solid var(--mw-secondary-color);
+      border-right: 2px solid var(--mw-secondary-text-color);
       border-top-right-radius: radius('none');
       border-bottom-right-radius: radius('none');
       text-align: right;
@@ -164,7 +164,7 @@ $_simple-date-width: 110px;
     animation-name: mw-slide-in-right;
 
     .mw-timeline-big-event {
-      border-left: 2px solid var(--mw-secondary-color);
+      border-left: 2px solid var(--mw-secondary-text-color);
       border-top-left-radius: radius('none');
       border-bottom-left-radius: radius('none');
       text-align: left;
@@ -182,7 +182,7 @@ $_simple-date-width: 110px;
   &-step.mw-active &-date-container,
   &-step.active &-date-container {
     background: var(--mw-primary-color);
-    border-color: var(--mw-primary-color);
+    border-color: var(--mw-primary-text-color);
     transform: scale(1.1);
     animation: mw-pulse-ring-big 2s infinite;
 
@@ -227,7 +227,7 @@ $_simple-date-width: 110px;
 
       .mw-timeline-big-event {
         border-right: none;
-        border-left: 2px solid var(--mw-secondary-color);
+        border-left: 2px solid var(--mw-secondary-text-color);
         border-top-right-radius: radius('sm');
         border-bottom-right-radius: radius('sm');
         text-align: left;
@@ -264,7 +264,7 @@ $_simple-date-width: 110px;
     top: 0;
     width: $_border-width-simple;
     height: 100%;
-    background: var(--mw-primary-color);
+    background: var(--mw-primary-text-color);
     transform: translateX(-50%);
   }
 
@@ -282,7 +282,7 @@ $_simple-date-width: 110px;
     font-size: font-size('sm');
     padding: spacing('2');
     border-radius: radius('md');
-    border: $_border-width-simple solid var(--mw-primary-color);
+    border: $_border-width-simple solid var(--mw-primary-text-color);
     background: var(--mw-card-background);
     line-height: 1.1;
     position: relative;

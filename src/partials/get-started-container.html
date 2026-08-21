@@ -69,16 +69,18 @@
         <pre class="mw-code-block"><code>/* your-custom-styles.css */
 :root {
   /* Brand colors */
-  --mw-primary-color: #e94560;
-  --mw-secondary-color: #f39c12;
+  --mw-primary-color: #0f766e;
+  --mw-secondary-color: #b45309;
 
-  /* Dark theme overrides */
-  --mw-dark-page-background: #1a1a2e;
-  --mw-dark-card-background: #2a2a4a;
+  /* Text on every solid colored surface. The one token that cannot be
+     derived: a light brand color needs a dark label, a dark one a light
+     label - set it opposite your primary. */
+  --mw-accent-text-color: #f2fafa;
 
-  /* Light theme overrides */
-  --mw-light-page-background: #ffffff;
-  --mw-light-card-background: #f0f0f5;
+  /* Page backgrounds. Card, footer and border are derived from them, so
+     these two are usually all you set. */
+  --mw-dark-page-background: #172127;
+  --mw-light-page-background: #f2f6f7;
 
   /* Font */
   --mw-font-family-base: 'Your Custom Font', sans-serif;
@@ -127,12 +129,13 @@
   $mw-theme-mode: 'switchable',
 
   // Root colors - everything else is derived from them at runtime
-  $primary-color: #e94560,
-  $secondary-color: #f39c12,
-  $dark-background: #1f1f2e,
-  $light-background: #f8f9fa,
-  $dark-text-color: #ffffff,
-  $light-text-color: #1c1c1c
+  $primary-color: #0f766e,
+  $secondary-color: #b45309,
+  $accent-text-color: #f2fafa,
+  $dark-background: #172127,
+  $light-background: #f2f6f7,
+  $dark-text-color: #e8eef0,
+  $light-text-color: #172127
 );
 
 // Your additional styles
