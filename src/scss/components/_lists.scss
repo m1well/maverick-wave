@@ -212,6 +212,7 @@
   border: 1px solid var(--mw-border);
   border-radius: radius('md');
   overflow: hidden;
+  background: var(--mw-card-background);
 
   > * {
     padding: spacing('3');
