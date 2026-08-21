@@ -14,7 +14,7 @@ $_size-lg: 7.5rem;
     height: $_size-default;
     border: 0.5rem solid var(--mw-border);
     border-radius: radius('full');
-    border-top-color: var(--mw-primary-color);
+    border-top-color: var(--mw-primary-text-color);
     animation: mw-spin 1.2s linear infinite;
 
     // Size variants
@@ -34,11 +34,11 @@ $_size-lg: 7.5rem;
 
     // Color variants
     &.mw-spinner-primary {
-      border-top-color: var(--mw-primary-color);
+      border-top-color: var(--mw-primary-text-color);
     }
 
     &.mw-spinner-secondary {
-      border-top-color: var(--mw-secondary-color);
+      border-top-color: var(--mw-secondary-text-color);
     }
   }
 
@@ -110,9 +110,9 @@ $_size-lg: 7.5rem;
       width: $_size-default;
       height: $_size-default;
       border-radius: radius('full');
-      border: 0.5rem solid var(--mw-primary-color);
-      border-color: var(--mw-primary-color) transparent var(--mw-primary-color)
-        transparent;
+      border: 0.5rem solid var(--mw-primary-text-color);
+      border-color: var(--mw-primary-text-color) transparent
+        var(--mw-primary-text-color) transparent;
       animation: mw-spin 1.5s linear infinite;
     }
 
@@ -141,13 +141,13 @@ $_size-lg: 7.5rem;
 
     // Color variants
     &.mw-spinner-primary:after {
-      border-color: var(--mw-primary-color) transparent var(--mw-primary-color)
-        transparent;
+      border-color: var(--mw-primary-text-color) transparent
+        var(--mw-primary-text-color) transparent;
     }
 
     &.mw-spinner-secondary:after {
-      border-color: var(--mw-secondary-color) transparent
-        var(--mw-secondary-color) transparent;
+      border-color: var(--mw-secondary-text-color) transparent
+        var(--mw-secondary-text-color) transparent;
     }
   }
 }

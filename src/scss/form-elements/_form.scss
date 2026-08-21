@@ -107,7 +107,7 @@
   &-label.mw-required::after,
   &-label[data-required='true']::after {
     content: ' *';
-    color: var(--mw-danger-color);
+    color: var(--mw-danger-text-color);
     font-weight: font-weight('bold');
   }
 
@@ -118,7 +118,7 @@
 
   &-error {
     font-size: font-size('xs');
-    color: var(--mw-danger-color);
+    color: var(--mw-danger-text-color);
     display: flex;
     align-items: center;
     gap: spacing('1');

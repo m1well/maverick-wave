@@ -19,7 +19,7 @@
   font-size: inherit;
 
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
   }
 
@@ -81,8 +81,8 @@
 }
 .mw-btn-outline {
   background: transparent;
-  border-color: var(--mw-primary-color);
-  color: var(--mw-primary-color);
+  border-color: var(--mw-primary-text-color);
+  color: var(--mw-primary-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
     color: var(--mw-accent-text-color);
@@ -97,7 +97,7 @@
   background: transparent;
   border: none;
   padding: 0;
-  color: var(--mw-primary-color);
+  color: var(--mw-primary-text-color);
   &:hover:not(:disabled) {
     text-decoration: underline;
   }
@@ -108,7 +108,7 @@
   padding: 0;
   color: var(--mw-text-muted-color);
   &:hover:not(:disabled) {
-    color: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
     text-decoration: underline;
   }
 }
@@ -133,7 +133,7 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
   }
 

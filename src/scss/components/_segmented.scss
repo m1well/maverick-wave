@@ -47,7 +47,7 @@
 
   // Inset, because an outline outside the item would be clipped by the frame
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: -2px;
   }
 
@@ -59,7 +59,7 @@
   &.mw-active,
   &.active {
     background: var(--mw-primary-color);
-    border-color: var(--mw-primary-color);
+    border-color: var(--mw-primary-text-color);
     color: var(--mw-accent-text-color);
   }
 }
@@ -69,7 +69,7 @@
   &.mw-active,
   &.active {
     background: var(--mw-secondary-color);
-    border-color: var(--mw-secondary-color);
+    border-color: var(--mw-secondary-text-color);
   }
 }
 

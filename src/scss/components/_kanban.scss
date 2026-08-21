@@ -221,12 +221,12 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    border-color: var(--mw-primary-color);
+    border-color: var(--mw-primary-text-color);
     color: var(--mw-accent-text-color);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
   }
 
@@ -254,7 +254,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   gap: spacing('3');
   padding: spacing('4');
   background: var(--mw-card-background);
-  border: 1px dashed var(--mw-primary-color);
+  border: 1px dashed var(--mw-primary-text-color);
   // Same silhouette as a ticket, so it reads as one being written
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
 

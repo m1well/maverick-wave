@@ -13,8 +13,8 @@ $_mw-card-addon-colors: (
 @mixin _card-divider-gradient {
   background-image: linear-gradient(
     to right,
-    var(--mw-secondary-color),
-    var(--mw-secondary-color),
+    var(--mw-secondary-text-color),
+    var(--mw-secondary-text-color),
     var(--mw-gray-background),
     transparent
   );

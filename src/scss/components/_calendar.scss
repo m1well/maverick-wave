@@ -10,12 +10,12 @@ $_mw-calendar-grid-gap-sm: 3px;
 $_mw-calendar-grid-gap-compact: 3px;
 
 $_mw-calendar-dot-tones: (
-  'primary': var(--mw-primary-color),
-  'secondary': var(--mw-secondary-color),
-  'success': var(--mw-success-color),
-  'warning': var(--mw-warning-color),
-  'danger': var(--mw-danger-color),
-  'info': var(--mw-info-color),
+  'primary': var(--mw-primary-text-color),
+  'secondary': var(--mw-secondary-text-color),
+  'success': var(--mw-success-text-color),
+  'warning': var(--mw-warning-text-color),
+  'danger': var(--mw-danger-text-color),
+  'info': var(--mw-info-text-color),
 );
 
 // Same silhouette as a card, but without the hover lift
@@ -86,7 +86,7 @@ $_mw-calendar-dot-tones: (
 // Saturday and Sunday read like a wall calendar - the label carries the
 // weekend, the cell below only gets a faint tint
 .mw-calendar-weekday.mw-calendar-weekend {
-  color: var(--mw-danger-color);
+  color: var(--mw-danger-text-color);
 }
 
 // A fixed row height instead of an aspect ratio
@@ -128,19 +128,19 @@ $_mw-calendar-dot-tones: (
 .mw-calendar-day:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--mw-primary-background);
-  border-color: var(--mw-primary-color);
+  border-color: var(--mw-primary-text-color);
 }
 
 // Today gets the outline, the selection gets the fill - both at once would be
 // indistinguishable. Secondary, so it never reads as a selection.
 .mw-calendar-day.mw-calendar-today {
-  border-color: var(--mw-secondary-color);
+  border-color: var(--mw-secondary-text-color);
   font-weight: font-weight('bold');
 }
 
 .mw-calendar-day.mw-selected {
   background: var(--mw-primary-color);
-  border-color: var(--mw-primary-color);
+  border-color: var(--mw-primary-text-color);
   color: var(--mw-accent-text-color);
   opacity: 1;
 }

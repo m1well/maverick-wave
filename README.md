@@ -38,12 +38,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@4.4.1/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@3.7.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.4.1/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -71,25 +71,27 @@ backgrounds, borders, muted text - is derived from them at runtime with
 ```css
 :root {
   /* brand */
-  --mw-primary-color: #e94560;
-  --mw-secondary-color: #f39c12;
+  --mw-primary-color: #0f766e;
+  --mw-secondary-color: #b45309;
 
   /* status */
-  --mw-success-color: #218838;
-  --mw-warning-color: #d4a310;
-  --mw-danger-color: #c82333;
-  --mw-info-color: #17a2b8;
+  --mw-success-color: #15803d;
+  --mw-warning-color: #a16207;
+  --mw-danger-color: #b91c1c;
+  --mw-info-color: #0e7490;
 
   /* neutrals and themes */
-  --mw-gray-color: #565656;
-  --mw-dark-page-background: #1a1a2e;
-  --mw-dark-text-color: #d6dbdf;
-  --mw-light-page-background: #f8f9fa;
-  --mw-light-text-color: #1a1a1d;
-  --mw-form-elements-background: #ffffff;
+  --mw-gray-color: #64748b;
+  --mw-dark-page-background: #172127;
+  --mw-dark-text-color: #e8eef0;
+  --mw-light-page-background: #f2f6f7;
+  --mw-light-text-color: #172127;
+  --mw-form-elements-background: #f5f9fa;
 
-  /* text on solid colored surfaces: buttons, table and panel headers */
-  --mw-accent-text-color: #ffffff;
+  /* text on every solid colored surface: buttons, table and panel headers.
+     The one token that cannot be derived - a light brand color needs a dark
+     label, a dark one a light label. Set it opposite your --mw-primary-color. */
+  --mw-accent-text-color: #f2fafa;
 
   --mw-font-family-base: 'Your Font Name', sans-serif;
 }
@@ -97,10 +99,81 @@ backgrounds, borders, muted text - is derived from them at runtime with
 
 Setting `--mw-primary-color` alone also retunes `--mw-primary-color-hover`,
 `--mw-primary-background`, `--mw-primary-background-hover`,
-`--mw-primary-info-background` and `--mw-border-accent`. The same holds for
+`--mw-primary-text-color` and `--mw-border-accent`. The same holds for
 `--mw-dark-page-background`, which drives the dark card, footer and border
 tones. Each derived token can still be overridden individually if you want to
 break out of the scale.
+
+> The derivation needs `color-mix()` **and** relative colour syntax
+> (`oklch(from ...)`): Chrome 119+, Safari 16.4+, Firefox 128+. Older browsers
+> get no colours at all, not merely worse ones.
+
+### Fill or ink
+
+Every brand and status colour comes in two tokens, and picking the right one is
+the whole trick:
+
+- `--mw-primary-color` is the exact colour, for anything it **fills** - buttons,
+  badges, bars, progress. The label on top is `--mw-accent-text-color`.
+- `--mw-primary-text-color` is the same colour tuned to the active theme, for
+  anything drawn **on** a theme surface - text, icons, focus rings, accent
+  borders and dividers.
+
+The second one exists because a colour picked to carry a label is by definition
+too dark or too light to be read _on_ the page it sits on. The ink token is
+derived by clamping OKLch lightness and keeping hue and chroma:
+
+```css
+--mw-dark-primary-text-color: oklch(
+  from var(--mw-primary-color) max(l, 0.68) c h
+);
+--mw-light-primary-text-color: oklch(
+  from var(--mw-primary-color) min(l, 0.55) c h
+);
+```
+
+That is a bound, not a target, which is what makes it work for any palette. A
+dark brand colour gets lifted, a very light one gets deepened, and a colour
+already inside the range passes through untouched - a neon green stays neon on
+the dark page and only turns into a real green on the light one. The bounds are
+`$ink-lightness-dark` and `$ink-lightness-light` in SCSS.
+`--mw-secondary-text-color` and `--mw-success/warning/danger/info-text-color`
+are derived the same way.
+
+`--mw-text-muted-color` is built the other way round: a true gray at a fixed
+lightness with `$muted-tint` (12%) of the primary colour mixed in, so the gray
+belongs to the palette without carrying its saturation. Stepping the theme's
+text colour back instead would hand its tint straight through - a mint white
+page would end up with mint green secondary text. Set `$muted-tint: 0%` for a
+neutral gray.
+
+Tinted surfaces follow one rule as well: `--mw-*-background` is 20% of the
+colour, `--mw-*-background-hover` 45%. Both stay close enough to the surface
+underneath that `--mw-text-color` keeps working on top, which is what makes an
+alert, badge or tag readable in either theme.
+
+### The surface stack
+
+Card, footer and border are derived from the page background by scaling its
+OKLch lightness _and_ chroma by one factor, keeping the hue:
+
+```css
+--mw-dark-card-background: oklch(
+  from var(--mw-dark-page-background) calc(l * 0.75) calc(c * 0.75) h
+);
+```
+
+Both themes step a card **away from their text colour** - down into the dark
+theme, up into the light one - so content always sits on the cleaner of the two
+surfaces. Chroma rides along with lightness because that is what a hand-picked
+stack does: a darker surface of the same hue carries less colour, not the same
+colour at a lower lightness.
+
+The one thing to know when picking `--mw-dark-page-background`: it needs
+headroom underneath. On a near-black page the surfaces below it have nowhere to
+go and cards collapse into the background, leaving only the border to separate
+them. The default sits at OKLch lightness 0.24 for that reason. The factors sit
+inline in `$dark-theme-colors` / `$light-theme-colors`, one per surface.
 
 ### SCSS Source
 
@@ -114,10 +187,15 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
   $mw-theme-mode: 'switchable',
 
   // Override root colors
-  $primary-color: #e94560,
-  $secondary-color: #f39c12,
-  $dark-background: #1f1f2e,
-  $light-background: #f8f9fa
+  $primary-color: #0f766e,
+  $secondary-color: #b45309,
+  $dark-background: #172127,
+  $light-background: #f2f6f7,
+
+  // Optional: the three derivation knobs
+  $ink-lightness-dark: 0.68,
+  $ink-lightness-light: 0.55,
+  $muted-tint: 12%
 );
 ```
 

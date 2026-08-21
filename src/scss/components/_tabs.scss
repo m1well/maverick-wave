@@ -35,13 +35,13 @@
     white-space: nowrap;
 
     &:hover {
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
     }
 
     &.mw-active,
     &.active {
-      color: var(--mw-primary-color);
-      border-bottom-color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
+      border-bottom-color: var(--mw-primary-text-color);
     }
   }
 
@@ -103,7 +103,7 @@
 
       &.mw-active,
       &.active {
-        border-right-color: var(--mw-primary-color);
+        border-right-color: var(--mw-primary-text-color);
       }
 
       @include media-down('sm') {
@@ -114,7 +114,7 @@
         &.mw-active,
         &.active {
           border-right-color: transparent;
-          border-bottom-color: var(--mw-primary-color);
+          border-bottom-color: var(--mw-primary-text-color);
         }
       }
     }

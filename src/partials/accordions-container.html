@@ -42,12 +42,12 @@
   :root {
     /* Root colors - hover tones, translucent backgrounds and borders
        are derived from them at runtime via color-mix() */
-    --mw-primary-color: #e94560;
-    --mw-secondary-color: #f39c12;
+    --mw-primary-color: #0f766e;
+    --mw-secondary-color: #b45309;
 
-    /* Theme colors */
-    --mw-dark-page-background: #1a1a2e;
-    --mw-light-page-background: #f0f0f5;
+    /* Theme colors - card, footer and border are derived from these */
+    --mw-dark-page-background: #172127;
+    --mw-light-page-background: #f2f6f7;
 
     /* Font */
     --mw-font-family-base: 'Your Custom Font', sans-serif;
@@ -67,7 +67,7 @@
         <pre class="mw-code-block"><code>// Your styles.scss
 
   @use 'path/to/maverick-wave/src/scss/main' with (
-    $primary-color: #e94560,
+    $primary-color: #0f766e,
     $mw-theme-mode: 'dark' // 'switchable' | 'dark' | 'light'
   );</code></pre>
         <p>

@@ -15,7 +15,7 @@
 // Keyframes for the pulsing indicator
 @keyframes pulse-indicator {
   0% {
-    opacity: 0.4;
+    opacity: 0.5;
     box-shadow: 0 0 3px var(--mw-warning-color);
   }
   25% {
@@ -23,7 +23,7 @@
     box-shadow: 0 6px 13px var(--mw-warning-color);
   }
   100% {
-    opacity: 0.4;
+    opacity: 0.5;
     box-shadow: 0 0 3px var(--mw-warning-color);
   }
 }

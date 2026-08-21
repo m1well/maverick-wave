@@ -168,8 +168,8 @@ href="path/maverick-wave.min.css"&gt;</code></pre>
         </p>
         <pre class="mw-code-block"><code>/* your-custom-styles.css */
 :root {
-  --mw-primary-color: #e94560; 
-  --mw-dark-page-background: #1a1a2e; 
+  --mw-primary-color: #0f766e; 
+  --mw-dark-page-background: #172127; 
   --mw-font-family-base: 'Your Custom Font', sans-serif; 
   /* ... other overrides ... */
 }</code></pre>
@@ -181,14 +181,15 @@ href="path/maverick-wave.min.css"&gt;</code></pre>
         </p>
         <pre class="mw-code-block"><code>// your-styles.scss
 @use 'path/to/maverick-wave/src/scss/main' with (
-  $primary-color: #e94560,
-  $secondary-color: #f39c12
+  $primary-color: #0f766e,
+  $secondary-color: #b45309
   // ... other root colors ...
 );</code></pre>
         <p>
           Both methods end up at the same place: the derived tones (hover
-          colors, translucent backgrounds, borders) are calculated at runtime
-          with <code>color-mix()</code>, so a single root color is enough.
+          colors, translucent backgrounds, borders, the ink variant the dark
+          theme needs) are calculated at runtime with <code>color-mix()</code>
+          and relative color syntax, so a single root color is enough.
         </p>
 
         <h5 class="mw-mt-4 mw-mb-2">Adding Custom Fonts</h5>

@@ -116,7 +116,7 @@
     }
 
     &:focus-visible {
-      outline: 2px solid var(--mw-primary-color);
+      outline: 2px solid var(--mw-primary-text-color);
       outline-offset: 2px;
     }
 
@@ -247,7 +247,7 @@
     &.active {
       color: var(--mw-header-navbar-list-active-color);
       background: var(--mw-primary-background);
-      box-shadow: inset 3px 0 0 var(--mw-primary-color);
+      box-shadow: inset 3px 0 0 var(--mw-header-navbar-list-active-color);
       font-weight: font-weight('medium');
     }
   }
@@ -485,11 +485,11 @@
 
   &:hover:not(:disabled) {
     background: var(--mw-primary-background-hover);
-    border-color: var(--mw-primary-color);
+    border-color: var(--mw-primary-text-color);
   }
 
   &:focus-visible {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
   }
 

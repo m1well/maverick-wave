@@ -9,25 +9,51 @@ $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d
 //
 // These are the only values a project has to set. Every other tone is derived
 // from them at runtime via color-mix(), so overriding a root token in plain
-// CSS (:root { --mw-primary-color: ... }) cascades to all of its variants.
+// CSS (:root { --mw-primary-color: ... }) cascades to all of its variants -
+// including the lightened variants the dark theme needs.
 // ---------------------------------------------------------------------------
+
+// Brand
 $primary-color: #1031bb !default;
-$secondary-color: #bb3110 !default;
-// Darkened a little so light button text stays readable on the solid surface
-$success-color: #218838 !default;
-$warning-color: #d4a310 !default;
-// Darkened a little so light button text stays readable on the solid surface
-$danger-color: #db182f !default;
-$info-color: #17a2b8 !default;
-$gray-color: #565656 !default;
-$dark-background: #0b111a !default;
-$dark-text-color: #d6dbdf !default;
-$light-background: #d2d1e1 !default;
-$light-text-color: #1a1a1d !default;
+$secondary-color: #bb5710 !default;
+
+// Neutrals - a touch of the brand hue, so grays sit next to the brand colors
+// instead of fighting them
+$gray-color: #5a6478 !default;
+// Deep enough to read as dark, light enough that the surfaces derived from it
+// still have somewhere to go - see the surface stack below
+$dark-background: #171f30 !default;
+$dark-text-color: #f0eef9 !default;
+$light-background: #e7e7f0 !default;
+$light-text-color: #0c1119 !default;
+// Text on solid colored surfaces, in both themes. The one token that cannot be
+// derived: a dark brand color needs a light label, a light one a dark label.
+// Set it to the opposite end of your palette from $primary-color.
+$accent-text-color: #f2f6fc !default;
 // Form controls stay light in both themes, so they get their own root value
-$form-elements-background: #efefef !default;
-// Text on solid colored surfaces stays white in both themes
-$accent-text-color: #efefef !default;
+$form-elements-background: #f4f7fb !default;
+
+// Status - kept clear of the brand colors, so "accent" never reads as
+// "attention"
+$success-color: #157f1a !default;
+$warning-color: #bda817 !default;
+$danger-color: #c42b1c !default;
+$info-color: #0a6ba5 !default;
+
+// Uniform hover tone for every solid brand/status surface. Darkening, in both
+// themes: the label on a solid surface is $accent-text-color, and lightening
+// a solid surface is what breaks it.
+$hover-shift: 15% !default;
+
+// How light a color has to be before it reads as ink on a dark surface, and how
+// dark before it reads as ink on a light one - OKLch lightness, 0 to 1. A bound,
+// not a target: a color already inside the range is used untouched, so a bright
+// brand color stays bright and only one that would drown gets moved.
+$ink-lightness-dark: 0.65 !default;
+$ink-lightness-light: 0.35 !default;
+// How much of the primary color the muted text gray picks up, so it belongs to
+// the palette instead of being a stock #888. 0% is a true gray.
+$muted-tint: 30% !default;
 
 // ---------------------------------------------------------------------------
 // Derivation helpers
@@ -40,6 +66,11 @@ $accent-text-color: #efefef !default;
 // Mixing with black/white also lowers the saturation a little - that is why
 // hover tones read slightly softer than the base color. Alpha blending uses
 // `srgb` against `transparent`.
+//
+// A derived token may only reference a token whose value does not depend on the
+// active theme, i.e. a root color or a theme-prefixed one (dark-*/light-*).
+// Custom properties are substituted on the element they are declared on, so a
+// base token pointing at a theme alias would freeze the dark value on :root.
 // ---------------------------------------------------------------------------
 
 // Reference another token as-is
@@ -68,24 +99,74 @@ $accent-text-color: #efefef !default;
   );
 }
 
-// Uniform hover tone for every solid brand/status surface
-$hover-shift: 12%;
+// The two ink variants. They clamp lightness in OKLch and keep hue and chroma,
+// which is what makes them palette-agnostic: the same expression lifts a very
+// dark color, deepens a very light one and leaves everything in between alone.
+@function ink-on-dark($name) {
+  @return string.unquote(
+    'oklch(from var(--mw-#{$name}) max(l, #{$ink-lightness-dark}) c h)'
+  );
+}
+
+@function ink-on-light($name) {
+  @return string.unquote(
+    'oklch(from var(--mw-#{$name}) min(l, #{$ink-lightness-light}) c h)'
+  );
+}
+
+// A theme surface derived from the page background: OKLch lightness and chroma
+// scaled by the same factor, hue kept. Below 1 steps toward black, above 1
+// toward white. Chroma rides along because that is what a hand-picked stack
+// does - a darker surface of the same hue carries less color, not the same
+// color at a lower lightness, which would read oversaturated.
+@function surface($name, $factor) {
+  @return string.unquote(
+    'oklch(from var(--mw-#{$name}) calc(l * #{$factor}) calc(c * #{$factor}) h)'
+  );
+}
+
+// Muted text tone. Built from a true gray on purpose, not by stepping the
+// theme's text color back: darkening keeps the source saturation and fading
+// keeps its hue, so a tinted text color hands its tint straight through - a
+// mint white page ends up with mint green secondary text. Starting neutral and
+// adding back a defined share of the brand keeps that under control. Opaque,
+// so it reads the same on the page and on a card.
+@function muted($lightness) {
+  @return string.unquote(
+    'color-mix(in oklab, oklch(#{$lightness} 0 0), var(--mw-primary-color) #{$muted-tint})'
+  );
+}
 
 // Base colors that don't change between themes.
 // Emitted as --mw-<key>.
+//
+// A brand color has two jobs, and they need two tokens:
+//   --mw-primary-color        the exact brand tone, for anything it *fills* -
+//                             buttons, badges, bars, filled surfaces. The label
+//                             on top is --mw-accent-text-color.
+//   --mw-primary-text-color   the same color as ink on a theme surface - text,
+//                             icons, focus rings, accent borders. Lives in the
+//                             theme maps below, because a color chosen to carry
+//                             a label is by definition too dark or too light to
+//                             be read *on* the page it sits on.
+// Same split for secondary and for every status color.
 $base-colors: (
   'primary-color': $primary-color,
   'primary-color-hover': shade('primary-color', $hover-shift),
-  'primary-background': fade('primary-color', 20%),
+  // One rule for every tinted surface in the framework: 20% of the color, 45%
+  // while hovered. Both stay close enough to the surface underneath that the
+  // theme's own --mw-text-color keeps working on top - which is what makes a
+  // soft alert, badge or tag readable in the light *and* the dark theme.
+  'primary-background': fade('primary-color', 30%),
   'primary-background-hover': fade('primary-color', 50%),
-  'primary-info-background': fade('primary-color', 70%),
+  // Same surface under the name the status colors use, so a component can
+  // interpolate one token name across all six colors
+  'primary-info-background': token('primary-background'),
   'secondary-color': $secondary-color,
   'secondary-color-hover': shade('secondary-color', $hover-shift),
-  'secondary-background': fade('secondary-color', 20%),
-  'secondary-background-hover': fade('secondary-color', 40%),
-  'secondary-info-background': fade('secondary-color-hover', 70%),
-  // Translucent accent line used for dividers, rules and outlines
-  'border-accent': fade('primary-color', 70%),
+  'secondary-background': fade('secondary-color', 30%),
+  'secondary-background-hover': fade('secondary-color', 50%),
+  'secondary-info-background': token('secondary-background'),
   // Text on any solid colored surface - buttons of every variant, table and
   // panel headers, badges, tooltips, mini close buttons, stepper dots.
   // Deliberately derived from neither a brand color nor a theme text color:
@@ -111,55 +192,81 @@ $base-colors: (
 $status-colors: (
   'success-color': $success-color,
   'success-color-hover': shade('success-color', $hover-shift),
-  'success-info-background': fade('success-color-hover', 90%),
-  'success-info-background-hover': fade('success-color', 70%),
+  'success-info-background': fade('success-color', 30%),
+  'success-info-background-hover': fade('success-color', 50%),
   'warning-color': $warning-color,
   'warning-color-hover': shade('warning-color', $hover-shift),
-  'warning-info-background': fade('warning-color-hover', 90%),
-  'warning-info-background-hover': fade('warning-color', 70%),
+  'warning-info-background': fade('warning-color', 30%),
+  'warning-info-background-hover': fade('warning-color', 50%),
   'danger-color': $danger-color,
   'danger-color-hover': shade('danger-color', $hover-shift),
-  'danger-info-background': fade('danger-color-hover', 90%),
-  'danger-info-background-hover': fade('danger-color', 70%),
+  'danger-info-background': fade('danger-color', 30%),
+  'danger-info-background-hover': fade('danger-color', 50%),
   'info-color': $info-color,
   'info-color-hover': shade('info-color', $hover-shift),
-  'info-info-background': fade('info-color-hover', 90%),
-  'info-info-background-hover': fade('info-color', 70%),
+  'info-info-background': fade('info-color', 30%),
+  'info-info-background-hover': fade('info-color', 50%),
 );
 
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
   'hero-overlay-background': fade('dark-page-background', 30%),
-  'card-background': tint('dark-page-background', 5%),
-  'footer-background': shade('dark-page-background', 30%),
-  'border': tint('dark-page-background', 16%),
+  // The surface stack. A card steps *away* from the text color - down here, up
+  // in the light theme - so content sits on the cleaner of the two surfaces.
+  // Footer and header chrome step further out, the rule steps back the other way.
+  'card-background': surface('dark-page-background', 0.8),
+  'footer-background': surface('dark-page-background', 0.7),
+  'border': surface('dark-page-background', 1.5),
   'shadow': fade('dark-text-color', 30%),
   'text-color': $dark-text-color,
-  'text-muted-color': shade('dark-text-color', 30%),
+  'text-muted-color': muted(0.7),
+  // Every color as ink on this page. Derived, not hardcoded - a project that
+  // overrides a root color gets a readable dark-theme variant without setting a
+  // second value, and a palette that is already light passes through unchanged.
+  'primary-text-color': ink-on-dark('primary-color'),
+  'secondary-text-color': ink-on-dark('secondary-color'),
+  'success-text-color': ink-on-dark('success-color'),
+  'warning-text-color': ink-on-dark('warning-color'),
+  'danger-text-color': ink-on-dark('danger-color'),
+  'info-text-color': ink-on-dark('info-color'),
+  // Translucent accent line used for dividers, rules and outlines. Built from
+  // the ink tone, not the fill tone, or the line disappears into the page.
+  'border-accent': fade('dark-primary-text-color', 70%),
 );
 
 // Light theme colors. Emitted as --mw-light-<key>.
 $light-theme-colors: (
   'page-background': $light-background,
   'hero-overlay-background': fade('light-page-background', 30%),
-  'card-background': tint('light-page-background', 40%),
-  'footer-background': shade('light-page-background', 8%),
-  'border': shade('light-page-background', 15%),
+  'card-background': surface('light-page-background', 1.05),
+  'footer-background': surface('light-page-background', 0.95),
+  'border': surface('light-page-background', 0.85),
   'shadow': fade('light-text-color', 30%),
   'text-color': $light-text-color,
-  'text-muted-color': tint('light-text-color', 32%),
+  'text-muted-color': muted(0.5),
+  // Same idea, other direction: a color too light to be read on paper is
+  // deepened, everything else passes through as it is
+  'primary-text-color': ink-on-light('primary-color'),
+  'secondary-text-color': ink-on-light('secondary-color'),
+  'success-text-color': ink-on-light('success-color'),
+  'warning-text-color': ink-on-light('warning-color'),
+  'danger-text-color': ink-on-light('danger-color'),
+  'info-text-color': ink-on-light('info-color'),
+  'border-accent': fade('light-primary-text-color', 70%),
 );
 
 // Header/navbar colors. They stay dark in both themes but can be retuned on
-// their own. Emitted as --mw-header-<key>.
+// their own, hence the dark-* references. Emitted as --mw-header-<key>.
 $header-colors: (
   'background': token('dark-footer-background'),
   'text-color': token('dark-text-color'),
   'navbar-list-color': token('dark-text-muted-color'),
-  'navbar-list-active-color': token('primary-color'),
+  // Primary carries the navigation, secondary stays a signal. The bar is dark in
+  // both themes, so the active item takes the dark ink tone in both.
+  'navbar-list-active-color': token('dark-primary-text-color'),
   'burgerbutton-color': token('dark-text-color'),
-  'border': token('border-accent'),
+  'border': token('dark-border-accent'),
 );
 // Drives the bar height, the anchor scroll offset and the mobile drawer padding.
 // 59px is the intrinsic height: 42px logo + 2 × spacing('3') + 1px border.

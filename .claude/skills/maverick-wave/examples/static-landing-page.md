@@ -26,7 +26,7 @@ wired up by hand.
       /* Brand colours - one token per family, the rest is derived */
       :root {
         --mw-primary-color: #0f766e;
-        --mw-secondary-color: #f39c12;
+        --mw-secondary-color: #b45309;
         --mw-hero-background: url('/assets/hero.jpg');
       }
     </style>

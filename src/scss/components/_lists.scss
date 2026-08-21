@@ -69,7 +69,7 @@
     }
 
     &:hover {
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
 
       &::after {
         opacity: 1;
@@ -91,7 +91,7 @@
 
     &::marker {
       left: spacing('0');
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
     }
   }
 }
@@ -108,7 +108,7 @@
 
   li::before {
     content: '✓';
-    color: var(--mw-primary-color);
+    color: var(--mw-primary-text-color);
     padding-right: spacing('4');
   }
 }
@@ -124,7 +124,7 @@
 
   // Smooth focus management for accessibility
   &:focus-within {
-    outline: 2px solid var(--mw-primary-color);
+    outline: 2px solid var(--mw-primary-text-color);
     outline-offset: 2px;
     border-radius: radius('sm');
   }
@@ -172,14 +172,14 @@
       top: 0;
       bottom: 0;
       width: 0;
-      background: var(--mw-primary-color);
+      background: var(--mw-primary-text-color);
       transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &:hover {
       padding-left: spacing('4');
       background: var(--mw-primary-background-hover);
-      border-color: var(--mw-primary-color);
+      border-color: var(--mw-primary-text-color);
       transform: translateX(4px);
 
       &::before {
@@ -195,12 +195,12 @@
 
   > * {
     &::before {
-      background: var(--mw-secondary-color);
+      background: var(--mw-secondary-text-color);
     }
 
     &:hover {
       background: var(--mw-secondary-background-hover);
-      border-color: var(--mw-secondary-color);
+      border-color: var(--mw-secondary-text-color);
     }
   }
 }
@@ -234,7 +234,7 @@
         top: 0;
         bottom: 0;
         width: 3px;
-        background: var(--mw-primary-color);
+        background: var(--mw-primary-text-color);
       }
     }
 
@@ -266,7 +266,7 @@
       &:hover {
         background: var(--mw-primary-background-hover);
         padding-left: spacing('4');
-        border-left: 3px solid var(--mw-primary-color);
+        border-left: 3px solid var(--mw-primary-text-color);
       }
     }
   }
@@ -516,7 +516,7 @@
     // When item is selected, add visual feedback
     &.mw-selected {
       background: var(--mw-primary-background-hover);
-      border-left-color: var(--mw-primary-color);
+      border-left-color: var(--mw-primary-text-color);
     }
   }
 
@@ -619,7 +619,7 @@
 
     &.mw-selected {
       background: var(--mw-secondary-background-hover);
-      border-left-color: var(--mw-secondary-color);
+      border-left-color: var(--mw-secondary-text-color);
     }
   }
 }

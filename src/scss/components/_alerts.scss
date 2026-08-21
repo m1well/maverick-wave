@@ -80,10 +80,10 @@ $_mw-alert-colors: (
       var(--mw-#{$name}-info-background)
     );
     border: 1px solid color-mix(in srgb, #{$col} 20%, transparent);
-    border-left: 4px solid #{$col};
+    border-left: 4px solid var(--mw-#{$name}-text-color);
 
     .mw-alert-icon {
-      color: #{$col};
+      color: var(--mw-#{$name}-text-color);
     }
   }
 }

@@ -39,11 +39,11 @@
 
     // Variants
     &-info {
-      color: var(--mw-info-color);
+      color: var(--mw-info-text-color);
     }
 
     &-error {
-      color: var(--mw-danger-color);
+      color: var(--mw-danger-text-color);
     }
 
     // Multiple messages spacing

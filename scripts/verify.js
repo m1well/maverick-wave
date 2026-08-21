@@ -27,8 +27,14 @@ const DOCS = [
   ...markdownFiles(path.join(ROOT, '.claude', 'skills')),
 ];
 
-// Tokens read by JavaScript or reserved for consumers, so "unused in CSS" is fine
-const TOKEN_ALLOWLIST = new Set(['--mw-internal-theme-mode']);
+// Tokens read by JavaScript or reserved for consumers, so "unused in CSS" is fine.
+// warning/info have no solid button variant, but every status offers the same
+// four tones so an application can build one.
+const TOKEN_ALLOWLIST = new Set([
+  '--mw-internal-theme-mode',
+  '--mw-warning-color-hover',
+  '--mw-info-color-hover',
+]);
 
 // Classes that exist only as JS hooks or are applied by the host application
 const CLASS_ALLOWLIST = new Set([]);

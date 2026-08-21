@@ -17,11 +17,11 @@
   }
 
   &-primary {
-    border-top-color: var(--mw-primary-color);
+    border-top-color: var(--mw-primary-text-color);
   }
 
   &-secondary {
-    border-top-color: var(--mw-secondary-color);
+    border-top-color: var(--mw-secondary-text-color);
   }
 }
 
@@ -67,7 +67,7 @@
     }
 
     span {
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
     }
   }
 }

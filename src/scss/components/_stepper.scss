@@ -68,12 +68,12 @@
     transition: color 0.3s ease;
 
     &.mw-active {
-      color: var(--mw-primary-color);
+      color: var(--mw-primary-text-color);
       font-weight: font-weight('medium');
     }
 
     &.mw-done {
-      color: var(--mw-success-color);
+      color: var(--mw-success-text-color);
     }
   }
 
@@ -114,7 +114,7 @@
     }
 
     &.mw-done:not(:last-child)::after {
-      background: var(--mw-primary-color);
+      background: var(--mw-primary-text-color);
     }
   }
 
@@ -134,7 +134,7 @@
       margin-bottom: spacing('1');
 
       .mw-stepper-step.mw-active & {
-        color: var(--mw-primary-color);
+        color: var(--mw-primary-text-color);
       }
     }
 
