@@ -19,13 +19,13 @@ $secondary-color: #bb5710 !default;
 
 // Neutrals - a touch of the brand hue, so grays sit next to the brand colors
 // instead of fighting them
-$gray-color: #5a6478 !default;
+$gray-color: #6e6e78 !default;
 // Deep enough to read as dark, light enough that the surfaces derived from it
 // still have somewhere to go - see the surface stack below
 $dark-background: #171f30 !default;
 $dark-text-color: #f0eef9 !default;
 $light-background: #e7e7f0 !default;
-$light-text-color: #0c1119 !default;
+$light-text-color: #131925 !default;
 // Text on solid colored surfaces, in both themes. The one token that cannot be
 // derived: a dark brand color needs a light label, a light one a dark label.
 // Set it to the opposite end of your palette from $primary-color.
@@ -36,9 +36,9 @@ $form-elements-background: #f4f7fb !default;
 // Status - kept clear of the brand colors, so "accent" never reads as
 // "attention"
 $success-color: #157f1a !default;
-$warning-color: #bda817 !default;
-$danger-color: #c42b1c !default;
-$info-color: #0a6ba5 !default;
+$warning-color: #d1bb21 !default;
+$danger-color: #d41708 !default;
+$info-color: #0780ca !default;
 
 // Uniform hover tone for every solid brand/status surface. Darkening, in both
 // themes: the label on a solid surface is $accent-text-color, and lightening
@@ -49,11 +49,11 @@ $hover-shift: 15% !default;
 // dark before it reads as ink on a light one - OKLch lightness, 0 to 1. A bound,
 // not a target: a color already inside the range is used untouched, so a bright
 // brand color stays bright and only one that would drown gets moved.
-$ink-lightness-dark: 0.65 !default;
-$ink-lightness-light: 0.35 !default;
+$ink-lightness-dark: 0.4 !default;
+$ink-lightness-light: 0.7 !default;
 // How much of the primary color the muted text gray picks up, so it belongs to
 // the palette instead of being a stock #888. 0% is a true gray.
-$muted-tint: 30% !default;
+$muted-tint: 23% !default;
 
 // ---------------------------------------------------------------------------
 // Derivation helpers
@@ -182,7 +182,7 @@ $base-colors: (
   'surface-muted': token('gray-background'),
   // Heavy scrim behind modals and blocking spinners
   'overlay-background': fade('gray-color', 60%),
-  'section-alternate-pattern': fade('gray-color', 45%),
+  'section-alternate-pattern': fade('gray-color', 30%),
   'form-elements-background': $form-elements-background,
   'form-elements-color': shade('light-text-color', 18%),
 );
@@ -216,7 +216,7 @@ $dark-theme-colors: (
   // in the light theme - so content sits on the cleaner of the two surfaces.
   // Footer and header chrome step further out, the rule steps back the other way.
   'card-background': surface('dark-page-background', 0.8),
-  'footer-background': surface('dark-page-background', 0.7),
+  'footer-background': surface('dark-page-background', 0.75),
   'border': surface('dark-page-background', 1.5),
   'shadow': fade('dark-text-color', 30%),
   'text-color': $dark-text-color,
