@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - new color concept and new default color palette
+- `mw-item-list-compact` sits on a card surface now
 
 ## [4.4.0] - 2026-08-20
 

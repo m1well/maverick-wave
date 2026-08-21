@@ -1,5 +1,51 @@
 @use '../abstracts' as *;
 
+// One scrollbar look for every scrollable list. Was copy-pasted per variant
+// before, which is how the checkbox list ended up with track and thumb in the
+// same color - an invisible scrollbar.
+@mixin _list-scrollbar {
+  scrollbar-gutter: stable; // Prevent layout shift
+
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--mw-primary-background);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--mw-text-muted-color);
+    border-radius: 3px;
+
+    &:hover {
+      background: var(--mw-primary-color);
+    }
+  }
+
+  // Modern Firefox scrollbar - needs both thumb and track, a single value
+  // makes the whole declaration invalid
+  scrollbar-width: thin;
+  scrollbar-color: var(--mw-text-muted-color) var(--mw-gray-background);
+}
+
+// Checkbox box and checkmark sizes - shape-drawing values, so px instead of
+// spacing() keys. The checkmark has to scale with the box: compact used to be
+// an 8px box (4px of usable space inside the 2px border) holding a 5.6px
+// checkmark, so the mark broke out of its own box.
+$_checkbox-box-compact: 12px;
+$_checkbox-box-default: 14px;
+$_checkbox-box-large: 16px;
+$_check-compact-w: 5px;
+$_check-compact-h: 3px;
+$_check-default-w: 6px;
+$_check-default-h: 3px;
+$_check-large-w: 7px;
+$_check-large-h: 4px;
+// Nudges the box down onto the first text line when a header is present
+$_checkbox-box-offset: 3px;
+
 // Base list styles
 .mw-list {
   margin: spacing('4') spacing('0');
@@ -82,15 +128,18 @@
 
 // Dot lists
 .mw-list-dot {
-  padding-left: spacing('3');
-  list-style: disc inside;
+  // outside keeps a wrapping line flush with the text instead of letting it
+  // run back underneath the bullet - the padding makes room for the marker
+  padding-left: spacing('6');
+  list-style: disc outside;
 
   li {
     padding-left: spacing('1');
     margin-bottom: spacing('1');
 
+    // ::marker only takes color, content and font properties - positioning
+    // it has no effect
     &::marker {
-      left: spacing('0');
       color: var(--mw-primary-text-color);
     }
   }
@@ -102,14 +151,18 @@
   padding-left: spacing('3');
 
   li {
-    padding-left: spacing('1');
+    position: relative;
+    padding-left: spacing('6');
     margin-bottom: spacing('1');
-  }
 
-  li::before {
-    content: '✓';
-    color: var(--mw-primary-text-color);
-    padding-right: spacing('4');
+    // Taken out of the flow so a wrapping line keeps its indent instead of
+    // running back underneath the checkmark
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--mw-primary-text-color);
+    }
   }
 }
 
@@ -162,7 +215,10 @@
     padding: spacing('3');
     background: var(--mw-card-background);
     border: 1px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
 
     &::before {
@@ -176,11 +232,13 @@
       transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    // The card carries its own background and radius, so moving the whole
+    // thing reads the same as growing the padding did - and runs on the
+    // compositor instead of relaying out the item on every hover
     &:hover {
-      padding-left: spacing('4');
       background: var(--mw-primary-background-hover);
       border-color: var(--mw-primary-text-color);
-      transform: translateX(4px);
+      transform: translateX(8px);
 
       &::before {
         width: 4px;
@@ -189,10 +247,8 @@
   }
 }
 
-// Secondary variant
+// Secondary variant - additive, sits alongside mw-item-list-slide
 .mw-item-list-slide-secondary {
-  @extend .mw-item-list-slide;
-
   > * {
     &::before {
       background: var(--mw-secondary-text-color);
@@ -217,8 +273,23 @@
   > * {
     padding: spacing('3');
     border-bottom: 1px solid var(--mw-border);
-    transition: all 0.2s ease;
+    transition:
+      background 0.2s ease,
+      padding-left 0.2s ease;
     position: relative;
+
+    // Always present at zero width so it can grow on hover - creating it
+    // inside :hover means it snaps in with no transition
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--mw-primary-text-color);
+      transition: width 0.2s ease;
+    }
 
     &:last-child {
       border-bottom: none;
@@ -229,13 +300,7 @@
       padding-left: spacing('4');
 
       &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
         width: 3px;
-        background: var(--mw-primary-text-color);
       }
     }
 
@@ -247,18 +312,21 @@
         padding-left: spacing('4');
 
         &::before {
-          display: none;
+          width: 0;
         }
       }
     }
   }
 
-  // Nested compact lists styling
+  // Nested compact lists styling - only the left rule, the full border comes
+  // from the outer rule and would frame the nested list a second time
   .mw-item-list-compact {
     margin-top: spacing('2');
     margin-left: spacing('2');
+    border: none;
     border-left: 2px solid var(--mw-border);
     border-radius: 0;
+    background: transparent;
 
     > * {
       padding: spacing('2');
@@ -286,7 +354,11 @@
   > * {
     padding: spacing('4');
     border-bottom: 1px solid var(--mw-border);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      padding-left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -318,37 +390,14 @@
   border: 1px solid var(--mw-border);
   border-radius: radius('md');
   background: var(--mw-card-background);
-  scrollbar-gutter: stable; // Prevent layout shift
-
-  // Custom scrollbar styling
-  &::-webkit-scrollbar {
-    width: 7px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--mw-primary-background);
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--mw-text-muted-color);
-    border-radius: 3px;
-    opacity: 0.6;
-
-    &:hover {
-      background: var(--mw-primary-color);
-      opacity: 1;
-    }
-  }
-
-  // Modern Firefox scrollbar
-  scrollbar-width: thin;
-  scrollbar-color: var(--mw-text-muted-color) var(--mw-gray-background);
+  @include _list-scrollbar;
 
   > * {
     padding: spacing('3');
     border-bottom: 1px solid var(--mw-border);
-    transition: all 0.2s ease;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease;
 
     &:last-child {
       border-bottom: none;
@@ -366,19 +415,18 @@
   }
 }
 
-// Height variants
+// Height modifiers - additive, put them alongside mw-item-list-scroll.
+// Extending duplicated the whole scroll block three times over for what is
+// one declaration each.
 .mw-item-list-scroll-sm {
-  @extend .mw-item-list-scroll;
   max-height: 200px;
 }
 
 .mw-item-list-scroll-lg {
-  @extend .mw-item-list-scroll;
   max-height: 400px;
 }
 
 .mw-item-list-scroll-xl {
-  @extend .mw-item-list-scroll;
   max-height: 500px;
 }
 
@@ -398,7 +446,11 @@
     border-bottom: 1px solid var(--mw-border);
     border-left: 3px solid transparent;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease,
+      border-left-color 0.2s ease;
     user-select: none;
 
     &:last-child {
@@ -415,59 +467,31 @@
       transform: scale(0.98);
     }
 
+    // Only the deltas to the .mw-checkbox in form-elements. The hidden input,
+    // the box chrome and the checked, focus-visible, disabled and color states
+    // all come from there - copying them here used to shadow disabled and the
+    // size variants, because the nesting gave the copy a higher specificity.
     .mw-checkbox {
       display: flex;
-      align-items: center;
       gap: spacing('3');
       flex: 1;
 
-      // Hide native checkbox
-      input[type='checkbox'] {
-        position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-        margin: spacing('0');
-      }
-
-      // Visual checkbox (the label)
+      // A list checkbox is smaller than a standalone one. Size is a list
+      // concern here - the -compact and -large list modifiers drive it, not
+      // mw-checkbox-sm/-lg, which sit on the wrong element to reach this.
       .mw-checkbox-box {
-        position: relative;
-        flex-shrink: 0;
-        width: 14px;
-        height: 14px;
-        border: 2px solid var(--mw-border);
-        border-radius: radius('sm');
-        background: var(--mw-form-elements-background);
-        transition: var(--mw-transition);
-        margin-top: 3px;
-        cursor: pointer;
-        display: block;
+        width: $_checkbox-box-default;
+        height: $_checkbox-box-default;
+        margin-top: $_checkbox-box-offset;
 
         &::after {
-          content: '';
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          width: spacing('2');
-          height: spacing('1');
-          border-left: 2px solid var(--mw-primary-color);
-          border-bottom: 2px solid var(--mw-primary-color);
-          transform: translate(-50%, -60%) rotate(-45deg) scale(0);
-          transform-origin: center;
-          transition: var(--mw-transition);
+          width: $_check-default-w;
+          height: $_check-default-h;
         }
       }
 
-      // Checked state
-      input[type='checkbox']:checked + .mw-checkbox-box {
-        border-color: var(--mw-primary-color);
-
-        &::after {
-          transform: translate(-50%, -60%) rotate(-45deg) scale(1);
-        }
-      }
-
+      // Header plus description stacked next to the box - a list-only
+      // extension, the form element carries a single label
       .mw-checkbox-content {
         display: flex;
         flex-direction: column;
@@ -530,9 +554,14 @@
         gap: spacing('1');
 
         .mw-checkbox-box {
-          width: spacing('3');
-          height: spacing('3');
+          width: $_checkbox-box-compact;
+          height: $_checkbox-box-compact;
           margin-top: spacing('1');
+
+          &::after {
+            width: $_check-compact-w;
+            height: $_check-compact-h;
+          }
         }
 
         .mw-checkbox-content {
@@ -571,9 +600,14 @@
         gap: spacing('3');
 
         .mw-checkbox-box {
-          width: spacing('5');
-          height: spacing('5');
+          width: $_checkbox-box-large;
+          height: $_checkbox-box-large;
           margin-top: spacing('1');
+
+          &::after {
+            width: $_check-large-w;
+            height: $_check-large-h;
+          }
         }
 
         .mw-checkbox-content {
@@ -604,10 +638,9 @@
   }
 }
 
-// Color variants for checkbox lists
+// Color variants for checkbox lists - additive, sits alongside
+// mw-item-list-checkbox
 .mw-item-list-checkbox-secondary {
-  @extend .mw-item-list-checkbox;
-
   > * {
     &:hover {
       background: var(--mw-secondary-background-hover);
@@ -630,29 +663,5 @@
   @extend .mw-item-list-checkbox;
   max-height: 300px;
   overflow-y: auto;
-  scrollbar-gutter: stable;
-
-  // Same scrollbar styling as scroll lists
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--mw-text-muted-color);
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--mw-text-muted-color);
-    border-radius: 3px;
-    opacity: 0.6;
-
-    &:hover {
-      background: var(--mw-primary-color);
-      opacity: 1;
-    }
-  }
-
-  scrollbar-width: thin;
-  scrollbar-color: var(--mw-text-muted-color);
+  @include _list-scrollbar;
 }

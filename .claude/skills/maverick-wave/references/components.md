@@ -944,15 +944,19 @@ deprecated). Any card fits into the content wrapper.
 
 Layout containers for arbitrary children - the children need no classes.
 
-| Class                     | Look                                                                         |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| `mw-item-list`            | Plain flex column with gaps                                                  |
-| `mw-item-list-horizontal` | Row, wrapping; column below `sm`                                             |
-| `mw-item-list-cards`      | Wider gaps, for cards                                                        |
-| `mw-item-list-compact`    | Bordered box, divided rows, hover indent (nests)                             |
-| `mw-item-list-menu`       | Elevated menu card, pointer cursor, press feedback                           |
-| `mw-item-list-slide`      | Cards with a sliding accent border on hover (`mw-item-list-slide-secondary`) |
-| `mw-item-list-scroll`     | Scroll box, 300px (`-sm` 200, `-lg` 400, `-xl` 500)                          |
+| Class                     | Look                                                          |
+| ------------------------- | ------------------------------------------------------------- |
+| `mw-item-list`            | Plain flex column with gaps                                   |
+| `mw-item-list-horizontal` | Row, wrapping; column below `sm`                              |
+| `mw-item-list-cards`      | Wider gaps, for cards                                         |
+| `mw-item-list-compact`    | Bordered card-surface box, divided rows, hover indent (nests) |
+| `mw-item-list-menu`       | Elevated menu card, pointer cursor, press feedback            |
+| `mw-item-list-slide`      | Cards sliding sideways with an accent border on hover         |
+| `mw-item-list-scroll`     | Scroll box, 300px tall                                        |
+
+Modifiers are additive - keep the base class and add the modifier:
+`mw-item-list-scroll` + `-sm` (200px), `-lg` (400px) or `-xl` (500px), and
+`mw-item-list-slide` + `-secondary` for the secondary accent.
 
 ```html
 <div class="mw-item-list-compact">
@@ -984,10 +988,17 @@ Layout containers for arbitrary children - the children need no classes.
 </ul>
 ```
 
-Variants: `mw-item-list-checkbox-compact`, `-large`, `-secondary`,
-`-scroll`. `mw-selected` on the `<li>` is the selected-row highlight - bind it
-to the checkbox state yourself in a SPA. The `mw-checkbox-content` block is
-optional; a bare `mw-checkbox-label` renders a single-line row.
+Add `mw-item-list-checkbox-compact`, `-large` or `-secondary` alongside the
+base class; `mw-item-list-checkbox-scroll` is a standalone class that replaces
+it. `mw-selected` on the `<li>` is the selected-row highlight - bind it to the
+checkbox state yourself in a SPA. The `mw-checkbox-content` block is optional;
+a bare `mw-checkbox-label` renders a single-line row.
+
+The `mw-checkbox` inside is the ordinary form-element checkbox, so
+`mw-checkbox-disabled` and the colour variants (`mw-checkbox-success` and the
+rest, see `references/forms.md`) work here too. Row height is a list concern -
+use the list's own `-compact` / `-large` modifiers rather than
+`mw-checkbox-sm` / `-lg`, which sit on the wrong element to reach the box.
 
 ## HTML lists
 
