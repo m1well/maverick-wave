@@ -65,6 +65,11 @@ $_mw-progress-colors: (
   }
 
   &-fill {
+    // The label sits *inside* the fill, so its ink follows whichever color
+    // variant is on the element - preset to the default fill, re-pointed by
+    // the variants at the bottom of the file
+    --mw-progress-ink: var(--mw-secondary-accent-text-color);
+
     height: 100%;
     background: var(--mw-secondary-color);
     border-radius: radius('sm');
@@ -96,7 +101,7 @@ $_mw-progress-colors: (
       padding-left: spacing('6');
       font-size: font-size('xs');
       font-weight: font-weight('medium');
-      color: var(--mw-accent-text-color);
+      color: var(--mw-progress-ink);
     }
   }
 }
@@ -104,5 +109,6 @@ $_mw-progress-colors: (
 @each $name, $col in $_mw-progress-colors {
   .mw-progress-#{$name} {
     background: #{$col};
+    --mw-progress-ink: var(--mw-#{$name}-accent-text-color);
   }
 }

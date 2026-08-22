@@ -218,11 +218,14 @@ text
    `mw-table-responsive-scroll` (height via `--mw-table-scroll-height`).
 7. **`--mw-text-muted-color` on a coloured surface is always wrong.** It follows
    the theme; buttons, table headers and badges do not. Use
-   `--mw-accent-text-color` there, and `opacity` for disabled states.
-   `--mw-accent-text-color` is the text on a **brand** surface, so overriding it
-   for a light primary makes it dark everywhere it is used. The fixed grey
-   surfaces - tooltip, `mw-btn-mini`, `mw-info-mini`, gallery arrows - therefore
-   hardcode white and ignore the token.
+   `--mw-*-accent-text-color` there, and `opacity` for disabled states.
+   `--mw-accent-text-color` is the shared label for all six colours; each one
+   also has its own `--mw-primary-accent-text-color`,
+   `--mw-secondary-accent-text-color`, `--mw-success/warning/danger/info-accent-text-color`,
+   defaulting to the shared token. Override a single one when that colour needs
+   the opposite label - a neon primary on an otherwise dark palette. The fixed
+   grey surfaces - tooltip, `mw-btn-mini`, `mw-info-mini`, gallery arrows -
+   hardcode white and ignore all of them.
 8. **`mw-card` already lifts on hover** and `mw-btn` already has `inline-flex`
    plus a gap for icons. Neither has a modifier class for it - adding one from
    memory produces markup that does nothing.

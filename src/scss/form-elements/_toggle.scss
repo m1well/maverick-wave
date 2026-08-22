@@ -69,6 +69,8 @@ $_knob-travel-lg: calc(
       left: $_knob-offset;
       width: $_knob-size;
       height: $_knob-size;
+      // The shared token, not a per-color one: the knob has to read on the
+      // fill *and* on the empty track, so it cannot follow the fill color
       background: var(--mw-accent-text-color);
       border-radius: radius('full');
       transition: transform 0.25s ease;

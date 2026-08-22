@@ -156,7 +156,7 @@
   Every brand and status colour comes in two tokens.
   <code>--mw-primary-color</code> is the exact colour, for anything it
   <strong>fills</strong> - buttons, badges, bars - with
-  <code>--mw-accent-text-color</code> on top.
+  <code>--mw-primary-accent-text-color</code> on top.
   <code>--mw-primary-text-color</code> is the same colour as ink
   <strong>on</strong> a theme surface: text, icons, focus rings, accent borders.
   A colour picked to carry a label is by definition too dark or too light to be
@@ -191,6 +191,40 @@
   </div>
 </div>
 
+<h3 class="mw-section-subtitle">Label Ink Per Colour</h3>
+
+<p class="mw-text-muted mw-mb-6">
+  <code>--mw-accent-text-color</code> is the label on every solid coloured
+  surface, and one value for all six only holds while the whole palette sits on
+  the same side of the lightness scale. A neon green primary next to a deep blue
+  secondary needs a dark label on the one and a light label on the other, so
+  every colour carries its own override:
+  <code>--mw-primary-accent-text-color</code>,
+  <code>--mw-secondary-accent-text-color</code> and the same for
+  <code>success</code>, <code>warning</code>, <code>danger</code> and
+  <code>info</code>. Each one defaults to <code>--mw-accent-text-color</code>,
+  so nothing changes until you set one.
+</p>
+
+<pre class="mw-code-block mw-mb-6"><code>:root {
+  --mw-primary-color: #39ff14;
+  /* the shared label stays light for the rest of the palette ... */
+  --mw-accent-text-color: #f2f6fc;
+  /* ... only the neon primary gets a dark one */
+  --mw-primary-accent-text-color: #0b0f0a;
+}</code></pre>
+
+<p class="mw-text-muted mw-mb-6">
+  Everything that fills a surface with that colour follows: buttons and mini
+  buttons, the burger button, table and panel headers, card badges and ribbons,
+  segmented and tab items, stepper dots, calendar selection, timeline dates,
+  accordion headers and progress labels. The burger button switches to
+  <code>--mw-secondary-accent-text-color</code> while the drawer is open,
+  because its surface does the same - override
+  <code>--mw-header-burgerbutton-color</code> and
+  <code>--mw-header-burgerbutton-open-color</code> to break out of that.
+</p>
+
 <p class="mw-text-muted">
   Tinted surfaces follow one rule as well:
   <code>--mw-*-background</code> is 20% of the colour,
@@ -199,7 +233,7 @@
   which is what makes an alert, badge or tag readable in either theme.
 </p>
 
-<p class="mw-text-muted">
+<p class="mw-text-muted mw-mb-6">
   The surfaces work the same way. Card, footer and border scale the page
   background's OKLch lightness and chroma by one factor and keep the hue, so a
   tinted page hands its tint down instead of graying out. A card always steps
@@ -208,3 +242,22 @@
   is also why the dark page background is not near-black: the surfaces below it
   need somewhere to go.
 </p>
+
+<p class="mw-text-muted mw-mb-6">
+  Each factor is an SCSS knob, so how far a card sits from the page is one
+  number per theme. Below 1 steps toward black, above 1 toward white - read
+  <code>0.85</code> as "the card sits at 85% of the page's lightness". Move both
+  card knobs toward 1 for a flat, borderless look, push them apart for cards
+  that read as raised panels. Keep the footer further out than the card in the
+  dark theme and on the other side in the light one, or the band under the page
+  stops reading as chrome.
+</p>
+
+<pre
+  class="mw-code-block mw-mb-6"
+><code>@use 'maverick-wave/src/scss/main' with (
+  $card-surface-dark: 0.85,   // card, dark theme
+  $card-surface-light: 1.05,  // card, light theme
+  $footer-surface-dark: 0.75, // footer and header chrome
+  $footer-surface-light: 0.95
+);</code></pre>

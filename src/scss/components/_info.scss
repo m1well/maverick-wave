@@ -155,6 +155,6 @@ button.mw-info {
 
   .mw-info-mini-#{$name} {
     background: #{$col};
-    color: var(--mw-accent-text-color);
+    color: var(--mw-#{$name}-accent-text-color);
   }
 }

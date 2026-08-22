@@ -32,7 +32,7 @@
 // Color variants
 .mw-btn-primary {
   background: var(--mw-primary-color);
-  color: var(--mw-accent-text-color);
+  color: var(--mw-primary-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color-hover);
   }
@@ -44,7 +44,7 @@
 }
 .mw-btn-secondary {
   background: var(--mw-secondary-color);
-  color: var(--mw-accent-text-color);
+  color: var(--mw-secondary-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color-hover);
   }
@@ -57,7 +57,7 @@
 // Semantic variants for destructive / confirming actions
 .mw-btn-danger {
   background: var(--mw-danger-color);
-  color: var(--mw-accent-text-color);
+  color: var(--mw-danger-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-danger-color-hover);
   }
@@ -69,7 +69,7 @@
 }
 .mw-btn-success {
   background: var(--mw-success-color);
-  color: var(--mw-accent-text-color);
+  color: var(--mw-success-accent-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-success-color-hover);
   }
@@ -85,12 +85,12 @@
   color: var(--mw-primary-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
   &.mw-active:not(:disabled),
   &.active:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
 }
 .mw-btn-link {
@@ -231,34 +231,34 @@
 
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
 }
 
 .mw-btn-mini-primary {
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
 }
 
 .mw-btn-mini-secondary {
   &:hover:not(:disabled) {
     background: var(--mw-secondary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-secondary-accent-text-color);
   }
 }
 
 .mw-btn-mini-danger {
   &:hover:not(:disabled) {
     background: var(--mw-danger-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-danger-accent-text-color);
   }
 }
 
 .mw-btn-mini-success {
   &:hover:not(:disabled) {
     background: var(--mw-success-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-success-accent-text-color);
   }
 }

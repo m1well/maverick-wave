@@ -77,6 +77,12 @@
      label - set it opposite your primary. */
   --mw-accent-text-color: #f2fafa;
 
+  /* Per color override of that label, for a palette that does not sit on
+     one side of the lightness scale - a neon primary needs a dark label
+     while the rest of the palette keeps the light one. Same token for
+     secondary, success, warning, danger and info. */
+  --mw-primary-accent-text-color: #0b0f0a;
+
   /* Page backgrounds. Card, footer and border are derived from them, so
      these two are usually all you set. */
   --mw-dark-page-background: #172127;
@@ -135,7 +141,15 @@
   $dark-background: #172127,
   $light-background: #f2f6f7,
   $dark-text-color: #e8eef0,
-  $light-text-color: #172127
+  $light-text-color: #172127,
+
+  // How far card and footer sit from the page background. Below 1 steps
+  // toward black, above 1 toward white - 0.85 means the card sits at 85%
+  // of the page's lightness.
+  $card-surface-dark: 0.85,
+  $card-surface-light: 1.05,
+  $footer-surface-dark: 0.75,
+  $footer-surface-light: 0.95
 );
 
 // Your additional styles

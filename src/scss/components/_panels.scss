@@ -52,14 +52,14 @@
   &-primary {
     .mw-panel-header {
       background: var(--mw-primary-color);
-      color: var(--mw-accent-text-color);
+      color: var(--mw-primary-accent-text-color);
     }
   }
 
   &-secondary {
     .mw-panel-header {
       background: var(--mw-secondary-color);
-      color: var(--mw-accent-text-color);
+      color: var(--mw-secondary-accent-text-color);
     }
   }
 
