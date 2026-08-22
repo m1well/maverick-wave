@@ -37,7 +37,8 @@
         position: absolute;
         inset: 0;
         background: var(--mw-hero-overlay-background);
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(5px);
+        opacity: 0.3;
         z-index: z-index('lift');
         pointer-events: none;
       }
