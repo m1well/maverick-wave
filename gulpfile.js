@@ -8,6 +8,13 @@ const autoprefixer = require('autoprefixer');
 // selectors without an error. cssnano runs in the postcss pass that is already
 // here and understands them.
 const cssnano = require('cssnano');
+// postcss-calc cannot lex relative color syntax - `calc(l * 0.85)` inside
+// `oklch(from ...)` makes it log a parse error per declaration. It leaves the
+// value alone, so the output was always correct, but the noise buried real
+// build errors. Switching it off leaves ten calc() terms unfolded
+// (`calc(500px - 1.5rem - 2px)` stays as written), worth about 100 bytes across
+// the whole file - cheaper than a build log nobody reads.
+const cssnanoPreset = ['default', { calc: false }];
 const terser = require('gulp-terser');
 const fs = require('fs');
 const path = require('path');
@@ -51,7 +58,7 @@ gulp.task('scss-build', function () {
   return gulp
     .src(paths.scss)
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([autoprefixer(), cssnano({ preset: 'default' })]))
+    .pipe(postcss([autoprefixer(), cssnano({ preset: cssnanoPreset })]))
     .pipe(rename('maverick-wave.min.css'))
     .pipe(gulp.dest(path.join(paths.dist)));
 });
@@ -59,7 +66,7 @@ gulp.task('scss-release', function () {
   return gulp
     .src(paths.scss)
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([autoprefixer(), cssnano({ preset: 'default' })]))
+    .pipe(postcss([autoprefixer(), cssnano({ preset: cssnanoPreset })]))
     .pipe(rename('maverick-wave.min.css'))
     .pipe(gulp.dest(path.join(paths.root)));
 });

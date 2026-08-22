@@ -179,6 +179,42 @@ picker.
 </div>
 ```
 
+**Feature frame** - wraps a card to lift one option out of a grid of equals,
+for the "most booked" plan in a pricing row:
+
+```html
+<div class="mw-card-feature mw-card-feature-secondary">
+  <p class="mw-card-feature-label">Most booked</p>
+  <div class="mw-card">
+    <div class="mw-card-body">...</div>
+  </div>
+</div>
+```
+
+- Unlike badge and ribbon this is a **wrapper around** the card, not an overlay
+  inside it. The card itself stays untouched - same width, same height, same
+  hover as its neighbours - and the frame plus its label bar grow outwards into
+  the grid gap.
+- Colours are `mw-card-feature-secondary` and `mw-card-feature-info`; primary is
+  the default and needs no class. This is a separate set from the
+  `mw-card-addon-*` classes that colour badge and ribbon - the frame only comes
+  in those three.
+- The label is a single line. It is set in uppercase at `2xs` and truncates with
+  an ellipsis rather than wrapping, because the 22px bar height is baked into
+  the frame's negative margins.
+- The frame reaches 29px above the card and 7px below it, so it sticks out of
+  its grid cell. Any `mw-grid-*` that directly contains one therefore gets
+  `row-gap: 56px` automatically, which leaves 20px between two stacked frames.
+  CSS has no per-row gap, so this applies to every row of that grid - expect
+  wrapped rows without a frame to sit further apart than usual. That is also why
+  the bar is kept low: each extra pixel is charged to every row.
+- The space **above the first row** is not covered - the frame reaches into
+  whatever sits there. Give the container the room (`mw-mt-10` on the grid, or
+  `mw-mb-10` on the heading above it).
+- In a layout that is not a `mw-grid-*` - your own flex column, an Angular host
+  with its own grid - nothing raises the gap for you. Leave at least 36px
+  between stacked items yourself.
+
 **Stack card** - icon + title header with a gradient rule, for feature or
 tech-stack grids:
 

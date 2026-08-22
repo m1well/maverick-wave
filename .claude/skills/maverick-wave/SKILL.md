@@ -163,7 +163,8 @@ Everything below is documented in `references/components.md` unless marked other
 `link`, `link-muted`, `plain`, `sm`, `lg`) · `mw-btn-mini` · `mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note`
 
-**Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon) ·
+**Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
+feature frame) ·
 `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
 `mw-item-list` family
 
