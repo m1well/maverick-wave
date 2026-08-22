@@ -10,6 +10,12 @@
     align-items: center;
     justify-content: flex-end;
     row-gap: spacing('1');
+
+    @include media-down('sm') {
+      justify-content: flex-start;
+      column-gap: spacing('6');
+      row-gap: spacing('2');
+    }
   }
 
   &-item {
@@ -19,6 +25,10 @@
     gap: spacing('2');
     &:not(:first-child) {
       margin-left: spacing('9');
+
+      @include media-down('sm') {
+        margin-left: spacing('0');
+      }
     }
     font-size: font-size('md');
 

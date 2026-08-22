@@ -3,7 +3,11 @@ const fileinclude = require('gulp-file-include');
 const sass = require('gulp-sass')(require('sass'));
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
-const cleanCSS = require('gulp-clean-css');
+// clean-css 4 is the last release gulp-clean-css pins, and it predates
+// @container, @layer and @starting-style: it drops those blocks or eats their
+// selectors without an error. cssnano runs in the postcss pass that is already
+// here and understands them.
+const cssnano = require('cssnano');
 const terser = require('gulp-terser');
 const fs = require('fs');
 const path = require('path');
@@ -47,8 +51,7 @@ gulp.task('scss-build', function () {
   return gulp
     .src(paths.scss)
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([autoprefixer()]))
-    .pipe(cleanCSS())
+    .pipe(postcss([autoprefixer(), cssnano({ preset: 'default' })]))
     .pipe(rename('maverick-wave.min.css'))
     .pipe(gulp.dest(path.join(paths.dist)));
 });
@@ -56,8 +59,7 @@ gulp.task('scss-release', function () {
   return gulp
     .src(paths.scss)
     .pipe(sass().on('error', sass.logError))
-    .pipe(postcss([autoprefixer()]))
-    .pipe(cleanCSS())
+    .pipe(postcss([autoprefixer(), cssnano({ preset: 'default' })]))
     .pipe(rename('maverick-wave.min.css'))
     .pipe(gulp.dest(path.join(paths.root)));
 });

@@ -15,7 +15,8 @@
 
   @include media-down('sm') {
     grid-template-columns: 1fr;
-    width: 90%;
+    width: 100%;
+    padding: spacing('0');
     gap: spacing('4');
   }
 
@@ -34,7 +35,10 @@
 
     @include media-down('sm') {
       grid-template-columns: 1fr;
-      width: 90%;
+      // Full width from here on - the page gutter is the container's job,
+      // a second inset only narrows the tile
+      width: 100%;
+      padding: spacing('0');
       gap: spacing('4');
     }
   }
@@ -46,7 +50,10 @@
 
     @include media-down('sm') {
       grid-template-columns: 1fr;
-      width: 90%;
+      // Full width from here on - the page gutter is the container's job,
+      // a second inset only narrows the tile
+      width: 100%;
+      padding: spacing('0');
       gap: spacing('4');
     }
   }

@@ -81,16 +81,17 @@
 
   .mw-social-links {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     column-gap: spacing('8');
     row-gap: spacing('4');
     margin: spacing('6') auto;
 
-    // modifier for more elements
+    // Modifier for more elements
     &.mod-wrap {
-      flex-wrap: wrap;
       width: 510px;
+      max-width: 100%;
     }
 
     a {
@@ -162,7 +163,7 @@
         width: 330px;
       }
 
-      button {
+      a {
         width: 40px;
         height: 40px;
         font-size: font-size('md');
@@ -191,19 +192,17 @@
         max-width: 100%;
         padding: spacing('0') spacing('4');
       }
-
-      button {
-        width: 33px;
-        height: 33px;
-        font-size: font-size('md');
-      }
     }
 
+    // A second 15% inset inside a container that already keeps a gutter only
+    // narrows the line to no purpose
     .mw-disclaimer {
+      width: 100%;
       font-size: font-size('xs');
     }
 
     .mw-copyright {
+      width: 100%;
       margin-top: spacing('5');
       font-size: font-size('xs');
     }

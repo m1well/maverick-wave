@@ -1,5 +1,8 @@
 @use '../abstracts' as *;
 
+// Card width at which the footer stops being a row
+$_mw-card-narrow: 360px;
+
 $_mw-card-addon-colors: (
   primary: var(--mw-primary-color),
   secondary: var(--mw-secondary-color),
@@ -41,6 +44,19 @@ $_mw-card-addon-colors: (
   // Direct child only - a card nested inside another one must not clip its host
   &:has(> .mw-card-ribbon) {
     overflow: hidden;
+  }
+
+  // Query container for the footer below. Named, so the query cannot resolve to
+  // a project's own container further up the tree.
+  //
+  // Only cards that have a footer, and they claim their slot: inline-size
+  // containment computes the card's own width as if it were empty, so a card
+  // that takes its width from its content - a flex row, `mw-grid-stack`, a
+  // timeline wrapper - would collapse to its border. Filling the slot keeps the
+  // width external, which is what makes it queryable in the first place.
+  &:has(.mw-card-footer) {
+    width: 100%;
+    container: mw-card / inline-size;
   }
 
   &:hover {
@@ -120,13 +136,17 @@ $_mw-card-addon-colors: (
 
   &-lg {
     --mw-card-img-height: 340px;
+
+    @include media-down('sm') {
+      --mw-card-img-height: 260px;
+    }
   }
 
   &-xl {
     --mw-card-img-height: 480px;
 
     @include media-down('sm') {
-      --mw-card-img-height: 440px;
+      --mw-card-img-height: 340px;
     }
   }
 
@@ -191,6 +211,9 @@ $_mw-card-addon-colors: (
     // centered, so plain text next to a button sits on the button's centre
     // line instead of being stretched to its height and starting at the top
     align-items: center;
+    // Buttons do not shrink, so two that no longer fit have to wrap - without
+    // this they leave the card sideways
+    flex-wrap: wrap;
     gap: spacing('3');
     flex-shrink: 0;
     text-wrap: balance;
@@ -206,10 +229,26 @@ $_mw-card-addon-colors: (
       flex-shrink: 0;
     }
 
-    @include media-down('lg') {
+    // Stacked once the card is narrow, not once the window is - a card in a
+    // three-column grid on a wide desktop is as narrow as the same card on a
+    // phone and used to keep its actions in a cramped row anyway.
+    @container mw-card (max-width: #{$_mw-card-narrow}) {
       flex-direction: column;
       align-items: stretch;
       gap: spacing('2');
+
+      // `flex: 1 0 100%` on the note is 100% of the *height* in a column: it
+      // fills the column and the buttons wrap out of the card sideways
+      &:has(.mw-actions-note),
+      &:has(.mw-form-actions-hint) {
+        flex-wrap: nowrap;
+      }
+
+      .mw-actions-note,
+      .mw-form-actions-hint {
+        flex: 0 0 auto;
+        text-align: left;
+      }
 
       > * {
         width: 100%;

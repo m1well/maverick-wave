@@ -35,6 +35,9 @@
   }
 
   @include media-down('sm') {
+    width: 100%;
+    margin-inline: spacing('0');
+
     th,
     td {
       padding: spacing('1') spacing('2');

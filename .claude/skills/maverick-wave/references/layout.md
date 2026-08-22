@@ -25,12 +25,15 @@
 
 - `mw-main` is a full-height flex column - the footer stays at the bottom on
   short pages.
-- `mw-container` is `min(1200px, 89%)`, horizontally centered. Nest it inside
-  every full-bleed band (header, section, footer), never around them. Below
-  576px it switches to a fixed 1rem gutter instead of the percentage - 89% of a
-  375px screen leaves 41px of nothing on a card that has to fit an amount, a
-  status and two labels into one row. Both widths are tokens,
-  `--mw-container-width` and `--mw-container-width-sm`.
+- `mw-container` is `min(1200px, 100% - 2 * gutter)`, horizontally centered.
+  Nest it inside every full-bleed band (header, section, footer), never around
+  them. The gutter is fluid - `clamp(1rem, 4.2vw + 0.5rem, 4rem)`, never smaller
+  than the safe-area inset - so it lands on ~24px at 375px, ~32px at 576px,
+  ~40px on a tablet and tops out at 64px, where the 1200px cap takes over. A
+  percentage alone keeps too little on a phone and throws away too much on a
+  desktop; stepping the gutter at a breakpoint instead would make the container
+  jump backwards at the step. Both values are tokens,
+  `--mw-container-gutter` and `--mw-container-width`.
 - `mw-content` (`flex: 1` + top padding) is the alternative to `mw-section` when
   a page has one single content area. `mw-content-centered` centers it
   vertically over the full viewport - login pages, error pages.

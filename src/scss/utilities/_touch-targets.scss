@@ -22,6 +22,18 @@
     min-height: 2.5rem;
   }
 
+  .mw-input,
+  .mw-input-sm,
+  .mw-input-lg,
+  .mw-select,
+  .mw-select-sm,
+  .mw-select-lg,
+  .mw-textarea,
+  .mw-textarea-sm,
+  .mw-textarea-lg {
+    font-size: 16px;
+  }
+
   // A tab strip is the one navigation a phone has no fallback for
   .mw-tabs-nav-item {
     display: flex;
