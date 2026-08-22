@@ -13,10 +13,6 @@
   margin: spacing('0') auto;
   padding: spacing('0');
 
-  @include media-down('sm') {
-    width: var(--mw-container-width-sm);
-  }
-
   // add a hero part for a full size background picture
   @supports (selector(:has(.mw-hero))) {
     // if it has *any* descendant .mw-hero
@@ -68,6 +64,14 @@
 // Pure CSS, no script needed. The flip side of that: it is a pseudo element on
 // the trigger, so an ancestor with `overflow: hidden` (a card, a scroll
 // container) cuts it off.
+//
+// Hidden means `display: none`, not `visibility: hidden`. A box that is hidden
+// but still laid out counts towards the page's scrollable overflow: a 280px
+// bubble centred on a trigger near the right edge added 50px of sideways scroll
+// to a 320px screen, on a page where nothing visible was out of place. Coming
+// back from `display: none` is a discrete transition, hence `allow-discrete`
+// and the starting style - a browser that knows neither simply drops the
+// transition and shows the bubble at once.
 $_mw-tooltip-arrow: 6px;
 $_mw-tooltip-gap: 8px;
 
@@ -91,8 +95,10 @@ $_mw-tooltip-gap: 8px;
     box-shadow: 0 2px 5px var(--mw-shadow);
     pointer-events: none;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease;
+    display: none;
+    transition:
+      opacity 0.2s ease,
+      display 0.2s allow-discrete;
     z-index: z-index('tooltip');
   }
 
@@ -107,8 +113,10 @@ $_mw-tooltip-gap: 8px;
     border-bottom-width: 0;
     border-top-color: var(--mw-gray-color);
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease;
+    display: none;
+    transition:
+      opacity 0.2s ease,
+      display 0.2s allow-discrete;
     z-index: z-index('tooltip');
   }
 
@@ -117,7 +125,11 @@ $_mw-tooltip-gap: 8px;
   &:focus-visible::before,
   &:focus-visible::after {
     opacity: 1;
-    visibility: visible;
+    display: block;
+
+    @starting-style {
+      opacity: 0;
+    }
   }
 }
 

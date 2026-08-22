@@ -27,8 +27,15 @@ h6 {
   font-weight: font-weight('bold');
 }
 
+// Two steps, not one. With the single jump at 576px, everything between there
+// and a tablet kept the full desktop headline - 3rem of h1 across a 690px
+// column is a third of the screen before the first line of copy.
 h1 {
   font-size: font-size('5xl');
+
+  @include media-down('md') {
+    font-size: font-size('4xl');
+  }
 
   @include media-down('sm') {
     font-size: font-size('3xl');
@@ -37,6 +44,10 @@ h1 {
 
 h2 {
   font-size: font-size('4xl');
+
+  @include media-down('md') {
+    font-size: font-size('3xl');
+  }
 
   @include media-down('sm') {
     font-size: font-size('2xl');

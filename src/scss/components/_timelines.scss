@@ -193,6 +193,8 @@ $_simple-date-width: 110px;
   }
 
   @include media-down('sm') {
+    width: 100%;
+
     // Line moves to the left
     &::before {
       left: 0;
@@ -317,6 +319,8 @@ $_simple-date-width: 110px;
   }
 
   @include media-down('sm') {
+    width: 100%;
+
     &::before {
       left: 0;
       transform: none;

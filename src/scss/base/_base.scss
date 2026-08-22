@@ -51,11 +51,27 @@ $_active-prefix: 'dark';
   // Layout knobs. A good default is not enough here: what reads as generous on
   // a landing page costs visible content in an application with a sticky
   // header. Same framework, two different right answers.
-  --mw-container-width: min(1200px, 89%);
-  // Below 'sm' the percentage turns into wasted margin - 89% of a 375px screen
-  // leaves 41px of nothing on a card that has to fit amount, status and two
-  // labels into one row. A fixed gutter uses the width instead.
-  --mw-container-width-sm: calc(100% - #{spacing('5')} * 2);
+  //
+  // The page gutter is fluid rather than stepped. A plain percentage keeps too
+  // little on a phone and throws away too much on a desktop; a fixed gutter
+  // does the reverse - Bootstrap ships 12px at every width, Bulma 32px, and
+  // Material asks for 16dp on a phone and more as the screen grows. The ramp
+  // below lands on ~24px at 375px, ~32px at 576px, ~40px on a tablet and tops
+  // out at 64px, where the 1200px cap takes over. Stepping it at a breakpoint
+  // instead would make the container jump *backwards* at the step, because the
+  // gutter grows faster there than the viewport does.
+  //
+  // max() against the safe-area insets, so a notched phone in landscape pushes
+  // the content clear of the cutout instead of running underneath it.
+  --mw-container-gutter: max(
+    clamp(1rem, 4.2vw + 0.5rem, 4rem),
+    env(safe-area-inset-left, 0px),
+    env(safe-area-inset-right, 0px)
+  );
+  --mw-container-width: min(
+    1200px,
+    calc(100% - 2 * var(--mw-container-gutter))
+  );
   --mw-section-padding-block: #{spacing('7')};
 
   // Active theme - aliases onto the dark or light set above

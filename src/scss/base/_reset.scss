@@ -10,7 +10,7 @@
 
 html {
   scroll-behavior: smooth;
-  min-width: 375px;
+  min-width: 320px;
   // Keeps anchor targets clear of the fixed header, plus a bit of breathing room
   scroll-padding-top: calc(var(--mw-header-height) + #{spacing('4')});
   -webkit-text-size-adjust: 100%;

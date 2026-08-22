@@ -149,13 +149,20 @@ picker.
 - `mw-card-simple` is the flat variant with even padding for arbitrary content.
   Use it when you only need a padded surface - it stays a block container, so
   inline children keep flowing side by side.
-- Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px. Set
-  `--mw-card-img-height` on the card for any other height.
+- Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px (260px/340px below
+  `sm`). Set `--mw-card-img-height` on the card for any other height.
   `mw-card-img-contain` shows the whole image instead of cropping it.
 - `mw-card-footer` pushes its last child to the right - with a single child that
   means it sits right, not left. Everything is vertically centered, so plain text
-  lines up with a button next to it. Below `lg` the footer stacks and children go
-  full width.
+  lines up with a button next to it. Actions that no longer fit next to each
+  other wrap.
+- The footer stacks to full-width children once the **card** is narrower than
+  360px, not once the window is - a card in a three-column grid is just as narrow
+  on a 1200px desktop as it is on a phone, and now looks the same in both. This
+  is a container query: a card that has a footer declares
+  `container: mw-card / inline-size` and takes `width: 100%`, so it fills its
+  slot instead of sizing to its content. Give such a card an explicit width if
+  you need it to hug its content.
 - `mw-card-badge` (top right corner) and `mw-card-ribbon` (diagonal banner) are
   absolutely positioned overlays; colour them with `mw-card-addon-primary`,
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.

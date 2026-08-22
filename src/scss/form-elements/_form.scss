@@ -53,6 +53,18 @@
     // full-width stacked
     &-full-width {
       flex-direction: column;
+
+      &:has(.mw-actions-note),
+      &:has(.mw-form-actions-hint) {
+        flex-wrap: nowrap;
+      }
+
+      .mw-actions-note,
+      .mw-form-actions-hint {
+        flex: 0 0 auto;
+        text-align: left;
+      }
+
       > * {
         width: 100%;
       }

@@ -94,8 +94,13 @@
 
       /* Small screens */
       @media (max-width: 576px) {
+        /* The h1 drops to 2.2rem down here, so the sticker has to move up with
+           it or it lands on the word instead of next to it */
         .version-corner {
+          top: -32px;
           right: 4%;
+          font-size: 0.9rem;
+          padding: 0.25rem 0.55rem;
         }
 
         .color-swatch {

@@ -13,7 +13,7 @@
   display: none;
   align-items: center;
   justify-content: center;
-  padding: spacing('3');
+  padding: spacing('7');
   opacity: 0;
   transition: opacity 0.4s ease;
 
@@ -58,6 +58,21 @@
   }
 }
 
+@include media-down('sm') {
+  .mw-modal-overlay {
+    padding: spacing('5');
+  }
+
+  .mw-modal-header,
+  .mw-modal-footer {
+    padding: spacing('3') spacing('4');
+  }
+
+  .mw-modal-body {
+    padding: spacing('4');
+  }
+}
+
 // Modal sections
 .mw-modal-header {
   padding: spacing('3') spacing('5');
@@ -92,6 +107,9 @@
   padding: spacing('3') spacing('5');
   border-top: 1px solid var(--mw-border-accent);
   display: flex;
+  // Three actions do not fit one line inside a phone-width dialog, and a row
+  // that cannot wrap pushes the last one out through the border
+  flex-wrap: wrap;
   gap: spacing('2');
   justify-content: flex-end;
 }
