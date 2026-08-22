@@ -327,6 +327,77 @@ $_mw-card-addon-colors: (
   }
 }
 
+// Frame with a bar on top, wrapped around a card - for the one variant in a
+// grid that should stand out.
+//
+// `mw-card-badge` sits inside the card body and overlaps the title on narrow
+// cards. This one wraps around the card instead, and grows outwards: the card
+// keeps the width, height and look of its neighbours, frame and bar reach into
+// the grid gap.
+//
+//   <div class="mw-card-feature">
+//     <p class="mw-card-feature-label">Most booked</p>
+//     <div class="mw-card">…</div>
+//   </div>
+//
+// Primary out of the box, `mw-card-feature-secondary` and
+// `mw-card-feature-info` swap the colour.
+//
+// Geometry: 22px bar, 6px gap between frame and card, 1px border. The bar
+// height is fixed and the margins count on it - a two-line label needs the
+// margin and the padding raised with it. It is kept low on purpose: every
+// pixel of bar is a pixel the grid below has to add to its row gap.
+.mw-card-feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: -29px -7px -7px;
+  padding: 28px 6px 6px;
+  border: 1px solid var(--mw-primary-color);
+  border-radius: 12px 27px 12px 27px;
+
+  &-label {
+    position: absolute;
+    inset: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    margin: 0;
+    padding-inline: spacing('4');
+    border-radius: 11px 26px 0 0;
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-accent-text-color);
+    font-size: font-size('2xs');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  > .mw-card {
+    flex: 1;
+  }
+}
+
+[class*='mw-grid-']:has(> .mw-card-feature) {
+  row-gap: 48px;
+}
+
+// Colour variants - primary is the default above, these two override it
+@each $name in ('secondary', 'info') {
+  .mw-card-feature-#{$name} {
+    border-color: var(--mw-#{$name}-color);
+
+    > .mw-card-feature-label {
+      background: var(--mw-#{$name}-color);
+      color: var(--mw-#{$name}-accent-text-color);
+    }
+  }
+}
+
 @each $name, $col in $_mw-card-addon-colors {
   .mw-card-addon-#{$name} {
     --mw-card-addon-color: #{$col};
