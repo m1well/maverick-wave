@@ -252,7 +252,7 @@ $status-colors: (
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
-  'hero-overlay-background': fade('dark-page-background', 30%),
+  'hero-overlay-background': fade('dark-page-background', 10%),
   // The surface stack - the card and footer factors and the reasoning behind
   // them live with the derivation knobs above, so a project can retune the
   // stack from one place instead of editing this map. The rule between the
@@ -282,7 +282,7 @@ $dark-theme-colors: (
 // Light theme colors. Emitted as --mw-light-<key>.
 $light-theme-colors: (
   'page-background': $light-background,
-  'hero-overlay-background': fade('light-page-background', 30%),
+  'hero-overlay-background': fade('light-page-background', 10%),
   'card-background': surface('light-page-background', $card-surface-light),
   'footer-background': surface('light-page-background', $footer-surface-light),
   'border': surface('light-page-background', 0.8),
