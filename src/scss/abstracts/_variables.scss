@@ -55,6 +55,30 @@ $ink-lightness-light: 0.7 !default;
 // the palette instead of being a stock #888. 0% is a true gray.
 $muted-tint: 23% !default;
 
+// The surface stack - how far card and footer sit from the page background.
+// Each one scales the page's OKLch lightness *and* chroma by its factor and
+// keeps the hue, so the whole stack stays in one color family no matter how
+// tinted the page is.
+//
+// Below 1 steps toward black, above 1 toward white. Read them as "the card is
+// at 85% of the page's lightness": lower the dark factor or raise the light one
+// for more separation between a card and the page, move both toward 1 for a
+// flatter look.
+//
+// A card always steps *away* from the text color - down in the dark theme, up
+// in the light one - so content sits on the cleaner of the two surfaces. That is
+// also the one thing to watch when retuning: a near-black $dark-background
+// leaves nothing underneath, and a card at 0.6 of almost nothing is still
+// almost nothing. Keep the dark page around OKLch lightness 0.24 if you want
+// room for a low card factor.
+$card-surface-dark: 0.85 !default;
+$card-surface-light: 1.05 !default;
+// Footer and header chrome. In the dark theme they step further out than the
+// card, in the light theme they step the other way, so the band under the page
+// reads as chrome and not as another card.
+$footer-surface-dark: 0.75 !default;
+$footer-surface-light: 0.95 !default;
+
 // ---------------------------------------------------------------------------
 // Derivation helpers
 //
@@ -143,7 +167,8 @@ $muted-tint: 23% !default;
 // A brand color has two jobs, and they need two tokens:
 //   --mw-primary-color        the exact brand tone, for anything it *fills* -
 //                             buttons, badges, bars, filled surfaces. The label
-//                             on top is --mw-accent-text-color.
+//                             on top is --mw-primary-accent-text-color, which
+//                             falls back to the shared --mw-accent-text-color.
 //   --mw-primary-text-color   the same color as ink on a theme surface - text,
 //                             icons, focus rings, accent borders. Lives in the
 //                             theme maps below, because a color chosen to carry
@@ -173,6 +198,18 @@ $base-colors: (
   // it has to stay readable on a dark surface no matter how the palette or the
   // active theme is retuned.
   'accent-text-color': $accent-text-color,
+  // Per-color override of that label. One accent text color only works while
+  // the whole palette sits on the same side of the lightness scale - a neon
+  // green primary next to a deep blue secondary needs a dark label on the one
+  // and a light label on the other. Defaults to the shared token, so nothing
+  // changes until a project sets one:
+  //   :root { --mw-primary-accent-text-color: #000; }
+  // Every component that fills a surface with one of the six colors reads the
+  // matching token, so a button, a table header, a panel header, a badge and
+  // the burger button all follow the same override. The status colors carry
+  // the same token, see $status-colors.
+  'primary-accent-text-color': token('accent-text-color'),
+  'secondary-accent-text-color': token('accent-text-color'),
   'gray-color': $gray-color,
   // Subtle neutral surface: zebra rows, disabled fields, tracks, skeletons
   'gray-background': fade('gray-color', 20%),
@@ -194,30 +231,37 @@ $status-colors: (
   'success-color-hover': shade('success-color', $hover-shift),
   'success-info-background': fade('success-color', 30%),
   'success-info-background-hover': fade('success-color', 50%),
+  'success-accent-text-color': token('accent-text-color'),
   'warning-color': $warning-color,
   'warning-color-hover': shade('warning-color', $hover-shift),
   'warning-info-background': fade('warning-color', 30%),
   'warning-info-background-hover': fade('warning-color', 50%),
+  'warning-accent-text-color': token('accent-text-color'),
   'danger-color': $danger-color,
   'danger-color-hover': shade('danger-color', $hover-shift),
   'danger-info-background': fade('danger-color', 30%),
   'danger-info-background-hover': fade('danger-color', 50%),
+  'danger-accent-text-color': token('accent-text-color'),
   'info-color': $info-color,
   'info-color-hover': shade('info-color', $hover-shift),
   'info-info-background': fade('info-color', 30%),
   'info-info-background-hover': fade('info-color', 50%),
+  'info-accent-text-color': token('accent-text-color'),
 );
 
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
   'hero-overlay-background': fade('dark-page-background', 30%),
-  // The surface stack. A card steps *away* from the text color - down here, up
-  // in the light theme - so content sits on the cleaner of the two surfaces.
-  // Footer and header chrome step further out, the rule steps back the other way.
-  'card-background': surface('dark-page-background', 0.8),
-  'footer-background': surface('dark-page-background', 0.75),
-  'border': surface('dark-page-background', 1.5),
+  // The surface stack - the card and footer factors and the reasoning behind
+  // them live with the derivation knobs above, so a project can retune the
+  // stack from one place instead of editing this map. The rule between the
+  // surfaces keeps its own factor: it runs against the card - lighter than a
+  // dark page, darker than a light one - or it disappears into what it
+  // separates, and that is not a per-project decision.
+  'card-background': surface('dark-page-background', $card-surface-dark),
+  'footer-background': surface('dark-page-background', $footer-surface-dark),
+  'border': surface('dark-page-background', 1.35),
   'shadow': fade('dark-text-color', 30%),
   'text-color': $dark-text-color,
   'text-muted-color': muted(0.7),
@@ -239,9 +283,9 @@ $dark-theme-colors: (
 $light-theme-colors: (
   'page-background': $light-background,
   'hero-overlay-background': fade('light-page-background', 30%),
-  'card-background': surface('light-page-background', 1.05),
-  'footer-background': surface('light-page-background', 0.95),
-  'border': surface('light-page-background', 0.85),
+  'card-background': surface('light-page-background', $card-surface-light),
+  'footer-background': surface('light-page-background', $footer-surface-light),
+  'border': surface('light-page-background', 0.8),
   'shadow': fade('light-text-color', 30%),
   'text-color': $light-text-color,
   'text-muted-color': muted(0.5),
@@ -265,7 +309,11 @@ $header-colors: (
   // Primary carries the navigation, secondary stays a signal. The bar is dark in
   // both themes, so the active item takes the dark ink tone in both.
   'navbar-list-active-color': token('dark-primary-text-color'),
-  'burgerbutton-color': token('dark-text-color'),
+  // The burger sits on the primary button surface, and on the secondary one
+  // while the drawer is open, so it takes the label ink of each - not the
+  // header text color, which is picked for the dark bar behind it.
+  'burgerbutton-color': token('primary-accent-text-color'),
+  'burgerbutton-open-color': token('secondary-accent-text-color'),
   'border': token('dark-border-accent'),
 );
 // Drives the bar height, the anchor scroll offset and the mobile drawer padding.

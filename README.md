@@ -93,6 +93,11 @@ backgrounds, borders, muted text - is derived from them at runtime with
      label, a dark one a light label. Set it opposite your --mw-primary-color. */
   --mw-accent-text-color: #f2fafa;
 
+  /* per color override of that label, for a palette that does not sit on one
+     side of the lightness scale. Same token for secondary, success, warning,
+     danger and info. */
+  --mw-primary-accent-text-color: #0b0f0a;
+
   --mw-font-family-base: 'Your Font Name', sans-serif;
 }
 ```
@@ -114,7 +119,8 @@ Every brand and status colour comes in two tokens, and picking the right one is
 the whole trick:
 
 - `--mw-primary-color` is the exact colour, for anything it **fills** - buttons,
-  badges, bars, progress. The label on top is `--mw-accent-text-color`.
+  badges, bars, progress. The label on top is
+  `--mw-primary-accent-text-color`.
 - `--mw-primary-text-color` is the same colour tuned to the active theme, for
   anything drawn **on** a theme surface - text, icons, focus rings, accent
   borders and dividers.
@@ -139,6 +145,36 @@ the dark page and only turns into a real green on the light one. The bounds are
 `$ink-lightness-dark` and `$ink-lightness-light` in SCSS.
 `--mw-secondary-text-color` and `--mw-success/warning/danger/info-text-color`
 are derived the same way.
+
+### The label on a fill
+
+`--mw-accent-text-color` is the text on every solid coloured surface, and one
+value for the whole palette only holds while all six colours sit on the same
+side of the lightness scale. A neon green primary next to a deep blue secondary
+needs a dark label on the one and a light label on the other, so every colour
+carries its own override:
+
+```css
+:root {
+  --mw-primary-color: #39ff14;
+  /* the shared label stays light for the rest of the palette ... */
+  --mw-accent-text-color: #f2f6fc;
+  /* ... only the neon primary gets a dark one */
+  --mw-primary-accent-text-color: #0b0f0a;
+}
+```
+
+`--mw-secondary-accent-text-color` and
+`--mw-success/warning/danger/info-accent-text-color` work the same way, and each
+defaults to `--mw-accent-text-color`, so nothing changes until you set one.
+
+Everything that fills a surface with one of the six colours reads the matching
+token: buttons and mini buttons, the burger button, table and panel headers,
+card badges and ribbons, segmented and tab items, stepper dots, calendar
+selection, timeline dates, accordion headers and progress labels. The burger
+button switches to `--mw-secondary-accent-text-color` while the drawer is open,
+because its surface does the same - `--mw-header-burgerbutton-color` and
+`--mw-header-burgerbutton-open-color` override the two states individually.
 
 `--mw-text-muted-color` is built the other way round: a true gray at a fixed
 lightness with `$muted-tint` (12%) of the primary colour mixed in, so the gray
@@ -172,8 +208,26 @@ colour at a lower lightness.
 The one thing to know when picking `--mw-dark-page-background`: it needs
 headroom underneath. On a near-black page the surfaces below it have nowhere to
 go and cards collapse into the background, leaving only the border to separate
-them. The default sits at OKLch lightness 0.24 for that reason. The factors sit
-inline in `$dark-theme-colors` / `$light-theme-colors`, one per surface.
+them. The default sits at OKLch lightness 0.24 for that reason.
+
+Each factor is a `!default` SCSS knob, so how far a card sits from the page is
+one number per theme:
+
+| Knob                    | Default | Effect                                                             |
+| ----------------------- | ------- | ------------------------------------------------------------------ |
+| `$card-surface-dark`    | `0.85`  | Card in the dark theme - lower means a darker, more separated card |
+| `$card-surface-light`   | `1.05`  | Card in the light theme - higher means a lighter card              |
+| `$footer-surface-dark`  | `0.75`  | Footer and header chrome, dark theme                               |
+| `$footer-surface-light` | `0.95`  | Footer and header chrome, light theme                              |
+
+Below 1 steps toward black, above 1 toward white, so read `0.85` as "the card
+sits at 85% of the page's lightness". Move both card knobs toward 1 for a flat,
+borderless look; push them apart for cards that read as raised panels. The
+footer knobs go further out than the card in the dark theme and the other way in
+the light one, so the band under the page reads as chrome rather than as another
+card - keep that ordering if you retune the card, or the footer stops looking
+like a footer. The rule between the surfaces keeps its own fixed factor: it runs
+against the card, or it disappears into what it separates.
 
 ### SCSS Source
 
@@ -192,10 +246,16 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
   $dark-background: #172127,
   $light-background: #f2f6f7,
 
-  // Optional: the three derivation knobs
+  // Optional: the derivation knobs
   $ink-lightness-dark: 0.68,
   $ink-lightness-light: 0.55,
-  $muted-tint: 12%
+  $muted-tint: 12%,
+
+  // Optional: how far card and footer sit from the page background
+  $card-surface-dark: 0.85,
+  $card-surface-light: 1.05,
+  $footer-surface-dark: 0.75,
+  $footer-surface-light: 0.95
 );
 ```
 

@@ -141,7 +141,7 @@ $_mw-calendar-dot-tones: (
 .mw-calendar-day.mw-selected {
   background: var(--mw-primary-color);
   border-color: var(--mw-primary-text-color);
-  color: var(--mw-accent-text-color);
+  color: var(--mw-primary-accent-text-color);
   opacity: 1;
 }
 
@@ -191,7 +191,7 @@ $_mw-calendar-dot-tones: (
 // Only the untoned dot would drown in the selected fill. An inline
 // --mw-calendar-dot on the dot itself still wins over this.
 .mw-calendar-day.mw-selected .mw-calendar-dot:not([class*='mw-calendar-dot-']) {
-  --mw-calendar-dot: var(--mw-accent-text-color);
+  --mw-calendar-dot: var(--mw-primary-accent-text-color);
 }
 
 // Compact month - date picker density

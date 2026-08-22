@@ -222,7 +222,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
     border-color: var(--mw-primary-text-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
 
   &:focus-visible {

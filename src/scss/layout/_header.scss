@@ -60,7 +60,7 @@
   // Login button styling
   .mw-login-btn {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
     border: none;
     border-radius: radius('md');
     font-size: font-size('md');
@@ -123,6 +123,11 @@
     &.open {
       background: var(--mw-secondary-color);
       z-index: z-index('header') + 10;
+
+      // The surface under the burger switches to secondary, so its ink has to
+      // switch with it. Set on the button, so the bar and both pseudo-elements
+      // pick it up.
+      --mw-header-burgerbutton-color: var(--mw-header-burgerbutton-open-color);
 
       &:hover {
         background: var(--mw-secondary-color-hover);

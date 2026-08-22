@@ -188,7 +188,7 @@ $_simple-date-width: 110px;
 
     .mw-timeline-big-date-main,
     .mw-timeline-big-date-sub {
-      color: var(--mw-accent-text-color);
+      color: var(--mw-primary-accent-text-color);
     }
   }
 
@@ -311,7 +311,7 @@ $_simple-date-width: 110px;
   &-step.mw-active &-date,
   &-step.active &-date {
     background: var(--mw-primary-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
     transform: scale(1.1);
     animation: mw-pulse-ring-simple 2s infinite;
   }

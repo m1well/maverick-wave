@@ -45,7 +45,7 @@
     &.mw-active,
     &.active {
       background: var(--mw-primary-color);
-      color: var(--mw-accent-text-color);
+      color: var(--mw-primary-accent-text-color);
 
       .mw-accordion-icon {
         transform: rotate(180deg);

@@ -62,7 +62,7 @@ $_mw-card-addon-colors: (
     right: spacing('4');
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
-    color: var(--mw-accent-text-color);
+    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
     background: var(--mw-card-addon-color, var(--mw-primary-color));
     border-radius: radius('md');
     white-space: nowrap;
@@ -79,7 +79,7 @@ $_mw-card-addon-colors: (
     right: -35px;
     padding: spacing('1') spacing('4');
     font-size: font-size('xs');
-    color: var(--mw-accent-text-color);
+    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
     background: var(--mw-card-addon-color, var(--mw-primary-color));
     white-space: nowrap;
     width: 220px;
@@ -231,7 +231,7 @@ $_mw-card-addon-colors: (
       height: 38px;
       border-radius: radius('full');
       background: var(--mw-primary-color);
-      color: var(--mw-accent-text-color);
+      color: var(--mw-primary-accent-text-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -291,6 +291,7 @@ $_mw-card-addon-colors: (
 @each $name, $col in $_mw-card-addon-colors {
   .mw-card-addon-#{$name} {
     --mw-card-addon-color: #{$col};
+    --mw-card-addon-text-color: var(--mw-#{$name}-accent-text-color);
   }
 }
 

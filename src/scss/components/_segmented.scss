@@ -60,7 +60,7 @@
   &.active {
     background: var(--mw-primary-color);
     border-color: var(--mw-primary-text-color);
-    color: var(--mw-accent-text-color);
+    color: var(--mw-primary-accent-text-color);
   }
 }
 
@@ -70,6 +70,7 @@
   &.active {
     background: var(--mw-secondary-color);
     border-color: var(--mw-secondary-text-color);
+    color: var(--mw-secondary-accent-text-color);
   }
 }
 
