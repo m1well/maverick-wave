@@ -6,6 +6,20 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.9.0] - 2026-08-22
+
+### Added
+
+- `mw-card-title-icon` - round icon badge in front of the card title, coloured by `mw-card-addon-*`
+
+### Changed
+
+- `mw-card-stack-icon` follows `mw-card-addon-*` as well, primary stays the default
+
+### Fixed
+
+- hero no longer centers behind the fixed header - content above the first line stays visible on mobile
+
 ## [4.8.0] - 2026-08-22
 
 ### Added
