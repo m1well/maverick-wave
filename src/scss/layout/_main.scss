@@ -44,6 +44,15 @@
         position: relative;
         z-index: z-index('card');
       }
+
+      // The header is fixed, so it floats over the hero and centering against
+      // the full viewport hides everything that reaches above the first line -
+      // a version badge, a kicker - underneath the bar. Center against what is
+      // left below the header instead. Guarded, because a hero without a header
+      // would otherwise sit off-center for no reason.
+      body:has(.mw-header) & {
+        padding-top: calc(var(--mw-header-height) + #{spacing('7')});
+      }
     }
   }
 }
