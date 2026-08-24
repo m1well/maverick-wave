@@ -119,8 +119,29 @@ Two rules that prevent most colour bugs:
   panels. Keep the footer further out than the card in the dark theme and on
   the other side in the light one, or the footer stops reading as chrome. The
   border factor is not configurable - it runs against the card by design.
-- Header, footer chrome and form controls deliberately stay dark/light
-  respectively in both themes.
+- Footer chrome and form controls deliberately stay dark/light respectively in
+  both themes, and so does the header - see the next point for where its colour
+  comes from.
+- The header bar is **not** part of that surface stack. It is
+  `--mw-primary-color` darkened straight toward black - `$header-surface` (16%)
+  is how much of the colour survives, the same shade ramp a colour tool prints.
+  It sits well past the bottom of that ramp so the hue reads as a tint on
+  near-black, not as a colour of its own. That matters for a light-only project:
+  while the bar was derived from the dark page background, its colour was frozen
+  at the framework default nobody had configured. Every `--mw-header-*` token
+  now follows the primary, and each is still overridable on its own.
+- The ink on the bar is mixed off the same primary: `--mw-header-text-color` is
+  `tint(92%)` and `--mw-header-navbar-list-active-color` - the current page and
+  the hover tone both - is `tint(35%)`, so the active item reads as the brand
+  colour rather than a washed-out pastel. Do not reach for
+  `--mw-primary-text-color` here: that bound is calibrated against the page
+  background and lets a mid-dark primary through untouched, which on this much
+  darker bar lands around 2:1. At the default bar the active tone clears 5:1 on
+  every palette; a near-black primary is the one case that falls short (~3.5:1,
+  the bar is near-black too) - override the token there.
+- Raising `$header-surface` for a lighter bar eats into that margin, since only
+  the bar moves and the ink stays put. Past roughly 30% check the active tone,
+  or move it down with the bar.
 - Persisting the choice, the toggle UI and the initial class are the
   application's job in a SPA (`examples/angular-services.md`). The shipped JS
   does it for static pages using `localStorage` under the key `mw-theme`.
@@ -161,6 +182,8 @@ effect, because the root colours are declared with `!default`.
   $card-surface-light: 1.05,
   $footer-surface-dark: 0.75,
   $footer-surface-light: 0.95,
+  // the header bar - how much of the primary survives darkening toward black
+  $header-surface: 16%,
   $mw-hero-image: url('/assets/hero.jpg'),
   $font-family-base: (
     'Inter',
