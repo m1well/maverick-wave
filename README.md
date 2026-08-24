@@ -112,7 +112,9 @@ still be overridden individually if you want to break out of the scale.
 
 > The derivation needs `color-mix()` **and** relative colour syntax
 > (`oklch(from ...)`): Chrome 119+, Safari 16.4+, Firefox 128+. Older browsers
-> get no colours at all, not merely worse ones.
+> get no colours at all, not merely worse ones. The same floor is set as
+> `browserslist` in `package.json`, which is what Autoprefixer and cssnano read
+> when building `dist/`.
 
 ### Fill or ink
 

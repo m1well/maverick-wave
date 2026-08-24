@@ -12,15 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `$header-surface` - SCSS knob for how dark the header bar sits
 - `$mw-hero-text-color` - ink on the hero image, fixed across themes
-- `$hero-dim-dark` / `$hero-dim-light` - how strongly the hero image is dimmed per theme
+- `$hero-filter-dark` / `$hero-filter-light` - per-theme filter on the hero image
 
 ### Changed
 
 - header colours derive from `--mw-primary-color` instead of the dark theme background
+- hero overlay replaced by `--mw-hero-image-filter`
 
 ### Fixed
 
 - active navbar link was barely readable on the header
+- `backdrop-filter` now carries its `-webkit-` prefix for Safari below 18 (`browserslist` in package.json)
 - hero text went dark over an unchanged image in light mode
 
 ## [4.9.0] - 2026-08-22

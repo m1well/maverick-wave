@@ -32,15 +32,17 @@
       // .mw-home still gets it.
       color: var(--mw-hero-text-color);
 
-      // A tint that dims the photo, dark in both themes but weaker in the light
-      // one - see $hero-dim-dark. It is what makes the theme switch visible at
-      // the top of the page, where the header is fixed and the image is fixed
-      // and nothing else is on screen yet.
+      // The theme treatment of the photo - see $hero-filter-dark. backdrop-filter
+      // and not a background colour, because it has to change how the image
+      // *looks* rather than lay something over it: an overlay on a dark photo
+      // reads the same in both themes until its alpha is high enough to become
+      // the colour you see. Filtering here rather than on the container keeps
+      // the content in front of it unfiltered.
       &::before {
         content: '';
         position: absolute;
         inset: 0;
-        background: var(--mw-hero-overlay-background);
+        backdrop-filter: var(--mw-hero-image-filter);
         z-index: z-index('lift');
         pointer-events: none;
         transition: var(--mw-transition);
