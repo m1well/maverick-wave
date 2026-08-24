@@ -12,16 +12,18 @@ $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d
 // or to any color of your own.
 $mw-hero-text-color: var(--mw-dark-text-color) !default;
 
-// How strongly the hero image is dimmed, per theme. Dark in *both* themes, only
-// at different strengths - the ink on the hero is fixed light, so lightening the
-// image in the light theme would be the one change that breaks it. The image
-// reads brighter and more alive in the light theme and muted in the dark one,
-// which is what makes the theme switch visible while the page is still at the
-// top, where the header and the hero are all there is to see.
+// How the hero image is treated per theme. A filter on the image, not a tinted
+// overlay: a translucent layer can only ever darken *toward its own colour*, so
+// on an already dark photo the two themes end up looking the same until the
+// alpha is high enough that the tint colour itself takes over - dark blue in
+// both, just more of it. brightness() moves the picture instead of covering it,
+// which reads as a difference even on a dark image.
 //
-// Set both to 0% for the bare photo, at the cost of that signal.
-$hero-dim-dark: 42% !default;
-$hero-dim-light: 17% !default;
+// Kept below 1 in the dark theme and just above it in the light one, so the
+// photo stays dark enough for the fixed light ink either way. Any filter list
+// works - add contrast(), sepia(), grayscale() to taste.
+$hero-filter-dark: brightness(0.7) !default;
+$hero-filter-light: brightness(1.1) !default;
 
 // ---------------------------------------------------------------------------
 // Root colors
@@ -298,7 +300,7 @@ $status-colors: (
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
-  'hero-overlay-background': fade('dark-page-background', $hero-dim-dark),
+  'hero-image-filter': $hero-filter-dark,
   // The surface stack - the card and footer factors and the reasoning behind
   // them live with the derivation knobs above, so a project can retune the
   // stack from one place instead of editing this map. The rule between the
@@ -328,10 +330,7 @@ $dark-theme-colors: (
 // Light theme colors. Emitted as --mw-light-<key>.
 $light-theme-colors: (
   'page-background': $light-background,
-  // The dark background on purpose, not the light one: the tint dims the photo
-  // in both themes so the fixed light ink keeps working, and only its strength
-  // tells the two apart.
-  'hero-overlay-background': fade('dark-page-background', $hero-dim-light),
+  'hero-image-filter': $hero-filter-light,
   'card-background': surface('light-page-background', $card-surface-light),
   'footer-background': surface('light-page-background', $footer-surface-light),
   'border': surface('light-page-background', 0.8),

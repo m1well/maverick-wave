@@ -234,14 +234,19 @@ width.
 ```
 
 A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
-mode with the background image from `--mw-hero-background`, dimmed by a tint
-(`--mw-hero-overlay-background`). `mw-home-content-fade` fades the content in.
+mode with the background image from `--mw-hero-background`.
+`mw-home-content-fade` fades the content in.
 
-That tint is dark in **both** themes and only differs in strength -
-`$hero-dim-dark` (45%) against `$hero-dim-light` (12%). Lightening the image in
-the light theme would break the fixed light ink; different strengths keep it
-readable while still making the theme switch visible at the top of the page,
-where the header and the image are all there is on screen.
+The image is treated per theme through `--mw-hero-image-filter` - a filter, not
+a tinted overlay: `$hero-filter-dark` (`brightness(0.5)`) against
+`$hero-filter-light` (`brightness(1.15) saturate(1.2)`). A translucent layer can
+only darken toward its own colour, so on an already dark photo both themes look
+the same until the alpha is high enough that the tint colour is what you see.
+Moving the image's brightness reads as a difference even on a dark photo, and
+keeps it dark enough for the fixed light ink either way. Any filter list works.
+
+It is applied with `backdrop-filter` on a pseudo element, so the content in
+front of the image stays unfiltered.
 
 The ink on that image comes from `--mw-hero-text-color` and does **not** follow
 the theme, because the photo does not either - a theme-bound colour would go
