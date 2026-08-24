@@ -27,22 +27,20 @@
       background-position: center;
       background-image: var(--mw-hero-background);
 
-      // the “overlay”
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: var(--mw-hero-overlay-background);
-        backdrop-filter: blur(5px);
-        opacity: 0.3;
-        z-index: z-index('lift');
-        pointer-events: none;
-      }
+      // The image does not change with the theme, so neither does the ink on
+      // it - see $mw-hero-text-color. Set on the container so a hero without
+      // .mw-home still gets it.
+      color: var(--mw-hero-text-color);
 
-      // your actual content should sit above the overlay
-      > * {
-        position: relative;
-        z-index: z-index('card');
+      // ...except for anything that paints its own surface. A card inside the
+      // hero is still a card on --mw-card-background and takes the theme's ink,
+      // or its text would be light on a light card in the light theme.
+      .mw-card,
+      .mw-panel,
+      .mw-modal,
+      .mw-tile,
+      .mw-calendar:not(.mw-calendar-plain) {
+        color: var(--mw-text-color);
       }
 
       // The header is fixed, so it floats over the hero and centering against
