@@ -12,6 +12,17 @@ $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d
 // or to any color of your own.
 $mw-hero-text-color: var(--mw-dark-text-color) !default;
 
+// How strongly the hero image is dimmed, per theme. Dark in *both* themes, only
+// at different strengths - the ink on the hero is fixed light, so lightening the
+// image in the light theme would be the one change that breaks it. The image
+// reads brighter and more alive in the light theme and muted in the dark one,
+// which is what makes the theme switch visible while the page is still at the
+// top, where the header and the hero are all there is to see.
+//
+// Set both to 0% for the bare photo, at the cost of that signal.
+$hero-dim-dark: 42% !default;
+$hero-dim-light: 17% !default;
+
 // ---------------------------------------------------------------------------
 // Root colors
 //
@@ -287,6 +298,7 @@ $status-colors: (
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
+  'hero-overlay-background': fade('dark-page-background', $hero-dim-dark),
   // The surface stack - the card and footer factors and the reasoning behind
   // them live with the derivation knobs above, so a project can retune the
   // stack from one place instead of editing this map. The rule between the
@@ -316,6 +328,10 @@ $dark-theme-colors: (
 // Light theme colors. Emitted as --mw-light-<key>.
 $light-theme-colors: (
   'page-background': $light-background,
+  // The dark background on purpose, not the light one: the tint dims the photo
+  // in both themes so the fixed light ink keeps working, and only its strength
+  // tells the two apart.
+  'hero-overlay-background': fade('dark-page-background', $hero-dim-light),
   'card-background': surface('light-page-background', $card-surface-light),
   'footer-background': surface('light-page-background', $footer-surface-light),
   'border': surface('light-page-background', 0.8),
