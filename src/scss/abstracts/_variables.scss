@@ -73,11 +73,27 @@ $muted-tint: 23% !default;
 // room for a low card factor.
 $card-surface-dark: 0.85 !default;
 $card-surface-light: 1.05 !default;
-// Footer and header chrome. In the dark theme they step further out than the
-// card, in the light theme they step the other way, so the band under the page
-// reads as chrome and not as another card.
+// The footer band. In the dark theme it steps further out than the card, in the
+// light theme it steps the other way, so the band under the page reads as chrome
+// and not as another card. The header is not part of this - see below.
 $footer-surface-dark: 0.75 !default;
 $footer-surface-light: 0.95 !default;
+
+// The header bar. It stays dark in both themes, so it cannot be part of the
+// surface stack above: a project that only ever shows the light theme would be
+// styling its header through a dark page color it never configured, and the bar
+// would keep the framework default no matter what the palette says.
+//
+// It is built from the primary color instead - the one token every palette has
+// to set - darkened straight toward black, which is the ramp every color tool
+// shows as a color's shades. Kept well past the bottom of that ramp on purpose:
+// this deep the brand hue is a tint on near-black rather than a color of its
+// own, which is what keeps the bar reading as chrome behind the page.
+//
+// Lower it for a darker bar. The ink on the bar is near-white, so going far up
+// means overriding --mw-header-text-color and
+// --mw-header-navbar-list-active-color with it.
+$header-surface: 16% !default;
 
 // ---------------------------------------------------------------------------
 // Derivation helpers
@@ -120,6 +136,17 @@ $footer-surface-light: 0.95 !default;
 @function tint($name, $amount) {
   @return string.unquote(
     'color-mix(in hsl, var(--mw-#{$name}), white #{$amount})'
+  );
+}
+
+// Darkened straight toward black in sRGB - the ramp a color tool prints as a
+// color's shades, where $amount is how much of the color survives. shade()
+// cannot stand in for it: mixing in hsl scales saturation along with lightness
+// and hands back a washed-out tone, which is what a hover state wants and what
+// a surface meant to still read as the brand color does not.
+@function deepen($name, $amount) {
+  @return string.unquote(
+    'color-mix(in srgb, var(--mw-#{$name}) #{$amount}, black)'
   );
 }
 
@@ -300,21 +327,22 @@ $light-theme-colors: (
   'border-accent': fade('light-primary-text-color', 70%),
 );
 
-// Header/navbar colors. They stay dark in both themes but can be retuned on
-// their own, hence the dark-* references. Emitted as --mw-header-<key>.
+// Header/navbar colors. The bar is dark in both themes, so every tone here is
+// built from the primary color rather than from a theme token: the header is the
+// one piece of chrome a light-only project would otherwise be styling through
+// dark-theme values it never set. Emitted as --mw-header-<key>, and each one is
+// still overridable on its own.
 $header-colors: (
-  'background': token('dark-footer-background'),
-  'text-color': token('dark-text-color'),
-  'navbar-list-color': token('dark-text-muted-color'),
-  // Primary carries the navigation, secondary stays a signal. The bar is dark in
-  // both themes, so the active item takes the dark ink tone in both.
-  'navbar-list-active-color': token('dark-primary-text-color'),
+  'background': deepen('primary-color', $header-surface),
+  'text-color': tint('primary-color', 92%),
+  'navbar-list-color': fade('header-text-color', 70%),
+  'navbar-list-active-color': tint('primary-color', 35%),
   // The burger sits on the primary button surface, and on the secondary one
   // while the drawer is open, so it takes the label ink of each - not the
   // header text color, which is picked for the dark bar behind it.
   'burgerbutton-color': token('primary-accent-text-color'),
   'burgerbutton-open-color': token('secondary-accent-text-color'),
-  'border': token('dark-border-accent'),
+  'border': fade('header-navbar-list-active-color', 40%),
 );
 // Drives the bar height, the anchor scroll offset and the mobile drawer padding.
 // 59px is the intrinsic height: 42px logo + 2 × spacing('3') + 1px border.

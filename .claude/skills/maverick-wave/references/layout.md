@@ -114,7 +114,10 @@ same height as the login and burger buttons.
   `--mw-header-text-color`, `--mw-header-navbar-list-color`,
   `--mw-header-navbar-list-active-color`, `--mw-header-burgerbutton-color`,
   `--mw-header-border`) so the chrome can be retuned without touching the brand
-  palette.
+  palette. All of them derive from `--mw-primary-color`, not from a theme
+  colour: the bar is dark in both themes and a light-only project must not have
+  to configure dark-theme values to change it. The bar itself is the primary
+  darkened toward black, `$header-surface` (16%) - see `theming.md`.
 
 **Localhost indicator.** Put `mw-localhost-indicator-activated` on the header
 and the shipped JS prepends a pulsing bar when the host is localhost/127.0.0.1/

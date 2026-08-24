@@ -104,10 +104,11 @@ backgrounds, borders, muted text - is derived from them at runtime with
 
 Setting `--mw-primary-color` alone also retunes `--mw-primary-color-hover`,
 `--mw-primary-background`, `--mw-primary-background-hover`,
-`--mw-primary-text-color` and `--mw-border-accent`. The same holds for
-`--mw-dark-page-background`, which drives the dark card, footer and border
-tones. Each derived token can still be overridden individually if you want to
-break out of the scale.
+`--mw-primary-text-color`, `--mw-border-accent` and the whole `--mw-header-*`
+set - the bar is the primary darkened toward black, so the chrome follows the
+brand without a second value. The same holds for `--mw-dark-page-background`,
+which drives the dark card, footer and border tones. Each derived token can
+still be overridden individually if you want to break out of the scale.
 
 > The derivation needs `color-mix()` **and** relative colour syntax
 > (`oklch(from ...)`): Chrome 119+, Safari 16.4+, Firefox 128+. Older browsers

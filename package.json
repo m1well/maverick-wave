@@ -1,6 +1,6 @@
 {
   "name": "maverick-wave",
-  "version": "4.9.0",
+  "version": "4.9.1",
   "config": {
     "version_short": "4.9"
   },
@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/m1well/maverick-wave/issues"
   },
-  "homepage": "https://maverickwave.m1well.com/",
+  "homepage": "https://maverick-wave.m1well.com/",
   "author": "m1well",
   "license": "MIT",
   "keywords": [
