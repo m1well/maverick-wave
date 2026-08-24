@@ -11,14 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `$header-surface` - SCSS knob for how dark the header bar sits
+- `$mw-hero-text-color` - ink on the hero image, fixed across themes
 
 ### Changed
 
 - header colours derive from `--mw-primary-color` instead of the dark theme background
 
+### Removed
+
+- hero overlay and `--mw-hero-overlay-background`
+
 ### Fixed
 
 - active navbar link was barely readable on the header
+- hero text went dark over an unchanged image in light mode
 
 ## [4.9.0] - 2026-08-22
 

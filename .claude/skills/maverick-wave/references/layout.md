@@ -234,8 +234,23 @@ width.
 ```
 
 A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
-mode with the background image from `--mw-hero-background` and a blurred overlay
-(`--mw-hero-overlay-background`). `mw-home-content-fade` fades the content in.
+mode with the background image from `--mw-hero-background`.
+`mw-home-content-fade` fades the content in.
+
+The ink on that image comes from `--mw-hero-text-color` and does **not** follow
+the theme, because the photo does not either - a theme-bound colour would go
+dark over an unchanged dark image the moment the light theme is on. It defaults
+to the light end of the palette; for a bright photo set it per page:
+
+```css
+.hero-page {
+  --mw-hero-text-color: var(--mw-light-text-color);
+}
+```
+
+Components that paint their own surface (`mw-card`, `mw-panel`, `mw-modal`,
+`mw-tile`, `mw-calendar`) are exempt and keep the theme's ink - a card in the
+hero is still a card.
 
 ## Grid
 

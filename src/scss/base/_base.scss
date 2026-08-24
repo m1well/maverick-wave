@@ -42,8 +42,9 @@ $_active-prefix: 'dark';
   // theme for theme-toggle
   --mw-internal-theme-mode: #{$mw-theme-mode};
 
-  // hero background image
+  // hero background image and the ink that sits on it
   --mw-hero-background: #{$mw-hero-image};
+  --mw-hero-text-color: #{$mw-hero-text-color};
 
   // header height
   --mw-header-height: #{$header-height};
