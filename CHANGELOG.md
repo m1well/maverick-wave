@@ -12,14 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `$header-surface` - SCSS knob for how dark the header bar sits
 - `$mw-hero-text-color` - ink on the hero image, fixed across themes
+- `$hero-dim-dark` / `$hero-dim-light` - how strongly the hero image is dimmed per theme
 
 ### Changed
 
 - header colours derive from `--mw-primary-color` instead of the dark theme background
-
-### Removed
-
-- hero overlay and `--mw-hero-overlay-background`
 
 ### Fixed
 

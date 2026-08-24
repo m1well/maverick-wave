@@ -32,6 +32,26 @@
       // .mw-home still gets it.
       color: var(--mw-hero-text-color);
 
+      // A tint that dims the photo, dark in both themes but weaker in the light
+      // one - see $hero-dim-dark. It is what makes the theme switch visible at
+      // the top of the page, where the header is fixed and the image is fixed
+      // and nothing else is on screen yet.
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: var(--mw-hero-overlay-background);
+        z-index: z-index('lift');
+        pointer-events: none;
+        transition: var(--mw-transition);
+      }
+
+      // ...so the content has to sit above it
+      > * {
+        position: relative;
+        z-index: z-index('card');
+      }
+
       // ...except for anything that paints its own surface. A card inside the
       // hero is still a card on --mw-card-background and takes the theme's ink,
       // or its text would be light on a light card in the light theme.

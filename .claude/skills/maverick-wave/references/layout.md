@@ -234,8 +234,14 @@ width.
 ```
 
 A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
-mode with the background image from `--mw-hero-background`.
-`mw-home-content-fade` fades the content in.
+mode with the background image from `--mw-hero-background`, dimmed by a tint
+(`--mw-hero-overlay-background`). `mw-home-content-fade` fades the content in.
+
+That tint is dark in **both** themes and only differs in strength -
+`$hero-dim-dark` (45%) against `$hero-dim-light` (12%). Lightening the image in
+the light theme would break the fixed light ink; different strengths keep it
+readable while still making the theme switch visible at the top of the page,
+where the header and the image are all there is on screen.
 
 The ink on that image comes from `--mw-hero-text-color` and does **not** follow
 the theme, because the photo does not either - a theme-bound colour would go
