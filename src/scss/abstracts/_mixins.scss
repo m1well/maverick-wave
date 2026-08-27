@@ -253,3 +253,20 @@
     box-shadow: none;
   }
 }
+
+// The look a link has: no box of its own, the underline only on hover, and it
+// sits a little lower than the browser's default so a descender does not cross
+// it. Shared by `mw-link` in running text and `mw-btn-link` in a row of
+// buttons - the two differ in whether they carry a control height, not in how
+// they look.
+@mixin link-look {
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1.5px;
+
+  &:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+}

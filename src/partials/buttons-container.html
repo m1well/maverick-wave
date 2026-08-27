@@ -219,7 +219,8 @@
   request row, a modal backdrop. It brings nothing but the focus ring and the
   pointer; everything else it inherits. Not the same as
   <code>mw-btn-link</code>, which is a button dressed as a link with a colour
-  and a minimum width of its own.
+  and a control height of its own, nor the same as <code>mw-link</code>, which
+  is the link inside a sentence.
 </p>
 <div class="mw-card mw-card-simple">
   <p class="mw-mb-4">
@@ -234,6 +235,28 @@
     <button type="button" class="mw-btn-plain">mw-btn-plain</button>
     <button type="button" class="mw-btn-plain" disabled>disabled</button>
   </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Text Links</h3>
+<p class="mw-text-muted">
+  <code>mw-link</code> is the link inside a sentence,
+  <code>mw-link-muted</code> the quieter one. Same look as
+  <code>mw-btn-link</code>, without the button: <code>mw-btn</code> carries a
+  control height, and in running text that lifts the one line the link sits on
+  above every line around it - glaring in a footer disclaimer, where the text is
+  a size smaller to begin with. So <code>mw-link</code> in a paragraph,
+  <code>mw-btn mw-btn-link</code> where the link really is one of several
+  buttons and has to line up with them. Both work on an
+  <code>&lt;a&gt;</code> and on a <code>&lt;button&gt;</code>.
+</p>
+<div class="mw-card mw-card-simple">
+  <p class="mw-mb-0">
+    Built with
+    <a href="https://astro.build" target="_blank" class="mw-link">Astro</a>
+    and written up in the
+    <a href="#get-started" class="mw-link-muted">Get Started</a> section - both
+    sit on the line, not above it.
+  </p>
 </div>
 
 <h3 class="mw-mb-4 mw-mt-6">Touch Targets</h3>

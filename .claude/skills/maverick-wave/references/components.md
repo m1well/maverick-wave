@@ -26,10 +26,37 @@ exhaustive: what is not named does not exist.
 - Every variant dips 1px on `:active`, and the solid ones invert their top
   highlight into an inner shadow. On touch that press is the only feedback there
   is, so do not override it away
-- `mw-btn-link` still has the button padding - `mw-p-0` makes it read as inline
-  text
+- **A link inside a sentence is `mw-link`, not `mw-btn mw-btn-link`.** The base
+  class carries a control height, so in running text it lifts that one line to
+  2.25rem while the lines around it stay where they are. `mw-p-0` does not help
+  - the height does it, not the padding. Keep `mw-btn` only where the link
+    really is a button in a row of buttons and has to line up with them
 - On a coarse pointer or below 768px `mw-btn` grows to a 2.75rem minimum height
   and `mw-btn-sm` to 2.5rem, on their own
+
+```html
+<!-- a button that happens to look like a link -->
+<button type="button" class="mw-btn mw-btn-link">Read Article</button>
+
+<!-- a link inside a sentence -->
+<p>Built with <a href="https://astro.build" class="mw-link">Astro</a>.</p>
+```
+
+### Text links
+
+`mw-link` and `mw-link-muted` are the inline links, added in 4.13.0. Same look
+as the two button variants - no box, underline on hover - but without
+`inline-flex` and without the control height, which is what makes them sit on
+the line instead of above it. `font` and the focus ring are set explicitly, so
+a `<button>` in the middle of a paragraph works as well as an `<a>`.
+
+```html
+<p>
+  Built with <a href="https://astro.build" class="mw-link">Astro</a> and written
+  up in the
+  <a href="#get-started" class="mw-link-muted">Get Started</a> section.
+</p>
+```
 
 ### Three emphasis levels
 
@@ -79,7 +106,8 @@ and colour, and keeps exactly two things: the pointer and the focus ring. Used
 on its own - `mw-btn` is neither needed nor wanted next to it.
 
 Not the same as `mw-btn-link`, which is a button dressed as a link and brings
-its own colour and minimum width.
+its own colour and control height, nor as `mw-link`, which is the link inside a
+sentence.
 
 **Destructive actions use `mw-btn-danger`.** `mw-btn-secondary` is a brand
 colour, not a semantic one.
