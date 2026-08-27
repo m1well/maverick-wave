@@ -27,7 +27,7 @@
 // Modal container
 .mw-modal {
   background: var(--mw-card-background);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface(0);
   box-shadow: var(--mw-elevation-5);
   max-width: 520px;
   width: 100%;

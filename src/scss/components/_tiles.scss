@@ -62,12 +62,11 @@
 // Base tile
 .mw-tile {
   background: var(--mw-card-background);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
   padding: spacing('5');
   box-shadow: var(--mw-elevation-2);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
-  position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;

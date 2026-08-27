@@ -155,6 +155,14 @@ keys at all (negative gap is invalid CSS and is not generated).
 
 **Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full`): 0, 2, 5, 10, 15, 20, 30 px, 50%.
 
+**The surface signature.** Every panel-like component - card, panel, modal,
+accordion, tile, calendar, pagination, login box - shares one silhouette: sharp
+5px corners on the top-left/bottom-right diagonal, round 20px ones on the other,
+plus a 2px **corner accent** in the primary tone (`--mw-corner-accent`) sitting
+on the two round corners. It is not a class and not opt-in; the components carry
+it. `mw-corner-plain` drops the accent on a box too small to hold it - see
+`references/layout.md`.
+
 **Elevation** (`mw-elevation-0` … `-5`, and `var(--mw-elevation-N)` inside SCSS).
 Two shadows per level - a tight contact layer plus a wide ambient one:
 `1` resting (inputs, tags), `2` raised (cards, panels at rest), `3` floating
@@ -230,6 +238,7 @@ feature frame) ·
 `mw-text-currency` · `mw-text-truncate` / `mw-text-clamp-2..5` /
 `mw-text-break` / `mw-text-nowrap` · `mw-text-balance` / `mw-text-pretty` /
 `mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` ·
+`mw-corner-plain` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
 spacing, flex, display, text

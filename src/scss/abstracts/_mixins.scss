@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'variables' as v;
+@use 'functions' as *;
 
 // Media query mixins
 @mixin media-up($breakpoint) {
@@ -268,5 +269,74 @@
 
   &:hover:not(:disabled) {
     text-decoration: underline;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Surface
+//
+// The MaverickWave silhouette: sharp corners on the top-left/bottom-right
+// diagonal, round ones on the other. Nine components repeated those four radii
+// by hand - this is the only place the shape is defined now.
+//
+// On top of the radii, an accent arc on the two round corners. The asymmetry
+// alone reads as an accident; a coloured bow sitting exactly on it does not.
+// Point-symmetric like the radii themselves, so it holds up on a tall card, a
+// wide panel and a square tile alike.
+//
+// The ring is drawn inside the padding box rather than on the border, because
+// four of the callers clip with `overflow: hidden` and would swallow a ring
+// sitting on the border edge. Hence $border-width: `inset: 0` already lands on
+// the padding box, but the corner radius there is the outer one minus the
+// border, and a ring drawn at the outer radius would visibly miss the curve.
+//
+// $corners drops the top arc for a surface whose top-right corner is already
+// taken by a fill of its own - see the coloured panel headers.
+// ---------------------------------------------------------------------------
+@mixin surface($border-width: 1px, $corners: 'both') {
+  position: relative;
+  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+
+  &::after {
+    @include corner-accent($border-width, $corners);
+  }
+}
+
+// The arc on its own, for a variant that has to redraw it without restating the
+// shape - it is already on the element by then.
+@mixin corner-accent($border-width: 1px, $corners: 'both') {
+  $sharp: radius('sm') - $border-width;
+  $round: radius('xl') - $border-width;
+  // Opaque out to where the curve ends, fading from there - so the arc runs a
+  // little way into the straight edge instead of being cut off at the tangent.
+  //
+  // The 1.8 is the one number worth retuning here, and it is bounded by the
+  // shortest surface rather than by the nicest-looking card: the fade reaches
+  // from a corner, so on a 50px-high box - `mw-card-simple` with one line in it
+  // - anything past about 2 lets the two arcs meet in the middle and the pair
+  // stops reading as two corners and starts reading as a frame. Higher is
+  // softer on a tall card, lower is more defined on a short one.
+  $reach: $round * 1.8;
+  $top: radial-gradient(circle $reach at 100% 0, #000 $round, transparent 100%);
+  $bottom: radial-gradient(
+    circle $reach at 0 100%,
+    #000 $round,
+    transparent 100%
+  );
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  // 2px rather than 1px: in the dark theme --mw-border sits at OKLch lightness
+  // 0.32 and the arc tone at 0.41, so a hairline is separated from the plain
+  // border by little more than its saturation and vanishes at reading distance.
+  border: 2px solid var(--mw-corner-accent);
+  border-radius: $sharp $round $sharp $round;
+
+  @if $corners == 'bottom' {
+    mask-image: $bottom;
+  } @else {
+    mask-image: $top, $bottom;
   }
 }

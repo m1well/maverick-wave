@@ -47,11 +47,10 @@ $_mw-card-addon-colors: (
   display: flex;
   flex-direction: column;
   background: var(--mw-card-background);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
   box-shadow: var(--mw-elevation-2);
   border: 1px solid var(--mw-border);
   transition: var(--mw-transition);
-  position: relative;
   // deliberately not `overflow: hidden` - that would also cut off anything a
   // child wants to show outside the card, a tooltip above a button being the
   // common case. Images round their own corners below, and only the ribbon

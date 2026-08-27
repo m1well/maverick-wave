@@ -288,7 +288,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   background: var(--mw-card-background);
   border: 1px dashed var(--mw-primary-text-color);
   // Same silhouette as a ticket, so it reads as one being written
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
 
   &.mw-active {
     display: flex;

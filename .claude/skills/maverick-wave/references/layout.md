@@ -340,6 +340,16 @@ with it; `mw-text-capitalize` is the plain transform.
 **Elevation** - `mw-elevation-0` through `-5`, the same ramp every component
 uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
 
+**Corner accent** - `mw-corner-plain` drops the accent arc that sits on the
+two round corners of every card, panel, modal, tile, accordion, calendar,
+pagination and login box. Everything else stays: the radii, the border, the
+shadow, the hover. It is for a box too small to carry the mark - the arc reaches
+about 34px in from its corner, so under roughly 90px the two of them take up
+most of the outline and the pair reads as a frame instead of as a detail. A
+chip-sized `mw-card-simple`, a swatch, a marker in a layout demo. A card with
+content in it never needs this, and it is not the way to switch the signature
+off across a project - restyle `--mw-corner-accent` for that.
+
 **Aspect ratio** - `mw-aspect-square|video|wide|portrait|photo`. Reserves the
 box before the image inside it has loaded, so the page does not reflow when the
 picture arrives. The child fills the box and crops rather than stretching.

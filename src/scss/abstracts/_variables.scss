@@ -505,6 +505,9 @@ $dark-theme-colors: (
   // Translucent accent line used for dividers, rules and outlines. Built from
   // the ink tone, not the fill tone, or the line disappears into the page.
   'border-accent': fade('dark-primary-text-color', 70%),
+  // The accent arc on the two round corners of every mw-surface. Full strength
+  // here: against a dark card the ink tone is the faintest it gets.
+  'corner-accent': token('dark-primary-text-color'),
 );
 
 // Light theme colors. Emitted as --mw-light-<key>.
@@ -537,6 +540,10 @@ $light-theme-colors: (
   'danger-text-color': ink-on-light('danger-color'),
   'info-text-color': ink-on-light('info-color'),
   'border-accent': fade('light-primary-text-color', 70%),
+  // Held back a little against the dark theme: the same blue on a near-white
+  // card carries far more contrast than it does on a dark one, and at full
+  // strength the arc stops being a detail and starts being a frame.
+  'corner-accent': fade('light-primary-text-color', 80%),
 );
 
 // Header/navbar colors. The bar is dark in both themes, so every tone here is
