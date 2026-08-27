@@ -194,7 +194,7 @@ export class ConfirmDialogComponent {
 
 ## Accordion
 
-`active` on the header **and** the content - no prefix.
+`mw-active` on the header **and** the content.
 
 ```ts
 @Component({
@@ -203,16 +203,20 @@ export class ConfirmDialogComponent {
     <div class="mw-accordion">
       @for (item of items(); track item.id; let i = $index) {
         <div class="mw-accordion-item">
-          <div
+          <button
+            type="button"
             class="mw-accordion-header"
             [class.mw-active]="openIndex() === i"
+            [attr.aria-expanded]="openIndex() === i"
+            [attr.aria-controls]="item.id"
             (click)="toggle(i)"
           >
-            <h3>{{ item.question }}</h3>
+            <span>{{ item.question }}</span>
             <i class="fas fa-chevron-down mw-accordion-icon"></i>
-          </div>
+          </button>
           <div
             class="mw-accordion-content"
+            [id]="item.id"
             [class.mw-active]="openIndex() === i"
           >
             <div class="mw-accordion-content-inner">{{ item.answer }}</div>

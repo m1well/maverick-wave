@@ -14,7 +14,29 @@
     }
   }
 
+  // Written for a <button>. The header is the control that opens the panel, and
+  // as a <div> it is not focusable and not reachable by keyboard - on a page of
+  // questions that is every answer on it. The declarations below clear what
+  // comes with a <button>; on a <div> they change nothing, so old markup keeps
+  // working.
   &-header {
+    appearance: none;
+    border: none;
+    width: 100%;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+
+    // A heading is flow content and not allowed inside a button, so the
+    // question carries its own type here rather than through a nested h3. The
+    // h3 rule further down keeps older markup looking the same.
+    font-size: font-size('md');
+    font-weight: font-weight('medium');
+
+    @include media-down('sm') {
+      font-size: font-size('sm');
+    }
+
     padding: spacing('4');
     background: var(--mw-card-background);
     cursor: pointer;
@@ -37,14 +59,12 @@
       background: var(--mw-primary-background-hover);
     }
 
+    // Markup from before the button: the header carries the type now, the
+    // heading only has to stop bringing its own.
     h3 {
       margin: spacing('0');
-      font-size: font-size('md');
-      font-weight: font-weight('medium');
-
-      @include media-down('sm') {
-        font-size: font-size('sm');
-      }
+      font-size: inherit;
+      font-weight: inherit;
     }
 
     .mw-accordion-icon {

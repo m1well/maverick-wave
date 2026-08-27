@@ -383,10 +383,18 @@
   function initAccordions() {
     const accordionHeaders = document.querySelectorAll('.mw-accordion-header');
     accordionHeaders.forEach((header) => {
+      // A header written as a <button> announces whether its panel is open.
+      // Only when the markup says so - setting it on a <div> without a role
+      // would claim a state for something that is not a control.
+      const announces = header.tagName === 'BUTTON';
+      if (announces) {
+        header.setAttribute('aria-expanded', String(isActive(header)));
+      }
       header.addEventListener('click', function () {
         const open = !isActive(this);
         setActive(this, open);
         setActive(this.nextElementSibling, open);
+        if (announces) this.setAttribute('aria-expanded', String(open));
       });
     });
   }

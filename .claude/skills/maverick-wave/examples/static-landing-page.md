@@ -234,11 +234,16 @@ wired up by hand.
 
           <div class="mw-accordion">
             <div class="mw-accordion-item">
-              <div class="mw-accordion-header mw-active">
-                <h3>Where is the data stored?</h3>
+              <button
+                type="button"
+                class="mw-accordion-header mw-active"
+                aria-expanded="true"
+                aria-controls="faq-storage"
+              >
+                <span>Where is the data stored?</span>
                 <i class="fas fa-chevron-down mw-accordion-icon"></i>
-              </div>
-              <div class="mw-accordion-content mw-active">
+              </button>
+              <div class="mw-accordion-content mw-active" id="faq-storage">
                 <div class="mw-accordion-content-inner">
                   <p>In Frankfurt, in our own data centre.</p>
                 </div>
@@ -246,11 +251,16 @@ wired up by hand.
             </div>
 
             <div class="mw-accordion-item">
-              <div class="mw-accordion-header">
-                <h3>Can I cancel monthly?</h3>
+              <button
+                type="button"
+                class="mw-accordion-header"
+                aria-expanded="false"
+                aria-controls="faq-cancel"
+              >
+                <span>Can I cancel monthly?</span>
                 <i class="fas fa-chevron-down mw-accordion-icon"></i>
-              </div>
-              <div class="mw-accordion-content">
+              </button>
+              <div class="mw-accordion-content" id="faq-cancel">
                 <div class="mw-accordion-content-inner">
                   <p>Yes, at the end of every billing period.</p>
                 </div>

@@ -1,3 +1,4 @@
+@use 'sass:list';
 @use 'sass:map';
 @use 'variables' as v;
 
@@ -34,4 +35,21 @@
 // Function to get a z-index value from the z-index map
 @function z-index($key) {
   @return map.get(v.$z-index, $key);
+}
+
+// The value behind --mw-transition and --mw-transition-fast. A shorthand list
+// carries duration and easing per entry, not once for the whole list: written
+// as `color, background-color, transform 300ms ease` only transform animates
+// and the two before it fall back to 0s. So the duration is appended to every
+// property here instead of to the tail of the list.
+@function transition-list($duration) {
+  $result: ();
+  @each $property in v.$transition-properties {
+    $result: list.append(
+      $result,
+      #{$property} var(#{$duration}) var(--mw-ease-out),
+      comma
+    );
+  }
+  @return $result;
 }

@@ -162,7 +162,8 @@ Two shadows per level - a tight contact layer plus a wide ambient one:
 `0` is explicitly flat. Never write a `box-shadow` by hand - the twelve one-off
 values that used to exist are exactly what this replaced.
 
-**Motion** `--mw-duration-instant|fast|base|slow|slower` = 90/150/240/400/700ms,
+**Motion** `--mw-duration-instant|fast|base|slow|slower` = 110/180/300/520/900ms
+plus `--mw-duration-zoom` (650ms, for a large surface actually travelling),
 `--mw-ease-out` (things arriving - the default), `--mw-ease-in-out` (A to B and
 back), `--mw-ease-spring` (a pop). Two ready-made transitions:
 `var(--mw-transition)` for hover and focus states, `var(--mw-transition-fast)`
@@ -352,8 +353,9 @@ spacing, flex, display, text
     comment. If your component really does need to animate a size, name that
     property - do not reach for `all`.
 27. **A control is a `<button>`, never a styled `<div>`.** `mw-tabs-nav-item`,
-    `mw-theme-toggle` and `mw-gallery-dot` are all written for one, and all
-    three shipped as divs and spans before 4.11 that no keyboard could reach.
+    `mw-theme-toggle`, `mw-gallery-dot` and `mw-accordion-header` are all
+    written for one, and all four shipped as divs and spans - the first three
+    until 4.11, the accordion header until 4.12 - that no keyboard could reach.
     Each class clears what a `<button>` brings with it, so
     `<button type="button" class="mw-tabs-nav-item" data-tab="...">` is the
     whole markup. If you build your own clickable thing: the element decides

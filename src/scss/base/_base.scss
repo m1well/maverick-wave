@@ -50,12 +50,12 @@ $_active-prefix: 'dark';
 
   // The workhorse: every hover, focus and active state in the framework. An
   // explicit property list rather than `all` - see $transition-properties.
-  --mw-transition: #{$transition-properties} var(--mw-duration-base)
-    var(--mw-ease-out);
+  // Built through transition-list(), which repeats the duration on every
+  // property: a shorthand list only reads it on the entry it stands behind.
+  --mw-transition: #{transition-list('--mw-duration-base')};
   // Same list, for a state change that should feel instant under the pointer
   // rather than animated - a button label, a tag, a table row.
-  --mw-transition-fast: #{$transition-properties} var(--mw-duration-fast)
-    var(--mw-ease-out);
+  --mw-transition-fast: #{transition-list('--mw-duration-fast')};
 
   // Control sizes - see the note in the variables file. Custom properties
   // rather than compile-time only, so an application can tighten its forms
