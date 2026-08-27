@@ -2,11 +2,10 @@
 
 .mw-login {
   background: var(--mw-card-background);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
   box-shadow: var(--mw-elevation-2);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
-  position: relative;
   overflow: hidden;
   width: min(340px, 85%);
   margin: spacing('2') auto;

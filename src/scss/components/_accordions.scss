@@ -2,7 +2,7 @@
 
 .mw-accordion {
   border: 1px solid var(--mw-border);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
   overflow: hidden;
   margin: spacing('2');
 

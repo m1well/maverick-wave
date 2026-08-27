@@ -10,37 +10,37 @@
 
 <h3 class="mw-mb-4">Grid with 1 Column</h3>
 <div class="mw-grid-1 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 2 Columns</h3>
 <div class="mw-grid-2 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 3 Columns</h3>
 <div class="mw-grid-3 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
-  <div class="mw-card mw-card-simple">Column 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 3</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 4 Columns</h3>
 <div class="mw-grid-4 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
-  <div class="mw-card mw-card-simple">Column 3</div>
-  <div class="mw-card mw-card-simple">Column 4</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 4</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 5 Columns</h3>
 <div class="mw-grid-5 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
-  <div class="mw-card mw-card-simple">Column 3</div>
-  <div class="mw-card mw-card-simple">Column 4</div>
-  <div class="mw-card mw-card-simple">Column 5</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 4</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 5</div>
 </div>
 
 <h3 class="mw-mb-3">Flexible Grid with Column Spans</h3>
@@ -48,9 +48,13 @@
   12-column grid with custom spans: 2 columns + 4 columns + 1 column
 </p>
 <div class="mw-grid-flex mw-mb-6">
-  <div class="mw-col-span-2 mw-card mw-card-simple">Span 2 Columns</div>
-  <div class="mw-col-span-4 mw-card mw-card-simple">Span 4 Columns</div>
-  <div class="mw-col-span-1 mw-card mw-card-simple">1 col</div>
+  <div class="mw-col-span-2 mw-card mw-card-simple mw-corner-plain">
+    Span 2 Columns
+  </div>
+  <div class="mw-col-span-4 mw-card mw-card-simple mw-corner-plain">
+    Span 4 Columns
+  </div>
+  <div class="mw-col-span-1 mw-card mw-card-simple mw-corner-plain">1 col</div>
 </div>
 
 <h3 class="mw-mb-3">Mixed Column Spans</h3>
@@ -58,11 +62,15 @@
   Various column combinations: 3 + 6 + 3 columns
 </p>
 <div class="mw-grid-flex mw-mb-6">
-  <div class="mw-col-span-3 mw-card mw-card-simple">Span 3 Columns</div>
-  <div class="mw-col-span-6 mw-card mw-card-simple">
+  <div class="mw-col-span-3 mw-card mw-card-simple mw-corner-plain">
+    Span 3 Columns
+  </div>
+  <div class="mw-col-span-6 mw-card mw-card-simple mw-corner-plain">
     Span 6 Columns (Main Content)
   </div>
-  <div class="mw-col-span-3 mw-card mw-card-simple">Span 3 Columns</div>
+  <div class="mw-col-span-3 mw-card mw-card-simple mw-corner-plain">
+    Span 3 Columns
+  </div>
 </div>
 
 <h3 class="mw-mb-3">Asymmetric Layout</h3>
@@ -70,8 +78,10 @@
   Sidebar + content layout: 4 + 8 columns
 </p>
 <div class="mw-grid-flex mw-mb-6">
-  <div class="mw-col-span-4 mw-card mw-card-simple">Sidebar (4 cols)</div>
-  <div class="mw-col-span-8 mw-card mw-card-simple">
+  <div class="mw-col-span-4 mw-card mw-card-simple mw-corner-plain">
+    Sidebar (4 cols)
+  </div>
+  <div class="mw-col-span-8 mw-card mw-card-simple mw-corner-plain">
     Main Content Area (8 cols)
   </div>
 </div>
@@ -83,46 +93,54 @@
   dynamic content.
 </p>
 <div class="mw-grid-auto-sm mw-mb-6">
-  <div class="mw-card mw-card-simple">Product Card</div>
-  <div class="mw-card mw-card-simple">Service Card</div>
-  <div class="mw-card mw-card-simple">Team Member</div>
-  <div class="mw-card mw-card-simple">Portfolio Item</div>
-  <div class="mw-card mw-card-simple">Blog Post</div>
-  <div class="mw-card mw-card-simple">Feature</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Product Card</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Service Card</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Team Member</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Portfolio Item</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Blog Post</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Feature</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 3 Columns - Default Spacing</h3>
 <div class="mw-grid-3 mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
-  <div class="mw-card mw-card-simple">Column 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 3</div>
 </div>
 
 <h3 class="mw-mb-4">Grid with 3 Columns - Large Spacing</h3>
 <div class="mw-grid-3-lg mw-mb-6">
-  <div class="mw-card mw-card-simple">Column 1</div>
-  <div class="mw-card mw-card-simple">Column 2</div>
-  <div class="mw-card mw-card-simple">Column 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Column 3</div>
 </div>
 
 <h3 class="mw-mb-4">Flexible Grid - Default Spacing</h3>
 <div class="mw-grid-flex mw-mb-6">
-  <div class="mw-col-span-4 mw-card mw-card-simple">4 Columns</div>
-  <div class="mw-col-span-8 mw-card mw-card-simple">8 Columns</div>
+  <div class="mw-col-span-4 mw-card mw-card-simple mw-corner-plain">
+    4 Columns
+  </div>
+  <div class="mw-col-span-8 mw-card mw-card-simple mw-corner-plain">
+    8 Columns
+  </div>
 </div>
 
 <h3 class="mw-mb-4">Flexible Grid - Large Spacing</h3>
 <div class="mw-grid-flex-lg mw-mb-6">
-  <div class="mw-col-span-4 mw-card mw-card-simple">4 Columns</div>
-  <div class="mw-col-span-8 mw-card mw-card-simple">8 Columns</div>
+  <div class="mw-col-span-4 mw-card mw-card-simple mw-corner-plain">
+    4 Columns
+  </div>
+  <div class="mw-col-span-8 mw-card mw-card-simple mw-corner-plain">
+    8 Columns
+  </div>
 </div>
 
 <h3 class="mw-mb-4">Auto Grid - Large Spacing</h3>
 <div class="mw-grid-auto-lg mw-mb-6">
-  <div class="mw-card mw-card-simple">Auto 1</div>
-  <div class="mw-card mw-card-simple">Auto 2</div>
-  <div class="mw-card mw-card-simple">Auto 3</div>
-  <div class="mw-card mw-card-simple">Auto 4</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Auto 1</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Auto 2</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Auto 3</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Auto 4</div>
 </div>
 
 <h3 class="mw-mb-4">Grid Stack - Natural Width (Left Aligned)</h3>
@@ -130,7 +148,7 @@
   <button class="mw-btn mw-btn-primary">Small Button</button>
   <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
   <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
-  <div class="mw-card mw-card-simple" style="width: 200px">
+  <div class="mw-card mw-card-simple mw-corner-plain" style="width: 200px">
     Fixed Width Card
   </div>
 </div>
@@ -140,7 +158,7 @@
   <button class="mw-btn mw-btn-primary">Small Button</button>
   <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
   <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
-  <div class="mw-card mw-card-simple" style="width: 200px">
+  <div class="mw-card mw-card-simple mw-corner-plain" style="width: 200px">
     Fixed Width Card
   </div>
 </div>
@@ -150,7 +168,7 @@
   <button class="mw-btn mw-btn-primary">Small Button</button>
   <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
   <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
-  <div class="mw-card mw-card-simple" style="width: 200px">
+  <div class="mw-card mw-card-simple mw-corner-plain" style="width: 200px">
     Fixed Width Card
   </div>
 </div>
@@ -160,12 +178,14 @@
   <button class="mw-btn mw-btn-primary">Small Button</button>
   <button class="mw-btn mw-btn-secondary">Medium Length Button</button>
   <button class="mw-btn mw-btn-outline">Very Long Button Text Here</button>
-  <div class="mw-card mw-card-simple">Full Width Card</div>
+  <div class="mw-card mw-card-simple mw-corner-plain">Full Width Card</div>
 </div>
 
 <h3 class="mw-mb-4">Grid Stack - Large Spacing & Centered</h3>
 <div class="mw-grid-stack-center-lg mw-mb-6">
   <button class="mw-btn mw-btn-primary">Button 1</button>
   <button class="mw-btn mw-btn-secondary">Button 2</button>
-  <div class="mw-card mw-card-simple" style="width: 300px">Centered Card</div>
+  <div class="mw-card mw-card-simple mw-corner-plain" style="width: 300px">
+    Centered Card
+  </div>
 </div>

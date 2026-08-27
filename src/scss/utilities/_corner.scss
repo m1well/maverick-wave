@@ -1,0 +1,8 @@
+@use '../abstracts' as *;
+
+// Opt-out from the corner accent - the arc on the two round corners that every
+// surface in the framework carries, see the surface() mixin. Everything else
+// stays: the radii, the border, the shadow, the hover.
+.mw-corner-plain::after {
+  content: none;
+}

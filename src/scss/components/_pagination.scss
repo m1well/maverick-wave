@@ -7,7 +7,7 @@
   padding: spacing('5');
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface;
   box-shadow: var(--mw-elevation-2);
 }
 

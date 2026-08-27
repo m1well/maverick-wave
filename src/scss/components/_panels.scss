@@ -2,7 +2,7 @@
 
 .mw-panel {
   background: var(--mw-card-background);
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  @include surface(2px);
   border: 2px solid var(--mw-border);
   overflow: hidden;
   display: flex;
@@ -60,6 +60,15 @@
       background: var(--mw-secondary-color);
       color: var(--mw-secondary-accent-text-color);
     }
+  }
+
+  // The coloured header already owns the top-right corner. An arc drawn over it
+  // either disappears into the primary fill or fights the secondary one - a
+  // blue bow on an orange header reads as a rendering fault, not as a mark. The
+  // bottom corner carries it alone on these two.
+  &-primary::after,
+  &-secondary::after {
+    @include corner-accent(2px, 'bottom');
   }
 
   // Scrollable variant for fixed height
