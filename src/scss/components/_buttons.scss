@@ -111,17 +111,12 @@
   }
 }
 
+// A button that looks like a link but is still a button: it keeps the control
+// height, so it lines up with the Save next to it in a card's actions or a
+// button bar. A link inside a sentence is `mw-link` instead - see _links.scss.
 .mw-btn-link,
 .mw-btn-link-muted {
-  background: transparent;
-  border: none;
-  padding: 0;
-  text-underline-offset: 0.22em;
-  text-decoration-thickness: 1.5px;
-
-  &:hover:not(:disabled) {
-    text-decoration: underline;
-  }
+  @include link-look;
 }
 
 .mw-btn-link {
@@ -220,7 +215,8 @@
 // the right element and a button is the wrong look.
 //
 // Not the same as `mw-btn-link`: that one is a button dressed as a link, with
-// its own colour and a min-width. This one has no look at all.
+// its own colour and a control height. Nor `mw-link`, which is the link inside
+// a sentence. This one has no look at all.
 .mw-btn-plain {
   display: inline-flex;
   align-items: center;

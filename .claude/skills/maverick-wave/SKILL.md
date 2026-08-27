@@ -187,7 +187,8 @@ Everything below is documented in `references/components.md` unless marked other
 
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
 `ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`, `sm`,
-`lg`) · `mw-btn-mini` · `mw-button-bar`
+`lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
+`mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note`
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
@@ -361,3 +362,13 @@ spacing, flex, display, text
     whole markup. If you build your own clickable thing: the element decides
     whether anyone without a mouse can use it, the class only decides how it
     looks.
+28. **A link in running text is `mw-link`, not `mw-btn mw-btn-link`.** Since
+    4.13.0 there is a class for exactly that. `mw-btn` is `inline-flex` with
+    `min-height: var(--mw-control-height)`, so a link written that way pulls its
+    own line up to 2.25rem while every line around it keeps the paragraph's
+    height - in a footer disclaimer at `font-size: sm` that is nearly double,
+    and it reads as a layout bug. `mw-p-0` is not the fix it looks like: the
+    height does it, not the padding. `mw-link` is the same look without the
+    control height and works on an `<a>` and a `<button>` alike.
+    `mw-btn mw-btn-link` stays right where the link really is one of several
+    buttons and has to line up with them - a card's actions, a button bar.

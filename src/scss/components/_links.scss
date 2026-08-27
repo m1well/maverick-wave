@@ -1,0 +1,35 @@
+@use '../abstracts' as *;
+
+// A link inside a sentence. Same look as `mw-btn-link`, but none of the button:
+// no `inline-flex`, no control height. That difference is the whole point -
+// `mw-btn` lifts its line to 2.25rem, which is barely visible in a heading and
+// glaring in a footer disclaimer, where the line around it is half that.
+//
+// So: `mw-link` in running text, `mw-btn mw-btn-link` where the link really is
+// one of several buttons and has to line up with them.
+//
+// `font` and the focus ring are spelled out because this also has to work on a
+// `<button>` - a "show more" in the middle of a paragraph is a button, and the
+// reset hands it the family but not the size. The shorthand carries the line
+// height along, which is what makes the button box come out exactly as tall as
+// the line it sits in. It stays one unbreakable box either way, since no
+// browser lets a `<button>` wrap - use an `<a>` where the label is long enough
+// to need it.
+.mw-link,
+.mw-link-muted {
+  font: inherit;
+
+  @include link-look;
+  @include focus-ring;
+}
+
+.mw-link {
+  color: var(--mw-primary-text-color);
+}
+
+.mw-link-muted {
+  color: var(--mw-text-muted-color);
+  &:hover {
+    color: var(--mw-primary-text-color);
+  }
+}
