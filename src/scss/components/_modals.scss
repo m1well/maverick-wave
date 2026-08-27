@@ -8,14 +8,14 @@
   right: 0;
   bottom: 0;
   background: var(--mw-overlay-background);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(3px);
   z-index: z-index('modal')-10;
   display: none;
   align-items: center;
   justify-content: center;
   padding: spacing('7');
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--mw-duration-base) var(--mw-ease-out);
 
   // Show modal when class is added
   &.mw-modal-open {
@@ -28,13 +28,15 @@
 .mw-modal {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  box-shadow: 0 25px 50px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-5);
   max-width: 520px;
   width: 100%;
   max-height: 85dvh;
   display: flex;
   flex-direction: column;
   z-index: z-index('modal');
+  transform: scale(0.96) translateY(12px);
+  transition: transform var(--mw-duration-base) var(--mw-ease-out);
 
   .mw-modal-open & {
     transform: scale(1) translateY(0);
@@ -58,18 +60,65 @@
   }
 }
 
+// Phone: the dialog becomes a sheet
 @include media-down('sm') {
   .mw-modal-overlay {
-    padding: spacing('5');
+    padding: spacing('0');
+    align-items: flex-end;
   }
 
-  .mw-modal-header,
+  .mw-modal,
+  .mw-modal.mw-modal-sm,
+  .mw-modal.mw-modal-lg,
+  .mw-modal.mw-modal-xl {
+    max-width: 100%;
+    max-height: 92dvh;
+    border-radius: radius('xl') radius('xl') radius('none') radius('none');
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    // Straight up from the bottom edge - a sheet does not scale in
+    transform: translateY(100%);
+    transition: transform var(--mw-duration-slow) var(--mw-ease-out);
+  }
+
+  .mw-modal-open .mw-modal {
+    transform: translateY(0);
+  }
+
+  // The grab handle. It does nothing - there is no drag-to-dismiss behind it -
+  // but it is the mark that says "this came up from the bottom and goes back
+  // down", and a sheet without one reads as a page that got stuck.
+  .mw-modal-header::before {
+    content: '';
+    position: absolute;
+    top: spacing('2');
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    border-radius: radius('lg');
+    background: var(--mw-text-muted-color);
+    opacity: 0.45;
+  }
+
+  .mw-modal-header {
+    position: relative;
+    padding: spacing('6') spacing('4') spacing('3');
+  }
+
   .mw-modal-footer {
-    padding: spacing('3') spacing('4');
+    padding: spacing('4');
   }
 
   .mw-modal-body {
     padding: spacing('4');
+  }
+
+  // On a phone the actions are the reason the sheet is open. Full width, in
+  // reading order, thumb-sized - not two 80px buttons huddled in a corner.
+  .mw-modal-footer .mw-btn {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 2.75rem;
   }
 }
 
@@ -101,6 +150,8 @@
   padding: spacing('4') spacing('5');
   overflow-y: auto;
   flex: 1;
+  overscroll-behavior: contain;
+  @include scrollbar;
 }
 
 .mw-modal-footer {
@@ -126,10 +177,24 @@
   align-items: center;
   justify-content: center;
   color: var(--mw-text-color);
+  transition: var(--mw-transition-fast);
+  @include focus-ring;
+  @include tappable;
 
   &:hover {
     background: var(--mw-primary-color-hover);
     color: var(--mw-primary-accent-text-color);
+  }
+
+  &:active {
+    transform: scale(0.92);
+    transition-duration: var(--mw-duration-instant);
+  }
+
+  // The one control on the sheet a thumb has to find without looking
+  @include media-down('sm') {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
   }
 }
 

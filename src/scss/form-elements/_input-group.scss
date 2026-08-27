@@ -63,8 +63,18 @@
     }
   }
 
+  // The field inside gives its halo up - three boxes each drawing their own
+  // ring around themselves is not a focused control, it is three focused
+  // controls - and the group draws one around the whole thing instead. Without
+  // this the group was the one field on the page whose focus was a border
+  // colour and nothing else.
   .mw-input:focus {
     box-shadow: none;
+  }
+
+  &:focus-within {
+    border-radius: radius('sm');
+    @include focus-halo;
   }
 
   // Button as suffix/prefix (e.g. search button, copy button)
@@ -84,12 +94,22 @@
     }
   }
 
-  // Size variants - applied to the group, cascades to prefix/suffix
+  // Size variants - put on the group, and they reach the field too. They used
+  // to style only the prefix and suffix, so `mw-input-group-sm` around a plain
+  // `mw-input` gave a small frame around a full-size field and the modifier
+  // looked broken unless you also knew to write `mw-input-sm` inside it.
   &-sm {
     .mw-input-group-prefix,
     .mw-input-group-suffix {
       padding: spacing('1') spacing('2');
       font-size: font-size('xs');
+    }
+
+    .mw-input,
+    .mw-btn {
+      min-height: var(--mw-control-height-sm);
+      font-size: var(--mw-control-font-sm);
+      padding-block: spacing('1');
     }
   }
 
@@ -98,6 +118,15 @@
     .mw-input-group-suffix {
       padding: spacing('3') spacing('4');
       font-size: font-size('sm');
+    }
+
+    .mw-input,
+    .mw-btn {
+      min-height: var(--mw-control-height-lg);
+      font-size: var(--mw-control-font-lg);
+      // A step under the minimum, or the padding wins and the group grows past
+      // the size step it was asked for - same trap as on the standalone field
+      padding-block: spacing('2');
     }
   }
 }

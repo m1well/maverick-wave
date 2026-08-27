@@ -47,12 +47,21 @@
       position: relative;
       transition: var(--mw-transition);
 
+      @include tappable;
+
       &:hover,
-      &:focus,
       &.mw-breadcrumbs-active {
-        outline: 0;
         color: var(--mw-primary-text-color);
         border-color: var(--mw-primary-text-color);
+        z-index: z-index('lift');
+      }
+
+      &:active {
+        color: var(--mw-primary-text-color);
+        transition-duration: var(--mw-duration-instant);
+      }
+
+      @include focus-ring-inset(-4px) {
         z-index: z-index('lift');
       }
 

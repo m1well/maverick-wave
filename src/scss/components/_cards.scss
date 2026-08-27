@@ -25,7 +25,7 @@ $_mw-card-addon-colors: (
   border-radius: radius('full');
   background: var(--mw-card-addon-color, var(--mw-primary-color));
   color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
-  box-shadow: 0 4px 8px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
   transition: var(--mw-transition);
 }
 
@@ -48,7 +48,7 @@ $_mw-card-addon-colors: (
   flex-direction: column;
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  box-shadow: 0 5px 10px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
   border: 1px solid var(--mw-border);
   transition: var(--mw-transition);
   position: relative;
@@ -77,9 +77,16 @@ $_mw-card-addon-colors: (
   }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 15px var(--mw-shadow);
+    box-shadow: var(--mw-elevation-3);
     border-color: var(--mw-border-accent);
+  }
+
+  // The lift moves the box, so it is guarded: on touch `:hover` latches after a
+  // tap and the card stays raised, visibly out of line with the row it sits in.
+  // The colour and shadow below are not - a latched border reads as "the one you
+  // last touched", which is no worse than nothing.
+  @include hover {
+    transform: translateY(-2px);
   }
 
   // Padded surface for arbitrary content - stays a block container so inline
@@ -138,7 +145,7 @@ $_mw-card-addon-colors: (
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: var(--mw-transition);
+      transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
     }
 
     &:hover img {

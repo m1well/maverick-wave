@@ -17,9 +17,11 @@ The result is a framework that balances utility with simplicity, offering develo
 ## Features
 
 - Responsive Grid System
-- 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Ratings, Stepper, Skeleton Loader, Empty State, Divider, and more
+- 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Badges, Dropdown, Ratings, Stepper, Skeleton Loader, Empty State, Divider, and more
 - Form Elements: Input, Select, Textarea, Checkbox, Radio, Toggle, Input Group, with `mw-field` wrapper pattern for Angular Reactive Forms
-- Utility Classes for spacing, flex, display, and typography
+- Utility Classes for spacing, flex, display, typography, text overflow, elevation and aspect ratio
+- A five-step elevation ramp and a motion scale, so every shadow and every transition in the framework comes from one place
+- Mobile as a first-class target: 44px touch targets on a coarse pointer, modals that become bottom sheets, press states on everything, and hover effects that do not latch after a tap
 - Easy Customization via CSS Custom Properties
 - Built-in Light & Dark Mode with optional theme switching
 - SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
@@ -115,6 +117,79 @@ still be overridden individually if you want to break out of the scale.
 > get no colours at all, not merely worse ones. The same floor is set as
 > `browserslist` in `package.json`, which is what Autoprefixer and cssnano read
 > when building `dist/`.
+
+### Elevation and motion
+
+Two scales that are not colours, and both are tokens for the same reason: a
+framework where every component picks its own shadow and its own timing looks
+assembled rather than designed.
+
+```css
+:root {
+  /* Elevation. Each level is two shadows - a tight contact layer that gives
+     the box weight, and a wide ambient one that says how high it floats.
+     Declared per theme, because the tones they are mixed from differ. */
+  --mw-elevation-1: /* resting: inputs, tags, small controls */;
+  --mw-elevation-2: /* raised: cards and panels at rest */;
+  --mw-elevation-3: /* floating: a card under the pointer */;
+  --mw-elevation-4: /* overlay: dropdowns, popovers, drawer */;
+  --mw-elevation-5: /* modal */;
+
+  /* Motion */
+  --mw-duration-instant: 90ms; /* a press */
+  --mw-duration-fast: 150ms; /* a colour swap under the pointer */
+  --mw-duration-base: 240ms; /* the default */
+  --mw-duration-slow: 400ms; /* something crossing the screen */
+  --mw-duration-slower: 700ms; /* a slider, a progress bar */
+  --mw-ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* things arriving */
+  --mw-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* A to B and back */
+  --mw-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* a pop */
+
+  /* The two ready-made transitions every component uses */
+  --mw-transition: /* the explicit paint-only property list, base duration */;
+  --mw-transition-fast: /* the same list, fast duration */;
+
+  /* Control sizes - one height per step, shared by input, select, textarea
+     and button, so a field and the button beside it line up */
+  --mw-control-height-sm: 2rem;
+  --mw-control-height: 2.25rem;
+  --mw-control-height-lg: 2.5rem;
+  --mw-control-font-sm: 0.8rem;
+  --mw-control-font: 0.9rem;
+  --mw-control-font-lg: 1rem;
+  --mw-control-line-height: 1.35;
+
+  /* Focus */
+  --mw-focus-ring-width: 2px;
+  --mw-focus-ring-offset: 2px;
+  --mw-focus-ring-color: var(--mw-primary-text-color);
+  --mw-focus-halo-size: 3px; /* the soft ring a form field gets instead */
+  --mw-focus-halo-opacity: 28%;
+}
+```
+
+`--mw-transition` deliberately lists its properties rather than saying `all`: a
+width that changes at a breakpoint should snap, not crawl. Anything that really
+does want to animate a size says so itself. `--mw-duration-zoom` (650ms) is the
+one for a large surface actually travelling - an image scaling inside a card, a
+slider track crossing its frame - because the eye reads speed as distance over
+time, and the 300ms that feels right on a 40px button feels snatched on a 300px
+photo.
+
+The control scale is what makes a form row line up. Each field used to work its
+own height out from its own font size, its own line-height and its own padding,
+and no two of them agreed: an input, a select and a button side by side measured
+32.2, 34.4 and 37.2 pixels. They all measure the same now, and the fields share
+one font scale instead of the select sitting a step below the input next to it.
+
+Under `prefers-reduced-motion: reduce` the duration tokens all drop to 1ms and a
+blanket rule catches anything that names its own timing - including whatever you
+wrote yourself. 1ms rather than 0, so a script waiting on `transitionend` still
+gets one.
+
+To retune from SCSS instead, the same values are `$duration-*`, `$ease-*`,
+`$control-height*` / `$control-font*`, `$focus-ring-*` and `$shadow-near-*` /
+`$shadow-far-*` in `abstracts/_variables.scss`, all `!default`.
 
 ### Fill or ink
 
@@ -292,8 +367,8 @@ have no use for the marketing components (`blog-post`, `gallery`,
 @use 'maverick-wave/src/scss/utilities';
 ```
 
-A typical application subset like the one above compiles to roughly 98 kB raw /
-15 kB gzipped, against 147 kB / 22.5 kB for the full build.
+A typical application subset like the one above compiles to roughly 85 kB raw /
+14 kB gzipped, against 196 kB / 30 kB for the full build.
 
 > **`base` is not optional.** It carries the `:root` custom properties - without
 > it every component renders without colors. If you bring your own reset, use

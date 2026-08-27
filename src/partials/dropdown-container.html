@@ -1,0 +1,119 @@
+<h3 class="mw-section-subtitle">Dropdown</h3>
+
+<p class="mw-text-muted mw-mb-6 mw-text-measure">
+  Built on <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> rather
+  than a <code>div</code> and a click handler. That buys the whole keyboard
+  contract for free: the trigger is focusable, Enter and Space toggle it, the
+  open state lives in the DOM where a screen reader can see it, and the menu
+  still opens with JavaScript switched off. The framework script only adds what
+  markup cannot express - closing on <kbd>Esc</kbd> and on a click elsewhere.
+</p>
+
+<div class="mw-grid-2 mw-gap-6">
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Actions menu</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Default</h5>
+        <details class="mw-dropdown">
+          <summary class="mw-btn mw-btn-primary">
+            Actions <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <div class="mw-dropdown-label">Manage</div>
+            <button class="mw-dropdown-item">
+              <i class="fas fa-pen"></i> Edit
+            </button>
+            <button class="mw-dropdown-item">
+              <i class="fas fa-copy"></i> Duplicate
+            </button>
+            <button class="mw-dropdown-item" disabled>
+              <i class="fas fa-arrow-right"></i> Move
+            </button>
+            <hr class="mw-dropdown-divider" />
+            <button class="mw-dropdown-item mw-dropdown-item-danger">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </details>
+      </div>
+
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">As a picker</h5>
+        <details class="mw-dropdown">
+          <summary class="mw-btn mw-btn-outline">
+            Sort by: Newest
+            <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <button class="mw-dropdown-item mw-active" aria-checked="true">
+              Newest first
+            </button>
+            <button class="mw-dropdown-item">Oldest first</button>
+            <button class="mw-dropdown-item">Name A - Z</button>
+            <button class="mw-dropdown-item">Name Z - A</button>
+          </div>
+        </details>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          <code>mw-active</code> marks the current choice, for a menu that picks
+          rather than acts.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Alignment</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div class="mw-row-split mw-row-split-center">
+        <span class="mw-text-muted mw-text-sm">Start (default)</span>
+        <details class="mw-dropdown">
+          <summary class="mw-btn mw-btn-sm mw-btn-outline">
+            Menu <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <button class="mw-dropdown-item">One</button>
+            <button class="mw-dropdown-item">Two</button>
+          </div>
+        </details>
+      </div>
+
+      <div class="mw-row-split mw-row-split-center">
+        <span class="mw-text-muted mw-text-sm"
+          ><code>mw-dropdown-end</code></span
+        >
+        <details class="mw-dropdown mw-dropdown-end">
+          <summary class="mw-btn mw-btn-sm mw-btn-outline">
+            Menu <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <button class="mw-dropdown-item">One</button>
+            <button class="mw-dropdown-item">Two</button>
+          </div>
+        </details>
+      </div>
+
+      <div class="mw-row-split mw-row-split-center">
+        <span class="mw-text-muted mw-text-sm"
+          ><code>mw-dropdown-up</code></span
+        >
+        <details class="mw-dropdown mw-dropdown-up mw-dropdown-end">
+          <summary class="mw-btn mw-btn-sm mw-btn-outline">
+            Menu <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <button class="mw-dropdown-item">One</button>
+            <button class="mw-dropdown-item">Two</button>
+          </div>
+        </details>
+      </div>
+
+      <p class="mw-text-muted mw-text-sm mw-mb-0">
+        The menu is absolutely positioned, so an ancestor that hides its
+        overflow clips it. The framework's own containers lift that clip while a
+        menu is open; on your own, one line does the same:
+        <code>:has(.mw-dropdown[open]) { overflow: visible }</code>.
+      </p>
+    </div>
+  </div>
+</div>

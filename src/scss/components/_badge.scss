@@ -1,0 +1,157 @@
+@use '../abstracts' as *;
+
+// Badge
+//
+// Not a tag. A tag is a label with a soft surface that names something - a
+// topic, a state, a category - and sits in a row of its own kind. A badge is a
+// solid mark that carries a *count* or a *status*, and it usually sits on
+// something else: the number on a bell, the dot on an avatar, the "3" on a tab.
+
+$_mw-badge-colors: (primary, secondary, success, warning, danger, info);
+
+.mw-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 spacing('2');
+  border-radius: radius('xl');
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-accent-text-color);
+  font-size: font-size('2xs');
+  font-weight: font-weight('bold');
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+@each $name in $_mw-badge-colors {
+  .mw-badge-#{$name} {
+    background: var(--mw-#{$name}-color);
+    color: var(--mw-#{$name}-accent-text-color);
+  }
+}
+
+.mw-badge-muted {
+  background: var(--mw-gray-color);
+  color: var(--mw-accent-text-color);
+}
+
+.mw-badge-outline {
+  background: transparent;
+  border: 1px solid currentcolor;
+  color: var(--mw-primary-text-color);
+}
+
+.mw-badge-sm {
+  min-width: 1rem;
+  height: 1rem;
+  padding: 0 spacing('1');
+  font-size: font-size('3xs');
+}
+
+.mw-badge-lg {
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 spacing('3');
+  font-size: font-size('xs');
+}
+
+// Dot
+.mw-badge-dot {
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  min-width: 0;
+  padding: 0;
+  border-radius: radius('full');
+  background: var(--mw-primary-color);
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+// A dot that is actually live - a running job, an open connection. The ring
+// pulses outward and fades; the dot underneath never moves, so a row of them
+// stays legible.
+.mw-badge-pulse {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+    animation: mw-badge-pulse 1.8s var(--mw-ease-out) infinite;
+  }
+}
+
+@keyframes mw-badge-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+// Anchoring a badge to something
+.mw-badge-anchor {
+  position: relative;
+  display: inline-flex;
+}
+
+.mw-badge-float {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(40%, -40%);
+  box-shadow: 0 0 0 2px var(--mw-page-background);
+  pointer-events: none;
+  z-index: z-index('lift');
+}
+
+// Inside anything that paints its own surface the ring has to match that
+// surface, not the page
+.mw-card,
+.mw-panel,
+.mw-modal,
+.mw-tile,
+.mw-header {
+  .mw-badge-float {
+    box-shadow: 0 0 0 2px var(--mw-card-background);
+  }
+}
+
+.mw-header .mw-badge-float {
+  box-shadow: 0 0 0 2px var(--mw-header-background);
+}
+
+// Status line
+.mw-badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: spacing('2');
+  font-size: font-size('sm');
+  color: var(--mw-text-color);
+  white-space: nowrap;
+}
+
+@each $name in $_mw-badge-colors {
+  .mw-badge-dot-#{$name} {
+    background: var(--mw-#{$name}-color);
+  }
+
+  .mw-badge-status-#{$name} .mw-badge-dot {
+    background: var(--mw-#{$name}-color);
+  }
+}
+
+.mw-badge-dot-muted,
+.mw-badge-status-muted .mw-badge-dot {
+  background: var(--mw-gray-color);
+}

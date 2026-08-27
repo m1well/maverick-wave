@@ -18,6 +18,28 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   }
 }
 
+// A card that has just been pushed to another lane arrives from the side it was
+// pushed from, and takes visibly longer doing it than a new card takes to
+// appear. The two are not the same event: a new card shows up exactly where the
+// eye already is - the composer it was written in - while a moved one lands in a
+// column somewhere else on the board, and has to be found there.
+//
+// Before this the move had no animation at all: the JS re-parented the card and
+// it simply blinked into the other lane.
+@keyframes mw-kanban-card-moved-forward {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+}
+
+@keyframes mw-kanban-card-moved-back {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Board
 // ---------------------------------------------------------------------------
@@ -129,7 +151,20 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
   padding: spacing('4');
 
   &.mw-kanban-card-in {
-    animation: mw-kanban-card-in 0.25s ease;
+    animation: mw-kanban-card-in var(--mw-duration-base) var(--mw-ease-out);
+  }
+
+  // `slow` rather than `base` - see the note by the keyframes. Retune the whole
+  // thing through --mw-duration-slow, or give these two rules a duration of
+  // their own if only the board should change.
+  &.mw-kanban-card-moved-forward {
+    animation: mw-kanban-card-moved-forward var(--mw-duration-slow)
+      var(--mw-ease-out);
+  }
+
+  &.mw-kanban-card-moved-back {
+    animation: mw-kanban-card-moved-back var(--mw-duration-slow)
+      var(--mw-ease-out);
   }
 }
 
@@ -225,10 +260,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
     color: var(--mw-primary-accent-text-color);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
-  }
+  @include focus-ring;
 
   &:disabled {
     opacity: 0.35;
@@ -260,7 +292,7 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 
   &.mw-active {
     display: flex;
-    animation: mw-kanban-card-in 0.2s ease;
+    animation: mw-kanban-card-in var(--mw-duration-fast) var(--mw-ease-out);
   }
 
   // Three lines of description without a scrollbar
@@ -358,6 +390,8 @@ $_mw-kanban-ribbon-clearance-compact: 58px;
 
 @media (prefers-reduced-motion: reduce) {
   .mw-kanban-card.mw-kanban-card-in,
+  .mw-kanban-card.mw-kanban-card-moved-forward,
+  .mw-kanban-card.mw-kanban-card-moved-back,
   .mw-kanban-composer.mw-active {
     animation: none;
   }

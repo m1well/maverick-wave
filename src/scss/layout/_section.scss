@@ -45,7 +45,7 @@
 }
 
 .mw-section-nav {
-  max-width: 90%;
+  max-width: 100%;
   margin: spacing('0') auto spacing('0') auto;
   display: flex;
   flex-wrap: wrap;
@@ -76,10 +76,13 @@
     color: var(--mw-primary-accent-text-color);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+    transition-duration: var(--mw-duration-instant);
   }
+
+  @include focus-ring;
+  @include tappable;
 
   &:disabled {
     cursor: not-allowed;

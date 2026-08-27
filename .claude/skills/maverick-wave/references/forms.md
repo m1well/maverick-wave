@@ -1,5 +1,31 @@
 # Forms
 
+## Control sizes
+
+`mw-input`, `mw-select`, `mw-textarea` and `mw-btn` share one scale:
+
+| step  | height  | font   |
+| ----- | ------- | ------ |
+| `-sm` | 2rem    | 0.8rem |
+| base  | 2.25rem | 0.9rem |
+| `-lg` | 2.5rem  | 1rem   |
+
+A field and the button beside it are therefore the same height by construction -
+before 4.11.0 each control worked its own height out and an input, a select and
+a button in one row measured 32.2, 34.4 and 37.2 pixels. Buttons sit one font
+step above the fields: a button carries a label, a field carries what the user
+typed.
+
+Never set a height on a control yourself. Pick the step and leave it alone.
+
+The minimum only governs while it is the larger of the two numbers. Block
+padding above it wins, and the control silently leaves the scale - which is
+exactly how a button once ended up 1.2px taller than the field beside it. So if
+you do override `padding-block` on a control, keep
+`2 x padding + line-height + border` under the height its step allows.
+On a coarse pointer or below 768px every control grows to 2.75rem on its own.
+Retune the whole scale through `--mw-control-height*` / `--mw-control-font*`.
+
 ## The field pattern
 
 `mw-field` groups label, control, hint and error into one unit. It is the

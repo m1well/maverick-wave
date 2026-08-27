@@ -1,0 +1,114 @@
+<h3 class="mw-section-subtitle">Badges</h3>
+
+<p class="mw-text-muted mw-mb-6 mw-text-measure">
+  A badge is not a tag. A tag names something and sits in a row of its own kind;
+  a badge carries a count or a status and usually sits <em>on</em> something -
+  the number on a bell, the dot on an avatar. That is why it fills its colour
+  instead of tinting it, and why it comes with an anchor.
+</p>
+
+<div class="mw-grid-2 mw-gap-6">
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Counts</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Colors</h5>
+        <div class="mw-d-flex mw-items-center mw-gap-3 mw-flex-wrap">
+          <span class="mw-badge">3</span>
+          <span class="mw-badge mw-badge-secondary">8</span>
+          <span class="mw-badge mw-badge-success">1</span>
+          <span class="mw-badge mw-badge-warning">4</span>
+          <span class="mw-badge mw-badge-danger">99+</span>
+          <span class="mw-badge mw-badge-info">12</span>
+          <span class="mw-badge mw-badge-muted">0</span>
+          <span class="mw-badge mw-badge-outline">new</span>
+        </div>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Sizes</h5>
+        <div class="mw-d-flex mw-items-center mw-gap-3">
+          <span class="mw-badge mw-badge-sm">7</span>
+          <span class="mw-badge">7</span>
+          <span class="mw-badge mw-badge-lg">7</span>
+        </div>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          Round on one character, a pill from two on - a
+          <code>min-width</code> the padding grows past, the same rule an OS
+          badge follows. The digits are tabular, so a counter ticking 9 to 10
+          does not shift what sits beside it.
+        </p>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Anchored to something</h5>
+        <div class="mw-d-flex mw-items-center mw-gap-6">
+          <span class="mw-badge-anchor">
+            <button class="mw-btn mw-btn-outline">
+              <i class="fas fa-inbox"></i> Inbox
+            </button>
+            <span class="mw-badge mw-badge-danger mw-badge-float">5</span>
+          </span>
+          <span class="mw-badge-anchor">
+            <i class="fas fa-bell mw-text-xl"></i>
+            <span class="mw-badge mw-badge-primary mw-badge-float mw-badge-sm"
+              >2</span
+            >
+          </span>
+        </div>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          <code>mw-badge-anchor</code> on the thing being badged,
+          <code>mw-badge-float</code> on the badge. It hangs off the corner and
+          carries a ring in the surface colour, so it reads as a separate object
+          rather than a blob on the icon.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Status</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Dot with a label</h5>
+        <div class="mw-grid-1 mw-gap-3">
+          <span class="mw-badge-status mw-badge-status-success">
+            <span class="mw-badge-dot"></span> Online
+          </span>
+          <span class="mw-badge-status mw-badge-status-warning">
+            <span class="mw-badge-dot"></span> Degraded
+          </span>
+          <span class="mw-badge-status mw-badge-status-danger">
+            <span class="mw-badge-dot mw-badge-pulse"></span> Incident
+          </span>
+          <span class="mw-badge-status mw-badge-status-muted">
+            <span class="mw-badge-dot"></span> Archived
+          </span>
+        </div>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Live</h5>
+        <p class="mw-text-muted mw-text-sm mw-mb-0">
+          <code>mw-badge-pulse</code> adds a ring that grows out and fades. The
+          dot underneath never moves, so a column of them in a table stays
+          readable. For something actually running - a job, an open connection -
+          not for decoration.
+        </p>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">In a row</h5>
+        <div class="mw-row-split mw-row-split-center">
+          <span>Deployment #4812</span>
+          <span class="mw-badge-status mw-badge-status-success">
+            <span class="mw-badge-dot"></span> Passed
+          </span>
+        </div>
+        <hr class="mw-divider" />
+        <div class="mw-row-split mw-row-split-center">
+          <span>Deployment #4811</span>
+          <span class="mw-badge-status mw-badge-status-danger">
+            <span class="mw-badge-dot"></span> Failed
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

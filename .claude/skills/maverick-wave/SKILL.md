@@ -155,12 +155,38 @@ keys at all (negative gap is invalid CSS and is not generated).
 
 **Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full`): 0, 2, 5, 10, 15, 20, 30 px, 50%.
 
+**Elevation** (`mw-elevation-0` … `-5`, and `var(--mw-elevation-N)` inside SCSS).
+Two shadows per level - a tight contact layer plus a wide ambient one:
+`1` resting (inputs, tags), `2` raised (cards, panels at rest), `3` floating
+(a card under the pointer), `4` overlay (dropdown, popover, drawer), `5` modal.
+`0` is explicitly flat. Never write a `box-shadow` by hand - the twelve one-off
+values that used to exist are exactly what this replaced.
+
+**Motion** `--mw-duration-instant|fast|base|slow|slower` = 90/150/240/400/700ms,
+`--mw-ease-out` (things arriving - the default), `--mw-ease-in-out` (A to B and
+back), `--mw-ease-spring` (a pop). Two ready-made transitions:
+`var(--mw-transition)` for hover and focus states, `var(--mw-transition-fast)`
+for anything that should feel instant under the pointer. Both list their
+properties explicitly rather than saying `all`.
+
+**Control sizes** `--mw-control-height-sm|base|lg` = 2 / 2.25 / 2.5rem (an even
+32 / 36 / 40px step) and
+`--mw-control-font-sm|base|lg` = 0.8 / 0.9 / 1rem, shared by `mw-input`,
+`mw-select`, `mw-textarea` and `mw-btn`. A field and the button beside it are
+the same height by construction. Buttons run one font step above the fields.
+
+**Focus** `--mw-focus-ring-width` 2px, `--mw-focus-ring-offset` 2px,
+`--mw-focus-ring-color`, plus `--mw-focus-halo-size` 3px /
+`--mw-focus-halo-opacity` 28% for the soft ring a form field gets instead of a
+hard outline. SCSS: `@include focus-ring`, `focus-ring-inset`, `field-focus`.
+
 ## Component index
 
 Everything below is documented in `references/components.md` unless marked otherwise.
 
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
-`link`, `link-muted`, `plain`, `sm`, `lg`) · `mw-btn-mini` · `mw-button-bar`
+`ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`, `sm`,
+`lg`) · `mw-btn-mini` · `mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note`
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
@@ -171,7 +197,8 @@ feature frame) ·
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
 `hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
 `mw-calendar` (+ `compact`, `plain`) · `mw-tag` /
-`mw-tags` · `mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
+`mw-tags` · `mw-badge` (+ `-dot`, `-status`, `-anchor`, `-float`, `-pulse`) ·
+`mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
 `mw-timeline-simple`
 
@@ -179,11 +206,13 @@ feature frame) ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
 **Navigation** `mw-header` + `mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
-`mw-section-nav` (`references/layout.md`)
+`mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
+`-caret`, `-end`, `-up`) · `mw-section-nav` (`references/layout.md`)
 
 **Media & content** `mw-avatar` (+ `initials`, `group`) · `mw-gallery` ·
 `mw-image-slider` · `mw-blog-post` · `mw-code-block` / `mw-terminal` ·
-`mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` · `mw-list` family
+`mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` · `mw-kbd` ·
+`mw-list` family
 
 **Forms** (`references/forms.md`) `mw-field` · `mw-input` · `mw-select` ·
 `mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
@@ -194,9 +223,14 @@ feature frame) ·
 `mw-section` · `mw-page-header` · `mw-grid-*` · `mw-row-split` · `mw-hero` ·
 `mw-footer`
 
-**Utilities** (`references/layout.md`) `mw-sr-only` · `mw-row-split`
-(+ `center`) · `mw-text-numeric` / `mw-text-currency` · spacing, flex, display,
-text
+**Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
+`mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
+`mw-text-currency` · `mw-text-truncate` / `mw-text-clamp-2..5` /
+`mw-text-break` / `mw-text-nowrap` · `mw-text-balance` / `mw-text-pretty` /
+`mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` ·
+`mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
+`mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
+spacing, flex, display, text
 
 ## Pitfalls
 
@@ -238,11 +272,13 @@ text
     Safari 16.4+, Firefox 128+. Both carry the derived tones, so older browsers
     get no colours at all, not merely worse ones.
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
-    `mw-btn-sm`, `mw-input-sm`, `mw-select-sm` and `mw-textarea-sm` get a 2.5rem
-    minimum height, a tab 2.75rem, a calendar day 44px. `mw-btn-mini` keeps its
-    18px circle - it sits in tag rows and table cells where a bigger one would
-    shift the layout - and grows its _hit area_ to 28px via a pseudo-element.
-    Nothing to switch on, and no reason to write the media query again in an app.
+    `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm`,
+    `mw-select-sm` and `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
+    44px, and list rows / menu items / pager pages / accordion headers 2.75rem.
+    `mw-btn-mini` keeps its 18px circle - it sits in tag rows and table cells
+    where a bigger one would shift the layout - and grows its _hit area_ to 28px
+    via a pseudo-element. Nothing to switch on, and no reason to write the media
+    query again in an app.
 12. **`mw-empty-state` has a `-desc`, not a `-text`.** The parts are
     `mw-empty-state-icon`, `-title`, `-desc`, plus the size variant
     `mw-empty-state-sm`. Invented names fail silently, as always.
@@ -259,3 +295,67 @@ text
     that host - it then generates no box and the children take the item role
     back. Angular: `host: { class: 'mw-d-contents' }`. `mw-header` handles this
     case on its own, the others do not.
+15. **A badge is not a tag.** `mw-tag` names something - a topic, a state - and
+    sits in a row of its own kind, with a tinted surface. `mw-badge` carries a
+    _count_ or a _status_ and usually sits **on** something, filled rather than
+    tinted. Number on a bell: badge. "Draft" next to a title: tag.
+16. **A dropdown is a `<details>`, not a div.** `<details class="mw-dropdown">`
+    with a `<summary>` trigger - that is where the keyboard handling, the focus
+    and the open state come from, and it works without script. The framework JS
+    only adds Escape and click-outside. Writing your own div-plus-click loses all
+    of it.
+17. **An open dropdown is clipped by anything that hides its overflow.** The menu
+    is absolutely positioned. The framework's own containers - panel, card, tile,
+    modal body, responsive table - lift the clip while a menu is open. On your
+    own container it is one line:
+    `:has(.mw-dropdown[open]) { overflow: visible }`.
+18. **Never write `box-shadow` by hand.** Use `var(--mw-elevation-1..5)` or the
+    `mw-elevation-*` class. A hand-rolled shadow is the wrong colour in one of
+    the two themes - the dark theme's shadow is a light rim over a dark contact
+    layer, not a black blur.
+19. **Never write a duration or an easing curve by hand** either. Use
+    `var(--mw-transition)` for a hover or focus state,
+    `var(--mw-transition-fast)` for something that should feel instant, and
+    `var(--mw-duration-*)` with `var(--mw-ease-*)` for anything else. That is
+    also what makes `prefers-reduced-motion` work - it turns the duration tokens
+    down, so anything built on them is covered for free.
+20. **A hover effect that _moves_ something needs the `hover` mixin.** On touch
+    `:hover` latches after a tap and stays on, so a lifted card stays lifted,
+    visibly out of line with its row. `@include hover { transform: ... }` -
+    colour changes are fine unguarded, movement is not. The framework's own
+    components already do this.
+21. **Below 576px a modal is a bottom sheet.** Full width, anchored to the bottom
+    edge, rounded on the top two corners, with a grab handle and full-width
+    actions in the footer. Nothing to switch on - do not fight it with your own
+    media query, and do not put a fixed height on `mw-modal`.
+22. **Press states exist on every control**, because a finger never hovers.
+    `mw-btn` and friends dip 1px and invert their highlight, `mw-btn-mini` and
+    `mw-modal-close` scale down. If you build your own control, give it an
+    `:active` - on touch it is the only feedback there is.
+23. **Never set a height on a form control.** `mw-input`, `mw-select`,
+    `mw-textarea` and `mw-btn` all take their minimum height from the control
+    scale, so a field and the button next to it line up on their own. Pick the
+    size step (`-sm` / nothing / `-lg`) and leave the height alone - a hand-set
+    one puts that control back out of line with everything around it.
+24. **Put the size modifier on the input group, not inside it.**
+    `mw-input-group-sm` and `-lg` size the prefix, the suffix _and_ the field.
+    Adding `mw-input-sm` inside as well is redundant, and mixing the two steps
+    is what makes a group look broken.
+25. **Loops keep their own timing, entrances go on the scale.** A spinner, a
+    skeleton shimmer and a pulse ring are ambient - running them at 300ms would
+    be frantic, and they are the one place a hand-written duration is right.
+    Anything that plays once - a panel appearing, a card sliding in, a drawer -
+    uses `var(--mw-duration-*)`.
+26. **`transition: all` is out.** `var(--mw-transition)` lists paint-only
+    properties on purpose. The one exception in the framework is the header
+    burger, which morphs by animating `top` and `bottom`, and it says so in a
+    comment. If your component really does need to animate a size, name that
+    property - do not reach for `all`.
+27. **A control is a `<button>`, never a styled `<div>`.** `mw-tabs-nav-item`,
+    `mw-theme-toggle` and `mw-gallery-dot` are all written for one, and all
+    three shipped as divs and spans before 4.11 that no keyboard could reach.
+    Each class clears what a `<button>` brings with it, so
+    `<button type="button" class="mw-tabs-nav-item" data-tab="...">` is the
+    whole markup. If you build your own clickable thing: the element decides
+    whether anyone without a mouse can use it, the class only decides how it
+    looks.

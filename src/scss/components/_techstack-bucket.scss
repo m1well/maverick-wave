@@ -14,7 +14,7 @@
     border: 1px solid var(--mw-border);
     border-radius: radius('md');
     padding: spacing('2');
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: var(--mw-transition-fast);
     color: var(--mw-text-color);
     min-width: 50px;
     min-height: 50px;
@@ -32,9 +32,12 @@
       font-size: font-size('xs');
     }
 
-    &:hover {
+    @include hover {
       transform: translateY(-2px);
-      box-shadow: 0 3px 10px var(--mw-shadow);
+    }
+
+    &:hover {
+      box-shadow: var(--mw-elevation-3);
       border-color: var(--mw-primary-text-color);
 
       .mw-techstack-logo {
@@ -76,7 +79,7 @@
   &-logo {
     object-fit: contain;
     border-radius: radius('sm');
-    transition: transform 0.2s ease;
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
     flex-shrink: 0;
   }
 
@@ -91,7 +94,7 @@
   &-name {
     font-weight: font-weight('bold');
     line-height: 1.1;
-    transition: color 0.2s ease;
+    transition: color var(--mw-duration-fast) var(--mw-ease-out);
   }
 
   &-desc {

@@ -47,11 +47,14 @@
     );
     opacity: 0;
     z-index: z-index('lift');
-    transition: opacity 0.9s ease;
+    transition: opacity var(--mw-duration-slower) var(--mw-ease-out);
+  }
+
+  @include hover {
+    transform: translateY(-3px);
   }
 
   &:hover {
-    transform: translateY(-3px);
     border-style: solid;
 
     .mw-coming-soon-icon {

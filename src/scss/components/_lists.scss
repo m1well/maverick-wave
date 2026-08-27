@@ -110,8 +110,8 @@ $_checkbox-box-offset: 3px;
       transform: scaleX(1);
       transform-origin: left;
       transition:
-        transform 0.2s ease,
-        opacity 0.2s ease;
+        transform var(--mw-duration-fast) var(--mw-ease-out),
+        opacity var(--mw-duration-fast) var(--mw-ease-out);
     }
 
     &:hover {
@@ -177,8 +177,8 @@ $_checkbox-box-offset: 3px;
 
   // Smooth focus management for accessibility
   &:focus-within {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
+    outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+    outline-offset: var(--mw-focus-ring-offset);
     border-radius: radius('sm');
   }
 }
@@ -216,9 +216,9 @@ $_checkbox-box-offset: 3px;
     background: var(--mw-card-background);
     border: 1px solid transparent;
     transition:
-      background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background var(--mw-duration-base) var(--mw-ease-out),
+      border-color var(--mw-duration-base) var(--mw-ease-out),
+      transform var(--mw-duration-base) var(--mw-ease-out);
     overflow: hidden;
 
     &::before {
@@ -229,7 +229,7 @@ $_checkbox-box-offset: 3px;
       bottom: 0;
       width: 0;
       background: var(--mw-primary-text-color);
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width var(--mw-duration-base) var(--mw-ease-out);
     }
 
     // The card carries its own background and radius, so moving the whole
@@ -238,11 +238,14 @@ $_checkbox-box-offset: 3px;
     &:hover {
       background: var(--mw-primary-background-hover);
       border-color: var(--mw-primary-text-color);
-      transform: translateX(8px);
 
       &::before {
         width: 4px;
       }
+    }
+
+    @include hover {
+      transform: translateX(8px);
     }
   }
 }
@@ -274,8 +277,8 @@ $_checkbox-box-offset: 3px;
     padding: spacing('3');
     border-bottom: 1px solid var(--mw-border);
     transition:
-      background 0.2s ease,
-      padding-left 0.2s ease;
+      background var(--mw-duration-fast) var(--mw-ease-out),
+      padding-left var(--mw-duration-fast) var(--mw-ease-out);
     position: relative;
 
     // Always present at zero width so it can grow on hover - creating it
@@ -288,7 +291,7 @@ $_checkbox-box-offset: 3px;
       bottom: 0;
       width: 0;
       background: var(--mw-primary-text-color);
-      transition: width 0.2s ease;
+      transition: width var(--mw-duration-fast) var(--mw-ease-out);
     }
 
     &:last-child {
@@ -349,16 +352,16 @@ $_checkbox-box-offset: 3px;
   border-radius: radius('lg');
   overflow: hidden;
   background: var(--mw-card-background);
-  box-shadow: 0 2px 8px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
 
   > * {
     padding: spacing('4');
     border-bottom: 1px solid var(--mw-border);
     transition:
-      background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      padding-left 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      background var(--mw-duration-fast) var(--mw-ease-out),
+      padding-left var(--mw-duration-fast) var(--mw-ease-out),
+      color var(--mw-duration-fast) var(--mw-ease-out),
+      transform var(--mw-duration-fast) var(--mw-ease-out);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -396,8 +399,8 @@ $_checkbox-box-offset: 3px;
     padding: spacing('3');
     border-bottom: 1px solid var(--mw-border);
     transition:
-      background 0.2s ease,
-      color 0.2s ease;
+      background var(--mw-duration-fast) var(--mw-ease-out),
+      color var(--mw-duration-fast) var(--mw-ease-out);
 
     &:last-child {
       border-bottom: none;
@@ -447,10 +450,10 @@ $_checkbox-box-offset: 3px;
     border-left: 3px solid transparent;
     cursor: pointer;
     transition:
-      background 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease,
-      border-left-color 0.2s ease;
+      background var(--mw-duration-fast) var(--mw-ease-out),
+      color var(--mw-duration-fast) var(--mw-ease-out),
+      transform var(--mw-duration-fast) var(--mw-ease-out),
+      border-left-color var(--mw-duration-fast) var(--mw-ease-out);
     user-select: none;
 
     &:last-child {

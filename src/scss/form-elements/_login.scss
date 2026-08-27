@@ -3,7 +3,7 @@
 .mw-login {
   background: var(--mw-card-background);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  box-shadow: 0 5px 10px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
   transition: var(--mw-transition);
   border: 1px solid var(--mw-border);
   position: relative;

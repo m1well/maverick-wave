@@ -68,7 +68,7 @@ Safari 16.4+, Firefox 128+. The same range is declared as `browserslist` in
 | `--mw-form-elements-background`, `--mw-form-elements-color`                                                                                                                  | Form controls stay light in both themes and therefore have their own pair                                                                                                                                                                                                                        |
 | `--mw-font-family-base`, `-heading`, `-mono`                                                                                                                                 | Font stacks - system stacks by default (`-mono` leads with Fira Code); no font is bundled. Configurable in SCSS, see below                                                                                                                                                                       |
 | `--mw-hero-background`, `--mw-hero-text-color`                                                                                                                               | Hero image (`url(...)`) and the ink on it. Fixed across themes - the photo does not change with the theme, so its text must not either. Defaults to the light end of the palette                                                                                                                 |
-| `--mw-transition`                                                                                                                                                            | Global transition (`all 0.3s ease`)                                                                                                                                                                                                                                                              |
+| `--mw-transition`                                                                                                                                                            | Hover and focus states - an explicit paint-only property list at `--mw-duration-base`, never `all`                                                                                                                                                                                               |
 | `--mw-card-img-height`                                                                                                                                                       | Per-card image height (default `210px`; `mw-card-lg`/`-xl` set it to 340px/480px, 260px/340px below `sm`)                                                                                                                                                                                        |
 | `--mw-card-addon-color`                                                                                                                                                      | Background of `mw-card-badge` / `mw-card-ribbon`; the `mw-card-addon-*` classes set it, override it for a custom colour                                                                                                                                                                          |
 | `--mw-card-addon-text-color`                                                                                                                                                 | Label on that badge/ribbon; the `mw-card-addon-*` classes point it at the matching `--mw-*-accent-text-color`                                                                                                                                                                                    |
@@ -79,6 +79,15 @@ Safari 16.4+, Firefox 128+. The same range is declared as `browserslist` in
 | `--mw-section-padding-block`                                                                                                                                                 | Top/bottom rhythm of `mw-section` (1.75rem)                                                                                                                                                                                                                                                      |
 | `--mw-calendar-dot`                                                                                                                                                          | Colour of a single calendar dot - set it per dot or per cell; the `mw-calendar-dot-*` classes are presets for it                                                                                                                                                                                 |
 | `--mw-scroll-hint-cover`                                                                                                                                                     | Colour the scroll hint on a tab bar fades into. Preset to the page, re-pointed to the card background inside `mw-card`, `mw-panel`, `mw-modal`, `mw-tile`, `mw-calendar`                                                                                                                         |
+| `--mw-elevation-1` … `-5`                                                                                                                                                    | Every shadow in the framework. Two layers per level - contact plus ambient. Never write a `box-shadow` by hand: a hand-rolled one is the wrong colour in one of the two themes                                                                                                                   |
+| `--mw-shadow-near`, `--mw-shadow-far`                                                                                                                                        | The two tones the ramp above is mixed from, per theme                                                                                                                                                                                                                                            |
+| `--mw-transition-fast`                                                                                                                                                       | The same property list at `--mw-duration-fast` - for a state change that should feel instant under the pointer                                                                                                                                                                                   |
+| `--mw-duration-instant\|fast\|base\|slow\|slower`                                                                                                                            | 110 / 180 / 300 / 520 / 900ms. Anything built on these is covered by `prefers-reduced-motion` for free                                                                                                                                                                                           |
+| `--mw-duration-zoom`                                                                                                                                                         | 650ms, for a large surface actually travelling - an image scaling inside a card, a slider track                                                                                                                                                                                                  |
+| `--mw-ease-out`, `--mw-ease-in-out`, `--mw-ease-spring`                                                                                                                      | Things arriving (the default) / A to B and back / a pop                                                                                                                                                                                                                                          |
+| `--mw-control-height-sm\|·\|lg`, `--mw-control-font-sm\|·\|lg`, `--mw-control-line-height`                                                                                   | One size scale for input, select, textarea and button, so a field and the button beside it line up by construction                                                                                                                                                                               |
+| `--mw-focus-ring-width\|offset\|color`                                                                                                                                       | The keyboard focus ring                                                                                                                                                                                                                                                                          |
+| `--mw-focus-halo-size\|opacity`                                                                                                                                              | The soft ring a form field gets instead of a hard outline                                                                                                                                                                                                                                        |
 | `--mw-internal-theme-mode`                                                                                                                                                   | Read-only: what `$mw-theme-mode` was compiled to                                                                                                                                                                                                                                                 |
 
 `--mw-container-gutter`, `--mw-container-width` and `--mw-section-padding-block`
@@ -97,10 +106,25 @@ Two rules that prevent most colour bugs:
    or `--mw-border`.
 2. **`--mw-text-muted-color` is only for text on theme surfaces** (cards, page
    background) - it follows the theme. It is a true gray with `$muted-tint`
-   (12%) of the primary mixed in, not a stepped-back text colour, so it stays
+   (23%) of the primary mixed in, not a stepped-back text colour, so it stays
    gray no matter how tinted the palette is. On a colour surface that stays the same
    in both themes it is always wrong: use `--mw-*-accent-text-color`, or
    `opacity` for a disabled look.
+
+3. **Elevation, motion and focus are tokens too.** `var(--mw-elevation-1..5)`
+   for any shadow, `var(--mw-transition)` / `var(--mw-transition-fast)` for a
+   hover or focus state, `var(--mw-duration-*)` with `var(--mw-ease-*)` for
+   anything else, and `--mw-focus-ring-*` / `--mw-focus-halo-*` for the ring.
+   A hand-rolled shadow is the wrong colour in one of the two themes: the dark
+   theme's shadow is a light rim over a dark contact layer, not a black blur.
+   A hand-rolled duration also opts out of `prefers-reduced-motion`, which works
+   by turning the duration tokens down.
+
+4. **The header has two knobs of its own.** `$header-surface` sets how dark the
+   bar sits under the primary colour (lower is darker); `$header-active-tint`
+   sets how far the active navbar link is lifted off it (lower is a stronger,
+   more saturated blue, higher is paler with more contrast against the bar).
+   Both are `!default` in `abstracts/_variables.scss`.
 
 ## Light & dark
 
@@ -124,7 +148,7 @@ Two rules that prevent most colour bugs:
   both themes, and so does the header - see the next point for where its colour
   comes from.
 - The header bar is **not** part of that surface stack. It is
-  `--mw-primary-color` darkened straight toward black - `$header-surface` (16%)
+  `--mw-primary-color` darkened straight toward black - `$header-surface` (14%)
   is how much of the colour survives, the same shade ramp a colour tool prints.
   It sits well past the bottom of that ramp so the hue reads as a tint on
   near-black, not as a colour of its own. That matters for a light-only project:
@@ -185,6 +209,9 @@ effect, because the root colours are declared with `!default`.
   $footer-surface-light: 0.95,
   // the header bar - how much of the primary survives darkening toward black
   $header-surface: 16%,
+  // how far the active navbar link sits off the primary colour - lower is a
+  // stronger, more saturated blue, higher is paler with more contrast
+  $header-active-tint: 25%,
   $mw-hero-image: url('/assets/hero.jpg'),
   // ink on that image - fixed, because the image is
   $mw-hero-text-color: var(--mw-dark-text-color),
@@ -236,7 +263,7 @@ they are all `var()` references anyway:
 
 ## Importing only what you need
 
-The full stylesheet is ~172 kB raw / ~26 kB gzipped. Marketing components
+The full stylesheet is ~200 kB raw / ~31 kB gzipped. Marketing components
 (`blog-post`, `gallery`, `content-slider`, `techstack-bucket`, `tiles`,
 `coming-soon`, `ratings`, `home`, `hero`) are dead weight in an application, and
 Angular bundle budgets notice.
@@ -275,8 +302,7 @@ colourless.
 @use 'maverick-wave/src/scss/utilities';
 ```
 
-That set compiles to ~77 kB raw / ~13 kB gzipped - well under half the full
-build.
+That set compiles to ~100 kB raw / ~17 kB gzipped - half the full build.
 
 Details worth knowing:
 
@@ -284,7 +310,7 @@ Details worth knowing:
   before any other module loads it, so the `with (...)` line goes at the top of
   the file. Configuring `main` instead pulls in everything again.
 - `base` forwards `reset`, `base` and `typography`. If you already have your own
-  reset, `@use '.../base/base'` gives you the `:root` block alone (~9 kB with a
+  reset, `@use '.../base/base'` gives you the `:root` block alone (~11 kB with a
   component or two).
 - Module names are the file names without the leading underscore:
   `components/_buttons.scss` becomes `components/buttons`.

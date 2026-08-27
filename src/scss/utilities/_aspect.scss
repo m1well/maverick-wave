@@ -1,0 +1,27 @@
+@use '../abstracts' as *;
+
+// Reserves the right box before the image inside it has loaded, which is the
+// whole point: without it the page reflows when the picture arrives and
+// everything below it jumps. The child fills the box and crops rather than
+// stretching.
+$_mw-aspects: (
+  'square': '1 / 1',
+  'video': '16 / 9',
+  'wide': '21 / 9',
+  'portrait': '3 / 4',
+  'photo': '4 / 3',
+);
+
+@each $name, $ratio in $_mw-aspects {
+  .mw-aspect-#{$name} {
+    aspect-ratio: #{$ratio};
+
+    > img,
+    > video,
+    > iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

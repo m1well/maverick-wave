@@ -1,4 +1,9 @@
 <h3 class="mw-section-subtitle">Buttons</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Three emphasis levels: primary fills, outline draws a line, ghost does neither
+  until you point at it. Every variant dips a pixel when pressed - on touch that
+  press is the only feedback there is.
+</p>
 
 <div class="mw-grid-1">
   <div>
@@ -27,6 +32,85 @@
         <button type="button" class="mw-btn mw-btn-primary" disabled>
           Primary Button Disabled
         </button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Ghost, Icon &amp; Block</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Ghost</h5>
+        <div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-3">
+          <button type="button" class="mw-btn mw-btn-ghost">Rename</button>
+          <button type="button" class="mw-btn mw-btn-ghost mw-active">
+            Selected
+          </button>
+          <button type="button" class="mw-btn mw-btn-ghost mw-btn-ghost-danger">
+            Remove
+          </button>
+        </div>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          The third emphasis level: primary fills, outline draws a line, ghost
+          does neither until you point at it. For a toolbar or a card's own
+          actions, where five outlined boxes would fight the content under them.
+          Not <code>mw-btn-plain</code> - this keeps the shape, the padding and
+          the hit area, it just does not paint them at rest.
+        </p>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Icon only</h5>
+        <div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-3">
+          <button
+            type="button"
+            class="mw-btn mw-btn-ghost mw-btn-icon mw-btn-sm"
+            aria-label="Edit"
+            data-tooltip="Edit"
+          >
+            <i class="fas fa-pen"></i>
+          </button>
+          <button
+            type="button"
+            class="mw-btn mw-btn-ghost mw-btn-icon"
+            aria-label="Duplicate"
+            data-tooltip="Duplicate"
+          >
+            <i class="fas fa-copy"></i>
+          </button>
+          <button
+            type="button"
+            class="mw-btn mw-btn-outline mw-btn-icon"
+            aria-label="Share"
+            data-tooltip="Share"
+          >
+            <i class="fas fa-share"></i>
+          </button>
+          <button
+            type="button"
+            class="mw-btn mw-btn-primary mw-btn-icon mw-btn-lg"
+            aria-label="Add"
+            data-tooltip="Add"
+          >
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          <code>mw-btn-icon</code> makes the button square. Without it the
+          horizontal padding is the only thing setting the width, so an icon
+          button ends up wider than it is tall and a row of them lines up on
+          nothing. It always needs an <code>aria-label</code> - there is no text
+          to read out.
+        </p>
+      </div>
+      <div>
+        <h5 class="mw-text-medium mw-mb-2">Block</h5>
+        <button type="button" class="mw-btn mw-btn-primary mw-btn-block">
+          Sign in
+        </button>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          <code>mw-btn-block</code> takes the full width - the one action on a
+          sheet, a sign-in form, a narrow sidebar.
+        </p>
       </div>
     </div>
   </div>

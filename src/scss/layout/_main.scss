@@ -118,16 +118,16 @@ $_mw-tooltip-gap: 8px;
     width: max-content;
     padding: spacing('1') spacing('2');
     background: var(--mw-gray-color);
-    color: #efefef;
+    color: $fixed-surface-text;
     font-size: font-size('xs');
     border-radius: radius('xs');
-    box-shadow: 0 2px 5px var(--mw-shadow);
+    box-shadow: var(--mw-elevation-2);
     pointer-events: none;
     opacity: 0;
     display: none;
     transition:
-      opacity 0.2s ease,
-      display 0.2s allow-discrete;
+      opacity var(--mw-duration-fast) var(--mw-ease-out),
+      display var(--mw-duration-fast) allow-discrete;
     z-index: z-index('tooltip');
   }
 
@@ -144,8 +144,8 @@ $_mw-tooltip-gap: 8px;
     opacity: 0;
     display: none;
     transition:
-      opacity 0.2s ease,
-      display 0.2s allow-discrete;
+      opacity var(--mw-duration-fast) var(--mw-ease-out),
+      display var(--mw-duration-fast) allow-discrete;
     z-index: z-index('tooltip');
   }
 

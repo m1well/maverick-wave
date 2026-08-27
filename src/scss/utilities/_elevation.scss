@@ -1,0 +1,16 @@
+@use '../abstracts' as *;
+
+// The elevation ramp as classes, for a surface a project draws itself. Same
+// five steps every component uses - see the elevation() function.
+//
+// 0 is not "no shadow it forgot to set", it is "explicitly flat": for taking a
+// component off the page it normally floats above.
+.mw-elevation-0 {
+  box-shadow: none;
+}
+
+@for $level from 1 through 5 {
+  .mw-elevation-#{$level} {
+    box-shadow: var(--mw-elevation-#{$level});
+  }
+}

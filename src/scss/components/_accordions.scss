@@ -18,6 +18,16 @@
     padding: spacing('4');
     background: var(--mw-card-background);
     cursor: pointer;
+    @include tappable;
+    @include focus-ring(-2px);
+
+    // A press has to be felt. On touch it is the only feedback there is - a
+    // finger never hovers - and every clickable surface in the framework owes it.
+    &:active {
+      background: var(--mw-primary-background);
+      transition-duration: var(--mw-duration-instant);
+    }
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +66,7 @@
   &-content {
     height: spacing('0');
     overflow: hidden;
-    transition: height 0.9s ease;
+    transition: height var(--mw-duration-slower) var(--mw-ease-out);
     background: var(--mw-card-background);
     interpolate-size: allow-keywords;
 

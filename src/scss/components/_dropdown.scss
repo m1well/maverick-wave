@@ -1,0 +1,219 @@
+@use '../abstracts' as *;
+
+// ---------------------------------------------------------------------------
+// Dropdown
+//
+// Built on <details>/<summary> rather than a div and a click handler. That one
+// choice buys the whole keyboard contract for free: the trigger is focusable,
+// Enter and Space toggle it, the open state lives in the DOM where a screen
+// reader can see it, and the menu still opens with JavaScript switched off. The
+// script that ships with the framework only adds what markup cannot express -
+// closing on Escape and on a click somewhere else.
+//
+// The menu is absolutely positioned, so an ancestor with `overflow: hidden` -
+// a card with a ribbon, a scroll container - will clip it. That is the same
+// trade the tooltip makes, and for the same reason: the alternative is a fixed
+// element, which breaks the moment any ancestor has a transform.
+// ---------------------------------------------------------------------------
+.mw-dropdown {
+  position: relative;
+  display: inline-block;
+
+  // Safari still draws its own triangle through the shadow DOM
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  > summary {
+    list-style: none;
+    cursor: pointer;
+
+    &::marker {
+      content: '';
+    }
+  }
+
+  // The chevron follows the open state, so the trigger says which way it goes
+  // without a second class to toggle
+  .mw-dropdown-caret {
+    display: inline-flex;
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
+  }
+
+  &[open] .mw-dropdown-caret {
+    transform: rotate(180deg);
+  }
+}
+
+.mw-dropdown-menu {
+  position: absolute;
+  top: calc(100% + #{spacing('2')});
+  left: 0;
+  z-index: z-index('menu');
+  min-width: 200px;
+  // Never wider than the screen it opens on, whatever the longest item says
+  max-width: min(320px, calc(100vw - 2 * var(--mw-container-gutter)));
+  padding: spacing('2');
+  background: var(--mw-card-background);
+  border: 1px solid var(--mw-border);
+  border-radius: radius('md');
+  box-shadow: var(--mw-elevation-4);
+  // A long menu scrolls rather than running off the bottom of the page
+  max-height: min(60dvh, 420px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  @include scrollbar;
+
+  // Opens downward and settles, rather than appearing. `@starting-style` gives
+  // the animation somewhere to start from without a class having to be added
+  // by script.
+  animation: mw-dropdown-in var(--mw-duration-fast) var(--mw-ease-out);
+}
+
+@keyframes mw-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+// Anchor the menu to the trigger's right edge - what a menu near the right of
+// the screen wants, and what an action menu at the end of a row always wants
+.mw-dropdown-end .mw-dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+// Open upward, for a trigger that sits low on the page
+.mw-dropdown-up .mw-dropdown-menu {
+  top: auto;
+  bottom: calc(100% + #{spacing('2')});
+
+  animation-name: mw-dropdown-in-up;
+}
+
+@keyframes mw-dropdown-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.mw-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: spacing('3');
+  width: 100%;
+  padding: spacing('3') spacing('3');
+  border: 0;
+  border-radius: radius('sm');
+  background: none;
+  color: var(--mw-text-color);
+  font: inherit;
+  font-size: font-size('sm');
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--mw-transition-fast);
+  @include focus-ring-inset;
+  @include tappable;
+
+  &:hover:not(:disabled) {
+    background: var(--mw-primary-background);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--mw-primary-background-hover);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // The current choice, for a menu that picks rather than acts
+  &.mw-active,
+  &[aria-checked='true'] {
+    background: var(--mw-primary-background);
+    color: var(--mw-primary-text-color);
+    font-weight: font-weight('medium');
+  }
+
+  // Icons keep one column so the labels line up whether or not every item has
+  // one
+  i,
+  fa-icon,
+  svg,
+  [class*='fa-'] {
+    width: 1.1em;
+    flex-shrink: 0;
+    text-align: center;
+    color: var(--mw-text-muted-color);
+  }
+}
+
+// Destructive actions belong at the bottom, behind a divider, in the colour
+// that says so
+.mw-dropdown-item-danger {
+  color: var(--mw-danger-text-color);
+
+  i,
+  fa-icon,
+  svg,
+  [class*='fa-'] {
+    color: inherit;
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--mw-danger-info-background);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--mw-danger-info-background-hover);
+  }
+}
+
+.mw-dropdown-divider {
+  height: 1px;
+  margin: spacing('2') spacing('1');
+  background: var(--mw-border);
+  border: 0;
+}
+
+// A label over a group of items - "Sort by", "Export as"
+.mw-dropdown-label {
+  padding: spacing('2') spacing('3') spacing('1');
+  font-size: font-size('2xs');
+  font-weight: font-weight('bold');
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mw-text-muted-color);
+}
+
+// The clipping escape hatch, for the framework's own containers that hide their
+// overflow. See the note at the top of this file: an absolutely positioned menu
+// is cut off by any ancestor that clips, and a card with a ribbon or a scrolling
+// table is exactly where an actions menu ends up.
+.mw-card:has(.mw-dropdown[open]),
+.mw-card-body:has(.mw-dropdown[open]),
+.mw-table-responsive:has(.mw-dropdown[open]),
+.mw-tile:has(.mw-dropdown[open]),
+.mw-modal-body:has(.mw-dropdown[open]) {
+  overflow: visible;
+}
+
+// A menu opened by a thumb needs rows a thumb can hit, and the room to show
+// them - so it takes the trigger's full width rather than a 200px column
+// floating beside it.
+@media (pointer: coarse), (max-width: #{breakpoint('sm')}) {
+  .mw-dropdown-menu {
+    min-width: max(100%, 240px);
+  }
+
+  .mw-dropdown-item {
+    min-height: 2.75rem;
+    font-size: font-size('base');
+  }
+}

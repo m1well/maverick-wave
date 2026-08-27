@@ -45,11 +45,15 @@
     color: var(--mw-text-color);
   }
 
-  // Inset, because an outline outside the item would be clipped by the frame
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: -2px;
+  @include tappable;
+
+  &:active {
+    transform: scale(0.97);
+    transition-duration: var(--mw-duration-instant);
   }
+
+  // Inset, because an outline outside the item would be clipped by the frame
+  @include focus-ring-inset;
 
   &:disabled {
     cursor: not-allowed;

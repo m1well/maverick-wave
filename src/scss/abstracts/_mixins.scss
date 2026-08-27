@@ -77,3 +77,179 @@
     0.9rem 100%;
   background-attachment: local, local, scroll, scroll;
 }
+
+// ---------------------------------------------------------------------------
+// Focus
+//
+// The ring was written out by hand in nine places before this, in two different
+// shapes, and a form field had a third. One mixin per shape instead, so the
+// whole framework moves when the ring is retuned.
+//
+// `:focus-visible` and never `:focus`: a mouse click on a button should not
+// leave it ringed. The browser decides what counts - a keyboard tab does, a
+// pointer press on a button does not, a pointer press into a text field does.
+// ---------------------------------------------------------------------------
+@mixin focus-ring(
+  $offset: var(--mw-focus-ring-offset),
+  $color: var(--mw-focus-ring-color)
+) {
+  &:focus-visible {
+    outline: var(--mw-focus-ring-width) solid #{$color};
+    outline-offset: #{$offset};
+    @content;
+  }
+}
+
+// Same ring, drawn inside the element. For anything clipped by its own frame -
+// a segment inside a segmented control, a cell inside a table - where a ring on
+// the outside would be cut off by the parent.
+@mixin focus-ring-inset($inset: -2px) {
+  &:focus-visible {
+    outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+    outline-offset: $inset;
+    @content;
+  }
+}
+
+// The form-field shape: recolour the border the field already has and lay a soft
+// halo around it, rather than adding a second hard line outside it.
+//
+// Two different tones, and the split is the framework's own fill-or-ink rule.
+// The border is drawn *on* the field, which is light in both themes, so it takes
+// the fill tone. The halo spreads *outside* it, onto the page or the card, so it
+// takes the ink tone - the theme-aware one. Using the fill tone for both is what
+// made the dark theme's halo a dark blue haze on a dark blue page.
+//
+// `outline: none` is only safe because the halo *is* the indicator - except in
+// forced-colors mode, where box-shadow is dropped and the field would be left
+// with nothing. The guard hands the outline back there.
+@mixin field-focus(
+  $trigger: 'focus',
+  $border: 'primary-color',
+  $halo: 'primary-text-color'
+) {
+  &:#{$trigger} {
+    outline: none;
+    border-color: var(--mw-#{$border});
+    @include focus-halo($halo);
+    @content;
+  }
+
+  @media (forced-colors: active) {
+    &:#{$trigger} {
+      outline: var(--mw-focus-ring-width) solid;
+      outline-offset: var(--mw-focus-ring-offset);
+    }
+  }
+}
+
+// The halo on its own, for the controls that draw their own box - a checkbox, a
+// radio, a switch track, a calendar day - and only want the ring around it.
+@mixin focus-halo($color: 'primary-text-color') {
+  box-shadow: 0 0 0 var(--mw-focus-halo-size)
+    color-mix(
+      in srgb,
+      var(--mw-#{$color}) var(--mw-focus-halo-opacity),
+      transparent
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Pointer
+// ---------------------------------------------------------------------------
+
+// Hover effects that *move* something - a card lifting, a tile growing - only
+// on a device that can actually hover. On touch, `:hover` latches after a tap
+// and stays on until you tap somewhere else, so a lifted card stays lifted and
+// a grid of them ends up with one member permanently out of line. Colour
+// changes are fine unguarded; movement is not.
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+// Everything a control needs to feel native under a thumb: no 300ms wait for a
+// double-tap that is never coming, and no grey box flashing over it while the
+// press is held - the component draws its own :active state instead.
+@mixin tappable {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// ---------------------------------------------------------------------------
+// Scrollbar
+//
+// Was written per list variant, which is why three of them had a thumb the same
+// colour as their track. One shape, used by every scroll container and by the
+// page itself.
+// ---------------------------------------------------------------------------
+@mixin scrollbar($thumb: var(--mw-text-muted-color), $track: transparent) {
+  scrollbar-width: thin;
+  // Firefox takes both in one declaration - a single value is invalid and the
+  // whole thing is dropped, which is how a thumb ends up invisible.
+  scrollbar-color: #{$thumb} #{$track};
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #{$track};
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #{$thumb};
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--mw-primary-text-color);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: #{$track};
+  }
+}
+
+// Everything that fills its own surface with a colour - every variant except
+// outline, link and plain.
+//
+// Two things, and both are what separates a button from a coloured rectangle: a
+// hairline of light along the top edge, as if there were a light source above
+// the page, and a shadow underneath that says the button sits on the surface
+// rather than in it. The pressed state inverts both - the highlight goes and an
+// inner shadow takes its place, which is the whole of what "pushed in" looks
+// like.
+//
+// White and black rather than tokens on purpose: this is lighting, not palette.
+// It has to behave the same on a primary, a danger and whatever a project
+// overrides them with.
+@mixin btn-solid {
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, #fff 15%, transparent),
+    var(--mw-elevation-1);
+
+  // A pixel up, and the shadow steps up with it. The two together are what read
+  // as the button coming toward the pointer - the shadow alone says it, but not
+  // as clearly, and the lift is small enough that a row of buttons does not
+  // twitch. Guarded, so it never latches after a tap.
+  @include hover {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, #fff 20%, transparent),
+      var(--mw-elevation-2);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    box-shadow: inset 0 2px 5px color-mix(in srgb, #000 25%, transparent);
+  }
+
+  &:disabled {
+    box-shadow: none;
+  }
+}

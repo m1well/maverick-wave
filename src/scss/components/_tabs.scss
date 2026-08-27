@@ -25,17 +25,34 @@
     }
   }
 
+  // Written for a <button>. A tab is the primary navigation of the view it
+  // sits in, and as a <div> it is not focusable, not reachable by keyboard and
+  // announces nothing - the one control on the page a keyboard user cannot get
+  // to. The declarations below clear what comes with a <button>; on a <div>
+  // they change nothing, so old markup keeps working.
   &-nav-item {
+    appearance: none;
+    background: none;
+    border: none;
+    font: inherit;
     padding: spacing('3') spacing('4');
     cursor: pointer;
     font-weight: font-weight('medium');
     color: var(--mw-text-muted-color);
     border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
+    transition: var(--mw-transition);
     white-space: nowrap;
+    @include tappable;
+    // Inset: a ring outside the item is clipped by the strip's own scroll
+    @include focus-ring-inset;
 
     &:hover {
       color: var(--mw-primary-text-color);
+    }
+
+    &:active {
+      color: var(--mw-primary-text-color);
+      transition-duration: var(--mw-duration-instant);
     }
 
     &.mw-active,
@@ -56,7 +73,9 @@
     &.mw-active,
     &.active {
       display: block;
-      animation: fadeIn 1.1s ease;
+      // 1.1s to reveal a tab panel means a second of blank space after every
+      // click. A panel switch is a state change, not an entrance.
+      animation: fadeIn var(--mw-duration-base) var(--mw-ease-out);
     }
   }
 
@@ -139,7 +158,7 @@
     .mw-tabs-nav-item {
       border-radius: radius('xl');
       padding: spacing('4') spacing('5');
-      line-height: 0.9;
+      line-height: 1.2;
       border: 1px solid var(--mw-border-accent);
       background: var(--mw-card-background);
 

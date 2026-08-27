@@ -13,7 +13,7 @@
 
   &-track {
     display: flex;
-    transition: transform 0.3s ease;
+    transition: transform var(--mw-duration-zoom) var(--mw-ease-in-out);
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
@@ -46,13 +46,19 @@
     border: none;
     border-radius: radius('md');
     background: rgb(0 0 0 / 40%);
-    color: #efefef;
+    color: $fixed-surface-text;
     font-size: font-size('xl');
     line-height: 1;
     cursor: pointer;
     z-index: z-index('lift');
     user-select: none;
     transition: var(--mw-transition);
+    @include tappable;
+
+    &:active {
+      transform: translateY(-50%) scale(0.9);
+      transition-duration: var(--mw-duration-instant);
+    }
 
     &::before {
       content: '';
@@ -65,10 +71,7 @@
       background: rgb(0 0 0 / 85%);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--mw-primary-text-color);
-      outline-offset: 2px;
-    }
+    @include focus-ring;
 
     &-prev {
       left: spacing('4');
@@ -101,10 +104,16 @@
     display: inline-block;
     width: 11px;
     height: 11px;
-    border-radius: 50%;
+    padding: 0;
+    border: 0;
+    appearance: none;
+    border-radius: radius('full');
     background: var(--mw-gray-color);
     cursor: pointer;
-    transition: transform 0.4s ease;
+    transition: var(--mw-transition-fast);
+
+    @include tappable;
+    @include focus-ring;
 
     &.mw-active {
       transform: scale(1.5);

@@ -115,3 +115,66 @@
     line-height: 1.8;
   }
 }
+
+// Overflow
+.mw-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+@each $lines in (2, 3, 4, 5) {
+  .mw-text-clamp-#{$lines} {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.mw-text-nowrap {
+  white-space: nowrap;
+}
+
+// For anything that has no spaces to break at - a URL, a hash, an API key -
+// and would otherwise push the page sideways on a phone
+.mw-text-break {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+// Wrapping
+.mw-text-balance {
+  text-wrap: balance;
+}
+
+.mw-text-pretty {
+  text-wrap: pretty;
+}
+
+.mw-text-uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mw-text-capitalize {
+  text-transform: capitalize;
+}
+
+// A kicker or an eyebrow over a heading - the small, spaced, upper-case line
+// that says what section this is
+.mw-text-eyebrow {
+  font-size: font-size('2xs');
+  font-weight: font-weight('bold');
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mw-text-muted-color);
+}
+
+// Sets the measure a column of text is comfortable at. Anything past roughly 75
+// characters and the eye loses the start of the next line on the way back.
+.mw-text-measure {
+  max-width: 68ch;
+}

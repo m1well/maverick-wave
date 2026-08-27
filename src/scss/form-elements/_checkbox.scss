@@ -43,6 +43,7 @@ $_mw-checkbox-colors: (
   display: inline-flex;
   align-items: center;
   gap: spacing('2');
+  min-height: 1.5rem;
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -83,7 +84,7 @@ $_mw-checkbox-colors: (
 
   // focus-visible state
   input[type='checkbox']:focus-visible + .mw-checkbox-box {
-    box-shadow: 0 0 0 2px var(--mw-primary-background);
+    @include focus-halo;
     border-color: var(--mw-primary-color);
   }
 
