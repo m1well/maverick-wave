@@ -317,21 +317,32 @@ Tile sizes: `mw-tile-sm`, `mw-tile-lg`.
 ```html
 <div class="mw-accordion">
   <div class="mw-accordion-item">
-    <div class="mw-accordion-header mw-active">
-      <h3>Question</h3>
+    <button
+      type="button"
+      class="mw-accordion-header mw-active"
+      aria-expanded="true"
+      aria-controls="faq-1"
+    >
+      <span>Question</span>
       <i class="fas fa-chevron-down mw-accordion-icon"></i>
-    </div>
-    <div class="mw-accordion-content mw-active">
+    </button>
+    <div class="mw-accordion-content mw-active" id="faq-1">
       <div class="mw-accordion-content-inner">Answer</div>
     </div>
   </div>
 </div>
 ```
 
+The header is a `<button>` - it is the control that opens the panel, and a
+`<div>` is not focusable. A heading is not allowed inside a button, so the
+question is a `<span>` and the header carries the type itself; a nested `h3`
+still renders the same, for markup written before 4.12.
+
 Open state = `mw-active` on header **and** content (bare `active` still works
 but is deprecated). The icon rotates via the **header** state - putting the
 class on the icon instead does nothing. Content taller than 500px scrolls.
-Toggling is JS - see `references/javascript.md`.
+Toggling is JS - see `references/javascript.md`; the shipped script keeps
+`aria-expanded` in step when the header is a button.
 
 ## Tabs
 

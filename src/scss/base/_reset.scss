@@ -11,8 +11,7 @@
 html {
   scroll-behavior: smooth;
   min-width: 320px;
-  // Keeps anchor targets clear of the fixed header, plus a bit of breathing room
-  scroll-padding-top: calc(var(--mw-header-height) + #{spacing('4')});
+  scroll-padding-top: var(--mw-header-height);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   @include scrollbar(var(--mw-border), transparent);
@@ -93,12 +92,6 @@ svg,
 video,
 canvas {
   max-width: 100%;
-}
-
-// Anchored headings clear the fixed bar the same way html's scroll-padding does,
-// for the case where a script scrolls an element into view itself.
-:target {
-  scroll-margin-top: calc(var(--mw-header-height) + #{spacing('4')});
 }
 
 table {
