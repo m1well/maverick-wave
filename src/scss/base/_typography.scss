@@ -25,6 +25,22 @@ h6 {
   line-height: 1.2;
   margin-bottom: spacing('4');
   font-weight: font-weight('bold');
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+// Tracking
+h1 {
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  letter-spacing: -0.02em;
+}
+
+h3,
+h4 {
+  letter-spacing: -0.01em;
 }
 
 // Two steps, not one. With the single jump at 576px, everything between there
@@ -79,6 +95,37 @@ h6 {
 // Paragraphs
 p {
   margin-bottom: spacing('3');
+  text-wrap: pretty;
+}
+
+// Inline text the framework was leaving to the browser. `small` in particular
+// showed up in footers and captions at whatever the UA felt like.
+small {
+  font-size: font-size('sm');
+  color: var(--mw-text-muted-color);
+}
+
+strong,
+b {
+  font-weight: font-weight('bold');
+}
+
+// The browser's own is a solid block of background with the text left dark on
+// it - unreadable on a dark page. Tinted with the brand instead, and it keeps
+// the theme's ink.
+mark {
+  background: color-mix(in srgb, var(--mw-warning-color) 35%, transparent);
+  color: inherit;
+  padding: 0.1em 0.25em;
+  border-radius: radius('xs');
+}
+
+// Underlined in the same shape the link buttons use, so an inline link and a
+// `mw-btn-link` do not read as two different things
+abbr[title] {
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
 }
 
 // Code elements

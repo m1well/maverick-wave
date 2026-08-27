@@ -107,7 +107,7 @@
 .mw-field {
   display: flex;
   flex-direction: column;
-  gap: spacing('1');
+  gap: spacing('2');
 
   &-label {
     font-size: font-size('base');
@@ -142,7 +142,7 @@
     .mw-select,
     .mw-textarea {
       border-color: var(--mw-danger-color);
-      box-shadow: 0 0 0 2px var(--mw-danger-info-background);
+      @include focus-halo('danger-text-color');
     }
   }
 }

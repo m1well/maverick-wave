@@ -14,6 +14,16 @@
   align-items: center;
   transition: var(--mw-transition);
   margin-right: spacing('5');
+  appearance: none;
+  padding: 0;
+  @include tappable;
+  @include focus-ring;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: var(--mw-duration-instant);
+  }
+
   @include media-down('lg') {
     margin-right: spacing('6');
   }
@@ -21,6 +31,8 @@
   &-slider {
     position: absolute;
     left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
     border-radius: radius('full');
@@ -38,15 +50,11 @@
     left: 35px;
   }
 
-  &.mw-active &-icon,
-  &.active &-icon {
-    left: 2px;
-  }
-
   &-icon {
-    position: absolute;
-    top: -2px;
-    left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
     font-size: font-size('base');
     transform: rotate(16deg);
   }

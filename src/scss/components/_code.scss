@@ -14,6 +14,21 @@ code {
   word-break: break-word;
 }
 
+// Inline code - a token in a sentence, a class name in a table cell - gets a
+// surface of its own so it reads as a quoted thing rather than as prose that
+// changed font halfway through. Only outside a `pre`: the block already paints
+// one, and a second box inside it is just a box inside a box.
+:not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: radius('xs');
+  background: var(--mw-surface-muted);
+  color: var(--mw-text-color);
+  // Mono faces run visibly larger than the body face at the same nominal size.
+  // `em` rather than a step off the scale, so it follows whatever it is set in -
+  // a paragraph, a table cell, a heading.
+  font-size: 0.88em;
+}
+
 pre {
   color: var(--mw-text-color);
   padding: spacing('4');

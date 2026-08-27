@@ -15,7 +15,7 @@
   > * {
     pointer-events: auto;
     margin-bottom: spacing('0');
-    animation: mw-toast-in 0.3s ease;
+    animation: mw-toast-in var(--mw-duration-base) var(--mw-ease-spring);
   }
 
   // Default position

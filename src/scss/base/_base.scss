@@ -36,8 +36,58 @@ $_active-prefix: 'dark';
     --mw-light-#{$name}: #{$value};
   }
 
-  // Transitions
-  --mw-transition: #{$transition-default};
+  // Motion. The scale itself lives in the variables file - these are the knobs
+  // a project retunes without recompiling.
+  --mw-duration-instant: #{$duration-instant};
+  --mw-duration-fast: #{$duration-fast};
+  --mw-duration-base: #{$duration-base};
+  --mw-duration-slow: #{$duration-slow};
+  --mw-duration-slower: #{$duration-slower};
+  --mw-duration-zoom: #{$duration-zoom};
+  --mw-ease-out: #{$ease-out};
+  --mw-ease-in-out: #{$ease-in-out};
+  --mw-ease-spring: #{$ease-spring};
+
+  // The workhorse: every hover, focus and active state in the framework. An
+  // explicit property list rather than `all` - see $transition-properties.
+  --mw-transition: #{$transition-properties} var(--mw-duration-base)
+    var(--mw-ease-out);
+  // Same list, for a state change that should feel instant under the pointer
+  // rather than animated - a button label, a tag, a table row.
+  --mw-transition-fast: #{$transition-properties} var(--mw-duration-fast)
+    var(--mw-ease-out);
+
+  // Control sizes - see the note in the variables file. Custom properties
+  // rather than compile-time only, so an application can tighten its forms
+  // without recompiling the framework.
+  --mw-control-height-sm: #{$control-height-sm};
+  --mw-control-height: #{$control-height};
+  --mw-control-height-lg: #{$control-height-lg};
+  --mw-control-font-sm: #{$control-font-sm};
+  --mw-control-font: #{$control-font};
+  --mw-control-font-lg: #{$control-font-lg};
+  --mw-control-line-height: #{$control-line-height};
+
+  // Focus ring
+  --mw-focus-ring-width: #{$focus-ring-width};
+  --mw-focus-ring-offset: #{$focus-ring-offset};
+  --mw-focus-ring-color: var(--mw-primary-text-color);
+  --mw-focus-halo-size: #{$focus-halo-size};
+  --mw-focus-halo-opacity: #{$focus-halo-opacity};
+
+  // Tells the browser which way round the page is, which is the only way the
+  // chrome it draws itself follows along: scrollbars, the popup a <select>
+  // opens, the panel behind a date picker, the spinner on a number field.
+  // Without it a dark page keeps light scrollbars and a white select popup.
+  @if $mw-theme-mode == 'light' {
+    color-scheme: light;
+  } @else {
+    color-scheme: dark;
+  }
+  // Native controls the framework does not paint over - <progress>, a file
+  // input's button, a text selection handle - take the brand colour instead of
+  // the OS blue.
+  accent-color: var(--mw-primary-color);
 
   // theme for theme-toggle
   --mw-internal-theme-mode: #{$mw-theme-mode};
@@ -87,7 +137,23 @@ $_active-prefix: 'dark';
     @each $name, $value in $light-theme-colors {
       --mw-#{$name}: var(--mw-light-#{$name});
     }
+
+    color-scheme: light;
   }
+}
+
+// Form controls are deliberately light in both themes - see
+// $form-elements-background - so they opt back out of the page's colour scheme.
+// Without this the browser draws their built-in parts for a dark surface and a
+// date field ends up with a white calendar icon on a near-white background.
+input,
+select,
+textarea,
+.mw-input,
+.mw-select,
+.mw-textarea,
+.mw-input-group {
+  color-scheme: light;
 }
 
 // Anything that draws its own surface re-points the cover colour of a scroll
@@ -99,4 +165,39 @@ $_active-prefix: 'dark';
 .mw-tile,
 .mw-calendar:not(.mw-calendar-plain) {
   --mw-scroll-hint-cover: var(--mw-card-background);
+}
+
+// ---------------------------------------------------------------------------
+// Reduced motion
+//
+// One switch for the whole framework. Turning the duration tokens down covers
+// everything built on them; the blanket rule underneath covers the handful of
+// animations that name their own timing, plus anything a project wrote itself.
+//
+// 1ms and not 0: a zero-length transition never fires transitionend, and any
+// script waiting for it to clean up - a modal removing a class, a toast
+// removing itself - would wait forever.
+// ---------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mw-duration-instant: 1ms;
+    --mw-duration-fast: 1ms;
+    --mw-duration-base: 1ms;
+    --mw-duration-slow: 1ms;
+    --mw-duration-slower: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

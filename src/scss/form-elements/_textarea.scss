@@ -5,7 +5,8 @@
   width: 100%;
   height: auto;
   padding: spacing('2') spacing('3');
-  font-size: font-size('xs');
+  font-size: var(--mw-control-font);
+  line-height: var(--mw-control-line-height);
   background: var(--mw-form-elements-background);
   color: var(--mw-form-elements-color);
   border: 2px solid var(--mw-border);
@@ -23,11 +24,7 @@
     border-color: var(--mw-gray-color);
   }
 
-  &:focus {
-    outline: none;
-    border-color: var(--mw-primary-color);
-    box-shadow: 0 0 0 2px var(--mw-primary-background);
-  }
+  @include field-focus;
 
   &:read-only {
     background-color: var(--mw-gray-background);
@@ -38,12 +35,12 @@
 
   &-sm {
     padding: spacing('1') spacing('2');
-    font-size: font-size('xs');
+    font-size: var(--mw-control-font-sm);
   }
   &-lg {
     min-height: spacing('11');
     padding: spacing('3') spacing('4');
-    font-size: font-size('sm');
+    font-size: var(--mw-control-font-lg);
   }
 
   &-resizable {

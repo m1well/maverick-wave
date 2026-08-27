@@ -55,7 +55,7 @@ $_simple-date-width: 110px;
   position: relative;
   margin: spacing('1') auto;
   padding: spacing('5') 0;
-  width: min(96%, 900px);
+  width: min(100%, 900px);
 
   // Center vertical line
   &::before {
@@ -88,7 +88,7 @@ $_simple-date-width: 110px;
     justify-content: center;
     gap: spacing('2');
     cursor: default;
-    transition: transform 0.2s ease;
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
     margin-bottom: spacing('4');
   }
 
@@ -109,7 +109,7 @@ $_simple-date-width: 110px;
     display: flex;
     flex-direction: column;
     opacity: 0;
-    animation-duration: 0.9s;
+    animation-duration: var(--mw-duration-slower);
     animation-fill-mode: forwards;
   }
 
@@ -117,7 +117,7 @@ $_simple-date-width: 110px;
     margin-top: spacing('4');
     padding: spacing('2') spacing('3');
     background: var(--mw-card-background);
-    box-shadow: 0 2px 7px var(--mw-shadow);
+    box-shadow: var(--mw-elevation-2);
     border-radius: radius('sm');
     cursor: default;
 
@@ -290,7 +290,7 @@ $_simple-date-width: 110px;
     position: relative;
     z-index: z-index('card');
     cursor: default;
-    transition: transform 0.2s ease;
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
   }
 
   &-content {
@@ -304,7 +304,10 @@ $_simple-date-width: 110px;
   // Staggered animation
   @for $i from 1 through 10 {
     &-step:nth-child(#{$i}) &-content {
-      animation: mw-slide-in-right 0.6s forwards;
+      animation: mw-slide-in-right
+        var(--mw-duration-slow)
+        var(--mw-ease-out)
+        forwards;
       animation-delay: $i * 0.2s;
     }
   }

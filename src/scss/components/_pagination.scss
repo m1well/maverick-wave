@@ -8,7 +8,7 @@
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  box-shadow: 0 5px 10px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
 }
 
 // The calendar gets its separation from the weekday row - here there is
@@ -57,11 +57,12 @@
 
 // Optional directional transitions for the swap
 .mw-pagination-slide-left {
-  animation: mw-pagination-slide-left 0.3s ease;
+  animation: mw-pagination-slide-left var(--mw-duration-base) var(--mw-ease-out);
 }
 
 .mw-pagination-slide-right {
-  animation: mw-pagination-slide-right 0.3s ease;
+  animation: mw-pagination-slide-right var(--mw-duration-base)
+    var(--mw-ease-out);
 }
 
 @keyframes mw-pagination-slide-left {

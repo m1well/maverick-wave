@@ -17,27 +17,26 @@
     justify-content: space-between;
     align-items: center;
     margin: spacing('0');
+    border-radius: (radius('sm') - 2px) (radius('xl') - 2px) 0 0;
   }
 
   &-body {
     padding: spacing('4') spacing('5');
     flex: 1;
     overflow-y: auto;
+    @include scrollbar;
+  }
 
-    // Scrollbar styling
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--mw-card-background);
-      border-radius: radius('sm');
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--mw-primary-color-hover);
-      border-radius: radius('sm');
-    }
+  // A dropdown, a tooltip, a date picker - anything a child opens *outside*
+  // itself - is cut off by the two clips above. Lifting them only while such a
+  // menu is open costs nothing the rest of the time, and the alternative is a
+  // menu that shows its first row and nothing else.
+  //
+  // This is the same escape hatch a project needs on its own containers: one
+  // `:has(.mw-dropdown[open]) { overflow: visible }` on whatever is clipping.
+  &:has(.mw-dropdown[open]),
+  &-body:has(.mw-dropdown[open]) {
+    overflow: visible;
   }
 
   &-footer {

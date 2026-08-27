@@ -33,6 +33,7 @@ $_size-lg: spacing('7');
   display: inline-flex;
   align-items: center;
   gap: spacing('2');
+  min-height: 1.5rem;
   cursor: pointer;
   user-select: none;
 
@@ -50,7 +51,7 @@ $_size-lg: spacing('7');
     width: $_size-default;
     height: $_size-default;
     border: 2px solid var(--mw-border);
-    border-radius: 50%;
+    border-radius: radius('full');
     transition: var(--mw-transition);
     background: var(--mw-form-elements-background);
 
@@ -62,7 +63,7 @@ $_size-lg: spacing('7');
       width: 50%;
       height: 50%;
       background: var(--mw-primary-color);
-      border-radius: 50%;
+      border-radius: radius('full');
       transform: translate(-50%, -50%) scale(0);
       transition: var(--mw-transition);
     }
@@ -70,7 +71,7 @@ $_size-lg: spacing('7');
 
   // focus-visible state
   input[type='radio']:focus-visible + .mw-radio-button {
-    box-shadow: 0 0 0 2px var(--mw-primary-background);
+    @include focus-halo;
     border-color: var(--mw-primary-color);
   }
 

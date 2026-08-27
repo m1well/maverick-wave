@@ -6,11 +6,15 @@
   align-items: center;
   justify-content: center;
   gap: spacing('3');
-  padding: spacing('3') spacing('4');
+  // Block padding sits a step under the inline one on purpose: the height comes
+  // from --mw-control-height, and padding above that value would override it
+  // and put this button out of line with the field next to it.
+  padding: spacing('2') spacing('4');
   border: 1px solid transparent;
   border-radius: radius('sm');
   font-weight: font-weight('medium');
   line-height: 1.2;
+  min-height: var(--mw-control-height);
   text-decoration: none;
   cursor: pointer;
   transition: var(--mw-transition);
@@ -18,19 +22,24 @@
   font-family: inherit;
   font-size: inherit;
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
+  @include focus-ring;
+  @include tappable;
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+    transition-duration: var(--mw-duration-instant);
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
+    transform: none;
   }
 }
 
 // Color variants
 .mw-btn-primary {
+  @include btn-solid;
   background: var(--mw-primary-color);
   color: var(--mw-primary-accent-text-color);
   &:hover:not(:disabled) {
@@ -43,6 +52,7 @@
   }
 }
 .mw-btn-secondary {
+  @include btn-solid;
   background: var(--mw-secondary-color);
   color: var(--mw-secondary-accent-text-color);
   &:hover:not(:disabled) {
@@ -56,6 +66,7 @@
 }
 // Semantic variants for destructive / confirming actions
 .mw-btn-danger {
+  @include btn-solid;
   background: var(--mw-danger-color);
   color: var(--mw-danger-accent-text-color);
   &:hover:not(:disabled) {
@@ -68,6 +79,7 @@
   }
 }
 .mw-btn-success {
+  @include btn-solid;
   background: var(--mw-success-color);
   color: var(--mw-success-accent-text-color);
   &:hover:not(:disabled) {
@@ -85,7 +97,12 @@
   color: var(--mw-primary-text-color);
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
+    border-color: var(--mw-primary-color);
     color: var(--mw-primary-accent-text-color);
+    box-shadow: var(--mw-elevation-1);
+  }
+  &:active:not(:disabled) {
+    box-shadow: inset 0 2px 5px color-mix(in srgb, #000 25%, transparent);
   }
   &.mw-active:not(:disabled),
   &.active:not(:disabled) {
@@ -93,24 +110,109 @@
     color: var(--mw-primary-accent-text-color);
   }
 }
-.mw-btn-link {
-  background: transparent;
-  border: none;
-  padding: 0;
-  color: var(--mw-primary-text-color);
-  &:hover:not(:disabled) {
-    text-decoration: underline;
-  }
-}
+
+.mw-btn-link,
 .mw-btn-link-muted {
   background: transparent;
   border: none;
   padding: 0;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1.5px;
+
+  &:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+}
+
+.mw-btn-link {
+  color: var(--mw-primary-text-color);
+}
+
+.mw-btn-link-muted {
   color: var(--mw-text-muted-color);
   &:hover:not(:disabled) {
     color: var(--mw-primary-text-color);
-    text-decoration: underline;
   }
+}
+
+// The third emphasis level, and the one that was missing. Primary fills, outline
+// draws a line, ghost does neither until you point at it - which is what a
+// toolbar, a card's own actions or a row of icon buttons wants, where five
+// outlined boxes would fight the content they sit on.
+//
+// Not the same as `mw-btn-plain`: this one keeps the button's shape, padding and
+// hit area, it just does not paint them at rest.
+.mw-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--mw-text-color);
+
+  &:hover:not(:disabled) {
+    background: var(--mw-primary-background);
+    color: var(--mw-primary-text-color);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--mw-primary-background-hover);
+  }
+
+  &.mw-active:not(:disabled),
+  &.active:not(:disabled) {
+    background: var(--mw-primary-background);
+    color: var(--mw-primary-text-color);
+  }
+}
+
+.mw-btn-ghost-danger {
+  color: var(--mw-danger-text-color);
+
+  &:hover:not(:disabled) {
+    background: var(--mw-danger-info-background);
+    color: var(--mw-danger-text-color);
+  }
+
+  &:active:not(:disabled) {
+    background: var(--mw-danger-info-background-hover);
+  }
+}
+
+// Square, for a button whose whole label is one icon. Without it the horizontal
+// padding is the only thing setting the width, so an icon button ends up wider
+// than it is tall and a row of them next to a text button lines up on nothing.
+// The width follows the size modifier it is combined with.
+.mw-btn-icon {
+  --mw-btn-icon-size: 2.4rem;
+
+  width: var(--mw-btn-icon-size);
+  height: var(--mw-btn-icon-size);
+  min-width: 0;
+  padding: 0;
+  flex-shrink: 0;
+
+  &.mw-btn-sm {
+    --mw-btn-icon-size: 2rem;
+  }
+
+  &.mw-btn-lg {
+    --mw-btn-icon-size: 2.9rem;
+  }
+
+  // The floor a thumb needs, over the visual size above
+  @media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+    --mw-btn-icon-size: 2.75rem;
+
+    &.mw-btn-sm {
+      --mw-btn-icon-size: 2.5rem;
+    }
+  }
+}
+
+// Full width. Mostly a phone thing - a sign-in button, the one action on a
+// sheet - but also right for a narrow sidebar. `flex` rather than `block`, so
+// the icon-and-label centering the base class sets up still holds.
+.mw-btn-block {
+  display: flex;
+  width: 100%;
 }
 
 // A button that brings nothing but its operability - settings tabs, calendar
@@ -132,10 +234,7 @@
   text-align: inherit;
   cursor: pointer;
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
-  }
+  @include focus-ring;
 
   &:disabled {
     cursor: not-allowed;
@@ -144,23 +243,28 @@
 }
 
 // Size modifiers
+// Buttons run one step above the fields on font size: a button carries a label,
+// a field carries what the user typed, and the label may be the louder of the
+// two. The heights still match, which is the part that shows.
 .mw-btn-sm {
   padding: spacing('1') spacing('3');
   font-size: font-size('sm');
+  min-height: var(--mw-control-height-sm);
 }
 .mw-btn-lg {
   padding: spacing('3') spacing('5');
   font-size: font-size('md');
+  min-height: var(--mw-control-height-lg);
 }
 
 // In a row of buttons a two-letter label like "Ja" ends up half the width
-// of its neighbour, which reads as an accident
+// of its neighbour, which reads as an accident.
 .mw-modal-footer,
 .mw-form-actions,
 .mw-panel-footer,
 .mw-button-bar,
 .mw-kanban-composer-actions {
-  .mw-btn {
+  .mw-btn:not(.mw-btn-icon) {
     min-width: 80px;
   }
 }
@@ -205,7 +309,7 @@
   height: 18px;
   border-radius: radius('full');
   background: var(--mw-gray-color);
-  color: #efefef;
+  color: $fixed-surface-text;
   border: none;
   padding: 0;
   line-height: 1;
@@ -229,9 +333,21 @@
     opacity: 0.4;
   }
 
+  @include focus-ring(1px);
+  @include tappable;
+
   &:hover:not(:disabled) {
     background: var(--mw-primary-color);
     color: var(--mw-primary-accent-text-color);
+  }
+
+  // Springs back rather than easing back - an 18px circle is small enough that
+  // a plain return reads as nothing having happened
+  &:active:not(:disabled) {
+    transform: scale(0.88);
+    transition:
+      transform var(--mw-duration-instant) var(--mw-ease-spring),
+      var(--mw-transition-fast);
   }
 }
 

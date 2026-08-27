@@ -12,10 +12,10 @@ $_mw-avatar-colors: (
 .mw-avatar {
   display: inline-flex;
   position: relative;
-  border-radius: 50%;
+  border-radius: radius('full');
   overflow: hidden;
   border: 3px solid var(--mw-border);
-  box-shadow: 0 6px 15px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-3);
   margin: spacing('1');
 
   // Standard (md)
@@ -89,14 +89,14 @@ $_mw-avatar-colors: (
     flex-wrap: wrap; // Allow items to wrap to next line
     justify-content: flex-start;
     margin: spacing('2');
+    row-gap: spacing('3');
 
     .mw-avatar {
-      margin-right: -15px;
-      margin-bottom: -15px;
+      margin: spacing('0') -15px spacing('0') spacing('0');
       border: 2px solid var(--mw-secondary-text-color);
-      transition: transform 0.3s ease;
+      transition: transform var(--mw-duration-base) var(--mw-ease-out);
 
-      &:hover {
+      @include hover {
         transform: translateY(-3px);
         z-index: z-index('lift');
       }
@@ -115,10 +115,31 @@ $_mw-avatar-colors: (
       margin-right: -20px;
     }
 
+    .mw-avatar-xs {
+      margin-right: -5px;
+    }
+    .mw-avatar-sm {
+      margin-right: -10px;
+    }
+    .mw-avatar-lg {
+      margin-right: -23px;
+    }
+    .mw-avatar-xl {
+      margin-right: -40px;
+    }
+
+    .mw-avatar:last-child {
+      margin-right: spacing('0');
+    }
+
     @include media-down('sm') {
       // For small screens, create a more compact layout
       .mw-avatar {
         margin-right: -10px; // Reduce overlap on small screens
+      }
+
+      .mw-avatar:last-child {
+        margin-right: spacing('0');
       }
     }
   }

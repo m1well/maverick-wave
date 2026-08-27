@@ -117,7 +117,7 @@ same height as the login and burger buttons.
   palette. All of them derive from `--mw-primary-color`, not from a theme
   colour: the bar is dark in both themes and a light-only project must not have
   to configure dark-theme values to change it. The bar itself is the primary
-  darkened toward black, `$header-surface` (16%) - see `theming.md`.
+  darkened toward black, `$header-surface` (14%) - see `theming.md`.
 
 **Localhost indicator.** Put `mw-localhost-indicator-activated` on the header
 and the shipped JS prepends a pulsing bar when the host is localhost/127.0.0.1/
@@ -238,8 +238,8 @@ mode with the background image from `--mw-hero-background`.
 `mw-home-content-fade` fades the content in.
 
 The image is treated per theme through `--mw-hero-image-filter` - a filter, not
-a tinted overlay: `$hero-filter-dark` (`brightness(0.5)`) against
-`$hero-filter-light` (`brightness(1.15) saturate(1.2)`). A translucent layer can
+a tinted overlay: `$hero-filter-dark` (`brightness(0.7)`) against
+`$hero-filter-light` (`brightness(1.1)`). A translucent layer can
 only darken toward its own colour, so on an already dark photo both themes look
 the same until the alpha is high enough that the tint colour is what you see.
 Moving the image's brightness reads as a difference even on a dark photo, and
@@ -313,6 +313,41 @@ automatically.
 
 **Display** - `mw-d-flex`, `mw-d-inline-flex`, `mw-d-block`, `mw-d-inline`,
 `mw-d-inline-block`, `mw-d-grid`, `mw-d-none`, `mw-d-contents`.
+
+**Responsive display** - `mw-d-{sm|md|lg|xl}-{none|block|flex|inline-flex|grid|inline-block}`.
+Mobile-first and min-width, like everything else here: `mw-d-md-flex` means
+"flex from the md breakpoint up", and the unprefixed class beside it is what
+applies below that. The pair `mw-d-none mw-d-md-flex` is hidden on a phone and a
+row from a tablet on. `mw-hide-mobile` (gone below md) and `mw-hide-desktop`
+(gone from md up) spell out the two everyone actually reaches for.
+
+**Text overflow** - `mw-text-truncate` is one line ending in an ellipsis and
+carries `min-width: 0` with it, which is the reason truncation "does not work"
+nine times out of ten inside a flex row. `mw-text-clamp-2` through `-5` is that
+many lines ending in one. `mw-text-break` is for a string with nothing to break
+at - a URL, a hash, an API key - and is what keeps a phone page from scrolling
+sideways. `mw-text-nowrap` is the opposite.
+
+**Wrapping and measure** - `mw-text-balance` evens out the lines of a short
+block so a headline never leaves one word alone (headings get it already);
+`mw-text-pretty` only prevents the orphan and is the one for body copy
+(paragraphs get it already). `mw-text-measure` caps a column at 68 characters -
+past roughly 75 the eye loses the start of the next line on the way back.
+`mw-text-eyebrow` is the small spaced upper-case kicker above a heading.
+`mw-text-uppercase` carries the letter-spacing capitals need to stay legible
+with it; `mw-text-capitalize` is the plain transform.
+
+**Elevation** - `mw-elevation-0` through `-5`, the same ramp every component
+uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
+
+**Aspect ratio** - `mw-aspect-square|video|wide|portrait|photo`. Reserves the
+box before the image inside it has loaded, so the page does not reflow when the
+picture arrives. The child fills the box and crops rather than stretching.
+
+**Overflow and scrolling** - `mw-overflow-auto`, `mw-overflow-x-auto` (which
+also contains the overscroll, so a sideways swipe on a wide table does not walk
+the whole page), `mw-overflow-hidden`, and `mw-snap-x` to make a horizontal
+strip come to rest on an item instead of halfway between two.
 
 **Numbers** - `mw-text-numeric` is fixed-width digits and nothing else, for a
 clock, a counter or an ID that must not jitter while it changes.

@@ -39,7 +39,54 @@
     initCheckboxLists();
     initKanbanBoards();
     initCalendars();
+    initDropdowns();
   });
+
+  // ===== Dropdowns =====
+  //
+  // The menu is a <details>, so opening, closing, the keyboard and the state a
+  // screen reader reads out are all the browser's job already. Two things it
+  // does not do, because no markup can express them: close when the click lands
+  // somewhere else, and close on Escape.
+  //
+  // Delegated to the document rather than bound per dropdown, so a menu added
+  // to the page later works without being initialised.
+  function initDropdowns() {
+    function closeAll(except) {
+      document.querySelectorAll('.mw-dropdown[open]').forEach((dropdown) => {
+        if (dropdown !== except) dropdown.removeAttribute('open');
+      });
+    }
+
+    document.addEventListener('click', function (event) {
+      const dropdown = event.target.closest('.mw-dropdown');
+
+      // Only one menu open at a time - opening a second while the first is
+      // still up reads as two menus fighting over the same click
+      closeAll(dropdown);
+
+      if (!dropdown) return;
+
+      // A choice inside the menu closes it. Anything the item does itself -
+      // navigating, submitting - still runs; this only takes the menu away.
+      if (event.target.closest('.mw-dropdown-item')) {
+        dropdown.removeAttribute('open');
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape') return;
+
+      const open = document.querySelector('.mw-dropdown[open]');
+      if (!open) return;
+
+      open.removeAttribute('open');
+      // Focus goes back to what opened it, or it is left on a menu that is no
+      // longer there and the next Tab starts from the top of the page
+      const trigger = open.querySelector('summary');
+      if (trigger) trigger.focus();
+    });
+  }
 
   // ===== Checkbox Lists =====
   function initCheckboxLists() {
@@ -184,8 +231,13 @@
 
     if (dotsBox) {
       for (let i = 0; i < slides.length; i++) {
-        const dot = document.createElement('span');
+        // A button, not a span: the dots are the only way to reach slide four
+        // directly, and as a span nothing focuses them and no screen reader
+        // says what they are.
+        const dot = document.createElement('button');
+        dot.type = 'button';
         dot.className = 'mw-gallery-dot' + (i === 0 ? ' mw-active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
         dot.addEventListener('click', () => goToSlide(i));
         dotsBox.appendChild(dot);
       }
@@ -790,12 +842,30 @@
       refresh();
     }
 
+    const MOVE_CLASSES = [
+      'mw-kanban-card-moved-forward',
+      'mw-kanban-card-moved-back',
+    ];
+
     function moveCard(card, offset) {
       const current = card.closest('.mw-kanban-column');
       const target = columns[columns.indexOf(current) + offset];
       if (!target) return;
 
       target.querySelector('.mw-kanban-column-body').appendChild(card);
+
+      // The card lands in a lane somewhere else on the board, so it says so on
+      // arrival and comes in from the side it was pushed from. Re-parenting it
+      // alone made it blink into the other column with no motion at all.
+      //
+      // Both classes come off first and the reflow is forced in between: an
+      // element that already carries the class it is being given again keeps
+      // the finished animation and plays nothing, so a second push in the same
+      // direction would be the silent one.
+      card.classList.remove.apply(card.classList, MOVE_CLASSES);
+      void card.offsetWidth;
+      card.classList.add(offset > 0 ? MOVE_CLASSES[0] : MOVE_CLASSES[1]);
+
       refresh();
     }
 

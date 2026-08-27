@@ -1,0 +1,43 @@
+@use '../abstracts' as *;
+
+// Keyboard key
+kbd,
+.mw-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6em;
+  padding: 0.15em 0.45em;
+  border: 1px solid var(--mw-border);
+  border-bottom-width: 3px;
+  border-radius: radius('xs');
+  background: var(--mw-surface-muted);
+  color: var(--mw-text-color);
+  font-family: var(--mw-font-family-mono);
+  font-size: 0.85em;
+  line-height: 1.4;
+  font-weight: font-weight('medium');
+  white-space: nowrap;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+// A combination - Ctrl + Shift + P - as one unit, so the pluses between the
+// keys are spaced and do not wrap away from what they join
+.mw-kbd-group {
+  display: inline-flex;
+  align-items: center;
+  gap: spacing('1');
+  white-space: nowrap;
+  color: var(--mw-text-muted-color);
+  font-size: font-size('sm');
+}
+
+// A key shown mid-press, for a hint that demonstrates rather than lists
+.mw-kbd-pressed {
+  border-bottom-width: 1px;
+  top: 1px;
+  background: var(--mw-primary-background);
+  border-color: var(--mw-primary-color);
+}

@@ -23,19 +23,28 @@ $_mw-info-colors: (
   border: 1px solid var(--mw-border);
   border-radius: radius('md');
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transform var(--mw-duration-base) var(--mw-ease-out),
+    box-shadow var(--mw-duration-base) var(--mw-ease-out);
   cursor: default;
   text-decoration: none;
 
   &:hover {
+    box-shadow: var(--mw-elevation-3);
+  }
+
+  @include hover {
     transform: translateY(-2px);
-    box-shadow: -1px 6px 9px var(--mw-shadow);
   }
 
   // Interactive variant
   &-clickable {
     cursor: pointer;
+    @include tappable;
+
+    &:active {
+      transform: scale(0.98);
+      transition-duration: var(--mw-duration-instant);
+    }
   }
 
   // Size variants
@@ -77,10 +86,7 @@ a.mw-info,
 button.mw-info {
   cursor: pointer;
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
-  }
+  @include focus-ring;
 }
 
 // Info like mini-buttons
@@ -92,7 +98,7 @@ button.mw-info {
   height: 20px;
   border-radius: radius('full');
   background: var(--mw-gray-color);
-  color: #efefef;
+  color: $fixed-surface-text;
   border: none;
   padding: 0;
   line-height: 1;

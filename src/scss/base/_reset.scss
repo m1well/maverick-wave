@@ -15,10 +15,14 @@ html {
   scroll-padding-top: calc(var(--mw-header-height) + #{spacing('4')});
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  @include scrollbar(var(--mw-border), transparent);
 }
 
 body {
   background: var(--mw-page-background);
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   &:has(.mw-modal-open) {
     overflow: hidden;
@@ -26,10 +30,20 @@ body {
   }
 }
 
+// A selection in the browser default blue on a deep blue page is the one bit of
+// chrome that gives away that nobody looked. Brand tint, kept translucent so it
+// works over a card, a code block and an image caption alike.
+::selection {
+  background: color-mix(in srgb, var(--mw-primary-color) 55%, transparent);
+  color: var(--mw-text-color);
+}
+
 a {
   text-decoration: none;
   color: var(--mw-text-muted-color);
   transition: var(--mw-transition);
+  @include tappable;
+  @include focus-ring(2px);
 }
 
 ul {
@@ -39,6 +53,9 @@ ul {
 hr {
   margin: spacing('3') 0;
   color: var(--mw-text-muted-color);
+  border: 0;
+  border-top: 1px solid currentcolor;
+  opacity: 0.35;
 }
 
 img {
@@ -52,11 +69,36 @@ button {
   border: none;
   cursor: pointer;
   font-family: inherit;
+  color: inherit;
+  @include tappable;
 }
 
 input,
-textarea {
+textarea,
+select {
   font-family: inherit;
+}
+
+// A control the framework has no component for - a bare <summary>, a
+// contenteditable, an element carrying tabindex - still gets a ring.
+:focus-visible {
+  outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+  outline-offset: var(--mw-focus-ring-offset);
+}
+
+// Media that has to fit its box without distorting. `height: auto` alone keeps
+// the aspect ratio only while nothing else sets a height.
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+// Anchored headings clear the fixed bar the same way html's scroll-padding does,
+// for the case where a script scrolls an element into view itself.
+:target {
+  scroll-margin-top: calc(var(--mw-header-height) + #{spacing('4')});
 }
 
 table {

@@ -12,6 +12,14 @@
 // component defaults without needing extra specificity.
 // ---------------------------------------------------------------------------
 @media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+  // The default button was the one that got missed. Its padding and line-height
+  // add up to about 35px, which is under the 44px every platform guideline asks
+  // for and the size a thumb actually is. Only the height grows - the padding
+  // is what sets the label's relationship to the edges and is right as it is.
+  .mw-btn {
+    min-height: 2.75rem;
+  }
+
   .mw-btn-sm {
     min-height: 2.5rem;
   }
@@ -20,6 +28,13 @@
   .mw-select-sm,
   .mw-textarea-sm {
     min-height: 2.5rem;
+  }
+
+  // The base fields sit at 2.35rem from the control scale, which is right under
+  // a pointer and short of a thumb. Same floor as the button beside them.
+  .mw-input,
+  .mw-select {
+    min-height: 2.75rem;
   }
 
   .mw-input,
@@ -45,6 +60,25 @@
     min-height: 2.5rem;
   }
 
+  // Rows of a list, items of a menu, links in a footer, pages of a pager - the
+  // controls that are a line of text on a desktop and a target on a phone
+  .mw-dropdown-item,
+  .mw-accordion-header,
+  .mw-modal-close,
+  .mw-breadcrumbs-item a {
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+  }
+
+  // A checkbox or radio is tapped by its label as much as by the box, so the
+  // whole row has to be the target - which it only is if the row is tall enough
+  .mw-checkbox,
+  .mw-radio,
+  .mw-toggle {
+    min-height: 2.5rem;
+  }
+
   .mw-calendar-day {
     min-height: 44px;
   }
@@ -62,5 +96,34 @@
       position: absolute;
       inset: -5px;
     }
+  }
+}
+
+// Sideways scroll
+.mw-table-responsive,
+.mw-tabs-nav {
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Phone layout
+@include media-down('md') {
+  :root {
+    --mw-section-padding-block: #{spacing('6')};
+  }
+}
+
+@include media-down('sm') {
+  // Cards sit edge to edge on a phone, so the padding inside them is all that
+  // separates the text from the screen edge - it cannot be the desktop value
+  .mw-card-simple {
+    padding: spacing('4');
+  }
+
+  // A row of actions on a phone stacks, and stacked buttons that are each as
+  // wide as their label look like a list of unrelated things
+  .mw-form-actions .mw-btn,
+  .mw-card-footer .mw-btn {
+    flex: 1 1 auto;
   }
 }

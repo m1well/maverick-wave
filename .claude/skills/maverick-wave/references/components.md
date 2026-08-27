@@ -15,15 +15,55 @@ exhaustive: what is not named does not exist.
 ```
 
 - Variants: `mw-btn-primary`, `mw-btn-secondary`, `mw-btn-danger`,
-  `mw-btn-success`, `mw-btn-outline`, `mw-btn-link`, `mw-btn-link-muted`
+  `mw-btn-success`, `mw-btn-outline`, `mw-btn-ghost`, `mw-btn-ghost-danger`,
+  `mw-btn-link`, `mw-btn-link-muted`
+- Shapes: `mw-btn-icon` (square, for an icon-only button), `mw-btn-block`
+  (full width)
 - Sizes: `mw-btn-sm`, `mw-btn-lg`
 - `mw-btn` is `inline-flex` with a gap - icons need no wrapper and no extra class
 - `disabled` gets `opacity: .6` and `not-allowed`; there is no disabled class
 - `mw-active` gives the pressed/selected look on the coloured variants
+- Every variant dips 1px on `:active`, and the solid ones invert their top
+  highlight into an inner shadow. On touch that press is the only feedback there
+  is, so do not override it away
 - `mw-btn-link` still has the button padding - `mw-p-0` makes it read as inline
   text
-- On a coarse pointer or below 768px `mw-btn-sm` grows to a 2.5rem minimum
-  height on its own
+- On a coarse pointer or below 768px `mw-btn` grows to a 2.75rem minimum height
+  and `mw-btn-sm` to 2.5rem, on their own
+
+### Three emphasis levels
+
+`mw-btn-primary` (or any solid colour) **fills**, `mw-btn-outline` **draws a
+line**, `mw-btn-ghost` does **neither** until you point at it. Ghost is what a
+toolbar, a card's own actions or a row of icon buttons wants - five outlined
+boxes in a row fight the content they sit on.
+
+```html
+<button type="button" class="mw-btn mw-btn-ghost">Rename</button>
+<button type="button" class="mw-btn mw-btn-ghost mw-btn-ghost-danger">
+  Remove
+</button>
+```
+
+Ghost is not `mw-btn-plain`: it keeps the button's shape, padding and hit area
+and only leaves them unpainted at rest. `mw-btn-plain` has no look at all.
+
+### Icon-only buttons
+
+```html
+<button
+  type="button"
+  class="mw-btn mw-btn-ghost mw-btn-icon"
+  aria-label="Duplicate"
+>
+  <i class="fas fa-copy"></i>
+</button>
+```
+
+`mw-btn-icon` makes the button square and follows the size modifier next to it
+(`mw-btn-sm` / `mw-btn-lg`), growing to 2.75rem on a coarse pointer. It always
+needs an `aria-label` - there is no text to read out. Combine it with any
+variant; ghost is usually the right one.
 
 ### `mw-btn-plain` - a button with no button in it
 
@@ -75,7 +115,7 @@ Row of equally treated buttons, centered by default.
 - Alignment: `mw-button-bar-left`, `-right`, `-center` (which is also the
   default), `mw-button-bar-between` pushes first and last apart.
 - Sizes: `mw-button-bar-sm`, `mw-button-bar-lg`.
-- Below 576px it stacks and gives every button 96% width. Right for a row of
+- Below 576px it stacks and gives every button the full width. Right for a row of
   independent actions - wrong for a switch, see below.
 
 ### `mw-actions-note` - one line above a row of actions
@@ -808,6 +848,114 @@ the list container: `mw-tags-muted`, `mw-tags-neutral`.
 Container variants: `mw-tags-primary`, `-secondary`, `-success`, `-info`,
 `-warning`, `-danger`, `-muted`, size `mw-tags-lg`. `mw-tags-remove` only
 positions the button - its look comes from `mw-btn-mini` plus a colour variant.
+
+## Badges
+
+A count or a status, not a label. See the pitfall list in `SKILL.md` for the
+badge-versus-tag rule: a tag names something and sits in a row of its own kind,
+a badge carries a number or a state and usually sits _on_ something.
+
+```html
+<span class="mw-badge mw-badge-danger">99+</span>
+```
+
+Colours: `mw-badge-primary` (the default), `-secondary`, `-success`, `-warning`,
+`-danger`, `-info`, `-muted`, plus `mw-badge-outline`. Sizes: `mw-badge-sm`,
+`mw-badge-lg`.
+
+Round on one character, a pill from two on - a `min-width` the padding grows
+past. The digits are `tabular-nums`, so a counter ticking 9 to 10 does not shift
+what sits beside it.
+
+**On an icon or a button:**
+
+```html
+<span class="mw-badge-anchor">
+  <button class="mw-btn mw-btn-outline">
+    <i class="fas fa-inbox"></i> Inbox
+  </button>
+  <span class="mw-badge mw-badge-danger mw-badge-float">5</span>
+</span>
+```
+
+`mw-badge-anchor` on the thing being badged, `mw-badge-float` on the badge. It
+hangs half off the corner and carries a ring in the surface colour, so it reads
+as a separate object rather than a blob on the icon. The ring follows the
+surface automatically inside a card, panel, modal, tile or the header.
+
+**Status:**
+
+```html
+<span class="mw-badge-status mw-badge-status-success">
+  <span class="mw-badge-dot"></span> Online
+</span>
+```
+
+`mw-badge-status-{primary|secondary|success|warning|danger|info|muted}` colours
+the dot inside it. A bare `mw-badge-dot-{colour}` works on its own too. Add
+`mw-badge-pulse` for something actually running - a job, an open connection: a
+ring grows out and fades while the dot underneath stays put, so a column of them
+in a table stays readable. Not for decoration.
+
+## Dropdown
+
+Built on `<details>` / `<summary>`. That is where the keyboard handling, the
+focus behaviour and the open state a screen reader can see come from, and it
+works with JavaScript switched off. The framework script only adds Escape and
+click-outside.
+
+```html
+<details class="mw-dropdown">
+  <summary class="mw-btn mw-btn-primary">
+    Actions <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+  </summary>
+  <div class="mw-dropdown-menu">
+    <div class="mw-dropdown-label">Manage</div>
+    <button class="mw-dropdown-item"><i class="fas fa-pen"></i> Edit</button>
+    <button class="mw-dropdown-item mw-active">Duplicate</button>
+    <button class="mw-dropdown-item" disabled>Move</button>
+    <hr class="mw-dropdown-divider" />
+    <button class="mw-dropdown-item mw-dropdown-item-danger">
+      <i class="fas fa-trash"></i> Delete
+    </button>
+  </div>
+</details>
+```
+
+Parts: `mw-dropdown-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
+`-caret` (rotates with the open state on its own). Alignment:
+`mw-dropdown-end` anchors the menu to the trigger's right edge,
+`mw-dropdown-up` opens it upward.
+
+`mw-active` (or `aria-checked="true"`) marks the current choice, for a menu that
+picks rather than acts. Icons inside items keep one column, so labels line up
+whether or not every item has one.
+
+The menu is absolutely positioned and is clipped by any ancestor that hides its
+overflow. The framework's own containers lift that clip while a menu is open; on
+your own it is `:has(.mw-dropdown[open]) { overflow: visible }`.
+
+On a coarse pointer the rows grow to 2.75rem and the menu takes at least the
+trigger's full width.
+
+## Keyboard keys
+
+`<kbd>` is styled directly, so a shortcut in prose needs no class:
+
+```html
+<p>
+  Press
+  <span class="mw-kbd-group"
+    ><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd></span
+  >
+  to open the palette, <kbd>Esc</kbd> to close.
+</p>
+```
+
+`mw-kbd` is the same look for a `<span>` when the markup is not yours to change.
+`mw-kbd-group` wraps a combination so the pluses are spaced and the whole thing
+cannot wrap apart. `mw-kbd-pressed` shows a key mid-press - the raised bottom
+edge drops and the key sits 1px lower.
 
 ## Info badges & counters
 

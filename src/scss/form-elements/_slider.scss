@@ -28,7 +28,7 @@ $_mw-slider-colors: (
   border-radius: radius('sm');
   appearance: none;
   cursor: pointer;
-  margin-top: 0.35rem;
+  margin-top: spacing('2');
 
   // thumb
   &::-webkit-slider-thumb {
@@ -37,11 +37,11 @@ $_mw-slider-colors: (
     height: spacing('5');
     background: var(--fill);
     border: 2px solid var(--mw-border);
-    border-radius: 50%;
+    border-radius: radius('full');
     margin-top: spacing('0');
     transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
+      transform var(--mw-duration-fast) var(--mw-ease-out),
+      border-color var(--mw-duration-fast) var(--mw-ease-out);
   }
   &::-webkit-slider-thumb:hover {
     transform: scale(1.1);
@@ -51,10 +51,10 @@ $_mw-slider-colors: (
     width: spacing('5');
     height: spacing('5');
     border: 2px solid var(--fill);
-    border-radius: 50%;
+    border-radius: radius('full');
     transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
+      transform var(--mw-duration-fast) var(--mw-ease-out),
+      border-color var(--mw-duration-fast) var(--mw-ease-out);
   }
   &::-moz-range-thumb:hover {
     transform: scale(1.1);
@@ -76,7 +76,7 @@ $_mw-slider-colors: (
     width: spacing('5');
     height: spacing('5');
     border: 2px solid var(--fill);
-    border-radius: 50%;
+    border-radius: radius('full');
   }
 
   // sizes
@@ -97,7 +97,7 @@ $_mw-slider-colors: (
   }
   &-lg {
     height: 16px;
-    margin-top: 0.35rem;
+    margin-top: spacing('2');
     &::-webkit-slider-thumb {
       width: spacing('6');
       height: spacing('6');
@@ -128,8 +128,8 @@ $_mw-slider-colors: (
 .mw-slider-container {
   position: relative;
   width: 100%;
-  line-height: 0.9;
-  padding-bottom: 0.4rem;
+  line-height: 1.2;
+  padding-bottom: spacing('2');
 
   // the badge in top-right
   .mw-slider-value {

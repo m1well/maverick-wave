@@ -25,7 +25,7 @@ $_mw-calendar-dot-tones: (
   background: var(--mw-card-background);
   border: 1px solid var(--mw-border);
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
-  box-shadow: 0 5px 10px var(--mw-shadow);
+  box-shadow: var(--mw-elevation-2);
 }
 
 // Calendar without its own surface - for one that already sits on a card
@@ -107,6 +107,13 @@ $_mw-calendar-dot-tones: (
   line-height: 1;
   cursor: pointer;
   transition: var(--mw-transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.mw-calendar-day:active:not(:disabled) {
+  transform: scale(0.92);
+  transition-duration: var(--mw-duration-instant);
 }
 
 .mw-calendar-day.mw-calendar-weekend {
@@ -127,7 +134,7 @@ $_mw-calendar-dot-tones: (
 
 .mw-calendar-day:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--mw-primary-background);
+  @include focus-halo;
   border-color: var(--mw-primary-text-color);
 }
 
@@ -208,6 +215,10 @@ $_mw-calendar-dot-tones: (
 
   .mw-calendar-nav {
     padding: spacing('1') spacing('3');
+    // The nav button is a `.mw-btn` and takes the control scale's minimum
+    // height with it, which is what stopped the compact calendar from being
+    // compact. A date picker header is chrome, not a form control.
+    min-height: var(--mw-control-height-sm);
   }
 
   .mw-calendar-weekday {

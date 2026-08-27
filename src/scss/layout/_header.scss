@@ -121,10 +121,7 @@
       transform: translateY(0);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--mw-primary-text-color);
-      outline-offset: 2px;
-    }
+    @include focus-ring;
 
     &.open {
       background: var(--mw-secondary-color);
@@ -162,7 +159,11 @@
     background: var(--mw-header-burgerbutton-color);
     border-radius: 1px;
     position: relative;
-    transition: all 0.3s ease;
+    // `all` on purpose, and the one place in the framework that keeps it: the
+    // burger morphs into an X by moving its two bars to the centre, so `top`
+    // and `bottom` have to animate - and those are exactly what the shared
+    // property list leaves out.
+    transition: all var(--mw-duration-base) var(--mw-ease-out);
 
     &::before,
     &::after {
@@ -173,7 +174,7 @@
       height: 2px;
       background: var(--mw-header-burgerbutton-color);
       border-radius: 1px;
-      transition: all 0.3s ease;
+      transition: all var(--mw-duration-base) var(--mw-ease-out);
     }
 
     &::before {
@@ -196,14 +197,16 @@
   height: 100dvh;
   background: var(--mw-header-background);
   border-left: 1px solid var(--mw-header-border);
-  box-shadow: -10px 0 30px var(--mw-shadow);
+  box-shadow:
+    -6px 0 12px var(--mw-shadow-near),
+    -18px 0 40px var(--mw-shadow-far);
   z-index: z-index('header') + 3;
 
   transform: translateX(100%);
   visibility: hidden;
   transition:
-    transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
-    visibility 0.3s;
+    transform var(--mw-duration-base) var(--mw-ease-out),
+    visibility var(--mw-duration-base);
 
   .mw-navbar-list {
     display: flex;
@@ -269,7 +272,8 @@
 
     // Items follow the panel in, slightly staggered
     .mw-navbar-item {
-      animation: mw-navbar-item-in 0.3s ease forwards;
+      animation: mw-navbar-item-in var(--mw-duration-base) var(--mw-ease-out)
+        forwards;
 
       @for $i from 1 through 10 {
         &:nth-child(#{$i}) {
@@ -302,7 +306,7 @@
       background: var(--mw-overlay-background);
       backdrop-filter: blur(2px);
       z-index: z-index('header') - 1;
-      animation: mw-navbar-scrim-in 0.3s ease;
+      animation: mw-navbar-scrim-in var(--mw-duration-base) var(--mw-ease-out);
     }
   }
 }
@@ -364,8 +368,8 @@
       transform: scaleX(0);
       transform-origin: center;
       transition:
-        transform 0.2s,
-        opacity 0.2s;
+        transform var(--mw-duration-fast),
+        opacity var(--mw-duration-fast);
       opacity: 0;
     }
 
@@ -499,10 +503,7 @@
     border-color: var(--mw-primary-text-color);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--mw-primary-text-color);
-    outline-offset: 2px;
-  }
+  @include focus-ring;
 
   &:disabled {
     opacity: 0.6;

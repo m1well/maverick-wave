@@ -28,7 +28,7 @@ $_mw-tag-colors: (
   border-radius: radius('xl');
   font-size: font-size('xs');
   border: 1px solid var(--mw-border);
-  transition: all 0.2s ease;
+  transition: var(--mw-transition-fast);
   user-select: none;
 
   &:hover {
@@ -65,7 +65,6 @@ $_mw-tag-colors: (
 
 .mw-tags-icon {
   display: inline-flex;
-  margin-left: spacing('1');
   margin-right: spacing('2');
   font-size: 0.9rem;
 }

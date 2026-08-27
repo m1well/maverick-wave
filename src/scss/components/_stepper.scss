@@ -22,7 +22,7 @@
     height: 2px;
     background: var(--mw-border);
     margin-top: spacing('4');
-    transition: background 0.3s ease;
+    transition: background var(--mw-duration-base) var(--mw-ease-out);
 
     &.mw-done {
       background: var(--mw-primary-color);
@@ -65,7 +65,7 @@
     color: var(--mw-text-muted-color);
     text-align: center;
     line-height: 1.2;
-    transition: color 0.3s ease;
+    transition: color var(--mw-duration-base) var(--mw-ease-out);
 
     &.mw-active {
       color: var(--mw-primary-text-color);
@@ -110,7 +110,7 @@
       bottom: 0;
       width: 2px;
       background: var(--mw-border);
-      transition: background 0.3s ease;
+      transition: background var(--mw-duration-base) var(--mw-ease-out);
     }
 
     &.mw-done:not(:last-child)::after {

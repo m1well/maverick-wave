@@ -43,3 +43,55 @@
     border-radius: $value;
   }
 }
+
+// Responsive display
+$_mw-responsive-displays: (none, block, flex, inline-flex, grid, inline-block);
+
+@each $bp in ('sm', 'md', 'lg', 'xl') {
+  @include media-up($bp) {
+    @each $value in $_mw-responsive-displays {
+      .mw-d-#{$bp}-#{$value} {
+        display: #{$value};
+      }
+    }
+  }
+}
+
+// The two everyone actually reaches for, spelled out. `md` is the divide: below
+// it a phone, at it and above a tablet with room for a second column.
+.mw-hide-mobile {
+  @include media-down('md') {
+    display: none !important;
+  }
+}
+
+.mw-hide-desktop {
+  @include media-up('md') {
+    display: none !important;
+  }
+}
+
+// Overflow, for the wrappers that hold something wider than the phone they are
+// being read on
+.mw-overflow-auto {
+  overflow: auto;
+}
+
+.mw-overflow-x-auto {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.mw-overflow-hidden {
+  overflow: hidden;
+}
+
+// Snap a horizontal strip so it comes to rest on an item instead of halfway
+// between two - a row of cards swiped through on a phone
+.mw-snap-x {
+  scroll-snap-type: x mandatory;
+
+  > * {
+    scroll-snap-align: start;
+  }
+}

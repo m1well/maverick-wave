@@ -34,6 +34,7 @@ $_knob-travel-lg: calc(
   display: inline-flex;
   align-items: center;
   gap: spacing('2');
+  min-height: 1.5rem;
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -57,8 +58,8 @@ $_knob-travel-lg: calc(
     background: var(--mw-border);
     border-radius: radius('lg');
     transition:
-      background 0.25s ease,
-      box-shadow 0.25s ease;
+      background var(--mw-duration-base) var(--mw-ease-out),
+      box-shadow var(--mw-duration-base) var(--mw-ease-out);
     flex-shrink: 0;
 
     // The sliding knob
@@ -73,8 +74,8 @@ $_knob-travel-lg: calc(
       // fill *and* on the empty track, so it cannot follow the fill color
       background: var(--mw-accent-text-color);
       border-radius: radius('full');
-      transition: transform 0.25s ease;
-      box-shadow: 0 1px 4px var(--mw-shadow);
+      transition: transform var(--mw-duration-base) var(--mw-ease-out);
+      box-shadow: var(--mw-elevation-1);
     }
   }
 
@@ -87,7 +88,7 @@ $_knob-travel-lg: calc(
   }
 
   input[type='checkbox']:focus-visible + .mw-toggle-track {
-    box-shadow: 0 0 0 2px var(--mw-primary-background);
+    @include focus-halo;
   }
 
   .mw-toggle-label {
