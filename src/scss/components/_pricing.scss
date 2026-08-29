@@ -179,6 +179,22 @@ $_mw-price-word-scale: 0.68;
     margin-top: spacing('0');
   }
 
+  // The one action on an offer card fills its row. A card footer otherwise
+  // keeps every button at its label's width - a "Details" link has no business
+  // being a band - but this is the button the whole card was built to get
+  // pressed, and an 80px target parked in a corner is not that.
+  //
+  // Only when it stands alone: with a price beside it the row is shared, and
+  // that case is at the bottom of this file.
+  //
+  // The auto margin has to go with it. An auto margin in a flex row eats the
+  // free space *before* flex-grow is ever offered any, so growing on its own
+  // leaves the button sitting exactly where it was.
+  > .mw-card-body > .mw-card-footer > .mw-btn:only-child {
+    flex: 1 1 auto;
+    margin-left: spacing('0');
+  }
+
   // A solid band across the top carrying the name and the price - the layout
   // for when the price is the thing being compared and the feature list is
   // only its justification. Colour comes from `mw-card-addon-*` on the card,
@@ -228,4 +244,34 @@ $_mw-price-word-scale: 0.68;
 // into the fill or fights it - the same call the coloured panel header makes.
 .mw-offer:has(> .mw-offer-head)::after {
   @include corner-accent(1px, 'bottom');
+}
+
+// A price in a card footer is a label next to an action, not a second action.
+//
+// The footer stacks its children to full width once the *card* is narrow, which
+// is right for two buttons that would otherwise squeeze into nothing on a phone
+// - and wrong here: "33 Euro" needs no width, and the one button beside it does
+// not need the whole card either. A full-bleed action under a left-aligned
+// price reads as a banner, not as the end of a card.
+//
+// So the row survives, and the action takes half of it. Lives here rather than
+// in _cards.scss because the price is the guest: the footer's own rule is
+// correct for everything that is not one.
+@container mw-card (max-width: #{$mw-card-narrow}) {
+  .mw-card-footer:has(> .mw-price) {
+    flex-direction: row;
+    align-items: center;
+
+    // The footer's own rule hands every child `width: 100%` for the stack. Taken
+    // back for all of them, not just the price - the second slot is a button on
+    // one card and an "Ausgebucht" tag on the next, and a full-width tag is no
+    // better than a full-width button.
+    > * {
+      width: auto;
+    }
+
+    > .mw-btn {
+      width: 50%;
+    }
+  }
 }

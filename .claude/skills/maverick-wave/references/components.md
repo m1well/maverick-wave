@@ -396,6 +396,11 @@ the feature lists have different lengths.
   with the button beside it on its own, and `mw-price-sm` keeps it from
   outweighing the action. That is the layout for a dated event, where the price
   is a detail rather than the offer.
+- Such a footer keeps its row once the card gets narrow, and gives the action
+  half of it. A footer normally stacks its children to full width down there, so
+  that two buttons do not squeeze - but a price is a label, not a second action,
+  and a full-bleed button under a left-aligned price reads as a banner rather
+  than as the end of a card.
 
 **Head band** - name and price in a solid bar at the top, for when the price is
 the thing being compared and the feature list is only its justification:
