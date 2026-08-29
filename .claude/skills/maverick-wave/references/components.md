@@ -329,10 +329,14 @@ tag:
   `mw-price-sm` (1.5rem) and `mw-price-lg` (3rem) move the whole row at once -
   cents, unit and struck original included. Set the token yourself for any other
   size.
-- `mw-price-original` is muted **and** struck. Muted alone reads as a footnote;
-  the line is what says this is no longer the price. The rule is drawn
-  explicitly, because the browser default hairline disappears at this size
-  against a muted tone.
+- `mw-price-original` is muted **and** struck, and it takes its own line
+  **above** the new price. Muted alone reads as a footnote; the line is what
+  says this is no longer the price. The rule is drawn explicitly, because the
+  browser default hairline disappears at this size against a muted tone.
+- Stacked is the default because inline the row runs long - "199 Euro 159 Euro
+  -20 %" - and the first thing to wrap away when the width gives out is the
+  discount tag, the one part that was there to catch the eye. `mw-price-inline`
+  puts it back on one line for a wide card or a table row.
 - `mw-price-fraction` goes **inside** the amount and sits one step down on the
   baseline, not raised to the cap height - raised cents are a discounter's idiom
   and make a service price read cheaper than it is.
@@ -347,12 +351,12 @@ tag:
 - A `mw-tag` or `mw-badge` placed directly in the row is centred against the
   digits rather than hung off their baseline.
 
-| Class              | What it does                                  |
-| ------------------ | --------------------------------------------- |
-| `mw-price-sm/lg`   | Retunes `--mw-price-size`, everything follows |
-| `mw-price-stacked` | Old price on its own line above the new one   |
-| `mw-price-center`  | Centres the row                               |
-| `mw-price-plain`   | Body colour instead of the brand              |
+| Class             | What it does                                   |
+| ----------------- | ---------------------------------------------- |
+| `mw-price-sm/lg`  | Retunes `--mw-price-size`, everything follows  |
+| `mw-price-inline` | Old price in front of the new one, on one line |
+| `mw-price-center` | Centres the row                                |
+| `mw-price-plain`  | Body colour instead of the brand               |
 
 A struck-through price is a visual convention a screen reader does not pass on -
 `<s>` is announced by almost none of them. Wherever an old and a new price stand

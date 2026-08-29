@@ -50,6 +50,8 @@
       <p class="mw-text-muted mw-text-sm mw-mb-5">
         <code>mw-price-original</code> is muted <em>and</em> struck. Muted alone
         reads as a footnote; the line is what says this is no longer the price.
+        It takes its own line above the new price, because inline the row gets
+        long and the first thing to wrap away is the discount tag.
       </p>
       <p class="mw-price">
         <span class="mw-price-original">
@@ -63,13 +65,13 @@
     </div>
 
     <div class="mw-card mw-card-simple mw-mt-4">
-      <h5 class="mw-text-medium mw-mb-2">Old price stacked above</h5>
+      <h5 class="mw-text-medium mw-mb-2">Both prices on one line</h5>
       <p class="mw-text-muted mw-text-sm mw-mb-5">
-        <code>mw-price-stacked</code> breaks the line after the old price. For a
-        narrow card, where the row would otherwise wrap at whatever point it
-        runs out of width.
+        <code>mw-price-inline</code> puts the old price in front of the new one
+        instead of above it. For a wide card or a table row that has the width
+        to spare - check it at the narrow end before reaching for it.
       </p>
-      <p class="mw-price mw-price-stacked">
+      <p class="mw-price mw-price-inline">
         <span class="mw-price-original">
           <span class="mw-sr-only">Regular price:</span>159 Euro
         </span>

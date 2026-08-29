@@ -72,6 +72,16 @@ $_mw-price-word-scale: 0.68;
   // The rule is drawn explicitly, because the browser default is a hairline
   // that vanishes at this size against a muted tone.
   &-original {
+    // On its own line, above the new price. Inline it reads fine on a wide card
+    // and badly everywhere else: "199 Euro 159 Euro -20 %" is a long row, and
+    // the first thing to drop to the next line when the width runs out is the
+    // discount tag - the one part that was there to catch the eye. Broken here
+    // it breaks where it is meant to.
+    //
+    // `flex-basis` is the line break. A wrapper element around the rest would
+    // do the same job and cost an element in every price on the page.
+    flex-basis: 100%;
+    margin-bottom: spacing('-1');
     // Floored higher than the unit - this one is a figure, and a reader has to
     // be able to compare it with the one next to it
     font-size: max(0.5em, #{font-size('sm')});
@@ -120,13 +130,12 @@ $_mw-price-word-scale: 0.68;
   --mw-price-size: #{font-size('5xl')};
 }
 
-// The old price on its own line above the new one - for a narrow card where the
-// row would otherwise wrap at whatever point it runs out of width. The
-// `flex-basis` is the line break: a wrapper element around the rest would do
-// the same job and cost an element in every price on the page.
-.mw-price-stacked .mw-price-original {
-  flex-basis: 100%;
-  margin-bottom: spacing('-1');
+// Old price in front of the new one instead of above it - one line, for a wide
+// card or a table row that has the width to spare. Check it at the narrow end
+// before reaching for it: the discount tag is the first thing to wrap away.
+.mw-price-inline .mw-price-original {
+  flex-basis: auto;
+  margin-bottom: spacing('0');
 }
 
 .mw-price-center {
