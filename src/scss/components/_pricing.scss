@@ -1,0 +1,222 @@
+@use '../abstracts' as *;
+
+// The word variant is set down from the price size and then has to climb back
+// to its line box - the two numbers only work as a pair, so they are named.
+$_mw-price-line-height: 1.1;
+$_mw-price-word-scale: 0.68;
+
+// ---------------------------------------------------------------------------
+// Price
+//
+// The figure, not the card around it: one baseline row holding the price that
+// was, the price that is, the unit and a discount tag.
+//
+// Every part is sized in `em` off a single token, so the size variants only
+// have to retune `--mw-price-size` and the whole row moves together - cents,
+// currency and struck-through original included.
+// ---------------------------------------------------------------------------
+
+.mw-price {
+  --mw-price-size: #{font-size('3xl')};
+
+  display: flex;
+  flex-wrap: wrap;
+  // Baseline, not centre: figure and words are read as one line of text, and
+  // centring a 0.45em word against a 2.2rem number floats it in the middle of
+  // the digits instead of sitting it on them.
+  align-items: baseline;
+  gap: spacing('2') spacing('3');
+  margin: spacing('0');
+  font-size: var(--mw-price-size);
+  line-height: $_mw-price-line-height;
+  color: var(--mw-primary-text-color);
+
+  // A pill is a box, not a word - on the baseline it hangs off the bottom of
+  // the digits. Centre is where the eye looks for it.
+  > .mw-tag,
+  > .mw-badge {
+    align-self: center;
+    flex-shrink: 0;
+  }
+
+  &-amount {
+    font-weight: font-weight('bold');
+    // Two prices under each other line up, and a figure swapped by a billing
+    // toggle does not jump sideways on the way
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: 'tnum', 'lnum';
+    white-space: nowrap;
+  }
+
+  // Cents, written inside the amount. One step down and left on the baseline -
+  // cents raised to the cap height are a discounter's idiom, and a service
+  // price that borrows it reads cheaper than it is.
+  &-fraction {
+    font-size: 0.62em;
+    font-weight: font-weight('medium');
+  }
+
+  // "Euro", "CHF", "€" - the unit, not the number, so it does not carry the
+  // weight either.
+  //
+  // The floor is where the `em` chain stops being useful: 0.45 of an
+  // `mw-price-sm` is 11px, and that is the size most offer cards run at.
+  &-currency {
+    font-size: max(0.45em, #{font-size('xs')});
+    font-weight: font-weight('normal');
+  }
+
+  // What it cost before the discount. Muted *and* struck: muted alone reads as
+  // a footnote, the line is what says "this is no longer the price".
+  //
+  // The rule is drawn explicitly, because the browser default is a hairline
+  // that vanishes at this size against a muted tone.
+  &-original {
+    // Floored higher than the unit - this one is a figure, and a reader has to
+    // be able to compare it with the one next to it
+    font-size: max(0.5em, #{font-size('sm')});
+    font-weight: font-weight('normal');
+    color: var(--mw-text-muted-color);
+    text-decoration: line-through;
+    text-decoration-thickness: 0.09em;
+    white-space: nowrap;
+  }
+
+  // "/ month", "per session" - what the price is per
+  &-period {
+    font-size: max(0.42em, #{font-size('xs')});
+    font-weight: font-weight('normal');
+    color: var(--mw-text-muted-color);
+  }
+
+  // "On request", "free" - not a figure, so not set like one. Still bold, so it
+  // holds the same slot in a row of cards as a real price would.
+  //
+  // The line height is scaled back up to the one a full-size amount has: a row
+  // of offers puts "On request" next to "129", and a shorter line box would sit
+  // that card's price a few pixels out of line with its neighbours.
+  &-word {
+    font-size: $_mw-price-word-scale * 1em;
+    line-height: calc(#{$_mw-price-line-height}em / #{$_mw-price-word-scale});
+    font-weight: font-weight('bold');
+  }
+
+  // The line under a price - what it includes, what it saves. A *sibling* of
+  // the row, not a child: inside it, it would inherit the price size and be a
+  // flex item on the same baseline.
+  &-note {
+    margin: spacing('2') spacing('0') spacing('0');
+    font-size: font-size('sm');
+    color: var(--mw-text-muted-color);
+  }
+}
+
+// Size. Only the token moves - see the `em` above.
+.mw-price-sm {
+  --mw-price-size: #{font-size('xl')};
+}
+
+.mw-price-lg {
+  --mw-price-size: #{font-size('5xl')};
+}
+
+// The old price on its own line above the new one - for a narrow card where the
+// row would otherwise wrap at whatever point it runs out of width. The
+// `flex-basis` is the line break: a wrapper element around the rest would do
+// the same job and cost an element in every price on the page.
+.mw-price-stacked .mw-price-original {
+  flex-basis: 100%;
+  margin-bottom: spacing('-1');
+}
+
+.mw-price-center {
+  justify-content: center;
+}
+
+// Body colour instead of the brand - for a table row or a list where a coloured
+// price would be the loudest thing on screen for no reason.
+.mw-price-plain {
+  color: var(--mw-text-color);
+}
+
+// ---------------------------------------------------------------------------
+// Offer card
+//
+// The card a price is sold from: what you get, what it costs, the button that
+// asks for it. Deliberately thin - shell, body and footer are `mw-card`'s, this
+// adds only what selling something needs.
+// ---------------------------------------------------------------------------
+
+.mw-offer {
+  // Prices in a row of offers have to sit on one line, and the feature lists
+  // are never the same length. Pushed down rather than positioned: the grid
+  // already stretches the cards to equal height, so "as far down as it goes"
+  // resolves to the same line in every card of the row.
+  > .mw-card-body > .mw-price {
+    margin-top: auto;
+    padding-top: spacing('5');
+  }
+
+  // The card body already pushes its footer down the same way. Two `auto`
+  // margins in one column *share* the free space instead of collecting it above
+  // the first, which leaves the price floating somewhere in the middle and at a
+  // different height in every card - so the footer gives its own up as soon as
+  // a price stands in front of it.
+  //
+  // Bottom-aligned, note included: a card that carries a `mw-price-note` and
+  // one that does not will not have their prices on the same line. Give every
+  // card in a row a note, or none of them.
+  > .mw-card-body > .mw-price ~ .mw-card-footer {
+    margin-top: spacing('0');
+  }
+
+  // A solid band across the top carrying the name and the price - the layout
+  // for when the price is the thing being compared and the feature list is
+  // only its justification. Colour comes from `mw-card-addon-*` on the card,
+  // the same set the card badge and the ribbon read.
+  &-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: spacing('2');
+    padding: spacing('6') spacing('5');
+    // The card's own radius minus its border - the band sits inside it
+    border-radius: (radius('sm') - 1px) (radius('xl') - 1px) 0 0;
+    background: var(--mw-card-addon-color, var(--mw-primary-color));
+    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
+    text-align: center;
+
+    // On a solid fill the price cannot keep the brand colour, and the muted
+    // parts cannot keep a grey that was mixed against the page background
+    .mw-price,
+    .mw-price-original,
+    .mw-price-period {
+      color: inherit;
+    }
+
+    .mw-price-original,
+    .mw-price-period {
+      opacity: 0.7;
+    }
+  }
+
+  &-name {
+    margin: spacing('0');
+    font-size: font-size('md');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  // With a band above it the body no longer opens the card, so it does not need
+  // the air a card top usually gets
+  &-head + .mw-card-body {
+    padding-top: spacing('6');
+  }
+}
+
+// The band owns the top-right corner. An arc drawn over it either disappears
+// into the fill or fights it - the same call the coloured panel header makes.
+.mw-offer:has(> .mw-offer-head)::after {
+  @include corner-accent(1px, 'bottom');
+}

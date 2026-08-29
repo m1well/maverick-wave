@@ -280,6 +280,7 @@
             <a href="#code" class="mw-section-btn">Code</a>
             <a href="#skeleton" class="mw-section-btn">Skeleton</a>
             <a href="#empty-state" class="mw-section-btn">Empty State</a>
+            <a href="#pricing" class="mw-section-btn">Pricing</a>
           </nav>
 
           <!-- Buttons container -->
@@ -347,6 +348,11 @@
           <!-- Empty State container -->
           <div id="empty-state">
             @@include('./src/partials/empty-state-container.html')
+          </div>
+
+          <!-- Pricing container -->
+          <div id="pricing">
+            @@include('./src/partials/pricing-container.html')
           </div>
         </div>
       </section>
@@ -495,6 +501,68 @@
             });
           }
         }
+      });
+
+      // just for the showcase: one segmented switch above the offer grid drives
+      // every card in it. The framework ships the look, not the arithmetic - a
+      // real application has its own prices and its own state, so this stays
+      // here rather than in maverick-wave.js.
+      document.addEventListener('DOMContentLoaded', () => {
+        const cycleSwitch = document.getElementById('cycle-switch');
+        const offers = document.getElementById('cycle-offers');
+        if (!cycleSwitch || !offers) return;
+
+        // Trailing zero cents are noise on a price - "24 Euro", not "24,00
+        // Euro". The tabular figures keep the row from jumping anyway.
+        const money = (n) => {
+          const fixed = n.toFixed(2);
+          return fixed.endsWith('.00')
+            ? fixed.slice(0, -3)
+            : fixed.replace('.', ',');
+        };
+
+        const apply = (button) => {
+          const months = Number(button.dataset.cycle);
+          const off = Number(button.dataset.cycleOff || 0);
+
+          cycleSwitch.querySelectorAll('.mw-segmented-item').forEach((item) => {
+            const on = item === button;
+            item.classList.toggle('mw-active', on);
+            item.setAttribute('aria-pressed', String(on));
+          });
+
+          offers.querySelectorAll('.mw-offer').forEach((card) => {
+            const rate = Number(card.dataset.rate);
+            const perMonth = rate * (1 - off / 100);
+            const [whole, cents] = money(perMonth).split(',');
+
+            card.querySelector('[data-price-amount]').innerHTML = cents
+              ? whole + '<span class="mw-price-fraction">,' + cents + '</span>'
+              : whole;
+
+            const original = card.querySelector('.mw-price-original');
+            original.hidden = off === 0;
+            original.querySelector('[data-price-rate]').textContent =
+              money(rate);
+
+            const tag = card.querySelector('[data-price-off]');
+            tag.hidden = off === 0;
+            tag.textContent = '-' + off + '%';
+
+            card.querySelector('[data-price-billing]').textContent =
+              off === 0
+                ? button.dataset.cycleLabel + '.'
+                : money(perMonth * months) +
+                  ' Euro ' +
+                  button.dataset.cycleLabel +
+                  '.';
+          });
+        };
+
+        cycleSwitch.querySelectorAll('.mw-segmented-item').forEach((item) => {
+          item.addEventListener('click', () => apply(item));
+        });
+        apply(cycleSwitch.querySelector('.mw-active'));
       });
 
       // for the modals

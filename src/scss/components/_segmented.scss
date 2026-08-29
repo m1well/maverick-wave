@@ -65,6 +65,18 @@
     background: var(--mw-primary-color);
     border-color: var(--mw-primary-text-color);
     color: var(--mw-primary-accent-text-color);
+
+    // A tag inside an item - the saving on a billing cycle, a count on a
+    // filter. Its colour variants mix their background from the *page*, so on
+    // the active item's fill they come out muddy: an orange pill on blue turns
+    // purple. On that one the tag borrows the item's own ink; on the others it
+    // keeps its colour, which is what makes a visitor click it in the first
+    // place.
+    .mw-tag {
+      background: transparent;
+      border-color: currentColor;
+      color: inherit;
+    }
   }
 }
 
