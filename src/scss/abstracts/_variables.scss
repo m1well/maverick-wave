@@ -77,8 +77,20 @@ $hover-shift: 15% !default;
 // dark before it reads as ink on a light one - OKLch lightness, 0 to 1. A bound,
 // not a target: a color already inside the range is used untouched, so a bright
 // brand color stays bright and only one that would drown gets moved.
-$ink-lightness-dark: 0.4 !default;
-$ink-lightness-light: 0.7 !default;
+//
+// 0.52 is where the default blue clears 3:1 on a dark card - the floor a rule
+// or a large label needs. At 0.4 it sat at 1.9:1: a price nobody reads and an
+// outline button whose border nobody finds. 0.58 does the same job for the
+// yellow on a light card, which was at 2.5:1, and is as low as that end can go
+// without collecting company - the orange and the cyan sit at 0.57, so one
+// step further moves three colors instead of one.
+//
+// Which is the point of a bound: in both directions exactly one of the six root
+// colors is outside it and gets moved. The other five pass through byte for
+// byte, and a project that swaps the palette gets the same treatment for
+// whichever of its own colors needs it.
+$ink-lightness-dark: 0.52 !default;
+$ink-lightness-light: 0.58 !default;
 // How much of the primary color the muted text gray picks up, so it belongs to
 // the palette instead of being a stock #888. 0% is a true gray.
 $muted-tint: 23% !default;
@@ -638,6 +650,11 @@ $spacing: (
 );
 
 // Breakpoints
+// Card width at which a card footer stops being a row. Shared: the footer rule
+// lives in _cards.scss, the exception for a price in it in _pricing.scss, and
+// the two have to agree or a price gets the row back one pixel too late.
+$mw-card-narrow: 360px !default;
+
 $breakpoints: (
   'xs': 375px,
   // Extra small devices (smaller phones)

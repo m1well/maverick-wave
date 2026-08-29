@@ -1,8 +1,5 @@
 @use '../abstracts' as *;
 
-// Card width at which the footer stops being a row
-$_mw-card-narrow: 360px;
-
 $_mw-card-addon-colors: (
   primary: var(--mw-primary-color),
   secondary: var(--mw-secondary-color),
@@ -275,7 +272,7 @@ $_mw-card-addon-colors: (
     // Stacked once the card is narrow, not once the window is - a card in a
     // three-column grid on a wide desktop is as narrow as the same card on a
     // phone and used to keep its actions in a cramped row anyway.
-    @container mw-card (max-width: #{$_mw-card-narrow}) {
+    @container mw-card (max-width: #{$mw-card-narrow}) {
       flex-direction: column;
       align-items: stretch;
       gap: spacing('2');

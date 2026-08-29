@@ -83,6 +83,40 @@
     min-height: 44px;
   }
 
+  // A gallery dot is 9px here - the target got *smaller* exactly where the
+  // pointer got coarser. Same treatment as the mini button below: the dot keeps
+  // its silhouette, only the hit area grows to the 24px floor. The gap has to
+  // grow with it, or two neighbouring hit areas overlap and a tap aimed at one
+  // slide brings up the next.
+  .mw-gallery-dots {
+    gap: spacing('6');
+  }
+
+  .mw-gallery-dot {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -7.5px;
+    }
+  }
+
+  // A range input is as tall as its track - 8px, and 6px in the small variant.
+  // That is the whole hit area, thumb included: a slider you can only grab by
+  // hitting an 8px band is a slider you drag the page with instead.
+  //
+  // `content-box` is what keeps the track out of it: the height stays the
+  // track's, the padding is the hit area on top, and clipping the background
+  // to the content box means the visible bar does not grow with it. No track
+  // height is repeated from `_slider.scss` this way - each variant grows off
+  // whatever it already has: 8px + 36 = 44, the small one 42, the large 52.
+  .mw-slider {
+    box-sizing: content-box;
+    padding-block: 18px;
+    background-clip: content-box;
+  }
+
   // The 18px silhouette stays: mini buttons sit in tag rows and table cells,
   // where growing the circle would shift the layout around them. Only the hit
   // area grows, to 28px - clear of the 24px floor. The extra margin keeps two
@@ -121,9 +155,13 @@
   }
 
   // A row of actions on a phone stacks, and stacked buttons that are each as
-  // wide as their label look like a list of unrelated things
-  .mw-form-actions .mw-btn,
-  .mw-card-footer .mw-btn {
+  // wide as their label look like a list of unrelated things.
+  //
+  // Not `mw-card-footer`: that one stacks on its *container*, not on the
+  // window, so at 390px it is still a row - and a `flex-grow` handed to a row
+  // is what turned a card's action into a full-bleed band. Stacked it needs no
+  // help either, the footer's own `width: 100%` is what fills the column.
+  .mw-form-actions .mw-btn {
     flex: 1 1 auto;
   }
 }
