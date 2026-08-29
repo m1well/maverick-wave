@@ -299,6 +299,164 @@ tech-stack grids:
 </div>
 ```
 
+## Pricing
+
+Two pieces that are almost always needed together: `mw-price`, the figure on its
+own, and `mw-offer`, the card it is sold from.
+
+### Price
+
+One baseline row - what it cost before, what it costs now, the unit, a discount
+tag:
+
+```html
+<p class="mw-price">
+  <span class="mw-price-original">
+    <span class="mw-sr-only">Regular price:</span>159 Euro
+  </span>
+  <span class="mw-sr-only">Now:</span>
+  <span class="mw-price-amount"
+    >129<span class="mw-price-fraction">,90</span></span
+  >
+  <span class="mw-price-currency">Euro</span>
+  <span class="mw-price-period">/ month</span>
+  <span class="mw-tag mw-tag-secondary">-20%</span>
+</p>
+<p class="mw-price-note">Billed yearly, cancel any time.</p>
+```
+
+- Everything in the row is sized in `em` off `--mw-price-size`, so
+  `mw-price-sm` (1.5rem) and `mw-price-lg` (3rem) move the whole row at once -
+  cents, unit and struck original included. Set the token yourself for any other
+  size.
+- `mw-price-original` is muted **and** struck. Muted alone reads as a footnote;
+  the line is what says this is no longer the price. The rule is drawn
+  explicitly, because the browser default hairline disappears at this size
+  against a muted tone.
+- `mw-price-fraction` goes **inside** the amount and sits one step down on the
+  baseline, not raised to the cap height - raised cents are a discounter's idiom
+  and make a service price read cheaper than it is.
+- `mw-price-currency` and `mw-price-period` stop shrinking at 0.8rem, and
+  `mw-price-original` at 0.9rem. Below `mw-price-sm` the `em` chain would put
+  them under 12px, and that is the size most offer cards run at.
+- `mw-price-word` for "On request" or "Free" - bold, so it holds the same slot in
+  a row of cards, but set well below a figure. Its line box is scaled back up to
+  the amount's, so a word and a number in neighbouring cards land on one line.
+- `mw-price-note` is a **sibling** of the row, not a child - inside it, it would
+  inherit the price size and join the baseline.
+- A `mw-tag` or `mw-badge` placed directly in the row is centred against the
+  digits rather than hung off their baseline.
+
+| Class              | What it does                                  |
+| ------------------ | --------------------------------------------- |
+| `mw-price-sm/lg`   | Retunes `--mw-price-size`, everything follows |
+| `mw-price-stacked` | Old price on its own line above the new one   |
+| `mw-price-center`  | Centres the row                               |
+| `mw-price-plain`   | Body colour instead of the brand              |
+
+A struck-through price is a visual convention a screen reader does not pass on -
+`<s>` is announced by almost none of them. Wherever an old and a new price stand
+next to each other, name them with `mw-sr-only`, as above. Without it the reader
+hears two prices and no way to tell which one is charged.
+
+### Offer card
+
+`mw-offer` goes on a `mw-card` and does the one thing the card cannot: it pushes
+the price to the bottom of the body, so the prices in a row line up even though
+the feature lists have different lengths.
+
+```html
+<article class="mw-card mw-offer">
+  <div class="mw-card-body">
+    <h3 class="mw-card-title">Studio</h3>
+    <hr class="mw-card-title-divider" />
+    <p class="mw-card-text">Description.</p>
+    <ul class="mw-list mw-list-check">
+      <li>10 projects</li>
+    </ul>
+    <p class="mw-price mw-price-sm">…</p>
+    <p class="mw-price-note">Per month, billed yearly.</p>
+    <div class="mw-card-footer">
+      <button class="mw-btn mw-btn-primary">Choose</button>
+    </div>
+  </div>
+</article>
+```
+
+- Bottom-aligned, note included: a card that carries a `mw-price-note` and one
+  that does not will **not** have their prices on the same line. Give every card
+  in a row a note, or none of them.
+- To lift one plan out of the row, wrap it in `mw-card-feature` - the frame is
+  the card's, not the offer's.
+- A price dropped into a `mw-card-footer` instead needs no modifier: it lines up
+  with the button beside it on its own, and `mw-price-sm` keeps it from
+  outweighing the action. That is the layout for a dated event, where the price
+  is a detail rather than the offer.
+
+**Head band** - name and price in a solid bar at the top, for when the price is
+the thing being compared and the feature list is only its justification:
+
+```html
+<article class="mw-card mw-offer mw-card-addon-secondary">
+  <div class="mw-offer-head">
+    <p class="mw-offer-name">Studio</p>
+    <p class="mw-price mw-price-sm">…</p>
+  </div>
+  <div class="mw-card-body">…</div>
+</article>
+```
+
+The band reads `mw-card-addon-*` for its colour - the same set the card badge and
+the ribbon use, primary without one. The price inherits the band's ink, and the
+card drops its top corner arc, which the band already owns.
+
+### Billing cycle
+
+A subscription sold on several terms, where the longer one is cheaper. The
+switch is a `mw-segmented` **above** the grid, not one per card - three cards
+with three switches are three states the visitor has to keep in their head.
+
+```html
+<div
+  class="mw-segmented mw-segmented-auto"
+  role="group"
+  aria-label="Billing cycle"
+>
+  <button type="button" class="mw-segmented-item mw-active" aria-pressed="true">
+    Monthly
+  </button>
+  <button type="button" class="mw-segmented-item" aria-pressed="false">
+    6 months <span class="mw-tag mw-tag-secondary">-10%</span>
+  </button>
+  <button type="button" class="mw-segmented-item" aria-pressed="false">
+    Yearly <span class="mw-tag mw-tag-secondary">-20%</span>
+  </button>
+</div>
+```
+
+- The headline figure stays **per month** on every term. "288 Euro" next to
+  "30 Euro" is not a comparison a reader can make in their head; the amount that
+  actually leaves the account belongs in the `mw-price-note` below
+  ("288 Euro charged once for the year, cancel monthly").
+- The full monthly rate goes in `mw-price-original`, the saving in a `mw-tag`
+  next to it. Both carry `hidden` on the monthly term - the framework resets
+  `[hidden]` to `display: none !important`, so it beats a component's own
+  `display` and an `el.hidden = true` or an Angular `[hidden]` binding works on
+  a `mw-tag` too.
+- Wrap the price in `aria-live="polite"` and put `aria-pressed` on the switch
+  items. The figure changes without the page moving, which a screen reader
+  otherwise never hears.
+- Drop trailing zero cents: "24 Euro", not "24,00 Euro". `mw-price-amount` sets
+  tabular figures, so the row does not jump when the term changes.
+- A tag inside the **active** item drops its colour and outlines itself in the
+  item's ink - the colour variants mix their background from the page, and an
+  orange pill on the blue fill comes out purple. Inactive items keep the colour,
+  which is what makes a visitor click them.
+
+The switching itself is the application's job - the framework ships the look,
+not the arithmetic. The showcase wires it in a few lines at the bottom of
+`index.html`.
+
 ## Panels
 
 A bordered box with a header rule - the "titled section" of an application.

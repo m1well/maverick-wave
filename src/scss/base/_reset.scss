@@ -29,6 +29,15 @@ body {
   }
 }
 
+// The UA rule behind the `hidden` attribute is `[hidden] { display: none }`, and
+// every component in here that sets its own `display` beats it on specificity -
+// a hidden `mw-tag` or `mw-btn` stays on screen. `!important` is the only thing
+// that wins against a class, and it is also what Angular's `[hidden]` binding
+// and every `el.hidden = true` in an application expect to happen.
+[hidden] {
+  display: none !important;
+}
+
 // A selection in the browser default blue on a deep blue page is the one bit of
 // chrome that gives away that nobody looked. Brand tint, kept translucent so it
 // works over a card, a code block and an image caption alike.

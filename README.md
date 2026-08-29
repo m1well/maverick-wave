@@ -17,7 +17,7 @@ The result is a framework that balances utility with simplicity, offering develo
 ## Features
 
 - Responsive Grid System
-- 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Badges, Dropdown, Ratings, Stepper, Skeleton Loader, Empty State, Divider, and more
+- 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Badges, Dropdown, Ratings, Stepper, Skeleton Loader, Empty State, Price, Offer Cards, Divider, and more
 - Form Elements: Input, Select, Textarea, Checkbox, Radio, Toggle, Input Group, with `mw-field` wrapper pattern for Angular Reactive Forms
 - Utility Classes for spacing, flex, display, typography, text overflow, elevation and aspect ratio
 - A five-step elevation ramp and a motion scale, so every shadow and every transition in the framework comes from one place

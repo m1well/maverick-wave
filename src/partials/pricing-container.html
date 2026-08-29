@@ -1,0 +1,521 @@
+<h3 class="mw-section-subtitle">Pricing</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Two pieces that are usually needed together: <code>mw-price</code>, the figure
+  on its own, and <code>mw-offer</code>, the card it is sold from. The price is
+  one baseline row - what it cost before, what it costs now, the unit, a
+  discount tag - and everything in it is sized in <code>em</code> off
+  <code>--mw-price-size</code>, so <code>mw-price-sm</code> and
+  <code>mw-price-lg</code> move the whole row at once.
+</p>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  A struck-through price is a visual convention that a screen reader does not
+  pass on - <code>&lt;s&gt;</code> is announced by almost none of them. Where an
+  old and a new price stand next to each other, name them with
+  <code>mw-sr-only</code>, as in the examples below. Without that the reader
+  hears two prices and no idea which one is being charged.
+</p>
+
+<h3 class="mw-card-title mw-mb-4">Price</h3>
+
+<div class="mw-grid-2-lg">
+  <div>
+    <div class="mw-card mw-card-simple">
+      <h5 class="mw-text-medium mw-mb-2">Plain price</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-amount</code> plus <code>mw-price-currency</code>. The
+        unit is a word next to the figure, not part of it - it stays at reading
+        size while the number carries the weight.
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">With a discount tag</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        Any <code>mw-tag</code> or <code>mw-badge</code> placed directly in the
+        row is centred against the digits instead of hung off their baseline.
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-tag mw-tag-secondary">-20%</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Old price struck through</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-original</code> is muted <em>and</em> struck. Muted alone
+        reads as a footnote; the line is what says this is no longer the price.
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-original">
+          <span class="mw-sr-only">Regular price:</span>159 Euro
+        </span>
+        <span class="mw-sr-only">Now:</span>
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-tag mw-tag-secondary">-20%</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Old price stacked above</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-stacked</code> breaks the line after the old price. For a
+        narrow card, where the row would otherwise wrap at whatever point it
+        runs out of width.
+      </p>
+      <p class="mw-price mw-price-stacked">
+        <span class="mw-price-original">
+          <span class="mw-sr-only">Regular price:</span>159 Euro
+        </span>
+        <span class="mw-sr-only">Now:</span>
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-tag mw-tag-secondary">-20%</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Not a figure</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-word</code> for "on request" or "free" - still bold, so
+        it holds the same slot in a row of cards, but set well below the size a
+        number gets.
+      </p>
+      <p class="mw-price mw-mb-4">
+        <span class="mw-price-word">On request</span>
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-word">Free</span>
+        <span class="mw-tag mw-tag-success">Trial</span>
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <div class="mw-card mw-card-simple">
+      <h5 class="mw-text-medium mw-mb-2">Decimals</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-fraction</code> sits inside the amount, one step down and
+        on the baseline. Cents raised to the cap height are a discounter's idiom
+        - a service price that borrows it reads cheaper than it is.
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-original">
+          <span class="mw-sr-only">Regular price:</span>159,90 Euro
+        </span>
+        <span class="mw-sr-only">Now:</span>
+        <span class="mw-price-amount"
+          >129<span class="mw-price-fraction">,90</span></span
+        >
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-tag mw-tag-secondary">-19%</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Period and note</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-period</code> for what the price is per,
+        <code>mw-price-note</code> for the line under it. The note is a sibling
+        of the row, not a child - inside it, it would be set at price size.
+      </p>
+      <p class="mw-price">
+        <span class="mw-price-amount">49</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ month</span>
+      </p>
+      <p class="mw-price-note">Billed yearly, cancel any time.</p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Sizes</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-sm</code>, default and <code>mw-price-lg</code>. Only
+        <code>--mw-price-size</code> changes - the struck price, the cents and
+        the unit follow it.
+      </p>
+      <p class="mw-price mw-price-sm mw-mb-4">
+        <span class="mw-price-original">159 Euro</span>
+        <span class="mw-price-amount"
+          >129<span class="mw-price-fraction">,90</span></span
+        >
+        <span class="mw-price-currency">Euro</span>
+      </p>
+      <p class="mw-price mw-mb-4">
+        <span class="mw-price-original">159 Euro</span>
+        <span class="mw-price-amount"
+          >129<span class="mw-price-fraction">,90</span></span
+        >
+        <span class="mw-price-currency">Euro</span>
+      </p>
+      <p class="mw-price mw-price-lg">
+        <span class="mw-price-original">159 Euro</span>
+        <span class="mw-price-amount"
+          >129<span class="mw-price-fraction">,90</span></span
+        >
+        <span class="mw-price-currency">Euro</span>
+      </p>
+    </div>
+
+    <div class="mw-card mw-card-simple mw-mt-4">
+      <h5 class="mw-text-medium mw-mb-2">Centred and plain</h5>
+      <p class="mw-text-muted mw-text-sm mw-mb-5">
+        <code>mw-price-center</code> for a centred card,
+        <code>mw-price-plain</code> for body colour instead of the brand - a
+        table row where a coloured price would be the loudest thing on screen
+        for no reason.
+      </p>
+      <p class="mw-price mw-price-center mw-mb-4">
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+      </p>
+      <p class="mw-price mw-price-sm mw-price-plain">
+        <span class="mw-price-original">159 Euro</span>
+        <span class="mw-price-amount">129</span>
+        <span class="mw-price-currency">Euro</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<h3 class="mw-card-title mw-mt-9 mw-mb-4">Offer cards</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  <code>mw-offer</code> goes on a <code>mw-card</code> and does one thing the
+  card cannot: it pushes the price to the bottom of the body, so the prices in a
+  row line up even though the feature lists have different lengths. Everything
+  else - shell, body, footer, the <code>mw-card-feature</code> frame around the
+  plan you want picked - is the card's.
+</p>
+
+<div class="mw-grid-3 mw-mt-10">
+  <article class="mw-card mw-offer">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Starter</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        One project, one seat. Enough to see whether this is the right tool.
+      </p>
+      <ul class="mw-list mw-list-check">
+        <li>1 project</li>
+        <li>5 GB storage</li>
+        <li>Community support</li>
+      </ul>
+      <p class="mw-price mw-price-sm">
+        <span class="mw-price-amount">19</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ month</span>
+      </p>
+      <p class="mw-price-note">Cancel any time.</p>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-outline">Choose Starter</button>
+      </div>
+    </div>
+  </article>
+
+  <div class="mw-card-feature mw-card-feature-secondary">
+    <p class="mw-card-feature-label">Most booked</p>
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <h3 class="mw-card-title">Studio</h3>
+        <hr class="mw-card-title-divider" />
+        <p class="mw-card-text">
+          The one most teams end up on: enough seats for a squad, no limits that
+          get in the way mid-sprint.
+        </p>
+        <ul class="mw-list mw-list-check">
+          <li>10 projects</li>
+          <li>100 GB storage</li>
+          <li>Priority support</li>
+          <li>Custom domain</li>
+        </ul>
+        <p class="mw-price mw-price-sm">
+          <span class="mw-price-original">
+            <span class="mw-sr-only">Regular price:</span>59 Euro
+          </span>
+          <span class="mw-sr-only">Now:</span>
+          <span class="mw-price-amount">49</span>
+          <span class="mw-price-currency">Euro</span>
+          <span class="mw-tag mw-tag-secondary">-17%</span>
+        </p>
+        <p class="mw-price-note">Per month, billed yearly.</p>
+        <div class="mw-card-footer">
+          <button class="mw-btn mw-btn-primary">Choose Studio</button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <article class="mw-card mw-offer">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Enterprise</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        Anything that needs a contract, a review and a name to call.
+      </p>
+      <ul class="mw-list mw-list-check">
+        <li>Unlimited projects</li>
+        <li>SSO and audit log</li>
+        <li>Named contact</li>
+      </ul>
+      <p class="mw-price mw-price-sm">
+        <span class="mw-price-word">On request</span>
+      </p>
+      <p class="mw-price-note">Priced per seat, yearly term.</p>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-outline">Talk to sales</button>
+      </div>
+    </div>
+  </article>
+</div>
+
+<h3 class="mw-card-title mw-mt-9 mw-mb-4">Offer card with a head band</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  <code>mw-offer-head</code> puts name and price in a solid band at the top of
+  the card - for when the price is the thing being compared and the feature list
+  is only its justification. It takes its colour from the
+  <code>mw-card-addon-*</code> class on the card, the same set the card badge
+  and the ribbon read.
+</p>
+
+<div class="mw-grid-3">
+  <article class="mw-card mw-offer">
+    <div class="mw-offer-head">
+      <p class="mw-offer-name">Basic</p>
+      <p class="mw-price mw-price-sm">
+        <span class="mw-price-amount">19</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ mo</span>
+      </p>
+    </div>
+    <div class="mw-card-body">
+      <ul class="mw-list mw-list-check">
+        <li>1 project</li>
+        <li>5 GB storage</li>
+      </ul>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-outline">Choose</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="mw-card mw-offer mw-card-addon-secondary">
+    <div class="mw-offer-head">
+      <p class="mw-offer-name">Studio</p>
+      <p class="mw-price mw-price-sm">
+        <span class="mw-price-original">
+          <span class="mw-sr-only">Regular price:</span>59 Euro
+        </span>
+        <span class="mw-sr-only">Now:</span>
+        <span class="mw-price-amount"
+          >48<span class="mw-price-fraction">,90</span></span
+        >
+        <span class="mw-price-currency">Euro</span>
+      </p>
+    </div>
+    <div class="mw-card-body">
+      <ul class="mw-list mw-list-check">
+        <li>10 projects</li>
+        <li>100 GB storage</li>
+        <li>Priority support</li>
+      </ul>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-secondary">Choose</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="mw-card mw-offer mw-card-addon-info">
+    <div class="mw-offer-head">
+      <p class="mw-offer-name">Team</p>
+      <p class="mw-price mw-price-sm">
+        <span class="mw-price-amount">99</span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ mo</span>
+      </p>
+    </div>
+    <div class="mw-card-body">
+      <ul class="mw-list mw-list-check">
+        <li>Unlimited projects</li>
+        <li>SSO and audit log</li>
+      </ul>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-outline">Choose</button>
+      </div>
+    </div>
+  </article>
+</div>
+
+<h3 class="mw-card-title mw-mt-9 mw-mb-4">Price in the footer</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  No modifier for this one - a <code>mw-price</code> dropped into a
+  <code>mw-card-footer</code> lines up with the button next to it on its own,
+  and <code>mw-price-sm</code> keeps it from outweighing the action. The layout
+  for a dated event, where the price is a detail rather than the offer.
+</p>
+
+<div class="mw-grid-2">
+  <article class="mw-card mw-offer">
+    <div class="mw-card-body">
+      <p class="mw-text-eyebrow mw-text-primary mw-mb-3">Fri, 14 March</p>
+      <h3 class="mw-card-title">Workshop: Reading a waveform</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        Three hours on what a spectrogram actually shows you, and what it does
+        not. Bring headphones.
+      </p>
+      <div class="mw-card-footer">
+        <p class="mw-price mw-price-sm">
+          <span class="mw-price-original">120 Euro</span>
+          <span class="mw-price-amount">90</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+        <button class="mw-btn mw-btn-primary">Sign up</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="mw-card mw-offer">
+    <div class="mw-card-body">
+      <p class="mw-text-eyebrow mw-text-primary mw-mb-3">Sat, 22 March</p>
+      <h3 class="mw-card-title">Workshop: Mixing for small rooms</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        A full day on the room you actually work in, rather than the one the
+        manual assumes.
+      </p>
+      <div class="mw-card-footer">
+        <p class="mw-price mw-price-sm">
+          <span class="mw-price-amount">180</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+        <span class="mw-tag mw-tag-muted">Fully booked</span>
+      </div>
+    </div>
+  </article>
+</div>
+
+<h3 class="mw-card-title mw-mt-9 mw-mb-4">Billing cycle</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  A subscription sold on three terms, where the longer one is cheaper. The
+  switch is a <code>mw-segmented</code> above the grid, not one per card - three
+  cards with three switches are three states the visitor has to keep in their
+  head. Every card shows the same thing: what a month works out at on the chosen
+  term, what the month costs without a discount, and what is actually charged.
+</p>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Comparing per-month figures is the point. A yearly plan priced at "288 Euro"
+  next to a monthly one at "30 Euro" is not a comparison a reader can make in
+  their head, so the headline figure stays per month on all three terms and the
+  amount that leaves the account moves to the line below it.
+</p>
+
+<div class="mw-d-flex mw-justify-center mw-mb-8">
+  <div
+    class="mw-segmented mw-segmented-auto"
+    role="group"
+    aria-label="Billing cycle"
+    id="cycle-switch"
+  >
+    <button
+      type="button"
+      class="mw-segmented-item mw-active"
+      aria-pressed="true"
+      data-cycle="1"
+      data-cycle-label="Billed monthly, cancel any time"
+    >
+      Monthly
+    </button>
+    <button
+      type="button"
+      class="mw-segmented-item"
+      aria-pressed="false"
+      data-cycle="6"
+      data-cycle-off="10"
+      data-cycle-label="charged once for six months, cancel monthly"
+    >
+      6 months
+      <span class="mw-tag mw-tag-secondary">-10%</span>
+    </button>
+    <button
+      type="button"
+      class="mw-segmented-item"
+      aria-pressed="false"
+      data-cycle="12"
+      data-cycle-off="20"
+      data-cycle-label="charged once for the year, cancel monthly"
+    >
+      Yearly
+      <span class="mw-tag mw-tag-secondary">-20%</span>
+    </button>
+  </div>
+</div>
+
+<div class="mw-grid-2" id="cycle-offers">
+  <article class="mw-card mw-offer" data-rate="12">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Starter</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        One workspace, three seats. The tier a side project stays on for a long
+        time.
+      </p>
+      <ul class="mw-list mw-list-check">
+        <li>3 seats</li>
+        <li>10 GB storage</li>
+        <li>Email support</li>
+      </ul>
+      <p class="mw-price mw-price-sm" aria-live="polite">
+        <span class="mw-price-original" hidden>
+          <span class="mw-sr-only">Without the term discount:</span>
+          <span data-price-rate></span> Euro
+        </span>
+        <span class="mw-sr-only">Price:</span>
+        <span class="mw-price-amount" data-price-amount></span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ month</span>
+        <span class="mw-tag mw-tag-secondary" data-price-off hidden></span>
+      </p>
+      <p class="mw-price-note" data-price-billing></p>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-outline">Choose Starter</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="mw-card mw-offer" data-rate="30">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Pro</h3>
+      <hr class="mw-card-title-divider" />
+      <p class="mw-card-text">
+        Everything in Starter, plus the things a team needs once more than one
+        person touches the data.
+      </p>
+      <ul class="mw-list mw-list-check">
+        <li>Unlimited seats</li>
+        <li>200 GB storage</li>
+        <li>Audit log and SSO</li>
+      </ul>
+      <p class="mw-price mw-price-sm" aria-live="polite">
+        <span class="mw-price-original" hidden>
+          <span class="mw-sr-only">Without the term discount:</span>
+          <span data-price-rate></span> Euro
+        </span>
+        <span class="mw-sr-only">Price:</span>
+        <span class="mw-price-amount" data-price-amount></span>
+        <span class="mw-price-currency">Euro</span>
+        <span class="mw-price-period">/ month</span>
+        <span class="mw-tag mw-tag-secondary" data-price-off hidden></span>
+      </p>
+      <p class="mw-price-note" data-price-billing></p>
+      <div class="mw-card-footer">
+        <button class="mw-btn mw-btn-primary">Choose Pro</button>
+      </div>
+    </div>
+  </article>
+</div>

@@ -202,7 +202,10 @@ Everything below is documented in `references/components.md` unless marked other
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
 `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
-`mw-item-list` family
+`mw-item-list` family · `mw-offer` (+ `-head`, `-name`)
+
+**Pricing** `mw-price` (+ `-amount`, `-fraction`, `-currency`, `-original`,
+`-period`, `-word`, `-note`, `sm`/`lg`, `stacked`, `center`, `plain`)
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
 `hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
