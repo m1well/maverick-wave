@@ -64,6 +64,42 @@ $_mw-info-colors: (
     font-weight: font-weight('medium');
   }
 
+  // Block variant: the same framed surface, carrying a paragraph instead of a
+  // value. The base is built for a short figure - it centres its content in a
+  // narrow column, sets it in medium weight and lifts on hover, which turns
+  // running text into a ragged stack that twitches under the pointer. This
+  // reads as a note instead: ranged left up to a measure, body weight, body
+  // leading, and it stays put.
+  //
+  //   <div class="mw-info mw-info-primary mw-info-block">
+  //     <strong>Why greyscale?</strong>
+  //     <span>Because the frame is not the stage ...</span>
+  //   </div>
+  &-block {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 68ch;
+    margin-inline: auto;
+    padding: spacing('6') spacing('7');
+    font-weight: font-weight('normal');
+    line-height: 1.7;
+    text-align: left;
+    text-wrap: pretty;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    @include hover {
+      transform: none;
+    }
+
+    strong {
+      margin-bottom: spacing('2');
+    }
+  }
+
   // counter variant: big number + small label
   &-counter {
     min-width: spacing('12');

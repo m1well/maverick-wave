@@ -124,6 +124,8 @@ $_active-prefix: 'dark';
     calc(100% - 2 * var(--mw-container-gutter))
   );
   --mw-section-padding-block: #{spacing('7')};
+  --mw-section-title-gap: #{spacing('7')};
+  --mw-scroll-hint-offset: #{spacing('9')};
 
   // Active theme - aliases onto the dark or light set above
   @each $name, $value in $_active-theme {

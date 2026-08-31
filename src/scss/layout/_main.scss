@@ -77,6 +77,51 @@
   }
 }
 
+// The "scroll down" cue at the bottom of a hero. It belongs to the hero
+// container and not to the flow below it: a hero fills the viewport, so the
+// cue has to sit on its lower edge no matter how tall the content above is.
+// Selector beats the `> *` rule above it, which would otherwise put the
+// element back into flow.
+.mw-container:has(.mw-hero) > .mw-scroll-hint {
+  position: absolute;
+  bottom: var(--mw-scroll-hint-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: spacing('2');
+  // Ink on the hero image, stepped back - the cue is an offer, not a headline
+  color: color-mix(in srgb, var(--mw-hero-text-color) 45%, transparent);
+  font-size: font-size('xs');
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  // A loop keeps its own timing - at any of the duration tokens this would
+  // read as nervous rather than as a slow bob
+  animation: mw-scroll-hint-float 2.2s var(--mw-ease-in-out) infinite;
+
+  @include hover {
+    color: var(--mw-hero-text-color);
+  }
+}
+
+@keyframes mw-scroll-hint-float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mw-scroll-hint {
+    animation: none;
+  }
+}
+
 .mw-content {
   flex: 1;
   padding-top: spacing('7');

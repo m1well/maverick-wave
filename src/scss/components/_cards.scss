@@ -24,6 +24,13 @@ $_mw-card-addon-colors: (
   color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
   box-shadow: var(--mw-elevation-2);
   transition: var(--mw-transition);
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 // Fading rule used by the title divider and the stack header underline
@@ -213,9 +220,18 @@ $_mw-card-addon-colors: (
   //     <span class="mw-card-title-icon"><i class="fas fa-file-invoice"></i></span>
   //     Invoices
   //   </h3>
+  //
+  // An <img> works in the same slot - a product logo or a portrait instead of
+  // an icon. Reach for the -lg step there: a wordmark inside 38px is a smudge.
   &-title-icon {
     @include _card-icon-circle;
     font-size: font-size('lg');
+
+    &-lg {
+      width: 62px;
+      height: 62px;
+      font-size: font-size('2xl');
+    }
   }
 
   &-title-divider {
