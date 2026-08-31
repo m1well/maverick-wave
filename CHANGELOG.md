@@ -6,6 +6,14 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.20.0] - 2026-08-31
+
+### Added
+
+- `mw-scroll-hint-end` - the hero scroll cue in the bottom right corner instead of centred
+- `--mw-scroll-hint-inline` - side distance of the cue in that corner
+- `--mw-scroll-hint-reserve` - room the hero keeps free at its bottom edge for the cue
+
 ## [4.19.0] - 2026-08-31
 
 ### Fixed

@@ -73,6 +73,37 @@
       body:has(.mw-header) & {
         padding-top: calc(var(--mw-header-height) + #{spacing('7')});
       }
+
+      // The scroll cue is taken out of flow, so the content above knows
+      // nothing about it and a hero with buttons under its text parks them
+      // right on top of the cue. Keep its strip free instead - the hero
+      // centres its content in what is left, which is what a reader expects
+      // anyway. Only when there actually is a cue, or every other hero would
+      // pay for a feature it does not use.
+      &:has(> .mw-scroll-hint) {
+        padding-bottom: calc(
+          var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
+        );
+      }
+
+      // ...except when the cue sits in the corner. That is the whole point of
+      // the end variant: it stands beside the content, not under it, so the
+      // hero keeps the full height it had before.
+      &:has(> .mw-scroll-hint-end) {
+        padding-bottom: spacing('0');
+      }
+
+      // On a phone even the corner is tight - the hero text is taller for the
+      // width it has, so both variants get the strip back. Last of the three,
+      // because a media query adds no specificity and would otherwise lose to
+      // the end rule above.
+      @include media-down('md') {
+        &:has(> .mw-scroll-hint) {
+          padding-bottom: calc(
+            var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
+          );
+        }
+      }
     }
   }
 }
@@ -85,8 +116,10 @@
 .mw-container:has(.mw-hero) > .mw-scroll-hint {
   position: absolute;
   bottom: var(--mw-scroll-hint-offset);
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  width: fit-content;
+  margin-inline: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,13 +136,32 @@
   }
 }
 
+// Bottom right instead of centred, for a hero whose text is not centred
+// either - the two would otherwise sit on top of each other.
+.mw-container:has(.mw-hero) > .mw-scroll-hint-end {
+  left: auto;
+  right: var(--mw-scroll-hint-inline);
+  margin-inline: 0;
+}
+
+// On a phone the middle under the hero is taken: the text is longer for the
+// width it has and any buttons reach close to the bottom edge. The corner next
+// to them is free, so both variants go there and the cue stays on screen.
+@include media-down('md') {
+  .mw-container:has(.mw-hero) > .mw-scroll-hint {
+    left: auto;
+    right: var(--mw-scroll-hint-inline);
+    margin-inline: 0;
+  }
+}
+
 @keyframes mw-scroll-hint-float {
   0%,
   100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
   }
   50% {
-    transform: translate(-50%, 7px);
+    transform: translateY(7px);
   }
 }
 
