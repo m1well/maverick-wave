@@ -91,14 +91,11 @@
   flex-direction: column;
   align-items: center;
   gap: spacing('2');
-  // Ink on the hero image, stepped back - the cue is an offer, not a headline
   color: color-mix(in srgb, var(--mw-hero-text-color) 45%, transparent);
   font-size: font-size('xs');
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-decoration: none;
-  // A loop keeps its own timing - at any of the duration tokens this would
-  // read as nervous rather than as a slow bob
   animation: mw-scroll-hint-float 2.2s var(--mw-ease-in-out) infinite;
 
   @include hover {
@@ -116,8 +113,11 @@
   }
 }
 
+// Same selector as the rule above on purpose: a media query adds no
+// specificity, so a bare `.mw-scroll-hint` here loses to the `.mw-container`
+// chain and the cue keeps bobbing for everyone who asked it not to.
 @media (prefers-reduced-motion: reduce) {
-  .mw-scroll-hint {
+  .mw-container:has(.mw-hero) > .mw-scroll-hint {
     animation: none;
   }
 }
