@@ -2,7 +2,7 @@
 
 .mw-section-title {
   font-size: font-size('3xl');
-  margin-bottom: spacing('7');
+  margin-bottom: var(--mw-section-title-gap);
   text-align: center;
   position: relative;
 
