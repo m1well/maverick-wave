@@ -97,8 +97,15 @@
       // width it has, so both variants get the strip back. Last of the three,
       // because a media query adds no specificity and would otherwise lose to
       // the end rule above.
+      //
+      // A smaller strip than on the desktop, though: a phone screen is barely
+      // taller than the hero text on it, so the full reserve is what tips the
+      // container past 100dvh - and everything below that line, the cue first,
+      // is off screen. min-height already leaves room here in most cases.
       @include media-down('md') {
         &:has(> .mw-scroll-hint) {
+          --mw-scroll-hint-reserve: #{spacing('6')};
+
           padding-bottom: calc(
             var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
           );
