@@ -5,7 +5,7 @@ VERSION=$(npm pkg get version --workspaces=false | tr -d \")
 echo "## checkout release branch and grab changes from main"
 git checkout release && git merge main --no-commit
 echo "## make a new release"
-npm run build && npm run release
+npm run build && npm run prepack
 echo "## add all changes and push it"
 git add --all
 git commit -m "release: ${VERSION}"
