@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Autumn forest with light through the trees">
+  <defs>
+    <linearGradient id="for-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbe3ab"/>
+      <stop offset="0.45" stop-color="#e0a659"/>
+      <stop offset="1" stop-color="#7d5327"/>
+    </linearGradient>
+    <linearGradient id="for-haze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffeec2" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#ffeec2" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#for-bg)"/>
+  <circle cx="404" cy="132" r="58" fill="#fff6da" opacity="0.75"/>
+  <circle cx="404" cy="132" r="110" fill="#fff6da" opacity="0.22"/>
+  <g fill="#a97236" opacity="0.4">
+    <rect x="72" y="0" width="13" height="450"/>
+    <rect x="214" y="0" width="10" height="450"/>
+    <rect x="352" y="0" width="14" height="450"/>
+    <rect x="498" y="0" width="11" height="450"/>
+    <rect x="628" y="0" width="13" height="450"/>
+    <rect x="756" y="0" width="10" height="450"/>
+  </g>
+  <g fill="#6b451f" opacity="0.85">
+    <rect x="128" y="0" width="22" height="450"/>
+    <rect x="288" y="0" width="18" height="450"/>
+    <rect x="566" y="0" width="20" height="450"/>
+    <rect x="702" y="0" width="16" height="450"/>
+  </g>
+  <g fill="#3d2611">
+    <rect x="24" y="0" width="30" height="450"/>
+    <rect x="428" y="0" width="26" height="450"/>
+    <rect x="772" y="0" width="28" height="450"/>
+  </g>
+  <path d="M0,342 C140,326 280,356 420,340 C560,324 680,344 800,332 L800,450 L0,450 Z" fill="#5b3818"/>
+  <rect y="316" width="800" height="134" fill="url(#for-haze)"/>
+  <g fill="#e8a94d" opacity="0.65">
+    <ellipse cx="150" cy="392" rx="11" ry="7"/>
+    <ellipse cx="298" cy="420" rx="9" ry="6"/>
+    <ellipse cx="472" cy="386" rx="12" ry="7"/>
+    <ellipse cx="624" cy="424" rx="10" ry="6"/>
+    <ellipse cx="722" cy="390" rx="9" ry="6"/>
+    <ellipse cx="76" cy="428" rx="10" ry="6"/>
+    <ellipse cx="390" cy="436" rx="9" ry="6"/>
+  </g>
+</svg>

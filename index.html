@@ -150,6 +150,10 @@
       <section id="foundations" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Foundations</h2>
+          <p class="mw-section-intro">
+            The raw material - type, color, spacing and the small utilities
+            everything else is built from.
+          </p>
           <nav class="mw-section-nav">
             <a href="#typography" class="mw-section-btn">Typography</a>
             <a href="#colors" class="mw-section-btn">Main Colors</a>
@@ -197,6 +201,10 @@
       <section id="layout" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <h2 class="mw-section-title">Layout</h2>
+          <p class="mw-section-intro">
+            The bones of a page - grids, cards, panels and the containers that
+            hold content together.
+          </p>
           <nav class="mw-section-nav">
             <a href="#grid" class="mw-section-btn">Grid System</a>
             <a href="#cards" class="mw-section-btn">Cards</a>
@@ -264,6 +272,10 @@
       <section id="components" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Components</h2>
+          <p class="mw-section-intro">
+            The everyday parts - buttons, tags, alerts and their many friends,
+            ready to drop in.
+          </p>
           <nav class="mw-section-nav">
             <a href="#buttons" class="mw-section-btn">Buttons</a>
             <a href="#button-bar" class="mw-section-btn">Button Bar</a>
@@ -277,6 +289,7 @@
             <a href="#ratings" class="mw-section-btn">Ratings</a>
             <a href="#info" class="mw-section-btn">Info</a>
             <a href="#alerts" class="mw-section-btn">Alerts</a>
+            <a href="#announcement" class="mw-section-btn">Announcement</a>
             <a href="#code" class="mw-section-btn">Code</a>
             <a href="#skeleton" class="mw-section-btn">Skeleton</a>
             <a href="#empty-state" class="mw-section-btn">Empty State</a>
@@ -337,6 +350,11 @@
             @@include('./src/partials/alerts-container.html')
           </div>
 
+          <!-- Announcement container -->
+          <div id="announcement">
+            @@include('./src/partials/announcement-container.html')
+          </div>
+
           <!-- Code container -->
           <div id="code">@@include('./src/partials/code-container.html')</div>
 
@@ -361,6 +379,10 @@
       <section id="forms" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <h2 class="mw-section-title">Forms</h2>
+          <p class="mw-section-intro">
+            Inputs, selects, toggles and validation - fields and buttons share
+            one height scale by construction.
+          </p>
           <nav class="mw-section-nav">
             <a href="#form-elements" class="mw-section-btn">Form Elements</a>
             <a href="#input-group" class="mw-section-btn">Input Group</a>
@@ -402,6 +424,10 @@
       <section id="data-display" class="mw-section">
         <div class="mw-container">
           <h2 class="mw-section-title">Data & Display</h2>
+          <p class="mw-section-intro">
+            Tables, boards, timelines and long-form content - everything that
+            shows real data.
+          </p>
           <nav class="mw-section-nav">
             <a href="#page-header" class="mw-section-btn">Page Header</a>
             <a href="#meta-info" class="mw-section-btn">Meta Info</a>
@@ -415,6 +441,9 @@
               >Technology Stack Bucket</a
             >
             <a href="#content-slider" class="mw-section-btn">Content Slider</a>
+            <a href="#testimonials" class="mw-section-btn">Testimonials</a>
+            <a href="#prose" class="mw-section-btn">Prose</a>
+            <a href="#media" class="mw-section-btn">Media</a>
             <a href="#blog-posts" class="mw-section-btn">Blog Posts</a>
           </nav>
 
@@ -467,6 +496,17 @@
           <div id="content-slider">
             @@include('./src/partials/content-slider-container.html')
           </div>
+
+          <!-- Testimonials container-->
+          <div id="testimonials">
+            @@include('./src/partials/testimonials-container.html')
+          </div>
+
+          <!-- Prose container-->
+          <div id="prose">@@include('./src/partials/prose-container.html')</div>
+
+          <!-- Media container-->
+          <div id="media">@@include('./src/partials/media-container.html')</div>
 
           <!-- Blogposts container-->
           <div id="blog-posts">

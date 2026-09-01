@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Turquoise mountain lake">
+  <defs>
+    <linearGradient id="sl-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3f8fb8"/>
+      <stop offset="1" stop-color="#bfe4e8"/>
+    </linearGradient>
+    <linearGradient id="sl-water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2aa39b"/>
+      <stop offset="1" stop-color="#0d5c66"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sl-sky)"/>
+  <g fill="#ffffff" opacity="0.7">
+    <ellipse cx="580" cy="72" rx="58" ry="18"/>
+    <ellipse cx="624" cy="64" rx="38" ry="14"/>
+  </g>
+  <polygon points="0,272 140,158 292,268 430,142 568,272 706,178 800,266 800,300 0,300" fill="#6e9fb8"/>
+  <polygon points="430,142 470,182 456,177 442,190 426,178 402,185" fill="#ffffff"/>
+  <polygon points="0,300 800,300 800,500 0,500" fill="url(#sl-water)"/>
+  <polygon points="0,300 140,362 292,304 430,376 568,302 706,352 800,306 800,300" fill="#3fb3a8" opacity="0.55"/>
+  <g fill="#e8fbfa" opacity="0.5">
+    <rect x="90" y="348" width="180" height="6" rx="3"/>
+    <rect x="410" y="392" width="240" height="6" rx="3"/>
+    <rect x="180" y="428" width="300" height="7" rx="3.5"/>
+    <rect x="520" y="452" width="200" height="6" rx="3"/>
+  </g>
+  <g fill="#1c5c4a">
+    <polygon points="88,304 116,214 144,304"/>
+    <polygon points="140,304 164,232 188,304"/>
+    <polygon points="624,304 652,222 680,304"/>
+    <polygon points="676,304 700,240 724,304"/>
+  </g>
+  <path d="M0,296 C60,290 120,300 190,296 L190,312 L0,312 Z" fill="#2f6f52"/>
+  <path d="M610,296 C680,288 740,300 800,294 L800,312 L610,312 Z" fill="#2f6f52"/>
+</svg>

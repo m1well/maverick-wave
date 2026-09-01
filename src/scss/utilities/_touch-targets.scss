@@ -140,10 +140,18 @@
   -webkit-overflow-scrolling: touch;
 }
 
-// Phone layout
+// Phone layout. The section rhythm steps down twice: a tablet keeps a middle
+// value, a phone drops further - every rem here is one the reader has to
+// scroll past on a screen that is already all scrolling.
 @include media-down('md') {
   :root {
-    --mw-section-padding-block: #{spacing('6')};
+    --mw-section-padding-block: #{spacing('9')};
+  }
+}
+
+@include media-down('sm') {
+  :root {
+    --mw-section-padding-block: #{spacing('7')};
   }
 }
 

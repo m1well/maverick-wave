@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Misty pine forest">
+  <defs>
+    <linearGradient id="sf-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9cfc4"/>
+      <stop offset="0.5" stop-color="#6f9481"/>
+      <stop offset="1" stop-color="#294438"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#sf-bg)"/>
+  <g fill="#8fae9d" opacity="0.55">
+    <polygon points="60,400 108,190 156,400"/>
+    <polygon points="210,410 252,206 294,410"/>
+    <polygon points="380,396 424,180 468,396"/>
+    <polygon points="546,410 590,200 634,410"/>
+    <polygon points="700,398 744,186 788,398"/>
+  </g>
+  <rect y="240" width="800" height="90" fill="#c3d6cc" opacity="0.45"/>
+  <g fill="#3f6653">
+    <polygon points="0,440 52,214 104,440"/>
+    <polygon points="146,450 196,196 246,450"/>
+    <polygon points="316,436 370,180 424,436"/>
+    <polygon points="490,452 542,192 594,452"/>
+    <polygon points="644,438 700,178 756,438"/>
+  </g>
+  <rect y="366" width="800" height="70" fill="#cfe0d7" opacity="0.4"/>
+  <g fill="#1e3a2d">
+    <polygon points="-20,500 40,270 100,500"/>
+    <polygon points="228,500 292,250 356,500"/>
+    <polygon points="452,500 512,262 572,500"/>
+    <polygon points="686,500 752,244 818,500"/>
+  </g>
+  <rect y="470" width="800" height="30" fill="#16291f"/>
+</svg>

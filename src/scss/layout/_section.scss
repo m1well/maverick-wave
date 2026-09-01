@@ -22,6 +22,20 @@
   }
 }
 
+// The lead line under a section title. Every landing page writes this
+// paragraph, and it always wants the same four things: centred, muted,
+// narrower than the container so it reads as a line rather than a block, and
+// pulled up toward the title it belongs to - the title's gap is sized for the
+// content below, not for its own subtitle.
+.mw-section-intro {
+  max-width: 46rem;
+  margin: spacing('-3') auto spacing('9');
+  font-size: font-size('md');
+  color: var(--mw-text-muted-color);
+  text-align: center;
+  text-wrap: balance;
+}
+
 .mw-section-subtitle {
   font-size: font-size('2xl');
   margin: spacing('8') spacing('0') spacing('6') spacing('0');

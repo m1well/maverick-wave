@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Snowy hills with pine trees">
+  <defs>
+    <linearGradient id="sno-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#48628a"/>
+      <stop offset="0.65" stop-color="#9db6cf"/>
+      <stop offset="1" stop-color="#e2edf4"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#sno-sky)"/>
+  <g fill="#ffffff" opacity="0.75">
+    <circle cx="92" cy="66" r="3"/><circle cx="214" cy="112" r="2.5"/><circle cx="336" cy="54" r="3"/>
+    <circle cx="452" cy="128" r="2.5"/><circle cx="548" cy="72" r="3"/><circle cx="664" cy="140" r="2.5"/>
+    <circle cx="742" cy="62" r="3"/><circle cx="160" cy="172" r="2.5"/><circle cx="392" cy="190" r="2.5"/>
+    <circle cx="612" cy="204" r="2.5"/>
+  </g>
+  <polygon points="0,272 148,178 288,266 428,166 566,262 706,182 800,252 800,450 0,450" fill="#c3d6e6"/>
+  <path d="M0,318 C150,282 268,344 420,320 C560,298 672,286 800,326 L800,450 L0,450 Z" fill="#e8f2f8"/>
+  <g fill="#2c4a41">
+    <polygon points="96,388 128,296 160,388"/>
+    <polygon points="104,356 128,296 152,356"/>
+    <rect x="122" y="386" width="12" height="22"/>
+    <polygon points="228,404 268,290 308,404"/>
+    <polygon points="238,364 268,290 298,364"/>
+    <rect x="260" y="402" width="14" height="26"/>
+    <polygon points="504,398 540,296 576,398"/>
+    <polygon points="513,362 540,296 567,362"/>
+    <rect x="533" y="396" width="13" height="24"/>
+    <polygon points="600,382 632,300 664,382"/>
+    <polygon points="608,352 632,300 656,352"/>
+    <rect x="626" y="380" width="12" height="20"/>
+  </g>
+  <g fill="#f3f9fc">
+    <polygon points="128,296 141,326 115,326"/>
+    <polygon points="268,290 283,324 253,324"/>
+    <polygon points="540,296 553,328 527,328"/>
+    <polygon points="632,300 644,328 620,328"/>
+  </g>
+  <path d="M0,406 C170,388 300,428 460,410 C608,393 700,398 800,412 L800,450 L0,450 Z" fill="#ffffff"/>
+</svg>

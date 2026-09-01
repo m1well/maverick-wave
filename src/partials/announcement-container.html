@@ -1,0 +1,67 @@
+<h3 class="mw-section-subtitle">Announcement</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The ribbon glued under the fixed header - a discount, a launch note, a
+  maintenance window. Shown here with <code>mw-announcement-static</code>, so
+  the demos sit in the flow instead of over this page. Without it the ribbon
+  fixes itself below the header, stays put while the page scrolls beneath it,
+  and reserves the anchor scroll offset via
+  <code>--mw-announcement-height</code>. The surface is 75% opaque with a
+  backdrop blur - visible wherever content sits behind it, like the first demo
+  below.
+</p>
+
+<div class="mw-grid-1 mw-gap-6">
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">
+      Default (primary) with highlight pill - over content, showing the 75%
+      surface and the blur
+    </h5>
+    <div
+      style="
+        background: url('images/slider-mountains.svg') center / cover;
+        padding: 1.75rem 1rem;
+      "
+    >
+      <aside class="mw-announcement mw-announcement-static">
+        <a class="mw-announcement-content" href="#announcement">
+          <span class="mw-announcement-highlight">-20 %</span>
+          <span>Summer discount on every plan until 30.09.</span>
+        </a>
+      </aside>
+    </div>
+  </div>
+
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">Secondary</h5>
+    <aside
+      class="mw-announcement mw-announcement-secondary mw-announcement-static"
+    >
+      <a class="mw-announcement-content" href="#announcement">
+        <span class="mw-announcement-highlight">NEW</span>
+        <span>Version 5 is out - see what changed.</span>
+      </a>
+    </aside>
+  </div>
+
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">Warning, without a link</h5>
+    <aside
+      class="mw-announcement mw-announcement-warning mw-announcement-static"
+    >
+      <div class="mw-announcement-content">
+        <span>Maintenance window on Saturday, 02:00 - 04:00 UTC.</span>
+      </div>
+    </aside>
+  </div>
+
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">Danger</h5>
+    <aside
+      class="mw-announcement mw-announcement-danger mw-announcement-static"
+    >
+      <div class="mw-announcement-content">
+        <span>The legacy API shuts down on 01.12. - migrate now.</span>
+      </div>
+    </aside>
+  </div>
+</div>

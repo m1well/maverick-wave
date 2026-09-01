@@ -1,0 +1,42 @@
+@use '../abstracts' as *;
+
+// Long-form running text - a legal page, terms, a plain article. One class on
+// the container instead of a utility chain on every heading: the markup inside
+// stays bare h2/h3/p/ul, which is exactly what a CMS or a JSON-driven page
+// produces anyway.
+//
+// Headings are deliberately small: in a document they structure the reading,
+// they do not compete with the page title.
+.mw-prose {
+  h2 {
+    font-size: font-size('lg');
+    color: var(--mw-primary-text-color);
+    margin: spacing('8') 0 spacing('3');
+  }
+
+  h3 {
+    font-size: font-size('md');
+    color: var(--mw-primary-text-color);
+    margin: spacing('6') 0 spacing('2');
+  }
+
+  ul,
+  ol {
+    margin: 0 0 spacing('3') spacing('7');
+  }
+
+  li {
+    margin-bottom: spacing('1');
+  }
+
+  // The first heading in a card already sits on the card's padding, the last
+  // paragraph on its bottom edge - without these the container carries double
+  // spacing at both ends.
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

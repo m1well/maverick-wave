@@ -162,13 +162,14 @@ viewport, so keep long tooltips off the outermost elements.
 
 ## Sections
 
-| Class                               | Use                                                                        |
-| ----------------------------------- | -------------------------------------------------------------------------- |
-| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 1.75rem    |
-| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                     |
-| `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages |
-| `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                     |
-| `mw-section-nav` + `mw-section-btn` | Centered, wrapping row of outline-style jump links                         |
+| Class                               | Use                                                                                                            |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`) |
+| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                         |
+| `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages                                     |
+| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                       |
+| `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                                                         |
+| `mw-section-nav` + `mw-section-btn` | Centered, wrapping row of outline-style jump links                                                             |
 
 ```html
 <section class="mw-section mw-section-alternate">
@@ -303,6 +304,21 @@ Every one of them has a `-lg` twin with a wider gap (2.5rem instead of 1.35rem):
 | `mw-grid-stack-stretch`                       | full width (same result as `mw-grid-1`) |
 | `mw-grid-stack-lg`, `mw-grid-stack-center-lg` | wide-gap twins                          |
 
+**Masonry columns** - `mw-columns-2` and `mw-columns-3`, for cards of unequal
+height where a row grid tears a gap under every short one. CSS multi-column:
+the children flow into columns and close up, the count steps down with the
+viewport (3 → 2 below `lg`, → 1 below `sm`), and every child keeps
+`break-inside: avoid` so a break never lands mid-card. Reading order runs top
+to bottom, then across - right for testimonials and galleries, wrong for
+anything ranked or chronological.
+
+```html
+<div class="mw-columns-3">
+  <figure class="mw-testimonial">...</figure>
+  <figure class="mw-testimonial">...</figure>
+</div>
+```
+
 ## Utilities
 
 **Spacing** - margin `mw-m-*`, `mw-mt-*`, `mw-mb-*`, `mw-ml-*`, `mw-mr-*`,
@@ -339,6 +355,13 @@ with it; `mw-text-capitalize` is the plain transform.
 
 **Elevation** - `mw-elevation-0` through `-5`, the same ramp every component
 uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
+
+**Scroll entrance** - `mw-reveal` lets a block rise briefly as it scrolls into
+view, driven by the browser's scroll timeline (`animation-timeline: view()`) -
+no JavaScript, no observer. Doubly guarded: `prefers-reduced-motion` turns it
+off, and a browser without scroll timelines renders the block in place instead
+of leaving it invisible. Put it on section content, not on the section itself -
+a screen-high band finishes its entrance before its content is halfway up.
 
 **Corner accent** - `mw-corner-plain` drops the accent arc that sits on the
 two round corners of every card, panel, modal, tile, accordion, calendar,

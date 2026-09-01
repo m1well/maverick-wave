@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500" role="img" aria-label="Golden field under a wide sky">
+  <defs>
+    <linearGradient id="sd-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5ea3d8"/>
+      <stop offset="1" stop-color="#f1e2b6"/>
+    </linearGradient>
+    <linearGradient id="sd-field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dfba5c"/>
+      <stop offset="1" stop-color="#9c6d1e"/>
+    </linearGradient>
+    <g id="ear">
+      <path d="M0,0 v-24" stroke="#8a6018" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      <ellipse cx="0" cy="-31" rx="4.4" ry="9" fill="#e0b241"/>
+      <ellipse cx="0" cy="-31" rx="1.6" ry="9" fill="#a97c1e" opacity="0.5"/>
+    </g>
+  </defs>
+  <rect width="800" height="500" fill="url(#sd-sky)"/>
+  <circle cx="606" cy="104" r="46" fill="#fff5d0"/>
+  <circle cx="606" cy="104" r="78" fill="#fff5d0" opacity="0.25"/>
+  <g fill="#ffffff" opacity="0.8">
+    <ellipse cx="168" cy="98" rx="66" ry="20"/>
+    <ellipse cx="216" cy="86" rx="44" ry="16"/>
+    <ellipse cx="430" cy="62" rx="52" ry="16"/>
+    <ellipse cx="470" cy="54" rx="34" ry="12"/>
+  </g>
+  <g fill="#6d8a4e">
+    <ellipse cx="86" cy="272" rx="30" ry="20"/>
+    <ellipse cx="122" cy="276" rx="22" ry="15"/>
+    <ellipse cx="248" cy="274" rx="26" ry="17"/>
+    <ellipse cx="470" cy="272" rx="34" ry="21"/>
+    <ellipse cx="508" cy="277" rx="24" ry="15"/>
+    <ellipse cx="686" cy="274" rx="28" ry="18"/>
+    <ellipse cx="722" cy="278" rx="20" ry="13"/>
+  </g>
+  <path d="M0,278 C120,270 220,284 340,276 C460,268 580,282 800,272 L800,306 L0,306 Z" fill="#7fa15a"/>
+  <path d="M0,300 C160,292 300,312 460,300 C600,290 700,300 800,296 L800,500 L0,500 Z" fill="url(#sd-field)"/>
+  <g opacity="0.55">
+    <use href="#ear" transform="translate(8,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(29,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(50,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(71,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(92,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(113,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(134,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(155,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(176,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(197,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(218,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(239,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(260,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(281,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(302,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(323,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(344,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(365,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(386,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(407,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(428,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(449,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(470,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(491,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(512,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(533,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(554,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(575,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(596,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(617,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(638,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(659,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(680,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(701,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(722,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(743,335) scale(0.5)"/>
+    <use href="#ear" transform="translate(764,332) scale(0.5)"/>
+    <use href="#ear" transform="translate(785,335) scale(0.5)"/>
+  </g>
+  <g opacity="0.8">
+    <use href="#ear" transform="translate(4,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(37,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(70,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(103,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(136,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(169,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(202,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(235,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(268,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(301,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(334,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(367,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(400,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(433,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(466,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(499,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(532,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(565,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(598,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(631,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(664,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(697,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(730,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(763,402) scale(0.78)"/>
+    <use href="#ear" transform="translate(796,402) scale(0.78)"/>
+  </g>
+  <g>
+    <use href="#ear" transform="translate(-6,482) scale(1.15)"/>
+    <use href="#ear" transform="translate(41,501) scale(1.15)"/>
+    <use href="#ear" transform="translate(88,492) scale(1.15)"/>
+    <use href="#ear" transform="translate(135,497) scale(1.15)"/>
+    <use href="#ear" transform="translate(182,488) scale(1.15)"/>
+    <use href="#ear" transform="translate(229,493) scale(1.15)"/>
+    <use href="#ear" transform="translate(276,498) scale(1.15)"/>
+    <use href="#ear" transform="translate(323,489) scale(1.15)"/>
+    <use href="#ear" transform="translate(370,494) scale(1.15)"/>
+    <use href="#ear" transform="translate(417,499) scale(1.15)"/>
+    <use href="#ear" transform="translate(464,490) scale(1.15)"/>
+    <use href="#ear" transform="translate(511,495) scale(1.15)"/>
+    <use href="#ear" transform="translate(558,500) scale(1.15)"/>
+    <use href="#ear" transform="translate(605,491) scale(1.15)"/>
+    <use href="#ear" transform="translate(652,496) scale(1.15)"/>
+    <use href="#ear" transform="translate(699,501) scale(1.15)"/>
+    <use href="#ear" transform="translate(746,492) scale(1.15)"/>
+    <use href="#ear" transform="translate(793,497) scale(1.15)"/>
+  </g>
+</svg>

@@ -1,0 +1,26 @@
+@use '../abstracts' as *;
+
+// Self-hosted audio and video. The framework ships no player - the native
+// controls are the player, and `accent-color` on :root already brands them.
+// This only makes the element sit right: full width, block, and a video gets
+// the surface silhouette so it reads as part of the family.
+.mw-media {
+  audio,
+  video {
+    display: block;
+    width: 100%;
+  }
+
+  video {
+    height: auto;
+    border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+    box-shadow: var(--mw-elevation-2);
+  }
+}
+
+.mw-media-caption {
+  margin-top: spacing('2');
+  font-size: font-size('sm');
+  color: var(--mw-text-muted-color);
+  text-align: center;
+}

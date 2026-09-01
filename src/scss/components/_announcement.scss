@@ -1,0 +1,84 @@
+@use '../abstracts' as *;
+
+// The ribbon under the fixed header - a discount, a launch note, a maintenance
+// window. One per page, and always a single line of content with an optional
+// highlight pill in front of it.
+.mw-announcement {
+  position: fixed;
+  top: var(--mw-header-height);
+  right: 0;
+  left: 0;
+  z-index: z-index('header') - 10;
+  background: color-mix(in srgb, var(--mw-primary-color) 75%, transparent);
+  backdrop-filter: blur(7px);
+  color: var(--mw-primary-accent-text-color);
+  box-shadow: var(--mw-elevation-2);
+}
+
+// The one row inside - usually a link to the thing announced.
+.mw-announcement-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: spacing('4');
+  min-height: var(--mw-announcement-height);
+  padding: spacing('1') spacing('4');
+  font-size: font-size('sm');
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background: color-mix(in srgb, #000 10%, transparent);
+  }
+
+  @include focus-ring-inset;
+  @include tappable;
+}
+
+// The highlight pill - the "-20 %", the "NEW". Darkened glass rather than a
+// color of its own, so it works on every variant without a token per pair.
+.mw-announcement-highlight {
+  flex-shrink: 0;
+  padding: spacing('1') spacing('3');
+  border-radius: 999px;
+  background: color-mix(in srgb, #000 18%, transparent);
+  font-weight: font-weight('bold');
+}
+
+// The ribbon in the document flow instead of glued under the header - for a
+// notice inside a page, or a demo of the component itself. Static, it scrolls
+// with the content and shifts no anchor offset below.
+.mw-announcement-static {
+  position: static;
+}
+
+// Anchors scrolled to under the fixed chrome would land under the ribbon too -
+// the same reason the reset reserves the header height. Scoped with :has, so a
+// page without a ribbon keeps the plain offset - and a static ribbon does not
+// count, it scrolls with the content.
+html:has(.mw-announcement:not(.mw-announcement-static)) {
+  scroll-padding-top: calc(
+    var(--mw-header-height) + var(--mw-announcement-height)
+  );
+}
+
+// On a phone the line wraps and the ribbon grows - the height token follows,
+// so the scroll offset above stays honest. Here and not in base, so cherry-
+// picking the component brings the whole behaviour along.
+@include media-down('sm') {
+  :root {
+    --mw-announcement-height: 3.4rem;
+  }
+}
+
+// Color variants
+$_mw-announcement-colors: (secondary, success, warning, danger, info);
+
+@each $name in $_mw-announcement-colors {
+  .mw-announcement-#{$name} {
+    background: color-mix(in srgb, var(--mw-#{$name}-color) 75%, transparent);
+    color: var(--mw-#{$name}-accent-text-color);
+  }
+}

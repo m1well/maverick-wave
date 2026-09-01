@@ -220,6 +220,45 @@
   }
 }
 
+// Masonry columns - for cards of unequal height, where a row grid tears a gap
+// under every short one. CSS multi-column instead: entries flow into columns
+// and close up, the column count steps down with the viewport. break-inside
+// keeps each child whole - without it a page break lands mid-card.
+//
+// Reading order caveat: columns read top to bottom, then across. Right for
+// testimonials and galleries, wrong for anything ranked or chronological -
+// that stays in a grid.
+%columns-base {
+  column-gap: spacing('6');
+
+  > * {
+    break-inside: avoid;
+    margin-bottom: spacing('6');
+  }
+}
+
+.mw-columns-2 {
+  @extend %columns-base;
+  columns: 2;
+
+  @include media-down('sm') {
+    columns: 1;
+  }
+}
+
+.mw-columns-3 {
+  @extend %columns-base;
+  columns: 3;
+
+  @include media-down('lg') {
+    columns: 2;
+  }
+
+  @include media-down('sm') {
+    columns: 1;
+  }
+}
+
 // Base stack - items keep their natural width
 .mw-grid-stack {
   @extend %grid-base;
