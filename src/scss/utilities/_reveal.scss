@@ -11,10 +11,18 @@
 //
 // The range ends well before the block reaches the middle of the screen, so
 // nothing is still moving while someone already reads it.
+//
+// Longhands on purpose, never the animation shorthand: esbuild's CSS minifier
+// (Vite's default, so every SCSS consumer) collapses a shorthand plus
+// animation-timeline into one `animation:` declaration - which cannot carry a
+// timeline, so browsers drop the whole thing and the reveal silently dies.
+// Three longhands next to the timeline give it nothing to merge.
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .mw-reveal {
-      animation: mw-reveal linear both;
+      animation-name: mw-reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 2% entry 62%;
     }
