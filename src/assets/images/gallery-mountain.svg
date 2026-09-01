@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Mountain range at sunrise">
+  <defs>
+    <linearGradient id="mtn-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14273f"/>
+      <stop offset="0.5" stop-color="#3d6a97"/>
+      <stop offset="1" stop-color="#a8c6d8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#mtn-sky)"/>
+  <circle cx="612" cy="128" r="44" fill="#ffe0ae"/>
+  <circle cx="612" cy="128" r="76" fill="#ffe0ae" opacity="0.18"/>
+  <polygon points="0,318 118,214 228,286 344,176 470,296 588,206 704,300 800,224 800,450 0,450" fill="#7096b8"/>
+  <polygon points="344,176 383,214 370,209 357,220 342,210 320,216" fill="#e8f1f7"/>
+  <polygon points="588,206 620,238 608,233 597,243 585,234 566,240" fill="#e8f1f7"/>
+  <polygon points="0,360 96,272 206,344 318,252 438,352 560,268 672,356 800,286 800,450 0,450" fill="#3f6489"/>
+  <polygon points="318,252 350,286 338,281 327,291 315,282 297,288" fill="#dae7f0"/>
+  <polygon points="-20,412 130,320 268,404 404,314 548,406 676,330 800,398 800,450 0,450" fill="#22405e"/>
+  <rect y="424" width="800" height="26" fill="#182f47"/>
+</svg>

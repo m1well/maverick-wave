@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Ocean waves rolling to the horizon">
+  <defs>
+    <linearGradient id="oce-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aa8cc"/>
+      <stop offset="1" stop-color="#d3edf3"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#oce-sky)"/>
+  <g fill="#ffffff" opacity="0.5">
+    <ellipse cx="150" cy="88" rx="66" ry="20"/>
+    <ellipse cx="198" cy="78" rx="44" ry="16"/>
+    <ellipse cx="596" cy="126" rx="78" ry="18"/>
+    <ellipse cx="644" cy="116" rx="46" ry="14"/>
+  </g>
+  <rect y="204" width="800" height="246" fill="#1f6f96"/>
+  <path d="M0,204 C120,196 200,222 320,214 C440,206 540,228 660,218 C720,213 764,220 800,216 L800,268 L0,268 Z" fill="#2b88ad"/>
+  <path d="M0,262 C140,250 230,286 372,272 C500,259 596,290 800,272 L800,330 L0,330 Z" fill="#1a6c92"/>
+  <path d="M0,326 C150,310 260,354 410,336 C556,318 660,352 800,330 L800,394 L0,394 Z" fill="#125877"/>
+  <path d="M0,390 C170,370 300,414 460,394 C610,375 700,404 800,390 L800,450 L0,450 Z" fill="#0b4159"/>
+  <g fill="#eaf7fb" opacity="0.85">
+    <path d="M60,268 c40,-8 70,6 108,0 c-34,14 -70,4 -108,0 Z"/>
+    <path d="M430,276 c48,-10 84,6 128,-2 c-40,18 -84,6 -128,2 Z"/>
+    <path d="M170,336 c56,-12 96,8 148,-2 c-46,20 -96,6 -148,2 Z"/>
+    <path d="M560,392 c46,-10 80,6 120,-2 c-36,18 -78,6 -120,2 Z"/>
+  </g>
+</svg>

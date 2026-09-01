@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Desert dunes under a low sun">
+  <defs>
+    <linearGradient id="des-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e28b52"/>
+      <stop offset="0.6" stop-color="#f3b972"/>
+      <stop offset="1" stop-color="#fbdda6"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#des-sky)"/>
+  <circle cx="256" cy="180" r="62" fill="#fff2cf"/>
+  <circle cx="256" cy="180" r="104" fill="#fff2cf" opacity="0.16"/>
+  <path d="M0,250 C130,214 236,268 360,252 C486,236 588,196 800,246 L800,450 L0,450 Z" fill="#e9b273"/>
+  <path d="M0,306 C142,264 266,330 402,308 C540,286 660,246 800,304 L800,450 L0,450 Z" fill="#d3924f"/>
+  <g fill="#7d4520">
+    <path d="M602,368 c-5,-28 -3,-54 8,-78 l11,4 c-10,23 -12,48 -8,74 Z"/>
+    <path d="M616,292 c-32,-12 -58,-2 -72,16 c26,-10 48,-11 70,-4 Z"/>
+    <path d="M616,292 c-30,-24 -58,-24 -78,-14 c28,0 52,6 74,20 Z"/>
+    <path d="M616,292 c32,-12 58,-2 72,16 c-26,-10 -48,-11 -70,-4 Z"/>
+    <path d="M616,292 c30,-24 58,-24 78,-14 c-28,0 -52,6 -74,20 Z"/>
+    <path d="M616,292 c-8,-30 2,-50 18,-60 c-8,22 -12,40 -12,60 Z"/>
+    <circle cx="612" cy="296" r="5"/>
+  </g>
+  <path d="M0,368 C122,332 246,390 396,364 C548,338 668,314 800,372 L800,450 L0,450 Z" fill="#b0703a"/>
+  <path d="M0,424 C160,398 300,436 452,414 C598,392 690,382 800,420 L800,450 L0,450 Z" fill="#8a5228"/>
+</svg>

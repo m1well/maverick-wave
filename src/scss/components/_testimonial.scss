@@ -1,0 +1,58 @@
+@use '../abstracts' as *;
+
+// A voice about the product - a quote card with its source. A figure, because
+// quote and attribution belong together and that is the element that says so:
+//
+// <figure class="mw-testimonial">
+//   <blockquote>...</blockquote>
+//   <figcaption class="mw-testimonial-source">
+//     Name <span class="mw-testimonial-detail">&middot; role or occasion</span>
+//   </figcaption>
+// </figure>
+.mw-testimonial {
+  @include surface;
+  display: flex;
+  flex-direction: column;
+  padding: spacing('5');
+  background: var(--mw-card-background);
+  border: 1px solid var(--mw-border);
+  box-shadow: var(--mw-elevation-2);
+
+  // Several of these in a row, each quote on the base blockquote tint, add up
+  // to a solid colored wall nobody reads through. The card already carries the
+  // surface - inside it the quote keeps only the edge and the quotation marks
+  // as its sign.
+  blockquote {
+    background: color-mix(in srgb, var(--mw-secondary-color) 6%, transparent);
+    border-left-color: color-mix(
+      in srgb,
+      var(--mw-secondary-color) 45%,
+      transparent
+    );
+    padding-block: spacing('2');
+    font-size: font-size('base');
+    line-height: 1.6;
+  }
+}
+
+// margin-top: auto, so in a grid of equal-height cards every source line sits
+// on its card's bottom edge instead of floating under quotes of random length.
+.mw-testimonial-source {
+  margin-top: auto;
+  padding-top: spacing('5');
+  font-size: font-size('sm');
+  font-weight: font-weight('bold');
+  color: var(--mw-primary-text-color);
+}
+
+.mw-testimonial-detail {
+  font-weight: font-weight('normal');
+  color: var(--mw-text-muted-color);
+}
+
+// The one voice lifted above the grid - it may speak a size louder.
+.mw-testimonial-featured {
+  blockquote {
+    font-size: font-size('md');
+  }
+}

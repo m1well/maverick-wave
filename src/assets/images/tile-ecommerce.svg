@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="E-commerce platform">
+  <defs>
+    <linearGradient id="ec-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f6fed"/>
+      <stop offset="1" stop-color="#1b3f9c"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#ec-bg)"/>
+  <circle cx="160" cy="40" r="52" fill="#ffffff" opacity="0.09"/>
+  <path d="M64 88 h72 l-7 56 a9 9 0 0 1 -9 8 h-40 a9 9 0 0 1 -9 -8 Z" fill="#ffffff" opacity="0.94"/>
+  <path d="M84 90 v-10 a16 16 0 0 1 32 0 v10" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="88" cy="110" r="6" fill="#2f6fed"/>
+  <circle cx="112" cy="110" r="6" fill="#2f6fed"/>
+</svg>

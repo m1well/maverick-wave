@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="City skyline at night">
+  <defs>
+    <linearGradient id="city-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#101830"/>
+      <stop offset="0.6" stop-color="#3a3566"/>
+      <stop offset="1" stop-color="#a5628a"/>
+    </linearGradient>
+    <pattern id="city-win" x="0" y="0" width="18" height="24" patternUnits="userSpaceOnUse">
+      <rect x="4" y="6" width="7" height="9" fill="#ffd98a" opacity="0.72"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#city-sky)"/>
+  <circle cx="150" cy="98" r="30" fill="#f4e7c8"/>
+  <circle cx="163" cy="90" r="30" fill="#26224a"/>
+  <g fill="#241f43">
+    <rect x="20" y="248" width="72" height="202"/>
+    <rect x="104" y="196" width="58" height="254"/>
+    <rect x="176" y="286" width="86" height="164"/>
+  </g>
+  <g fill="url(#city-win)">
+    <rect x="20" y="248" width="72" height="202"/>
+    <rect x="104" y="196" width="58" height="254"/>
+    <rect x="176" y="286" width="86" height="164"/>
+  </g>
+  <g fill="#1a1633">
+    <rect x="272" y="156" width="78" height="294"/>
+    <rect x="362" y="228" width="64" height="222"/>
+    <rect x="440" y="122" width="52" height="328"/>
+    <rect x="506" y="204" width="88" height="246"/>
+  </g>
+  <g fill="url(#city-win)">
+    <rect x="272" y="156" width="78" height="294"/>
+    <rect x="362" y="228" width="64" height="222"/>
+    <rect x="440" y="122" width="52" height="328"/>
+    <rect x="506" y="204" width="88" height="246"/>
+  </g>
+  <rect x="462" y="96" width="8" height="30" fill="#1a1633"/>
+  <circle cx="466" cy="92" r="6" fill="#ff7b6b"/>
+  <g fill="#120f27">
+    <rect x="604" y="262" width="70" height="188"/>
+    <rect x="686" y="182" width="60" height="268"/>
+    <rect x="758" y="300" width="42" height="150"/>
+  </g>
+  <g fill="url(#city-win)">
+    <rect x="604" y="262" width="70" height="188"/>
+    <rect x="686" y="182" width="60" height="268"/>
+    <rect x="758" y="300" width="42" height="150"/>
+  </g>
+</svg>

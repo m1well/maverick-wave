@@ -6,6 +6,17 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.22.0] - 2026-09-01
+
+### Added
+
+- `mw-announcement` - the ribbon under the fixed header (discount, launch note), with `-content`, `-highlight` pill, color variants, a `-static` in-flow variant and `--mw-announcement-height` driving the anchor scroll offset
+- `mw-testimonial` - quote card with `-source`, `-detail` and `-featured`, built for walls of voices
+- `mw-prose` - long-form running text container (legal pages, terms, articles): bare h2/h3/p/ul inside, no utility chains
+- `mw-section-intro` - the lead paragraph under a `mw-section-title`
+- `mw-reveal` - scroll entrance via `animation-timeline: view()`, guarded for reduced motion and older browsers
+- `mw-media` - self-hosted audio and video sit full width, video in the surface silhouette
+
 ## [4.21.0] - 2026-08-31
 
 ### Fixed

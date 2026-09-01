@@ -99,6 +99,12 @@ $_active-prefix: 'dark';
   // header height
   --mw-header-height: #{$header-height};
 
+  // Height the announcement ribbon reserves - the anchor scroll offset is
+  // calculated from it, so a project with a taller ribbon raises this token
+  // rather than fighting the offset. Below `sm` the component itself steps it
+  // up for the wrapped line.
+  --mw-announcement-height: 2.7rem;
+
   // Layout knobs. A good default is not enough here: what reads as generous on
   // a landing page costs visible content in an application with a sticky
   // header. Same framework, two different right answers.
@@ -123,7 +129,7 @@ $_active-prefix: 'dark';
     1200px,
     calc(100% - 2 * var(--mw-container-gutter))
   );
-  --mw-section-padding-block: #{spacing('7')};
+  --mw-section-padding-block: #{spacing('10')};
   --mw-section-title-gap: #{spacing('7')};
   --mw-scroll-hint-offset: #{spacing('9')};
   --mw-scroll-hint-inline: var(--mw-container-gutter);

@@ -1,0 +1,27 @@
+<h3 class="mw-section-subtitle">Media</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Self-hosted audio and video. The framework ships no player - the native
+  controls are the player, and <code>accent-color</code> already brands them.
+  The wrapper makes the element a full-width block; a <code>video</code> also
+  gets the surface silhouette and a resting shadow, same markup with a
+  <code>&lt;video&gt;</code> element inside.
+</p>
+
+<div class="mw-grid-2 mw-gap-6">
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">Audio with caption</h5>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-media">
+        <audio controls preload="metadata" src="media/demo-chime.wav"></audio>
+        <p class="mw-media-caption">A short chime, served from this site.</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h5 class="mw-text-medium mw-mb-2">Bare, without a card</h5>
+    <div class="mw-media">
+      <audio controls preload="metadata" src="media/demo-chime.wav"></audio>
+    </div>
+  </div>
+</div>

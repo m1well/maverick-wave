@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img" aria-label="Calm lake at dusk">
+  <defs>
+    <linearGradient id="lake-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b3a63"/>
+      <stop offset="0.55" stop-color="#8f6d8e"/>
+      <stop offset="1" stop-color="#f0b083"/>
+    </linearGradient>
+    <linearGradient id="lake-water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c98f74"/>
+      <stop offset="0.35" stop-color="#5c5f85"/>
+      <stop offset="1" stop-color="#24304f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#lake-sky)"/>
+  <circle cx="400" cy="238" r="38" fill="#ffd9a8"/>
+  <polygon points="0,258 132,182 250,246 360,196 470,252 600,178 720,250 800,214 800,272 0,272" fill="#5b4f74"/>
+  <polygon points="0,272 800,272 800,450 0,450" fill="url(#lake-water)"/>
+  <rect x="386" y="278" width="28" height="96" rx="14" fill="#ffd9a8" opacity="0.5"/>
+  <rect x="120" y="296" width="180" height="5" rx="2.5" fill="#e7c3ae" opacity="0.35"/>
+  <rect x="470" y="318" width="230" height="5" rx="2.5" fill="#e7c3ae" opacity="0.3"/>
+  <rect x="220" y="348" width="300" height="6" rx="3" fill="#e7c3ae" opacity="0.22"/>
+  <rect x="80" y="392" width="420" height="6" rx="3" fill="#e7c3ae" opacity="0.16"/>
+  <polygon points="586,272 612,192 638,272" fill="#1e2a44"/>
+  <polygon points="634,272 658,206 682,272" fill="#1e2a44"/>
+  <rect x="607" y="262" width="10" height="18" fill="#1e2a44"/>
+</svg>

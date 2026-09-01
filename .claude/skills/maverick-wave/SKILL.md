@@ -215,7 +215,8 @@ feature frame) ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
 `mw-timeline-simple`
 
-**Feedback** `mw-alert` · `mw-toast-stack` · `mw-empty-state` ·
+**Feedback** `mw-alert` · `mw-toast-stack` · `mw-announcement` (+ `-content`,
+`-highlight`, `-static`, color variants) · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
 **Navigation** `mw-header` + `mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
@@ -223,9 +224,10 @@ feature frame) ·
 `-caret`, `-end`, `-up`) · `mw-section-nav` (`references/layout.md`)
 
 **Media & content** `mw-avatar` (+ `initials`, `group`) · `mw-gallery` ·
-`mw-image-slider` · `mw-blog-post` · `mw-code-block` / `mw-terminal` ·
-`mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` · `mw-kbd` ·
-`mw-list` family
+`mw-image-slider` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
+`-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
+`mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
+`mw-kbd` · `mw-list` family
 
 **Forms** (`references/forms.md`) `mw-field` · `mw-input` · `mw-select` ·
 `mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
@@ -233,8 +235,8 @@ feature frame) ·
 `mw-form-actions` · `mw-login`
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
-`mw-section` · `mw-page-header` · `mw-grid-*` · `mw-row-split` · `mw-hero` ·
-`mw-footer`
+`mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*` ·
+`mw-columns-2/3` · `mw-row-split` · `mw-hero` · `mw-footer`
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -244,7 +246,7 @@ feature frame) ·
 `mw-corner-plain` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
-spacing, flex, display, text
+`mw-reveal` · spacing, flex, display, text
 
 ## Pitfalls
 

@@ -636,6 +636,32 @@ class), `-top-center`, `-bottom-right`. Width is capped at
 the entry animation respects `prefers-reduced-motion`. Auto-dismiss is the
 application's job.
 
+## Announcement
+
+The ribbon glued under the fixed header - a discount, a launch note, a
+maintenance window. One per page.
+
+```html
+<aside class="mw-announcement mw-announcement-secondary">
+  <a class="mw-announcement-content" href="#pricing">
+    <span class="mw-announcement-highlight">-20 %</span>
+    <span>Summer discount on all coachings until 06.09.</span>
+  </a>
+</aside>
+```
+
+Positioned fixed below the header and one z-index layer under it, and it stays
+there - the page scrolls beneath it. Variants: `mw-announcement-secondary`,
+`-success`, `-warning`, `-danger`, `-info` (primary is the default).
+`mw-announcement-highlight` is the pill in front of the text; the content
+element is usually an `<a>` but a plain `<div>` works.
+`mw-announcement-static` puts the ribbon into the document flow instead - it
+then scrolls with the content and shifts no anchor offset.
+
+The height lives in `--mw-announcement-height` and drives the anchor scroll
+offset (`scroll-padding-top`) automatically - a taller ribbon raises the token
+instead of fighting the offset.
+
 ## Empty state
 
 ```html
@@ -1560,6 +1586,65 @@ current button carry `active`.
 
 `mw-blog-post-content-markdown` styles unclassed HTML - the target for rendered
 markdown. `mw-blog-post-content` is the same wrapper for hand-written markup.
+
+## Testimonial
+
+A quote card with its source - a voice about the product. A `figure`, because
+quote and attribution belong together:
+
+```html
+<figure class="mw-testimonial">
+  <blockquote>
+    The workshop picked me up after a long day of talking.
+  </blockquote>
+  <figcaption class="mw-testimonial-source">
+    Anna M. <span class="mw-testimonial-detail">&middot; voice workshop</span>
+  </figcaption>
+</figure>
+```
+
+The card carries the surface, so inside it the blockquote drops most of its
+tint and keeps only the edge and the quotation marks. `mw-testimonial-source`
+uses `margin-top: auto` - in a grid of equal-height cards every source line
+sits on its card's bottom edge. `mw-testimonial-featured` sets the quote a
+size larger, for the one voice lifted above the grid.
+
+For a wall of testimonials of unequal length, put them in `mw-columns-2` or
+`mw-columns-3` (`references/layout.md`) instead of a grid.
+
+## Prose
+
+Long-form running text - a legal page, terms, a plain article. One class on
+the container, bare `h2`/`h3`/`p`/`ul` inside:
+
+```html
+<div class="mw-card mw-card-simple mw-prose">
+  <h2>1. Scope</h2>
+  <p>...</p>
+  <h2>2. Contact</h2>
+  <p>...</p>
+</div>
+```
+
+Headings are deliberately small (`lg`/`md`, primary ink) - in a document they
+structure the reading rather than compete with the page title. First and last
+child lose their outer margins, so the container's own padding rules.
+
+## Media
+
+Self-hosted audio and video. The native controls are the player -
+`accent-color` already brands them - the wrapper only makes the element sit
+right:
+
+```html
+<div class="mw-media">
+  <video src="/media/intro.mp4" controls preload="metadata"></video>
+  <p class="mw-media-caption">Two minutes about how a session works.</p>
+</div>
+```
+
+`audio` and `video` become full-width blocks; a video also gets the surface
+silhouette and a resting shadow. Works with `<audio controls>` the same way.
 
 ## Code & terminal
 
