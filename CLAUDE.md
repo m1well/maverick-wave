@@ -12,9 +12,12 @@ MaverickWave is a lightweight, modern CSS framework providing a grid system, 25+
 npm start          # Build + watch for changes (development)
 npm run build      # Clean dist, then full build
 npm run showcase   # Serve built dist on http://localhost:8888
-npm run clean      # Remove dist/ and root maverick-wave.{css,js}
-npm run format     # Format all SCSS, JS, JSON, HTML, MD with Prettier
-npm run release    # Build non-minified maverick-wave.{css,js} in project root
+npm run clean      # Remove dist/ (never touches the root release files)
+npm run format     # Check formatting of SCSS, JS, JSON, HTML, MD (used by CI)
+npm run format:fix # Format all files with Prettier
+npm run verify     # Consistency checks between built CSS, markup and docs
+npm run prepack    # Build minified maverick-wave.min.{css,js} in project root
+                   # (runs automatically before npm pack / npm publish)
 ```
 
 There are no test or lint scripts.
@@ -46,7 +49,7 @@ There are no test or lint scripts.
 
 ## Code Formatting
 
-Prettier is the single formatter. Config (`.prettierrc.json`): single quotes, 80-char print width, 2-space tabs, semicolons, trailing commas (ES5). Run `npm run format` before committing.
+Prettier is the single formatter. Config (`.prettierrc.json`): single quotes, 80-char print width, 2-space tabs, semicolons, trailing commas (ES5). Run `npm run format:fix` before committing.
 
 ## Commit Convention
 

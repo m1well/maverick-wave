@@ -4,3 +4,5 @@ package-lock.json
 
 # built output
 dist
+maverick-wave.min.css
+maverick-wave.min.js
