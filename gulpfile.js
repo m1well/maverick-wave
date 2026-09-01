@@ -135,11 +135,11 @@ gulp.task('inject-build-info', function () {
     .pipe(gulp.dest(paths.dist));
 });
 
-// clean - remove dist and maverick-wave.css & maverick-wave.js
+// clean - remove dist only. The root maverick-wave.min.* files are committed
+// release artifacts - deleting them here once shipped a broken npm package
+// (4.22.0) because a plain build before publish wiped them.
 gulp.task('clean', async function () {
-  await deleteAsync(['dist', 'maverick-wave.min.css', 'maverick-wave.min.js'], {
-    force: true,
-  });
+  await deleteAsync(['dist'], { force: true });
 });
 
 // Watch for changes

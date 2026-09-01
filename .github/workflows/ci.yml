@@ -22,7 +22,7 @@ jobs:
         run: npm ci
 
       - name: Check formatting
-        run: npm run format:check
+        run: npm run format
 
       # Fails on any Sass error, so a broken @use or an unknown function
       # never reaches a release
