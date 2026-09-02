@@ -64,7 +64,10 @@ if (!css || !html) {
   process.exit(1);
 }
 const js = read(JS) || '';
-const docs = DOCS.map(read).filter(Boolean).join('\n');
+// The YAML frontmatter of a skill is metadata, not documentation - its
+// `name: mw-maverick-wave` would otherwise be reported as a missing class.
+const stripFrontmatter = (md) => md.replace(/^---\n[\s\S]*?\n---\n/, '');
+const docs = DOCS.map(read).filter(Boolean).map(stripFrontmatter).join('\n');
 
 // --- 1 + 2: custom properties ---------------------------------------------
 

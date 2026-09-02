@@ -1599,6 +1599,7 @@ quote and attribution belong together:
   </blockquote>
   <figcaption class="mw-testimonial-source">
     Anna M. <span class="mw-testimonial-detail">&middot; voice workshop</span>
+    <time class="mw-testimonial-date" datetime="2026-03">March 2026</time>
   </figcaption>
 </figure>
 ```
@@ -1608,6 +1609,14 @@ tint and keeps only the edge and the quotation marks. `mw-testimonial-source`
 uses `margin-top: auto` - in a grid of equal-height cards every source line
 sits on its card's bottom edge. `mw-testimonial-featured` sets the quote a
 size larger, for the one voice lifted above the grid.
+
+`mw-testimonial-date` is optional: a `<time>` on the right edge of the source
+line, month and year - a full date is review-platform optics, a bare year
+reads as a footnote. It drops to its own line, still right-aligned, when the
+source line runs out of room. Leave it out unless the voices are kept fresh: a
+dated quote ages, and three from years ago say more about the page than about
+the product. The `datetime` attribute is what Schema.org's `datePublished`
+would read.
 
 For a wall of testimonials of unequal length, put them in `mw-columns-2` or
 `mw-columns-3` (`references/layout.md`) instead of a grid.
