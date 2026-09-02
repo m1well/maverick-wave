@@ -264,6 +264,25 @@ Components that paint their own surface (`mw-card`, `mw-panel`, `mw-modal`,
 `mw-tile`, `mw-calendar`) are exempt and keep the theme's ink - a card in the
 hero is still a card.
 
+**Scroll cue** - `mw-scroll-hint` is the "scroll down" cue on the lower edge of
+the hero. An `<a>` that is a sibling of `mw-hero`, directly in the container:
+
+```html
+<div class="mw-container">
+  <div class="mw-hero">...</div>
+  <a class="mw-scroll-hint" href="#features">
+    More <i class="fas fa-chevron-down"></i>
+  </a>
+</div>
+```
+
+It is taken out of the flow, and the hero keeps a strip at its bottom free for
+it, so buttons under the hero text never land on top of the cue.
+`mw-scroll-hint-end` puts it in the bottom right corner instead - for a hero
+whose text is not centred either - and gives the hero its full height back.
+Below `md` both variants sit in the corner, because the middle under the text
+is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
+
 ## Grid
 
 All grid classes are `display: grid` with a preset gap (`mw-gap-*` overrides
@@ -358,10 +377,32 @@ uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
 
 **Scroll entrance** - `mw-reveal` lets a block rise briefly as it scrolls into
 view, driven by the browser's scroll timeline (`animation-timeline: view()`) -
-no JavaScript, no observer. Doubly guarded: `prefers-reduced-motion` turns it
+no JavaScript, no observer. The block stays hidden until it is 8dvh above the
+bottom edge and has arrived by 34dvh, the same zone for every block whatever
+its height, so the motion happens where the eye is and is over before the
+block is read. Doubly guarded: `prefers-reduced-motion` turns it
 off, and a browser without scroll timelines renders the block in place instead
 of leaving it invisible. Put it on section content, not on the section itself -
 a screen-high band finishes its entrance before its content is halfway up.
+
+A row of cards crosses the viewport edge together, so `mw-reveal` on each of
+them rises as one slab. `mw-reveal-stagger` goes on the **grid** instead: every
+child reveals, and each one in a row 4dvh of scroll after the one before it -
+a wave across the row. One class, nothing per card. On `mw-grid-2` to `mw-grid-5` and
+their `-lg` variants the wave follows the actual columns at every breakpoint:
+four steps in a four-column row, two once it has collapsed to two. Any other
+container - `mw-columns-*`, a layout of your own - gets a fixed cycle of three.
+
+```html
+<div class="mw-grid-3 mw-reveal-stagger">
+  <div class="mw-card">...</div>
+  <div class="mw-card">...</div>
+  <div class="mw-card">...</div>
+</div>
+```
+
+The animation lets go once the entrance is done, so a card keeps its hover
+lift and an open dropdown inside it is not trapped under the next card.
 
 **Corner accent** - `mw-corner-plain` drops the accent arc that sits on the
 two round corners of every card, panel, modal, tile, accordion, calendar,

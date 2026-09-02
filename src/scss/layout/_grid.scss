@@ -11,6 +11,33 @@
   gap: spacing('9');
 }
 
+// The scroll-reveal stagger, made to follow the columns. mw-reveal-stagger
+// (utilities/_reveal.scss) shifts the entrance of the second and third child of
+// every three - right for a row of three, but in a mw-grid-4 the fourth card
+// would start over with the first. The grid knows its column count at every
+// breakpoint, so it restates the cycle to match: included once per column
+// count, right next to the grid-template-columns it belongs to. Only the range
+// is set here, through the shared `reveal-range` mixin - the animation and its
+// guards stay in _reveal.scss, and a child without the animation ignores the
+// range. The :nth-child(n) reset carries the
+// same specificity as the cycle rules, so a narrower breakpoint can override
+// the wider one's cycle for every child.
+@mixin _reveal-stagger($cols) {
+  &.mw-reveal-stagger > :nth-child(n) {
+    @include reveal-range(1);
+  }
+
+  // Guarded: Sass counts `from 2 through 1` downwards and would emit a rule
+  // for a second column that a single-column grid does not have.
+  @if $cols > 1 {
+    @for $i from 2 through $cols {
+      &.mw-reveal-stagger > :nth-child(#{$cols}n + #{$i}) {
+        @include reveal-range($i);
+      }
+    }
+  }
+}
+
 .mw-grid {
   @extend %grid-base;
 }
@@ -29,56 +56,69 @@
 .mw-grid-2 {
   @extend %grid-base;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  @include _reveal-stagger(2);
 
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
   }
 }
 
 .mw-grid-3 {
   @extend %grid-base;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  @include _reveal-stagger(3);
 
   @include media-down('md') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
   }
 
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
   }
 }
 
 .mw-grid-4 {
   @extend %grid-base;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  @include _reveal-stagger(4);
 
   @include media-down('lg') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
   }
 
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
   }
 }
 
 .mw-grid-5 {
   @extend %grid-base;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  @include _reveal-stagger(5);
 
   @include media-down('lg') {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    @include _reveal-stagger(4);
   }
 
   @include media-down('md') {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include _reveal-stagger(3);
   }
 
   @include media-down('sm') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
   }
 
   @include media-down('xs') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
   }
 }
 
@@ -148,8 +188,10 @@
 .mw-grid-2-lg {
   @extend %grid-base-lg;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  @include _reveal-stagger(2);
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
     gap: spacing('6');
   }
 }
@@ -157,12 +199,15 @@
 .mw-grid-3-lg {
   @extend %grid-base-lg;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  @include _reveal-stagger(3);
   @include media-down('lg') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
     gap: spacing('7');
   }
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
     gap: spacing('6');
   }
 }
@@ -170,14 +215,17 @@
 .mw-grid-4-lg {
   @extend %grid-base-lg;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  @include _reveal-stagger(4);
   @include media-down('xl') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
   }
   @include media-down('md') {
     gap: spacing('7');
   }
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
     gap: spacing('6');
   }
 }
@@ -185,18 +233,23 @@
 .mw-grid-5-lg {
   @extend %grid-base-lg;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  @include _reveal-stagger(5);
   @include media-down('xl') {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    @include _reveal-stagger(4);
   }
   @include media-down('lg') {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    @include _reveal-stagger(3);
   }
   @include media-down('md') {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    @include _reveal-stagger(2);
     gap: spacing('7');
   }
   @include media-down('sm') {
     grid-template-columns: minmax(0, 1fr);
+    @include _reveal-stagger(1);
     gap: spacing('6');
   }
 }

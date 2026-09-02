@@ -340,3 +340,16 @@
     mask-image: $top, $bottom;
   }
 }
+
+// The scroll-reveal zone (utilities/_reveal.scss), as the range of the n-th
+// column of a row. Viewport lengths rather than percentages of the block: a
+// two-line counter band and a tall card then rise through the same region of
+// the screen instead of the short one snapping in. The zone starts 8dvh above
+// the bottom edge - right at the edge nobody sees the motion - and ends at
+// 34dvh, still in the lower third, so nothing is moving while someone already
+// reads it. Each further column of a row starts 4dvh later than the one before.
+@mixin reveal-range($column: 1) {
+  $shift: 4dvh * ($column - 1);
+
+  animation-range: entry #{8dvh + $shift} entry #{34dvh + $shift};
+}

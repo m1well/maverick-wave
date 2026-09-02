@@ -1,5 +1,5 @@
 ---
-name: maverick-wave
+name: mw-maverick-wave
 description: Complete usage guide for the MaverickWave CSS framework - mw-* classes, --mw-* design tokens, grid, components, forms, theming and integration into Angular, other SPAs or plain HTML. Use whenever markup or styles are written in a project that loads maverick-wave (CSS/SCSS/CDN), when a mw-* class or --mw-* token appears, or when a UI has to be built with it.
 ---
 
@@ -30,12 +30,12 @@ Load the one you need - do not read them all up front.
 
 ## Examples
 
-| File                              | Content                                                                                                                |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `examples/angular-list-page.md`   | Full list/CRUD page: page header, meta counters, filter bar, table with status tags, empty state, delete modal, toasts |
-| `examples/angular-form.md`        | Reactive form: `mw-field`, validation states, input groups, numeric input, toggles, form actions                       |
-| `examples/angular-services.md`    | Theme service, toast service, modal/scroll-lock, tabs and accordion without `main.js`                                  |
-| `examples/static-landing-page.md` | Plain HTML page: header, hero, sections, cards, tiles, accordion, footer, theme toggle                                 |
+| File                              | Content                                                                                                                                           |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `examples/angular-list-page.md`   | Full list/CRUD page: page header, meta counters, filter bar, table with status tags, empty state, delete modal, toasts                            |
+| `examples/angular-form.md`        | Reactive form: `mw-field`, validation states, input groups, numeric input, toggles, form actions                                                  |
+| `examples/angular-services.md`    | Theme service, toast service, modal/scroll-lock, tabs and accordion without `main.js`                                                             |
+| `examples/static-landing-page.md` | Plain HTML page: announcement ribbon, hero with scroll cue, feature and offer cards, testimonials, scroll reveal, accordion, footer, theme toggle |
 
 ## Setup
 
@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@4.24.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.0.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.24.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -225,7 +225,7 @@ feature frame) ·
 
 **Media & content** `mw-avatar` (+ `initials`, `group`) · `mw-gallery` ·
 `mw-image-slider` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
-`-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
+`-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
 `mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
 `mw-kbd` · `mw-list` family
 
@@ -236,7 +236,7 @@ feature frame) ·
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
 `mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*` ·
-`mw-columns-2/3` · `mw-row-split` · `mw-hero` · `mw-footer`
+`mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) · `mw-footer`
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -246,7 +246,7 @@ feature frame) ·
 `mw-corner-plain` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
-`mw-reveal` · spacing, flex, display, text
+`mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
 
 ## Pitfalls
 

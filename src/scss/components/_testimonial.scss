@@ -37,7 +37,19 @@
 
 // margin-top: auto, so in a grid of equal-height cards every source line sits
 // on its card's bottom edge instead of floating under quotes of random length.
+//
+// A wrapping flex row rather than inline text, so an optional date can sit on
+// the card's right edge: "who" on the left, "when" on the right, and the two
+// do not run into each other. The column gap stands in for the space the
+// inline flow used to leave between name and detail. When the line runs out
+// of room the date drops to a line of its own and stays right-aligned - its
+// auto margin absorbs whatever is left.
 .mw-testimonial-source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: spacing('2');
+  row-gap: spacing('1');
   margin-top: auto;
   padding-top: spacing('5');
   font-size: font-size('sm');
@@ -48,6 +60,16 @@
 .mw-testimonial-detail {
   font-weight: font-weight('normal');
   color: var(--mw-text-muted-color);
+}
+
+// When the voice spoke - a <time>, month and year, on the right edge of the
+// source line. Optional on purpose: a dated quote ages, and a wall of voices
+// from three years ago says more about the page than about the product.
+.mw-testimonial-date {
+  margin-left: auto;
+  font-weight: font-weight('normal');
+  color: var(--mw-text-muted-color);
+  white-space: nowrap;
 }
 
 // The one voice lifted above the grid - it may speak a size louder.

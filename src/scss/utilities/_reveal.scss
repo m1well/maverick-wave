@@ -6,11 +6,22 @@
 //
 // Both guards matter. `prefers-reduced-motion` is the obvious one. The
 // @supports guard is the safety net: a browser without scroll timelines would
-// otherwise apply `both` fill on an animation that never runs and leave the
-// block invisible forever - guarded, it simply renders in place.
+// otherwise apply the backwards fill on an animation that never runs and
+// leave the block invisible forever - guarded, it simply renders in place.
 //
-// The range ends well before the block reaches the middle of the screen, so
-// nothing is still moving while someone already reads it.
+// The zone it plays in is the `reveal-range` mixin in abstracts/_mixins.scss:
+// from 8dvh above the bottom edge to 34dvh, measured in viewport lengths so
+// every block rises through the same region of the screen. Eased out rather
+// than linear against the scroll: the block covers most of its way at once
+// and settles, which reads as arriving instead of being dragged.
+//
+// `backwards`, not `both`: the fill only has to hide the block before its
+// entrance - the last frame is the block's own resting state anyway. A
+// forwards fill would keep that frame applied for good, and an animated
+// `transform` beats every author rule: a card would lose its hover lift, and
+// as a transformed box it stays a stacking context, so a dropdown opened
+// inside it paints under the next card in the row. Without the forwards fill
+// the animation lets go once the entrance is done.
 //
 // Longhands on purpose, never the animation shorthand: esbuild's CSS minifier
 // (Vite's default, so every SCSS consumer) collapses a shorthand plus
@@ -19,12 +30,32 @@
 // Three longhands next to the timeline give it nothing to merge.
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .mw-reveal {
+    .mw-reveal,
+    .mw-reveal-stagger > * {
       animation-name: mw-reveal;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
+      animation-timing-function: var(--mw-ease-out);
+      animation-fill-mode: backwards;
       animation-timeline: view();
-      animation-range: entry 2% entry 62%;
+      @include reveal-range(1);
+    }
+
+    // A row of cards crosses the viewport edge on the same scroll step, so
+    // mw-reveal on each of them rises as one slab. The stagger container
+    // shifts the range of the second and third child of every three - a wave
+    // across the row instead of a lift. One class on the grid, because the
+    // grid decides the columns per breakpoint and the markup cannot.
+    //
+    // Cycles of three are only the fallback for a container that is not one of
+    // the fixed grids - mw-columns-*, a project's own layout. mw-grid-2 to -5
+    // and their -lg variants restate the cycle to their own column count at
+    // every breakpoint (layout/_grid.scss), so the fourth card of a four-column
+    // row is a beat behind the third, not level with the first.
+    .mw-reveal-stagger > :nth-child(3n + 2) {
+      @include reveal-range(2);
+    }
+
+    .mw-reveal-stagger > :nth-child(3n + 3) {
+      @include reveal-range(3);
     }
   }
 }
@@ -32,7 +63,7 @@
 @keyframes mw-reveal {
   from {
     opacity: 0;
-    transform: translateY(26px);
+    transform: translateY(40px);
   }
 
   to {

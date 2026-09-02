@@ -40,12 +40,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@4.4.1/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@4.24.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.4.1/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.24.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -420,7 +420,7 @@ state yourself - the framework does not style Angular's `ng-invalid` /
 
 A complete usage guide for AI coding assistants - every component, token,
 integration pattern and example - ships with the package as a Claude Code skill
-in `.claude/skills/maverick-wave/`.
+in `.claude/skills/mw-maverick-wave/`.
 
 ## Development
 
