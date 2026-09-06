@@ -487,13 +487,26 @@
 
     if (sections.length === 0 || navLinks.length === 0) return;
 
+    // An anchor jump lands on scroll-padding-top, so the spy has to measure
+    // against the same value - a hardcoded one marks the section before the
+    // target as soon as an announcement ribbon raises the padding. Read per
+    // run: the ribbon grows on small screens and can be dismissed at runtime.
+    function scrollOffset() {
+      const padding = parseFloat(
+        getComputedStyle(document.documentElement).scrollPaddingTop
+      );
+      // +2 absorbs subpixel rounding between the jump and the scroll position.
+      return (Number.isNaN(padding) ? 0 : padding) + 2;
+    }
+
     window.addEventListener(
       'scroll',
       debounce(function () {
         let current = '';
+        const offset = scrollOffset();
 
         sections.forEach((section) => {
-          const sectionTop = section.offsetTop - 100;
+          const sectionTop = section.offsetTop - offset;
           const sectionHeight = section.clientHeight;
 
           if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
