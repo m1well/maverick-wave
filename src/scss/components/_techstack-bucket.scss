@@ -135,6 +135,12 @@
     );
   }
 
+  &-narrow {
+    max-width: 14rem;
+    padding: spacing('5') spacing('6');
+    margin-inline: auto;
+  }
+
   // Variant dashed - completely closed
   &-dashed {
     background: transparent;
