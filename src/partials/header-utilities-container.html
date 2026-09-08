@@ -1,9 +1,9 @@
 <h3 class="mw-section-subtitle">Header Utilities</h3>
 <p class="mw-text-muted mw-text-measure mw-mb-6">
-  The two controls that live in the bar itself rather than on the page: the
-  theme switch and the login button. Both are real buttons, so they are
-  reachable by keyboard - the switch in particular is the first thing someone
-  with a light-sensitivity need goes looking for.
+  The controls that live in the bar itself rather than on the page: the theme
+  switch, the language switcher and the login button. All of them are real
+  buttons, so they are reachable by keyboard - the theme switch in particular is
+  the first thing someone with a light-sensitivity need goes looking for.
 </p>
 
 <div class="mw-mt-6">
@@ -48,7 +48,194 @@
   </div>
 </div>
 
-<div class="mw-mt-6">
+<div class="mw-mt-7">
+  <h3 class="mw-mb-2">Language Switcher (on a fake header here)</h3>
+  <p class="mw-text-muted mw-text-measure">
+    A <code>.mw-dropdown</code> with a quieter trigger: no fill and no border
+    until you touch it, so the bar keeps two calm controls instead of a row of
+    buttons. The two-letter code is what states the current language - a flag is
+    a country, and no country stands for English. The flag is only what the eye
+    finds first. Picking one fires <code>mw-language-change</code> on the
+    switcher; loading the translations is the application's job.
+  </p>
+  <!-- Fake header -->
+  <div class="mw-mb-4" style="position: relative">
+    <div
+      class="mw-d-flex mw-justify-between mw-items-center mw-p-3"
+      style="
+        background: var(--mw-header-background);
+        border-bottom: 1px solid var(--mw-header-border);
+      "
+    >
+      <div class="mw-d-flex mw-items-center">
+        <div
+          style="
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--mw-header-text-color);
+          "
+        >
+          Your Logo
+        </div>
+      </div>
+      <div class="mw-d-flex mw-items-center mw-gap-5">
+        <a style="color: var(--mw-header-navbar-list-color)"> Home </a>
+        <a style="color: var(--mw-header-navbar-list-color)"> About </a>
+        <details
+          class="mw-dropdown mw-dropdown-end mw-lang-switch mw-lang-switch-inverted"
+        >
+          <summary aria-label="Language: Deutsch">
+            <span class="mw-flag mw-flag-de"></span>
+            <span class="mw-lang-switch-code">de</span>
+            <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+          </summary>
+          <div class="mw-dropdown-menu">
+            <button
+              type="button"
+              class="mw-dropdown-item mw-active"
+              aria-current="true"
+              data-mw-lang="de"
+            >
+              <span class="mw-flag mw-flag-de"></span>
+              <span class="mw-lang-switch-name" lang="de">Deutsch</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+            <button type="button" class="mw-dropdown-item" data-mw-lang="en">
+              <span class="mw-flag mw-flag-gb"></span>
+              <span class="mw-lang-switch-name" lang="en">English</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+            <button type="button" class="mw-dropdown-item" data-mw-lang="fr">
+              <span class="mw-flag mw-flag-fr"></span>
+              <span class="mw-lang-switch-name" lang="fr">Fran&ccedil;ais</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+            <button type="button" class="mw-dropdown-item" data-mw-lang="it">
+              <span class="mw-flag mw-flag-it"></span>
+              <span class="mw-lang-switch-name" lang="it">Italiano</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+            <button type="button" class="mw-dropdown-item" data-mw-lang="es">
+              <span class="mw-flag mw-flag-es"></span>
+              <span class="mw-lang-switch-name" lang="es">Espa&ntilde;ol</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+            <button type="button" class="mw-dropdown-item" data-mw-lang="pl">
+              <span class="mw-flag mw-flag-pl"></span>
+              <span class="mw-lang-switch-name" lang="pl">Polski</span>
+              <i class="fas fa-check mw-lang-switch-check"></i>
+            </button>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <p class="mw-text-muted mw-text-measure">
+    The flags are drawn in CSS gradients, so they cost no request and no icon
+    font. Emoji were not an option: Windows ships no flag glyphs, and Chrome and
+    Edge render the German one as the two letters "DE" in a box. Anything not in
+    the set below takes an <code>&lt;img&gt;</code> or an inline
+    <code>&lt;svg&gt;</code> inside <code>.mw-flag</code>, which hands it the
+    same box, corner and hairline.
+  </p>
+  <div class="mw-d-flex mw-flex-wrap mw-gap-5 mw-mt-5">
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-de"></span>
+      <span class="mw-text-muted mw-text-sm">de</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-at"></span>
+      <span class="mw-text-muted mw-text-sm">at</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-ch"></span>
+      <span class="mw-text-muted mw-text-sm">ch</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-gb"></span>
+      <span class="mw-text-muted mw-text-sm">gb</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-us"></span>
+      <span class="mw-text-muted mw-text-sm">us</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-ie"></span>
+      <span class="mw-text-muted mw-text-sm">ie</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-fr"></span>
+      <span class="mw-text-muted mw-text-sm">fr</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-it"></span>
+      <span class="mw-text-muted mw-text-sm">it</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-es"></span>
+      <span class="mw-text-muted mw-text-sm">es</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-pt"></span>
+      <span class="mw-text-muted mw-text-sm">pt</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-nl"></span>
+      <span class="mw-text-muted mw-text-sm">nl</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-be"></span>
+      <span class="mw-text-muted mw-text-sm">be</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-pl"></span>
+      <span class="mw-text-muted mw-text-sm">pl</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-hu"></span>
+      <span class="mw-text-muted mw-text-sm">hu</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-ro"></span>
+      <span class="mw-text-muted mw-text-sm">ro</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-bg"></span>
+      <span class="mw-text-muted mw-text-sm">bg</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-ua"></span>
+      <span class="mw-text-muted mw-text-sm">ua</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-se"></span>
+      <span class="mw-text-muted mw-text-sm">se</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-dk"></span>
+      <span class="mw-text-muted mw-text-sm">dk</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-no"></span>
+      <span class="mw-text-muted mw-text-sm">no</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-fi"></span>
+      <span class="mw-text-muted mw-text-sm">fi</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-tr"></span>
+      <span class="mw-text-muted mw-text-sm">tr</span>
+    </span>
+    <span class="mw-d-flex mw-items-center mw-gap-2">
+      <span class="mw-flag mw-flag-jp"></span>
+      <span class="mw-text-muted mw-text-sm">jp</span>
+    </span>
+  </div>
+</div>
+
+<div class="mw-mt-7">
   <h3 class="mw-mb-2">Localhost Indicator (on a fake header here)</h3>
   <p class="mw-text-muted">
     This is what the localhost indicator looks like when it has been activated
