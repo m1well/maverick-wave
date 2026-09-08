@@ -40,6 +40,7 @@
     initKanbanBoards();
     initCalendars();
     initDropdowns();
+    initLangSwitches();
   });
 
   // ===== Dropdowns =====
@@ -85,6 +86,56 @@
       // longer there and the next Tab starts from the top of the page
       const trigger = open.querySelector('summary');
       if (trigger) trigger.focus();
+    });
+  }
+
+  // ===== Language Switcher =====
+  //
+  // The menu itself is a dropdown and needs nothing here. This only keeps the
+  // trigger in step with the choice and then announces it - which language is
+  // actually loaded is the application's business, not the framework's, and
+  // that decision usually lives in the URL or on the server rather than in
+  // localStorage. Listen for it:
+  //
+  //   document.addEventListener('mw-language-change', (e) => e.detail.lang)
+  function initLangSwitches() {
+    document.querySelectorAll('.mw-lang-switch').forEach((languageSwitch) => {
+      const items = languageSwitch.querySelectorAll('[data-mw-lang]');
+      const summary = languageSwitch.querySelector('summary');
+      const triggerFlag = languageSwitch.querySelector('summary .mw-flag');
+      const triggerCode = languageSwitch.querySelector(
+        'summary .mw-lang-switch-code'
+      );
+
+      items.forEach((item) => {
+        item.addEventListener('click', function () {
+          const lang = item.dataset.mwLang;
+          const nameElement = item.querySelector('.mw-lang-switch-name');
+          const label = nameElement ? nameElement.textContent.trim() : lang;
+
+          items.forEach((other) => {
+            setActive(other, other === item);
+            if (other === item) other.setAttribute('aria-current', 'true');
+            else other.removeAttribute('aria-current');
+          });
+
+          if (triggerCode) triggerCode.textContent = lang;
+
+          const itemFlag = item.querySelector('.mw-flag');
+          if (triggerFlag && itemFlag) {
+            triggerFlag.className = itemFlag.className;
+          }
+
+          if (summary) summary.setAttribute('aria-label', 'Language: ' + label);
+
+          languageSwitch.dispatchEvent(
+            new CustomEvent('mw-language-change', {
+              bubbles: true,
+              detail: { lang, name: label },
+            })
+          );
+        });
+      });
     });
   }
 

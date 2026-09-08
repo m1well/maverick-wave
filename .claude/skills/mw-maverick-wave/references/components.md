@@ -1170,6 +1170,54 @@ your own it is `:has(.mw-dropdown[open]) { overflow: visible }`.
 On a coarse pointer the rows grow to 2.75rem and the menu takes at least the
 trigger's full width.
 
+## Language switcher
+
+A `mw-dropdown` with a quieter trigger: no fill and no border until it is
+hovered, so a header bar does not turn into a row of competing buttons.
+
+```html
+<details class="mw-dropdown mw-dropdown-end mw-lang-switch">
+  <summary aria-label="Language: Deutsch">
+    <span class="mw-flag mw-flag-de"></span>
+    <span class="mw-lang-switch-code">de</span>
+    <i class="fas fa-chevron-down mw-dropdown-caret"></i>
+  </summary>
+  <div class="mw-dropdown-menu">
+    <button
+      type="button"
+      class="mw-dropdown-item mw-active"
+      aria-current="true"
+      data-mw-lang="de"
+    >
+      <span class="mw-flag mw-flag-de"></span>
+      <span class="mw-lang-switch-name" lang="de">Deutsch</span>
+      <i class="fas fa-check mw-lang-switch-check"></i>
+    </button>
+    <button type="button" class="mw-dropdown-item" data-mw-lang="en">
+      <span class="mw-flag mw-flag-gb"></span>
+      <span class="mw-lang-switch-name" lang="en">English</span>
+      <i class="fas fa-check mw-lang-switch-check"></i>
+    </button>
+  </div>
+</details>
+```
+
+The two-letter code carries the state, not the flag: a flag is a country and
+never a language - no country stands for English. Write each language name in
+its own language and put `lang="fr"` on it, so a screen reader pronounces it
+instead of spelling it out.
+
+Parts: `mw-lang-switch-code`, `-name`, `-check` (the tick, shown by `mw-active`
+on the item and kept in the layout while hidden). `mw-lang-switch-inverted` is
+for a dark bar built without `mw-header`; inside `mw-header` those colours apply
+on their own.
+
+Flags: `mw-flag` plus `mw-flag-<iso>` for de, at, ch, gb, us, ie, fr, it, es,
+pt, nl, be, pl, hu, ro, bg, ua, se, dk, no, fi, tr and jp - CSS gradients, all
+in the same 4:3 box whatever the real ratio. Never an emoji flag: Windows ships
+no glyphs for them. Anything outside the set goes as an `<img>` or an inline
+`<svg>` inside `mw-flag`.
+
 ## Keyboard keys
 
 `<kbd>` is styled directly, so a shortcut in prose needs no class:
