@@ -1,148 +1,182 @@
 @use '../abstracts' as *;
 
-.mw-form {
-  display: flex;
-  flex-direction: column;
-  gap: spacing('4');
-  width: 100%;
-
-  &-inline {
-    flex-direction: row;
-    align-items: center;
-    gap: spacing('4');
-  }
-
-  &-group {
+@layer mw.components {
+  .mw-form {
     display: flex;
     flex-direction: column;
-    padding: spacing('4');
-    gap: spacing('2');
-    border-radius: radius('sm');
-    border: 2px solid var(--mw-border);
+    gap: spacing('4');
+    width: 100%;
 
-    // Explicit hook for the heading, mirrors mw-modal-title
-    &-title {
-      font-size: font-size('md');
-      font-weight: font-weight('bold');
-      color: var(--mw-text-color);
-      line-height: 1.2;
-      margin: spacing('0') spacing('0') spacing('1') spacing('0');
+    &-inline {
+      flex-direction: row;
+      align-items: center;
+      gap: spacing('4');
     }
-  }
 
-  label {
-    font-size: font-size('base');
-    span {
-      margin-bottom: spacing('1');
-    }
-  }
-
-  &-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: spacing('3');
-    margin-top: spacing('5');
-    justify-content: flex-end;
-    position: relative;
-    text-align: right;
-
-    // The note above the buttons is `.mw-actions-note` (see _buttons.scss), so
-    // it looks the same in a form, a modal, a panel and a card. Only its
-    // alignment is the form's business, because a form row can be re-aligned.
-
-    // full-width stacked
-    &-full-width {
+    &-group {
+      display: flex;
       flex-direction: column;
+      padding: spacing('4');
+      gap: spacing('2');
+      border-radius: radius('sm');
+      border: 2px solid var(--mw-border);
 
-      &:has(.mw-actions-note),
-      &:has(.mw-form-actions-hint) {
-        flex-wrap: nowrap;
-      }
-
-      .mw-actions-note,
-      .mw-form-actions-hint {
-        flex: 0 0 auto;
-        text-align: left;
-      }
-
-      > * {
-        width: 100%;
+      &-title {
+        font-size: font-size('md');
+        font-weight: font-weight('bold');
+        color: var(--mw-text-color);
+        line-height: 1.2;
+        margin: spacing('0') spacing('0') spacing('1') spacing('0');
       }
     }
 
-    &-center {
-      justify-content: center;
-      text-align: center;
+    label {
+      font-size: font-size('base');
+      span {
+        margin-bottom: spacing('1');
+      }
+    }
 
-      .mw-actions-note,
-      .mw-form-actions-hint {
+    &-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: spacing('3');
+      margin-top: spacing('5');
+      justify-content: flex-end;
+      position: relative;
+      text-align: right;
+
+      // The note above the buttons is `.mw-actions-note` (see _buttons.scss), so
+      // it looks the same in a form, a modal, a panel and a card. Only its
+      // alignment is the form's business, because a form row can be re-aligned.
+
+      &-full-width {
+        flex-direction: column;
+
+        &:has(.mw-actions-note),
+        &:has(.mw-form-actions-hint) {
+          flex-wrap: nowrap;
+        }
+
+        .mw-actions-note,
+        .mw-form-actions-hint {
+          flex: 0 0 auto;
+          text-align: left;
+        }
+
+        > * {
+          width: 100%;
+        }
+      }
+
+      &-center {
+        justify-content: center;
         text-align: center;
+
+        .mw-actions-note,
+        .mw-form-actions-hint {
+          text-align: center;
+        }
       }
-    }
 
-    &-left {
-      justify-content: flex-start;
-      text-align: left;
-
-      .mw-actions-note,
-      .mw-form-actions-hint {
+      &-left {
+        justify-content: flex-start;
         text-align: left;
+
+        .mw-actions-note,
+        .mw-form-actions-hint {
+          text-align: left;
+        }
+      }
+    }
+
+    &-element-error {
+      border: 3px solid var(--mw-danger-color);
+
+      // A field brings its own padding, a checkbox or radio group is a bare flex
+      // container - without this its rows sit flush against the 3px border
+      &.mw-checkbox-group,
+      &.mw-radio-group {
+        padding: spacing('4');
+        border-radius: radius('sm');
       }
     }
   }
 
-  &-element-error {
-    border: 3px solid var(--mw-danger-color);
-  }
-}
-
-// ===== Form Field - label + input + hint + error as a unit =====
-// Designed e.g. for Angular reactive forms pattern:
-//   <div class="mw-field">
-//     <label class="mw-field-label mw-required">Email</label>
-//     <input class="mw-input" formControlName="email">
-//     <span class="mw-field-hint">We'll never share your email</span>
-//     <span class="mw-field-error">Please enter a valid email</span>
-//   </div>
-.mw-field {
-  display: flex;
-  flex-direction: column;
-  gap: spacing('2');
-
-  &-label {
-    font-size: font-size('base');
-    font-weight: font-weight('medium');
-    color: var(--mw-text-color);
-  }
-
-  // Required field asterisk - add class mw-required or attribute data-required
-  &-label.mw-required::after,
-  &-label[data-required='true']::after {
-    content: ' *';
-    color: var(--mw-danger-text-color);
-    font-weight: font-weight('bold');
-  }
-
-  &-hint {
-    font-size: font-size('xs');
-    color: var(--mw-text-muted-color);
-  }
-
-  &-error {
-    font-size: font-size('xs');
-    color: var(--mw-danger-text-color);
+  // ===== Form Field - label + input + hint + error as a unit =====
+  // Designed e.g. for Angular reactive forms pattern:
+  //   <div class="mw-field">
+  //     <label class="mw-field-label mw-required">Email</label>
+  //     <input class="mw-input" formControlName="email">
+  //     <span class="mw-field-hint">We'll never share your email</span>
+  //     <span class="mw-field-error">Please enter a valid email</span>
+  //   </div>
+  .mw-field {
     display: flex;
-    align-items: center;
-    gap: spacing('1');
+    flex-direction: column;
+    gap: spacing('2');
+
+    &-label {
+      font-size: font-size('base');
+      font-weight: font-weight('medium');
+      color: var(--mw-text-color);
+    }
+
+    // Required field asterisk. The two explicit spellings stay for a label that
+    // is not next to its control - an Angular form where the validator lives in
+    // the component and the input carries no `required` attribute at all.
+    //
+    // The third selector is for the markup that does say so: a label directly in
+    // front of a required control gets the asterisk without anyone having to
+    // remember the class, and it cannot drift out of step with the validation,
+    // because it *is* the validation.
+    &-label.mw-required::after,
+    &-label[data-required='true']::after,
+    &-label:has(
+        + .mw-input:required,
+        + .mw-select:required,
+        + .mw-textarea:required
+      )::after {
+      content: ' *';
+      color: var(--mw-danger-text-color);
+      font-weight: font-weight('bold');
+    }
+
+    &-hint {
+      font-size: font-size('xs');
+      color: var(--mw-text-muted-color);
+    }
+
+    &-error {
+      font-size: font-size('xs');
+      color: var(--mw-danger-text-color);
+      display: flex;
+      align-items: center;
+      gap: spacing('1');
+    }
+
+    &.mw-field-has-error {
+      .mw-input,
+      .mw-select,
+      .mw-textarea {
+        border-color: var(--mw-danger-color);
+        @include focus-halo('danger-text-color');
+      }
+    }
   }
 
-  // When the field itself is in error state
-  &.mw-field-has-error {
-    .mw-input,
-    .mw-select,
-    .mw-textarea {
-      border-color: var(--mw-danger-color);
-      @include focus-halo('danger-text-color');
-    }
+  // The same look from the browser's own validation, so nothing has to toggle
+  // mw-field-has-error. `:user-invalid` and never `:invalid`, which is true from
+  // page load and would mark an empty required field before anyone typed.
+  // The class stays authoritative for a validator that lives in the application.
+  .mw-input:user-invalid,
+  .mw-select:user-invalid,
+  .mw-textarea:user-invalid {
+    border-color: var(--mw-danger-color);
+    @include focus-halo('danger-text-color');
+  }
+
+  .mw-field:has(> :user-invalid) > .mw-field-hint {
+    color: var(--mw-danger-text-color);
   }
 }

@@ -7,6 +7,7 @@
  *   2. every --mw-* definition is used somewhere
  *   3. every mw-* class in the markup exists in the built CSS
  *   4. the committed root release files exist and are not empty
+ *   5. the CDN version pinned in the docs matches package.json
  *
  * Sources are scanned rather than hard-coded so a new partial is covered
  * automatically. Exits 1 on any error; warnings never fail the build.
@@ -72,9 +73,12 @@ const docs = DOCS.map(read).filter(Boolean).map(stripFrontmatter).join('\n');
 // --- 1 + 2: custom properties ---------------------------------------------
 
 const tokensDefined = new Set(all(css, /(--mw-[a-z0-9-]+)\s*:/g));
+// `\s*` after the paren: a long declaration wrapped by Prettier keeps its
+// newline inside var() all the way through the minifier, and a token used only
+// there would otherwise read as unused.
 const tokensUsed = new Set([
-  ...all(css, /var\((--mw-[a-z0-9-]+)/g),
-  ...all(html, /var\((--mw-[a-z0-9-]+)/g),
+  ...all(css, /var\(\s*(--mw-[a-z0-9-]+)/g),
+  ...all(html, /var\(\s*(--mw-[a-z0-9-]+)/g),
   ...all(js, /(--mw-[a-z0-9-]+)/g),
 ]);
 
@@ -132,6 +136,27 @@ for (const f of ['maverick-wave.min.css', 'maverick-wave.min.js']) {
   if (!fs.existsSync(p) || fs.statSync(p).size === 0) {
     errors.push(
       `release file missing or empty: ${f} - run \`npm run prepack\` and commit it`
+    );
+  }
+}
+
+// --- 5: pinned CDN version -------------------------------------------------
+// Every jsDelivr snippet in the docs pins a version, which is the right advice
+// and the reason it goes stale: 5.0.0 shipped with six snippets still on 4.28.0.
+
+const { version } = require(path.join(ROOT, 'package.json'));
+
+for (const p of [path.join(ROOT, 'README.md'), ...DOCS]) {
+  const md = read(p);
+  if (!md) continue;
+  const stale = new Set(
+    all(md, /maverick-wave@([0-9]+\.[0-9]+\.[0-9]+)/g).filter(
+      (v) => v !== version
+    )
+  );
+  for (const v of stale) {
+    errors.push(
+      `stale CDN pin in ${path.relative(ROOT, p)}: maverick-wave@${v} - package.json is ${version}`
     );
   }
 }

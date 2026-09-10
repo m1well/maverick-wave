@@ -1,469 +1,442 @@
 @use '../abstracts' as *;
 
-$_mw-card-addon-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
-
-// Round icon badge - shared by the title icon and the stack header icon.
-// Font size stays with the callers: the stack tile is compact and wants a
-// smaller glyph than a full card title.
-@mixin _card-icon-circle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  border-radius: radius('full');
-  background: var(--mw-card-addon-color, var(--mw-primary-color));
-  color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
-  box-shadow: var(--mw-elevation-2);
-  transition: var(--mw-transition);
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-// Fading rule used by the title divider and the stack header underline
-@mixin _card-divider-gradient {
-  background-image: linear-gradient(
-    to right,
-    var(--mw-secondary-text-color),
-    var(--mw-secondary-text-color),
-    var(--mw-gray-background),
-    transparent
-  );
-  opacity: 0.75;
-}
-
-.mw-card {
-  // flex column so the footer can be pushed to the bottom - no height: 100%,
-  // grid and flex items already stretch and it would blow up block parents
-  display: flex;
-  flex-direction: column;
-  background: var(--mw-card-background);
-  @include surface;
-  box-shadow: var(--mw-elevation-2);
-  border: 1px solid var(--mw-border);
-  transition: var(--mw-transition);
-  // deliberately not `overflow: hidden` - that would also cut off anything a
-  // child wants to show outside the card, a tooltip above a button being the
-  // common case. Images round their own corners below, and only the ribbon
-  // really needs the card to clip.
-  overflow: visible;
-
-  // Direct child only - a card nested inside another one must not clip its host
-  &:has(> .mw-card-ribbon) {
-    overflow: hidden;
-  }
-
-  // Query container for the footer below. Named, so the query cannot resolve to
-  // a project's own container further up the tree.
-  //
-  // Only cards that have a footer, and they claim their slot: inline-size
-  // containment computes the card's own width as if it were empty, so a card
-  // that takes its width from its content - a flex row, `mw-grid-stack`, a
-  // timeline wrapper - would collapse to its border. Filling the slot keeps the
-  // width external, which is what makes it queryable in the first place.
-  &:has(.mw-card-footer) {
-    width: 100%;
-    container: mw-card / inline-size;
-  }
-
-  &:hover {
-    box-shadow: var(--mw-elevation-3);
-    border-color: var(--mw-border-accent);
-  }
-
-  // The lift moves the box, so it is guarded: on touch `:hover` latches after a
-  // tap and the card stays raised, visibly out of line with the row it sits in.
-  // The colour and shadow below are not - a latched border reads as "the one you
-  // last touched", which is no worse than nothing.
-  @include hover {
-    transform: translateY(-2px);
-  }
-
-  // Padded surface for arbitrary content - stays a block container so inline
-  // children keep flowing instead of turning into flex items
-  &-simple {
-    display: block;
-    padding: spacing('5');
-  }
-
-  &-badge {
-    position: absolute;
-    top: spacing('2');
-    right: spacing('4');
-    padding: spacing('1') spacing('4');
-    font-size: font-size('xs');
-    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
-    background: var(--mw-card-addon-color, var(--mw-primary-color));
-    border-radius: radius('md');
-    white-space: nowrap;
-    z-index: 1;
-    pointer-events: none;
-    text-align: center;
-    opacity: 0.9;
-    font-weight: font-weight('medium');
-  }
-
-  &-ribbon {
-    position: absolute;
-    top: 20px;
-    right: -35px;
-    padding: spacing('1') spacing('4');
-    font-size: font-size('xs');
-    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
-    background: var(--mw-card-addon-color, var(--mw-primary-color));
-    white-space: nowrap;
-    width: 220px;
-    z-index: 1;
-    pointer-events: none;
-    transform: rotate(25deg);
-    text-align: center;
-    opacity: 0.8;
-    font-weight: font-weight('medium');
-    @include media-down('sm') {
-      font-size: font-size('2xs');
-    }
-  }
-
-  &-img,
-  &-img-contain {
-    height: var(--mw-card-img-height, 210px);
-    overflow: hidden;
+@layer mw.components {
+  // Round icon badge - shared by the title icon and the stack header icon.
+  // Font size stays with the callers: the stack tile is compact and wants a
+  // smaller glyph than a full card title.
+  @mixin _card-icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
     flex-shrink: 0;
-    border-radius: (radius('sm') - 1px) (radius('xl') - 1px) 0 0;
+    border-radius: radius('full');
+    background: var(--mw-card-addon-color, var(--mw-primary-color));
+    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
+    box-shadow: var(--mw-elevation-2);
+    transition: var(--mw-transition);
+    overflow: hidden;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
-    }
-
-    &:hover img {
-      transform: scale(1.05);
     }
   }
 
-  &-img-contain img {
-    object-fit: contain;
-    object-position: center;
+  // Fading rule used by the title divider and the stack header underline
+  @mixin _card-divider-gradient {
+    background-image: linear-gradient(
+      to right,
+      var(--mw-secondary-text-color),
+      var(--mw-secondary-text-color),
+      var(--mw-gray-background),
+      transparent
+    );
+    opacity: 0.75;
   }
 
-  &-lg {
-    --mw-card-img-height: 340px;
-
-    @include media-down('sm') {
-      --mw-card-img-height: 260px;
-    }
-  }
-
-  &-xl {
-    --mw-card-img-height: 480px;
-
-    @include media-down('sm') {
-      --mw-card-img-height: 340px;
-    }
-  }
-
-  &-body {
+  .mw-card {
+    // flex column so the footer can be pushed to the bottom - no height: 100%,
+    // grid and flex items already stretch and it would blow up block parents
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    padding: spacing('7') spacing('5') spacing('6');
+    background: var(--mw-card-background);
+    @include surface;
+    box-shadow: var(--mw-elevation-2);
+    border: 1px solid var(--mw-border);
+    transition: var(--mw-transition);
+    // deliberately not `overflow: hidden` - that would also cut off anything a
+    // child wants to show outside the card, a tooltip above a button being the
+    // common case. Images round their own corners below, and only the ribbon
+    // really needs the card to clip.
+    overflow: visible;
 
-    @include media-down('sm') {
-      padding: spacing('6') spacing('4') spacing('5');
+    // Direct child only - a card nested inside another one must not clip its host
+    &:has(> .mw-card-ribbon) {
+      overflow: hidden;
     }
 
-    > *:last-child:not(.mw-card-footer) {
-      margin-bottom: spacing('0');
+    // Named, so the query cannot resolve to a container further up the tree. Only
+    // cards with a footer, and they claim their slot: inline-size containment
+    // computes the width as if the card were empty, so one that sizes to its
+    // content would collapse to its border.
+    &:has(.mw-card-footer) {
+      width: 100%;
+      container: mw-card / inline-size;
     }
 
-    .mw-card-footer {
-      margin-top: auto;
-      padding-top: spacing('5');
-    }
-  }
-
-  &-title {
-    margin-bottom: spacing('3');
-    font-size: font-size('xl');
-    @include media-down('md') {
-      font-size: font-size('lg');
+    // The arc on the two round corners is the one mark that makes a card look
+    // like this framework and not like a rounded box, so it is what the hover
+    // pulls on. Recoloured through the token the mixin already reads, which is
+    // why the rule sits on the card and not on its ::after.
+    &::after {
+      transition: var(--mw-transition);
     }
 
-    // Only with an icon - a plain title stays a block, so a long one keeps
-    // wrapping the way a heading is expected to
-    &:has(> .mw-card-title-icon) {
-      display: flex;
-      align-items: center;
-      gap: spacing('4');
+    &:hover {
+      box-shadow: var(--mw-elevation-3);
+      border-color: var(--mw-border-accent);
+      --mw-corner-accent: var(--mw-corner-accent-hover);
     }
-  }
 
-  // Icon badge in front of the card title. Takes its colour from
-  // `mw-card-addon-*` on the card, like the badge and the ribbon do.
-  //
-  //   <h3 class="mw-card-title">
-  //     <span class="mw-card-title-icon"><i class="fas fa-file-invoice"></i></span>
-  //     Invoices
-  //   </h3>
-  //
-  // An <img> works in the same slot - a product logo or a portrait instead of
-  // an icon. Reach for the -lg step there: a wordmark inside 38px is a smudge.
-  &-title-icon {
-    @include _card-icon-circle;
-    font-size: font-size('lg');
+    // The lift moves the box, so it is guarded: on touch `:hover` latches after a
+    // tap and the card stays raised, visibly out of line with the row it sits in.
+    // The colour and shadow below are not - a latched border reads as "the one you
+    // last touched", which is no worse than nothing.
+    @include hover {
+      transform: translateY(-2px);
+    }
+
+    // Padded surface for arbitrary content - stays a block container so inline
+    // children keep flowing instead of turning into flex items
+    &-simple {
+      display: block;
+      padding: spacing('5');
+    }
+
+    &-badge {
+      position: absolute;
+      top: spacing('2');
+      right: spacing('4');
+      padding: spacing('1') spacing('4');
+      font-size: font-size('xs');
+      color: var(
+        --mw-card-addon-text-color,
+        var(--mw-primary-accent-text-color)
+      );
+      background: var(--mw-card-addon-color, var(--mw-primary-color));
+      border-radius: radius('md');
+      white-space: nowrap;
+      z-index: 1;
+      pointer-events: none;
+      text-align: center;
+      opacity: 0.9;
+      font-weight: font-weight('medium');
+    }
+
+    &-ribbon {
+      position: absolute;
+      top: 20px;
+      right: -35px;
+      padding: spacing('1') spacing('4');
+      font-size: font-size('2xs');
+      color: var(
+        --mw-card-addon-text-color,
+        var(--mw-primary-accent-text-color)
+      );
+      background: var(--mw-card-addon-color, var(--mw-primary-color));
+      white-space: nowrap;
+      width: 220px;
+      z-index: 1;
+      pointer-events: none;
+      transform: rotate(25deg);
+      text-align: center;
+      opacity: 0.8;
+      font-weight: font-weight('medium');
+      @include media-up('sm') {
+        font-size: font-size('xs');
+      }
+    }
+
+    &-img,
+    &-img-contain {
+      height: var(--mw-card-img-height, 210px);
+      overflow: hidden;
+      flex-shrink: 0;
+      border-radius: (radius('sm') - 1px) (radius('xl') - 1px) 0 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
+      }
+
+      &:hover img {
+        transform: scale(1.05);
+      }
+    }
+
+    &-img-contain img {
+      object-fit: contain;
+      object-position: center;
+    }
 
     &-lg {
-      width: 62px;
-      height: 62px;
-      font-size: font-size('2xl');
-    }
-  }
+      --mw-card-img-height: 260px;
 
-  &-title-divider {
-    height: 4px;
-    margin: spacing('1') spacing('0') spacing('4') spacing('0');
-    border: 0;
-    width: 70%;
-    @include _card-divider-gradient;
-  }
-
-  &-subtitle {
-    margin-bottom: spacing('3');
-    font-size: font-size('md');
-    line-height: 1.2;
-    font-style: italic;
-    color: var(--mw-text-muted-color);
-    @include media-down('md') {
-      margin-bottom: spacing('2');
-    }
-  }
-
-  &-text {
-    margin: spacing('2') spacing('0') spacing('4') spacing('0');
-    color: var(--mw-text-color);
-    @include media-down('sm') {
-      margin-bottom: spacing('2');
-    }
-  }
-
-  &-footer {
-    display: flex;
-    justify-content: flex-start;
-    // centered, so plain text next to a button sits on the button's centre
-    // line instead of being stretched to its height and starting at the top
-    align-items: center;
-    // Buttons do not shrink, so two that no longer fit have to wrap - without
-    // this they leave the card sideways
-    flex-wrap: wrap;
-    gap: spacing('3');
-    flex-shrink: 0;
-    text-wrap: balance;
-
-    /* push the last element all the way right - a single one included */
-    > *:last-child {
-      margin-left: auto;
-      text-align: right;
-    }
-
-    // Ensure buttons maintain their size
-    .mw-btn {
-      flex-shrink: 0;
-    }
-
-    // Stacked once the card is narrow, not once the window is - a card in a
-    // three-column grid on a wide desktop is as narrow as the same card on a
-    // phone and used to keep its actions in a cramped row anyway.
-    @container mw-card (max-width: #{$mw-card-narrow}) {
-      flex-direction: column;
-      align-items: stretch;
-      gap: spacing('2');
-
-      // `flex: 1 0 100%` on the note is 100% of the *height* in a column: it
-      // fills the column and the buttons wrap out of the card sideways
-      &:has(.mw-actions-note),
-      &:has(.mw-form-actions-hint) {
-        flex-wrap: nowrap;
-      }
-
-      .mw-actions-note,
-      .mw-form-actions-hint {
-        flex: 0 0 auto;
-        text-align: left;
-      }
-
-      > * {
-        width: 100%;
-      }
-
-      .mw-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
-
-  &-stack {
-    padding: spacing('4') spacing('5');
-
-    &-icon {
-      @include _card-icon-circle;
-      margin-right: spacing('2');
-      font-size: font-size('md');
-    }
-
-    &:hover &-icon {
-      transform: rotate(25deg);
-    }
-
-    &-header {
-      display: flex;
-      align-items: center;
-      position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        bottom: spacing('-3');
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        height: 2px;
-        @include _card-divider-gradient;
+      @include media-up('sm') {
+        --mw-card-img-height: 340px;
       }
     }
 
-    &-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: spacing('0');
+    &-xl {
+      --mw-card-img-height: 340px;
 
-      @include media-down('sm') {
-        font-size: font-size('sm');
+      @include media-up('sm') {
+        --mw-card-img-height: 480px;
       }
     }
 
     &-body {
       display: flex;
       flex-direction: column;
-      padding-top: spacing('5');
+      flex-grow: 1;
+      padding: spacing('6') spacing('4') spacing('5');
+
+      @include media-up('sm') {
+        padding: spacing('7') spacing('5') spacing('6');
+      }
+
+      > *:last-child:not(.mw-card-footer) {
+        margin-bottom: spacing('0');
+      }
+
+      .mw-card-footer {
+        margin-top: auto;
+        padding-top: spacing('5');
+      }
+    }
+
+    &-title {
+      margin-bottom: spacing('3');
+      font-size: font-size('lg');
+      @include media-up('md') {
+        font-size: font-size('xl');
+      }
+
+      // Only with an icon - a plain title stays a block, so a long one keeps
+      // wrapping the way a heading is expected to
+      &:has(> .mw-card-title-icon) {
+        display: flex;
+        align-items: center;
+        gap: spacing('4');
+      }
+    }
+
+    // Colour comes from mw-card-addon-* on the card, like the badge and the ribbon.
+    // An <img> works in the same slot - reach for -lg there, a wordmark inside
+    // 38px is a smudge.
+    &-title-icon {
+      @include _card-icon-circle;
+      font-size: font-size('lg');
+
+      &-lg {
+        width: 62px;
+        height: 62px;
+        font-size: font-size('2xl');
+      }
+    }
+
+    &-title-divider {
+      height: 4px;
+      margin: spacing('1') spacing('0') spacing('4') spacing('0');
+      border: 0;
+      width: 70%;
+      @include _card-divider-gradient;
+    }
+
+    &-subtitle {
+      margin-bottom: spacing('2');
+      font-size: font-size('md');
+      line-height: 1.2;
+      font-style: italic;
+      color: var(--mw-text-muted-color);
+      @include media-up('md') {
+        margin-bottom: spacing('3');
+      }
     }
 
     &-text {
-      margin-top: spacing('2');
+      margin: spacing('2') spacing('0') spacing('4') spacing('0');
       color: var(--mw-text-color);
-      font-size: font-size('sm');
+      @include media-down('sm') {
+        margin-bottom: spacing('2');
+      }
+    }
+
+    &-footer {
+      display: flex;
+      justify-content: flex-start;
+      // centered, so plain text next to a button sits on the button's centre
+      // line instead of being stretched to its height and starting at the top
+      align-items: center;
+      // Buttons do not shrink, so two that no longer fit have to wrap - without
+      // this they leave the card sideways
+      flex-wrap: wrap;
+      gap: spacing('3');
+      flex-shrink: 0;
+      text-wrap: balance;
+
+      /* push the last element all the way right - a single one included */
+      > *:last-child {
+        margin-left: auto;
+        text-align: right;
+      }
+
+      // Ensure buttons maintain their size
+      .mw-btn {
+        flex-shrink: 0;
+      }
+
+      // Stacked once the card is narrow, not once the window is - a card in a
+      // three-column grid on a wide desktop is as narrow as the same card on a
+      // phone and used to keep its actions in a cramped row anyway.
+      @container mw-card (max-width: #{$mw-card-narrow}) {
+        flex-direction: column;
+        align-items: stretch;
+        gap: spacing('2');
+
+        // `flex: 1 0 100%` on the note is 100% of the *height* in a column: it
+        // fills the column and the buttons wrap out of the card sideways
+        &:has(.mw-actions-note),
+        &:has(.mw-form-actions-hint) {
+          flex-wrap: nowrap;
+        }
+
+        .mw-actions-note,
+        .mw-form-actions-hint {
+          flex: 0 0 auto;
+          text-align: left;
+        }
+
+        > * {
+          width: 100%;
+        }
+
+        .mw-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    &-stack {
+      padding: spacing('4') spacing('5');
+
+      &-icon {
+        @include _card-icon-circle;
+        margin-right: spacing('2');
+        font-size: font-size('md');
+      }
+
+      &:hover &-icon {
+        transform: rotate(25deg);
+      }
+
+      &-header {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          bottom: spacing('-3');
+          left: 50%;
+          transform: translateX(-50%);
+          width: 90%;
+          height: 2px;
+          @include _card-divider-gradient;
+        }
+      }
+
+      &-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: spacing('0');
+
+        @include media-down('sm') {
+          font-size: font-size('sm');
+        }
+      }
+
+      &-body {
+        display: flex;
+        flex-direction: column;
+        padding-top: spacing('5');
+      }
+
+      &-text {
+        margin-top: spacing('2');
+        color: var(--mw-text-color);
+        font-size: font-size('sm');
+      }
     }
   }
-}
 
-// Frame with a bar on top, wrapped around a card - for the one variant in a
-// grid that should stand out.
-//
-// `mw-card-badge` sits inside the card body and overlaps the title on narrow
-// cards. This one wraps around the card instead, and grows outwards: the card
-// keeps the width, height and look of its neighbours, frame and bar reach into
-// the grid gap.
-//
-//   <div class="mw-card-feature">
-//     <p class="mw-card-feature-label">Most booked</p>
-//     <div class="mw-card">…</div>
-//   </div>
-//
-// Primary out of the box, `mw-card-feature-secondary` and
-// `mw-card-feature-info` swap the colour.
-//
-// Geometry: 22px bar, 6px gap between frame and card, 1px border. The bar
-// height is fixed and the margins count on it - a two-line label needs the
-// margin and the padding raised with it. It is kept low on purpose: every
-// pixel of bar is a pixel the grid below has to add to its row gap.
-.mw-card-feature {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: -29px -7px -7px;
-  padding: 28px 6px 6px;
-  border: 1px solid var(--mw-primary-color);
-  border-radius: 12px 27px 12px 27px;
-
-  &-label {
-    position: absolute;
-    inset: 0 0 auto;
+  // Frame and bar wrapped *around* a card, growing outwards into the grid gap, so
+  // the card keeps the size and look of its neighbours. mw-card-badge sits inside
+  // the body instead and overlaps the title on a narrow card.
+  //
+  // Geometry: 22px bar, 6px gap, 1px border. The bar height is fixed and the
+  // margins count on it, so a two-line label needs both raised - and every pixel
+  // of bar is one the grid has to add to its row gap.
+  .mw-card-feature {
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 22px;
-    margin: 0;
-    padding-inline: spacing('4');
-    border-radius: 11px 26px 0 0;
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
-    font-size: font-size('2xs');
-    font-weight: font-weight('bold');
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    flex-direction: column;
+    margin: -29px -7px -7px;
+    padding: 28px 6px 6px;
+    border: 1px solid var(--mw-primary-color);
+    border-radius: 12px 27px 12px 27px;
 
-  > .mw-card {
-    flex: 1;
-  }
-}
+    &-label {
+      position: absolute;
+      inset: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      margin: 0;
+      padding-inline: spacing('4');
+      border-radius: 11px 26px 0 0;
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+      font-size: font-size('2xs');
+      font-weight: font-weight('bold');
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      @include truncate;
+    }
 
-[class*='mw-grid-']:has(> .mw-card-feature) {
-  row-gap: 48px;
-}
-
-// Colour variants - primary is the default above, these two override it
-@each $name in ('secondary', 'info') {
-  .mw-card-feature-#{$name} {
-    border-color: var(--mw-#{$name}-color);
-
-    > .mw-card-feature-label {
-      background: var(--mw-#{$name}-color);
-      color: var(--mw-#{$name}-accent-text-color);
+    > .mw-card {
+      flex: 1;
     }
   }
-}
 
-@each $name, $col in $_mw-card-addon-colors {
-  .mw-card-addon-#{$name} {
-    --mw-card-addon-color: #{$col};
-    --mw-card-addon-text-color: var(--mw-#{$name}-accent-text-color);
-  }
-}
+  // Colour variants - primary is the default above, these two override it
+  @each $name in ('secondary', 'info') {
+    .mw-card-feature-#{$name} {
+      border-color: var(--mw-#{$name}-color);
 
-@media (prefers-reduced-motion: reduce) {
-  .mw-card,
-  .mw-card-img img,
-  .mw-card-img-contain img,
-  .mw-card-title-icon,
-  .mw-card-stack-icon {
-    transition: none;
+      > .mw-card-feature-label {
+        background: var(--mw-#{$name}-color);
+        color: var(--mw-#{$name}-accent-text-color);
+      }
+    }
   }
 
-  .mw-card:hover,
-  .mw-card-img:hover img,
-  .mw-card-img-contain:hover img,
-  .mw-card-stack:hover .mw-card-stack-icon {
-    transform: none;
+  @each $name, $col in $semantic-colors {
+    .mw-card-addon-#{$name} {
+      --mw-card-addon-color: #{$col};
+      --mw-card-addon-text-color: var(--mw-#{$name}-accent-text-color);
+    }
+  }
+
+  // Only the movement. The durations are already pinned to 1ms globally in
+  // base/_base.scss; a hover that *travels* has to be taken away outright, or it
+  // still jumps to its lifted position in one frame.
+  @media (prefers-reduced-motion: reduce) {
+    .mw-card:hover,
+    .mw-card-img:hover img,
+    .mw-card-img-contain:hover img,
+    .mw-card-stack:hover .mw-card-stack-icon {
+      transform: none;
+    }
   }
 }

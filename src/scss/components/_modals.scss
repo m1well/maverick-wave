@@ -1,217 +1,308 @@
 @use '../abstracts' as *;
 
-// Modal overlay - hidden by default
-.mw-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--mw-overlay-background);
-  backdrop-filter: blur(3px);
-  z-index: z-index('modal')-10;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: spacing('7');
-  opacity: 0;
-  transition: opacity var(--mw-duration-base) var(--mw-ease-out);
-
-  // Show modal when class is added
-  &.mw-modal-open {
-    display: flex;
-    opacity: 1;
-  }
-}
-
-// Modal container
-.mw-modal {
-  background: var(--mw-card-background);
-  @include surface(0);
-  box-shadow: var(--mw-elevation-5);
-  max-width: 520px;
-  width: 100%;
-  max-height: 85dvh;
-  display: flex;
-  flex-direction: column;
-  z-index: z-index('modal');
-  transform: scale(0.96) translateY(12px);
-  transition: transform var(--mw-duration-base) var(--mw-ease-out);
-
-  .mw-modal-open & {
-    transform: scale(1) translateY(0);
-  }
-
-  // The four widths grow by a roughly even step (150 / 200 / 240px) so each
-  // size is recognisably a size. Before, default and lg sat 130px apart - the
-  // smallest gap of the four, right in the middle of the scale, which made the
-  // two read as the same modal rendered twice.
-  &.mw-modal-sm {
-    max-width: 370px;
-    max-height: 80dvh;
-  }
-  &.mw-modal-lg {
-    max-width: 720px;
-    max-height: 90dvh;
-  }
-  &.mw-modal-xl {
-    max-width: 960px;
-    max-height: 92dvh;
-  }
-}
-
-// Phone: the dialog becomes a sheet
-@include media-down('sm') {
+@layer mw.components {
+  // Modal overlay - hidden by default
   .mw-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--mw-overlay-background);
+    backdrop-filter: blur(3px);
+    z-index: z-index('modal')-10;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: spacing('7');
+    opacity: 0;
+    transition: opacity var(--mw-duration-base) var(--mw-ease-out);
+
+    // Show modal when class is added
+    &.mw-modal-open {
+      display: flex;
+      opacity: 1;
+    }
+  }
+
+  // Modal container
+  .mw-modal {
+    background: var(--mw-card-background);
+    @include surface(0);
+    box-shadow: var(--mw-elevation-5);
+    max-width: 520px;
+    width: 100%;
+    max-height: 85dvh;
+    display: flex;
+    flex-direction: column;
+    z-index: z-index('modal');
+    transform: scale(0.96) translateY(12px);
+    transition: transform var(--mw-duration-base) var(--mw-ease-out);
+
+    .mw-modal-open & {
+      transform: scale(1) translateY(0);
+    }
+
+    // The four widths grow by a roughly even step (150 / 200 / 240px) so each
+    // size is recognisably a size. Before, default and lg sat 130px apart - the
+    // smallest gap of the four, right in the middle of the scale, which made the
+    // two read as the same modal rendered twice.
+    &.mw-modal-sm {
+      max-width: 370px;
+      max-height: 80dvh;
+    }
+    &.mw-modal-lg {
+      max-width: 720px;
+      max-height: 90dvh;
+    }
+    &.mw-modal-xl {
+      max-width: 960px;
+      max-height: 92dvh;
+    }
+  }
+
+  // Phone: the dialog becomes a sheet
+  @include media-down('sm') {
+    .mw-modal-overlay {
+      padding: spacing('0');
+      align-items: flex-end;
+    }
+
+    .mw-modal,
+    .mw-modal.mw-modal-sm,
+    .mw-modal.mw-modal-lg,
+    .mw-modal.mw-modal-xl {
+      max-width: 100%;
+      max-height: 92dvh;
+      border-radius: radius('xl') radius('xl') radius('none') radius('none');
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      // Straight up from the bottom edge - a sheet does not scale in
+      transform: translateY(100%);
+      transition: transform var(--mw-duration-slow) var(--mw-ease-out);
+    }
+
+    .mw-modal-open .mw-modal {
+      transform: translateY(0);
+    }
+
+    // The grab handle. It does nothing - there is no drag-to-dismiss behind it -
+    // but it is the mark that says "this came up from the bottom and goes back
+    // down", and a sheet without one reads as a page that got stuck.
+    .mw-modal-header::before {
+      content: '';
+      position: absolute;
+      top: spacing('2');
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 4px;
+      border-radius: radius('lg');
+      background: var(--mw-text-muted-color);
+      opacity: 0.45;
+    }
+
+    .mw-modal-header {
+      position: relative;
+      padding: spacing('6') spacing('4') spacing('3');
+    }
+
+    .mw-modal-footer {
+      padding: spacing('4');
+    }
+
+    .mw-modal-body {
+      padding: spacing('4');
+    }
+
+    // On a phone the actions are the reason the sheet is open. Full width, in
+    // reading order, thumb-sized - not two 80px buttons huddled in a corner.
+    .mw-modal-footer .mw-btn {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 2.75rem;
+    }
+  }
+
+  // The same modal as a <dialog>, which brings the focus trap, Escape, the inert
+  // background and the scroll lock a div cannot have. Every rule above is
+  // class-based and applies unchanged; what follows is only what the top layer
+  // changes. `closedby="any"` dismisses on a backdrop click, and where that is
+  // not understood the framework script handles the click itself.
+  dialog.mw-modal {
+    // The UA draws its own box - a border, padding and a white background - and
+    // `.mw-modal` above already has all three.
     padding: spacing('0');
-    align-items: flex-end;
+    border: none;
+    color: inherit;
+    // In the top layer there is nothing left to sit above
+    z-index: auto;
+    // The UA centres a dialog with auto margins; these keep that while giving
+    // the sheet below something to override.
+    margin: auto;
+
+    // `.mw-modal` sets `display: flex`, which beats the UA's rule for a closed
+    // dialog and would leave it on screen. Discrete, so it can be transitioned.
+    &:not([open]) {
+      display: none;
+    }
+
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+    transition:
+      opacity var(--mw-duration-base) var(--mw-ease-out),
+      transform var(--mw-duration-base) var(--mw-ease-out),
+      overlay var(--mw-duration-base) allow-discrete,
+      display var(--mw-duration-base) allow-discrete;
+
+    &[open] {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+
+      // Without this the dialog is already at its end state on the first frame
+      // and only the backdrop animates.
+      @starting-style {
+        opacity: 0;
+        transform: scale(0.96) translateY(12px);
+      }
+    }
+
+    &::backdrop {
+      background: var(--mw-overlay-background);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      transition:
+        opacity var(--mw-duration-base) var(--mw-ease-out),
+        overlay var(--mw-duration-base) allow-discrete,
+        display var(--mw-duration-base) allow-discrete;
+    }
+
+    &[open]::backdrop {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    // Phone: the same bottom sheet the div version turns into. The width, the
+    // height cap, the corners and the safe-area padding all come from the
+    // `.mw-modal` rule above, which is class-based and applies here too - only
+    // what a top-layer box needs on top of it is repeated.
+    @include media-down('sm') {
+      // The UA centres a dialog; a sheet sits on the bottom edge.
+      margin: auto auto 0;
+      width: 100%;
+      // Straight up from the bottom edge - a sheet does not scale in, and it
+      // travels the height of itself rather than twelve pixels, so it gets the
+      // slow duration the div sheet above uses for the same move.
+      transform: translateY(100%);
+      transition:
+        opacity var(--mw-duration-slow) var(--mw-ease-out),
+        transform var(--mw-duration-slow) var(--mw-ease-out),
+        overlay var(--mw-duration-slow) allow-discrete,
+        display var(--mw-duration-slow) allow-discrete;
+
+      &[open] {
+        transform: translateY(0);
+
+        @starting-style {
+          transform: translateY(100%);
+        }
+      }
+    }
   }
 
-  .mw-modal,
-  .mw-modal.mw-modal-sm,
-  .mw-modal.mw-modal-lg,
-  .mw-modal.mw-modal-xl {
-    max-width: 100%;
-    max-height: 92dvh;
-    border-radius: radius('xl') radius('xl') radius('none') radius('none');
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    // Straight up from the bottom edge - a sheet does not scale in
-    transform: translateY(100%);
-    transition: transform var(--mw-duration-slow) var(--mw-ease-out);
-  }
-
-  .mw-modal-open .mw-modal {
-    transform: translateY(0);
-  }
-
-  // The grab handle. It does nothing - there is no drag-to-dismiss behind it -
-  // but it is the mark that says "this came up from the bottom and goes back
-  // down", and a sheet without one reads as a page that got stuck.
-  .mw-modal-header::before {
-    content: '';
-    position: absolute;
-    top: spacing('2');
-    left: 50%;
-    transform: translateX(-50%);
-    width: 36px;
-    height: 4px;
-    border-radius: radius('lg');
-    background: var(--mw-text-muted-color);
-    opacity: 0.45;
-  }
-
+  // Modal sections
   .mw-modal-header {
-    position: relative;
-    padding: spacing('6') spacing('4') spacing('3');
+    padding: spacing('3') spacing('5');
+    border-bottom: 1px solid var(--mw-border-accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      margin: spacing('0');
+      line-height: 1.2;
+    }
   }
 
-  .mw-modal-footer {
-    padding: spacing('4');
-  }
-
-  .mw-modal-body {
-    padding: spacing('4');
-  }
-
-  // On a phone the actions are the reason the sheet is open. Full width, in
-  // reading order, thumb-sized - not two 80px buttons huddled in a corner.
-  .mw-modal-footer .mw-btn {
-    flex: 1 1 auto;
-    min-width: 0;
-    min-height: 2.75rem;
-  }
-}
-
-// Modal sections
-.mw-modal-header {
-  padding: spacing('3') spacing('5');
-  border-bottom: 1px solid var(--mw-border-accent);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
+  // Explicit hook for the heading
+  .mw-modal-title {
     margin: spacing('0');
     line-height: 1.2;
   }
-}
 
-// Explicit hook for the heading
-.mw-modal-title {
-  margin: spacing('0');
-  line-height: 1.2;
-}
-
-.mw-modal-body {
-  padding: spacing('4') spacing('5');
-  overflow-y: auto;
-  flex: 1;
-  overscroll-behavior: contain;
-  @include scrollbar;
-}
-
-.mw-modal-footer {
-  padding: spacing('3') spacing('5');
-  border-top: 1px solid var(--mw-border-accent);
-  display: flex;
-  // Three actions do not fit one line inside a phone-width dialog, and a row
-  // that cannot wrap pushes the last one out through the border
-  flex-wrap: wrap;
-  gap: spacing('2');
-  justify-content: flex-end;
-}
-
-// Close button
-.mw-modal-close {
-  background: none;
-  font-size: font-size('md');
-  cursor: pointer;
-  padding: spacing('1') spacing('3');
-  border-radius: radius('sm');
-  border: 1px solid var(--mw-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--mw-text-color);
-  transition: var(--mw-transition-fast);
-  @include focus-ring;
-  @include tappable;
-
-  &:hover {
-    background: var(--mw-primary-color-hover);
-    color: var(--mw-primary-accent-text-color);
+  .mw-modal-body {
+    padding: spacing('4') spacing('5');
+    overflow-y: auto;
+    flex: 1;
+    overscroll-behavior: contain;
+    @include scrollbar;
   }
 
-  &:active {
-    transform: scale(0.92);
-    transition-duration: var(--mw-duration-instant);
+  .mw-modal-footer {
+    padding: spacing('3') spacing('5');
+    border-top: 1px solid var(--mw-border-accent);
+    display: flex;
+    // Three actions do not fit one line inside a phone-width dialog, and a row
+    // that cannot wrap pushes the last one out through the border
+    flex-wrap: wrap;
+    gap: spacing('2');
+    justify-content: flex-end;
   }
 
-  // The one control on the sheet a thumb has to find without looking
-  @include media-down('sm') {
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-  }
-}
+  // Close button
+  .mw-modal-close {
+    background: none;
+    font-size: font-size('md');
+    cursor: pointer;
+    padding: spacing('1') spacing('3');
+    border-radius: radius('sm');
+    border: 1px solid var(--mw-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mw-text-color);
+    transition: var(--mw-transition-fast);
+    @include focus-ring;
+    @include tappable;
 
-// Backdrop for click-outside-to-close.
-// The cursor says it is clickable, so it should also be reachable by keyboard -
-// which means it wants to be a <button>. These four lines clear the browser
-// defaults that come with one; on a <div> they change nothing.
-.mw-modal-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: z-index('modal')-5;
-  cursor: pointer;
-  appearance: none;
-  padding: 0;
-  background: none;
-  border: 0;
+    &:hover {
+      background: var(--mw-primary-color-hover);
+      color: var(--mw-primary-accent-text-color);
+    }
+
+    &:active {
+      transform: scale(0.92);
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    // The one control on the sheet a thumb has to find without looking
+    @include media-down('sm') {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
+  }
+
+  // Backdrop for click-outside-to-close.
+  // The cursor says it is clickable, so it should also be reachable by keyboard -
+  // which means it wants to be a <button>. These four lines clear the browser
+  // defaults that come with one; on a <div> they change nothing.
+  .mw-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: z-index('modal')-5;
+    cursor: pointer;
+    appearance: none;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
 }

@@ -1,73 +1,75 @@
 @use '../abstracts' as *;
 
-// Base horizontal divider
-.mw-divider {
-  display: block;
-  width: 100%;
-  border: none;
-  border-top: 1px solid var(--mw-border);
-  margin: spacing('4') spacing('0');
+@layer mw.components {
+  // Base horizontal divider
+  .mw-divider {
+    display: block;
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--mw-border);
+    margin: spacing('4') spacing('0');
 
-  &-thick {
-    border-top-width: 4px;
+    &-thick {
+      border-top-width: 4px;
+    }
+
+    &-dashed {
+      border-top-style: dashed;
+    }
+
+    &-primary {
+      border-top-color: var(--mw-primary-text-color);
+    }
+
+    &-secondary {
+      border-top-color: var(--mw-secondary-text-color);
+    }
   }
 
-  &-dashed {
-    border-top-style: dashed;
-  }
-
-  &-primary {
-    border-top-color: var(--mw-primary-text-color);
-  }
-
-  &-secondary {
-    border-top-color: var(--mw-secondary-text-color);
-  }
-}
-
-// Vertical divider (use inside a flex row)
-.mw-divider-vertical {
-  display: inline-block;
-  width: 1px;
-  background: var(--mw-border);
-  margin: spacing('0') spacing('3');
-  align-self: stretch;
-  border: none;
-  flex-shrink: 0;
-}
-
-// Divider with centered label text
-.mw-divider-text {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: spacing('3');
-  margin: spacing('2') spacing('0');
-  border: none;
-
-  &::before,
-  &::after {
-    content: '';
-    flex: 1;
-    height: 1px;
+  // Vertical divider (use inside a flex row)
+  .mw-divider-vertical {
+    display: inline-block;
+    width: 1px;
     background: var(--mw-border);
+    margin: spacing('0') spacing('3');
+    align-self: stretch;
+    border: none;
+    flex-shrink: 0;
   }
 
-  span {
-    color: var(--mw-text-muted-color);
-    font-size: font-size('sm');
-    white-space: nowrap;
-    user-select: none;
-  }
+  // Divider with centered label text
+  .mw-divider-text {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: spacing('3');
+    margin: spacing('2') spacing('0');
+    border: none;
 
-  &.mw-divider-primary {
     &::before,
     &::after {
-      background: var(--mw-primary-color);
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--mw-border);
     }
 
     span {
-      color: var(--mw-primary-text-color);
+      color: var(--mw-text-muted-color);
+      font-size: font-size('sm');
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    &.mw-divider-primary {
+      &::before,
+      &::after {
+        background: var(--mw-primary-color);
+      }
+
+      span {
+        color: var(--mw-primary-text-color);
+      }
     }
   }
 }

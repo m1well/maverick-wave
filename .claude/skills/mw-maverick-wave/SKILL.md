@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@4.28.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.0.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.28.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.0.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -116,18 +116,18 @@ leave a second tab lit.
 
 The classes that mean something _other_ than "on" keep their own names:
 
-| Component                                    | State class                         |
-| -------------------------------------------- | ----------------------------------- |
-| Anything switchable, "on"                    | `mw-active` (`active` deprecated)   |
-| Burger button + navbar drawer                | `open` (no prefix)                  |
-| Stepper indicator / label / connector / step | `mw-active`, `mw-done`              |
-| Checkbox list item (`li`)                    | `mw-selected`                       |
-| Calendar day, picked                         | `mw-selected`                       |
-| Kanban ticket being edited                   | `mw-kanban-editing`                 |
-| Modal overlay                                | `mw-modal-open`                     |
-| Alert, after dismissal                       | `mw-alert-closed` (`display: none`) |
-| Field wrapper in error                       | `mw-field-has-error`                |
-| Single form control in error                 | `mw-form-element-error`             |
+| Component                                    | State class                                              |
+| -------------------------------------------- | -------------------------------------------------------- |
+| Anything switchable, "on"                    | `mw-active` (`active` deprecated)                        |
+| Burger button + navbar drawer                | `open` (no prefix)                                       |
+| Stepper indicator / label / connector / step | `mw-active`, `mw-done`                                   |
+| Checkbox list item (`li`)                    | `mw-selected`                                            |
+| Calendar day, picked                         | `mw-selected`                                            |
+| Kanban ticket being edited                   | `mw-kanban-editing`                                      |
+| Modal overlay                                | `mw-modal-open`                                          |
+| Alert, dismissing / dismissed                | `mw-alert-closing` → `mw-alert-closed` (`display: none`) |
+| Field wrapper in error                       | `mw-field-has-error`                                     |
+| Single form control in error                 | `mw-form-element-error`                                  |
 
 `mw-active` and `mw-selected` are not the same thing and not interchangeable:
 active is the one of several that is currently showing, selected is a choice the
@@ -150,8 +150,22 @@ keys at all (negative gap is invalid CSS and is not generated).
 `sm` 0.9, `base` 1, `md` 1.1, `lg` 1.3, `xl` 1.5, `2xl` 1.8, `3xl` 2.2, `4xl` 2.5,
 `5xl` 3, `6xl` 4.3 rem.
 
-**Breakpoints** (max-width, mobile-first markup / desktop-first media queries):
-`xs` 375, `sm` 576, `md` 768, `lg` 992, `xl` 1200, `2xl` 1400 px.
+**Breakpoints**: `xs` 375, `sm` 576, `md` 768, `lg` 992, `xl` 1200, `2xl` 1400 px.
+Column grids and most components are mobile-first (`min-width`); the ranges do
+not overlap, `media-down` stops 0.02px short of its breakpoint. Blocks that only
+adjust something on a phone stay `max-width`.
+
+**Overriding.** Everything the framework emits sits in
+`@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities`.
+Any rule written outside a layer beats all of it, so a single `.mw-card {}` in
+your own stylesheet wins - no `!important`, no doubled selectors. `!important`
+is not a stronger version of this but a weaker one: important declarations
+reverse the layer order and unlayered comes last, so an important rule in
+`mw.base` beats an important one of yours even behind an ID selector. The flip
+side: third-party CSS loaded unlayered also wins, so pull it into a layer of
+its own:
+`@import url('font-awesome.css') layer(vendor);` with `@layer vendor, mw;`
+declared before it.
 
 **Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full`): 0, 2, 5, 10, 15, 20, 30 px, 50%.
 
@@ -370,14 +384,15 @@ feature frame) ·
     comment. If your component really does need to animate a size, name that
     property - do not reach for `all`.
 27. **A control is a `<button>`, never a styled `<div>`.** `mw-tabs-nav-item`,
-    `mw-theme-toggle`, `mw-gallery-dot` and `mw-accordion-header` are all
-    written for one, and all four shipped as divs and spans - the first three
-    until 4.11, the accordion header until 4.12 - that no keyboard could reach.
-    Each class clears what a `<button>` brings with it, so
-    `<button type="button" class="mw-tabs-nav-item" data-tab="...">` is the
-    whole markup. If you build your own clickable thing: the element decides
-    whether anyone without a mouse can use it, the class only decides how it
-    looks.
+    `mw-theme-toggle`, `mw-gallery-dot`, `mw-accordion-header` and `mw-menu-btn`
+    are all written for one, and all five shipped as divs and spans - the first
+    three until 4.11, the accordion header until 4.12, the burger after that -
+    that no keyboard could reach. Each class clears what a `<button>` brings
+    with it, so `<button type="button" class="mw-tabs-nav-item" data-tab="...">`
+    is the whole markup. The burger is the worst of the five to get wrong:
+    below the collapse breakpoint it is the only route to the navigation.
+    If you build your own clickable thing: the element decides whether anyone
+    without a mouse can use it, the class only decides how it looks.
 28. **A link in running text is `mw-link`, not `mw-btn mw-btn-link`.** Since
     4.13.0 there is a class for exactly that. `mw-btn` is `inline-flex` with
     `min-height: var(--mw-control-height)`, so a link written that way pulls its

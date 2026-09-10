@@ -267,39 +267,39 @@
 </p>
 <div class="mw-grid-2 mw-gap-6">
   <div class="mw-card mw-card-simple">
-    <h5 class="mw-text-medium mw-mb-2"><code>mw-text-truncate</code></h5>
+    <h4 class="mw-text-medium mw-mb-2"><code>mw-text-truncate</code></h4>
     <p class="mw-text-truncate">
       One line only: this sentence is far longer than the box it has been given
       and ends in an ellipsis rather than wrapping.
     </p>
-    <h5 class="mw-text-medium mw-mb-2 mw-mt-5">
+    <h4 class="mw-text-medium mw-mb-2 mw-mt-5">
       <code>mw-text-clamp-2</code>
-    </h5>
+    </h4>
     <p class="mw-text-clamp-2">
       Two lines and then an ellipsis. This paragraph runs on for long enough
       that the third line is cut off, which is what a card preview or a list
       subtitle wants when the copy is not yours to control.
     </p>
-    <h5 class="mw-text-medium mw-mb-2 mw-mt-5">
+    <h4 class="mw-text-medium mw-mb-2 mw-mt-5">
       <code>mw-text-break</code>
-    </h5>
+    </h4>
     <p class="mw-text-break">
       https://example.com/a/very/long/url/that/has/no/spaces/in/it/at/all/and/would/otherwise/push/the/page/sideways
     </p>
   </div>
   <div class="mw-card mw-card-simple">
-    <h5 class="mw-text-medium mw-mb-2">
+    <h4 class="mw-text-medium mw-mb-2">
       <code>mw-text-balance</code> and <code>mw-text-pretty</code>
-    </h5>
+    </h4>
     <p class="mw-text-muted mw-text-sm">
       Headings get <code>balance</code> by default - it evens the lines out so
       no headline leaves one word alone on the last one. Paragraphs get
       <code>pretty</code>, which only prevents the orphan. Both are on already;
       the classes are for anything the framework does not style itself.
     </p>
-    <h5 class="mw-text-medium mw-mb-2 mw-mt-5">
+    <h4 class="mw-text-medium mw-mb-2 mw-mt-5">
       <code>mw-text-eyebrow</code>
-    </h5>
+    </h4>
     <p class="mw-text-eyebrow mw-mb-1">Release notes</p>
     <h4 class="mw-mb-0">The kicker above a heading</h4>
     <h5 class="mw-text-medium mw-mb-2 mw-mt-5">
@@ -323,29 +323,29 @@
 </p>
 <div class="mw-grid-3 mw-gap-6">
   <div class="mw-card mw-card-simple mw-elevation-1">
-    <h5 class="mw-text-medium mw-mb-1">1 &middot; resting</h5>
+    <h4 class="mw-text-medium mw-mb-1">1 &middot; resting</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">
       Inputs, tags, small controls.
     </p>
   </div>
   <div class="mw-card mw-card-simple mw-elevation-2">
-    <h5 class="mw-text-medium mw-mb-1">2 &middot; raised</h5>
+    <h4 class="mw-text-medium mw-mb-1">2 &middot; raised</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">Cards and panels at rest.</p>
   </div>
   <div class="mw-card mw-card-simple mw-elevation-3">
-    <h5 class="mw-text-medium mw-mb-1">3 &middot; floating</h5>
+    <h4 class="mw-text-medium mw-mb-1">3 &middot; floating</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">A card under the pointer.</p>
   </div>
   <div class="mw-card mw-card-simple mw-elevation-4">
-    <h5 class="mw-text-medium mw-mb-1">4 &middot; overlay</h5>
+    <h4 class="mw-text-medium mw-mb-1">4 &middot; overlay</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">Dropdowns, popovers, drawer.</p>
   </div>
   <div class="mw-card mw-card-simple mw-elevation-5">
-    <h5 class="mw-text-medium mw-mb-1">5 &middot; modal</h5>
+    <h4 class="mw-text-medium mw-mb-1">5 &middot; modal</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">The dialog over everything.</p>
   </div>
   <div class="mw-card mw-card-simple mw-elevation-0">
-    <h5 class="mw-text-medium mw-mb-1">0 &middot; flat</h5>
+    <h4 class="mw-text-medium mw-mb-1">0 &middot; flat</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-0">Explicitly on the page.</p>
   </div>
 </div>
@@ -401,5 +401,25 @@
     class="mw-aspect-photo mw-card mw-card-simple mw-d-flex mw-items-center mw-justify-center"
   >
     <code>photo</code>
+  </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Squircle Corners</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-squircle</code> draws the framework silhouette with a superellipse
+  instead of a circular arc - same four radii, fuller curve. Opt-in, because
+  <code>corner-shape</code> only lands in Chromium so far; everywhere else the
+  card below is simply the normal one.
+</p>
+<div class="mw-grid-2 mw-gap-6">
+  <div class="mw-card mw-card-simple">
+    <strong>Default</strong>
+    <p class="mw-text-muted mw-text-sm mw-mb-0">Circular corner radii.</p>
+  </div>
+  <div class="mw-card mw-card-simple mw-squircle">
+    <strong>mw-squircle</strong>
+    <p class="mw-text-muted mw-text-sm mw-mb-0">
+      Superellipse, corner accent follows.
+    </p>
   </div>
 </div>

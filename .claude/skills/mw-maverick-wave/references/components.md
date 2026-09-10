@@ -544,8 +544,12 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
 ```html
 <div class="mw-tabs">
   <div class="mw-tabs-nav">
-    <div class="mw-tabs-nav-item mw-active" data-tab="tab1">Details</div>
-    <div class="mw-tabs-nav-item" data-tab="tab2">History</div>
+    <button type="button" class="mw-tabs-nav-item mw-active" data-tab="tab1">
+      Details
+    </button>
+    <button type="button" class="mw-tabs-nav-item" data-tab="tab2">
+      History
+    </button>
   </div>
   <div class="mw-tabs-content">
     <div class="mw-tabs-panel mw-active" id="tab1">...</div>
@@ -558,6 +562,9 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
   `mw-tabs-pills`.
 - `data-tab` matches the panel `id` - that pairing is only needed for the
   shipped JS. In a SPA, bind `mw-active` yourself and drop the attribute.
+- The shipped JS turns the strip into a real tablist: `role`, `aria-selected`,
+  `aria-controls`, `aria-labelledby`, a roving `tabindex` and arrow/Home/End
+  keys. Without it, that is yours to add - see `references/javascript.md`.
 - The nav scrolls horizontally instead of wrapping, and says so: a shadow shows
   on whichever side still has tabs behind it and disappears once that end is
   reached. Pure CSS, no scroll listener. The fade colour comes from
@@ -602,6 +609,35 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
 
 Angular: `<div class="mw-modal-overlay" [class.mw-modal-open]="isOpen()">`.
 
+### The same modal as a `<dialog>`
+
+Same classes, no overlay wrapper and no backdrop element:
+
+```html
+<dialog id="delete-modal" class="mw-modal mw-modal-sm" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">Delete invoice</h4>
+    <button class="mw-modal-close" type="button" aria-label="Close">
+      &#120299;
+    </button>
+  </div>
+  <div class="mw-modal-body">…</div>
+  <div class="mw-modal-footer">…</div>
+</dialog>
+```
+
+- Escape, the focus trap, `inert` on the page behind it and the scroll lock all
+  come from the element. Prefer this shape for anything that asks a question.
+- Opened with `showModal()`, closed with `close()`. `main.js` wires the close
+  buttons and exposes `mwOpenModal(id)` / `mwCloseModal(id)`, both of which take
+  either shape. A trigger can also carry `data-mw-modal="delete-modal"`.
+- `closedby="any"` dismisses it on a backdrop click; where that attribute is not
+  understood the script handles the click instead.
+- Sizes, the bottom sheet below 576px and every `mw-modal-*` part behave exactly
+  as above - those rules are class-based.
+
+Angular: bind nothing, call `showModal()` on a `viewChild` ref.
+
 ## Alerts & toasts
 
 ```html
@@ -618,9 +654,10 @@ Angular: `<div class="mw-modal-overlay" [class.mw-modal-open]="isOpen()">`.
 ```
 
 Variants: `mw-alert-primary`, `-secondary`, `-success`, `-warning`, `-danger`,
-`-info`. `mw-alert-title` and the close button are optional. `mw-alert-closed`
-hides a dismissed alert (`display: none`) - in a SPA prefer removing it from the
-list instead.
+`-info`. `mw-alert-title` and the close button are optional. Dismissal runs in
+two steps: `mw-alert-closing` fades the alert out over `--mw-duration-base`, then
+`mw-alert-closed` hides it (`display: none`) - in a SPA prefer removing it from
+the list instead.
 
 **Toasts** are alerts inside a fixed stack:
 

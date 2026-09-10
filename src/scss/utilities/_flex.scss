@@ -1,114 +1,112 @@
 @use '../abstracts' as *;
 
-// Flex utilities
-.mw-flex {
-  &-row {
-    flex-direction: row;
+@layer mw.utilities {
+  .mw-flex {
+    &-row {
+      flex-direction: row;
+    }
+
+    &-column {
+      flex-direction: column;
+    }
+
+    &-wrap {
+      flex-wrap: wrap;
+    }
+
+    &-nowrap {
+      flex-wrap: nowrap;
+    }
+
+    &-1 {
+      flex: 1;
+    }
+
+    &-grow-1 {
+      flex-grow: 1;
+    }
+
+    &-shrink-0 {
+      flex-shrink: 0;
+    }
   }
 
-  &-column {
-    flex-direction: column;
+  .mw-justify {
+    &-start {
+      justify-content: flex-start;
+    }
+
+    &-end {
+      justify-content: flex-end;
+    }
+
+    &-center {
+      justify-content: center;
+    }
+
+    &-between {
+      justify-content: space-between;
+    }
+
+    &-around {
+      justify-content: space-around;
+    }
+
+    &-evenly {
+      justify-content: space-evenly;
+    }
   }
 
-  &-wrap {
+  .mw-items {
+    &-start {
+      align-items: flex-start;
+    }
+
+    &-end {
+      align-items: flex-end;
+    }
+
+    &-center {
+      align-items: center;
+    }
+
+    &-stretch {
+      align-items: stretch;
+    }
+  }
+
+  .mw-self {
+    &-start {
+      align-self: flex-start;
+    }
+
+    &-end {
+      align-self: flex-end;
+    }
+
+    &-center {
+      align-self: center;
+    }
+
+    &-stretch {
+      align-self: stretch;
+    }
+  }
+
+  // The most common row in any app: what it is on the left, the value or the
+  // action on the right, and on a narrow screen the right half drops below.
+  // The `flex-wrap` is the part everyone forgets.
+  .mw-row-split {
+    display: flex;
     flex-wrap: wrap;
-  }
-
-  &-nowrap {
-    flex-wrap: nowrap;
-  }
-
-  &-1 {
-    flex: 1;
-  }
-
-  &-grow-1 {
-    flex-grow: 1;
-  }
-
-  &-shrink-0 {
-    flex-shrink: 0;
-  }
-}
-
-// Justify content
-.mw-justify {
-  &-start {
-    justify-content: flex-start;
-  }
-
-  &-end {
-    justify-content: flex-end;
-  }
-
-  &-center {
-    justify-content: center;
-  }
-
-  &-between {
+    align-items: baseline;
     justify-content: space-between;
+    gap: spacing('2') spacing('5');
   }
 
-  &-around {
-    justify-content: space-around;
-  }
-
-  &-evenly {
-    justify-content: space-evenly;
-  }
-}
-
-// Align items
-.mw-items {
-  &-start {
-    align-items: flex-start;
-  }
-
-  &-end {
-    align-items: flex-end;
-  }
-
-  &-center {
+  // Same row for content of unequal height - an icon beside text, a button
+  // beside a heading. Baseline alignment would hang those off the text.
+  .mw-row-split-center {
     align-items: center;
   }
-
-  &-stretch {
-    align-items: stretch;
-  }
-}
-
-// Align self - the per-item counterpart to .mw-items-*
-.mw-self {
-  &-start {
-    align-self: flex-start;
-  }
-
-  &-end {
-    align-self: flex-end;
-  }
-
-  &-center {
-    align-self: center;
-  }
-
-  &-stretch {
-    align-self: stretch;
-  }
-}
-
-// The most common row in any app: what it is on the left, the value or the
-// action on the right, and on a narrow screen the right half drops below.
-// The `flex-wrap` is the part everyone forgets.
-.mw-row-split {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: spacing('2') spacing('5');
-}
-
-// Same row for content of unequal height - an icon beside text, a button
-// beside a heading. Baseline alignment would hang those off the text.
-.mw-row-split-center {
-  align-items: center;
 }

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MaverickWave is a lightweight, modern CSS framework providing a grid system, 25+ UI components, utility classes, and light/dark mode support. The repo also contains the showcase/documentation website bundled into the distribution.
+MaverickWave is a lightweight, modern CSS framework providing a grid system, 48 UI components, utility classes, and light/dark mode support. The repo also contains the showcase/documentation website bundled into the distribution.
 
 ## Commands
 
@@ -30,19 +30,19 @@ There are no test or lint scripts.
 
 - `abstracts/` - CSS custom properties, mixins, SCSS functions (color variant generation)
 - `base/` - Reset, element defaults, typography
-- `components/` - Self-contained component styles (25+ files, one per component)
+- `components/` - Self-contained component styles (48 files, one per component)
 - `form-elements/` - Form input/select/checkbox-specific styles
 - `layout/` - Grid, container, header/footer, section
 - `utilities/` - Spacing, flex, display utility classes
 - `main.scss` - Entry point using `@use`/`@forward` (not `@import`)
 
-**JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery slider, theme toggle (persisted to localStorage), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs, alerts/toasts, modals, range inputs.
+**JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery and image sliders, theme toggle (persisted to localStorage, transitions suppressed during the flip), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs (which also get their ARIA and arrow-key handling here), alerts/toasts, modals, range inputs, dropdowns, language switcher, checkbox lists, kanban board, calendar.
 
-**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 40+ partials from `src/partials/`. These compile into `dist/index.html`.
+**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 60 partials from `src/partials/`. These compile into `dist/index.html`.
 
 ## Naming Conventions
 
-- **CSS classes**: `mw-` prefix for all framework classes (`.mw-button`, `.mw-card`, `.mw-modal`)
+- **CSS classes**: `mw-` prefix for all framework classes (`.mw-btn`, `.mw-card`, `.mw-modal`)
 - **State classes**: `.mw-active`, `.mw-selected`
 - **CSS custom properties**: `--mw-` prefix (`--mw-primary-color`, `--mw-font-family-base`)
 - **Theme control**: `--mw-internal-theme-mode` CSS var controls whether theme is switchable/fixed-light/fixed-dark; body class `mw-theme-light` toggles light mode

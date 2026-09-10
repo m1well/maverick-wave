@@ -1,136 +1,138 @@
 @use '../abstracts' as *;
 
-// Colour variants
-$_mw-tag-colors: (
-  'primary': '',
-  'secondary': '',
-  'success': 'info-',
-  'warning': 'info-',
-  'danger': 'info-',
-  'info': 'info-',
-);
+@layer mw.components {
+  // Colour variants
+  $_mw-tag-colors: (
+    'primary': '',
+    'secondary': '',
+    'success': 'info-',
+    'warning': 'info-',
+    'danger': 'info-',
+    'info': 'info-',
+  );
 
-// Container for tag *lists* - carries the colour for all its items
-.mw-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: spacing('2');
-}
-
-// Visual base, shared by the list item and the standalone tag
-%mw-tag-base {
-  display: inline-flex;
-  align-items: center;
-  background: var(--mw-primary-background);
-  color: var(--mw-text-color);
-  font-weight: font-weight('medium');
-  padding: spacing('1') spacing('3');
-  border-radius: radius('xl');
-  font-size: font-size('xs');
-  border: 1px solid var(--mw-border);
-  transition: var(--mw-transition-fast);
-  user-select: none;
-
-  &:hover {
-    background: var(--mw-primary-background-hover);
+  // Container for tag *lists* - carries the colour for all its items
+  .mw-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: spacing('2');
   }
-}
 
-// Tag item - inside a `.mw-tags` container
-.mw-tags-item {
-  @extend %mw-tag-base;
-
-  // Removable tag styling
-  &.mw-tags-removable {
-    padding-right: spacing('1');
-  }
-}
-
-// Standalone tag - carries its colour directly, no container needed
-.mw-tag {
-  @extend %mw-tag-base;
-}
-
-// Remove button - pure CSS
-.mw-tags-remove {
-  flex-shrink: 0;
-  margin-left: spacing('3');
-
-  i,
-  fa-icon,
-  svg {
-    font-size: 0.7rem !important;
-  }
-}
-
-.mw-tags-icon {
-  display: inline-flex;
-  margin-right: spacing('2');
-  font-size: 0.9rem;
-}
-
-// Color variants - generated for the list form and the standalone form
-@each $name, $infix in $_mw-tag-colors {
-  .mw-tags-#{$name} .mw-tags-item,
-  .mw-tag-#{$name} {
-    background-color: var(--mw-#{$name}-#{$infix}background);
-    border-color: var(--mw-#{$name}-color);
+  // Visual base, shared by the list item and the standalone tag
+  %mw-tag-base {
+    display: inline-flex;
+    align-items: center;
+    background: var(--mw-primary-background);
+    color: var(--mw-text-color);
+    font-weight: font-weight('medium');
+    padding: spacing('1') spacing('3');
+    border-radius: radius('xl');
+    font-size: font-size('xs');
+    border: 1px solid var(--mw-border);
+    transition: var(--mw-transition-fast);
+    user-select: none;
 
     &:hover {
-      background: var(--mw-#{$name}-#{$infix}background-hover);
+      background: var(--mw-primary-background-hover);
     }
   }
-}
 
-// Neutral variant for "draft" / "done" states.
-.mw-tags-muted .mw-tags-item,
-.mw-tag-muted {
-  background-color: var(--mw-gray-background);
-  border-color: var(--mw-border);
-  color: var(--mw-text-muted-color);
+  // Tag item - inside a `.mw-tags` container
+  .mw-tags-item {
+    @extend %mw-tag-base;
 
-  &:hover {
-    background-color: var(--mw-gray-background);
-    border-color: var(--mw-text-muted-color);
-    color: var(--mw-text-color);
+    // Removable tag styling
+    &.mw-tags-removable {
+      padding-right: spacing('1');
+    }
   }
-}
 
-// Neutral variant for plain identifiers - a customer number, a document type,
-// a price on a category. `muted` means "steps back", this one means "no
-// judgement attached": on an invoice card "XRechnung" is a property, while
-// "no e-invoice" is a shortcoming, and the two must not look alike.
-.mw-tags-neutral .mw-tags-item,
-.mw-tag-neutral {
-  background-color: var(--mw-surface-muted);
-  border-color: var(--mw-border);
-  color: var(--mw-text-color);
-
-  &:hover {
-    background-color: var(--mw-surface-muted);
-    border-color: var(--mw-border-accent);
+  // Standalone tag - carries its colour directly, no container needed
+  .mw-tag {
+    @extend %mw-tag-base;
   }
-}
 
-// Size variants
-// a little more air between the items instead of inside them
-.mw-tags-lg {
-  gap: spacing('3');
-}
-
-.mw-tags-lg .mw-tags-item,
-.mw-tag-lg {
-  font-size: font-size('sm');
-  padding: spacing('2') spacing('3');
-
+  // Remove button - pure CSS
   .mw-tags-remove {
-    width: 22px;
-    height: 22px;
+    flex-shrink: 0;
+    margin-left: spacing('3');
 
     i,
     fa-icon,
     svg {
-      font-size: 0.9rem !important;
+      font-size: 0.7rem !important;
+    }
+  }
+
+  .mw-tags-icon {
+    display: inline-flex;
+    margin-right: spacing('2');
+    font-size: 0.9rem;
+  }
+
+  // Color variants - generated for the list form and the standalone form
+  @each $name, $infix in $_mw-tag-colors {
+    .mw-tags-#{$name} .mw-tags-item,
+    .mw-tag-#{$name} {
+      background-color: var(--mw-#{$name}-#{$infix}background);
+      border-color: var(--mw-#{$name}-color);
+
+      &:hover {
+        background: var(--mw-#{$name}-#{$infix}background-hover);
+      }
+    }
+  }
+
+  // Neutral variant for "draft" / "done" states.
+  .mw-tags-muted .mw-tags-item,
+  .mw-tag-muted {
+    background-color: var(--mw-gray-background);
+    border-color: var(--mw-border);
+    color: var(--mw-text-muted-color);
+
+    &:hover {
+      background-color: var(--mw-gray-background);
+      border-color: var(--mw-text-muted-color);
+      color: var(--mw-text-color);
+    }
+  }
+
+  // Neutral variant for plain identifiers - a customer number, a document type,
+  // a price on a category. `muted` means "steps back", this one means "no
+  // judgement attached": on an invoice card "XRechnung" is a property, while
+  // "no e-invoice" is a shortcoming, and the two must not look alike.
+  .mw-tags-neutral .mw-tags-item,
+  .mw-tag-neutral {
+    background-color: var(--mw-surface-muted);
+    border-color: var(--mw-border);
+    color: var(--mw-text-color);
+
+    &:hover {
+      background-color: var(--mw-surface-muted);
+      border-color: var(--mw-border-accent);
+    }
+  }
+
+  // Size variants
+  // a little more air between the items instead of inside them
+  .mw-tags-lg {
+    gap: spacing('3');
+  }
+
+  .mw-tags-lg .mw-tags-item,
+  .mw-tag-lg {
+    font-size: font-size('sm');
+    padding: spacing('2') spacing('3');
+
+    .mw-tags-remove {
+      width: 22px;
+      height: 22px;
+
+      i,
+      fa-icon,
+      svg {
+        font-size: 0.9rem !important;
+      }
     }
   }
 }

@@ -1,10 +1,8 @@
 (function () {
   'use strict';
 
-  // State classes: `mw-active` is the documented spelling, plain `active` is
-  // the one older markup uses. Both are styled, so turning a state *off* has
-  // to clear both - otherwise a stale `active` from the HTML would keep a
-  // second tab lit.
+  // Both spellings are styled, so turning a state off has to clear both or a
+  // stale `active` in the HTML keeps a second tab lit
   function setActive(el, on) {
     if (!el) return;
     el.classList.toggle('mw-active', on);
@@ -43,15 +41,8 @@
     initLangSwitches();
   });
 
-  // ===== Dropdowns =====
-  //
-  // The menu is a <details>, so opening, closing, the keyboard and the state a
-  // screen reader reads out are all the browser's job already. Two things it
-  // does not do, because no markup can express them: close when the click lands
-  // somewhere else, and close on Escape.
-  //
-  // Delegated to the document rather than bound per dropdown, so a menu added
-  // to the page later works without being initialised.
+  // The menu is a <details>, so only two things are left: close on an outside
+  // click and close on Escape. Delegated, so a menu added later works too.
   function initDropdowns() {
     function closeAll(except) {
       document.querySelectorAll('.mw-dropdown[open]').forEach((dropdown) => {
@@ -89,14 +80,8 @@
     });
   }
 
-  // ===== Language Switcher =====
-  //
-  // The menu itself is a dropdown and needs nothing here. This only keeps the
-  // trigger in step with the choice and then announces it - which language is
-  // actually loaded is the application's business, not the framework's, and
-  // that decision usually lives in the URL or on the server rather than in
-  // localStorage. Listen for it:
-  //
+  // Keeps the trigger in step with the choice and announces it - which language
+  // actually loads is the application's business, usually the URL or the server:
   //   document.addEventListener('mw-language-change', (e) => e.detail.lang)
   function initLangSwitches() {
     document.querySelectorAll('.mw-lang-switch').forEach((languageSwitch) => {
@@ -320,6 +305,7 @@
     if (!themeToggle) return;
 
     const body = document.body;
+    const root = document.documentElement;
     const icon = themeToggle.querySelector('.mw-theme-toggle-slider i');
 
     const computedStyle = getComputedStyle(document.documentElement);
@@ -358,8 +344,12 @@
 
     // Function to apply theme styles and icon
     const applyTheme = (lightMode) => {
-      // Use toggle's second argument for cleaner class switching
+      // The forced reflow is the point: the new colours land while transitions are off
+      root.classList.add('mw-theme-switching');
       body.classList.toggle('mw-theme-light', lightMode);
+      void root.offsetHeight;
+      root.classList.remove('mw-theme-switching');
+
       setActive(themeToggle, lightMode);
       if (icon) {
         icon.className = lightMode ? 'fas fa-sun' : 'fas fa-moon';
@@ -375,8 +365,8 @@
       applyTheme(isLight);
       localStorage.setItem('mw-theme', isLight ? 'light' : 'dark'); // Save
 
-      // update color swatches
-      setTimeout(updateColorSwatchHexValues, 400);
+      // No transition left to wait out, so the swatches can read the new values now
+      updateColorSwatchHexValues();
     });
   }
 
@@ -386,14 +376,20 @@
   }
 
   function updateColorSwatchHexValues() {
-    const colorSwatches = document.querySelectorAll('.color-swatch');
-    colorSwatches.forEach((swatch) => {
-      const bgColor = window.getComputedStyle(swatch).backgroundColor;
-      const hex = rgbToHex(bgColor);
+    const colorSwatches = Array.from(
+      document.querySelectorAll('.color-swatch')
+    );
+
+    // All reads before the first write - a write between two reads forces a recalc
+    const hexValues = colorSwatches.map((swatch) =>
+      rgbToHex(window.getComputedStyle(swatch).backgroundColor)
+    );
+
+    colorSwatches.forEach((swatch, index) => {
       const hexTextElement =
         swatch.parentElement.querySelector('.mw-text-muted');
       if (hexTextElement) {
-        hexTextElement.textContent = hex;
+        hexTextElement.textContent = hexValues[index];
       }
     });
   }
@@ -457,16 +453,19 @@
 
     if (!menuBtn || !navbar) return;
 
-    function closeMenu() {
-      menuBtn.classList.remove('open');
-      navbar.classList.remove('open');
+    // aria-expanded only on a real control - on a <div> it claims a state for nothing
+    const announces = menuBtn.tagName === 'BUTTON';
+
+    function setOpen(open) {
+      menuBtn.classList.toggle('open', open);
+      navbar.classList.toggle('open', open);
+      if (announces) menuBtn.setAttribute('aria-expanded', String(open));
     }
 
     function toggleMenu(e) {
       e.preventDefault();
       e.stopPropagation();
-      menuBtn.classList.toggle('open');
-      navbar.classList.toggle('open');
+      setOpen(!navbar.classList.contains('open'));
     }
 
     // Add multiple event listeners for better iOS compatibility
@@ -477,38 +476,58 @@
     document.addEventListener('click', function (e) {
       if (!navbar.classList.contains('open')) return;
       if (navbar.contains(e.target) || menuBtn.contains(e.target)) return;
-      closeMenu();
+      setOpen(false);
     });
 
+    // Or Escape strands the keyboard user in a drawer that is no longer there
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeMenu();
+      if (e.key !== 'Escape') return;
+      if (!navbar.classList.contains('open')) return;
+      setOpen(false);
+      menuBtn.focus();
     });
   }
 
   // ===== Progress Bars =====
+
+  // The fill is driven from CSS where the browser can do it (_progress.scss), so
+  // this only hands the target width over and switches the animation on
   function initProgressBars() {
     const fills = document.querySelectorAll('.mw-progress-fill');
     if (!fills.length) return;
 
+    const scrollDriven = CSS.supports('animation-timeline', 'view()');
+
+    // Two spellings in the wild: data-value="75" and style="width: 75%".
+    const targetWidth = (bar) =>
+      bar.dataset.value ? bar.dataset.value + '%' : bar.style.width;
+
+    const driven = [];
+    fills.forEach((bar) => {
+      const target = targetWidth(bar);
+      if (!target) return;
+      bar.style.setProperty('--mw-progress-value', target);
+      if (scrollDriven) bar.classList.add('mw-progress-driven');
+      else driven.push(bar);
+    });
+
+    if (scrollDriven) return;
+
+    // Fallback: set the width once, when the bar comes into view, and let the
+    // transition in _progress.scss animate it. Only bars whose target is known -
+    // a bar already carrying its width in the markup is left alone.
     const obs = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const bar = entry.target;
-          const pct = bar.dataset.value || 0;
-          // trigger the CSS transition
-          bar.style.width = pct + '%';
-          // stop observing this one
-          observer.unobserve(bar);
+          entry.target.style.width = targetWidth(entry.target);
+          observer.unobserve(entry.target);
         });
       },
-      {
-        root: null,
-        threshold: 0.2,
-      }
+      { root: null, threshold: 0.2 }
     );
 
-    fills.forEach((bar) => obs.observe(bar));
+    driven.forEach((bar) => obs.observe(bar));
   }
 
   // ===== Smooth Scrolling =====
@@ -538,10 +557,8 @@
 
     if (sections.length === 0 || navLinks.length === 0) return;
 
-    // An anchor jump lands on scroll-padding-top, so the spy has to measure
-    // against the same value - a hardcoded one marks the section before the
-    // target as soon as an announcement ribbon raises the padding. Read per
-    // run: the ribbon grows on small screens and can be dismissed at runtime.
+    // Measured against scroll-padding-top, the same value an anchor jump lands on,
+    // and read per run - the ribbon grows on small screens and can be dismissed
     function scrollOffset() {
       const padding = parseFloat(
         getComputedStyle(document.documentElement).scrollPaddingTop
@@ -583,33 +600,107 @@
     );
   }
 
-  // ===== Tabs =====
+  // The strip draws the marker, this only hands over position and length as custom
+  // properties. Both axes every time - which pair the bar uses is the stylesheet's
+  // decision, at a breakpoint this file knows nothing of. The attribute switches
+  // the bar on and is set after the first measurement, so a page without script
+  // keeps the plain border and still looks finished.
+  function measureTabsMarker(nav) {
+    const active = nav.querySelector(
+      '.mw-tabs-nav-item.mw-active, .mw-tabs-nav-item.active'
+    );
+    if (!active) {
+      nav.removeAttribute('data-mw-tabs-marker');
+      return;
+    }
+
+    // Unitless for the scale factors: the bar is 1px long and scaled up.
+    nav.style.setProperty('--mw-tabs-marker-x', active.offsetLeft + 'px');
+    nav.style.setProperty('--mw-tabs-marker-w', active.offsetWidth);
+    nav.style.setProperty('--mw-tabs-marker-y', active.offsetTop + 'px');
+    nav.style.setProperty('--mw-tabs-marker-h', active.offsetHeight);
+    nav.setAttribute('data-mw-tabs-marker', '');
+  }
+
+  // Set here and not in the markup, so a page that already ships .mw-tabs gets the
+  // tablist semantics by loading the script
   function initTabs() {
-    const tabNavItems = document.querySelectorAll('.mw-tabs-nav-item');
+    document.querySelectorAll('.mw-tabs-nav').forEach((nav) => {
+      const items = Array.from(nav.querySelectorAll('.mw-tabs-nav-item'));
+      if (!items.length) return;
 
-    tabNavItems.forEach((item) => {
-      item.addEventListener('click', function () {
-        const tabsContainer = this.closest('.mw-tabs');
-        if (!tabsContainer) return;
+      const vertical = !!nav.closest('.mw-tabs-vertical');
 
-        tabsContainer
-          .querySelectorAll('.mw-tabs-nav-item')
-          .forEach((navItem) => {
-            setActive(navItem, false);
-          });
+      nav.setAttribute('role', 'tablist');
+      if (vertical) nav.setAttribute('aria-orientation', 'vertical');
 
-        setActive(this, true);
+      items.forEach((item, index) => {
+        const panel = tabPanelOf(item);
 
-        const tabId = this.getAttribute('data-tab');
-        if (!tabId) return;
+        item.setAttribute('role', 'tab');
+        if (!item.id) item.id = (panel ? panel.id : 'mw-tab-' + index) + '-tab';
 
-        tabsContainer.querySelectorAll('.mw-tabs-panel').forEach((panel) => {
-          setActive(panel, false);
+        if (panel) {
+          item.setAttribute('aria-controls', panel.id);
+          panel.setAttribute('role', 'tabpanel');
+          panel.setAttribute('aria-labelledby', item.id);
+        }
+
+        syncTabState(item);
+
+        item.addEventListener('click', () => selectTab(items, item));
+
+        item.addEventListener('keydown', (event) => {
+          const target = tabKeyTarget(event, vertical, items.length, index);
+          if (target === null) return;
+          event.preventDefault();
+          selectTab(items, items[target]);
+          items[target].focus();
         });
-
-        setActive(document.getElementById(tabId), true);
       });
+
+      measureTabsMarker(nav);
+
+      // The items are watched too: a web font arriving moves the label the bar is
+      // parked under without the strip itself changing size
+      const observer = new ResizeObserver(() => measureTabsMarker(nav));
+      observer.observe(nav);
+      items.forEach((item) => observer.observe(item));
     });
+  }
+
+  function tabPanelOf(item) {
+    const id = item.getAttribute('data-tab');
+    return id ? document.getElementById(id) : null;
+  }
+
+  function syncTabState(item) {
+    const on = isActive(item);
+    item.setAttribute('aria-selected', String(on));
+    item.tabIndex = on ? 0 : -1;
+  }
+
+  function selectTab(items, item) {
+    items.forEach((other) => {
+      const on = other === item;
+      setActive(other, on);
+      setActive(tabPanelOf(other), on);
+      syncTabState(other);
+    });
+
+    const nav = item.closest('.mw-tabs-nav');
+    if (nav) measureTabsMarker(nav);
+  }
+
+  function tabKeyTarget(event, vertical, count, index) {
+    const back = vertical ? 'ArrowUp' : 'ArrowLeft';
+    const forward = vertical ? 'ArrowDown' : 'ArrowRight';
+
+    if (event.key === back) return (index - 1 + count) % count;
+    if (event.key === forward) return (index + 1) % count;
+    if (event.key === 'Home') return 0;
+    if (event.key === 'End') return count - 1;
+    return null;
   }
 
   // ===== Alerts =====
@@ -691,16 +782,70 @@
   }
 
   // ===== Modals =====
+
+  // Two shapes: the older `mw-modal-overlay` div toggled by class, and `<dialog>`,
+  // where focus trap, Escape and the inert background are the browser's job.
+  // Delegated, so a modal added later works too.
   function initModals() {
-    document.querySelectorAll('.mw-modal-close').forEach((button) => {
-      button.addEventListener('click', function () {
-        const modal = this.closest('.mw-modal-overlay');
-        if (modal) {
-          modal.classList.remove('mw-modal-open');
+    document.addEventListener('click', (e) => {
+      const closer = e.target.closest('.mw-modal-close');
+      if (closer) {
+        const dialog = closer.closest('dialog.mw-modal');
+        if (dialog) {
+          dialog.close();
+          return;
         }
-      });
+        const overlay = closer.closest('.mw-modal-overlay');
+        if (overlay) overlay.classList.remove('mw-modal-open');
+        return;
+      }
+
+      const opener = e.target.closest('[data-mw-modal]');
+      if (opener) {
+        openModal(document.getElementById(opener.dataset.mwModal));
+        return;
+      }
+
+      // Light dismiss for a dialog the browser does not dismiss itself. A click
+      // that lands on the dialog element is a click on the backdrop - the
+      // content sits in .mw-modal-header/body/footer inside it.
+      if (
+        e.target.matches('dialog.mw-modal[open]') &&
+        !dismissesItself(e.target)
+      ) {
+        e.target.close();
+      }
     });
   }
+
+  // True when `closedby` is on the element *and* understood, which is the only
+  // case where the browser closes the dialog on a backdrop click by itself.
+  function dismissesItself(dialog) {
+    return 'closedBy' in dialog && dialog.getAttribute('closedby') !== null;
+  }
+
+  // Opens either shape. Exposed, because which modal opens when is the
+  // application's decision and not something markup can express on its own.
+  function openModal(modal) {
+    if (!modal) return;
+    if (modal.tagName === 'DIALOG') {
+      modal.showModal();
+    } else {
+      modal.classList.add('mw-modal-open');
+    }
+  }
+
+  function closeModal(modal) {
+    if (!modal) return;
+    if (modal.tagName === 'DIALOG') {
+      modal.close();
+    } else {
+      modal.classList.remove('mw-modal-open');
+    }
+  }
+
+  window.mwOpenModal = (id) => openModal(document.getElementById(id));
+  window.mwCloseModal = (id) => closeModal(document.getElementById(id));
 
   // ===== Login Button =====
   function initHeaderLoginButton() {
@@ -926,14 +1071,9 @@
 
       target.querySelector('.mw-kanban-column-body').appendChild(card);
 
-      // The card lands in a lane somewhere else on the board, so it says so on
-      // arrival and comes in from the side it was pushed from. Re-parenting it
-      // alone made it blink into the other column with no motion at all.
-      //
-      // Both classes come off first and the reflow is forced in between: an
-      // element that already carries the class it is being given again keeps
-      // the finished animation and plays nothing, so a second push in the same
-      // direction would be the silent one.
+      // Re-parenting alone makes the card blink into the other column, so it comes
+      // in from the side it was pushed from. Both classes come off first with a
+      // forced reflow between, or a second push in the same direction is silent.
       card.classList.remove.apply(card.classList, MOVE_CLASSES);
       void card.offsetWidth;
       card.classList.add(offset > 0 ? MOVE_CLASSES[0] : MOVE_CLASSES[1]);

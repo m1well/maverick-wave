@@ -11,10 +11,16 @@
       content="telephone=no,email=no,address=no,date=no"
     />
     <title>MaverickWave</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <!-- Third-party CSS goes into a layer of its own, declared ahead of the
+         framework's. Unlayered CSS beats every layer, so a plain <link> here
+         would let Font Awesome's `.fas { display }` win over `.mw-tags-icon`.
+         Any project that loads a vendor stylesheet next to MaverickWave wants
+         these two lines. -->
+    <style>
+      @layer vendor, mw;
+      @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+      layer(vendor);
+    </style>
     <link rel="stylesheet" href="maverick-wave.min.css" />
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
@@ -40,18 +46,10 @@
         position: relative;
       }
 
+      /* A version number is digits, so it gets the mono stack - the rest of
+         the pill is mw-hero-badge */
       .version-corner {
-        position: absolute;
-        top: -24px;
-        right: 13%;
-        background: var(--mw-primary-color);
-        color: var(--mw-primary-accent-text-color);
-        font-size: 1.1rem;
-        padding: 0.3rem 0.7rem;
-        border-radius: 0.4rem;
-        font-weight: 600;
-        box-shadow: 3px 7px 10px var(--mw-shadow);
-        transform: rotate(7deg);
+        font-family: var(--mw-font-family-mono);
       }
 
       .color-card {
@@ -80,11 +78,6 @@
 
       /* Medium screens */
       @media (max-width: 992px) {
-        .version-corner {
-          right: 7%;
-          font-size: 1rem;
-        }
-
         /* Two calendars side by side squeeze their cells below md, so they
            stack one breakpoint earlier than mw-grid-2 would on its own */
         .calendar-demos {
@@ -94,15 +87,6 @@
 
       /* Small screens */
       @media (max-width: 576px) {
-        /* The h1 drops to 2.2rem down here, so the sticker has to move up with
-           it or it lands on the word instead of next to it */
-        .version-corner {
-          top: -32px;
-          right: 4%;
-          font-size: 0.9rem;
-          padding: 0.25rem 0.55rem;
-        }
-
         .color-swatch {
           margin: 0 auto 7px auto;
           width: 92%;
@@ -115,6 +99,8 @@
   </head>
 
   <body>
+    <a class="mw-skip-link" href="#main">Skip to content</a>
+
     <!-- Header -->
     <header class="mw-header mw-localhost-indicator-activated">
       <div class="mw-container">
@@ -122,7 +108,7 @@
       </div>
     </header>
 
-    <main class="mw-main">
+    <main class="mw-main" id="main">
       <!-- Home section -->
       <section id="home" class="mw-section">
         <div class="mw-container">
@@ -612,14 +598,9 @@
         apply(cycleSwitch.querySelector('.mw-active'));
       });
 
-      // for the modals
-      function openModal(modalId) {
-        document.getElementById(modalId).classList.add('mw-modal-open');
-      }
-
-      function closeModal(modalId) {
-        document.getElementById(modalId).classList.remove('mw-modal-open');
-      }
+      // for the modals - the framework handles both shapes, div and <dialog>
+      const openModal = window.mwOpenModal;
+      const closeModal = window.mwCloseModal;
     </script>
   </body>
 </html>

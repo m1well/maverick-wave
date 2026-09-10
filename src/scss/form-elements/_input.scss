@@ -1,92 +1,92 @@
 @use '../abstracts' as *;
 
-.mw-input {
-  width: 100%;
-  padding: spacing('2') spacing('3');
-  font-size: var(--mw-control-font);
-  line-height: var(--mw-control-line-height);
-  min-height: var(--mw-control-height);
-  background: var(--mw-form-elements-background);
-  color: var(--mw-form-elements-color);
-  border: 2px solid var(--mw-border);
-  border-radius: radius('sm');
-  transition: var(--mw-transition);
-  font-family: inherit;
+@layer mw.forms {
+  .mw-input {
+    width: 100%;
+    padding: spacing('2') spacing('3');
+    font-size: var(--mw-control-font);
+    line-height: var(--mw-control-line-height);
+    min-height: var(--mw-control-height);
+    background: var(--mw-form-elements-background);
+    color: var(--mw-form-elements-color);
+    border: 2px solid var(--mw-border);
+    border-radius: radius('sm');
+    transition: var(--mw-transition);
+    font-family: inherit;
 
-  &::placeholder {
-    color: var(--mw-text-muted-color);
-    opacity: 0.7;
-  }
-
-  &:hover:not(:focus):not(:read-only):not(:disabled) {
-    border-color: var(--mw-gray-color);
-  }
-
-  @include field-focus;
-
-  &:read-only {
-    background-color: var(--mw-gray-background);
-    color: var(--mw-text-muted-color);
-    cursor: default;
-    box-shadow: none;
-  }
-
-  &-sm {
-    padding: spacing('1') spacing('2');
-    font-size: var(--mw-control-font-sm);
-    min-height: var(--mw-control-height-sm);
-  }
-  &-lg {
-    padding: spacing('2') spacing('4');
-    font-size: var(--mw-control-font-lg);
-    min-height: var(--mw-control-height-lg);
-  }
-
-  // Numeric input for money and other figures - the entry counterpart to the
-  // `mw-text-numeric` utility, so a value looks the same while being typed and
-  // once it is rendered into a table.
-  //
-  // Pair it with `type="text" inputmode="decimal"`, not `type="number"`:
-  // number inputs change their value on scroll, and they reject a comma as
-  // decimal separator in most locales, which silently empties `.value` for
-  // anyone typing "1234,50".
-  &-numeric {
-    text-align: right;
-    font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: 'tnum', 'lnum';
-
-    // Suppress the native spinners if a `type="number"` slips through - their
-    // step of 1 is meaningless for an amount and the arrows are tiny.
-    appearance: textfield;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      appearance: none;
-      margin: 0;
+    &::placeholder {
+      color: var(--mw-text-muted-color);
+      opacity: 0.7;
     }
-  }
 
-  // Date / time inputs - style the native picker indicator
-  &[type='date'],
-  &[type='time'],
-  &[type='datetime-local'] {
-    &::-webkit-calendar-picker-indicator {
-      cursor: pointer;
-      opacity: 0.55;
-      padding: 0;
-      margin-left: spacing('1');
-      transition: opacity var(--mw-duration-fast) var(--mw-ease-out);
+    &:hover:not(:focus):not(:read-only):not(:disabled) {
+      border-color: var(--mw-gray-color);
+    }
 
-      &:hover {
-        opacity: 1;
+    @include field-focus;
+
+    &:read-only {
+      background-color: var(--mw-gray-background);
+      color: var(--mw-text-muted-color);
+      cursor: default;
+      box-shadow: none;
+    }
+
+    &-sm {
+      padding: spacing('1') spacing('2');
+      font-size: var(--mw-control-font-sm);
+      min-height: var(--mw-control-height-sm);
+    }
+    &-lg {
+      padding: spacing('2') spacing('4');
+      font-size: var(--mw-control-font-lg);
+      min-height: var(--mw-control-height-lg);
+    }
+
+    // Numeric input for money and other figures - the entry counterpart to the
+    // `mw-text-numeric` utility, so a value looks the same while being typed and
+    // once it is rendered into a table.
+    //
+    // Pair it with `type="text" inputmode="decimal"`, not `type="number"`:
+    // number inputs change their value on scroll, and they reject a comma as
+    // decimal separator in most locales, which silently empties `.value` for
+    // anyone typing "1234,50".
+    &-numeric {
+      text-align: right;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: 'tnum', 'lnum';
+
+      // Suppress the native spinners if a `type="number"` slips through - their
+      // step of 1 is meaningless for an amount and the arrows are tiny.
+      appearance: textfield;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
       }
     }
-  }
 
-  // disabled state
-  &:disabled {
-    background-color: var(--mw-gray-background);
-    color: var(--mw-text-muted-color);
-    cursor: not-allowed;
+    &[type='date'],
+    &[type='time'],
+    &[type='datetime-local'] {
+      &::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.55;
+        padding: 0;
+        margin-left: spacing('1');
+        transition: opacity var(--mw-duration-fast) var(--mw-ease-out);
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:disabled {
+      background-color: var(--mw-gray-background);
+      color: var(--mw-text-muted-color);
+      cursor: not-allowed;
+    }
   }
 }

@@ -1,11 +1,11 @@
 <div class="mw-logo">
-  <button type="button" onclick="location.href = '#home'">
+  <a href="#home">
     <img src="header-logo.svg" alt="MaverickWave Logo" />
-  </button>
+  </a>
 </div>
 
 <div class="mw-header-actions">
-  <nav class="mw-navbar mw-navbar-medium">
+  <nav class="mw-navbar mw-navbar-medium" id="mw-main-nav">
     <ul class="mw-navbar-list">
       <li class="mw-navbar-item">
         <a href="#get-started" class="mw-navbar-link">Get Started</a>
@@ -42,12 +42,23 @@
   </button>
 
   <!-- Login Button -->
-  <button class="mw-login-btn" id="login-button">
+  <button
+    type="button"
+    class="mw-login-btn"
+    id="login-button"
+    aria-label="Log in"
+  >
     <i class="fas fa-lock"></i>
   </button>
 
   <!-- Burger Menu Button -->
-  <div class="mw-menu-btn">
-    <div class="mw-menu-btn-burger"></div>
-  </div>
+  <button
+    type="button"
+    class="mw-menu-btn"
+    aria-label="Menu"
+    aria-expanded="false"
+    aria-controls="mw-main-nav"
+  >
+    <span class="mw-menu-btn-burger"></span>
+  </button>
 </div>

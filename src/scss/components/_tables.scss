@@ -1,186 +1,193 @@
 @use '../abstracts' as *;
 
-// Base table styles
-.mw-table {
-  width: 100%;
-  margin: spacing('1') spacing('0');
-  border-collapse: collapse;
-  background: var(--mw-card-background);
-
-  th,
-  td {
-    padding: spacing('3') spacing('4');
-    text-align: left;
-    border: 1px solid var(--mw-border);
-    color: var(--mw-text-muted-color);
-  }
-
-  th {
-    font-weight: font-weight('medium');
-    color: var(--mw-primary-accent-text-color);
-    background: var(--mw-primary-color);
-    user-select: none;
-  }
-
-  // Zebra striping
-  tr:nth-child(even) {
-    background: var(--mw-gray-background);
-  }
-
-  tr:hover {
-    td {
-      background: var(--mw-primary-background-hover);
-      color: var(--mw-text-color);
-    }
-  }
-
-  @include media-down('sm') {
-    th,
-    td {
-      padding: spacing('2') spacing('3');
-      font-size: font-size('xs');
-    }
-  }
-}
-
-// Responsive table container
-.mw-table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: spacing('1');
-
+@layer mw.components {
+  // Base table styles
   .mw-table {
-    margin-bottom: spacing('0');
-  }
-}
+    width: 100%;
+    margin: spacing('1') spacing('0');
+    border-collapse: collapse;
+    background: var(--mw-card-background);
 
-// Scroll hint for a table that is known to be wider than its frame.
-//
-// Opt-in, unlike the one on the tab bar, and by a different mechanism. A table
-// paints its own opaque surface, so the gradient trick used on `.mw-tabs-nav`
-// would sit behind the rows and never show. A mask sits in front of the
-// content and works - but masks have no `local` attachment, so it cannot
-// disappear once the last column is reached. Hence the extra class: only put
-// it on a table that really does overflow.
-.mw-table-responsive-hint {
-  mask-image: linear-gradient(
-    to right,
-    #000 calc(100% - 2.5rem),
-    transparent 100%
-  );
-}
-
-// Card view for mobile - clean and simple approach
-.mw-table-cards {
-  @include media-down('md') {
-    // Hide table header on mobile
-    thead {
-      display: none;
-    }
-
-    // Make each row a card
-    tr {
-      display: block;
-      margin-bottom: spacing('3');
-      box-shadow: var(--mw-elevation-2);
-      background: var(--mw-card-background);
-      cursor: text;
-    }
-
-    // Style each cell as a row in the card
-    td {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: spacing('1') spacing('4');
-
-      // Add the column header as a label
-      &::before {
-        content: attr(data-label);
-        font-weight: font-weight('medium');
-        color: var(--mw-text-color);
-        flex: 1;
-        text-align: left;
-      }
-
-      // The cell value
-      span,
-      a,
-      div {
-        flex: 2;
-        text-align: right;
-      }
-    }
-
-    // Add some visual separation between cards
-    tr:not(:last-child) {
-      margin-bottom: spacing('4');
-    }
-  }
-}
-
-// Compact table
-.mw-table-compact {
-  th,
-  td {
-    padding: spacing('1') spacing('2');
-    font-size: font-size('sm');
-  }
-
-  @include media-down('sm') {
     th,
     td {
+      padding: spacing('3') spacing('4');
+      text-align: left;
+      border: 1px solid var(--mw-border);
+      color: var(--mw-text-muted-color);
+    }
+
+    th {
+      font-weight: font-weight('medium');
+      color: var(--mw-primary-accent-text-color);
+      background: var(--mw-primary-color);
+      user-select: none;
+    }
+
+    // Zebra striping
+    tr:nth-child(even) {
+      background: var(--mw-gray-background);
+    }
+
+    // The tinted surface at rest, not the hovered one. A row starts out
+    // transparent, so it takes the whole step in one go - and at the hover tone
+    // it lands close enough to the solid header above it to read as selected
+    // rather than as pointed at. A badge or a tag is already sitting on the
+    // resting tint, which is why the louder one is right there and not here.
+    tr:hover {
+      td {
+        background: var(--mw-primary-background);
+        color: var(--mw-text-color);
+      }
+    }
+
+    @include media-down('sm') {
+      th,
+      td {
+        padding: spacing('2') spacing('3');
+        font-size: font-size('xs');
+      }
+    }
+  }
+
+  // Responsive table container
+  .mw-table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: spacing('1');
+
+    .mw-table {
+      margin-bottom: spacing('0');
+    }
+  }
+
+  // Scroll hint for a table that is known to be wider than its frame.
+  //
+  // Opt-in, unlike the one on the tab bar, and by a different mechanism. A table
+  // paints its own opaque surface, so the gradient trick used on `.mw-tabs-nav`
+  // would sit behind the rows and never show. A mask sits in front of the
+  // content and works - but masks have no `local` attachment, so it cannot
+  // disappear once the last column is reached. Hence the extra class: only put
+  // it on a table that really does overflow.
+  .mw-table-responsive-hint {
+    mask-image: linear-gradient(
+      to right,
+      #000 calc(100% - 2.5rem),
+      transparent 100%
+    );
+  }
+
+  // Card view for mobile - clean and simple approach
+  .mw-table-cards {
+    @include media-down('md') {
+      // Hide table header on mobile
+      thead {
+        display: none;
+      }
+
+      // Make each row a card
+      tr {
+        display: block;
+        margin-bottom: spacing('3');
+        box-shadow: var(--mw-elevation-2);
+        background: var(--mw-card-background);
+        cursor: text;
+      }
+
+      // Style each cell as a row in the card
+      td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: spacing('1') spacing('4');
+
+        // Add the column header as a label
+        &::before {
+          content: attr(data-label);
+          font-weight: font-weight('medium');
+          color: var(--mw-text-color);
+          flex: 1;
+          text-align: left;
+        }
+
+        // The cell value
+        span,
+        a,
+        div {
+          flex: 2;
+          text-align: right;
+        }
+      }
+
+      // Add some visual separation between cards
+      tr:not(:last-child) {
+        margin-bottom: spacing('4');
+      }
+    }
+  }
+
+  // Compact table
+  .mw-table-compact {
+    th,
+    td {
+      padding: spacing('1') spacing('2');
       font-size: font-size('2xs');
     }
-  }
-}
 
-// Hoverable rows
-.mw-table-hover {
-  tbody tr:hover {
-    background: var(--mw-primary-background-hover);
-  }
-}
-
-// Quiet header for data-heavy views
-.mw-table-subtle {
-  th {
-    background: color-mix(
-      in srgb,
-      var(--mw-gray-color) 20%,
-      var(--mw-card-background)
-    );
-    color: var(--mw-text-color);
-    border-bottom: 2px solid var(--mw-border-accent);
-  }
-}
-
-// Header stays visible while the body scrolls
-.mw-table-sticky-head {
-  th {
-    position: sticky;
-    top: spacing('0');
-    z-index: z-index('lift');
-    box-shadow:
-      inset 0 1px 0 var(--mw-border),
-      inset 0 -1px 0 var(--mw-border);
-  }
-}
-
-.mw-table-responsive-scroll {
-  @extend .mw-table-responsive;
-  --mw-table-scroll-height: 400px;
-  max-height: var(--mw-table-scroll-height);
-  overflow-y: auto;
-
-  .mw-table {
-    margin-top: spacing('0');
+    @include media-up('sm') {
+      th,
+      td {
+        font-size: font-size('sm');
+      }
+    }
   }
 
-  // Rows get shorter on small screens
-  @include media-down('sm') {
+  // Hoverable rows
+  .mw-table-hover {
+    tbody tr:hover {
+      background: var(--mw-primary-background);
+    }
+  }
+
+  // Quiet header for data-heavy views
+  .mw-table-subtle {
+    th {
+      background: color-mix(
+        in srgb,
+        var(--mw-gray-color) 20%,
+        var(--mw-card-background)
+      );
+      color: var(--mw-text-color);
+      border-bottom: 2px solid var(--mw-border-accent);
+    }
+  }
+
+  // Header stays visible while the body scrolls
+  .mw-table-sticky-head {
+    th {
+      position: sticky;
+      top: spacing('0');
+      z-index: z-index('lift');
+      box-shadow:
+        inset 0 1px 0 var(--mw-border),
+        inset 0 -1px 0 var(--mw-border);
+    }
+  }
+
+  .mw-table-responsive-scroll {
+    @extend .mw-table-responsive;
     --mw-table-scroll-height: 260px;
+    max-height: var(--mw-table-scroll-height);
+    overflow-y: auto;
+
+    .mw-table {
+      margin-top: spacing('0');
+    }
+
+    // Rows get shorter on small screens
+    @include media-up('sm') {
+      --mw-table-scroll-height: 400px;
+    }
   }
 }

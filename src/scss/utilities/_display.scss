@@ -1,97 +1,103 @@
 @use '../abstracts' as *;
 
-// Display utilities
-.mw-d {
-  &-flex {
-    display: flex;
+@layer mw.utilities {
+  .mw-d {
+    &-flex {
+      display: flex;
+    }
+
+    &-inline-flex {
+      display: inline-flex;
+    }
+
+    &-block {
+      display: block;
+    }
+
+    &-inline {
+      display: inline;
+    }
+
+    &-inline-block {
+      display: inline-block;
+    }
+
+    &-grid {
+      display: grid;
+    }
+
+    &-none {
+      display: none;
+    }
+
+    // For a wrapper that must not become a flex/grid item itself - the element
+    // generates no box, so its children take over the item role
+    &-contents {
+      display: contents;
+    }
   }
 
-  &-inline-flex {
-    display: inline-flex;
+  @each $key, $value in $radius {
+    .mw-radius-#{$key} {
+      border-radius: $value;
+    }
   }
 
-  &-block {
-    display: block;
-  }
+  $_mw-responsive-displays: (
+    none,
+    block,
+    flex,
+    inline-flex,
+    grid,
+    inline-block
+  );
 
-  &-inline {
-    display: inline;
-  }
-
-  &-inline-block {
-    display: inline-block;
-  }
-
-  &-grid {
-    display: grid;
-  }
-
-  &-none {
-    display: none;
-  }
-
-  // For a wrapper that must not become a flex/grid item itself - the element
-  // generates no box, so its children take over the item role
-  &-contents {
-    display: contents;
-  }
-}
-
-// Border radius
-@each $key, $value in $radius {
-  .mw-radius-#{$key} {
-    border-radius: $value;
-  }
-}
-
-// Responsive display
-$_mw-responsive-displays: (none, block, flex, inline-flex, grid, inline-block);
-
-@each $bp in ('sm', 'md', 'lg', 'xl') {
-  @include media-up($bp) {
-    @each $value in $_mw-responsive-displays {
-      .mw-d-#{$bp}-#{$value} {
-        display: #{$value};
+  @each $bp in ('sm', 'md', 'lg', 'xl') {
+    @include media-up($bp) {
+      @each $value in $_mw-responsive-displays {
+        .mw-d-#{$bp}-#{$value} {
+          display: #{$value};
+        }
       }
     }
   }
-}
 
-// The two everyone actually reaches for, spelled out. `md` is the divide: below
-// it a phone, at it and above a tablet with room for a second column.
-.mw-hide-mobile {
-  @include media-down('md') {
-    display: none !important;
+  // The two everyone actually reaches for, spelled out. `md` is the divide: below
+  // it a phone, at it and above a tablet with room for a second column.
+  .mw-hide-mobile {
+    @include media-down('md') {
+      display: none;
+    }
   }
-}
 
-.mw-hide-desktop {
-  @include media-up('md') {
-    display: none !important;
+  .mw-hide-desktop {
+    @include media-up('md') {
+      display: none;
+    }
   }
-}
 
-// Overflow, for the wrappers that hold something wider than the phone they are
-// being read on
-.mw-overflow-auto {
-  overflow: auto;
-}
+  // Overflow, for the wrappers that hold something wider than the phone they are
+  // being read on
+  .mw-overflow-auto {
+    overflow: auto;
+  }
 
-.mw-overflow-x-auto {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-}
+  .mw-overflow-x-auto {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
 
-.mw-overflow-hidden {
-  overflow: hidden;
-}
+  .mw-overflow-hidden {
+    overflow: hidden;
+  }
 
-// Snap a horizontal strip so it comes to rest on an item instead of halfway
-// between two - a row of cards swiped through on a phone
-.mw-snap-x {
-  scroll-snap-type: x mandatory;
+  // Snap a horizontal strip so it comes to rest on an item instead of halfway
+  // between two - a row of cards swiped through on a phone
+  .mw-snap-x {
+    scroll-snap-type: x mandatory;
 
-  > * {
-    scroll-snap-align: start;
+    > * {
+      scroll-snap-align: start;
+    }
   }
 }

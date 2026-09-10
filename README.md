@@ -6,7 +6,7 @@ While AI tools helped kickstart the development of some components and provided 
 
 - Consistent implementation of custom variables throughout the system
 - Proper integration between components and logical SCSS structure
-- Optimized specificity and selector hierarchy
+- Cascade layers throughout, so a project overrides any `mw-` class with a plain selector
 - Reliable responsive behavior across devices
 - Built-in dark mode support and accessibility considerations
 
@@ -25,6 +25,8 @@ The result is a framework that balances utility with simplicity, offering develo
 - Easy Customization via CSS Custom Properties
 - Built-in Light & Dark Mode with optional theme switching
 - SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
+- Modals as `<div>` or as `<dialog>` - the latter brings the focus trap, Escape and the inert background from the platform
+- Native form validation is styled through `:user-invalid`, alongside the class-driven error states for reactive forms
 - Minimal JavaScript footprint (single vanilla JS file, no dependencies)
 
 ## Installation & Usage
@@ -40,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@4.28.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.0.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@4.28.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.0.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -307,6 +309,42 @@ card - keep that ordering if you retune the card, or the footer stops looking
 like a footer. The rule between the surfaces keeps its own fixed factor: it runs
 against the card, or it disappears into what it separates.
 
+### Overriding
+
+Everything the framework emits sits in cascade layers:
+
+```css
+@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities;
+```
+
+An unlayered rule beats every layer no matter how specific it is, so a project
+overrides a component with a single class selector - no `!important`, no
+`.mw-card.mw-card`:
+
+```css
+.mw-card {
+  border-radius: 12px;
+}
+```
+
+`!important` is not the stronger version of that, it is the weaker one: for
+important declarations the layer order reverses and unlayered comes last, so an
+important rule in `mw.base` beats an important one of yours even behind an ID
+selector. A project coming from before 5.0 can drop the `!important`s it carried
+for these overrides - the plain rule already wins.
+
+That cuts both ways: third-party CSS loaded unlayered also beats the framework,
+which is how an icon font ends up winning over `mw-tags-icon`. Load it into a
+layer of its own:
+
+```html
+<style>
+  @layer vendor, mw;
+  @import url('https://cdn.example.com/font-awesome.css') layer(vendor);
+</style>
+<link rel="stylesheet" href="maverick-wave.min.css" />
+```
+
 ### SCSS Source
 
 For full control, clone the repository and integrate `src/scss/main.scss` into your Sass build (Dart Sass required). MaverickWave uses modern `@use`/`@forward` syntax. Pass your overrides through `with`:
@@ -394,8 +432,14 @@ above):
 > contract. Theme switching, for example, is a single class on `<body>`:
 
 ```typescript
-// theme.service.ts
+// theme.service.ts - mw-theme-switching suppresses the transitions the flip
+// would otherwise start on every element at once
+const root = document.documentElement;
+
+root.classList.add('mw-theme-switching');
 document.body.classList.toggle('mw-theme-light', isLight);
+void root.offsetHeight;
+root.classList.remove('mw-theme-switching');
 ```
 
 The `mw-field` wrapper groups label, control, hint and error. Bind the error

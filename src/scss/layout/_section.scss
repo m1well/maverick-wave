@@ -1,150 +1,176 @@
 @use '../abstracts' as *;
 
-.mw-section-title {
-  font-size: font-size('3xl');
-  margin-bottom: var(--mw-section-title-gap);
-  text-align: center;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: spacing('-3');
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 5px;
-    background: var(--mw-primary-text-color);
+@layer mw.layout {
+  // The rule under a section heading. Shared, so the two levels cannot drift
+  // apart in width and weight - the subtitle carried the wider mark, which reads
+  // as the louder one under the smaller heading. Colour is where they do part.
+  @mixin _section-rule(
+    $width,
+    $height,
+    $offset,
+    $color: var(--mw-primary-text-color)
+  ) {
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: $offset;
+      left: 50%;
+      transform: translateX(-50%);
+      width: $width;
+      height: $height;
+      border-radius: radius('xs');
+      background: $color;
+    }
   }
 
-  @include media-down('sm') {
+  .mw-section-title {
     font-size: font-size('2xl');
-  }
-}
+    margin-bottom: var(--mw-section-title-gap);
+    text-align: center;
+    position: relative;
 
-// The lead line under a section title. Every landing page writes this
-// paragraph, and it always wants the same four things: centred, muted,
-// narrower than the container so it reads as a line rather than a block, and
-// pulled up toward the title it belongs to - the title's gap is sized for the
-// content below, not for its own subtitle.
-.mw-section-intro {
-  max-width: 46rem;
-  margin: spacing('-3') auto spacing('9');
-  font-size: font-size('md');
-  color: var(--mw-text-muted-color);
-  text-align: center;
-  text-wrap: balance;
-}
+    @include _section-rule(56px, 3px, spacing('-3'));
 
-.mw-section-subtitle {
-  font-size: font-size('2xl');
-  margin: spacing('8') spacing('0') spacing('6') spacing('0');
-  text-align: center;
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: spacing('-2');
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 2px;
-    background: var(--mw-secondary-text-color);
+    @include media-up('sm') {
+      font-size: font-size('3xl');
+    }
   }
 
-  @include media-down('sm') {
+  // The lead line under a section title. Every landing page writes this
+  // paragraph, and it always wants the same four things: centred, muted,
+  // narrower than the container so it reads as a line rather than a block, and
+  // pulled up toward the title it belongs to - the title's gap is sized for the
+  // content below, not for its own subtitle.
+  .mw-section-intro {
+    max-width: 46rem;
+    margin: spacing('-3') auto spacing('9');
+    font-size: font-size('md');
+    color: var(--mw-text-muted-color);
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  .mw-section-subtitle {
     font-size: font-size('xl');
-  }
-}
+    // The step above a demo gap of spacing('6') - at spacing('8') the boundary
+    // between two components read like the one between two demos
+    margin: spacing('10') spacing('0') spacing('6') spacing('0');
+    text-align: center;
+    position: relative;
 
-.mw-section-nav {
-  max-width: 100%;
-  margin: spacing('0') auto spacing('0') auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: spacing('3');
-}
+    @include _section-rule(
+      32px,
+      2px,
+      spacing('-2'),
+      var(--mw-secondary-text-color)
+    );
 
-.mw-section-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: spacing('3');
-  padding: spacing('3') spacing('4');
-  border: 1px solid var(--mw-primary-text-color);
-  border-radius: radius('sm');
-  font-weight: font-weight('medium');
-  font-size: inherit;
-  font-family: inherit;
-  text-decoration: none;
-  cursor: pointer;
-  transition: var(--mw-transition);
-  box-sizing: border-box;
-  background: transparent;
-  color: var(--mw-primary-text-color);
-
-  &:hover:not(:disabled) {
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
+    @include media-up('sm') {
+      font-size: font-size('2xl');
+    }
   }
 
-  &:active:not(:disabled) {
-    transform: translateY(1px);
-    transition-duration: var(--mw-duration-instant);
-  }
-
-  @include focus-ring;
-  @include tappable;
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-}
-
-// Responsive adjustments
-@include media-down('sm') {
+  // Sticky, because the strip is the only way back: inside a long section the
+  // nav at the entrance can be twenty thousand pixels behind the reader
   .mw-section-nav {
-    flex-direction: column;
+    position: sticky;
+    top: var(--mw-header-height);
+    z-index: z-index('menu');
     width: 100%;
-    max-width: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    padding-block: spacing('3');
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    // A long strip aligns to its start instead of centring both ends out of reach
+    justify-content: safe center;
+    gap: spacing('3');
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    // Opaque and unblurred - the strip repaints on every scroll frame, and the
+    // alternate sections build their pattern on this same colour anyway
+    background: var(--mw-page-background);
+
+    @include scrollbar;
+  }
+
+  // The strip parks under the header, so a jump to a component clears both
+  .mw-container > div:has(> .mw-section-subtitle) {
+    scroll-margin-top: calc(
+      var(--mw-header-height) + var(--mw-section-nav-height) + #{spacing('5')}
+    );
   }
 
   .mw-section-btn {
-    width: 100%;
-    text-align: center;
-  }
-}
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    // No shrinking in a row that scrolls rather than wraps
+    flex: 0 0 auto;
+    gap: spacing('3');
+    padding: spacing('3') spacing('4');
+    border: 1px solid var(--mw-primary-text-color);
+    border-radius: radius('sm');
+    font-weight: font-weight('medium');
+    font-size: inherit;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--mw-transition);
+    box-sizing: border-box;
+    background: transparent;
+    color: var(--mw-primary-text-color);
 
-// Additional spacing for the whole section
-.mw-section {
-  padding: var(--mw-section-padding-block) spacing('0');
-  position: relative;
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+    }
 
-  // ...except around a hero. The hero container is already 100dvh, so the
-  // padding pushes exactly that much of it past the bottom of the screen -
-  // and with it the scroll cue sitting on its lower edge. A hero is the full
-  // screen by definition and brings its own breathing room.
-  @supports (selector(:has(.mw-hero))) {
-    &:has(.mw-hero) {
-      padding-block: spacing('0');
+    &:active:not(:disabled) {
+      transform: translateY(1px);
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    @include focus-ring;
+    @include tappable;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
-}
 
-// Pattern variant for sections
-.mw-section-alternate {
-  position: relative;
-  --s: 5px; // size
-  --c1: var(--mw-page-background);
-  --c2: var(--mw-section-alternate-pattern);
-  --g: var(--c2) -5% 5%, var(--c1) 0 45%;
-  background:
-    linear-gradient(0deg, #0000 10%, var(--c1) 0 40%, #0000 0),
-    repeating-linear-gradient(-45deg, var(--g)) var(--c1);
-  background-size: var(--s) var(--s);
+  @include media-down('sm') {
+    // The section boundary steps down to 56px on a phone, so the component
+    // boundary steps with it or the two stop being distinguishable
+    .mw-section-subtitle {
+      margin-top: spacing('7');
+    }
+  }
+
+  .mw-section {
+    padding: var(--mw-section-padding-block) spacing('0');
+    position: relative;
+
+    // ...except around a hero. The hero container is already 100dvh, so the
+    // padding pushes exactly that much of it past the bottom of the screen -
+    // and with it the scroll cue sitting on its lower edge. A hero is the full
+    // screen by definition and brings its own breathing room.
+    @supports (selector(:has(.mw-hero))) {
+      &:has(.mw-hero) {
+        padding-block: spacing('0');
+      }
+    }
+  }
+
+  .mw-section-alternate {
+    position: relative;
+    --s: 5px;
+    --c1: var(--mw-page-background);
+    --c2: var(--mw-section-alternate-pattern);
+    --g: var(--c2) -5% 5%, var(--c1) 0 45%;
+    background:
+      linear-gradient(0deg, #0000 10%, var(--c1) 0 40%, #0000 0),
+      repeating-linear-gradient(-45deg, var(--g)) var(--c1);
+    background-size: var(--s) var(--s);
+  }
 }

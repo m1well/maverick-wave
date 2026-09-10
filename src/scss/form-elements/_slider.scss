@@ -1,157 +1,142 @@
-// _slider.scss
 @use '../abstracts' as *;
 
-// color map
-$_mw-slider-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
+@layer mw.forms {
+  .mw-slider {
+    --value: 0%;
+    --fill: var(--mw-primary-color);
+    --track: var(--mw-gray-background);
 
-.mw-slider {
-  --value: 0%;
-  --fill: var(--mw-primary-color);
-  --track: var(--mw-gray-background);
-
-  width: 100%;
-  height: 8px;
-  background: linear-gradient(
-    to right,
-    var(--fill) 0,
-    var(--fill) var(--value),
-    var(--track) var(--value),
-    var(--track) 100%
-  );
-  border-radius: radius('sm');
-  appearance: none;
-  cursor: pointer;
-  margin-top: spacing('2');
-
-  // thumb
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: spacing('5');
-    height: spacing('5');
-    background: var(--fill);
-    border: 2px solid var(--mw-border);
-    border-radius: radius('full');
-    margin-top: spacing('0');
-    transition:
-      transform var(--mw-duration-fast) var(--mw-ease-out),
-      border-color var(--mw-duration-fast) var(--mw-ease-out);
-  }
-  &::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-  }
-
-  &::-moz-range-thumb {
-    width: spacing('5');
-    height: spacing('5');
-    border: 2px solid var(--fill);
-    border-radius: radius('full');
-    transition:
-      transform var(--mw-duration-fast) var(--mw-ease-out),
-      border-color var(--mw-duration-fast) var(--mw-ease-out);
-  }
-  &::-moz-range-thumb:hover {
-    transform: scale(1.1);
-  }
-
-  // track styling for Firefox
-  &::-moz-range-track {
-    background: transparent;
-  }
-
-  // IE
-  &::-ms-fill-lower {
-    background: var(--fill);
-  }
-  &::-ms-fill-upper {
-    background: var(--track);
-  }
-  &::-ms-thumb {
-    width: spacing('5');
-    height: spacing('5');
-    border: 2px solid var(--fill);
-    border-radius: radius('full');
-  }
-
-  // sizes
-  &-sm {
-    height: 6px;
-    &::-webkit-slider-thumb {
-      width: spacing('4');
-      height: spacing('4');
-    }
-    &::-moz-range-thumb {
-      width: spacing('4');
-      height: spacing('4');
-    }
-    &::-ms-thumb {
-      width: spacing('4');
-      height: spacing('4');
-    }
-  }
-  &-lg {
-    height: 16px;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+      to right,
+      var(--fill) 0,
+      var(--fill) var(--value),
+      var(--track) var(--value),
+      var(--track) 100%
+    );
+    border-radius: radius('sm');
+    appearance: none;
+    cursor: pointer;
     margin-top: spacing('2');
+
+    @include focus-ring;
+
     &::-webkit-slider-thumb {
-      width: spacing('6');
-      height: spacing('6');
+      -webkit-appearance: none;
+      width: spacing('5');
+      height: spacing('5');
+      background: var(--fill);
+      border: 2px solid var(--mw-border);
+      border-radius: radius('full');
+      margin-top: spacing('0');
+      transition:
+        transform var(--mw-duration-fast) var(--mw-ease-out),
+        border-color var(--mw-duration-fast) var(--mw-ease-out);
     }
+    &::-webkit-slider-thumb:hover {
+      transform: scale(1.1);
+    }
+
     &::-moz-range-thumb {
-      width: spacing('6');
-      height: spacing('6');
+      width: spacing('5');
+      height: spacing('5');
+      border: 2px solid var(--fill);
+      border-radius: radius('full');
+      transition:
+        transform var(--mw-duration-fast) var(--mw-ease-out),
+        border-color var(--mw-duration-fast) var(--mw-ease-out);
+    }
+    &::-moz-range-thumb:hover {
+      transform: scale(1.1);
+    }
+
+    &::-moz-range-track {
+      background: transparent;
+    }
+
+    // IE
+    &::-ms-fill-lower {
+      background: var(--fill);
+    }
+    &::-ms-fill-upper {
+      background: var(--track);
     }
     &::-ms-thumb {
-      width: spacing('6');
-      height: spacing('6');
+      width: spacing('5');
+      height: spacing('5');
+      border: 2px solid var(--fill);
+      border-radius: radius('full');
+    }
+
+    &-sm {
+      height: 6px;
+      &::-webkit-slider-thumb {
+        width: spacing('4');
+        height: spacing('4');
+      }
+      &::-moz-range-thumb {
+        width: spacing('4');
+        height: spacing('4');
+      }
+      &::-ms-thumb {
+        width: spacing('4');
+        height: spacing('4');
+      }
+    }
+    &-lg {
+      height: 16px;
+      margin-top: spacing('2');
+      &::-webkit-slider-thumb {
+        width: spacing('6');
+        height: spacing('6');
+      }
+      &::-moz-range-thumb {
+        width: spacing('6');
+        height: spacing('6');
+      }
+      &::-ms-thumb {
+        width: spacing('6');
+        height: spacing('6');
+      }
+    }
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    @each $name, $col in $semantic-colors {
+      &-#{$name} {
+        --fill: #{$col};
+      }
     }
   }
-  // disabled
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
 
-  // color variants
-  @each $name, $col in $_mw-slider-colors {
-    &-#{$name} {
-      --fill: #{$col};
-    }
-  }
-}
+  .mw-slider-container {
+    position: relative;
+    width: 100%;
+    line-height: 1.2;
+    padding-bottom: spacing('2');
 
-.mw-slider-container {
-  position: relative;
-  width: 100%;
-  line-height: 1.2;
-  padding-bottom: spacing('2');
-
-  // the badge in top-right
-  .mw-slider-value {
-    position: absolute;
-    top: -17px;
-    right: 7px;
-    font-size: font-size('sm');
-    color: var(--mw-text-muted-color);
-    pointer-events: none;
-
-    @include media-down('sm') {
-      font-size: font-size('xs');
+    .mw-slider-value {
+      position: absolute;
       top: -15px;
-    }
+      right: 7px;
+      font-size: font-size('xs');
+      color: var(--mw-text-muted-color);
+      pointer-events: none;
 
-    // 1-10 numeric style
-    &.mw-slider-numeric::after {
-      content: attr(data-value) '/10';
-    }
-    // percentage style
-    &.mw-slider-percent::after {
-      content: attr(data-value) '%';
+      @include media-up('sm') {
+        font-size: font-size('sm');
+        top: -17px;
+      }
+
+      &.mw-slider-numeric::after {
+        content: attr(data-value) '/10';
+      }
+      &.mw-slider-percent::after {
+        content: attr(data-value) '%';
+      }
     }
   }
 }

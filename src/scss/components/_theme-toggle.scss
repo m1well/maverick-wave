@@ -1,61 +1,63 @@
 @use 'sass:map';
 @use '../abstracts' as *;
 
-.mw-theme-toggle {
-  position: relative;
-  top: 1px;
-  width: 60px;
-  height: 30px;
-  border-radius: radius('lg');
-  background: var(--mw-dark-footer-background);
-  border: 1px solid var(--mw-header-border);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: var(--mw-transition);
-  margin-right: spacing('5');
-  appearance: none;
-  padding: 0;
-  @include tappable;
-  @include focus-ring;
-
-  &:active {
-    transform: scale(0.95);
-    transition-duration: var(--mw-duration-instant);
-  }
-
-  @include media-down('lg') {
-    margin-right: spacing('6');
-  }
-
-  &-slider {
-    position: absolute;
-    left: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    border-radius: radius('full');
-    background: var(--mw-secondary-color);
+@layer mw.components {
+  .mw-theme-toggle {
+    position: relative;
+    top: 1px;
+    width: 60px;
+    height: 30px;
+    border-radius: radius('lg');
+    background: var(--mw-dark-footer-background);
+    border: 1px solid var(--mw-header-border);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
     transition: var(--mw-transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--mw-secondary-accent-text-color);
-    font-size: font-size('md');
-  }
+    margin-right: spacing('6');
+    appearance: none;
+    padding: 0;
+    @include tappable;
+    @include focus-ring;
 
-  &.mw-active &-slider,
-  &.active &-slider {
-    left: 35px;
-  }
+    &:active {
+      transform: scale(0.95);
+      transition-duration: var(--mw-duration-instant);
+    }
 
-  &-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    font-size: font-size('base');
-    transform: rotate(16deg);
+    @include media-up('lg') {
+      margin-right: spacing('5');
+    }
+
+    &-slider {
+      position: absolute;
+      left: 3px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      border-radius: radius('full');
+      background: var(--mw-secondary-color);
+      transition: var(--mw-transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mw-secondary-accent-text-color);
+      font-size: font-size('md');
+    }
+
+    &.mw-active &-slider,
+    &.active &-slider {
+      left: 35px;
+    }
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      font-size: font-size('base');
+      transform: rotate(16deg);
+    }
   }
 }

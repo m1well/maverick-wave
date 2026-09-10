@@ -1,147 +1,147 @@
 @use 'sass:math';
 @use '../abstracts' as *;
 
-// Horizontal
-.mw-stepper {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-
-  &-step {
+@layer mw.components {
+  .mw-stepper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: spacing('2');
-    flex: 1;
-    min-width: 0;
-  }
-
-  // Horizontal connector line between steps
-  &-connector {
-    flex: 1;
-    height: 2px;
-    background: var(--mw-border);
-    margin-top: spacing('4');
-    transition: background var(--mw-duration-base) var(--mw-ease-out);
-
-    &.mw-done {
-      background: var(--mw-primary-color);
-    }
-  }
-
-  // Step circle with number or icon
-  &-indicator {
-    width: 28px;
-    height: 28px;
-    border-radius: radius('full');
-    border: 2px solid var(--mw-border);
-    background: var(--mw-card-background);
-    color: var(--mw-text-muted-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: font-size('sm');
-    font-weight: font-weight('bold');
-    transition: var(--mw-transition);
-    flex-shrink: 0;
-    user-select: none;
-
-    &.mw-active {
-      border-color: var(--mw-primary-color);
-      background: var(--mw-primary-color);
-      color: var(--mw-primary-accent-text-color);
-    }
-
-    &.mw-done {
-      border-color: var(--mw-success-color);
-      background: var(--mw-success-color);
-      color: var(--mw-success-accent-text-color);
-    }
-  }
-
-  // Step label below the circle
-  &-label {
-    font-size: font-size('xs');
-    color: var(--mw-text-muted-color);
-    text-align: center;
-    line-height: 1.2;
-    transition: color var(--mw-duration-base) var(--mw-ease-out);
-
-    &.mw-active {
-      color: var(--mw-primary-text-color);
-      font-weight: font-weight('medium');
-    }
-
-    &.mw-done {
-      color: var(--mw-success-text-color);
-    }
-  }
-
-  @include media-down('sm') {
-    &-label {
-      font-size: font-size('2xs');
-    }
-  }
-}
-
-// Vertical
-.mw-stepper-vertical {
-  display: flex;
-  flex-direction: column;
-
-  .mw-stepper-step {
-    display: flex;
-    flex-direction: row;
     align-items: flex-start;
-    gap: spacing('3');
-    position: relative;
-    padding-bottom: spacing('5');
+    width: 100%;
 
-    &:last-child {
-      padding-bottom: spacing('0');
+    &-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: spacing('2');
+      flex: 1;
+      min-width: 0;
     }
 
-    // Connecting line drawn below each step (except last)
-    &:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: calc(#{spacing('7')} / 2 - 1px);
-      top: spacing('7');
-      bottom: 0;
-      width: 2px;
+    &-connector {
+      flex: 1;
+      height: 2px;
       background: var(--mw-border);
+      margin-top: spacing('4');
       transition: background var(--mw-duration-base) var(--mw-ease-out);
-    }
 
-    &.mw-done:not(:last-child)::after {
-      background: var(--mw-primary-text-color);
-    }
-  }
-
-  .mw-stepper-indicator {
-    flex-shrink: 0;
-  }
-
-  // Content area next to the indicator
-  .mw-stepper-content {
-    flex: 1;
-    margin-left: spacing('1');
-
-    &-title {
-      font-size: font-size('base');
-      font-weight: font-weight('medium');
-      color: var(--mw-text-color);
-      margin-bottom: spacing('1');
-
-      .mw-stepper-step.mw-active & {
-        color: var(--mw-primary-text-color);
+      &.mw-done {
+        background: var(--mw-primary-color);
       }
     }
 
-    &-desc {
-      font-size: font-size('sm');
+    &-indicator {
+      width: 28px;
+      height: 28px;
+      border-radius: radius('full');
+      border: 2px solid var(--mw-border);
+      background: var(--mw-card-background);
       color: var(--mw-text-muted-color);
-      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: font-size('sm');
+      font-weight: font-weight('bold');
+      transition: var(--mw-transition);
+      flex-shrink: 0;
+      user-select: none;
+
+      // The halo is what says "you are here". Without it the current step is a
+      // filled circle and so is every finished one, which leaves the hue as the
+      // only thing telling them apart - and a stepper is read at a glance, by
+      // people who do not all see blue against green.
+      &.mw-active {
+        border-color: var(--mw-primary-color);
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+        @include focus-halo;
+      }
+
+      &.mw-done {
+        border-color: var(--mw-success-color);
+        background: var(--mw-success-color);
+        color: var(--mw-success-accent-text-color);
+      }
+    }
+
+    &-label {
+      font-size: font-size('2xs');
+      color: var(--mw-text-muted-color);
+      text-align: center;
+      line-height: 1.2;
+      transition: color var(--mw-duration-base) var(--mw-ease-out);
+
+      &.mw-active {
+        color: var(--mw-primary-text-color);
+        font-weight: font-weight('medium');
+      }
+
+      &.mw-done {
+        color: var(--mw-success-text-color);
+      }
+    }
+
+    @include media-up('sm') {
+      &-label {
+        font-size: font-size('xs');
+      }
+    }
+  }
+
+  .mw-stepper-vertical {
+    display: flex;
+    flex-direction: column;
+
+    .mw-stepper-step {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: spacing('3');
+      position: relative;
+      padding-bottom: spacing('5');
+
+      &:last-child {
+        padding-bottom: spacing('0');
+      }
+
+      &:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: calc(#{spacing('7')} / 2 - 1px);
+        top: spacing('7');
+        bottom: 0;
+        width: 2px;
+        background: var(--mw-border);
+        transition: background var(--mw-duration-base) var(--mw-ease-out);
+      }
+
+      &.mw-done:not(:last-child)::after {
+        background: var(--mw-primary-text-color);
+      }
+    }
+
+    .mw-stepper-indicator {
+      flex-shrink: 0;
+    }
+
+    .mw-stepper-content {
+      flex: 1;
+      margin-left: spacing('1');
+
+      &-title {
+        font-size: font-size('base');
+        font-weight: font-weight('medium');
+        color: var(--mw-text-color);
+        margin-bottom: spacing('1');
+
+        .mw-stepper-step.mw-active & {
+          color: var(--mw-primary-text-color);
+        }
+      }
+
+      &-desc {
+        font-size: font-size('sm');
+        color: var(--mw-text-muted-color);
+        line-height: 1.5;
+      }
     }
   }
 }

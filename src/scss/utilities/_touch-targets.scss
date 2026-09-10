@@ -1,175 +1,158 @@
 @use '../abstracts' as *;
 
-// ---------------------------------------------------------------------------
-// Touch targets
-//
-// WCAG 2.5.8 puts the floor at 24x24 CSS px, and that is a floor, not a goal.
-// The compact sizes are right on a pointing device and too small on a thumb,
-// so they only grow where the input actually is coarse.
-//
-// `pointer: coarse` *or* narrow, not just narrow: a tablet in landscape is
-// wide and still operated with a finger. Loaded last, so these win over the
-// component defaults without needing extra specificity.
-// ---------------------------------------------------------------------------
-@media (pointer: coarse), (max-width: #{breakpoint('md')}) {
-  // The default button was the one that got missed. Its padding and line-height
-  // add up to about 35px, which is under the 44px every platform guideline asks
-  // for and the size a thumb actually is. Only the height grows - the padding
-  // is what sets the label's relationship to the edges and is right as it is.
-  .mw-btn {
-    min-height: 2.75rem;
-  }
+@layer mw.utilities {
+  // WCAG 2.5.8 puts the floor at 24x24px, and a floor is not a goal - the compact
+  // sizes are right under a pointer and too small under a thumb. Coarse *or*
+  // narrow, because a tablet in landscape is wide and still finger-operated.
+  // Loaded last, so these win without extra specificity.
+  @media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+    // Padding and line-height add up to ~35px, under the 44px a thumb needs. Only
+    // the height grows: the padding sets the label's relationship to the edges.
+    .mw-btn {
+      min-height: 2.75rem;
+    }
 
-  .mw-btn-sm {
-    min-height: 2.5rem;
-  }
+    .mw-btn-sm {
+      min-height: 2.5rem;
+    }
 
-  .mw-input-sm,
-  .mw-select-sm,
-  .mw-textarea-sm {
-    min-height: 2.5rem;
-  }
+    .mw-input-sm,
+    .mw-select-sm,
+    .mw-textarea-sm {
+      min-height: 2.5rem;
+    }
 
-  // The base fields sit at 2.35rem from the control scale, which is right under
-  // a pointer and short of a thumb. Same floor as the button beside them.
-  .mw-input,
-  .mw-select {
-    min-height: 2.75rem;
-  }
+    // The base fields sit at 2.35rem from the control scale, which is right under
+    // a pointer and short of a thumb. Same floor as the button beside them.
+    .mw-input,
+    .mw-select {
+      min-height: 2.75rem;
+    }
 
-  .mw-input,
-  .mw-input-sm,
-  .mw-input-lg,
-  .mw-select,
-  .mw-select-sm,
-  .mw-select-lg,
-  .mw-textarea,
-  .mw-textarea-sm,
-  .mw-textarea-lg {
-    font-size: 16px;
-  }
+    .mw-input,
+    .mw-input-sm,
+    .mw-input-lg,
+    .mw-select,
+    .mw-select-sm,
+    .mw-select-lg,
+    .mw-textarea,
+    .mw-textarea-sm,
+    .mw-textarea-lg {
+      font-size: 16px;
+    }
 
-  // A tab strip is the one navigation a phone has no fallback for
-  .mw-tabs-nav-item {
-    display: flex;
-    align-items: center;
-    min-height: 2.75rem;
-  }
+    // A tab strip is the one navigation a phone has no fallback for
+    .mw-tabs-nav-item {
+      display: flex;
+      align-items: center;
+      min-height: 2.75rem;
+    }
 
-  .mw-segmented-item {
-    min-height: 2.5rem;
-  }
+    .mw-segmented-item {
+      min-height: 2.5rem;
+    }
 
-  // Rows of a list, items of a menu, links in a footer, pages of a pager - the
-  // controls that are a line of text on a desktop and a target on a phone
-  .mw-dropdown-item,
-  .mw-accordion-header,
-  .mw-modal-close,
-  .mw-breadcrumbs-item a {
-    min-height: 2.75rem;
-    display: flex;
-    align-items: center;
-  }
+    // Rows of a list, items of a menu, links in a footer, pages of a pager - the
+    // controls that are a line of text on a desktop and a target on a phone
+    .mw-dropdown-item,
+    .mw-accordion-header,
+    .mw-modal-close,
+    .mw-breadcrumbs-item a {
+      min-height: 2.75rem;
+      display: flex;
+      align-items: center;
+    }
 
-  // A checkbox or radio is tapped by its label as much as by the box, so the
-  // whole row has to be the target - which it only is if the row is tall enough
-  .mw-checkbox,
-  .mw-radio,
-  .mw-toggle {
-    min-height: 2.5rem;
-  }
+    // A checkbox or radio is tapped by its label as much as by the box, so the
+    // whole row has to be the target - which it only is if the row is tall enough
+    .mw-checkbox,
+    .mw-radio,
+    .mw-toggle {
+      min-height: 2.5rem;
+    }
 
-  .mw-calendar-day {
-    min-height: 44px;
-  }
+    .mw-calendar-day {
+      min-height: 44px;
+    }
 
-  // A gallery dot is 9px here - the target got *smaller* exactly where the
-  // pointer got coarser. Same treatment as the mini button below: the dot keeps
-  // its silhouette, only the hit area grows to the 24px floor. The gap has to
-  // grow with it, or two neighbouring hit areas overlap and a tap aimed at one
-  // slide brings up the next.
-  .mw-gallery-dots {
-    gap: spacing('6');
-  }
+    // A gallery dot is 9px here - the target got *smaller* exactly where the
+    // pointer got coarser. Same treatment as the mini button below: the dot keeps
+    // its silhouette, only the hit area grows to the 24px floor. The gap has to
+    // grow with it, or two neighbouring hit areas overlap and a tap aimed at one
+    // slide brings up the next.
+    .mw-gallery-dots {
+      gap: spacing('6');
+    }
 
-  .mw-gallery-dot {
-    position: relative;
+    .mw-gallery-dot {
+      position: relative;
 
-    &::after {
-      content: '';
-      position: absolute;
-      inset: -7.5px;
+      &::after {
+        content: '';
+        position: absolute;
+        inset: -7.5px;
+      }
+    }
+
+    // A range input is as tall as its track, so the whole hit area is 8px and you
+    // drag the page instead. `content-box` keeps the height the track's and makes
+    // the padding the hit area on top, so no track height has to be repeated from
+    // _slider.scss - each variant grows off its own: 8px + 36 = 44.
+    .mw-slider {
+      box-sizing: content-box;
+      padding-block: 18px;
+      background-clip: content-box;
+    }
+
+    // The 18px silhouette stays: mini buttons sit in tag rows and table cells,
+    // where growing the circle would shift the layout around them. Only the hit
+    // area grows, to 28px - clear of the 24px floor. The extra margin keeps two
+    // neighbouring hit areas from overlapping.
+    .mw-btn-mini {
+      position: relative;
+      margin-left: spacing('4');
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: -5px;
+      }
     }
   }
 
-  // A range input is as tall as its track - 8px, and 6px in the small variant.
-  // That is the whole hit area, thumb included: a slider you can only grab by
-  // hitting an 8px band is a slider you drag the page with instead.
-  //
-  // `content-box` is what keeps the track out of it: the height stays the
-  // track's, the padding is the hit area on top, and clipping the background
-  // to the content box means the visible bar does not grow with it. No track
-  // height is repeated from `_slider.scss` this way - each variant grows off
-  // whatever it already has: 8px + 36 = 44, the small one 42, the large 52.
-  .mw-slider {
-    box-sizing: content-box;
-    padding-block: 18px;
-    background-clip: content-box;
+  .mw-table-responsive,
+  .mw-tabs-nav {
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
-  // The 18px silhouette stays: mini buttons sit in tag rows and table cells,
-  // where growing the circle would shift the layout around them. Only the hit
-  // area grows, to 28px - clear of the 24px floor. The extra margin keeps two
-  // neighbouring hit areas from overlapping.
-  .mw-btn-mini {
-    position: relative;
-    margin-left: spacing('4');
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: -5px;
+  // Phone layout. The section rhythm steps down twice: a tablet keeps a middle
+  // value, a phone drops further - every rem here is one the reader has to
+  // scroll past on a screen that is already all scrolling.
+  @include media-down('md') {
+    :root {
+      --mw-section-padding-block: #{spacing('9')};
     }
   }
-}
 
-// Sideways scroll
-.mw-table-responsive,
-.mw-tabs-nav {
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-// Phone layout. The section rhythm steps down twice: a tablet keeps a middle
-// value, a phone drops further - every rem here is one the reader has to
-// scroll past on a screen that is already all scrolling.
-@include media-down('md') {
-  :root {
-    --mw-section-padding-block: #{spacing('9')};
-  }
-}
-
-@include media-down('sm') {
-  :root {
-    --mw-section-padding-block: #{spacing('7')};
-  }
-}
-
-@include media-down('sm') {
-  // Cards sit edge to edge on a phone, so the padding inside them is all that
-  // separates the text from the screen edge - it cannot be the desktop value
-  .mw-card-simple {
-    padding: spacing('4');
+  @include media-down('sm') {
+    :root {
+      --mw-section-padding-block: #{spacing('7')};
+    }
   }
 
-  // A row of actions on a phone stacks, and stacked buttons that are each as
-  // wide as their label look like a list of unrelated things.
-  //
-  // Not `mw-card-footer`: that one stacks on its *container*, not on the
-  // window, so at 390px it is still a row - and a `flex-grow` handed to a row
-  // is what turned a card's action into a full-bleed band. Stacked it needs no
-  // help either, the footer's own `width: 100%` is what fills the column.
-  .mw-form-actions .mw-btn {
-    flex: 1 1 auto;
+  @include media-down('sm') {
+    // Cards sit edge to edge on a phone, so the padding inside them is all that
+    // separates the text from the screen edge - it cannot be the desktop value
+    .mw-card-simple {
+      padding: spacing('4');
+    }
+
+    // Stacked buttons at their label's width read as a list of unrelated things.
+    // Not mw-card-footer: that stacks on its *container*, so at 390px it is still
+    // a row, and flex-grow on a row makes a card's action a full-bleed band.
+    .mw-form-actions .mw-btn {
+      flex: 1 1 auto;
+    }
   }
 }

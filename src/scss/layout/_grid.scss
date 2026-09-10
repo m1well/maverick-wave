@@ -1,381 +1,347 @@
+@use 'sass:list';
+@use 'sass:map';
 @use '../abstracts' as *;
 
-// Base grid styles that apply to all grid types
-%grid-base {
-  display: grid;
-  gap: spacing('6');
-}
+// How every column grid steps up, as data: one column is the base, each entry
+// adds a breakpoint above it as (breakpoint, columns, gap), and `null` means that
+// step leaves the one it stands for alone. Ascending order, because they are
+// emitted in it and a wider step has to override a narrower one.
+//
+// Outside the layer blocks below, because both read it - the columns are emitted
+// in `mw.layout`, the reveal cycle in `mw.utilities`, and a Sass variable declared
+// inside an `@layer` block is local to it.
+$_column-steps: (
+  2: (
+    ('sm', 2, null),
+  ),
+  3: (
+    ('sm', 2, null),
+    ('md', 3, null),
+  ),
+  4: (
+    ('sm', 2, null),
+    ('lg', 4, null),
+  ),
+  5: (
+    ('xs', 2, null),
+    ('sm', 3, null),
+    ('md', 4, null),
+    ('lg', 5, null),
+  ),
+);
 
-%grid-base-lg {
-  display: grid;
-  gap: spacing('9');
-}
+$_column-steps-lg: (
+  2: (
+    ('sm', 2, '9'),
+  ),
+  3: (
+    ('sm', 2, '7'),
+    ('lg', 3, '9'),
+  ),
+  4: (
+    ('sm', 2, '7'),
+    ('md', null, '9'),
+    ('xl', 4, null),
+  ),
+  5: (
+    ('sm', 2, '7'),
+    ('md', 3, '9'),
+    ('lg', 4, null),
+    ('xl', 5, null),
+  ),
+);
 
-// The scroll-reveal stagger, made to follow the columns. mw-reveal-stagger
-// (utilities/_reveal.scss) shifts the entrance of the second and third child of
-// every three - right for a row of three, but in a mw-grid-4 the fourth card
-// would start over with the first. The grid knows its column count at every
-// breakpoint, so it restates the cycle to match: included once per column
-// count, right next to the grid-template-columns it belongs to. Only the range
-// is set here, through the shared `reveal-range` mixin - the animation and its
-// guards stay in _reveal.scss, and a child without the animation ignores the
-// range. The :nth-child(n) reset carries the
-// same specificity as the cycle rules, so a narrower breakpoint can override
-// the wider one's cycle for every child.
-@mixin _reveal-stagger($cols) {
-  &.mw-reveal-stagger > :nth-child(n) {
-    @include reveal-range(1);
+@layer mw.layout {
+  %grid-base {
+    display: grid;
+    gap: spacing('6');
   }
 
-  // Guarded: Sass counts `from 2 through 1` downwards and would emit a rule
-  // for a second column that a single-column grid does not have.
-  @if $cols > 1 {
-    @for $i from 2 through $cols {
-      &.mw-reveal-stagger > :nth-child(#{$cols}n + #{$i}) {
-        @include reveal-range($i);
+  %grid-base-lg {
+    display: grid;
+    gap: spacing('9');
+  }
+
+  @mixin _columns($count) {
+    grid-template-columns: repeat($count, minmax(0, 1fr));
+  }
+
+  @mixin _single-column {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  // $base-gap is for the -lg ramp, whose placeholder carries the desktop gap and
+  // has to come back down to the default air on a phone
+  @mixin _column-grid($steps, $base-gap: null) {
+    @include _single-column;
+    @if $base-gap {
+      gap: spacing($base-gap);
+    }
+
+    @each $breakpoint, $cols, $gap in $steps {
+      @include media-up($breakpoint) {
+        @if $cols {
+          @include _columns($cols);
+        }
+        @if $gap {
+          gap: spacing($gap);
+        }
       }
     }
   }
-}
 
-.mw-grid {
-  @extend %grid-base;
-}
+  // The child reset a full-width single column needs: a card that carries its own
+  // max-width would otherwise sit narrow in a column built to hold it.
+  @mixin _stretch-children {
+    justify-items: stretch;
 
-.mw-grid-1 {
-  @extend %grid-base;
-  grid-template-columns: minmax(0, 1fr);
-
-  justify-items: stretch;
-  > * {
-    width: 100% !important;
-    max-width: none !important;
-  }
-}
-
-.mw-grid-2 {
-  @extend %grid-base;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  @include _reveal-stagger(2);
-
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-  }
-}
-
-.mw-grid-3 {
-  @extend %grid-base;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  @include _reveal-stagger(3);
-
-  @include media-down('md') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-  }
-
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-  }
-}
-
-.mw-grid-4 {
-  @extend %grid-base;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  @include _reveal-stagger(4);
-
-  @include media-down('lg') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-  }
-
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-  }
-}
-
-.mw-grid-5 {
-  @extend %grid-base;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  @include _reveal-stagger(5);
-
-  @include media-down('lg') {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    @include _reveal-stagger(4);
-  }
-
-  @include media-down('md') {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    @include _reveal-stagger(3);
-  }
-
-  @include media-down('sm') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-  }
-
-  @include media-down('xs') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-  }
-}
-
-// flexible grid system with column spans
-.mw-grid-flex {
-  @extend %grid-base;
-
-  // Default: 12-column grid (you can adjust this base)
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-
-  // At MD breakpoint and below, force single column
-  @include media-down('md') {
-    grid-template-columns: minmax(0, 1fr);
-
-    // Reset all spans to full width
     > * {
-      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      max-width: none !important;
     }
   }
-}
 
-// Column span utilities
-@for $i from 1 through 12 {
-  .mw-col-span-#{$i} {
-    grid-column: span #{$i};
+  .mw-grid {
+    @extend %grid-base;
   }
-}
 
-// Responsive auto grid
-.mw-grid-auto {
-  @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-
-  // Ensure children don't override the grid behavior
-  > * {
-    width: auto !important;
-    max-width: none !important;
-    min-width: 0;
+  .mw-grid-1 {
+    @extend %grid-base;
+    @include _single-column;
+    @include _stretch-children;
   }
-}
 
-// Alternative with different minimum widths
-.mw-grid-auto-sm {
-  @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
-}
-
-.mw-grid-auto-md {
-  @extend %grid-base;
-  grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
-}
-
-.mw-grid-lg {
-  @extend %grid-base-lg;
-}
-
-.mw-grid-1-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: stretch;
-  > * {
-    width: 100% !important;
-    max-width: none !important;
-  }
-}
-
-.mw-grid-2-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  @include _reveal-stagger(2);
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-    gap: spacing('6');
-  }
-}
-
-.mw-grid-3-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  @include _reveal-stagger(3);
-  @include media-down('lg') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-    gap: spacing('7');
-  }
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-    gap: spacing('6');
-  }
-}
-
-.mw-grid-4-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  @include _reveal-stagger(4);
-  @include media-down('xl') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-  }
-  @include media-down('md') {
-    gap: spacing('7');
-  }
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-    gap: spacing('6');
-  }
-}
-
-.mw-grid-5-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  @include _reveal-stagger(5);
-  @include media-down('xl') {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    @include _reveal-stagger(4);
-  }
-  @include media-down('lg') {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    @include _reveal-stagger(3);
-  }
-  @include media-down('md') {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    @include _reveal-stagger(2);
-    gap: spacing('7');
-  }
-  @include media-down('sm') {
-    grid-template-columns: minmax(0, 1fr);
-    @include _reveal-stagger(1);
-    gap: spacing('6');
-  }
-}
-
-.mw-grid-auto-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-}
-
-// Flexible grids with large spacing
-.mw-grid-flex-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-
-  @include media-down('md') {
-    grid-template-columns: minmax(0, 1fr);
-    gap: spacing('5');
-    > * {
-      grid-column: 1 / -1 !important;
+  @each $count, $steps in $_column-steps {
+    .mw-grid-#{$count} {
+      @extend %grid-base;
+      @include _column-grid($steps);
     }
   }
+
+  .mw-grid-flex {
+    @extend %grid-base;
+
+    @include _columns(12);
+
+    @include media-down('md') {
+      @include _single-column;
+
+      > * {
+        grid-column: 1 / -1 !important;
+      }
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .mw-col-span-#{$i} {
+      grid-column: span #{$i};
+    }
+  }
+
+  .mw-grid-auto {
+    @extend %grid-base;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+
+    > * {
+      width: auto !important;
+      max-width: none !important;
+      min-width: 0;
+    }
+  }
+
+  .mw-grid-auto-sm {
+    @extend %grid-base;
+    grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  }
+
+  .mw-grid-auto-md {
+    @extend %grid-base;
+    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+  }
+
+  .mw-grid-lg {
+    @extend %grid-base-lg;
+  }
+
+  .mw-grid-1-lg {
+    @extend %grid-base-lg;
+    @include _single-column;
+    @include _stretch-children;
+  }
+
+  @each $count, $steps in $_column-steps-lg {
+    .mw-grid-#{$count}-lg {
+      @extend %grid-base-lg;
+      // A phone gets the same air between cards whichever ramp is used; the -lg
+      // in the name is about the desktop end of it.
+      @include _column-grid($steps, '6');
+    }
+  }
+
+  .mw-grid-auto-lg {
+    @extend %grid-base-lg;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  }
+
+  .mw-grid-flex-lg {
+    @extend %grid-base-lg;
+    @include _columns(12);
+
+    @include media-down('md') {
+      @include _single-column;
+      gap: spacing('5');
+      > * {
+        grid-column: 1 / -1 !important;
+      }
+    }
+  }
+
+  // For cards of unequal height, where a row grid tears a gap under every short
+  // one. break-inside keeps each child whole. Caveat: columns read top to bottom
+  // then across, so anything ranked or chronological stays in a grid.
+  %columns-base {
+    column-gap: spacing('6');
+
+    > * {
+      break-inside: avoid;
+      margin-bottom: spacing('6');
+    }
+  }
+
+  .mw-columns-2 {
+    @extend %columns-base;
+    columns: 1;
+
+    @include media-up('sm') {
+      columns: 2;
+    }
+  }
+
+  .mw-columns-3 {
+    @extend %columns-base;
+    columns: 1;
+
+    @include media-up('sm') {
+      columns: 2;
+    }
+
+    @include media-up('lg') {
+      columns: 3;
+    }
+  }
+
+  // The stack variants: one column, and the difference is only where the items
+  // sit in it and whether they keep their natural width. `justify-items` plus the
+  // matching child reset, which is the whole of what separates the four.
+  $_stack-alignments: (
+    '': (
+      start,
+      auto,
+    ),
+    '-center': (
+      center,
+      null,
+    ),
+    '-end': (
+      end,
+      auto,
+    ),
+    '-stretch': (
+      stretch,
+      100%,
+    ),
+  );
+
+  @mixin _stack($justify, $child-width) {
+    @include _single-column;
+    justify-items: $justify;
+
+    > * {
+      @if $child-width {
+        width: $child-width;
+      }
+      max-width: none;
+    }
+  }
+
+  @each $suffix, $spec in $_stack-alignments {
+    $justify: list.nth($spec, 1);
+    $child-width: list.nth($spec, 2);
+
+    .mw-grid-stack#{$suffix} {
+      @extend %grid-base;
+      @include _stack($justify, $child-width);
+    }
+  }
+
+  // Large spacing variants - only the two that were ever written out
+  @each $suffix in ('', '-center') {
+    $spec: map.get($_stack-alignments, $suffix);
+
+    .mw-grid-stack#{$suffix}-lg {
+      @extend %grid-base-lg;
+      @include _stack(list.nth($spec, 1), list.nth($spec, 2));
+    }
+  }
+
+  // A feature card grows outwards - its frame and its label bar reach into the
+  // gap, and two rows of them would touch. The card asks for the room, but the
+  // grid has to hand it over: written next to the card it would sit in
+  // `mw.components` and lose to every gap above, no matter how specific.
+  [class*='mw-grid-']:has(> .mw-card-feature) {
+    row-gap: 48px;
+  }
 }
 
-// Masonry columns - for cards of unequal height, where a row grid tears a gap
-// under every short one. CSS multi-column instead: entries flow into columns
-// and close up, the column count steps down with the viewport. break-inside
-// keeps each child whole - without it a page break lands mid-card.
+// The reveal cycle restated per column count, because the fallback in
+// _reveal.scss shifts every third child and a mw-grid-4 would start its fourth
+// card over with the first. Only the range is set here.
 //
-// Reading order caveat: columns read top to bottom, then across. Right for
-// testimonials and galleries, wrong for anything ranked or chronological -
-// that stays in a grid.
-%columns-base {
-  column-gap: spacing('6');
+// In `mw.utilities` and not next to the columns, because that is where the
+// fallback it has to beat lives - specificity is no help across layers.
+@layer mw.utilities {
+  // The `:nth-child(n)` reset carries the same specificity as the cycle rules,
+  // so a narrower breakpoint can override the wider one's cycle for every child.
+  @mixin _reveal-stagger($cols) {
+    &.mw-reveal-stagger > :nth-child(n) {
+      @include reveal-range(1);
+    }
 
-  > * {
-    break-inside: avoid;
-    margin-bottom: spacing('6');
-  }
-}
-
-.mw-columns-2 {
-  @extend %columns-base;
-  columns: 2;
-
-  @include media-down('sm') {
-    columns: 1;
-  }
-}
-
-.mw-columns-3 {
-  @extend %columns-base;
-  columns: 3;
-
-  @include media-down('lg') {
-    columns: 2;
+    // Guarded: Sass counts `from 2 through 1` downwards and would emit a rule
+    // for a second column that a single-column grid does not have.
+    @if $cols > 1 {
+      @for $i from 2 through $cols {
+        &.mw-reveal-stagger > :nth-child(#{$cols}n + #{$i}) {
+          @include reveal-range($i);
+        }
+      }
+    }
   }
 
-  @include media-down('sm') {
-    columns: 1;
+  // One column on a phone, then the same steps the columns take. The gap each
+  // entry carries is not read here: a step that only widens the gap leaves the
+  // cycle alone.
+  @mixin _reveal-ramp($steps) {
+    @include _reveal-stagger(1);
+
+    @each $breakpoint, $cols in $steps {
+      @if $cols {
+        @include media-up($breakpoint) {
+          @include _reveal-stagger($cols);
+        }
+      }
+    }
   }
-}
 
-// Base stack - items keep their natural width
-.mw-grid-stack {
-  @extend %grid-base;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: start; // Items keep natural width, aligned left
-
-  // Remove the forced width from grid-1
-  > * {
-    width: auto;
-    max-width: none;
+  @each $count, $steps in $_column-steps {
+    .mw-grid-#{$count} {
+      @include _reveal-ramp($steps);
+    }
   }
-}
 
-// Stack variants with different alignments
-.mw-grid-stack-center {
-  @extend %grid-base;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-
-  > * {
-    max-width: none;
-  }
-}
-
-.mw-grid-stack-end {
-  @extend %grid-base;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: end;
-
-  > * {
-    width: auto;
-    max-width: none;
-  }
-}
-
-.mw-grid-stack-stretch {
-  @extend %grid-base;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: stretch;
-
-  > * {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-// Large spacing variants
-.mw-grid-stack-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: start;
-
-  > * {
-    width: auto;
-    max-width: none;
-  }
-}
-
-.mw-grid-stack-center-lg {
-  @extend %grid-base-lg;
-  grid-template-columns: minmax(0, 1fr);
-  justify-items: center;
-
-  > * {
-    max-width: none;
+  @each $count, $steps in $_column-steps-lg {
+    .mw-grid-#{$count}-lg {
+      @include _reveal-ramp($steps);
+    }
   }
 }

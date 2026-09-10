@@ -7,7 +7,9 @@ service or a component per behaviour, none of them longer than a screen.
 ## Theme service
 
 The framework only needs one class on `<body>`. Everything else - persistence,
-the toggle UI, the initial value - belongs to the application.
+the toggle UI, the initial value - belongs to the application. The second class,
+`mw-theme-switching` on `<html>`, is not optional on a page of any size: without
+it the flip starts a transition on every element that changes colour.
 
 ```ts
 import { Injectable, effect, signal } from '@angular/core';
@@ -21,7 +23,13 @@ export class ThemeService {
   constructor() {
     effect(() => {
       const light = this.light();
+      const root = document.documentElement;
+
+      root.classList.add('mw-theme-switching');
       document.body.classList.toggle('mw-theme-light', light);
+      void root.offsetHeight; // commit the colours with transitions off
+      root.classList.remove('mw-theme-switching');
+
       localStorage.setItem(STORAGE_KEY, light ? 'light' : 'dark');
     });
   }
@@ -308,13 +316,17 @@ on every navigation.
             <span class="mw-profile-btn-name">{{ user().name }}</span>
           </button>
 
-          <div
+          <button
+            type="button"
             class="mw-menu-btn"
+            aria-label="Menu"
+            aria-controls="main-nav"
+            [attr.aria-expanded]="menuOpen()"
             [class.open]="menuOpen()"
             (click)="menuOpen.set(!menuOpen())"
           >
-            <div class="mw-menu-btn-burger"></div>
-          </div>
+            <span class="mw-menu-btn-burger"></span>
+          </button>
         </div>
       </div>
     </header>

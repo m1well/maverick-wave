@@ -1,116 +1,108 @@
 @use '../abstracts' as *;
 
-// ---------------------------------------------------------------------------
-// Language switcher
-//
-// A `.mw-dropdown` underneath, so the keyboard contract, Escape, click-outside
-// and the open state in the DOM are all inherited rather than rebuilt. What
-// this file adds is the trigger - deliberately not a button shape: no fill, no
-// border until it is touched, so the bar reads as logo, links, and then two
-// quiet controls rather than a row of competing buttons.
-//
-// The two-letter code, not the flag, is what says which language is on. A flag
-// is a country and never a language - which one stands for English, and which
-// for the German a Swiss or Austrian visitor reads? The code carries the
-// meaning and the flag is the thing the eye finds first.
-// ---------------------------------------------------------------------------
+@layer mw.components {
+  // A .mw-dropdown underneath, so the keyboard contract is inherited rather than
+  // rebuilt. This adds the trigger, deliberately not a button shape - the bar
+  // reads as logo, links and two quiet controls, not a row of buttons.
+  //
+  // The two-letter code says which language is on, not the flag: a flag is a
+  // country, and neither English nor the German a Swiss visitor reads has one.
 
-.mw-lang-switch {
-  > summary {
-    display: inline-flex;
-    align-items: center;
-    gap: spacing('3');
-    height: 36px;
-    padding: spacing('0') spacing('3');
-    border: 1px solid transparent;
-    border-radius: radius('2xl');
-    background: transparent;
-    color: var(--mw-text-color);
-    transition: var(--mw-transition);
-    @include tappable;
-    @include focus-ring;
+  .mw-lang-switch {
+    > summary {
+      display: inline-flex;
+      align-items: center;
+      gap: spacing('3');
+      height: 36px;
+      padding: spacing('0') spacing('3');
+      border: 1px solid transparent;
+      border-radius: radius('2xl');
+      background: transparent;
+      color: var(--mw-text-color);
+      transition: var(--mw-transition);
+      @include tappable;
+      @include focus-ring;
+    }
+
+    // Open looks the same as hovered - the menu below is what says it is open
+    > summary:hover,
+    &[open] > summary {
+      background: var(--mw-surface-muted);
+      border-color: var(--mw-border);
+    }
   }
 
-  // Open looks the same as hovered - the menu below is what says it is open
-  > summary:hover,
-  &[open] > summary {
-    background: var(--mw-surface-muted);
-    border-color: var(--mw-border);
-  }
-}
-
-// The code carries the state, so it is the one part that gets full ink
-.mw-lang-switch-code {
-  font-size: font-size('xs');
-  font-weight: font-weight('bold');
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.mw-lang-switch .mw-dropdown-caret {
-  font-size: font-size('3xs');
-  opacity: 0.6;
-}
-
-// A language list is short and its labels are one word - the 200px default
-// menu leaves half of it empty. The one place it must not be narrowed is under
-// a thumb, where the dropdown widens every menu on purpose.
-.mw-lang-switch .mw-dropdown-menu {
-  min-width: 170px;
-
-  @media (pointer: coarse), (max-width: #{breakpoint('sm')}) {
-    min-width: max(100%, 240px);
-  }
-}
-
-.mw-lang-switch-name {
-  flex: 1;
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-// The tick is the only mark of the current choice inside the menu - it has to
-// stay out of the muted icon column the dropdown gives every other icon.
-// Kept in the layout while hidden, so the labels do not shift by a tick's width
-// when the choice moves to another row.
-.mw-lang-switch .mw-dropdown-item .mw-lang-switch-check {
-  margin-left: auto;
-  color: var(--mw-primary-text-color);
-  visibility: hidden;
-}
-
-.mw-lang-switch .mw-dropdown-item.mw-active .mw-lang-switch-check,
-.mw-lang-switch .mw-dropdown-item.active .mw-lang-switch-check {
-  visibility: visible;
-}
-
-// In the bar the control sits on the header's own dark surface, which stays
-// dark in the light theme too - so it cannot use the page's text and surface
-// tokens the way it does anywhere else. The modifier is for the same surface
-// reached another way: a project that builds its own bar instead of using
-// `.mw-header`, or a dark footer.
-.mw-header .mw-lang-switch,
-.mw-lang-switch-inverted {
-  > summary {
-    color: var(--mw-header-text-color);
+  // The code carries the state, so it is the one part that gets full ink
+  .mw-lang-switch-code {
+    font-size: font-size('xs');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
   }
 
-  > summary:hover,
-  &[open] > summary {
-    background: var(--mw-header-border);
-    border-color: var(--mw-header-border);
+  .mw-lang-switch .mw-dropdown-caret {
+    font-size: font-size('3xs');
+    opacity: 0.6;
   }
-}
 
-// 36px is a comfortable target for a mouse and a miss for a finger. The caret
-// stays - without it the control reads as a label rather than as something to
-// press.
-@include media-down('sm') {
-  .mw-lang-switch > summary {
-    height: 40px;
-    gap: spacing('2');
+  // A language list is short and its labels are one word - the 200px default
+  // menu leaves half of it empty. The one place it must not be narrowed is under
+  // a thumb, where the dropdown widens every menu on purpose.
+  .mw-lang-switch .mw-dropdown-menu {
+    min-width: 170px;
+
+    @media (pointer: coarse), (max-width: #{breakpoint('sm')}) {
+      min-width: max(100%, 240px);
+    }
+  }
+
+  .mw-lang-switch-name {
+    flex: 1;
+    min-width: 0;
+    @include truncate;
+  }
+
+  // The tick is the only mark of the current choice inside the menu - it has to
+  // stay out of the muted icon column the dropdown gives every other icon.
+  // Kept in the layout while hidden, so the labels do not shift by a tick's width
+  // when the choice moves to another row.
+  .mw-lang-switch .mw-dropdown-item .mw-lang-switch-check {
+    margin-left: auto;
+    color: var(--mw-primary-text-color);
+    visibility: hidden;
+  }
+
+  .mw-lang-switch .mw-dropdown-item.mw-active .mw-lang-switch-check,
+  .mw-lang-switch .mw-dropdown-item.active .mw-lang-switch-check {
+    visibility: visible;
+  }
+
+  // In the bar the control sits on the header's own dark surface, which stays
+  // dark in the light theme too - so it cannot use the page's text and surface
+  // tokens the way it does anywhere else. The modifier is for the same surface
+  // reached another way: a project that builds its own bar instead of using
+  // `.mw-header`, or a dark footer.
+  .mw-header .mw-lang-switch,
+  .mw-lang-switch-inverted {
+    > summary {
+      color: var(--mw-header-text-color);
+    }
+
+    > summary:hover,
+    &[open] > summary {
+      background: var(--mw-header-border);
+      border-color: var(--mw-header-border);
+    }
+  }
+
+  // 36px is a comfortable target for a mouse and a miss for a finger. The caret
+  // stays - without it the control reads as a label rather than as something to
+  // press.
+  @include media-down('sm') {
+    .mw-lang-switch > summary {
+      height: 40px;
+      gap: spacing('2');
+    }
   }
 }

@@ -1,114 +1,137 @@
 @use '../abstracts' as *;
 
-$_mw-progress-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
-
-.mw-progress {
-  &-container {
-    margin: spacing('1');
-  }
-
-  &-barinfo {
-    display: flex;
-    justify-content: space-between;
-    margin: spacing('3') spacing('2') spacing('1');
-    font-size: font-size('sm');
-
-    // hide info, if this class is available
-    &.mw-progress-hide-info {
-      display: none;
-    }
-  }
-
-  &-label {
-    font-weight: font-weight('medium');
-  }
-
-  &-value {
-    color: var(--mw-text-muted-color);
-    pointer-events: none;
-    align-content: end;
-
-    @include media-down('sm') {
-      font-size: font-size('xs');
+@layer mw.components {
+  .mw-progress {
+    &-container {
+      margin: spacing('1');
     }
 
-    // numeric values from 1-10
-    &.mw-progress-numeric {
-      &::after {
-        content: '/10';
-      }
-    }
-
-    // for percentage values
-    &.mw-progress-percent {
-      &::after {
-        content: '%';
-      }
-    }
-  }
-
-  &-bar {
-    width: 100%;
-    height: 10px;
-    background: var(--mw-gray-background);
-    opacity: 0.9;
-    border-radius: radius('sm');
-    overflow: hidden;
-    position: relative;
-  }
-
-  &-fill {
-    // The label sits *inside* the fill, so its ink follows whichever color
-    // variant is on the element - preset to the default fill, re-pointed by
-    // the variants at the bottom of the file
-    --mw-progress-ink: var(--mw-secondary-accent-text-color);
-
-    height: 100%;
-    background: var(--mw-secondary-color);
-    border-radius: radius('sm');
-    width: 0;
-    transition: width var(--mw-duration-slower) var(--mw-ease-in-out);
-  }
-
-  // Sizes
-  &-sm .mw-progress-bar {
-    height: 6px;
-    border-radius: radius('sm');
-  }
-
-  &-lg .mw-progress-bar {
-    height: 15px;
-    border-radius: radius('lg');
-  }
-
-  // With inner label
-  &-inline-label {
-    .mw-progress-bar {
-      height: 22px;
-      user-select: none;
-    }
-
-    .mw-progress-fill {
+    &-barinfo {
       display: flex;
-      align-items: center;
-      padding-left: spacing('6');
-      font-size: font-size('xs');
+      justify-content: space-between;
+      margin: spacing('3') spacing('2') spacing('1');
+      font-size: font-size('sm');
+
+      &.mw-progress-hide-info {
+        display: none;
+      }
+    }
+
+    &-label {
       font-weight: font-weight('medium');
-      color: var(--mw-progress-ink);
+    }
+
+    &-value {
+      color: var(--mw-text-muted-color);
+      pointer-events: none;
+      align-content: end;
+
+      @include media-down('sm') {
+        font-size: font-size('xs');
+      }
+
+      &.mw-progress-numeric {
+        &::after {
+          content: '/10';
+        }
+      }
+
+      &.mw-progress-percent {
+        &::after {
+          content: '%';
+        }
+      }
+    }
+
+    &-bar {
+      width: 100%;
+      height: 10px;
+      background: var(--mw-gray-background);
+      opacity: 0.9;
+      border-radius: radius('sm');
+      overflow: hidden;
+      position: relative;
+    }
+
+    &-fill {
+      // The label sits *inside* the fill, so its ink follows whichever color
+      // variant is on the element - preset to the default fill, re-pointed by
+      // the variants at the bottom of the file
+      --mw-progress-ink: var(--mw-secondary-accent-text-color);
+
+      // How far the bar is filled. Written by the script from data-value or from
+      // an inline width, and read by the keyframe below. Declared here so it has
+      // a definition rather than only a fallback - an unset bar is an empty one.
+      --mw-progress-value: 0;
+
+      height: 100%;
+      background: var(--mw-secondary-color);
+      border-radius: radius('sm');
+      width: 0;
+      transition: width var(--mw-duration-slower) var(--mw-ease-in-out);
+
+      // The bar fills as it is scrolled into view, tied to the scroll position
+      // rather than to a one-shot transition: scroll back up and it empties
+      // again.
+      //
+      // Gated on a class the script adds, and only once it knows the target
+      // width - an animation outranks an inline style, so a bar written as
+      // `style="width: 70%"` would be animated to nothing by a keyframe that
+      // reads an unset --mw-progress-value. With the gate, a page whose script
+      // never runs keeps whatever width its markup set.
+      &.mw-progress-driven {
+        @supports (animation-timeline: view()) {
+          @media (prefers-reduced-motion: no-preference) {
+            animation: mw-progress-fill linear both;
+            animation-timeline: view();
+            // Starts once the bar is properly on screen and finishes well
+            // before it reaches the middle, so it is full when it is read.
+            animation-range: entry 60% cover 40%;
+          }
+        }
+      }
+    }
+
+    &-sm .mw-progress-bar {
+      height: 6px;
+      border-radius: radius('sm');
+    }
+
+    &-lg .mw-progress-bar {
+      height: 15px;
+      border-radius: radius('lg');
+    }
+
+    &-inline-label {
+      .mw-progress-bar {
+        height: 22px;
+        user-select: none;
+      }
+
+      .mw-progress-fill {
+        display: flex;
+        align-items: center;
+        padding-left: spacing('6');
+        font-size: font-size('xs');
+        font-weight: font-weight('medium');
+        color: var(--mw-progress-ink);
+      }
     }
   }
-}
 
-@each $name, $col in $_mw-progress-colors {
-  .mw-progress-#{$name} {
-    background: #{$col};
-    --mw-progress-ink: var(--mw-#{$name}-accent-text-color);
+  @each $name, $col in $semantic-colors {
+    .mw-progress-#{$name} {
+      background: #{$col};
+      --mw-progress-ink: var(--mw-#{$name}-accent-text-color);
+    }
+  }
+
+  @keyframes mw-progress-fill {
+    from {
+      width: 0;
+    }
+    to {
+      width: var(--mw-progress-value);
+    }
   }
 }

@@ -2,7 +2,9 @@
 @use 'variables' as v;
 @use 'functions' as *;
 
-// Media query mixins
+// `media-down` stops 0.02px short, or both ranges match at exactly 768px - an
+// iPad in portrait, where mw-hide-mobile and mw-hide-desktop would both hide.
+// 0.02 and not 1, because a viewport can be fractional (zoom, scaled display).
 @mixin media-up($breakpoint) {
   @media (min-width: map.get(v.$breakpoints, $breakpoint)) {
     @content;
@@ -10,51 +12,15 @@
 }
 
 @mixin media-down($breakpoint) {
-  @media (max-width: map.get(v.$breakpoints, $breakpoint)) {
+  @media (max-width: map.get(v.$breakpoints, $breakpoint) - 0.02px) {
     @content;
   }
 }
 
-// Flexbox mixins
-@mixin flex(
-  $direction: row,
-  $justify: flex-start,
-  $align: stretch,
-  $wrap: nowrap
-) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
-  flex-wrap: $wrap;
-}
-
-// Grid mixins
-@mixin grid($columns: 1, $gap: 1rem) {
-  display: grid;
-  grid-template-columns: repeat($columns, 1fr);
-  gap: $gap;
-}
-
-@mixin media-between($min, $max) {
-  $min-width: map.get(v.$breakpoints, $min);
-  $max-width: map.get(v.$breakpoints, $max) - 1px;
-
-  @media (min-width: $min-width) and (max-width: $max-width) {
-    @content;
-  }
-}
-
-// Scroll hint for a horizontally scrollable strip - a tab bar, a wide table.
-//
-// Four gradient layers in two pairs. The cover pair is attached to the content
-// (`local`) and therefore scrolls out of the way once that edge is reached;
-// the shadow pair stays on the frame (`scroll`). Net effect: a shadow shows
-// only on the side that still has something hidden behind it. No JavaScript,
-// no scroll listener.
-//
-// The cover has to match whatever the strip sits on, which is why it reads a
-// token: preset to the page, re-pointed inside cards, panels and modals.
+// Four gradients in two pairs: the cover pair is attached to the content and
+// scrolls out of the way at the edge, the shadow pair stays on the frame - so a
+// shadow shows only where something is still hidden. No scroll listener.
+// The cover reads a token because it has to match whatever the strip sits on.
 @mixin scroll-hint {
   background-image:
     linear-gradient(
@@ -79,17 +45,8 @@
   background-attachment: local, local, scroll, scroll;
 }
 
-// ---------------------------------------------------------------------------
-// Focus
-//
-// The ring was written out by hand in nine places before this, in two different
-// shapes, and a form field had a third. One mixin per shape instead, so the
-// whole framework moves when the ring is retuned.
-//
-// `:focus-visible` and never `:focus`: a mouse click on a button should not
-// leave it ringed. The browser decides what counts - a keyboard tab does, a
-// pointer press on a button does not, a pointer press into a text field does.
-// ---------------------------------------------------------------------------
+// `:focus-visible` and never `:focus`: a mouse click on a button should not leave
+// it ringed, and the browser is the one that knows which press counts.
 @mixin focus-ring(
   $offset: var(--mw-focus-ring-offset),
   $color: var(--mw-focus-ring-color)
@@ -101,9 +58,7 @@
   }
 }
 
-// Same ring, drawn inside the element. For anything clipped by its own frame -
-// a segment inside a segmented control, a cell inside a table - where a ring on
-// the outside would be cut off by the parent.
+// Same ring, inside the element - for anything its parent would clip
 @mixin focus-ring-inset($inset: -2px) {
   &:focus-visible {
     outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
@@ -112,18 +67,10 @@
   }
 }
 
-// The form-field shape: recolour the border the field already has and lay a soft
-// halo around it, rather than adding a second hard line outside it.
-//
-// Two different tones, and the split is the framework's own fill-or-ink rule.
-// The border is drawn *on* the field, which is light in both themes, so it takes
-// the fill tone. The halo spreads *outside* it, onto the page or the card, so it
-// takes the ink tone - the theme-aware one. Using the fill tone for both is what
-// made the dark theme's halo a dark blue haze on a dark blue page.
-//
-// `outline: none` is only safe because the halo *is* the indicator - except in
-// forced-colors mode, where box-shadow is dropped and the field would be left
-// with nothing. The guard hands the outline back there.
+// Two tones on purpose: the border is drawn *on* the field, which is light in
+// both themes, so it takes the fill tone; the halo spreads onto the page and
+// takes the theme-aware ink tone. `outline: none` is safe because the halo is the
+// indicator - except under forced-colors, where the guard hands it back.
 @mixin field-focus(
   $trigger: 'focus',
   $border: 'primary-color',
@@ -144,8 +91,7 @@
   }
 }
 
-// The halo on its own, for the controls that draw their own box - a checkbox, a
-// radio, a switch track, a calendar day - and only want the ring around it.
+// For controls that draw their own box and only want the ring around it
 @mixin focus-halo($color: 'primary-text-color') {
   box-shadow: 0 0 0 var(--mw-focus-halo-size)
     color-mix(
@@ -155,15 +101,26 @@
     );
 }
 
-// ---------------------------------------------------------------------------
-// Pointer
-// ---------------------------------------------------------------------------
+// Both spellings: `mw-active` is documented, plain `active` is what older markup
+// carries, and a state toggled off in one must not stay lit in the other.
+// $suffix qualifies the state, e.g. `@include active(':not(:disabled)')`.
+@mixin active($suffix: '') {
+  &.mw-active#{$suffix},
+  &.active#{$suffix} {
+    @content;
+  }
+}
 
-// Hover effects that *move* something - a card lifting, a tile growing - only
-// on a device that can actually hover. On touch, `:hover` latches after a tap
-// and stays on until you tap somewhere else, so a lifted card stays lifted and
-// a grid of them ends up with one member permanently out of line. Colour
-// changes are fine unguarded; movement is not.
+// Without the `min-width: 0` that mw-text-truncate carries: that fixes the layout
+// around the text, and handing it to seven components would change how they size
+@mixin truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// For hover effects that *move* something. On touch `:hover` latches after a tap,
+// so a lifted card stays lifted. Colour changes are fine unguarded, movement is not.
 @mixin hover {
   @media (hover: hover) and (pointer: fine) {
     &:hover {
@@ -172,25 +129,16 @@
   }
 }
 
-// Everything a control needs to feel native under a thumb: no 300ms wait for a
-// double-tap that is never coming, and no grey box flashing over it while the
-// press is held - the component draws its own :active state instead.
+// No 300ms double-tap wait, no grey flash - the component draws its own :active
 @mixin tappable {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
-// ---------------------------------------------------------------------------
-// Scrollbar
-//
-// Was written per list variant, which is why three of them had a thumb the same
-// colour as their track. One shape, used by every scroll container and by the
-// page itself.
-// ---------------------------------------------------------------------------
+// One shape for every scroll container and the page itself
 @mixin scrollbar($thumb: var(--mw-text-muted-color), $track: transparent) {
   scrollbar-width: thin;
-  // Firefox takes both in one declaration - a single value is invalid and the
-  // whole thing is dropped, which is how a thumb ends up invisible.
+  // Firefox needs both values - a single one is invalid and drops the declaration
   scrollbar-color: #{$thumb} #{$track};
 
   &::-webkit-scrollbar {
@@ -217,28 +165,16 @@
   }
 }
 
-// Everything that fills its own surface with a colour - every variant except
-// outline, link and plain.
-//
-// Two things, and both are what separates a button from a coloured rectangle: a
-// hairline of light along the top edge, as if there were a light source above
-// the page, and a shadow underneath that says the button sits on the surface
-// rather than in it. The pressed state inverts both - the highlight goes and an
-// inner shadow takes its place, which is the whole of what "pushed in" looks
-// like.
-//
-// White and black rather than tokens on purpose: this is lighting, not palette.
-// It has to behave the same on a primary, a danger and whatever a project
-// overrides them with.
+// A hairline of light along the top edge and a shadow underneath, as if the light
+// came from above the page; the pressed state inverts both. White and black and
+// not tokens on purpose - this is lighting, not palette.
 @mixin btn-solid {
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, #fff 15%, transparent),
     var(--mw-elevation-1);
 
-  // A pixel up, and the shadow steps up with it. The two together are what read
-  // as the button coming toward the pointer - the shadow alone says it, but not
-  // as clearly, and the lift is small enough that a row of buttons does not
-  // twitch. Guarded, so it never latches after a tap.
+  // A pixel up and the shadow steps with it - the pair reads as the button coming
+  // toward the pointer. Guarded, so it never latches after a tap.
   @include hover {
     box-shadow:
       inset 0 1px 0 color-mix(in srgb, #fff 20%, transparent),
@@ -255,11 +191,8 @@
   }
 }
 
-// The look a link has: no box of its own, the underline only on hover, and it
-// sits a little lower than the browser's default so a descender does not cross
-// it. Shared by `mw-link` in running text and `mw-btn-link` in a row of
-// buttons - the two differ in whether they carry a control height, not in how
-// they look.
+// Shared by mw-link and mw-btn-link, which differ in whether they carry a control
+// height, not in how they look. The underline sits low so descenders clear it.
 @mixin link-look {
   background: transparent;
   border: none;
@@ -272,27 +205,13 @@
   }
 }
 
-// ---------------------------------------------------------------------------
-// Surface
+// The MaverickWave silhouette: sharp corners on one diagonal, round on the other,
+// with an accent arc on the round pair - the asymmetry alone reads as an accident.
 //
-// The MaverickWave silhouette: sharp corners on the top-left/bottom-right
-// diagonal, round ones on the other. Nine components repeated those four radii
-// by hand - this is the only place the shape is defined now.
-//
-// On top of the radii, an accent arc on the two round corners. The asymmetry
-// alone reads as an accident; a coloured bow sitting exactly on it does not.
-// Point-symmetric like the radii themselves, so it holds up on a tall card, a
-// wide panel and a square tile alike.
-//
-// The ring is drawn inside the padding box rather than on the border, because
-// four of the callers clip with `overflow: hidden` and would swallow a ring
-// sitting on the border edge. Hence $border-width: `inset: 0` already lands on
-// the padding box, but the corner radius there is the outer one minus the
-// border, and a ring drawn at the outer radius would visibly miss the curve.
-//
-// $corners drops the top arc for a surface whose top-right corner is already
-// taken by a fill of its own - see the coloured panel headers.
-// ---------------------------------------------------------------------------
+// The ring is drawn inside the padding box, because four callers clip with
+// `overflow: hidden`. Hence $border-width: the radius there is the outer one minus
+// the border, and a ring at the outer radius would miss the curve. $corners drops
+// the top arc where a fill already owns that corner.
 @mixin surface($border-width: 1px, $corners: 'both') {
   position: relative;
   border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
@@ -302,20 +221,14 @@
   }
 }
 
-// The arc on its own, for a variant that has to redraw it without restating the
-// shape - it is already on the element by then.
+// The arc alone, for a variant that redraws it without restating the shape
 @mixin corner-accent($border-width: 1px, $corners: 'both') {
   $sharp: radius('sm') - $border-width;
   $round: radius('xl') - $border-width;
-  // Opaque out to where the curve ends, fading from there - so the arc runs a
-  // little way into the straight edge instead of being cut off at the tangent.
-  //
-  // The 1.8 is the one number worth retuning here, and it is bounded by the
-  // shortest surface rather than by the nicest-looking card: the fade reaches
-  // from a corner, so on a 50px-high box - `mw-card-simple` with one line in it
-  // - anything past about 2 lets the two arcs meet in the middle and the pair
-  // stops reading as two corners and starts reading as a frame. Higher is
-  // softer on a tall card, lower is more defined on a short one.
+  // Opaque to where the curve ends, fading from there, so the arc runs into the
+  // straight edge instead of stopping at the tangent. 1.8 is bounded by the
+  // shortest surface: past about 2 the two arcs meet on a 50px box and read as
+  // a frame.
   $reach: $round * 1.8;
   $top: radial-gradient(circle $reach at 100% 0, #000 $round, transparent 100%);
   $bottom: radial-gradient(
@@ -328,9 +241,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  // 2px rather than 1px: in the dark theme --mw-border sits at OKLch lightness
-  // 0.32 and the arc tone at 0.41, so a hairline is separated from the plain
-  // border by little more than its saturation and vanishes at reading distance.
+  // 2px, or in the dark theme the arc is separated from the plain border by little
+  // more than its saturation and vanishes at reading distance
   border: 2px solid var(--mw-corner-accent);
   border-radius: $sharp $round $sharp $round;
 
@@ -341,13 +253,9 @@
   }
 }
 
-// The scroll-reveal zone (utilities/_reveal.scss), as the range of the n-th
-// column of a row. Viewport lengths rather than percentages of the block: a
-// two-line counter band and a tall card then rise through the same region of
-// the screen instead of the short one snapping in. The zone starts 8dvh above
-// the bottom edge - right at the edge nobody sees the motion - and ends at
-// 34dvh, still in the lower third, so nothing is moving while someone already
-// reads it. Each further column of a row starts 4dvh later than the one before.
+// The reveal zone as the range of the n-th column. Viewport lengths and not
+// percentages of the block, so a short band and a tall card rise through the same
+// region of the screen. Each further column starts 4dvh after the one before.
 @mixin reveal-range($column: 1) {
   $shift: 4dvh * ($column - 1);
 

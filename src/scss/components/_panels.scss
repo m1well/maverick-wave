@@ -1,125 +1,127 @@
 @use '../abstracts' as *;
 
-.mw-panel {
-  background: var(--mw-card-background);
-  @include surface(2px);
-  border: 2px solid var(--mw-border);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  margin: spacing('1');
-
-  &-header {
-    padding: spacing('4') spacing('5');
-    border-bottom: 1px solid var(--mw-border-accent);
+@layer mw.components {
+  .mw-panel {
+    background: var(--mw-card-background);
+    @include surface(2px);
+    border: 2px solid var(--mw-border);
+    overflow: hidden;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: spacing('0');
-    border-radius: (radius('sm') - 2px) (radius('xl') - 2px) 0 0;
-  }
-
-  &-body {
-    padding: spacing('4') spacing('5');
-    flex: 1;
-    overflow-y: auto;
-    @include scrollbar;
-  }
-
-  // A dropdown, a tooltip, a date picker - anything a child opens *outside*
-  // itself - is cut off by the two clips above. Lifting them only while such a
-  // menu is open costs nothing the rest of the time, and the alternative is a
-  // menu that shows its first row and nothing else.
-  //
-  // This is the same escape hatch a project needs on its own containers: one
-  // `:has(.mw-dropdown[open]) { overflow: visible }` on whatever is clipping.
-  &:has(.mw-dropdown[open]),
-  &-body:has(.mw-dropdown[open]) {
-    overflow: visible;
-  }
-
-  &-footer {
-    padding: spacing('4') spacing('5');
-    border-top: 1px solid var(--mw-border-accent);
-    display: flex;
-    justify-content: flex-end;
-    gap: spacing('3');
-  }
-
-  // Panel variants
-  &-primary {
-    .mw-panel-header {
-      background: var(--mw-primary-color);
-      color: var(--mw-primary-accent-text-color);
-    }
-  }
-
-  &-secondary {
-    .mw-panel-header {
-      background: var(--mw-secondary-color);
-      color: var(--mw-secondary-accent-text-color);
-    }
-  }
-
-  // The coloured header already owns the top-right corner. An arc drawn over it
-  // either disappears into the primary fill or fights the secondary one - a
-  // blue bow on an orange header reads as a rendering fault, not as a mark. The
-  // bottom corner carries it alone on these two.
-  &-primary::after,
-  &-secondary::after {
-    @include corner-accent(2px, 'bottom');
-  }
-
-  // Scrollable variant for fixed height
-  &-scrollable {
-    max-height: 500px;
-
-    .mw-panel-body {
-      overflow-y: auto;
-      max-height: calc(500px - #{2 * spacing('4')} - 2px);
-    }
-  }
-
-  // Scrollable variants for max height
-  &-max-height {
-    &-sm {
-      max-height: 300px;
-      min-height: 0;
-      align-self: start;
-      .mw-panel-body {
-        max-height: calc(300px - #{2 * spacing('4')} - 2px);
-        overflow-y: auto;
-      }
-    }
-
-    &-md {
-      max-height: 500px;
-      min-height: 0;
-      align-self: start;
-      .mw-panel-body {
-        max-height: calc(500px - #{2 * spacing('4')} - 2px);
-        overflow-y: auto;
-      }
-    }
-
-    &-lg {
-      max-height: 700px;
-      min-height: 0;
-      align-self: start;
-      .mw-panel-body {
-        max-height: calc(700px - #{2 * spacing('4')} - 2px);
-        overflow-y: auto;
-      }
-    }
-  }
-
-  @include media-down('sm') {
-    font-size: font-size('sm');
+    flex-direction: column;
+    min-height: 100%;
+    margin: spacing('1');
 
     &-header {
-      h3 {
-        font-size: font-size('sm');
+      padding: spacing('4') spacing('5');
+      border-bottom: 1px solid var(--mw-border-accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: spacing('0');
+      border-radius: (radius('sm') - 2px) (radius('xl') - 2px) 0 0;
+    }
+
+    &-body {
+      padding: spacing('4') spacing('5');
+      flex: 1;
+      overflow-y: auto;
+      @include scrollbar;
+    }
+
+    // A dropdown, a tooltip, a date picker - anything a child opens *outside*
+    // itself - is cut off by the two clips above. Lifting them only while such a
+    // menu is open costs nothing the rest of the time, and the alternative is a
+    // menu that shows its first row and nothing else.
+    //
+    // This is the same escape hatch a project needs on its own containers: one
+    // `:has(.mw-dropdown[open]) { overflow: visible }` on whatever is clipping.
+    &:has(.mw-dropdown[open]),
+    &-body:has(.mw-dropdown[open]) {
+      overflow: visible;
+    }
+
+    &-footer {
+      padding: spacing('4') spacing('5');
+      border-top: 1px solid var(--mw-border-accent);
+      display: flex;
+      justify-content: flex-end;
+      gap: spacing('3');
+    }
+
+    // Panel variants
+    &-primary {
+      .mw-panel-header {
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+
+    &-secondary {
+      .mw-panel-header {
+        background: var(--mw-secondary-color);
+        color: var(--mw-secondary-accent-text-color);
+      }
+    }
+
+    // The coloured header already owns the top-right corner. An arc drawn over it
+    // either disappears into the primary fill or fights the secondary one - a
+    // blue bow on an orange header reads as a rendering fault, not as a mark. The
+    // bottom corner carries it alone on these two.
+    &-primary::after,
+    &-secondary::after {
+      @include corner-accent(2px, 'bottom');
+    }
+
+    // Scrollable variant for fixed height
+    &-scrollable {
+      max-height: 500px;
+
+      .mw-panel-body {
+        overflow-y: auto;
+        max-height: calc(500px - #{2 * spacing('4')} - 2px);
+      }
+    }
+
+    // Scrollable variants for max height
+    &-max-height {
+      &-sm {
+        max-height: 300px;
+        min-height: 0;
+        align-self: start;
+        .mw-panel-body {
+          max-height: calc(300px - #{2 * spacing('4')} - 2px);
+          overflow-y: auto;
+        }
+      }
+
+      &-md {
+        max-height: 500px;
+        min-height: 0;
+        align-self: start;
+        .mw-panel-body {
+          max-height: calc(500px - #{2 * spacing('4')} - 2px);
+          overflow-y: auto;
+        }
+      }
+
+      &-lg {
+        max-height: 700px;
+        min-height: 0;
+        align-self: start;
+        .mw-panel-body {
+          max-height: calc(700px - #{2 * spacing('4')} - 2px);
+          overflow-y: auto;
+        }
+      }
+    }
+
+    @include media-down('sm') {
+      font-size: font-size('sm');
+
+      &-header {
+        h3 {
+          font-size: font-size('sm');
+        }
       }
     }
   }

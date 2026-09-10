@@ -107,7 +107,11 @@
             class="mw-input"
             placeholder="Keyword..."
           />
-          <button type="button" class="mw-btn mw-btn-primary">
+          <button
+            type="button"
+            class="mw-btn mw-btn-primary"
+            aria-label="Search"
+          >
             <i class="fas fa-search"></i>
           </button>
         </div>
@@ -130,6 +134,7 @@
             onclick="
               navigator.clipboard?.writeText('https://maverick-wave.m1well.com')
             "
+            aria-label="Copy link"
           >
             <i class="fas fa-copy"></i>
           </button>
@@ -177,7 +182,11 @@
             class="mw-input"
             placeholder="Type a message..."
           />
-          <button type="button" class="mw-btn mw-btn-primary">
+          <button
+            type="button"
+            class="mw-btn mw-btn-primary"
+            aria-label="Send message"
+          >
             <i class="fas fa-paper-plane"></i>
           </button>
         </div>

@@ -1,309 +1,325 @@
 @use '../abstracts' as *;
 
-// ---------------------------------------------------------------------------
-// Flag
-//
-// A country flag drawn entirely in CSS gradients - no image, no icon font, no
-// request. Two reasons it is not the obvious emoji: Windows ships no flag
-// glyphs at all (Chrome and Edge render 🇩🇪 as the letters "DE" in a box), and
-// an emoji cannot be sized to line up with text the way a box can.
-//
-// Every flag gets the same 4:3 box regardless of its real ratio - Switzerland
-// is square, the US is 10:19 - because a column of switcher rows has to line
-// up, and a correct aspect ratio per country is what breaks it.
-//
-// The set below covers the languages a European project actually offers. For
-// anything else, the class is a slot: put an <img> or an inline <svg> inside
-// and it inherits the box, the corner and the hairline.
-// ---------------------------------------------------------------------------
+@layer mw.components {
+  // Drawn in CSS gradients, not emoji: Windows ships no flag glyphs at all, and an
+  // emoji cannot be sized to line up with text. Every flag gets the same 4:3 box
+  // whatever its real ratio, or a column of switcher rows stops lining up.
+  //
+  // For anything not in the set below the class is a slot - put an <img> or an
+  // inline <svg> inside and it inherits the box, the corner and the hairline.
 
-// Shape values, in px - these draw a picture and have nothing to do with the
-// spacing scale
-$_flag-width: 20px;
-$_flag-height: 15px;
+  // Shape values, in px - these draw a picture and have nothing to do with the
+  // spacing scale
+  $_flag-width: 20px;
+  $_flag-height: 15px;
 
-.mw-flag {
-  display: inline-block;
-  width: $_flag-width;
-  height: $_flag-height;
-  flex-shrink: 0;
-  border-radius: radius('xs');
-  overflow: hidden;
-  // Drawn on top rather than as a border: a border would shrink the painting
-  // area and shift every gradient stop inward by a pixel. Two rings, because
-  // each theme loses a different edge - the dark one keeps white flags (Japan,
-  // Poland) off a light card, the light one keeps the black band of Germany and
-  // Belgium off a dark header. Each is invisible where it is not needed.
-  box-shadow:
-    inset 0 0 0 1px rgb(0 0 0 / 0.2),
-    0 0 0 1px rgb(255 255 255 / 0.14);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  vertical-align: middle;
+  .mw-flag {
+    display: inline-block;
+    width: $_flag-width;
+    height: $_flag-height;
+    flex-shrink: 0;
+    border-radius: radius('xs');
+    overflow: hidden;
+    // Drawn on top rather than as a border: a border would shrink the painting
+    // area and shift every gradient stop inward by a pixel. Two rings, because
+    // each theme loses a different edge - the dark one keeps white flags (Japan,
+    // Poland) off a light card, the light one keeps the black band of Germany and
+    // Belgium off a dark header. Each is invisible where it is not needed.
+    box-shadow:
+      inset 0 0 0 1px rgb(0 0 0 / 0.2),
+      0 0 0 1px rgb(255 255 255 / 0.14);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    vertical-align: middle;
 
-  // The slot: a real flag asset fills the same box
-  > img,
-  > svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    // The slot: a real flag asset fills the same box
+    > img,
+    > svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
-}
 
-// --- Three horizontal bands ------------------------------------------------
-.mw-flag-de {
-  background-image: linear-gradient(
-    to bottom,
-    #000 0 33.34%,
-    #dd0000 33.34% 66.67%,
-    #ffce00 66.67%
-  );
-}
-
-.mw-flag-at {
-  background-image: linear-gradient(
-    to bottom,
-    #ed2939 0 33.34%,
-    #fff 33.34% 66.67%,
-    #ed2939 66.67%
-  );
-}
-
-.mw-flag-nl {
-  background-image: linear-gradient(
-    to bottom,
-    #ae1c28 0 33.34%,
-    #fff 33.34% 66.67%,
-    #21468b 66.67%
-  );
-}
-
-.mw-flag-hu {
-  background-image: linear-gradient(
-    to bottom,
-    #ce2939 0 33.34%,
-    #fff 33.34% 66.67%,
-    #477050 66.67%
-  );
-}
-
-.mw-flag-bg {
-  background-image: linear-gradient(
-    to bottom,
-    #fff 0 33.34%,
-    #00966e 33.34% 66.67%,
-    #d62612 66.67%
-  );
-}
-
-// Spain's bands are 1:2:1, not equal thirds - the civil flag, without the arms
-.mw-flag-es {
-  background-image: linear-gradient(
-    to bottom,
-    #aa151b 0 25%,
-    #f1bf00 25% 75%,
-    #aa151b 75%
-  );
-}
-
-// --- Three vertical bands --------------------------------------------------
-.mw-flag-fr {
-  background-image: linear-gradient(
-    to right,
-    #002654 0 33.34%,
-    #fff 33.34% 66.67%,
-    #ed2939 66.67%
-  );
-}
-
-.mw-flag-it {
-  background-image: linear-gradient(
-    to right,
-    #009246 0 33.34%,
-    #fff 33.34% 66.67%,
-    #ce2b37 66.67%
-  );
-}
-
-.mw-flag-be {
-  background-image: linear-gradient(
-    to right,
-    #000 0 33.34%,
-    #fae042 33.34% 66.67%,
-    #ed2939 66.67%
-  );
-}
-
-.mw-flag-ro {
-  background-image: linear-gradient(
-    to right,
-    #002b7f 0 33.34%,
-    #fcd116 33.34% 66.67%,
-    #ce1126 66.67%
-  );
-}
-
-.mw-flag-ie {
-  background-image: linear-gradient(
-    to right,
-    #169b62 0 33.34%,
-    #fff 33.34% 66.67%,
-    #ff883e 66.67%
-  );
-}
-
-// --- Two bands -------------------------------------------------------------
-.mw-flag-pl {
-  background-image: linear-gradient(to bottom, #fff 0 50%, #dc143c 50%);
-}
-
-.mw-flag-ua {
-  background-image: linear-gradient(to bottom, #0057b7 0 50%, #ffd700 50%);
-}
-
-// --- Nordic cross ----------------------------------------------------------
-// The arm sits left of centre, as it does on the real flags. Two bars laid over
-// a solid field: the horizontal one first so the intersection is one colour.
-@mixin nordic-cross($field, $cross) {
-  background-image:
-    linear-gradient(
+  // --- Three horizontal bands ------------------------------------------------
+  .mw-flag-de {
+    background-image: linear-gradient(
       to bottom,
-      transparent 40%,
-      $cross 40% 60%,
-      transparent 60%
-    ),
-    linear-gradient(to right, transparent 26%, $cross 26% 46%, transparent 46%),
-    linear-gradient($field 0 0);
-}
+      #000 0 33.34%,
+      #dd0000 33.34% 66.67%,
+      #ffce00 66.67%
+    );
+  }
 
-.mw-flag-se {
-  @include nordic-cross(#005293, #fecb00);
-}
-
-.mw-flag-dk {
-  @include nordic-cross(#c8102e, #fff);
-}
-
-.mw-flag-fi {
-  @include nordic-cross(#fff, #003580);
-}
-
-// Norway's blue cross sits inside the white one, so it takes a second, thinner
-// pair of bars on top
-.mw-flag-no {
-  background-image:
-    linear-gradient(
+  .mw-flag-at {
+    background-image: linear-gradient(
       to bottom,
-      transparent 44%,
-      #00205b 44% 56%,
-      transparent 56%
-    ),
-    linear-gradient(
+      #ed2939 0 33.34%,
+      #fff 33.34% 66.67%,
+      #ed2939 66.67%
+    );
+  }
+
+  .mw-flag-nl {
+    background-image: linear-gradient(
+      to bottom,
+      #ae1c28 0 33.34%,
+      #fff 33.34% 66.67%,
+      #21468b 66.67%
+    );
+  }
+
+  .mw-flag-hu {
+    background-image: linear-gradient(
+      to bottom,
+      #ce2939 0 33.34%,
+      #fff 33.34% 66.67%,
+      #477050 66.67%
+    );
+  }
+
+  .mw-flag-bg {
+    background-image: linear-gradient(
+      to bottom,
+      #fff 0 33.34%,
+      #00966e 33.34% 66.67%,
+      #d62612 66.67%
+    );
+  }
+
+  // Spain's bands are 1:2:1, not equal thirds - the civil flag, without the arms
+  .mw-flag-es {
+    background-image: linear-gradient(
+      to bottom,
+      #aa151b 0 25%,
+      #f1bf00 25% 75%,
+      #aa151b 75%
+    );
+  }
+
+  // --- Three vertical bands --------------------------------------------------
+  .mw-flag-fr {
+    background-image: linear-gradient(
       to right,
-      transparent 30%,
-      #00205b 30% 42%,
-      transparent 42%
-    ),
-    linear-gradient(to bottom, transparent 40%, #fff 40% 60%, transparent 60%),
-    linear-gradient(to right, transparent 26%, #fff 26% 46%, transparent 46%),
-    linear-gradient(#ba0c2f 0 0);
-}
+      #002654 0 33.34%,
+      #fff 33.34% 66.67%,
+      #ed2939 66.67%
+    );
+  }
 
-// Switzerland is square in reality; in a 4:3 box the arms are widened so the
-// cross still reads as one
-.mw-flag-ch {
-  background-image:
-    linear-gradient(to bottom, transparent 36%, #fff 36% 64%, transparent 64%),
-    linear-gradient(to right, transparent 39%, #fff 39% 61%, transparent 61%),
-    linear-gradient(#d52b1e 0 0);
-}
-
-// --- Everything else -------------------------------------------------------
-// The Union Jack, from the back forward: white diagonals, red diagonals over
-// them, then the white and red arms of St George's cross on top. The
-// counterchange of the red diagonals is dropped - at 20px nobody sees it, and
-// it would cost four more layers.
-.mw-flag-gb {
-  background-image:
-    linear-gradient(
+  .mw-flag-it {
+    background-image: linear-gradient(
       to right,
-      transparent 42%,
-      #c8102e 42% 58%,
-      transparent 58%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 38%,
-      #c8102e 38% 62%,
-      transparent 62%
-    ),
-    linear-gradient(to right, transparent 36%, #fff 36% 64%, transparent 64%),
-    linear-gradient(to bottom, transparent 30%, #fff 30% 70%, transparent 70%),
-    linear-gradient(
-      to bottom right,
-      transparent 45%,
-      #c8102e 45% 55%,
-      transparent 55%
-    ),
-    linear-gradient(
-      to bottom left,
-      transparent 45%,
-      #c8102e 45% 55%,
-      transparent 55%
-    ),
-    linear-gradient(
-      to bottom right,
-      transparent 38%,
-      #fff 38% 62%,
-      transparent 62%
-    ),
-    linear-gradient(
-      to bottom left,
-      transparent 38%,
-      #fff 38% 62%,
-      transparent 62%
-    ),
-    linear-gradient(#012169 0 0);
-}
+      #009246 0 33.34%,
+      #fff 33.34% 66.67%,
+      #ce2b37 66.67%
+    );
+  }
 
-// 13 stripes and the canton. The stars are left out - at 15px tall they would
-// be a grey smear, and the blue block already says which flag this is.
-.mw-flag-us {
-  background-image:
-    linear-gradient(#3c3b6e 0 0),
-    repeating-linear-gradient(to bottom, #b31942 0 7.693%, #fff 7.693% 15.385%);
-  background-size:
-    40% 53.85%,
-    100% 100%;
-  background-position:
-    top left,
-    top left;
-}
+  .mw-flag-be {
+    background-image: linear-gradient(
+      to right,
+      #000 0 33.34%,
+      #fae042 33.34% 66.67%,
+      #ed2939 66.67%
+    );
+  }
 
-.mw-flag-jp {
-  background-image:
-    radial-gradient(circle at 50% 50%, #bc002d 0 29%, transparent 30%),
-    linear-gradient(#fff 0 0);
-}
+  .mw-flag-ro {
+    background-image: linear-gradient(
+      to right,
+      #002b7f 0 33.34%,
+      #fcd116 33.34% 66.67%,
+      #ce1126 66.67%
+    );
+  }
 
-// Two overlapping circles make the crescent; the star is dropped for the same
-// reason as the US stars
-.mw-flag-tr {
-  background-image:
-    radial-gradient(circle at 47% 50%, #e30a17 0 20%, transparent 21%),
-    radial-gradient(circle at 40% 50%, #fff 0 25%, transparent 26%),
-    linear-gradient(#e30a17 0 0);
-}
+  .mw-flag-ie {
+    background-image: linear-gradient(
+      to right,
+      #169b62 0 33.34%,
+      #fff 33.34% 66.67%,
+      #ff883e 66.67%
+    );
+  }
 
-// Portugal without the armillary sphere - the ring alone carries it at this size
-.mw-flag-pt {
-  background-image:
-    radial-gradient(
-      circle at 40% 50%,
-      transparent 0 12%,
-      #ffe900 13% 21%,
-      transparent 22%
-    ),
-    linear-gradient(to right, #046a38 0 40%, #da291c 40%);
+  // --- Two bands -------------------------------------------------------------
+  .mw-flag-pl {
+    background-image: linear-gradient(to bottom, #fff 0 50%, #dc143c 50%);
+  }
+
+  .mw-flag-ua {
+    background-image: linear-gradient(to bottom, #0057b7 0 50%, #ffd700 50%);
+  }
+
+  // --- Nordic cross ----------------------------------------------------------
+  // The arm sits left of centre, as it does on the real flags. Two bars laid over
+  // a solid field: the horizontal one first so the intersection is one colour.
+  @mixin nordic-cross($field, $cross) {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent 40%,
+        $cross 40% 60%,
+        transparent 60%
+      ),
+      linear-gradient(
+        to right,
+        transparent 26%,
+        $cross 26% 46%,
+        transparent 46%
+      ),
+      linear-gradient($field 0 0);
+  }
+
+  .mw-flag-se {
+    @include nordic-cross(#005293, #fecb00);
+  }
+
+  .mw-flag-dk {
+    @include nordic-cross(#c8102e, #fff);
+  }
+
+  .mw-flag-fi {
+    @include nordic-cross(#fff, #003580);
+  }
+
+  // Norway's blue cross sits inside the white one, so it takes a second, thinner
+  // pair of bars on top
+  .mw-flag-no {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent 44%,
+        #00205b 44% 56%,
+        transparent 56%
+      ),
+      linear-gradient(
+        to right,
+        transparent 30%,
+        #00205b 30% 42%,
+        transparent 42%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 40%,
+        #fff 40% 60%,
+        transparent 60%
+      ),
+      linear-gradient(to right, transparent 26%, #fff 26% 46%, transparent 46%),
+      linear-gradient(#ba0c2f 0 0);
+  }
+
+  // Switzerland is square in reality; in a 4:3 box the arms are widened so the
+  // cross still reads as one
+  .mw-flag-ch {
+    background-image:
+      linear-gradient(
+        to bottom,
+        transparent 36%,
+        #fff 36% 64%,
+        transparent 64%
+      ),
+      linear-gradient(to right, transparent 39%, #fff 39% 61%, transparent 61%),
+      linear-gradient(#d52b1e 0 0);
+  }
+
+  // --- Everything else -------------------------------------------------------
+  // The Union Jack, from the back forward: white diagonals, red diagonals over
+  // them, then the white and red arms of St George's cross on top. The
+  // counterchange of the red diagonals is dropped - at 20px nobody sees it, and
+  // it would cost four more layers.
+  .mw-flag-gb {
+    background-image:
+      linear-gradient(
+        to right,
+        transparent 42%,
+        #c8102e 42% 58%,
+        transparent 58%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 38%,
+        #c8102e 38% 62%,
+        transparent 62%
+      ),
+      linear-gradient(to right, transparent 36%, #fff 36% 64%, transparent 64%),
+      linear-gradient(
+        to bottom,
+        transparent 30%,
+        #fff 30% 70%,
+        transparent 70%
+      ),
+      linear-gradient(
+        to bottom right,
+        transparent 45%,
+        #c8102e 45% 55%,
+        transparent 55%
+      ),
+      linear-gradient(
+        to bottom left,
+        transparent 45%,
+        #c8102e 45% 55%,
+        transparent 55%
+      ),
+      linear-gradient(
+        to bottom right,
+        transparent 38%,
+        #fff 38% 62%,
+        transparent 62%
+      ),
+      linear-gradient(
+        to bottom left,
+        transparent 38%,
+        #fff 38% 62%,
+        transparent 62%
+      ),
+      linear-gradient(#012169 0 0);
+  }
+
+  // 13 stripes and the canton. The stars are left out - at 15px tall they would
+  // be a grey smear, and the blue block already says which flag this is.
+  .mw-flag-us {
+    background-image:
+      linear-gradient(#3c3b6e 0 0),
+      repeating-linear-gradient(
+        to bottom,
+        #b31942 0 7.693%,
+        #fff 7.693% 15.385%
+      );
+    background-size:
+      40% 53.85%,
+      100% 100%;
+    background-position:
+      top left,
+      top left;
+  }
+
+  .mw-flag-jp {
+    background-image:
+      radial-gradient(circle at 50% 50%, #bc002d 0 29%, transparent 30%),
+      linear-gradient(#fff 0 0);
+  }
+
+  // Two overlapping circles make the crescent; the star is dropped for the same
+  // reason as the US stars
+  .mw-flag-tr {
+    background-image:
+      radial-gradient(circle at 47% 50%, #e30a17 0 20%, transparent 21%),
+      radial-gradient(circle at 40% 50%, #fff 0 25%, transparent 26%),
+      linear-gradient(#e30a17 0 0);
+  }
+
+  // Portugal without the armillary sphere - the ring alone carries it at this size
+  .mw-flag-pt {
+    background-image:
+      radial-gradient(
+        circle at 40% 50%,
+        transparent 0 12%,
+        #ffe900 13% 21%,
+        transparent 22%
+      ),
+      linear-gradient(to right, #046a38 0 40%, #da291c 40%);
+  }
 }

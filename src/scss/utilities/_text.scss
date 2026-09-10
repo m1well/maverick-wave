@@ -1,180 +1,178 @@
 @use '../abstracts' as *;
 
-// Text utilities
-.mw-text {
-  &-center {
-    text-align: center;
+@layer mw.utilities {
+  .mw-text {
+    &-center {
+      text-align: center;
+    }
+
+    &-left {
+      text-align: left;
+    }
+
+    &-right {
+      text-align: right;
+    }
+
+    // Fixed-width digits, nothing else. For anything where figures have to line
+    // up vertically or must not jitter while they count: a clock, a counter, a
+    // key figure, an ID. `lining-nums` guards against fonts that default to
+    // old-style figures.
+    //
+    // Deliberately without alignment: bundling `text-align: right` in here meant
+    // that whoever only wanted the digits could not use the class and wrote the
+    // declaration out by hand instead.
+    &-numeric {
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: 'tnum', 'lnum';
+    }
+
+    // For money and other figures in tables: the digits from above, plus
+    // right-aligned and never wrapped mid-number. Locale-agnostic - it works for
+    // 1,204.50 and 1.204,50 alike, because the alignment comes from the right
+    // edge, not from the separator.
+    &-currency {
+      text-align: right;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-feature-settings: 'tnum', 'lnum';
+      white-space: nowrap;
+    }
+
+    &-primary {
+      color: var(--mw-primary-text-color);
+    }
+
+    &-secondary {
+      color: var(--mw-secondary-text-color);
+    }
+
+    &-success {
+      color: var(--mw-success-text-color);
+    }
+
+    &-warning {
+      color: var(--mw-warning-text-color);
+    }
+
+    &-danger {
+      color: var(--mw-danger-text-color);
+    }
+
+    &-info {
+      color: var(--mw-info-text-color);
+    }
+
+    &-muted {
+      color: var(--mw-text-muted-color);
+    }
+
+    &-bold {
+      font-weight: font-weight('bold');
+    }
+
+    &-medium {
+      font-weight: font-weight('medium');
+    }
+
+    &-normal {
+      font-weight: font-weight('normal');
+    }
+
+    &-light {
+      font-weight: font-weight('light');
+    }
+
+    &-italic {
+      font-style: italic;
+    }
+
+    &-color-dark {
+      color: var(--mw-dark-text-color);
+    }
+
+    &-color-light {
+      color: var(--mw-light-text-color);
+    }
+
+    @each $name, $size in $font-sizes {
+      &-#{$name} {
+        font-size: $size;
+      }
+    }
   }
 
-  &-left {
-    text-align: left;
+  .mw-leading {
+    &-tight {
+      line-height: 1.2;
+    }
+
+    &-normal {
+      line-height: 1.5;
+    }
+
+    &-loose {
+      line-height: 1.8;
+    }
   }
 
-  &-right {
-    text-align: right;
+  .mw-text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
   }
 
-  // Fixed-width digits, nothing else. For anything where figures have to line
-  // up vertically or must not jitter while they count: a clock, a counter, a
-  // key figure, an ID. `lining-nums` guards against fonts that default to
-  // old-style figures.
-  //
-  // Deliberately without alignment: bundling `text-align: right` in here meant
-  // that whoever only wanted the digits could not use the class and wrote the
-  // declaration out by hand instead.
-  &-numeric {
-    font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: 'tnum', 'lnum';
+  @each $lines in (2, 3, 4, 5) {
+    .mw-text-clamp-#{$lines} {
+      display: -webkit-box;
+      -webkit-line-clamp: $lines;
+      line-clamp: $lines;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
-  // For money and other figures in tables: the digits from above, plus
-  // right-aligned and never wrapped mid-number. Locale-agnostic - it works for
-  // 1,204.50 and 1.204,50 alike, because the alignment comes from the right
-  // edge, not from the separator.
-  &-currency {
-    text-align: right;
-    font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: 'tnum', 'lnum';
+  .mw-text-nowrap {
     white-space: nowrap;
   }
 
-  &-primary {
-    color: var(--mw-primary-text-color);
+  // For anything that has no spaces to break at - a URL, a hash, an API key -
+  // and would otherwise push the page sideways on a phone
+  .mw-text-break {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
-  &-secondary {
-    color: var(--mw-secondary-text-color);
+  .mw-text-balance {
+    text-wrap: balance;
   }
 
-  &-success {
-    color: var(--mw-success-text-color);
+  .mw-text-pretty {
+    text-wrap: pretty;
   }
 
-  &-warning {
-    color: var(--mw-warning-text-color);
+  .mw-text-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
-  &-danger {
-    color: var(--mw-danger-text-color);
+  .mw-text-capitalize {
+    text-transform: capitalize;
   }
 
-  &-info {
-    color: var(--mw-info-text-color);
-  }
-
-  &-muted {
+  // A kicker or an eyebrow over a heading - the small, spaced, upper-case line
+  // that says what section this is
+  .mw-text-eyebrow {
+    font-size: font-size('2xs');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--mw-text-muted-color);
   }
 
-  &-bold {
-    font-weight: font-weight('bold');
+  // Sets the measure a column of text is comfortable at. Anything past roughly 75
+  // characters and the eye loses the start of the next line on the way back.
+  .mw-text-measure {
+    max-width: 68ch;
   }
-
-  &-medium {
-    font-weight: font-weight('medium');
-  }
-
-  &-normal {
-    font-weight: font-weight('normal');
-  }
-
-  &-light {
-    font-weight: font-weight('light');
-  }
-
-  &-italic {
-    font-style: italic;
-  }
-
-  &-color-dark {
-    color: var(--mw-dark-text-color);
-  }
-
-  &-color-light {
-    color: var(--mw-light-text-color);
-  }
-
-  @each $name, $size in $font-sizes {
-    &-#{$name} {
-      font-size: $size;
-    }
-  }
-}
-
-// Line height utilities
-.mw-leading {
-  &-tight {
-    line-height: 1.2;
-  }
-
-  &-normal {
-    line-height: 1.5;
-  }
-
-  &-loose {
-    line-height: 1.8;
-  }
-}
-
-// Overflow
-.mw-text-truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-@each $lines in (2, 3, 4, 5) {
-  .mw-text-clamp-#{$lines} {
-    display: -webkit-box;
-    -webkit-line-clamp: $lines;
-    line-clamp: $lines;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-}
-
-.mw-text-nowrap {
-  white-space: nowrap;
-}
-
-// For anything that has no spaces to break at - a URL, a hash, an API key -
-// and would otherwise push the page sideways on a phone
-.mw-text-break {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
-// Wrapping
-.mw-text-balance {
-  text-wrap: balance;
-}
-
-.mw-text-pretty {
-  text-wrap: pretty;
-}
-
-.mw-text-uppercase {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.mw-text-capitalize {
-  text-transform: capitalize;
-}
-
-// A kicker or an eyebrow over a heading - the small, spaced, upper-case line
-// that says what section this is
-.mw-text-eyebrow {
-  font-size: font-size('2xs');
-  font-weight: font-weight('bold');
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--mw-text-muted-color);
-}
-
-// Sets the measure a column of text is comfortable at. Anything past roughly 75
-// characters and the eye loses the start of the next line on the way back.
-.mw-text-measure {
-  max-width: 68ch;
 }
