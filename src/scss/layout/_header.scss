@@ -1,536 +1,535 @@
 @use '../abstracts' as *;
 
-.mw-header {
-  position: fixed;
-  top: spacing('0');
-  left: spacing('0');
-  width: 100%;
-  z-index: z-index('header');
-  background: var(--mw-header-background);
-  backdrop-filter: blur(7px);
-  border-bottom: 1px solid var(--mw-header-border);
-  padding: spacing('3') spacing('0');
-  transition: var(--mw-transition);
-  display: flex;
-  align-items: center;
-  min-height: var(--mw-header-height);
-
-  // A component host (Angular, React) sitting between the header and its
-  // container would become the flex item and shrink to content width, leaving
-  // mw-container to center inside a far too narrow box. The container brings
-  // its own width and centering, so the wrapper only has to fill the line.
-  // Absolutely positioned children are out of flow and stay unaffected.
-  > *:not(.mw-container) {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .mw-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: spacing('3');
-  }
-
-  .mw-logo {
+@layer mw.layout {
+  .mw-header {
+    position: fixed;
+    top: spacing('0');
+    left: spacing('0');
+    width: 100%;
+    z-index: z-index('header');
+    background: var(--mw-header-background);
+    backdrop-filter: blur(7px);
+    border-bottom: 1px solid var(--mw-header-border);
+    padding: spacing('3') spacing('0');
+    transition: var(--mw-transition);
     display: flex;
     align-items: center;
-    z-index: z-index('header') + 5;
-    position: relative;
-    flex-shrink: 1;
-    min-width: 0;
+    min-height: var(--mw-header-height);
 
-    button {
-      display: inline-block;
-      text-decoration: none;
+    // A component host (Angular, React) sitting between the header and its
+    // container would become the flex item and shrink to content width, leaving
+    // mw-container to center inside a far too narrow box. The container brings
+    // its own width and centering, so the wrapper only has to fill the line.
+    // Absolutely positioned children are out of flow and stay unaffected.
+    > *:not(.mw-container) {
+      flex: 1;
       min-width: 0;
     }
 
-    img {
-      height: 42px;
-      width: auto;
-      max-width: 100%;
-      object-fit: contain;
-      object-position: left center;
-      display: block;
-    }
-  }
-
-  .mw-header-actions {
-    display: flex;
-    align-items: center;
-    gap: spacing('2');
-    flex-shrink: 0;
-  }
-
-  // Login button styling
-  .mw-login-btn {
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
-    border: none;
-    border-radius: radius('md');
-    font-size: font-size('md');
-    cursor: pointer;
-    transition: var(--mw-transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    width: 50px;
-    flex-shrink: 0;
-
-    &:hover:not(:disabled) {
-      background: var(--mw-primary-color-hover);
-      transform: translateY(-1px);
+    .mw-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: spacing('3');
     }
 
-    &:disabled {
-      // Same treatment as every other disabled button - a theme-bound text
-      // color would go dark on this always-primary surface in light mode
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-  }
+    .mw-logo {
+      display: flex;
+      align-items: center;
+      z-index: z-index('header') + 5;
+      position: relative;
+      flex-shrink: 1;
+      min-width: 0;
 
-  // Updated burger button to look like primary button
-  .mw-menu-btn {
-    background: var(--mw-primary-color);
-    border: none;
-    cursor: pointer;
-    outline: none;
-    border-radius: radius('md');
-    transition: var(--mw-transition);
-    height: 40px;
-    width: 50px;
-    display: none;
-    position: relative;
-    flex-shrink: 0;
+      a,
+      button {
+        display: inline-block;
+        text-decoration: none;
+        min-width: 0;
+      }
 
-    // iOS
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    user-select: none;
-    touch-action: manipulation;
-
-    &:hover {
-      background: var(--mw-primary-color-hover);
-      transform: translateY(-1px);
+      img {
+        height: 42px;
+        width: auto;
+        max-width: 100%;
+        object-fit: contain;
+        object-position: left center;
+        display: block;
+      }
     }
 
-    &:active {
-      transform: translateY(0);
+    .mw-header-actions {
+      display: flex;
+      align-items: center;
+      gap: spacing('2');
+      flex-shrink: 0;
     }
 
-    @include focus-ring;
+    .mw-login-btn {
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+      border: none;
+      border-radius: radius('md');
+      font-size: font-size('md');
+      cursor: pointer;
+      transition: var(--mw-transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      width: 50px;
+      flex-shrink: 0;
 
-    &.open {
-      background: var(--mw-secondary-color);
-      z-index: z-index('header') + 10;
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color-hover);
+        transform: translateY(-1px);
+      }
 
-      // The surface under the burger switches to secondary, so its ink has to
-      // switch with it. Set on the button, so the bar and both pseudo-elements
-      // pick it up.
-      --mw-header-burgerbutton-color: var(--mw-header-burgerbutton-open-color);
+      @include focus-ring;
+
+      &:disabled {
+        // Same treatment as every other disabled button - a theme-bound text
+        // color would go dark on this always-primary surface in light mode
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .mw-menu-btn {
+      background: var(--mw-primary-color);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      outline: none;
+      border-radius: radius('md');
+      transition: var(--mw-transition);
+      height: 40px;
+      width: 50px;
+      display: none;
+      position: relative;
+      flex-shrink: 0;
+
+      // iOS
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      user-select: none;
+      touch-action: manipulation;
 
       &:hover {
-        background: var(--mw-secondary-color-hover);
+        background: var(--mw-primary-color-hover);
+        transform: translateY(-1px);
       }
 
-      // Transform the burger to X
-      .mw-menu-btn-burger {
-        background: transparent;
+      &:active {
+        transform: translateY(0);
+      }
 
-        &::before {
-          top: 0;
-          transform: rotate(45deg);
+      @include focus-ring;
+
+      &.open {
+        background: var(--mw-secondary-color);
+        z-index: z-index('header') + 10;
+
+        // The surface under the burger switches to secondary, so its ink has to
+        // switch with it. Set on the button, so the bar and both pseudo-elements
+        // pick it up.
+        --mw-header-burgerbutton-color: var(
+          --mw-header-burgerbutton-open-color
+        );
+
+        &:hover {
+          background: var(--mw-secondary-color-hover);
         }
 
-        &::after {
-          bottom: 0;
-          transform: rotate(-45deg);
+        .mw-menu-btn-burger {
+          background: transparent;
+
+          &::before {
+            top: 0;
+            transform: rotate(45deg);
+          }
+
+          &::after {
+            bottom: 0;
+            transform: rotate(-45deg);
+          }
         }
       }
     }
-  }
 
-  .mw-menu-btn-burger {
-    width: 18px;
-    height: 2px;
-    background: var(--mw-header-burgerbutton-color);
-    border-radius: 1px;
-    position: relative;
-    // `all` on purpose, and the one place in the framework that keeps it: the
-    // burger morphs into an X by moving its two bars to the centre, so `top`
-    // and `bottom` have to animate - and those are exactly what the shared
-    // property list leaves out.
-    transition: all var(--mw-duration-base) var(--mw-ease-out);
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
+    .mw-menu-btn-burger {
+      // A <span> in a button (a <div> is not phrasing content), so it needs a box
+      display: block;
       width: 18px;
       height: 2px;
       background: var(--mw-header-burgerbutton-color);
       border-radius: 1px;
+      position: relative;
+      // `all` on purpose, and the one place in the framework that keeps it: the
+      // burger morphs into an X by moving its two bars to the centre, so `top`
+      // and `bottom` have to animate - and those are exactly what the shared
+      // property list leaves out.
       transition: all var(--mw-duration-base) var(--mw-ease-out);
-    }
 
-    &::before {
-      top: -6px;
-    }
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 18px;
+        height: 2px;
+        background: var(--mw-header-burgerbutton-color);
+        border-radius: 1px;
+        transition: all var(--mw-duration-base) var(--mw-ease-out);
+      }
 
-    &::after {
-      bottom: -6px;
-    }
-  }
-}
+      &::before {
+        top: -6px;
+      }
 
-// Off-canvas drawer for the collapsed navbar (mobile only)
-@mixin navbar-off-canvas {
-  position: fixed;
-  top: 0;
-  right: 0;
-  --mw-navbar-drawer-width: 250px;
-  width: var(--mw-navbar-drawer-width);
-  height: 100dvh;
-  background: var(--mw-header-background);
-  border-left: 1px solid var(--mw-header-border);
-  box-shadow:
-    -6px 0 12px var(--mw-shadow-near),
-    -18px 0 40px var(--mw-shadow-far);
-  z-index: z-index('header') + 3;
-
-  transform: translateX(100%);
-  visibility: hidden;
-  transition:
-    transform var(--mw-duration-base) var(--mw-ease-out),
-    visibility var(--mw-duration-base);
-
-  .mw-navbar-list {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: spacing('1');
-    height: 100%;
-    overflow-y: auto;
-    // Keeps a rubber-band scroll inside the panel from moving the page
-    overscroll-behavior: contain;
-    padding: calc(
-        var(--mw-header-height) + #{spacing('6')} + env(safe-area-inset-top)
-      )
-      spacing('4') calc(#{spacing('6')} + env(safe-area-inset-bottom));
-  }
-
-  .mw-navbar-item {
-    width: 100%;
-    margin: spacing('0');
-    opacity: 0;
-    transform: translateX(12px);
-  }
-
-  .mw-navbar-link {
-    display: flex;
-    align-items: center;
-    min-height: 48px;
-    width: 100%;
-    padding: spacing('3') spacing('4');
-    border-radius: radius('md');
-    font-size: font-size('md');
-    text-align: left;
-    color: var(--mw-header-text-color);
-
-    // The sliding underline is a hover affordance and has no place on touch
-    &::after {
-      display: none;
-    }
-
-    // Restated here: the plain color above already outranks the base
-    &:hover {
-      color: var(--mw-header-navbar-list-active-color);
-      background: var(--mw-primary-background);
-    }
-
-    &:active {
-      background: var(--mw-primary-background-hover);
-    }
-
-    // Last, so the current page keeps its look while being hovered
-    &.mw-active,
-    &.active {
-      color: var(--mw-header-navbar-list-active-color);
-      background: var(--mw-primary-background);
-      box-shadow: inset 3px 0 0 var(--mw-header-navbar-list-active-color);
-      font-weight: font-weight('medium');
+      &::after {
+        bottom: -6px;
+      }
     }
   }
 
-  &.open {
-    transform: translateX(0);
-    visibility: visible;
+  @mixin navbar-off-canvas {
+    position: fixed;
+    top: 0;
+    right: 0;
+    --mw-navbar-drawer-width: 250px;
+    width: var(--mw-navbar-drawer-width);
+    height: 100dvh;
+    background: var(--mw-header-background);
+    border-left: 1px solid var(--mw-header-border);
+    box-shadow:
+      -6px 0 12px var(--mw-shadow-near),
+      -18px 0 40px var(--mw-shadow-far);
+    z-index: z-index('header') + 3;
 
-    // Items follow the panel in, slightly staggered
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform var(--mw-duration-base) var(--mw-ease-out),
+      visibility var(--mw-duration-base);
+
+    .mw-navbar-list {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: spacing('1');
+      height: 100%;
+      overflow-y: auto;
+      // Keeps a rubber-band scroll inside the panel from moving the page
+      overscroll-behavior: contain;
+      padding: calc(
+          var(--mw-header-height) + #{spacing('6')} + env(safe-area-inset-top)
+        )
+        spacing('4') calc(#{spacing('6')} + env(safe-area-inset-bottom));
+    }
+
     .mw-navbar-item {
-      animation: mw-navbar-item-in var(--mw-duration-base) var(--mw-ease-out)
-        forwards;
+      width: 100%;
+      margin: spacing('0');
+      opacity: 0;
+      transform: translateX(12px);
+    }
 
-      @for $i from 1 through 10 {
-        &:nth-child(#{$i}) {
-          animation-delay: 0.1s + $i * 0.035s;
+    .mw-navbar-link {
+      display: flex;
+      align-items: center;
+      min-height: 48px;
+      width: 100%;
+      padding: spacing('3') spacing('4');
+      border-radius: radius('md');
+      font-size: font-size('md');
+      text-align: left;
+      color: var(--mw-header-text-color);
+
+      // The sliding underline is a hover affordance and has no place on touch
+      &::after {
+        display: none;
+      }
+
+      // Restated here: the plain color above already outranks the base
+      &:hover {
+        color: var(--mw-header-navbar-list-active-color);
+        background: var(--mw-primary-background);
+      }
+
+      &:active {
+        background: var(--mw-primary-background-hover);
+      }
+
+      // Last, so the current page keeps its look while being hovered
+      @include active() {
+        color: var(--mw-header-navbar-list-active-color);
+        background: var(--mw-primary-background);
+        box-shadow: inset 3px 0 0 var(--mw-header-navbar-list-active-color);
+        font-weight: font-weight('medium');
+      }
+    }
+
+    &.open {
+      transform: translateX(0);
+      visibility: visible;
+
+      // Items follow the panel in, slightly staggered
+      .mw-navbar-item {
+        animation: mw-navbar-item-in var(--mw-duration-base) var(--mw-ease-out)
+          forwards;
+
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+            animation-delay: 0.1s + $i * 0.035s;
+          }
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0.01ms;
+
+      .mw-navbar-item {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+    }
+  }
+
+  @mixin navbar-scrim($navbar-selector) {
+    body:has(#{$navbar-selector}.open) {
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: var(--mw-overlay-background);
+        backdrop-filter: blur(2px);
+        z-index: z-index('header') - 1;
+        animation: mw-navbar-scrim-in var(--mw-duration-base) var(--mw-ease-out);
+      }
+    }
+  }
+
+  @keyframes mw-navbar-item-in {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes mw-navbar-scrim-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .mw-navbar {
+    display: flex;
+
+    &-list {
+      display: flex;
+      list-style: none;
+      margin: spacing('0');
+      padding: spacing('0');
+      gap: spacing('2');
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow: visible;
+
+      @include media-up('lg') {
+        gap: spacing('4');
+      }
+    }
+
+    &-item {
+      position: relative;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    &-link {
+      position: relative;
+      font-weight: font-weight('medium');
+      font-size: inherit;
+      transition: var(--mw-transition);
+      color: var(--mw-header-navbar-list-color);
+      padding-bottom: 3px;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 10%;
+        bottom: 0;
+        width: 80%;
+        height: 2px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition:
+          transform var(--mw-duration-fast),
+          opacity var(--mw-duration-fast);
+        opacity: 0;
+      }
+
+      &:hover,
+      &.mw-active,
+      &.active {
+        color: var(--mw-header-navbar-list-active-color);
+      }
+
+      &:hover::after,
+      &.mw-active::after,
+      &.active::after {
+        transform: scaleX(1) !important;
+        opacity: 1 !important;
+      }
+    }
+
+    // Auto-responsive behavior based on nav item count
+    // Default behavior (1-3 items): collapse at md
+    @include media-down('md') {
+      @include navbar-off-canvas;
+    }
+
+    // Medium (4-5 items): collapse at lg
+    &.mw-navbar-medium {
+      @include media-down('lg') {
+        @include navbar-off-canvas;
+      }
+    }
+
+    // Large (6+ items): collapse at xl
+    &.mw-navbar-large {
+      @include media-down('xl') {
+        @include navbar-off-canvas;
+      }
+    }
+  }
+
+  // Every variant is collapsed at md, so the default selector covers them all
+  @include media-down('md') {
+    @include navbar-scrim('.mw-navbar');
+  }
+
+  @include media-down('lg') {
+    @include navbar-scrim('.mw-navbar-medium');
+  }
+
+  @include media-down('xl') {
+    @include navbar-scrim('.mw-navbar-large');
+  }
+
+  .mw-navbar {
+    // Default (1-3 items): show burger at md
+    @include media-down('md') {
+      ~ .mw-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &.mw-navbar-medium {
+      // 4-5 items: show burger at lg
+      @include media-down('lg') {
+        ~ .mw-menu-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    &.mw-navbar-large {
+      // 6+ items: show burger at xl
+      @include media-down('xl') {
+        ~ .mw-menu-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition-duration: 0.01ms;
-
-    .mw-navbar-item {
-      opacity: 1;
-      transform: none;
-      animation: none;
-    }
-  }
-}
-
-// Page scrim behind the drawer
-@mixin navbar-scrim($navbar-selector) {
-  body:has(#{$navbar-selector}.open) {
-    overflow: hidden;
-
-    &::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: var(--mw-overlay-background);
-      backdrop-filter: blur(2px);
-      z-index: z-index('header') - 1;
-      animation: mw-navbar-scrim-in var(--mw-duration-base) var(--mw-ease-out);
-    }
-  }
-}
-
-@keyframes mw-navbar-item-in {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes mw-navbar-scrim-in {
-  from {
-    opacity: 0;
-  }
-}
-
-// Navbar with built-in auto-detection
-.mw-navbar {
-  display: flex;
-
-  &-list {
-    display: flex;
-    list-style: none;
-    margin: spacing('0');
-    padding: spacing('0');
-    gap: spacing('4');
-    align-items: center;
-    flex-wrap: nowrap;
-    overflow: visible;
-
-    @include media-down('lg') {
-      gap: spacing('2');
-    }
-  }
-
-  &-item {
-    position: relative;
-    flex-shrink: 0;
-    white-space: nowrap;
-  }
-
-  &-link {
-    position: relative;
-    font-weight: font-weight('medium');
-    font-size: inherit;
-    transition: var(--mw-transition);
-    color: var(--mw-header-navbar-list-color);
-    padding-bottom: 3px;
-
-    &::after {
-      content: '';
-      position: absolute;
-      left: 10%;
-      bottom: 0;
-      width: 80%;
-      height: 2px;
-      background: currentColor;
-      transform: scaleX(0);
-      transform-origin: center;
-      transition:
-        transform var(--mw-duration-fast),
-        opacity var(--mw-duration-fast);
+  @keyframes fadeIn {
+    from {
       opacity: 0;
+      transform: translateY(-10px);
     }
-
-    &:hover,
-    &.mw-active,
-    &.active {
-      color: var(--mw-header-navbar-list-active-color);
-    }
-
-    &:hover::after,
-    &.mw-active::after,
-    &.active::after {
-      transform: scaleX(1) !important;
-      opacity: 1 !important;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  // Auto-responsive behavior based on nav item count
-  // Default behavior (1-3 items): collapse at md
-  @include media-down('md') {
-    @include navbar-off-canvas;
-  }
-
-  // Medium (4-5 items): collapse at lg
-  &.mw-navbar-medium {
-    @include media-down('lg') {
-      @include navbar-off-canvas;
-    }
-  }
-
-  // Large (6+ items): collapse at xl
-  &.mw-navbar-large {
-    @include media-down('xl') {
-      @include navbar-off-canvas;
-    }
-  }
-}
-
-// Every variant is collapsed at md, so the default selector covers them all
-@include media-down('md') {
-  @include navbar-scrim('.mw-navbar');
-}
-
-@include media-down('lg') {
-  @include navbar-scrim('.mw-navbar-medium');
-}
-
-@include media-down('xl') {
-  @include navbar-scrim('.mw-navbar-large');
-}
-
-// Show burger button based on navbar size
-.mw-navbar {
-  // Default (1-3 items): show burger at md
-  @include media-down('md') {
-    ~ .mw-menu-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  &.mw-navbar-medium {
-    // 4-5 items: show burger at lg
-    @include media-down('lg') {
-      ~ .mw-menu-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
-
-  &.mw-navbar-large {
-    // 6+ items: show burger at xl
-    @include media-down('xl') {
-      ~ .mw-menu-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Profile button - avatar plus the signed-in name
-.mw-profile-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: spacing('3');
-  height: 40px;
-  padding: spacing('0') spacing('4') spacing('0') spacing('1');
-  background: transparent;
-  border: 1px solid var(--mw-header-border);
-  border-radius: radius('2xl');
-  color: var(--mw-header-text-color);
-  cursor: pointer;
-  transition: var(--mw-transition);
-  flex-shrink: 0;
-  max-width: 220px;
-
-  // The avatar brings spacing of its own that would break the pill shape
-  .mw-avatar {
-    margin: spacing('0');
-    box-shadow: none;
-    border-width: 0;
-  }
-
-  &-name {
-    font-size: font-size('sm');
-    font-weight: font-weight('medium');
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &:hover:not(:disabled) {
-    background: var(--mw-primary-background-hover);
-    border-color: var(--mw-primary-text-color);
-  }
-
-  @include focus-ring;
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  // Icon fallback for projects without initials
-  > i,
-  > svg,
-  > [class*='fa-'] {
+  // Profile button - avatar plus the signed-in name
+  .mw-profile-btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
+    gap: spacing('3');
+    height: 40px;
+    padding: spacing('0') spacing('4') spacing('0') spacing('1');
+    background: transparent;
+    border: 1px solid var(--mw-header-border);
+    border-radius: radius('2xl');
+    color: var(--mw-header-text-color);
+    cursor: pointer;
+    transition: var(--mw-transition);
     flex-shrink: 0;
-    font-size: font-size('xl');
-  }
+    max-width: 220px;
 
-  @include media-down('md') {
-    padding: spacing('0');
-    width: 40px;
-    justify-content: center;
-    border-radius: radius('full');
+    // The avatar brings spacing of its own that would break the pill shape
+    .mw-avatar {
+      margin: spacing('0');
+      box-shadow: none;
+      border-width: 0;
+    }
 
-    .mw-profile-btn-name {
-      display: none;
+    &-name {
+      font-size: font-size('sm');
+      font-weight: font-weight('medium');
+      line-height: 1.2;
+      @include truncate;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-background-hover);
+      border-color: var(--mw-primary-text-color);
+    }
+
+    @include focus-ring;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    > i,
+    > svg,
+    > [class*='fa-'] {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      font-size: font-size('xl');
+    }
+
+    @include media-down('md') {
+      padding: spacing('0');
+      width: 40px;
+      justify-content: center;
+      border-radius: radius('full');
+
+      .mw-profile-btn-name {
+        display: none;
+      }
     }
   }
 }

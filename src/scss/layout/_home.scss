@@ -1,40 +1,41 @@
 @use '../abstracts' as *;
 
-.mw-home {
-  justify-items: center;
-  align-items: center;
-  text-align: center;
+@layer mw.layout {
+  .mw-home {
+    justify-items: center;
+    align-items: center;
+    text-align: center;
 
-  &-content {
-    padding: spacing('6');
-    @include media-down('sm') {
+    &-content {
       padding: spacing('9') spacing('4');
+      @include media-up('sm') {
+        padding: spacing('6');
+      }
+
+      &-fade {
+        @extend .mw-home-content;
+        animation: fadeIn var(--mw-duration-slower) var(--mw-ease-out);
+      }
     }
 
-    // choose mw-home-content or mw-home-content-fade
-    &-fade {
-      @extend .mw-home-content;
-      animation: fadeIn var(--mw-duration-slower) var(--mw-ease-out);
-    }
-  }
-
-  &-text {
-    width: min(75%, 700px);
-    position: relative;
-    margin: spacing('0') auto spacing('4');
-    @include media-down('sm') {
+    &-text {
       width: 85%;
+      position: relative;
+      margin: spacing('0') auto spacing('4');
+      @include media-up('sm') {
+        width: min(75%, 700px);
+      }
     }
   }
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-8px) translateY(-23px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(-8px) translateY(-23px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

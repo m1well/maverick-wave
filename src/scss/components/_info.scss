@@ -1,202 +1,186 @@
 @use '../abstracts' as *;
 
-$_mw-info-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
-
-.mw-info {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: spacing('3') spacing('5');
-  margin: spacing('1');
-  font-size: font-size('base');
-  font-weight: font-weight('medium');
-  color: var(--mw-text-color);
-  background: var(--mw-card-background);
-  border: 1px solid var(--mw-border);
-  border-radius: radius('md');
-  transition:
-    transform var(--mw-duration-base) var(--mw-ease-out),
-    box-shadow var(--mw-duration-base) var(--mw-ease-out);
-  cursor: default;
-  text-decoration: none;
-
-  &:hover {
-    box-shadow: var(--mw-elevation-3);
-  }
-
-  @include hover {
-    transform: translateY(-2px);
-  }
-
-  // Interactive variant
-  &-clickable {
-    cursor: pointer;
-    @include tappable;
-
-    &:active {
-      transform: scale(0.98);
-      transition-duration: var(--mw-duration-instant);
-    }
-  }
-
-  // Size variants
-  &-sm {
-    padding: spacing('1') spacing('3');
-    font-size: font-size('sm');
-    font-weight: font-weight('normal');
-  }
-  &-lg {
-    padding: spacing('4') spacing('6');
-    font-size: font-size('lg');
+@layer mw.components {
+  .mw-info {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: spacing('3') spacing('5');
+    margin: spacing('1');
+    font-size: font-size('base');
     font-weight: font-weight('medium');
-  }
-  &-xl {
-    padding: spacing('5') spacing('8');
-    font-size: font-size('xl');
-    font-weight: font-weight('medium');
-  }
-
-  // Block variant: the same framed surface, carrying a paragraph instead of a
-  // value. The base is built for a short figure - it centres its content in a
-  // narrow column, sets it in medium weight and lifts on hover, which turns
-  // running text into a ragged stack that twitches under the pointer. This
-  // reads as a note instead: ranged left up to a measure, body weight, body
-  // leading, and it stays put.
-  //
-  //   <div class="mw-info mw-info-primary mw-info-block">
-  //     <strong>Why greyscale?</strong>
-  //     <span>Because the frame is not the stage ...</span>
-  //   </div>
-  &-block {
-    display: flex;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 68ch;
-    margin-inline: auto;
-    padding: spacing('6') spacing('7');
-    font-weight: font-weight('normal');
-    line-height: 1.7;
-    text-align: left;
-    text-wrap: pretty;
+    color: var(--mw-text-color);
+    background: var(--mw-card-background);
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    transition:
+      transform var(--mw-duration-base) var(--mw-ease-out),
+      box-shadow var(--mw-duration-base) var(--mw-ease-out);
+    cursor: default;
+    text-decoration: none;
 
     &:hover {
-      box-shadow: none;
+      box-shadow: var(--mw-elevation-3);
     }
 
     @include hover {
-      transform: none;
+      transform: translateY(-2px);
     }
 
-    strong {
-      margin-bottom: spacing('2');
-    }
-  }
+    // Interactive variant
+    &-clickable {
+      cursor: pointer;
+      @include tappable;
 
-  // counter variant: big number + small label
-  &-counter {
-    min-width: spacing('12');
-    .mw-info-value {
-      font-size: font-size('4xl');
-      font-weight: font-weight('bold');
-      line-height: 1.4;
+      &:active {
+        transform: scale(0.98);
+        transition-duration: var(--mw-duration-instant);
+      }
     }
-    .mw-info-label {
+
+    &-sm {
+      padding: spacing('1') spacing('3');
       font-size: font-size('sm');
+      font-weight: font-weight('normal');
+    }
+    &-lg {
+      padding: spacing('4') spacing('6');
+      font-size: font-size('lg');
       font-weight: font-weight('medium');
-      opacity: 0.7;
-      text-align: center;
+    }
+    &-xl {
+      padding: spacing('5') spacing('8');
+      font-size: font-size('xl');
+      font-weight: font-weight('medium');
+    }
+
+    // The same surface carrying a paragraph instead of a figure. The base centres
+    // a short value and lifts on hover, which turns running text into a ragged
+    // stack that twitches under the pointer - this stays put and reads as a note.
+    &-block {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      max-width: 68ch;
+      margin-inline: auto;
+      padding: spacing('6') spacing('7');
+      font-weight: font-weight('normal');
+      line-height: 1.7;
+      text-align: left;
+      text-wrap: pretty;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      @include hover {
+        transform: none;
+      }
+
+      strong {
+        margin-bottom: spacing('2');
+      }
+    }
+
+    // counter variant: big number + small label
+    &-counter {
+      min-width: spacing('12');
+      .mw-info-value {
+        font-size: font-size('4xl');
+        font-weight: font-weight('bold');
+        line-height: 1.4;
+      }
+      .mw-info-label {
+        font-size: font-size('sm');
+        font-weight: font-weight('medium');
+        opacity: 0.7;
+        text-align: center;
+      }
     }
   }
-}
 
-// When the figure is actually interactive it should say so
-a.mw-info,
-button.mw-info {
-  cursor: pointer;
+  // When the figure is actually interactive it should say so
+  a.mw-info,
+  button.mw-info {
+    cursor: pointer;
 
-  @include focus-ring;
-}
-
-// Info like mini-buttons
-.mw-info-mini {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border-radius: radius('full');
-  background: var(--mw-gray-color);
-  color: $fixed-surface-text;
-  border: none;
-  padding: 0;
-  line-height: 1;
-  font-weight: bold;
-  cursor: default;
-  box-sizing: border-box;
-
-  i,
-  fa-icon,
-  svg,
-  [class*='fa-'],
-  [class*='fas-'] {
-    font-size: 0.7rem;
+    @include focus-ring;
   }
 
-  &-sm {
-    width: 16px;
-    height: 16px;
+  // Info like mini-buttons
+  .mw-info-mini {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: radius('full');
+    background: var(--mw-gray-color);
+    color: $fixed-surface-text;
+    border: none;
+    padding: 0;
+    line-height: 1;
+    font-weight: bold;
+    cursor: default;
+    box-sizing: border-box;
+
     i,
     fa-icon,
     svg,
     [class*='fa-'],
     [class*='fas-'] {
-      font-size: 0.55rem;
+      font-size: 0.7rem;
+    }
+
+    &-sm {
+      width: 16px;
+      height: 16px;
+      i,
+      fa-icon,
+      svg,
+      [class*='fa-'],
+      [class*='fas-'] {
+        font-size: 0.55rem;
+      }
+    }
+
+    &-lg {
+      width: 24px;
+      height: 24px;
+      i,
+      fa-icon,
+      svg,
+      [class*='fa-'],
+      [class*='fas-'] {
+        font-size: 0.8rem;
+      }
+    }
+
+    &-xl {
+      width: 32px;
+      height: 32px;
+      i,
+      fa-icon,
+      svg,
+      [class*='fa-'],
+      [class*='fas-'] {
+        font-size: 1rem;
+      }
     }
   }
 
-  &-lg {
-    width: 24px;
-    height: 24px;
-    i,
-    fa-icon,
-    svg,
-    [class*='fa-'],
-    [class*='fas-'] {
-      font-size: 0.8rem;
+  // Generate color modifiers
+  @each $name, $col in $semantic-colors {
+    .mw-info-#{$name} {
+      background: var(--mw-#{$name}-info-background);
+      border-color: var(--mw-#{$name}-text-color);
+      border-left: 6px solid var(--mw-#{$name}-text-color);
     }
-  }
 
-  &-xl {
-    width: 32px;
-    height: 32px;
-    i,
-    fa-icon,
-    svg,
-    [class*='fa-'],
-    [class*='fas-'] {
-      font-size: 1rem;
+    .mw-info-mini-#{$name} {
+      background: #{$col};
+      color: var(--mw-#{$name}-accent-text-color);
     }
-  }
-}
-
-// Generate color modifiers
-@each $name, $col in $_mw-info-colors {
-  .mw-info-#{$name} {
-    background: var(--mw-#{$name}-info-background);
-    border-color: var(--mw-#{$name}-text-color);
-    border-left: 6px solid var(--mw-#{$name}-text-color);
-  }
-
-  .mw-info-mini-#{$name} {
-    background: #{$col};
-    color: var(--mw-#{$name}-accent-text-color);
   }
 }

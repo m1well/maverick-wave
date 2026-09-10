@@ -1,152 +1,144 @@
 @use '../abstracts' as *;
 
-// Base button bar
-.mw-button-bar {
-  display: flex;
-  gap: spacing('3');
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  border: 1px solid var(--mw-border);
-  border-radius: radius('md');
-  padding: spacing('2');
+@layer mw.components {
+  .mw-button-bar {
+    display: flex;
+    gap: spacing('3');
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    padding: spacing('2');
 
-  &:hover {
-    border-color: var(--mw-border-accent);
-  }
+    &:hover {
+      border-color: var(--mw-border-accent);
+    }
 
-  @include media-down('sm') {
-    flex-direction: column;
-    gap: spacing('2');
+    @include media-down('sm') {
+      flex-direction: column;
+      gap: spacing('2');
 
-    .mw-btn {
-      width: 100%;
-      min-width: 0;
+      .mw-btn {
+        width: 100%;
+        min-width: 0;
+      }
     }
   }
-}
 
-// Alignment variants
-.mw-button-bar-left {
-  justify-content: flex-start;
-}
+  .mw-button-bar-left {
+    justify-content: flex-start;
+  }
 
-.mw-button-bar-right {
-  justify-content: flex-end;
-}
+  .mw-button-bar-right {
+    justify-content: flex-end;
+  }
 
-// Explicit counterpart to the three above - it matches the default, but nobody
-// should have to look that up to find out
-.mw-button-bar-center {
-  justify-content: center;
-}
-
-.mw-button-bar-between {
-  justify-content: space-between;
-
-  @include media-down('sm') {
+  // Explicit counterpart to the three above - it matches the default, but nobody
+  // should have to look that up to find out
+  .mw-button-bar-center {
     justify-content: center;
   }
-}
 
-// Primary button bar (applies primary styling to all buttons)
-.mw-button-bar-primary {
-  .mw-btn:not([class*='mw-btn-secondary']):not([class*='mw-btn-outline']):not(
-      [class*='mw-btn-link']
-    ) {
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
+  .mw-button-bar-between {
+    justify-content: center;
 
-    @include btn-solid;
-
-    &:hover:not(:disabled) {
-      background: var(--mw-primary-color-hover);
+    @include media-up('sm') {
+      justify-content: space-between;
     }
   }
-}
 
-// Secondary button bar (applies secondary styling to all buttons)
-.mw-button-bar-secondary {
-  .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-outline']):not(
-      [class*='mw-btn-link']
-    ) {
-    background: var(--mw-secondary-color);
-    color: var(--mw-secondary-accent-text-color);
-
-    @include btn-solid;
-
-    &:hover:not(:disabled) {
-      background: var(--mw-secondary-color-hover);
-    }
-  }
-}
-
-// Outline button bar
-.mw-button-bar-outline {
-  .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-secondary']):not(
-      [class*='mw-btn-link']
-    ) {
-    background: transparent;
-    border-color: var(--mw-primary-text-color);
-    color: var(--mw-primary-text-color);
-
-    &:hover:not(:disabled) {
+  .mw-button-bar-primary {
+    .mw-btn:not([class*='mw-btn-secondary']):not([class*='mw-btn-outline']):not(
+        [class*='mw-btn-link']
+      ) {
       background: var(--mw-primary-color);
       color: var(--mw-primary-accent-text-color);
+
+      @include btn-solid;
+
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color-hover);
+      }
     }
   }
-}
 
-// Mixed button bar for navigation (common pattern)
-.mw-button-bar-nav {
-  justify-content: space-between;
+  .mw-button-bar-secondary {
+    .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-outline']):not(
+        [class*='mw-btn-link']
+      ) {
+      background: var(--mw-secondary-color);
+      color: var(--mw-secondary-accent-text-color);
 
-  // First and last buttons get outline style
-  .mw-btn:first-child:not([class*='mw-btn-']),
-  .mw-btn:last-child:not([class*='mw-btn-']) {
-    background: transparent;
-    border-color: var(--mw-primary-text-color);
-    color: var(--mw-primary-text-color);
+      @include btn-solid;
 
-    &:hover:not(:disabled) {
+      &:hover:not(:disabled) {
+        background: var(--mw-secondary-color-hover);
+      }
+    }
+  }
+
+  .mw-button-bar-outline {
+    .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-secondary']):not(
+        [class*='mw-btn-link']
+      ) {
+      background: transparent;
+      border-color: var(--mw-primary-text-color);
+      color: var(--mw-primary-text-color);
+
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+  }
+
+  .mw-button-bar-nav {
+    justify-content: space-between;
+
+    .mw-btn:first-child:not([class*='mw-btn-']),
+    .mw-btn:last-child:not([class*='mw-btn-']) {
+      background: transparent;
+      border-color: var(--mw-primary-text-color);
+      color: var(--mw-primary-text-color);
+
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+
+    .mw-btn:not(:first-child):not(:last-child):not([class*='mw-btn-']) {
       background: var(--mw-primary-color);
       color: var(--mw-primary-accent-text-color);
+
+      @include btn-solid;
+
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color-hover);
+      }
     }
   }
 
-  // Middle button(s) get primary style
-  .mw-btn:not(:first-child):not(:last-child):not([class*='mw-btn-']) {
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
-
-    @include btn-solid;
-
-    &:hover:not(:disabled) {
-      background: var(--mw-primary-color-hover);
-    }
-  }
-}
-
-// Compact variant with smaller spacing
-.mw-button-bar-sm {
-  gap: spacing('2');
-
-  @include media-down('sm') {
+  .mw-button-bar-sm {
     gap: spacing('1');
-  }
-}
 
-// Large variant with bigger spacing and larger buttons
-.mw-button-bar-lg {
-  gap: spacing('4');
-
-  .mw-btn {
-    padding: spacing('3') spacing('5');
-    font-size: font-size('md');
-    min-height: var(--mw-control-height-lg);
+    @include media-up('sm') {
+      gap: spacing('2');
+    }
   }
 
-  @include media-down('sm') {
+  .mw-button-bar-lg {
     gap: spacing('3');
+
+    .mw-btn {
+      padding: spacing('3') spacing('5');
+      font-size: font-size('md');
+      min-height: var(--mw-control-height-lg);
+    }
+
+    @include media-up('sm') {
+      gap: spacing('4');
+    }
   }
 }

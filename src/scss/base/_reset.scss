@@ -1,125 +1,127 @@
 @use '../abstracts' as *;
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  min-width: 320px;
-  scroll-padding-top: var(--mw-header-height);
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  @include scrollbar(var(--mw-border), transparent);
-}
-
-body {
-  background: var(--mw-page-background);
-  overflow-wrap: break-word;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  &:has(.mw-modal-open) {
-    overflow: hidden;
-    height: 100vh;
+@layer mw.reset {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-}
 
-// The UA rule behind the `hidden` attribute is `[hidden] { display: none }`, and
-// every component in here that sets its own `display` beats it on specificity -
-// a hidden `mw-tag` or `mw-btn` stays on screen. `!important` is the only thing
-// that wins against a class, and it is also what Angular's `[hidden]` binding
-// and every `el.hidden = true` in an application expect to happen.
-[hidden] {
-  display: none !important;
-}
+  html {
+    scroll-behavior: smooth;
+    min-width: 320px;
+    scroll-padding-top: var(--mw-header-height);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    @include scrollbar(var(--mw-border), transparent);
+  }
 
-// A selection in the browser default blue on a deep blue page is the one bit of
-// chrome that gives away that nobody looked. Brand tint, kept translucent so it
-// works over a card, a code block and an image caption alike.
-::selection {
-  background: color-mix(in srgb, var(--mw-primary-color) 55%, transparent);
-  color: var(--mw-text-color);
-}
+  body {
+    background: var(--mw-page-background);
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-a {
-  text-decoration: none;
-  color: var(--mw-text-muted-color);
-  transition: var(--mw-transition);
-  @include tappable;
-  @include focus-ring(2px);
-}
+    &:has(.mw-modal-open) {
+      overflow: hidden;
+      height: 100vh;
+    }
+  }
 
-ul {
-  list-style: none;
-}
+  // The UA rule behind the `hidden` attribute is `[hidden] { display: none }`, and
+  // every component in here that sets its own `display` beats it on specificity -
+  // a hidden `mw-tag` or `mw-btn` stays on screen. `!important` is the only thing
+  // that wins against a class, and it is also what Angular's `[hidden]` binding
+  // and every `el.hidden = true` in an application expect to happen.
+  [hidden] {
+    display: none !important;
+  }
 
-hr {
-  margin: spacing('3') 0;
-  color: var(--mw-text-muted-color);
-  border: 0;
-  border-top: 1px solid currentcolor;
-  opacity: 0.35;
-}
+  // A selection in the browser default blue on a deep blue page is the one bit of
+  // chrome that gives away that nobody looked. Brand tint, kept translucent so it
+  // works over a card, a code block and an image caption alike.
+  ::selection {
+    background: color-mix(in srgb, var(--mw-primary-color) 55%, transparent);
+    color: var(--mw-text-color);
+  }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+  a {
+    text-decoration: none;
+    color: var(--mw-text-muted-color);
+    transition: var(--mw-transition);
+    @include tappable;
+    @include focus-ring(2px);
+  }
 
-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  color: inherit;
-  @include tappable;
-}
+  ul {
+    list-style: none;
+  }
 
-input,
-textarea,
-select {
-  font-family: inherit;
-}
+  hr {
+    margin: spacing('3') 0;
+    color: var(--mw-text-muted-color);
+    border: 0;
+    border-top: 1px solid currentcolor;
+    opacity: 0.35;
+  }
 
-// A control the framework has no component for - a bare <summary>, a
-// contenteditable, an element carrying tabindex - still gets a ring.
-:focus-visible {
-  outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
-  outline-offset: var(--mw-focus-ring-offset);
-}
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 
-// Media that has to fit its box without distorting. `height: auto` alone keeps
-// the aspect ratio only while nothing else sets a height.
-img,
-svg,
-video,
-canvas {
-  max-width: 100%;
-}
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    color: inherit;
+    @include tappable;
+  }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+  input,
+  textarea,
+  select {
+    font-family: inherit;
+  }
 
-th,
-td {
-  border: 1px solid var(--mw-border);
-  padding: spacing('1') spacing('2');
-  text-align: left;
-}
+  // A control the framework has no component for - a bare <summary>, a
+  // contenteditable, an element carrying tabindex - still gets a ring.
+  :focus-visible {
+    outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+    outline-offset: var(--mw-focus-ring-offset);
+  }
 
-th {
-  background: var(--mw-primary-color);
-  color: var(--mw-primary-accent-text-color);
-}
+  // Media that has to fit its box without distorting. `height: auto` alone keeps
+  // the aspect ratio only while nothing else sets a height.
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+  }
 
-tbody tr:nth-child(even) {
-  background: var(--mw-gray-background);
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border: 1px solid var(--mw-border);
+    padding: spacing('1') spacing('2');
+    text-align: left;
+  }
+
+  th {
+    background: var(--mw-primary-color);
+    color: var(--mw-primary-accent-text-color);
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--mw-gray-background);
+  }
 }

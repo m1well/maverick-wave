@@ -1,213 +1,193 @@
 @use '../abstracts' as *;
 
-// Active theme set and its token prefix, derived from $mw-theme-mode
-$_active-theme: $dark-theme-colors;
-$_active-prefix: 'dark';
+@layer mw.base {
+  // Active theme set and its token prefix, derived from $mw-theme-mode
+  $_active-theme: $dark-theme-colors;
+  $_active-prefix: 'dark';
 
-@if $mw-theme-mode == 'light' {
-  $_active-theme: $light-theme-colors;
-  $_active-prefix: 'light';
-}
-
-// CSS Variables for theming and overriding
-:root {
-  // Brand and neutral colors
-  @each $name, $value in $base-colors {
-    --mw-#{$name}: #{$value};
-  }
-
-  // Status colors
-  @each $name, $value in $status-colors {
-    --mw-#{$name}: #{$value};
-  }
-
-  // Header/navbar colors (fixed across themes, but overridable on their own)
-  @each $name, $value in $header-colors {
-    --mw-header-#{$name}: #{$value};
-  }
-
-  // Dark theme colors
-  @each $name, $value in $dark-theme-colors {
-    --mw-dark-#{$name}: #{$value};
-  }
-
-  // Light theme colors
-  @each $name, $value in $light-theme-colors {
-    --mw-light-#{$name}: #{$value};
-  }
-
-  // Motion. The scale itself lives in the variables file - these are the knobs
-  // a project retunes without recompiling.
-  --mw-duration-instant: #{$duration-instant};
-  --mw-duration-fast: #{$duration-fast};
-  --mw-duration-base: #{$duration-base};
-  --mw-duration-slow: #{$duration-slow};
-  --mw-duration-slower: #{$duration-slower};
-  --mw-duration-zoom: #{$duration-zoom};
-  --mw-ease-out: #{$ease-out};
-  --mw-ease-in-out: #{$ease-in-out};
-  --mw-ease-spring: #{$ease-spring};
-
-  // The workhorse: every hover, focus and active state in the framework. An
-  // explicit property list rather than `all` - see $transition-properties.
-  // Built through transition-list(), which repeats the duration on every
-  // property: a shorthand list only reads it on the entry it stands behind.
-  --mw-transition: #{transition-list('--mw-duration-base')};
-  // Same list, for a state change that should feel instant under the pointer
-  // rather than animated - a button label, a tag, a table row.
-  --mw-transition-fast: #{transition-list('--mw-duration-fast')};
-
-  // Control sizes - see the note in the variables file. Custom properties
-  // rather than compile-time only, so an application can tighten its forms
-  // without recompiling the framework.
-  --mw-control-height-sm: #{$control-height-sm};
-  --mw-control-height: #{$control-height};
-  --mw-control-height-lg: #{$control-height-lg};
-  --mw-control-font-sm: #{$control-font-sm};
-  --mw-control-font: #{$control-font};
-  --mw-control-font-lg: #{$control-font-lg};
-  --mw-control-line-height: #{$control-line-height};
-
-  // Focus ring
-  --mw-focus-ring-width: #{$focus-ring-width};
-  --mw-focus-ring-offset: #{$focus-ring-offset};
-  --mw-focus-ring-color: var(--mw-primary-text-color);
-  --mw-focus-halo-size: #{$focus-halo-size};
-  --mw-focus-halo-opacity: #{$focus-halo-opacity};
-
-  // Tells the browser which way round the page is, which is the only way the
-  // chrome it draws itself follows along: scrollbars, the popup a <select>
-  // opens, the panel behind a date picker, the spinner on a number field.
-  // Without it a dark page keeps light scrollbars and a white select popup.
   @if $mw-theme-mode == 'light' {
-    color-scheme: light;
-  } @else {
-    color-scheme: dark;
+    $_active-theme: $light-theme-colors;
+    $_active-prefix: 'light';
   }
-  // Native controls the framework does not paint over - <progress>, a file
-  // input's button, a text selection handle - take the brand colour instead of
-  // the OS blue.
-  accent-color: var(--mw-primary-color);
 
-  // theme for theme-toggle
-  --mw-internal-theme-mode: #{$mw-theme-mode};
-
-  // hero background image and the ink that sits on it
-  --mw-hero-background: #{$mw-hero-image};
-  --mw-hero-text-color: #{$mw-hero-text-color};
-
-  // header height
-  --mw-header-height: #{$header-height};
-
-  // Height the announcement ribbon reserves - the anchor scroll offset is
-  // calculated from it, so a project with a taller ribbon raises this token
-  // rather than fighting the offset. Below `sm` the component itself steps it
-  // up for the wrapped line.
-  --mw-announcement-height: 2.7rem;
-
-  // Layout knobs. A good default is not enough here: what reads as generous on
-  // a landing page costs visible content in an application with a sticky
-  // header. Same framework, two different right answers.
-  //
-  // The page gutter is fluid rather than stepped. A plain percentage keeps too
-  // little on a phone and throws away too much on a desktop; a fixed gutter
-  // does the reverse - Bootstrap ships 12px at every width, Bulma 32px, and
-  // Material asks for 16dp on a phone and more as the screen grows. The ramp
-  // below lands on ~24px at 375px, ~32px at 576px, ~40px on a tablet and tops
-  // out at 64px, where the 1200px cap takes over. Stepping it at a breakpoint
-  // instead would make the container jump *backwards* at the step, because the
-  // gutter grows faster there than the viewport does.
-  //
-  // max() against the safe-area insets, so a notched phone in landscape pushes
-  // the content clear of the cutout instead of running underneath it.
-  --mw-container-gutter: max(
-    clamp(1rem, 4.2vw + 0.5rem, 4rem),
-    env(safe-area-inset-left, 0px),
-    env(safe-area-inset-right, 0px)
-  );
-  --mw-container-width: min(
-    1200px,
-    calc(100% - 2 * var(--mw-container-gutter))
-  );
-  --mw-section-padding-block: #{spacing('10')};
-  --mw-section-title-gap: #{spacing('7')};
-  --mw-scroll-hint-offset: #{spacing('9')};
-  --mw-scroll-hint-inline: var(--mw-container-gutter);
-  --mw-scroll-hint-reserve: #{spacing('10')};
-
-  // Active theme - aliases onto the dark or light set above
-  @each $name, $value in $_active-theme {
-    --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
-  }
-}
-
-@if $mw-theme-mode == 'switchable' {
-  .mw-theme-light {
-    // Light theme variables for switching
-    @each $name, $value in $light-theme-colors {
-      --mw-#{$name}: var(--mw-light-#{$name});
+  // CSS Variables for theming and overriding
+  :root {
+    // Brand and neutral colors
+    @each $name, $value in $base-colors {
+      --mw-#{$name}: #{$value};
     }
 
+    // Status colors
+    @each $name, $value in $status-colors {
+      --mw-#{$name}: #{$value};
+    }
+
+    // Header/navbar colors (fixed across themes, but overridable on their own)
+    @each $name, $value in $header-colors {
+      --mw-header-#{$name}: #{$value};
+    }
+
+    // Dark theme colors
+    @each $name, $value in $dark-theme-colors {
+      --mw-dark-#{$name}: #{$value};
+    }
+
+    // Light theme colors
+    @each $name, $value in $light-theme-colors {
+      --mw-light-#{$name}: #{$value};
+    }
+
+    // The scale lives in the variables file - these are the runtime knobs
+    --mw-duration-instant: #{$duration-instant};
+    --mw-duration-fast: #{$duration-fast};
+    --mw-duration-base: #{$duration-base};
+    --mw-duration-slow: #{$duration-slow};
+    --mw-duration-slower: #{$duration-slower};
+    --mw-duration-zoom: #{$duration-zoom};
+    --mw-ease-out: #{$ease-out};
+    --mw-ease-in-out: #{$ease-in-out};
+    --mw-ease-spring: #{$ease-spring};
+
+    // Every hover, focus and active state. transition-list() repeats the duration
+    // on every property - a shorthand list only reads it on the entry behind it.
+    --mw-transition: #{transition-list('--mw-duration-base')};
+    // Same list, for a state that should feel instant rather than animated
+    --mw-transition-fast: #{transition-list('--mw-duration-fast')};
+
+    // Custom properties, so an application can tighten its forms without recompiling
+    --mw-control-height-sm: #{$control-height-sm};
+    --mw-control-height: #{$control-height};
+    --mw-control-height-lg: #{$control-height-lg};
+    --mw-control-font-sm: #{$control-font-sm};
+    --mw-control-font: #{$control-font};
+    --mw-control-font-lg: #{$control-font-lg};
+    --mw-control-line-height: #{$control-line-height};
+
+    // Focus ring
+    --mw-focus-ring-width: #{$focus-ring-width};
+    --mw-focus-ring-offset: #{$focus-ring-offset};
+    --mw-focus-ring-color: var(--mw-primary-text-color);
+    --mw-focus-halo-size: #{$focus-halo-size};
+    --mw-focus-halo-opacity: #{$focus-halo-opacity};
+
+    // The only way the chrome the browser draws itself follows the theme:
+    // scrollbars, the select popup, the date picker panel, number spinners
+    @if $mw-theme-mode == 'light' {
+      color-scheme: light;
+    } @else {
+      color-scheme: dark;
+    }
+    // Native controls the framework does not paint over take the brand, not OS blue
+    accent-color: var(--mw-primary-color);
+
+    // theme for theme-toggle
+    --mw-internal-theme-mode: #{$mw-theme-mode};
+
+    // hero background image and the ink that sits on it
+    --mw-hero-background: #{$mw-hero-image};
+    --mw-hero-text-color: #{$mw-hero-text-color};
+
+    // header height
+    --mw-header-height: #{$header-height};
+
+    // Read by the anchor offset of anything the sticky section nav can cover
+    --mw-section-nav-height: 3.7rem;
+
+    // The anchor scroll offset is calculated from it, so a taller ribbon raises
+    // this token rather than fighting the offset
+    --mw-announcement-height: 2.7rem;
+
+    // Fluid rather than stepped: ~24px at 375px up to 64px, where the 1200px cap
+    // takes over. Stepping at a breakpoint makes the container jump *backwards*
+    // there, because the gutter grows faster than the viewport does.
+    // max() against the safe-area insets keeps a notched phone clear of the cutout.
+    --mw-container-gutter: max(
+      clamp(1rem, 4.2vw + 0.5rem, 4rem),
+      env(safe-area-inset-left, 0px),
+      env(safe-area-inset-right, 0px)
+    );
+    --mw-container-width: min(
+      1200px,
+      calc(100% - 2 * var(--mw-container-gutter))
+    );
+    --mw-section-padding-block: #{spacing('10')};
+    --mw-section-title-gap: #{spacing('7')};
+    --mw-scroll-hint-offset: #{spacing('9')};
+    --mw-scroll-hint-inline: var(--mw-container-gutter);
+    --mw-scroll-hint-reserve: #{spacing('10')};
+
+    // Active theme - aliases onto the dark or light set above
+    @each $name, $value in $_active-theme {
+      --mw-#{$name}: var(--mw-#{$_active-prefix}-#{$name});
+    }
+  }
+
+  @if $mw-theme-mode == 'switchable' {
+    .mw-theme-light {
+      // Light theme variables for switching
+      @each $name, $value in $light-theme-colors {
+        --mw-#{$name}: var(--mw-light-#{$name});
+      }
+
+      color-scheme: light;
+    }
+  }
+
+  // Form controls are deliberately light in both themes - see
+  // $form-elements-background - so they opt back out of the page's colour scheme.
+  // Without this the browser draws their built-in parts for a dark surface and a
+  // date field ends up with a white calendar icon on a near-white background.
+  input,
+  select,
+  textarea,
+  .mw-input,
+  .mw-select,
+  .mw-textarea,
+  .mw-input-group {
     color-scheme: light;
   }
-}
 
-// Form controls are deliberately light in both themes - see
-// $form-elements-background - so they opt back out of the page's colour scheme.
-// Without this the browser draws their built-in parts for a dark surface and a
-// date field ends up with a white calendar icon on a near-white background.
-input,
-select,
-textarea,
-.mw-input,
-.mw-select,
-.mw-textarea,
-.mw-input-group {
-  color-scheme: light;
-}
-
-// Anything that draws its own surface re-points the cover colour of a scroll
-// hint, so a tab bar or a wide table inside a card fades into the card and not
-// into the page behind it. Inherited, so nesting keeps working.
-.mw-card,
-.mw-panel,
-.mw-modal,
-.mw-tile,
-.mw-calendar:not(.mw-calendar-plain) {
-  --mw-scroll-hint-cover: var(--mw-card-background);
-}
-
-// ---------------------------------------------------------------------------
-// Reduced motion
-//
-// One switch for the whole framework. Turning the duration tokens down covers
-// everything built on them; the blanket rule underneath covers the handful of
-// animations that name their own timing, plus anything a project wrote itself.
-//
-// 1ms and not 0: a zero-length transition never fires transitionend, and any
-// script waiting for it to clean up - a modal removing a class, a toast
-// removing itself - would wait forever.
-// ---------------------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --mw-duration-instant: 1ms;
-    --mw-duration-fast: 1ms;
-    --mw-duration-base: 1ms;
-    --mw-duration-slow: 1ms;
-    --mw-duration-slower: 1ms;
+  // A scroll hint inside a card has to fade into the card, not into the page
+  .mw-card,
+  .mw-panel,
+  .mw-modal,
+  .mw-tile,
+  .mw-calendar:not(.mw-calendar-plain) {
+    --mw-scroll-hint-cover: var(--mw-card-background);
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 1ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 1ms !important;
-    transition-delay: 0ms !important;
+  // The duration tokens cover everything built on them, the blanket rule below
+  // the few animations that name their own timing. 1ms and not 0: a zero-length
+  // transition never fires transitionend, and a script waiting for it would hang.
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --mw-duration-instant: 1ms;
+      --mw-duration-fast: 1ms;
+      --mw-duration-base: 1ms;
+      --mw-duration-slow: 1ms;
+      --mw-duration-slower: 1ms;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 1ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 1ms !important;
+      transition-delay: 0ms !important;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
   }
 
-  html {
-    scroll-behavior: auto;
+  // Without this a theme flip starts ~5900 concurrent transitions at once
+  .mw-theme-switching,
+  .mw-theme-switching *,
+  .mw-theme-switching *::before,
+  .mw-theme-switching *::after {
+    transition: none !important;
   }
 }

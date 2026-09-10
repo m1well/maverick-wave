@@ -1,181 +1,272 @@
 @use '../abstracts' as *;
 
-.mw-tabs {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  &-nav {
+@layer mw.components {
+  .mw-tabs {
     display: flex;
-    border-bottom: 1px solid var(--mw-border-accent);
-    margin-bottom: spacing('3');
-    overflow-x: auto;
+    flex-direction: column;
+    width: 100%;
 
-    // Seven tabs, three of them visible, and nothing saying so - whoever is
-    // looking for the seventh never finds the page. The hint appears only on
-    // the side that still has tabs behind it.
-    @include scroll-hint;
+    &-nav {
+      display: flex;
+      position: relative;
+      border-bottom: 1px solid var(--mw-border-accent);
+      margin-bottom: spacing('3');
+      overflow-x: auto;
 
-    @include media-down('sm') {
-      flex-wrap: nowrap;
-      -webkit-overflow-scrolling: touch;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
-
-  // Written for a <button>. A tab is the primary navigation of the view it
-  // sits in, and as a <div> it is not focusable, not reachable by keyboard and
-  // announces nothing - the one control on the page a keyboard user cannot get
-  // to. The declarations below clear what comes with a <button>; on a <div>
-  // they change nothing, so old markup keeps working.
-  &-nav-item {
-    appearance: none;
-    background: none;
-    border: none;
-    font: inherit;
-    padding: spacing('3') spacing('4');
-    cursor: pointer;
-    font-weight: font-weight('medium');
-    color: var(--mw-text-muted-color);
-    border-bottom: 2px solid transparent;
-    transition: var(--mw-transition);
-    white-space: nowrap;
-    @include tappable;
-    // Inset: a ring outside the item is clipped by the strip's own scroll
-    @include focus-ring-inset;
-
-    &:hover {
-      color: var(--mw-primary-text-color);
-    }
-
-    &:active {
-      color: var(--mw-primary-text-color);
-      transition-duration: var(--mw-duration-instant);
-    }
-
-    &.mw-active,
-    &.active {
-      color: var(--mw-primary-text-color);
-      border-bottom-color: var(--mw-primary-text-color);
-    }
-  }
-
-  &-content {
-    flex: 1;
-    margin-top: spacing('1');
-  }
-
-  &-panel {
-    display: none;
-
-    &.mw-active,
-    &.active {
-      display: block;
-      // 1.1s to reveal a tab panel means a second of blank space after every
-      // click. A panel switch is a state change, not an entrance.
-      animation: fadeIn var(--mw-duration-base) var(--mw-ease-out);
-    }
-  }
-
-  // Vertical tabs variant
-  &-vertical {
-    flex-direction: row;
-
-    @include media-down('sm') {
-      flex-direction: column;
-      display: block;
-    }
-
-    .mw-tabs-nav {
-      flex-direction: column;
-      border-bottom: none;
-      border-right: 1px solid var(--mw-border-accent);
-      margin-bottom: spacing('0');
-      margin-right: spacing('3');
-      min-width: 160px;
-      max-width: 200px;
-      // Stacked, so nothing scrolls sideways and the hint would be a lie
-      background-image: none;
+      // Seven tabs, three of them visible, and nothing saying so - whoever is
+      // looking for the seventh never finds the page. The hint appears only on
+      // the side that still has tabs behind it.
+      @include scroll-hint;
 
       @include media-down('sm') {
-        flex-direction: row;
-        border-right: none;
-        border-bottom: 1px solid var(--mw-border-accent);
-        margin-right: spacing('0');
-        margin-bottom: spacing('4');
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        overflow-x: auto;
-        display: flex;
-
-        // Horizontal again down here, so it comes back
-        @include scroll-hint;
-      }
-    }
-
-    .mw-tabs-nav-item {
-      border-bottom: none;
-      border-right: 2px solid transparent;
-
-      &.mw-active,
-      &.active {
-        border-right-color: var(--mw-primary-text-color);
-      }
-
-      @include media-down('sm') {
-        border-right: none;
-        border-bottom: 2px solid transparent;
-        flex-shrink: 0;
-
-        &.mw-active,
-        &.active {
-          border-right-color: transparent;
-          border-bottom-color: var(--mw-primary-text-color);
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        &::-webkit-scrollbar {
+          display: none;
         }
       }
     }
 
-    .mw-tabs-content {
+    // Written for a <button>. A tab is the primary navigation of the view it
+    // sits in, and as a <div> it is not focusable, not reachable by keyboard and
+    // announces nothing - the one control on the page a keyboard user cannot get
+    // to. The declarations below clear what comes with a <button>; on a <div>
+    // they change nothing, so old markup keeps working.
+    &-nav-item {
+      appearance: none;
+      background: none;
+      border: none;
+      font: inherit;
+      padding: spacing('3') spacing('4');
+      cursor: pointer;
+      font-weight: font-weight('medium');
+      color: var(--mw-text-muted-color);
+      border-bottom: 2px solid transparent;
+      transition: var(--mw-transition);
+      white-space: nowrap;
+      @include tappable;
+      // Inset: a ring outside the item is clipped by the strip's own scroll
+      @include focus-ring-inset;
+
+      &:hover {
+        color: var(--mw-primary-text-color);
+      }
+
+      &:active {
+        color: var(--mw-primary-text-color);
+        transition-duration: var(--mw-duration-instant);
+      }
+
+      @include active() {
+        color: var(--mw-primary-text-color);
+        border-bottom-color: var(--mw-primary-text-color);
+      }
+    }
+
+    // The active tab is marked by a bar that travels to it rather than appearing
+    // under it. Only once the script has measured the strip - the attribute is
+    // its signal - so without JavaScript the border above stays the marker and
+    // nothing is missing.
+    //
+    // A 1px bar scaled to width, not a bar whose width is set: scaleX runs on the
+    // compositor, `width` relayouts the strip on every frame of the slide.
+    &-nav[data-mw-tabs-marker] {
+      // Declared with a zero length so the four are real tokens with a resting
+      // value rather than four names the stylesheet only ever reads. The script
+      // sets them on the element, which outranks this either way.
+      --mw-tabs-marker-x: 0;
+      --mw-tabs-marker-w: 0;
+      --mw-tabs-marker-y: 0;
+      --mw-tabs-marker-h: 0;
+
+      .mw-tabs-nav-item.mw-active,
+      .mw-tabs-nav-item.active {
+        border-bottom-color: transparent;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 1px;
+        height: 2px;
+        background: var(--mw-primary-text-color);
+        transform-origin: left center;
+        transform: translateX(var(--mw-tabs-marker-x))
+          scaleX(var(--mw-tabs-marker-w));
+        transition: transform var(--mw-duration-base) var(--mw-ease-out);
+        pointer-events: none;
+      }
+    }
+
+    &-content {
       flex: 1;
+      margin-top: spacing('1');
+    }
+
+    &-panel {
+      display: none;
+
+      @include active() {
+        display: block;
+        // 1.1s to reveal a tab panel means a second of blank space after every
+        // click. A panel switch is a state change, not an entrance.
+        animation: fadeIn var(--mw-duration-base) var(--mw-ease-out);
+      }
+    }
+
+    // Vertical tabs variant
+    &-vertical {
+      flex-direction: row;
 
       @include media-down('sm') {
-        width: 100%;
-        margin-top: spacing('3');
+        flex-direction: column;
+        display: block;
+      }
+
+      .mw-tabs-nav {
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid var(--mw-border-accent);
+        margin-bottom: spacing('0');
+        margin-right: spacing('3');
+        min-width: 160px;
+        max-width: 200px;
+        // Stacked, so nothing scrolls sideways and the hint would be a lie
+        background-image: none;
+
+        @include media-down('sm') {
+          flex-direction: row;
+          border-right: none;
+          border-bottom: 1px solid var(--mw-border-accent);
+          margin-right: spacing('0');
+          margin-bottom: spacing('4');
+          width: 100%;
+          max-width: 100%;
+          min-width: 100%;
+          overflow-x: auto;
+          display: flex;
+
+          // Horizontal again down here, so it comes back
+          @include scroll-hint;
+        }
+      }
+
+      .mw-tabs-nav-item {
+        border-bottom: none;
+        border-right: 2px solid transparent;
+
+        @include active() {
+          border-right-color: var(--mw-primary-text-color);
+        }
+
+        @include media-down('sm') {
+          border-right: none;
+          border-bottom: 2px solid transparent;
+          flex-shrink: 0;
+
+          @include active() {
+            border-right-color: transparent;
+            border-bottom-color: var(--mw-primary-text-color);
+          }
+        }
+      }
+
+      // The bar stands the other way up here, so it travels down the column
+      // instead of across. The script measures both axes and leaves the choice
+      // to CSS, which is what lets the strip flip back to horizontal below 'sm'
+      // without the script knowing that a breakpoint exists.
+      .mw-tabs-nav[data-mw-tabs-marker] {
+        .mw-tabs-nav-item.mw-active,
+        .mw-tabs-nav-item.active {
+          border-right-color: transparent;
+        }
+
+        &::after {
+          left: auto;
+          right: -1px;
+          top: 0;
+          bottom: auto;
+          width: 2px;
+          height: 1px;
+          transform-origin: center top;
+          transform: translateY(var(--mw-tabs-marker-y))
+            scaleY(var(--mw-tabs-marker-h));
+        }
+
+        @include media-down('sm') {
+          .mw-tabs-nav-item.mw-active,
+          .mw-tabs-nav-item.active {
+            border-bottom-color: transparent;
+          }
+
+          &::after {
+            left: 0;
+            right: auto;
+            top: auto;
+            bottom: 0;
+            width: 1px;
+            height: 2px;
+            transform-origin: left center;
+            transform: translateX(var(--mw-tabs-marker-x))
+              scaleX(var(--mw-tabs-marker-w));
+          }
+        }
+      }
+
+      .mw-tabs-content {
+        flex: 1;
+
+        @include media-down('sm') {
+          width: 100%;
+          margin-top: spacing('3');
+        }
+      }
+    }
+
+    // Pills variant
+    &-pills {
+      .mw-tabs-nav {
+        border-bottom: none;
+        gap: spacing('3');
+      }
+
+      // A pill is its own marker: the bar has nothing to do here, and the border
+      // it clears elsewhere is a full outline on a pill rather than a marker, so
+      // the bottom edge has to come back with it.
+      .mw-tabs-nav[data-mw-tabs-marker] {
+        &::after {
+          display: none;
+        }
+
+        .mw-tabs-nav-item.mw-active,
+        .mw-tabs-nav-item.active {
+          border-bottom-color: var(--mw-border-accent);
+        }
+      }
+
+      .mw-tabs-nav-item {
+        border-radius: radius('xl');
+        padding: spacing('4') spacing('5');
+        line-height: 1.2;
+        border: 1px solid var(--mw-border-accent);
+        background: var(--mw-card-background);
+
+        @include active() {
+          background: var(--mw-primary-color);
+          color: var(--mw-primary-accent-text-color);
+        }
       }
     }
   }
 
-  // Pills variant
-  &-pills {
-    .mw-tabs-nav {
-      border-bottom: none;
-      gap: spacing('3');
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-
-    .mw-tabs-nav-item {
-      border-radius: radius('xl');
-      padding: spacing('4') spacing('5');
-      line-height: 1.2;
-      border: 1px solid var(--mw-border-accent);
-      background: var(--mw-card-background);
-
-      &.mw-active,
-      &.active {
-        background: var(--mw-primary-color);
-        color: var(--mw-primary-accent-text-color);
-      }
+    to {
+      opacity: 1;
     }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }

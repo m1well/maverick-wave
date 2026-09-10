@@ -59,11 +59,11 @@ its children are styled through descendant selectors:
 <header class="mw-header">
   <div class="mw-container">
     <div class="mw-logo">
-      <button type="button"><img src="logo.svg" alt="Logo" /></button>
+      <a href="#start"><img src="logo.svg" alt="Logo" /></a>
     </div>
 
     <div class="mw-header-actions">
-      <nav class="mw-navbar mw-navbar-medium">
+      <nav class="mw-navbar mw-navbar-medium" id="main-nav">
         <ul class="mw-navbar-list">
           <li class="mw-navbar-item">
             <a href="#start" class="mw-navbar-link mw-active">Start</a>
@@ -74,17 +74,29 @@ its children are styled through descendant selectors:
         </ul>
       </nav>
 
-      <div class="mw-theme-toggle mw-ml-5">
+      <button
+        type="button"
+        class="mw-theme-toggle mw-ml-5"
+        aria-label="Toggle light and dark theme"
+      >
         <div class="mw-theme-toggle-slider">
           <div class="mw-theme-toggle-icon"><i class="fas fa-moon"></i></div>
         </div>
-      </div>
+      </button>
 
-      <button class="mw-login-btn" type="button">
+      <button class="mw-login-btn" type="button" aria-label="Log in">
         <i class="fas fa-lock"></i>
       </button>
 
-      <div class="mw-menu-btn"><div class="mw-menu-btn-burger"></div></div>
+      <button
+        type="button"
+        class="mw-menu-btn"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        <span class="mw-menu-btn-burger"></span>
+      </button>
     </div>
   </div>
 </header>
@@ -94,7 +106,9 @@ its children are styled through descendant selectors:
   at `md`, `mw-navbar-medium` (4-5) at `lg`, `mw-navbar-large` (6+) at `xl`.
   Pick the class by how many links you have.
 - Below the breakpoint the list is hidden and `mw-menu-btn` appears. Opening the
-  drawer means adding `open` to **both** `mw-menu-btn` and `mw-navbar`.
+  drawer means adding `open` to **both** `mw-menu-btn` and `mw-navbar`, and
+  setting `aria-expanded` on the button - below the breakpoint it is the only
+  route to the navigation, so it has to be a real `<button>`, not a `<div>`.
 - The active link carries `mw-active` (bare `active` still works but is
   deprecated).
 - `mw-profile-btn` is the signed-in pill, next to or instead of the login button:
@@ -162,14 +176,14 @@ viewport, so keep long tooltips off the outermost elements.
 
 ## Sections
 
-| Class                               | Use                                                                                                            |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`) |
-| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                         |
-| `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages                                     |
-| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                       |
-| `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                                                         |
-| `mw-section-nav` + `mw-section-btn` | Centered, wrapping row of outline-style jump links                                                             |
+| Class                               | Use                                                                                                                |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`)     |
+| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                             |
+| `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages                                         |
+| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                           |
+| `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                                                             |
+| `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows |
 
 ```html
 <section class="mw-section mw-section-alternate">
@@ -186,6 +200,10 @@ viewport, so keep long tooltips off the outermost elements.
   </div>
 </section>
 ```
+
+The strip sticks at `--mw-header-height` and is `--mw-section-nav-height` tall
+(3.7rem). Anything it can cover on a jump needs the sum as `scroll-margin-top`;
+a block wrapping a `mw-section-subtitle` gets that from the framework already.
 
 ## Page header
 
@@ -264,6 +282,12 @@ Components that paint their own surface (`mw-card`, `mw-panel`, `mw-modal`,
 `mw-tile`, `mw-calendar`) are exempt and keep the theme's ink - a card in the
 hero is still a card.
 
+`mw-btn-outline` is exempt the other way round: inside the hero it takes the
+hero's ink plus a dark scrim and a blur, because its usual border and label are
+tuned for the page background and go quiet over a photograph. A second call to
+action next to `mw-btn-primary` therefore looks different here than it does
+further down the page - that is deliberate, not a stray override.
+
 **Scroll cue** - `mw-scroll-hint` is the "scroll down" cue on the lower edge of
 the hero. An `<a>` that is a sibling of `mw-hero`, directly in the container:
 
@@ -286,8 +310,10 @@ is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
 ## Grid
 
 All grid classes are `display: grid` with a preset gap (`mw-gap-*` overrides
-it). They collapse to fewer columns on their own - no responsive suffixes to
-manage.
+it). They handle their own column count - no responsive suffixes to manage. One
+column is the base and each breakpoint adds to it, so a phone renders them
+without evaluating a single media query; the table below reads the same either
+way.
 
 | Class             | Columns                                         | Collapses                    |
 | ----------------- | ----------------------------------------------- | ---------------------------- |
@@ -414,6 +440,11 @@ chip-sized `mw-card-simple`, a swatch, a marker in a layout demo. A card with
 content in it never needs this, and it is not the way to switch the signature
 off across a project - restyle `--mw-corner-accent` for that.
 
+**Squircle corners** - `mw-squircle` draws the same silhouette with a
+superellipse instead of a circular arc: same four radii, fuller curve, and the
+corner accent follows. Opt-in, because `corner-shape` only lands in Chromium so
+far - everywhere else the box is simply the normal one.
+
 **Aspect ratio** - `mw-aspect-square|video|wide|portrait|photo`. Reserves the
 box before the image inside it has loaded, so the page does not reflow when the
 picture arrives. The child fills the box and crops rather than stretching.
@@ -513,11 +544,14 @@ do not.
 **Flex** - `mw-flex-row`, `mw-flex-column`, `mw-flex-wrap`, `mw-flex-nowrap`,
 `mw-flex-1`, `mw-flex-grow-1`, `mw-flex-shrink-0`,
 `mw-justify-start|end|center|between|around|evenly`,
-`mw-items-start|end|center|stretch`.
+`mw-items-start|end|center|stretch`,
+`mw-self-start|end|center|stretch`.
 
 `mw-flex-1` sets `flex: 1` (basis 0, all items equal). `mw-flex-grow-1` only
 grows and keeps the content width as the basis - that is the one you want next
-to an avatar or an icon.
+to an avatar or an icon. `mw-self-*` is the per-item counterpart to
+`mw-items-*`: it goes on the child, for the one that sits differently from the
+rest of the row.
 
 **Text** - alignment `mw-text-left|center|right`; colour `mw-text-primary`,
 `-secondary`, `-success`, `-warning`, `-danger`, `-info`, `-muted`,

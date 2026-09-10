@@ -1,190 +1,192 @@
 @use 'sass:meta';
 @use '../abstracts' as *;
 
-:root {
-  --mw-font-family-base: #{meta.inspect($font-family-base)};
-  --mw-font-family-heading: #{meta.inspect($font-family-heading)};
-  --mw-font-family-mono: #{meta.inspect($font-family-mono)};
-}
-
-// Base font settings
-body {
-  font-family: var(--mw-font-family-base);
-  line-height: 1.5;
-  color: var(--mw-text-color);
-}
-
-// Headings
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--mw-font-family-heading);
-  line-height: 1.2;
-  margin-bottom: spacing('4');
-  font-weight: font-weight('bold');
-  text-wrap: balance;
-  overflow-wrap: break-word;
-}
-
-// Tracking
-h1 {
-  letter-spacing: -0.025em;
-}
-
-h2 {
-  letter-spacing: -0.02em;
-}
-
-h3,
-h4 {
-  letter-spacing: -0.01em;
-}
-
-// Two steps, not one. With the single jump at 576px, everything between there
-// and a tablet kept the full desktop headline - 3rem of h1 across a 690px
-// column is a third of the screen before the first line of copy.
-h1 {
-  font-size: font-size('5xl');
-
-  @include media-down('md') {
-    font-size: font-size('4xl');
+@layer mw.base {
+  :root {
+    --mw-font-family-base: #{meta.inspect($font-family-base)};
+    --mw-font-family-heading: #{meta.inspect($font-family-heading)};
+    --mw-font-family-mono: #{meta.inspect($font-family-mono)};
   }
 
-  @include media-down('sm') {
+  // Base font settings
+  body {
+    font-family: var(--mw-font-family-base);
+    line-height: 1.5;
+    color: var(--mw-text-color);
+  }
+
+  // Headings
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--mw-font-family-heading);
+    line-height: 1.2;
+    margin-bottom: spacing('4');
+    font-weight: font-weight('bold');
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  // Tracking
+  h1 {
+    letter-spacing: -0.025em;
+  }
+
+  h2 {
+    letter-spacing: -0.02em;
+  }
+
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+  }
+
+  // Two steps, not one. With the single jump at 576px, everything between there
+  // and a tablet kept the full desktop headline - 3rem of h1 across a 690px
+  // column is a third of the screen before the first line of copy.
+  h1 {
     font-size: font-size('3xl');
-  }
-}
 
-h2 {
-  font-size: font-size('4xl');
+    @include media-up('sm') {
+      font-size: font-size('4xl');
+    }
 
-  @include media-down('md') {
-    font-size: font-size('3xl');
-  }
-
-  @include media-down('sm') {
-    font-size: font-size('2xl');
-  }
-}
-
-h3 {
-  font-size: font-size('xl');
-
-  &.mw-accent {
-    color: var(--mw-primary-text-color);
-  }
-}
-
-h4 {
-  font-size: font-size('lg');
-}
-
-h5 {
-  font-size: font-size('md');
-  font-weight: font-weight('medium');
-}
-
-h6 {
-  font-size: font-size('sm');
-  font-weight: font-weight('medium');
-}
-
-// Paragraphs
-p {
-  margin-bottom: spacing('3');
-  text-wrap: pretty;
-}
-
-// Inline text the framework was leaving to the browser. `small` in particular
-// showed up in footers and captions at whatever the UA felt like.
-small {
-  font-size: font-size('sm');
-  color: var(--mw-text-muted-color);
-}
-
-strong,
-b {
-  font-weight: font-weight('bold');
-}
-
-// The browser's own is a solid block of background with the text left dark on
-// it - unreadable on a dark page. Tinted with the brand instead, and it keeps
-// the theme's ink.
-mark {
-  background: color-mix(in srgb, var(--mw-warning-color) 35%, transparent);
-  color: inherit;
-  padding: 0.1em 0.25em;
-  border-radius: radius('xs');
-}
-
-// Underlined in the same shape the link buttons use, so an inline link and a
-// `mw-btn-link` do not read as two different things
-abbr[title] {
-  text-decoration: underline dotted;
-  text-underline-offset: 0.2em;
-  cursor: help;
-}
-
-// Code elements
-code,
-pre,
-kbd {
-  font-family: var(--mw-font-family-mono);
-}
-
-pre {
-  border: 1px solid var(--mw-border);
-  background: var(--mw-card-background);
-  margin-bottom: spacing('2');
-}
-
-code {
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-blockquote {
-  color: var(--mw-secondary-text-color);
-  font-style: italic;
-  position: relative;
-  padding: spacing('4') spacing('8');
-  margin: spacing('2') spacing('1');
-  border-left: 2px solid var(--mw-secondary-background-hover);
-  border-radius: radius('none') radius('sm') radius('sm') radius('none');
-  background: color-mix(
-    in srgb,
-    var(--mw-secondary-background) 85%,
-    transparent
-  );
-
-  &:hover {
-    &::before,
-    &::after {
-      opacity: 0.7;
+    @include media-up('md') {
+      font-size: font-size('5xl');
     }
   }
 
-  &::before,
-  &::after {
-    font-family: Georgia, serif;
-    font-size: font-size('5xl');
-    position: absolute;
-    opacity: 0.4;
-    line-height: 1;
+  h2 {
+    font-size: font-size('2xl');
+
+    @include media-up('sm') {
+      font-size: font-size('3xl');
+    }
+
+    @include media-up('md') {
+      font-size: font-size('4xl');
+    }
   }
 
-  &::before {
-    content: '"';
-    top: spacing('-1');
-    left: spacing('2');
+  h3 {
+    font-size: font-size('xl');
+
+    &.mw-accent {
+      color: var(--mw-primary-text-color);
+    }
   }
 
-  &::after {
-    content: '"';
-    bottom: spacing('-6');
-    right: spacing('4');
+  h4 {
+    font-size: font-size('lg');
+  }
+
+  h5 {
+    font-size: font-size('md');
+    font-weight: font-weight('medium');
+  }
+
+  h6 {
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+  }
+
+  // Paragraphs
+  p {
+    margin-bottom: spacing('3');
+    text-wrap: pretty;
+  }
+
+  // Inline text the framework was leaving to the browser. `small` in particular
+  // showed up in footers and captions at whatever the UA felt like.
+  small {
+    font-size: font-size('sm');
+    color: var(--mw-text-muted-color);
+  }
+
+  strong,
+  b {
+    font-weight: font-weight('bold');
+  }
+
+  // The browser's own is a solid block of background with the text left dark on
+  // it - unreadable on a dark page. Tinted with the brand instead, and it keeps
+  // the theme's ink.
+  mark {
+    background: color-mix(in srgb, var(--mw-warning-color) 35%, transparent);
+    color: inherit;
+    padding: 0.1em 0.25em;
+    border-radius: radius('xs');
+  }
+
+  // Underlined in the same shape the link buttons use, so an inline link and a
+  // `mw-btn-link` do not read as two different things
+  abbr[title] {
+    text-decoration: underline dotted;
+    text-underline-offset: 0.2em;
+    cursor: help;
+  }
+
+  // Code elements
+  code,
+  pre,
+  kbd {
+    font-family: var(--mw-font-family-mono);
+  }
+
+  pre {
+    border: 1px solid var(--mw-border);
+    background: var(--mw-card-background);
+    margin-bottom: spacing('2');
+  }
+
+  code {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  blockquote {
+    color: var(--mw-secondary-text-color);
+    font-style: italic;
+    position: relative;
+    padding: spacing('4') spacing('8');
+    margin: spacing('2') spacing('1');
+    border-left: 2px solid var(--mw-secondary-background-hover);
+    border-radius: radius('none') radius('sm') radius('sm') radius('none');
+    background: color-mix(
+      in srgb,
+      var(--mw-secondary-background) 85%,
+      transparent
+    );
+
+    &:hover {
+      &::before,
+      &::after {
+        opacity: 0.7;
+      }
+    }
+
+    &::before,
+    &::after {
+      font-family: Georgia, serif;
+      font-size: font-size('5xl');
+      position: absolute;
+      opacity: 0.4;
+      line-height: 1;
+    }
+
+    &::before {
+      content: '"';
+      top: spacing('-1');
+      left: spacing('2');
+    }
+
+    &::after {
+      content: '"';
+      bottom: spacing('-6');
+      right: spacing('4');
+    }
   }
 }

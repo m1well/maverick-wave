@@ -1,66 +1,80 @@
-// _textarea.scss
 @use '../abstracts' as *;
 
-.mw-textarea {
-  width: 100%;
-  height: auto;
-  padding: spacing('2') spacing('3');
-  font-size: var(--mw-control-font);
-  line-height: var(--mw-control-line-height);
-  background: var(--mw-form-elements-background);
-  color: var(--mw-form-elements-color);
-  border: 2px solid var(--mw-border);
-  border-radius: radius('sm');
-  transition: var(--mw-transition);
-  resize: none;
-  font-family: inherit;
+@layer mw.forms {
+  .mw-textarea {
+    width: 100%;
+    height: auto;
+    padding: spacing('2') spacing('3');
+    font-size: var(--mw-control-font);
+    line-height: var(--mw-control-line-height);
+    background: var(--mw-form-elements-background);
+    color: var(--mw-form-elements-color);
+    border: 2px solid var(--mw-border);
+    border-radius: radius('sm');
+    transition: var(--mw-transition);
+    resize: none;
+    font-family: inherit;
 
-  &::placeholder {
-    color: var(--mw-text-muted-color);
-    opacity: 0.7;
+    // Grows with what is typed instead of holding a fixed box with a scrollbar
+    // in it. `resize: none` above is what makes this worth having - without
+    // field-sizing the only way out of a too-small box was the resize handle,
+    // and that is switched off.
+    //
+    // Bounded, or a pasted wall of text pushes the submit button off the screen.
+    // `lh` is the element's own line-height, so the floor is three lines of
+    // whatever size step this textarea is set in.
+    @supports (field-sizing: content) {
+      field-sizing: content;
+      min-height: 3lh;
+      max-height: 60dvh;
+    }
+
+    &::placeholder {
+      color: var(--mw-text-muted-color);
+      opacity: 0.7;
+    }
+
+    &:hover:not(:focus):not(:read-only):not(:disabled) {
+      border-color: var(--mw-gray-color);
+    }
+
+    @include field-focus;
+
+    &:read-only {
+      background-color: var(--mw-gray-background);
+      color: var(--mw-text-muted-color);
+      cursor: default;
+      box-shadow: none;
+    }
+
+    &-sm {
+      padding: spacing('1') spacing('2');
+      font-size: var(--mw-control-font-sm);
+    }
+    &-lg {
+      min-height: spacing('11');
+      padding: spacing('3') spacing('4');
+      font-size: var(--mw-control-font-lg);
+    }
+
+    &-resizable {
+      resize: both;
+    }
+    &-resizable-vertical {
+      resize: vertical;
+    }
+    &-resizable-horizontal {
+      resize: horizontal;
+    }
+
+    &:disabled {
+      background-color: var(--mw-gray-background);
+      color: var(--mw-text-muted-color);
+      cursor: not-allowed;
+    }
   }
 
-  &:hover:not(:focus):not(:read-only):not(:disabled) {
-    border-color: var(--mw-gray-color);
+  .mw-textarea:not([rows]) {
+    min-height: spacing('10');
   }
-
-  @include field-focus;
-
-  &:read-only {
-    background-color: var(--mw-gray-background);
-    color: var(--mw-text-muted-color);
-    cursor: default;
-    box-shadow: none;
-  }
-
-  &-sm {
-    padding: spacing('1') spacing('2');
-    font-size: var(--mw-control-font-sm);
-  }
-  &-lg {
-    min-height: spacing('11');
-    padding: spacing('3') spacing('4');
-    font-size: var(--mw-control-font-lg);
-  }
-
-  &-resizable {
-    resize: both;
-  }
-  &-resizable-vertical {
-    resize: vertical;
-  }
-  &-resizable-horizontal {
-    resize: horizontal;
-  }
-
-  // disabled state
-  &:disabled {
-    background-color: var(--mw-gray-background);
-    color: var(--mw-text-muted-color);
-    cursor: not-allowed;
-  }
-}
-
-.mw-textarea:not([rows]) {
-  min-height: spacing('10');
 }

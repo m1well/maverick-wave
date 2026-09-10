@@ -1,282 +1,319 @@
 @use '../abstracts' as *;
 
-.mw-main {
-  margin: spacing('0');
-  padding: spacing('0');
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-}
+@layer mw.layout {
+  .mw-main {
+    margin: spacing('0');
+    padding: spacing('0');
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
 
-.mw-container {
-  width: var(--mw-container-width);
-  margin: spacing('0') auto;
-  padding: spacing('0');
+  .mw-container {
+    width: var(--mw-container-width);
+    margin: spacing('0') auto;
+    padding: spacing('0');
 
-  // add a hero part for a full size background picture
-  @supports (selector(:has(.mw-hero))) {
-    // if it has *any* descendant .mw-hero
-    &:has(.mw-hero) {
-      position: relative;
-      width: 100%;
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-size: cover;
-      background-position: center;
-      background-image: var(--mw-hero-background);
-
-      // The image does not change with the theme, so neither does the ink on
-      // it - see $mw-hero-text-color. Set on the container so a hero without
-      // .mw-home still gets it.
-      color: var(--mw-hero-text-color);
-
-      // The theme treatment of the photo - see $hero-filter-dark. backdrop-filter
-      // and not a background colour, because it has to change how the image
-      // *looks* rather than lay something over it: an overlay on a dark photo
-      // reads the same in both themes until its alpha is high enough to become
-      // the colour you see. Filtering here rather than on the container keeps
-      // the content in front of it unfiltered.
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        backdrop-filter: var(--mw-hero-image-filter);
-        z-index: z-index('lift');
-        pointer-events: none;
-        transition: var(--mw-transition);
-      }
-
-      // ...so the content has to sit above it
-      > * {
+    @supports (selector(:has(.mw-hero))) {
+      &:has(.mw-hero) {
         position: relative;
-        z-index: z-index('card');
-      }
+        width: 100%;
+        min-height: 100dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-size: cover;
+        background-position: center;
+        background-image: var(--mw-hero-background);
 
-      // ...except for anything that paints its own surface. A card inside the
-      // hero is still a card on --mw-card-background and takes the theme's ink,
-      // or its text would be light on a light card in the light theme.
-      .mw-card,
-      .mw-panel,
-      .mw-modal,
-      .mw-tile,
-      .mw-calendar:not(.mw-calendar-plain) {
-        color: var(--mw-text-color);
-      }
+        // Set on the container so a hero without .mw-home gets it too
+        color: var(--mw-hero-text-color);
 
-      // The header is fixed, so it floats over the hero and centering against
-      // the full viewport hides everything that reaches above the first line -
-      // a version badge, a kicker - underneath the bar. Center against what is
-      // left below the header instead. Guarded, because a hero without a header
-      // would otherwise sit off-center for no reason.
-      body:has(.mw-header) & {
-        padding-top: calc(var(--mw-header-height) + #{spacing('7')});
-      }
+        // backdrop-filter and not an overlay - see $hero-filter-dark. On the pseudo
+        // element, so the content in front of the image stays unfiltered.
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          backdrop-filter: var(--mw-hero-image-filter);
+          z-index: z-index('lift');
+          pointer-events: none;
+          transition: var(--mw-transition);
+        }
 
-      // The scroll cue is taken out of flow, so the content above knows
-      // nothing about it and a hero with buttons under its text parks them
-      // right on top of the cue. Keep its strip free instead - the hero
-      // centres its content in what is left, which is what a reader expects
-      // anyway. Only when there actually is a cue, or every other hero would
-      // pay for a feature it does not use.
-      &:has(> .mw-scroll-hint) {
-        padding-bottom: calc(
-          var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
-        );
-      }
+        // ...so the content has to sit above it
+        > * {
+          position: relative;
+          z-index: z-index('card');
+        }
 
-      // ...except when the cue sits in the corner. That is the whole point of
-      // the end variant: it stands beside the content, not under it, so the
-      // hero keeps the full height it had before.
-      &:has(> .mw-scroll-hint-end) {
-        padding-bottom: spacing('0');
-      }
+        // The same shadow the scroll cue already carries: the light theme lifts
+        // the photo to brightness(1.1) and pale ink alone stops holding its edge
+        h1,
+        h2,
+        h3,
+        p {
+          text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+        }
 
-      // On a phone even the corner is tight - the hero text is taller for the
-      // width it has, so both variants get the strip back. Last of the three,
-      // because a media query adds no specificity and would otherwise lose to
-      // the end rule above.
-      //
-      // A smaller strip than on the desktop, though: a phone screen is barely
-      // taller than the hero text on it, so the full reserve is what tips the
-      // container past 100dvh - and everything below that line, the cue first,
-      // is off screen. min-height already leaves room here in most cases.
-      @include media-down('md') {
+        // ...except anything that paints its own surface: a card in the hero is
+        // still a card, or its text is light on a light card in the light theme
+        .mw-card,
+        .mw-panel,
+        .mw-modal,
+        .mw-tile,
+        .mw-calendar:not(.mw-calendar-plain) {
+          color: var(--mw-text-color);
+
+          h1,
+          h2,
+          h3,
+          p {
+            text-shadow: none;
+          }
+        }
+
+        // ...and except the outline button, for the opposite reason: its tone is
+        // picked to read on the page background and goes quiet over a photograph.
+        // The hover is restated because this selector is exactly as specific as
+        // `.mw-btn-outline:hover:not(:disabled)` and the layer order beats it.
+        .mw-btn-outline {
+          border-color: color-mix(
+            in srgb,
+            var(--mw-hero-text-color) 45%,
+            transparent
+          );
+          background: rgb(0 0 0 / 30%);
+          backdrop-filter: blur(6px);
+          color: var(--mw-hero-text-color);
+
+          &:hover:not(:disabled) {
+            background: var(--mw-primary-color);
+            border-color: var(--mw-primary-color);
+            color: var(--mw-primary-accent-text-color);
+          }
+        }
+
+        // The bar floats over the hero, so centring against the full viewport hides
+        // a badge or a kicker underneath it. Guarded - no header, no offset.
+        body:has(.mw-header) & {
+          padding-top: calc(var(--mw-header-height) + #{spacing('7')});
+        }
+
+        // The cue is out of flow, so buttons under the hero text would park on top
+        // of it. Only when there is one, or every hero pays for a feature it lacks.
         &:has(> .mw-scroll-hint) {
-          --mw-scroll-hint-reserve: #{spacing('6')};
-
           padding-bottom: calc(
             var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
           );
         }
+
+        // ...except in the corner: the end variant stands beside the content
+        &:has(> .mw-scroll-hint-end) {
+          padding-bottom: spacing('0');
+        }
+
+        // On a phone the corner is tight too, so both variants get the strip back.
+        // Last of the three: a media query adds no specificity and would lose to
+        // the end rule above. Smaller than on the desktop, or the full reserve
+        // tips the container past 100dvh and pushes the cue off screen.
+        @include media-down('md') {
+          &:has(> .mw-scroll-hint) {
+            --mw-scroll-hint-reserve: #{spacing('6')};
+
+            padding-bottom: calc(
+              var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
+            );
+          }
+        }
       }
     }
   }
-}
 
-// The "scroll down" cue at the bottom of a hero. It belongs to the hero
-// container and not to the flow below it: a hero fills the viewport, so the
-// cue has to sit on its lower edge no matter how tall the content above is.
-// Selector beats the `> *` rule above it, which would otherwise put the
-// element back into flow.
-.mw-container:has(.mw-hero) > .mw-scroll-hint {
-  position: absolute;
-  bottom: var(--mw-scroll-hint-offset);
-  left: 0;
-  right: 0;
-  width: fit-content;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: spacing('2');
-  color: color-mix(in srgb, var(--mw-hero-text-color) 72%, transparent);
-  font-size: font-size('xs');
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  animation: mw-scroll-hint-float 2.2s var(--mw-ease-in-out) infinite;
-  text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
-
-  // The arrow carries the meaning, the word only confirms it - so it is the
-  // arrow that gets the size, and the label stays quiet at 'xs'.
-  > i,
-  > svg {
-    font-size: font-size('lg');
+  // Glass rather than a fill: on a hero image a solid badge is the loudest thing
+  // on the screen and plain text sinks into the picture.
+  .mw-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('3');
+    max-width: 100%;
+    margin-bottom: spacing('6');
+    padding: spacing('2') spacing('5');
+    border: 1px solid #{fade('hero-text-color', 22%)};
+    border-radius: 999px;
+    background: fade('hero-text-color', 8%);
+    backdrop-filter: blur(4px);
+    color: fade('hero-text-color', 88%);
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+    letter-spacing: 0.02em;
   }
 
-  @include hover {
-    color: var(--mw-hero-text-color);
+  // Carries the secondary colour, because the badge is a state, not a label -
+  // override `background` for a different one
+  .mw-hero-badge-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+    border-radius: radius('full');
+    background: var(--mw-secondary-color);
   }
-}
 
-// Bottom right instead of centred, for a hero whose text is not centred
-// either - the two would otherwise sit on top of each other.
-.mw-container:has(.mw-hero) > .mw-scroll-hint-end {
-  left: auto;
-  right: var(--mw-scroll-hint-inline);
-  margin-inline: 0;
-}
-
-// On a phone the middle under the hero is taken: the text is longer for the
-// width it has and any buttons reach close to the bottom edge. The corner next
-// to them is free, so both variants go there and the cue stays on screen.
-@include media-down('md') {
+  // Belongs to the hero container, not to the flow below it, so the cue sits on
+  // the lower edge whatever the content does. Beats the `> *` rule above it.
   .mw-container:has(.mw-hero) > .mw-scroll-hint {
+    position: absolute;
+    bottom: var(--mw-scroll-hint-offset);
+    left: auto;
+    right: var(--mw-scroll-hint-inline);
+    width: fit-content;
+    margin-inline: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: spacing('2');
+    color: color-mix(in srgb, var(--mw-hero-text-color) 72%, transparent);
+    font-size: font-size('xs');
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    animation: mw-scroll-hint-float 2.2s var(--mw-ease-in-out) infinite;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+
+    // The arrow carries the meaning, so it gets the size and the label stays quiet
+    > i,
+    > svg {
+      font-size: font-size('lg');
+    }
+
+    @include hover {
+      color: var(--mw-hero-text-color);
+    }
+  }
+
+  // For a hero whose text is not centred either, or the two sit on each other
+  .mw-container:has(.mw-hero) > .mw-scroll-hint-end {
     left: auto;
     right: var(--mw-scroll-hint-inline);
     margin-inline: 0;
   }
-}
 
-@keyframes mw-scroll-hint-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(7px);
-  }
-}
-
-// Same selector as the rule above on purpose: a media query adds no
-// specificity, so a bare `.mw-scroll-hint` here loses to the `.mw-container`
-// chain and the cue keeps bobbing for everyone who asked it not to.
-@media (prefers-reduced-motion: reduce) {
-  .mw-container:has(.mw-hero) > .mw-scroll-hint {
-    animation: none;
-  }
-}
-
-.mw-content {
-  flex: 1;
-  padding-top: spacing('7');
-}
-
-.mw-content-centered {
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-// tooltip - use it everywhere you want: put data-tooltip="..." on any element.
-// Pure CSS, no script needed. The flip side of that: it is a pseudo element on
-// the trigger, so an ancestor with `overflow: hidden` (a card, a scroll
-// container) cuts it off.
-//
-// Hidden means `display: none`, not `visibility: hidden`. A box that is hidden
-// but still laid out counts towards the page's scrollable overflow: a 280px
-// bubble centred on a trigger near the right edge added 50px of sideways scroll
-// to a 320px screen, on a page where nothing visible was out of place. Coming
-// back from `display: none` is a discrete transition, hence `allow-discrete`
-// and the starting style - a browser that knows neither simply drops the
-// transition and shows the bubble at once.
-$_mw-tooltip-arrow: 6px;
-$_mw-tooltip-gap: 8px;
-
-[data-tooltip] {
-  position: relative;
-
-  &::before {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: $_mw-tooltip-gap + $_mw-tooltip-arrow;
-    max-width: min(280px, 90vw);
-    width: max-content;
-    padding: spacing('1') spacing('2');
-    background: var(--mw-gray-color);
-    color: $fixed-surface-text;
-    font-size: font-size('xs');
-    border-radius: radius('xs');
-    box-shadow: var(--mw-elevation-2);
-    pointer-events: none;
-    opacity: 0;
-    display: none;
-    transition:
-      opacity var(--mw-duration-fast) var(--mw-ease-out),
-      display var(--mw-duration-fast) allow-discrete;
-    z-index: z-index('tooltip');
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: $_mw-tooltip-gap;
-    border: $_mw-tooltip-arrow solid transparent;
-    border-bottom-width: 0;
-    border-top-color: var(--mw-gray-color);
-    opacity: 0;
-    display: none;
-    transition:
-      opacity var(--mw-duration-fast) var(--mw-ease-out),
-      display var(--mw-duration-fast) allow-discrete;
-    z-index: z-index('tooltip');
-  }
-
-  &:hover::before,
-  &:hover::after,
-  &:focus-visible::before,
-  &:focus-visible::after {
-    opacity: 1;
-    display: block;
-
-    @starting-style {
-      opacity: 0;
+  // Both variants start in the corner, because on a phone the middle under the
+  // hero is taken. Only the plain one comes back - the end variant belongs there,
+  // and the rule above reserves no strip for it.
+  @include media-up('md') {
+    .mw-container:has(.mw-hero) > .mw-scroll-hint:not(.mw-scroll-hint-end) {
+      left: 0;
+      right: 0;
+      margin-inline: auto;
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  [data-tooltip]::before,
-  [data-tooltip]::after {
-    transition: none;
+  @keyframes mw-scroll-hint-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(7px);
+    }
+  }
+
+  .mw-content {
+    flex: 1;
+    padding-top: spacing('7');
+  }
+
+  .mw-content-centered {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  // A pseudo element on the trigger, so an ancestor with `overflow: hidden` cuts
+  // it off. Hidden means `display: none`: a laid-out box still counts towards the
+  // page's overflow, and a 280px bubble near the right edge added 50px of sideways
+  // scroll on a phone. Hence `allow-discrete` and the starting style.
+  $_mw-tooltip-arrow: 6px;
+  $_mw-tooltip-gap: 8px;
+
+  [data-tooltip] {
+    position: relative;
+
+    &::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+      max-width: min(280px, 90vw);
+      width: max-content;
+      padding: spacing('1') spacing('2');
+      background: var(--mw-gray-color);
+      color: $fixed-surface-text;
+      font-size: font-size('xs');
+      border-radius: radius('xs');
+      box-shadow: var(--mw-elevation-2);
+      pointer-events: none;
+      opacity: 0;
+      display: none;
+      transition:
+        opacity var(--mw-duration-fast) var(--mw-ease-out),
+        display var(--mw-duration-fast) allow-discrete;
+      z-index: z-index('tooltip');
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: $_mw-tooltip-gap;
+      border: $_mw-tooltip-arrow solid transparent;
+      border-bottom-width: 0;
+      border-top-color: var(--mw-gray-color);
+      opacity: 0;
+      display: none;
+      transition:
+        opacity var(--mw-duration-fast) var(--mw-ease-out),
+        display var(--mw-duration-fast) allow-discrete;
+      z-index: z-index('tooltip');
+    }
+
+    &:hover::before,
+    &:hover::after,
+    &:focus-visible::before,
+    &:focus-visible::after {
+      opacity: 1;
+      display: block;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    // The clipping caveat above, lifted where the browser can do it: `fixed` takes
+    // the bubble out of the trigger's containing block, anchor positioning keeps
+    // it attached. No `anchor-name` needed - a pseudo element is implicitly
+    // anchored to the element it comes from.
+    //
+    // No `position-try-fallbacks: flip-block` on purpose: the arrow is a border
+    // triangle and would still point up, into a bubble that flipped below.
+    @supports (position-area: block-start) {
+      &::before,
+      &::after {
+        position: fixed;
+        position-area: block-start;
+        // The absolute placement these replace - left as-is they fight the
+        // position-area, which resolves the inset properties itself.
+        bottom: auto;
+        left: auto;
+        transform: none;
+      }
+    }
   }
 }

@@ -1,86 +1,85 @@
 @use 'sass:map';
 @use '../abstracts' as *;
 
-$_margin-values: map.merge(
-  $spacing,
-  (
-    'auto': auto,
-  )
-);
+@layer mw.utilities {
+  $_margin-values: map.merge(
+    $spacing,
+    (
+      'auto': auto,
+    )
+  );
 
-// Margin utilities
-@each $key, $value in $_margin-values {
-  .mw-m-#{$key} {
-    margin: $value;
-  }
-
-  .mw-mt-#{$key} {
-    margin-top: $value;
-  }
-
-  .mw-mb-#{$key} {
-    margin-bottom: $value;
-  }
-
-  .mw-ml-#{$key} {
-    margin-left: $value;
-  }
-
-  .mw-mr-#{$key} {
-    margin-right: $value;
-  }
-
-  .mw-mx-#{$key} {
-    margin-left: $value;
-    margin-right: $value;
-  }
-
-  .mw-my-#{$key} {
-    margin-top: $value;
-    margin-bottom: $value;
-  }
-}
-
-// Padding utilities
-@each $key, $value in $spacing {
-  @if $value >= 0 {
-    .mw-p-#{$key} {
-      padding: $value;
+  @each $key, $value in $_margin-values {
+    .mw-m-#{$key} {
+      margin: $value;
     }
 
-    .mw-pt-#{$key} {
-      padding-top: $value;
+    .mw-mt-#{$key} {
+      margin-top: $value;
     }
 
-    .mw-pb-#{$key} {
-      padding-bottom: $value;
+    .mw-mb-#{$key} {
+      margin-bottom: $value;
     }
 
-    .mw-pl-#{$key} {
-      padding-left: $value;
+    .mw-ml-#{$key} {
+      margin-left: $value;
     }
 
-    .mw-pr-#{$key} {
-      padding-right: $value;
+    .mw-mr-#{$key} {
+      margin-right: $value;
     }
 
-    .mw-px-#{$key} {
-      padding-left: $value;
-      padding-right: $value;
+    .mw-mx-#{$key} {
+      margin-left: $value;
+      margin-right: $value;
     }
 
-    .mw-py-#{$key} {
-      padding-top: $value;
-      padding-bottom: $value;
+    .mw-my-#{$key} {
+      margin-top: $value;
+      margin-bottom: $value;
     }
   }
-}
 
-// Gap utilities
-@each $key, $value in $spacing {
-  @if $value >= 0 {
-    .mw-gap-#{$key} {
-      gap: $value;
+  @each $key, $value in $spacing {
+    @if $value >= 0 {
+      .mw-p-#{$key} {
+        padding: $value;
+      }
+
+      .mw-pt-#{$key} {
+        padding-top: $value;
+      }
+
+      .mw-pb-#{$key} {
+        padding-bottom: $value;
+      }
+
+      .mw-pl-#{$key} {
+        padding-left: $value;
+      }
+
+      .mw-pr-#{$key} {
+        padding-right: $value;
+      }
+
+      .mw-px-#{$key} {
+        padding-left: $value;
+        padding-right: $value;
+      }
+
+      .mw-py-#{$key} {
+        padding-top: $value;
+        padding-bottom: $value;
+      }
+    }
+  }
+
+  @each $key, $value in $spacing {
+    @if $value >= 0 {
+      .mw-gap-#{$key} {
+        gap: $value;
+      }
     }
   }
 }

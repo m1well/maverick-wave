@@ -1,0 +1,10 @@
+// Declared here and before any rule: a layer's position is fixed by where its
+// name first appears. What it buys a consumer is that any rule outside a layer
+// beats every rule inside one, however specific.
+//
+// The order reads inside out - the smaller thing first, then whatever places it.
+// Two steps are worth stating: forms before components, because a list restyles
+// the checkbox inside it; components before layout, because the two meet on one
+// element (`class="mw-card mw-grid-2"`) and there the layout class has to win, or
+// `.mw-card` hands `display: block` back to a grid.
+@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities;

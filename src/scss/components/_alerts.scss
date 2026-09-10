@@ -1,89 +1,90 @@
 @use '../abstracts' as *;
 
-.mw-alert {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  padding: spacing('4') spacing('5');
-  margin-bottom: spacing('4');
-  border-radius: radius('md');
-
-  background: var(--mw-card-background);
-  border: 1px solid var(--mw-border);
-  box-shadow: var(--mw-elevation-2);
-
-  &-icon {
-    flex-shrink: 0;
-    margin-right: spacing('4');
-    font-size: font-size('xl');
-    line-height: 1.2;
-    margin-top: spacing('1');
-  }
-
-  &-content {
-    flex: 1;
-    color: var(--mw-text-color);
-  }
-
-  &-title {
-    display: block;
-    font-weight: font-weight('bold');
-    margin-bottom: spacing('1');
-    line-height: 1.3;
-  }
-
-  // Text in body
-  p {
-    margin: 0;
-    line-height: 1.5;
-    font-size: font-size('sm');
-    opacity: 0.9;
-
-    & + p {
-      margin-top: spacing('2');
-    }
-  }
-
-  &-closed {
-    display: none !important;
-  }
-
-  @include media-down('sm') {
+@layer mw.components {
+  .mw-alert {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
     padding: spacing('4');
+    margin-bottom: spacing('4');
+    border-radius: radius('md');
+
+    background: var(--mw-card-background);
+    border: 1px solid var(--mw-border);
+    box-shadow: var(--mw-elevation-2);
+
     &-icon {
+      flex-shrink: 0;
       margin-right: spacing('3');
+      font-size: font-size('xl');
+      line-height: 1.2;
+      margin-top: spacing('1');
+    }
+
+    &-content {
+      flex: 1;
+      color: var(--mw-text-color);
+    }
+
+    &-title {
+      display: block;
+      font-weight: font-weight('bold');
+      margin-bottom: spacing('1');
+      line-height: 1.3;
+    }
+
+    // Text in body
+    p {
+      margin: 0;
+      line-height: 1.5;
+      font-size: font-size('sm');
+      opacity: 0.9;
+
+      & + p {
+        margin-top: spacing('2');
+      }
+    }
+
+    // initAlerts() sets this, waits, then adds -closed. Without a rule here that
+    // wait is 300ms in which nothing happens and the alert then blinks out.
+    &-closing {
+      opacity: 0;
+      transform: translateY(-6px);
+      transition:
+        opacity var(--mw-duration-base) var(--mw-ease-out),
+        transform var(--mw-duration-base) var(--mw-ease-out);
+    }
+
+    &-closed {
+      display: none;
+    }
+
+    @include media-up('sm') {
+      padding: spacing('4') spacing('5');
+      &-icon {
+        margin-right: spacing('4');
+      }
     }
   }
-}
 
-// Close button
-.mw-alert-close {
-  flex-shrink: 0;
-  margin-left: spacing('3');
-}
+  // Close button
+  .mw-alert-close {
+    flex-shrink: 0;
+    margin-left: spacing('3');
+  }
 
-// Color mapping
-$_mw-alert-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
+  @each $name, $col in $semantic-colors {
+    .mw-alert-#{$name} {
+      background-image: linear-gradient(
+        var(--mw-#{$name}-info-background),
+        var(--mw-#{$name}-info-background)
+      );
+      border: 1px solid color-mix(in srgb, #{$col} 20%, transparent);
+      border-left: 4px solid var(--mw-#{$name}-text-color);
 
-// Color variants
-@each $name, $col in $_mw-alert-colors {
-  .mw-alert-#{$name} {
-    background-image: linear-gradient(
-      var(--mw-#{$name}-info-background),
-      var(--mw-#{$name}-info-background)
-    );
-    border: 1px solid color-mix(in srgb, #{$col} 20%, transparent);
-    border-left: 4px solid var(--mw-#{$name}-text-color);
-
-    .mw-alert-icon {
-      color: var(--mw-#{$name}-text-color);
+      .mw-alert-icon {
+        color: var(--mw-#{$name}-text-color);
+      }
     }
   }
 }

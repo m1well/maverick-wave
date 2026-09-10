@@ -11,7 +11,7 @@
     <h3 class="mw-card-title mw-mb-4">Status & Types</h3>
     <div class="mw-card mw-card-simple">
       <!-- Basic -->
-      <h5 class="mw-text-medium mw-mb-2">Default</h5>
+      <h4 class="mw-text-medium mw-mb-2">Default</h4>
       <div class="mw-tags mw-mb-4">
         <span class="mw-tags-item">Frontend</span>
         <span class="mw-tags-item">Backend</span>
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Primary (Main Tech) -->
-      <h5 class="mw-text-medium mw-mb-2">Primary</h5>
+      <h4 class="mw-text-medium mw-mb-2">Primary</h4>
       <div class="mw-tags mw-tags-primary mw-mb-4">
         <span class="mw-tags-item">Angular</span>
         <span class="mw-tags-item">Spring Boot</span>
@@ -27,7 +27,7 @@
       </div>
 
       <!-- Success (Status) -->
-      <h5 class="mw-text-medium mw-mb-2">Success</h5>
+      <h4 class="mw-text-medium mw-mb-2">Success</h4>
       <div class="mw-tags mw-tags-success mw-mb-4">
         <span class="mw-tags-item">
           <i class="fas fa-check mw-tags-icon"></i>Completed
@@ -37,7 +37,7 @@
       </div>
 
       <!-- Info (Metadata) -->
-      <h5 class="mw-text-medium mw-mb-2">Info</h5>
+      <h4 class="mw-text-medium mw-mb-2">Info</h4>
       <div class="mw-tags mw-tags-info mw-mb-4">
         <span class="mw-tags-item">v2.4.0</span>
         <span class="mw-tags-item">
@@ -47,7 +47,7 @@
       </div>
 
       <!-- Secondary (Tools) -->
-      <h5 class="mw-text-medium mw-mb-2">Secondary</h5>
+      <h4 class="mw-text-medium mw-mb-2">Secondary</h4>
       <div class="mw-tags mw-tags-secondary mw-mb-4">
         <span class="mw-tags-item">Docker</span>
         <span class="mw-tags-item">Kubernetes</span>
@@ -55,7 +55,7 @@
       </div>
 
       <!-- Warning (Pending) -->
-      <h5 class="mw-text-medium mw-mb-2">Warning</h5>
+      <h4 class="mw-text-medium mw-mb-2">Warning</h4>
       <div class="mw-tags mw-tags-warning mw-mb-4">
         <span class="mw-tags-item">
           <i class="fas fa-clock mw-tags-icon"></i>Pending
@@ -64,7 +64,7 @@
       </div>
 
       <!-- Danger (Failed) -->
-      <h5 class="mw-text-medium mw-mb-2">Danger</h5>
+      <h4 class="mw-text-medium mw-mb-2">Danger</h4>
       <div class="mw-tags mw-tags-danger mw-mb-4">
         <span class="mw-tags-item">
           <i class="fas fa-xmark mw-tags-icon"></i>Failed
@@ -73,7 +73,7 @@
       </div>
 
       <!-- Muted (Neutral) -->
-      <h5 class="mw-text-medium mw-mb-2">Muted</h5>
+      <h4 class="mw-text-medium mw-mb-2">Muted</h4>
       <div class="mw-tags mw-tags-muted">
         <span class="mw-tags-item">Draft</span>
         <span class="mw-tags-item">Archived</span>
@@ -86,7 +86,7 @@
     <h3 class="mw-card-title mw-mb-4">Sizes & Formatting</h3>
     <div class="mw-card mw-card-simple">
       <!-- Default -->
-      <h5 class="mw-text-medium mw-mb-2">Default Size</h5>
+      <h4 class="mw-text-medium mw-mb-2">Default Size</h4>
       <div class="mw-tags mw-mb-4">
         <span class="mw-tags-item">Typescript</span>
         <span class="mw-tags-item">
@@ -97,6 +97,7 @@
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove filter: active"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -105,14 +106,14 @@
       </div>
 
       <!-- Large (Categories) -->
-      <h5 class="mw-text-medium mw-mb-2">Large (Categories)</h5>
+      <h4 class="mw-text-medium mw-mb-2">Large (Categories)</h4>
       <div class="mw-tags mw-tags-lg mw-mb-4">
         <span class="mw-tags-item">Web Development</span>
         <span class="mw-tags-item">Design System</span>
       </div>
 
       <!-- With Details -->
-      <h5 class="mw-text-medium mw-mb-2">With Details</h5>
+      <h4 class="mw-text-medium mw-mb-2">With Details</h4>
       <div class="mw-tags">
         <span class="mw-tags-item">
           <i class="fab fa-npm mw-tags-icon"></i>
@@ -132,13 +133,14 @@
   <div>
     <h3 class="mw-card-title mw-mb-4">Interactive Tags</h3>
     <div class="mw-card mw-card-simple">
-      <h5 class="mw-text-medium mw-mb-2">Removable Input (Primary)</h5>
+      <h4 class="mw-text-medium mw-mb-2">Removable Input (Primary)</h4>
       <div class="mw-tags mw-tags-primary mw-mb-4">
         <span class="mw-tags-item mw-tags-removable">
           React
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove React"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -149,6 +151,7 @@
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove Vue.js"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -156,13 +159,14 @@
         </span>
       </div>
 
-      <h5 class="mw-text-medium mw-mb-2">Removable Status (Success)</h5>
+      <h4 class="mw-text-medium mw-mb-2">Removable Status (Success)</h4>
       <div class="mw-tags mw-tags-success mw-mb-4">
         <span class="mw-tags-item mw-tags-removable">
           <i class="fas fa-user-check mw-tags-icon"></i>Online
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove Online"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -173,6 +177,7 @@
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove Available"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -180,13 +185,14 @@
         </span>
       </div>
 
-      <h5 class="mw-text-medium mw-mb-2">Large Removable</h5>
+      <h4 class="mw-text-medium mw-mb-2">Large Removable</h4>
       <div class="mw-tags mw-tags-lg mw-tags-info">
         <span class="mw-tags-item mw-tags-removable">
           Filter: Architecture
           <button
             type="button"
             class="mw-btn-mini mw-btn-mini-danger mw-tags-remove"
+            aria-label="Remove Filter: Architecture"
             onclick="this.closest('.mw-tags-item').remove()"
           >
             <i class="fas fa-times"></i>
@@ -206,7 +212,7 @@
         <strong>mw-tags</strong> container is needed.
       </p>
 
-      <h5 class="mw-text-medium mw-mb-2">Variants</h5>
+      <h4 class="mw-text-medium mw-mb-2">Variants</h4>
       <div class="mw-d-flex mw-flex-wrap mw-gap-2 mw-mb-4">
         <span class="mw-tag mw-tag-primary">Primary</span>
         <span class="mw-tag mw-tag-secondary">Secondary</span>
@@ -218,7 +224,7 @@
         <span class="mw-tag mw-tag-neutral">XRechnung</span>
       </div>
 
-      <h5 class="mw-text-medium mw-mb-2">Neutral vs. Muted</h5>
+      <h4 class="mw-text-medium mw-mb-2">Neutral vs. Muted</h4>
       <p class="mw-text-muted mw-text-sm mw-mb-3">
         <strong>mw-tag-neutral</strong> is a plain identifier - a customer
         number, a document type. <strong>mw-tag-muted</strong> means the label
@@ -232,7 +238,7 @@
         <span class="mw-tag mw-tag-muted">No e-invoice</span>
       </div>
 
-      <h5 class="mw-text-medium mw-mb-2">Large</h5>
+      <h4 class="mw-text-medium mw-mb-2">Large</h4>
       <div class="mw-d-flex mw-flex-wrap mw-gap-2">
         <span class="mw-tag mw-tag-success mw-tag-lg">Paid</span>
         <span class="mw-tag mw-tag-muted mw-tag-lg">Draft</span>

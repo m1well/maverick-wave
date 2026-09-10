@@ -1,122 +1,122 @@
 @use '../abstracts' as *;
 
-.mw-accordion {
-  border: 1px solid var(--mw-border);
-  @include surface;
-  overflow: hidden;
-  margin: spacing('2');
+@layer mw.components {
+  .mw-accordion {
+    border: 1px solid var(--mw-border);
+    @include surface;
+    overflow: hidden;
+    margin: spacing('2');
 
-  &-item {
-    border-bottom: 1px solid var(--mw-border-accent);
+    &-item {
+      border-bottom: 1px solid var(--mw-border-accent);
 
-    &:last-child {
-      border-bottom: none;
+      &:last-child {
+        border-bottom: none;
+      }
     }
-  }
 
-  // Written for a <button>. The header is the control that opens the panel, and
-  // as a <div> it is not focusable and not reachable by keyboard - on a page of
-  // questions that is every answer on it. The declarations below clear what
-  // comes with a <button>; on a <div> they change nothing, so old markup keeps
-  // working.
-  &-header {
-    appearance: none;
-    border: none;
-    width: 100%;
-    font: inherit;
-    color: inherit;
-    text-align: left;
+    // Written for a <button>. The header is the control that opens the panel, and
+    // as a <div> it is not focusable and not reachable by keyboard - on a page of
+    // questions that is every answer on it. The declarations below clear what
+    // comes with a <button>; on a <div> they change nothing, so old markup keeps
+    // working.
+    &-header {
+      appearance: none;
+      border: none;
+      width: 100%;
+      font: inherit;
+      color: inherit;
+      text-align: left;
 
-    // A heading is flow content and not allowed inside a button, so the
-    // question carries its own type here rather than through a nested h3. The
-    // h3 rule further down keeps older markup looking the same.
-    font-size: font-size('md');
-    font-weight: font-weight('medium');
-
-    @include media-down('sm') {
+      // A heading is flow content and not allowed inside a button, so the
+      // question carries its own type here rather than through a nested h3. The
+      // h3 rule further down keeps older markup looking the same.
       font-size: font-size('sm');
-    }
+      font-weight: font-weight('medium');
 
-    padding: spacing('4');
-    background: var(--mw-card-background);
-    cursor: pointer;
-    @include tappable;
-    @include focus-ring(-2px);
+      @include media-up('sm') {
+        font-size: font-size('md');
+      }
 
-    // A press has to be felt. On touch it is the only feedback there is - a
-    // finger never hovers - and every clickable surface in the framework owes it.
-    &:active {
-      background: var(--mw-primary-background);
-      transition-duration: var(--mw-duration-instant);
-    }
+      padding: spacing('4');
+      background: var(--mw-card-background);
+      cursor: pointer;
+      @include tappable;
+      @include focus-ring(-2px);
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: var(--mw-transition);
+      // A press has to be felt. On touch it is the only feedback there is - a
+      // finger never hovers - and every clickable surface in the framework owes it.
+      &:active {
+        background: var(--mw-primary-background);
+        transition-duration: var(--mw-duration-instant);
+      }
 
-    &:hover {
-      background: var(--mw-primary-background-hover);
-    }
-
-    // Markup from before the button: the header carries the type now, the
-    // heading only has to stop bringing its own.
-    h3 {
-      margin: spacing('0');
-      font-size: inherit;
-      font-weight: inherit;
-    }
-
-    .mw-accordion-icon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       transition: var(--mw-transition);
-      transform: rotate(0deg);
-    }
 
-    &.mw-active,
-    &.active {
-      background: var(--mw-primary-color);
-      color: var(--mw-primary-accent-text-color);
+      &:hover {
+        background: var(--mw-primary-background-hover);
+      }
+
+      // Markup from before the button: the header carries the type now, the
+      // heading only has to stop bringing its own.
+      h3 {
+        margin: spacing('0');
+        font-size: inherit;
+        font-weight: inherit;
+      }
 
       .mw-accordion-icon {
-        transform: rotate(180deg);
+        transition: var(--mw-transition);
+        transform: rotate(0deg);
       }
-    }
-  }
 
-  &-content {
-    height: spacing('0');
-    overflow: hidden;
-    transition: height var(--mw-duration-slower) var(--mw-ease-out);
-    background: var(--mw-card-background);
-    interpolate-size: allow-keywords;
+      @include active() {
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
 
-    &-inner {
-      padding: spacing('4');
-      border-top: 1px solid var(--mw-border-accent);
-      @include media-down('sm') {
-        font-size: font-size('sm');
+        .mw-accordion-icon {
+          transform: rotate(180deg);
+        }
       }
     }
 
-    &.mw-active,
-    &.active {
-      height: auto;
-      max-height: 500px;
-      overflow-y: auto;
+    &-content {
+      height: spacing('0');
+      overflow: hidden;
+      transition: height var(--mw-duration-slower) var(--mw-ease-out);
+      background: var(--mw-card-background);
+      interpolate-size: allow-keywords;
 
-      // Scrollbar styling
-      &::-webkit-scrollbar {
-        width: 6px;
+      &-inner {
+        padding: spacing('4');
+        border-top: 1px solid var(--mw-border-accent);
+        @include media-down('sm') {
+          font-size: font-size('sm');
+        }
       }
 
-      &::-webkit-scrollbar-track {
-        background: var(--mw-card-background);
-        border-radius: radius('sm');
-      }
+      @include active() {
+        height: auto;
+        max-height: 500px;
+        overflow-y: auto;
 
-      &::-webkit-scrollbar-thumb {
-        background: var(--mw-primary-color-hover);
-        border-radius: radius('sm');
+        // Scrollbar styling
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: var(--mw-card-background);
+          border-radius: radius('sm');
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: var(--mw-primary-color-hover);
+          border-radius: radius('sm');
+        }
       }
     }
   }

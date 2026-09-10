@@ -1,50 +1,50 @@
 @use '../abstracts' as *;
 
-.mw-select {
-  width: 100%;
-  padding: spacing('2') spacing('6') spacing('2') spacing('3');
-  font-size: var(--mw-control-font);
-  min-height: var(--mw-control-height);
-  background: var(--mw-form-elements-background);
-  color: var(--mw-form-elements-color);
-  border: 2px solid var(--mw-border);
-  border-radius: radius('sm');
-  transition: var(--mw-transition);
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: $select-arrow-image;
-  background-repeat: no-repeat;
-  background-position: right spacing('3') center;
-  background-size: spacing('3') spacing('3');
-  font-family: inherit;
-  line-height: var(--mw-control-line-height);
+@layer mw.forms {
+  .mw-select {
+    width: 100%;
+    padding: spacing('2') spacing('6') spacing('2') spacing('3');
+    font-size: var(--mw-control-font);
+    min-height: var(--mw-control-height);
+    background: var(--mw-form-elements-background);
+    color: var(--mw-form-elements-color);
+    border: 2px solid var(--mw-border);
+    border-radius: radius('sm');
+    transition: var(--mw-transition);
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: $select-arrow-image;
+    background-repeat: no-repeat;
+    background-position: right spacing('3') center;
+    background-size: spacing('3') spacing('3');
+    font-family: inherit;
+    line-height: var(--mw-control-line-height);
 
-  &:hover:not(:focus):not(:disabled) {
-    border-color: var(--mw-gray-color);
-  }
+    &:hover:not(:focus):not(:disabled) {
+      border-color: var(--mw-gray-color);
+    }
 
-  @include field-focus;
+    @include field-focus;
 
-  // size modifiers
-  &-sm {
-    padding: spacing('1') spacing('5') spacing('1') spacing('2');
-    font-size: var(--mw-control-font-sm);
-    min-height: var(--mw-control-height-sm);
-    background-position: right spacing('2') center;
-    background-size: spacing('2') spacing('2');
-  }
-  &-lg {
-    padding: spacing('2') spacing('7') spacing('2') spacing('4');
-    font-size: var(--mw-control-font-lg);
-    min-height: var(--mw-control-height-lg);
-    background-position: right spacing('4') center;
-    background-size: spacing('4') spacing('4');
-  }
+    &-sm {
+      padding: spacing('1') spacing('5') spacing('1') spacing('2');
+      font-size: var(--mw-control-font-sm);
+      min-height: var(--mw-control-height-sm);
+      background-position: right spacing('2') center;
+      background-size: spacing('2') spacing('2');
+    }
+    &-lg {
+      padding: spacing('2') spacing('7') spacing('2') spacing('4');
+      font-size: var(--mw-control-font-lg);
+      min-height: var(--mw-control-height-lg);
+      background-position: right spacing('4') center;
+      background-size: spacing('4') spacing('4');
+    }
 
-  // disabled state
-  &:disabled {
-    background-color: var(--mw-gray-background);
-    color: var(--mw-text-muted-color);
-    cursor: not-allowed;
+    &:disabled {
+      background-color: var(--mw-gray-background);
+      color: var(--mw-text-muted-color);
+      cursor: not-allowed;
+    }
   }
 }

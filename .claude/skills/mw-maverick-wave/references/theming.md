@@ -78,6 +78,7 @@ Safari 16.4+, Firefox 128+. The same range is declared as `browserslist` in
 | `--mw-kanban-background`, `--mw-kanban-lane-border`, `--mw-kanban-column-min-height`                                                                                         | Per-board surface, lane border and lane floor (120px, 90px on `mw-kanban-compact`)                                                                                                                                                                                                                                                      |
 | `--mw-container-gutter`, `--mw-container-width`                                                                                                                              | Page gutter of `mw-container` (fluid `clamp(1rem, 4.2vw + 0.5rem, 4rem)`, never below the safe-area inset) and the width derived from it (`min(1200px, 100% - 2 * gutter)`)                                                                                                                                                             |
 | `--mw-section-padding-block`                                                                                                                                                 | Top/bottom rhythm of `mw-section` (3.3rem, stepping down to 2.5rem below `md` and 1.75rem below `sm`)                                                                                                                                                                                                                                   |
+| `--mw-section-nav-height`                                                                                                                                                    | Height the sticky `mw-section-nav` reserves (3.7rem). Add it to `--mw-header-height` for the `scroll-margin-top` of anything the strip can cover                                                                                                                                                                                        |
 | `--mw-calendar-dot`                                                                                                                                                          | Colour of a single calendar dot - set it per dot or per cell; the `mw-calendar-dot-*` classes are presets for it                                                                                                                                                                                                                        |
 | `--mw-scroll-hint-cover`                                                                                                                                                     | Colour the scroll hint on a tab bar fades into. Preset to the page, re-pointed to the card background inside `mw-card`, `mw-panel`, `mw-modal`, `mw-tile`, `mw-calendar`                                                                                                                                                                |
 | `--mw-elevation-1` … `-5`                                                                                                                                                    | Every shadow in the framework. Two layers per level - contact plus ambient. Never write a `box-shadow` by hand: a hand-rolled one is the wrong colour in one of the two themes                                                                                                                                                          |
@@ -171,9 +172,20 @@ Two rules that prevent most colour bugs:
 - Persisting the choice, the toggle UI and the initial class are the
   application's job in a SPA (`examples/angular-services.md`). The shipped JS
   does it for static pages using `localStorage` under the key `mw-theme`.
+- **Suppress transitions while the class flips.** Colour changes on nearly every
+  element at once, and the shared `--mw-transition` turns that into thousands of
+  concurrent animations - on a documentation-sized page it is seconds of blocked
+  style and layout. `mw-theme-switching` on `<html>` kills them for the flip; the
+  forced reflow between the two class changes is what commits the new colours
+  before transitions come back.
 
 ```ts
+const root = document.documentElement;
+
+root.classList.add('mw-theme-switching');
 document.body.classList.toggle('mw-theme-light', isLight);
+void root.offsetHeight; // commit the new colours with transitions off
+root.classList.remove('mw-theme-switching');
 ```
 
 ## SCSS configuration
@@ -262,6 +274,29 @@ they are all `var()` references anyway:
 }
 ```
 
+## Overriding a component
+
+Tokens cover colour and rhythm; for anything else write a normal rule. The
+framework emits everything inside
+`@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities`,
+and an unlayered rule beats every layer regardless of weight:
+
+```css
+/* wins over .mw-card, no !important and no doubled selector */
+.mw-card {
+  border-radius: 12px;
+}
+```
+
+The same rule cuts the other way: third-party CSS loaded unlayered also beats
+the framework, which is what makes an icon font quietly win over `mw-tags-icon`.
+Give it a layer of its own:
+
+```css
+@layer vendor, mw;
+@import url('font-awesome.css') layer(vendor);
+```
+
 ## Importing only what you need
 
 The full stylesheet is ~200 kB raw / ~31 kB gzipped. Marketing components
@@ -272,7 +307,9 @@ Angular bundle budgets notice.
 Every layer forwards one module per file, and no `@extend` crosses a file
 boundary, so partial imports are safe. **The one thing you must not drop is
 `base`** - it carries the `:root` tokens; without it every component renders
-colourless.
+colourless. The cascade layer order comes along on its own: every module loads
+`abstracts`, which declares it, so a hand-picked subset orders itself the same
+way the full build does.
 
 ```scss
 // styles.scss - configure first, then pick

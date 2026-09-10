@@ -1,171 +1,159 @@
 @use '../abstracts' as *;
 
-$_mw-avatar-colors: (
-  primary: var(--mw-primary-color),
-  secondary: var(--mw-secondary-color),
-  info: var(--mw-info-color),
-  success: var(--mw-success-color),
-  warning: var(--mw-warning-color),
-  danger: var(--mw-danger-color),
-);
+@layer mw.components {
+  .mw-avatar {
+    display: inline-flex;
+    position: relative;
+    border-radius: radius('full');
+    overflow: hidden;
+    border: 3px solid var(--mw-border);
+    box-shadow: var(--mw-elevation-3);
+    margin: spacing('1');
 
-.mw-avatar {
-  display: inline-flex;
-  position: relative;
-  border-radius: radius('full');
-  overflow: hidden;
-  border: 3px solid var(--mw-border);
-  box-shadow: var(--mw-elevation-3);
-  margin: spacing('1');
+    width: 96px;
+    height: 96px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    // Scales with the avatar size; only takes effect on the initials variant
+    font-size: font-size('3xl');
 
-  // Standard (md)
-  width: 96px;
-  height: 96px;
-  flex-shrink: 0; // Prevents the avatar from shrinking
-  flex-grow: 0; // Prevents the avatar from growing
-  // Scales with the avatar size; only takes effect on the initials variant
-  font-size: font-size('3xl');
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  // Sizes
-  &-xs {
-    width: 32px;
-    height: 32px;
-    border-width: 2px;
-    // Small enough that wide pairs like "MW" still clear the circle
-    font-size: font-size('2xs');
-  }
-
-  &-sm {
-    width: 64px;
-    height: 64px;
-    border-width: 2px;
-    font-size: font-size('xl');
-  }
-
-  &-lg {
-    width: 144px;
-    height: 144px;
-    border-width: 5px;
-    font-size: font-size('5xl');
-  }
-
-  &-xl {
-    width: 210px;
-    height: 210px;
-    border-width: 6px;
-    font-size: font-size('6xl');
-  }
-
-  // Square
-  &-square {
-    border-radius: radius('sm');
-  }
-
-  // Initials - for users without a picture. Centers its text content and puts
-  // the color on the background, so it stays combinable with the color
-  // variants below, which keep working on the border.
-  &-initials {
-    align-items: center;
-    justify-content: center;
-    background: var(--mw-primary-color);
-    color: var(--mw-primary-accent-text-color);
-    font-weight: font-weight('bold');
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    user-select: none;
-  }
-
-  // Groups
-  &-group {
-    display: flex;
-    flex-wrap: wrap; // Allow items to wrap to next line
-    justify-content: flex-start;
-    margin: spacing('2');
-    row-gap: spacing('3');
-
-    .mw-avatar {
-      margin: spacing('0') -15px spacing('0') spacing('0');
-      border: 2px solid var(--mw-secondary-text-color);
-      transition: transform var(--mw-duration-base) var(--mw-ease-out);
-
-      @include hover {
-        transform: translateY(-3px);
-        z-index: z-index('lift');
-      }
-
-      &:last-child {
-        margin-right: spacing('0');
-      }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    // Group sizes
-    &-sm .mw-avatar {
-      margin-right: -10px;
+    &-xs {
+      width: 32px;
+      height: 32px;
+      border-width: 2px;
+      // Small enough that wide pairs like "MW" still clear the circle
+      font-size: font-size('2xs');
     }
 
-    &-lg .mw-avatar {
-      margin-right: -20px;
+    &-sm {
+      width: 64px;
+      height: 64px;
+      border-width: 2px;
+      font-size: font-size('xl');
     }
 
-    .mw-avatar-xs {
-      margin-right: -5px;
-    }
-    .mw-avatar-sm {
-      margin-right: -10px;
-    }
-    .mw-avatar-lg {
-      margin-right: -23px;
-    }
-    .mw-avatar-xl {
-      margin-right: -32px;
-    }
-
-    .mw-avatar:last-child {
-      margin-right: spacing('0');
-    }
-
-    @include media-down('sm') {
-      // For small screens, create a more compact layout
-      .mw-avatar {
-        margin-right: -10px; // Reduce overlap on small screens
-      }
-
-      .mw-avatar:last-child {
-        margin-right: spacing('0');
-      }
-    }
-  }
-
-  @include media-down('sm') {
     &-lg {
       width: 120px;
       height: 120px;
       border-width: 4px;
+      font-size: font-size('5xl');
     }
 
     &-xl {
       width: 150px;
       height: 150px;
       border-width: 5px;
+      font-size: font-size('6xl');
+    }
+
+    &-square {
+      border-radius: radius('sm');
+    }
+
+    // Initials - for users without a picture. Centers its text content and puts
+    // the color on the background, so it stays combinable with the color
+    // variants below, which keep working on the border.
+    &-initials {
+      align-items: center;
+      justify-content: center;
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+      font-weight: font-weight('bold');
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      user-select: none;
+    }
+
+    &-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin: spacing('2');
+      row-gap: spacing('3');
+
+      .mw-avatar {
+        margin: spacing('0') -15px spacing('0') spacing('0');
+        border: 2px solid var(--mw-secondary-text-color);
+        transition: transform var(--mw-duration-base) var(--mw-ease-out);
+
+        @include hover {
+          transform: translateY(-3px);
+          z-index: z-index('lift');
+        }
+
+        &:last-child {
+          margin-right: spacing('0');
+        }
+      }
+
+      &-sm .mw-avatar {
+        margin-right: -10px;
+      }
+
+      &-lg .mw-avatar {
+        margin-right: -20px;
+      }
+
+      .mw-avatar-xs {
+        margin-right: -5px;
+      }
+      .mw-avatar-sm {
+        margin-right: -10px;
+      }
+      .mw-avatar-lg {
+        margin-right: -23px;
+      }
+      .mw-avatar-xl {
+        margin-right: -32px;
+      }
+
+      .mw-avatar:last-child {
+        margin-right: spacing('0');
+      }
+
+      @include media-down('sm') {
+        // For small screens, create a more compact layout
+        .mw-avatar {
+          margin-right: -10px;
+        }
+
+        .mw-avatar:last-child {
+          margin-right: spacing('0');
+        }
+      }
+    }
+
+    @include media-up('sm') {
+      &-lg {
+        width: 144px;
+        height: 144px;
+        border-width: 5px;
+      }
+
+      &-xl {
+        width: 210px;
+        height: 210px;
+        border-width: 6px;
+      }
     }
   }
-}
 
-@each $name, $col in $_mw-avatar-colors {
-  .mw-avatar-#{$name} {
-    border-color: #{$col};
-  }
+  @each $name, $col in $semantic-colors {
+    .mw-avatar-#{$name} {
+      border-color: #{$col};
+    }
 
-  // On an initials avatar the same variant also tints the surface
-  .mw-avatar-initials.mw-avatar-#{$name} {
-    background: #{$col};
+    // On an initials avatar the same variant also tints the surface
+    .mw-avatar-initials.mw-avatar-#{$name} {
+      background: #{$col};
+    }
   }
 }
