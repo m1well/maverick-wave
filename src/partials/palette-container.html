@@ -139,4 +139,187 @@
       <input type="color" id="palette-secondary" value="#bb5710" />
     </label>
   </div>
+
+  <h3 class="palette-heading palette-heading-split">Variants</h3>
+  <p class="palette-hint">
+    Every switch is one class on &lt;html&gt; or one custom property - no build,
+    no rebuild. The setup at the bottom is what a project would carry.
+  </p>
+
+  <div id="variant-list">
+    <label class="variant-row">
+      <span class="variant-label">
+        Distinctive card corners
+        <small
+          >The arc across two corners that gives every surface its shape. Off
+          leaves an evenly rounded box.</small
+        >
+      </span>
+      <input
+        type="checkbox"
+        checked
+        data-variant-class="mw-corners-even"
+        data-variant-invert
+      />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Corner radius
+        <small
+          >How round every box is drawn, from hard edges to fully
+          rounded.</small
+        >
+      </span>
+      <select data-variant-prop="--mw-radius-scale">
+        <option value="0">Square</option>
+        <option value="" selected>Default</option>
+        <option value="1.7">Round</option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Pill buttons
+        <small
+          >Buttons rounded all the way. Form fields keep their own shape.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-btn-pill" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Single accent color
+        <small
+          >Drop the second brand colour - hovers, tints and borders all come
+          from the first one.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-accent-single" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Photos in grey
+        <small
+          >Pictures stay grey until the pointer reaches them, so only the brand
+          carries colour.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-media-mono" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Heading font
+        <small>The typeface for headlines. Body copy is unaffected.</small>
+      </span>
+      <select data-variant-prop="--mw-font-family-heading">
+        <option value="" selected>System</option>
+        <option value="Georgia, 'Times New Roman', serif">Serif</option>
+        <option
+          value="Optima, Candara, 'Gill Sans', 'Trebuchet MS', sans-serif"
+        >
+          Humanist
+        </option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Uppercase headings
+        <small>Headlines set in capitals with wider letter spacing.</small>
+      </span>
+      <input type="checkbox" data-variant-class="mw-headings-caps" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Flat surfaces
+        <small
+          >Cards and panels lose their shadow and sit flat on the page.
+          Dropdowns and dialogs still float.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-shadows-flat" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Static on hover
+        <small
+          >Nothing lifts or zooms under the pointer. Colours and borders still
+          respond.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-hover-static" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Sticky header
+        <small
+          >The bar stays put from the top instead of sliding in over the first
+          screen.</small
+        >
+      </span>
+      <input
+        type="checkbox"
+        data-variant-class="mw-header-reveal"
+        data-variant-target=".mw-header"
+        data-variant-invert
+      />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Alternating sections
+        <small>The fine diagonal hatch behind every second section.</small>
+      </span>
+      <input
+        type="checkbox"
+        checked
+        data-variant-class="mw-sections-plain"
+        data-variant-invert
+      />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Section spacing
+        <small
+          >How much air sits above and below each section of the page.</small
+        >
+      </span>
+      <select data-variant-prop="--mw-section-padding-block">
+        <option value="2rem">Compact</option>
+        <option value="" selected>Default</option>
+        <option value="5.5rem">Airy</option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Page width
+        <small
+          >How wide the content runs before it stops growing on a large
+          screen.</small
+        >
+      </span>
+      <select data-variant-prop="--mw-container-width">
+        <option value="" selected>1200</option>
+        <option
+          value="min(1440px, calc(100% - 2 * var(--mw-container-gutter)))"
+        >
+          1440
+        </option>
+        <option value="calc(100% - 2 * var(--mw-container-gutter))">
+          Full
+        </option>
+      </select>
+    </label>
+  </div>
+
+  <pre class="variant-setup" id="variant-setup"></pre>
 </div>

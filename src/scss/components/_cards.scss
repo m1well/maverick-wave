@@ -81,11 +81,10 @@
       --mw-corner-accent: var(--mw-corner-accent-hover);
     }
 
-    // The lift moves the box, so it is guarded: on touch `:hover` latches after a
-    // tap and the card stays raised, visibly out of line with the row it sits in.
-    // The colour and shadow below are not - a latched border reads as "the one you
-    // last touched", which is no worse than nothing.
-    @include hover {
+    // Pointer-guarded, unlike the colour and shadow above: on touch `:hover`
+    // latches after a tap and the card would stay raised, visibly out of line
+    // with the row it sits in. A latched border is no worse than nothing.
+    @include hover-move {
       transform: translateY(-2px);
     }
 
@@ -145,7 +144,7 @@
       height: var(--mw-card-img-height, 210px);
       overflow: hidden;
       flex-shrink: 0;
-      border-radius: (radius('sm') - 1px) (radius('xl') - 1px) 0 0;
+      border-radius: calc(#{radius('sm')} - 1px) calc(#{radius('xl')} - 1px) 0 0;
 
       img {
         width: 100%;
@@ -154,8 +153,10 @@
         transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
       }
 
-      &:hover img {
-        transform: scale(1.05);
+      @include hover-move {
+        img {
+          transform: scale(1.05);
+        }
       }
     }
 
@@ -323,8 +324,10 @@
         font-size: font-size('md');
       }
 
-      &:hover &-icon {
-        transform: rotate(25deg);
+      @include hover-move {
+        .mw-card-stack-icon {
+          transform: rotate(25deg);
+        }
       }
 
       &-header {
@@ -425,18 +428,6 @@
     .mw-card-addon-#{$name} {
       --mw-card-addon-color: #{$col};
       --mw-card-addon-text-color: var(--mw-#{$name}-accent-text-color);
-    }
-  }
-
-  // Only the movement. The durations are already pinned to 1ms globally in
-  // base/_base.scss; a hover that *travels* has to be taken away outright, or it
-  // still jumps to its lifted position in one frame.
-  @media (prefers-reduced-motion: reduce) {
-    .mw-card:hover,
-    .mw-card-img:hover img,
-    .mw-card-img-contain:hover img,
-    .mw-card-stack:hover .mw-card-stack-icon {
-      transform: none;
     }
   }
 }

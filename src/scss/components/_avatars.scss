@@ -85,8 +85,11 @@
         transition: transform var(--mw-duration-base) var(--mw-ease-out);
 
         @include hover {
-          transform: translateY(-3px);
           z-index: z-index('lift');
+        }
+
+        @include hover-move {
+          transform: translateY(-3px);
         }
 
         &:last-child {

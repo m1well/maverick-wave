@@ -239,7 +239,7 @@
         }
       }
 
-      @include hover {
+      @include hover-move {
         transform: translateX(8px);
       }
     }

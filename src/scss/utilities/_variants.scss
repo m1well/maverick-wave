@@ -1,0 +1,90 @@
+@use '../abstracts' as *;
+
+@layer mw.utilities {
+  // Site-wide looks, switched with one class on <html>. Two more live elsewhere,
+  // because they have to reach every caller of a mixin: .mw-corners-even in
+  // surface(), .mw-hover-static in hover-move().
+
+  // One brand colour instead of two. Every secondary tone is derived from
+  // --mw-secondary-color with color-mix() and oklch(from ...), so the two lines
+  // below carry through to hovers, tints, borders and both themes' ink.
+  :root.mw-accent-single {
+    --mw-secondary-color: var(--mw-primary-color);
+    --mw-secondary-accent-text-color: var(--mw-primary-accent-text-color);
+
+    // Or the two solid buttons would be the same button. Outline keeps the
+    // emphasis order the markup asked for: primary fills, secondary draws a line.
+    .mw-btn-secondary {
+      background: transparent;
+      border-color: var(--mw-primary-text-color);
+      color: var(--mw-primary-text-color);
+
+      &:hover:not(:disabled) {
+        background: var(--mw-primary-color);
+        border-color: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+  }
+
+  // 1 to 3 are surfaces lying on the page and go; 4 and 5 are the dropdown and
+  // the modal, which genuinely float above content and keep their shadow - in a
+  // flat page they are the only two things that should cast one.
+  //
+  // The second selector is not optional: elevation is a theme alias, and the
+  // light theme re-declares it on <body>. A value written on :root alone is
+  // shadowed for the whole body subtree, so the switch would do nothing at all
+  // in light mode. Any variant that retunes a theme-bound token needs both.
+  :root.mw-shadows-flat,
+  :root.mw-shadows-flat .mw-theme-light {
+    --mw-elevation-1: none;
+    --mw-elevation-2: none;
+    --mw-elevation-3: none;
+  }
+
+  // The diagonal hatch behind an alternating section, dropped. Written on the
+  // section and not as a token on :root: --mw-page-background is a theme alias
+  // that only becomes the light one further down the tree, so a copy taken up
+  // here hands the section the *other* theme's colour - the hatch turns dark
+  // instead of vanishing.
+  :root.mw-sections-plain .mw-section-alternate {
+    background: var(--mw-page-background);
+  }
+
+  // Buttons only. Input groups build their radius corner by corner, so a pill
+  // there is its own piece of geometry rather than one more override.
+  :root.mw-btn-pill .mw-btn {
+    border-radius: 999px;
+  }
+
+  // Photos drained of colour until pointed at - the palette then comes only from
+  // the brand tones. Avatars stay out: a greyed-out face reads as disabled, and
+  // so does mw-media, which is the audio player and holds no picture at all.
+  :root.mw-media-mono {
+    .mw-card-img img,
+    .mw-card-img-contain img,
+    .mw-tile-img img,
+    .mw-gallery img,
+    .mw-image-slider img,
+    img.mw-blog-post-featured-image {
+      filter: grayscale(1);
+      transition: filter var(--mw-duration-zoom) var(--mw-ease-out);
+    }
+
+    // The blog image carries the class itself rather than sitting in a wrapper,
+    // so it is the one that has to answer for its own hover
+    :is(.mw-card, .mw-tile, .mw-gallery, .mw-image-slider):hover img,
+    img.mw-blog-post-featured-image:hover {
+      filter: none;
+    }
+  }
+
+  :root.mw-headings-caps {
+    h1,
+    h2,
+    h3 {
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+    }
+  }
+}

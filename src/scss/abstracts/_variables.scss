@@ -86,10 +86,10 @@ $header-active-tint: 25% !default;
 $shadow-cast-dark: 0.3 !default;
 // Near (contact) and far (ambient) opacity. The dark theme's far layer is a light
 // rim, so it stays low - a glow carries further than a shadow at the same alpha.
-$shadow-near-dark: 55% !default;
-$shadow-far-dark: 13% !default;
-$shadow-near-light: 14% !default;
-$shadow-far-light: 10% !default;
+$shadow-near-dark: 68% !default;
+$shadow-far-dark: 16% !default;
+$shadow-near-light: 21% !default;
+$shadow-far-light: 14% !default;
 
 // Control sizes - 32 / 36 / 40px, shared by input, select, textarea and button so
 // the row lines up. A minimum, not a fixed height, and it is what sets a field's

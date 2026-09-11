@@ -27,9 +27,18 @@
   @return map.get(v.$breakpoints, $key);
 }
 
-// Function to get a radius value from the radius map
+// Emitted through --mw-radius-scale, so one number retunes every rounded box in
+// the framework at once - 0 squares them off, above 1 rounds them further, and
+// the corner arc follows. 'none' and 'full' pass through: a scaled 0 is still 0,
+// and a circle has to stay a circle.
 @function radius($key) {
-  @return map.get(v.$radius, $key);
+  $value: map.get(v.$radius, $key);
+
+  @if $key == 'none' or $key == 'full' {
+    @return $value;
+  }
+
+  @return calc(#{$value} * var(--mw-radius-scale, 1));
 }
 
 // Function to get a z-index value from the z-index map

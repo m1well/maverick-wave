@@ -20,13 +20,13 @@ or, in the framework repo, `npm run verify`.
 
 Load the one you need - do not read them all up front.
 
-| File                       | Content                                                                                                          |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `references/layout.md`     | Page skeleton, grid, container, section, page header, header/navbar, footer, spacing/flex/display/text utilities |
-| `references/components.md` | Every component: markup, variants, sizes, state classes                                                          |
-| `references/forms.md`      | Inputs, select, textarea, checkbox, radio, toggle, slider, input group, `mw-field` pattern, validation           |
-| `references/theming.md`    | Token model, `color-mix` derivation, light/dark, SCSS configuration, cherry-picking single components            |
-| `references/javascript.md` | What the shipped `main.js` does, why SPAs must not load it, what to implement instead                            |
+| File                       | Content                                                                                                                   |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `references/layout.md`     | Page skeleton, grid, container, section, page header, header/navbar, footer, spacing/flex/display/text utilities          |
+| `references/components.md` | Every component: markup, variants, sizes, state classes                                                                   |
+| `references/forms.md`      | Inputs, select, textarea, checkbox, radio, toggle, slider, input group, `mw-field` pattern, validation                    |
+| `references/theming.md`    | Token model, `color-mix` derivation, light/dark, site-wide variants, SCSS configuration, cherry-picking single components |
+| `references/javascript.md` | What the shipped `main.js` does, why SPAs must not load it, what to implement instead                                     |
 
 ## Examples
 
@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -168,6 +168,8 @@ its own:
 declared before it.
 
 **Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full`): 0, 2, 5, 10, 15, 20, 30 px, 50%.
+Every one of them is multiplied by `--mw-radius-scale` (default 1), so one number
+squares the framework off or rounds it further; `none` and `full` pass through.
 
 **The surface signature.** Every panel-like component - card, panel, modal,
 accordion, tile, calendar, pagination, login box - shares one silhouette: sharp
@@ -175,7 +177,8 @@ accordion, tile, calendar, pagination, login box - shares one silhouette: sharp
 plus a 2px **corner accent** in the primary tone (`--mw-corner-accent`) sitting
 on the two round corners. It is not a class and not opt-in; the components carry
 it. `mw-corner-plain` drops the accent on a box too small to hold it - see
-`references/layout.md`.
+`references/layout.md` - and `mw-corners-even` on `<html>` drops the whole
+signature site-wide.
 
 **Elevation** (`mw-elevation-0` … `-5`, and `var(--mw-elevation-N)` inside SCSS).
 Two shadows per level - a tight contact layer plus a wide ambient one:

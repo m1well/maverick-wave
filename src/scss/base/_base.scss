@@ -88,6 +88,9 @@
     --mw-hero-pattern: #{$mw-hero-pattern};
     --mw-hero-text-color: #{$mw-hero-text-color};
 
+    // Read by every radius the framework draws - see the radius() function
+    --mw-radius-scale: 1;
+
     // header height
     --mw-header-height: #{$header-height};
 

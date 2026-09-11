@@ -82,7 +82,12 @@
 
       &:hover:not(:disabled) {
         background: var(--mw-primary-color-hover);
-        transform: translateY(-1px);
+      }
+
+      @include hover-move {
+        &:not(:disabled) {
+          transform: translateY(-1px);
+        }
       }
 
       @include focus-ring;
@@ -117,6 +122,9 @@
 
       &:hover {
         background: var(--mw-primary-color-hover);
+      }
+
+      @include hover-move {
         transform: translateY(-1px);
       }
 
