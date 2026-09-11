@@ -90,7 +90,11 @@
           }
 
           @media (prefers-reduced-motion: no-preference) {
-            animation: mw-progress-fill linear both;
+            // Longhands and never the shorthand, which esbuild collapses into one
+            // `animation:` that cannot carry a timeline.
+            animation-name: mw-progress-fill;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: view();
             // Starts once the bar is properly on screen and finishes well
             // before it reaches the middle, so it is full when it is read.
