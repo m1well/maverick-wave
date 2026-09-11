@@ -42,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -515,9 +515,8 @@ maverick-wave/
 │       ├── utilities/      # Spacing, flex, display helpers
 │       └── main.scss       # SCSS entry point
 ├── .claude/
-│   ├── commands/mw.md      # Claude Code slash command (Angular quick reference)
 │   └── skills/
-│       └── maverick-wave/  # Claude Code skill: full usage guide + examples
+│       └── mw-maverick-wave/  # Claude Code skill: full usage guide + examples
 ├── scripts/verify.js       # Class and token consistency check (npm run verify)
 ├── .prettierrc.json        # Prettier configuration
 ├── gulpfile.js             # Gulp tasks configuration

@@ -369,3 +369,94 @@ about the class name.
 
 `mw-progress-percent` only appends the `%` sign - the number comes from you, and
 so does the width.
+
+## Scroll reveal
+
+`mw-reveal` runs on the browser's scroll timeline and needs nothing from you -
+except in Firefox, which ships none, where the block appears without motion.
+This directive is the Firefox half: it adds to the class, never replaces it.
+
+```ts
+import {
+  DestroyRef,
+  Directive,
+  ElementRef,
+  afterNextRender,
+  inject,
+  signal,
+} from '@angular/core';
+
+@Directive({
+  selector: '[mwReveal]',
+  host: {
+    '[class.mw-reveal-hidden]': "state() === 'hidden'",
+    '[class.mw-reveal-run]': "state() === 'run'",
+    '[style.animation-delay.ms]': 'delay()',
+  },
+})
+export class MwRevealDirective {
+  private readonly host =
+    inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+
+  protected readonly state = signal<'off' | 'hidden' | 'run'>('off');
+  protected readonly delay = signal(0);
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+
+    afterNextRender(() => {
+      if (CSS.supports('animation-timeline', 'view()')) return;
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // Already on screen: past its entry range in a timeline browser too
+      if (this.host.getBoundingClientRect().top < innerHeight) return;
+
+      this.state.set('hidden');
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          observer.disconnect();
+          this.delay.set(this.columnDelay());
+          this.state.set('run');
+        },
+        { threshold: 0.15 }
+      );
+
+      observer.observe(this.host);
+      destroyRef.onDestroy(() => observer.disconnect());
+    });
+  }
+
+  // The wave a grid draws in CSS, read back from the columns the browser
+  // rendered - one on a phone, so the stagger disappears with them.
+  private columnDelay(): number {
+    const grid = this.host.parentElement;
+    if (!grid?.classList.contains('mw-reveal-stagger')) return 0;
+    const columns =
+      getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+    return ([...grid.children].indexOf(this.host) % columns) * 90;
+  }
+}
+```
+
+A single block carries `mw-reveal`, a grid carries `mw-reveal-stagger` and its
+children carry nothing but the directive:
+
+```html
+<article class="mw-card mw-reveal" mwReveal>...</article>
+
+<div class="mw-grid-4 mw-reveal-stagger">
+  @for (item of items(); track item.id) {
+  <article class="mw-card" mwReveal>...</article>
+  }
+</div>
+```
+
+Unlike the shipped script this also covers what a route renders later - the
+directive runs per element, not once per page.
+
+`mw-header-reveal` and `mw-parallax` need the same treatment and the same
+`CSS.supports` guard. The header is a class toggled past a scroll threshold; the
+parallax writes `--mw-parallax-progress` (0 to 1) on each `mw-parallax-media`
+from a `requestAnimationFrame` loop, reading every layer's rect before writing
+to any of them.

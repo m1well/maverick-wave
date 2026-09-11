@@ -9,6 +9,10 @@ borders, the theme's surface stack, the ink variant the dark theme needs. That i
 the difference to pre-3.4.0, where derived values were baked in at compile time
 and a palette switch meant setting 41 variables.
 
+Writing those tokens on `<html>` at runtime is how a palette is swapped without
+a reload. It repaints the same breadth the theme flip does and needs the same
+guard against a page-wide interpolation - see **Light & dark** below.
+
 Browser floor for that: `color-mix()` **and** `oklch(from ...)` - Chrome 119+,
 Safari 16.4+, Firefox 128+. The same range is declared as `browserslist` in
 `package.json`, so Autoprefixer and cssnano target exactly it.

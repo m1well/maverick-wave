@@ -253,11 +253,12 @@
   }
 }
 
-// The reveal zone as the range of the n-th column. Viewport lengths and not
-// percentages of the block, so a short band and a tall card rise through the same
-// region of the screen. Each further column starts 4dvh after the one before.
+// The reveal zone as the range of the n-th column, measured along the block's own
+// entry and not in viewport lengths: a zone in dvh is the same length whatever the
+// block measures, so a card shorter than the zone stands fully in place while it is
+// still transparent. Each further column starts a tenth of that entry later.
 @mixin reveal-range($column: 1) {
-  $shift: 4dvh * ($column - 1);
+  $shift: 10% * ($column - 1);
 
-  animation-range: entry #{8dvh + $shift} entry #{34dvh + $shift};
+  animation-range: entry #{$shift} entry #{60% + $shift};
 }

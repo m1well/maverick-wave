@@ -2,7 +2,7 @@
 
 ## What `maverick-wave.min.js` is
 
-One vanilla IIFE, no dependencies, ~8 kB. It queries the DOM **once** on
+One vanilla IIFE, no dependencies, ~23 kB. It queries the DOM **once** on
 `DOMContentLoaded` and attaches listeners. There is no re-init API, no
 `MutationObserver`, no exported module - it is built for a server-rendered or
 static page.
@@ -44,9 +44,26 @@ classes are the entire contract.
 | Calendar            | Renders the month or week grid from `data-calendar="month                                                                                                                                                                                                                       | week"`, pages with `data-calendar-nav`, draws the status dots from `data-calendar-markers`, toggles `mw-selected`and emits`mw-calendar-select`                                                                               | Render the cells from a signal and bind `mw-calendar-adjacent`, `mw-calendar-weekend`, `mw-calendar-today` and `mw-selected` yourself; none of the `data-calendar-*` attributes are needed |
 | Localhost indicator | On a local hostname, prepends `mw-localhost-indicator-pulse` to the header when it carries `mw-localhost-indicator-activated`                                                                                                                                                   | Render the element conditionally                                                                                                                                                                                             |
 | Header login button | Swaps the FontAwesome lock icon                                                                                                                                                                                                                                                 | Bind the icon class                                                                                                                                                                                                          |
-| Color swatches      | Showcase-only (prints computed hex values)                                                                                                                                                                                                                                      | Not needed                                                                                                                                                                                                                   |
+| Color swatches      | Showcase-only (prints computed hex values); exposes `window.mwRefreshColorSwatches` to read them again after a root colour changed                                                                                                                                              | Not needed                                                                                                                                                                                                                   |
 | Dropdown            | Delegated to the document: closes the open `mw-dropdown` on Escape, on a click elsewhere and on a click on a `mw-dropdown-item`, and returns focus to the `summary`                                                                                                             | The `<details>` does the opening, the keyboard and the state on its own. Rebuild only the two behaviours markup cannot express - or bind `[attr.open]` and keep them in the component                                        |
 | Language switcher   | Keeps the trigger's flag and code in step with the chosen item, moves `mw-active` and `aria-current`, and fires `mw-language-change` (`detail: { lang, name }`) on the switcher                                                                                                 | Bind the trigger from your locale signal and switch the language in your own i18n service; the menu itself is a `<details>` and needs nothing                                                                                |
+| Scroll reveal       | Firefox only: an `IntersectionObserver` adds `mw-reveal-hidden` to what is still below the fold and swaps it for `mw-reveal-run` on entry, with an `animation-delay` per grid column                                                                                            | A directive per element - see `examples/angular-services.md`                                                                                                                                                                 |
+| Header reveal       | Firefox only: toggles `mw-header-away` and `mw-announcement-away` past 270px of scroll, and adds the transition class one frame later so the bar does not slide away on load                                                                                                    | The same two classes bound to a scroll signal, behind the same guard                                                                                                                                                         |
+| Parallax            | Firefox only: writes `--mw-parallax-progress` (0 to 1) on every `mw-parallax-media` from a `requestAnimationFrame` loop                                                                                                                                                         | The same, reading every layer's rect before writing to any of them                                                                                                                                                           |
+
+## Scroll-driven animations
+
+Four things ride the browser's own scroll timeline: `mw-reveal`,
+`mw-header-reveal`, `mw-parallax` and the `mw-progress-fill` scrub. In Chrome,
+Edge and Safari they need no script at all. Firefox ships no scroll timelines,
+so there - and only there - the shipped JS stands in for them. Each one checks
+`CSS.supports('animation-timeline', ...)` first and does nothing where the
+browser has it.
+
+Without the script Firefox loses the motion and nothing else: cards stand in
+place, the picture holds still. The exception is `mw-header-reveal`, where the
+bar then sits over the hero from the first paint - a layout difference, not a
+missing effect.
 
 ## Modals and progress bars
 

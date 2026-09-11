@@ -536,6 +536,9 @@ still renders the same, for markup written before 4.12.
 Open state = `mw-active` on header **and** content (bare `active` still works
 but is deprecated). The icon rotates via the **header** state - putting the
 class on the icon instead does nothing. Content taller than 500px scrolls.
+The `mw-accordion-content-inner` wrapper is required and not decoration: the
+panel opens by animating a grid row and that wrapper is the row, so content
+placed straight into `mw-accordion-content` never collapses when closed.
 Toggling is JS - see `references/javascript.md`; the shipped script keeps
 `aria-expanded` in step when the header is a button.
 

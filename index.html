@@ -118,6 +118,144 @@
           height: 50px;
         }
       }
+
+      /* Palette switcher, showcase only. The framework derives every tone from
+         the root colors, so the panel writes nothing but those. */
+      .palette-fab {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 400;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 1px solid var(--mw-border-accent);
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+        box-shadow: var(--mw-elevation-4);
+        font-size: 1.25rem;
+        cursor: pointer;
+        transition: var(--mw-transition);
+      }
+
+      .palette-fab:hover {
+        background: var(--mw-primary-color-hover);
+      }
+
+      .palette-fab:active {
+        transform: scale(0.92);
+      }
+
+      .palette-panel {
+        position: fixed;
+        right: 18px;
+        bottom: 82px;
+        z-index: 400;
+        width: 300px;
+        padding: 18px;
+        border-radius: 12px;
+        border: 1px solid var(--mw-border);
+        background: var(--mw-card-background);
+        box-shadow: var(--mw-elevation-5);
+      }
+
+      .palette-heading {
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+      }
+
+      .palette-hint {
+        font-size: 0.8rem;
+        line-height: 1.35;
+        color: var(--mw-text-muted-color);
+        margin-bottom: 14px;
+      }
+
+      .palette-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .palette-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: 1px solid var(--mw-border);
+        background: transparent;
+        color: var(--mw-text-color);
+        font-size: 0.8rem;
+        text-align: left;
+        cursor: pointer;
+        transition: var(--mw-transition);
+      }
+
+      .palette-item::before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--swatch-primary) 50%,
+          var(--swatch-secondary) 50%
+        );
+      }
+
+      .palette-item:hover,
+      .palette-item.mw-active {
+        border-color: var(--mw-primary-text-color);
+      }
+
+      .palette-item.mw-active {
+        background: var(--mw-primary-background);
+      }
+
+      .palette-custom {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid var(--mw-border);
+      }
+
+      .palette-field {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.75rem;
+        color: var(--mw-text-muted-color);
+      }
+
+      .palette-field input {
+        width: 100%;
+        height: 30px;
+        padding: 2px;
+        border: 1px solid var(--mw-border);
+        border-radius: 6px;
+        background: var(--mw-card-background);
+        cursor: pointer;
+      }
+
+      @media (max-width: 576px) {
+        .palette-fab {
+          right: 12px;
+          bottom: 12px;
+          width: 46px;
+          height: 46px;
+        }
+
+        .palette-panel {
+          right: 12px;
+          left: 12px;
+          bottom: 68px;
+          width: auto;
+        }
+      }
     </style>
 
     <script src="maverick-wave.min.js"></script>
@@ -538,6 +676,17 @@
           </div>
         </div>
       </section>
+      <!-- History section -->
+      <section id="history" class="mw-section mw-section-alternate">
+        <div class="mw-container">
+          <h2 class="mw-section-title">History</h2>
+          <p class="mw-section-intro">
+            The major releases so far. Everything in between - the minors and
+            the patch releases - sits in the changelog.
+          </p>
+          @@include('./src/partials/history-container.html')
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -546,6 +695,9 @@
         @@include('./src/partials/footer-container.html')
       </div>
     </footer>
+
+    <!-- Palette switcher -->
+    @@include('./src/partials/palette-container.html')
     <script>
       // just for the showcase (login button triggers login error)
       document.addEventListener('DOMContentLoaded', () => {
@@ -627,6 +779,111 @@
           item.addEventListener('click', () => apply(item));
         });
         apply(cycleSwitch.querySelector('.mw-active'));
+      });
+
+      // just for the showcase: the palette switcher. Every tone in the framework
+      // is derived from the root colors with color-mix(), so writing those on the
+      // root element repaints the page - bar, ink, borders and tints included.
+      // Nothing is persisted - a palette is for looking at, a reload is the way back.
+      document.addEventListener('DOMContentLoaded', () => {
+        const fab = document.getElementById('palette-fab');
+        const panel = document.getElementById('palette-panel');
+        const primaryInput = document.getElementById('palette-primary');
+        const secondaryInput = document.getElementById('palette-secondary');
+        const items = [...document.querySelectorAll('.palette-item')];
+        if (!fab || !panel) return;
+
+        const root = document.documentElement;
+
+        const DARK_INK = '#131925';
+        const LIGHT_INK = '#f2f6fc';
+
+        const luminance = (hex) => {
+          const [r, g, b] = [1, 3, 5].map((i) => {
+            const channel = parseInt(hex.slice(i, i + 2), 16) / 255;
+            return channel <= 0.04045
+              ? channel / 12.92
+              : ((channel + 0.055) / 1.055) ** 2.4;
+          });
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+
+        const contrast = (a, b) => {
+          const [high, low] = [luminance(a), luminance(b)].sort(
+            (x, y) => y - x
+          );
+          return (high + 0.05) / (low + 0.05);
+        };
+
+        // Measured, not thresholded - a lightness cutoff gets a saturated mid
+        // tone wrong
+        const ink = (fill) =>
+          contrast(fill, DARK_INK) > contrast(fill, LIGHT_INK)
+            ? DARK_INK
+            : LIGHT_INK;
+
+        // Cuts the transition the new colours started: the whole page
+        // interpolating at once is the expensive part, and the hex labels in the
+        // Colors section read computed values, so they need the landed ones
+        const settle = () => {
+          root.classList.add('mw-theme-switching');
+          void root.offsetHeight;
+          root.classList.remove('mw-theme-switching');
+          window.mwRefreshColorSwatches?.();
+        };
+
+        const paint = (name, color) => {
+          root.style.setProperty(`--mw-${name}-color`, color);
+          root.style.setProperty(`--mw-${name}-accent-text-color`, ink(color));
+        };
+
+        items.forEach((item) => {
+          const { primary, secondary, dark, light } = item.dataset;
+          item.style.setProperty('--swatch-primary', primary);
+          item.style.setProperty('--swatch-secondary', secondary);
+
+          item.addEventListener('click', () => {
+            items.forEach((other) =>
+              other.classList.toggle('mw-active', other === item)
+            );
+            paint('primary', primary);
+            paint('secondary', secondary);
+            root.style.setProperty('--mw-dark-page-background', dark);
+            root.style.setProperty('--mw-light-page-background', light);
+            primaryInput.value = primary;
+            secondaryInput.value = secondary;
+            settle();
+          });
+        });
+
+        // A hand-picked color belongs to no preset - the page backgrounds stay put
+        [
+          ['primary', primaryInput],
+          ['secondary', secondaryInput],
+        ].forEach(([name, input]) => {
+          input.addEventListener('input', () => {
+            items.forEach((item) => item.classList.remove('mw-active'));
+            paint(name, input.value);
+          });
+          // Dragging the picker fires `input` per pixel - the rest waits for the end
+          input.addEventListener('change', settle);
+        });
+
+        const toggle = (open) => {
+          panel.hidden = !open;
+          fab.setAttribute('aria-expanded', String(open));
+        };
+
+        fab.addEventListener('click', (event) => {
+          event.stopPropagation();
+          toggle(panel.hidden);
+        });
+        document.addEventListener('click', (event) => {
+          if (!panel.hidden && !panel.contains(event.target)) toggle(false);
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') toggle(false);
+        });
       });
 
       // for the modals - the framework handles both shapes, div and <dialog>

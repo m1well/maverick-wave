@@ -36,6 +36,28 @@
     }
   }
 
+  // Firefox ships no scroll timelines at all, so there the script drives the
+  // same movement (main.js): `mw-reveal-hidden` while the element waits below
+  // the fold, `mw-reveal-run` once it enters. Both classes are added by the
+  // script and never by the markup - a page without JS keeps everything
+  // visible, which is what the guard above is for.
+  @media (prefers-reduced-motion: no-preference) {
+    .mw-reveal-hidden {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .mw-reveal-run {
+      // `backwards` for the reason above - a forwards fill would pin the
+      // transform and cost the card its hover lift. The delay comes inline,
+      // from the element's column.
+      animation-name: mw-reveal;
+      animation-duration: var(--mw-duration-slower);
+      animation-timing-function: var(--mw-ease-out);
+      animation-fill-mode: backwards;
+    }
+  }
+
   @keyframes mw-reveal {
     from {
       opacity: 0;
