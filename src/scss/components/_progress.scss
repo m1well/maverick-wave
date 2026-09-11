@@ -81,8 +81,18 @@
       // never runs keeps whatever width its markup set.
       &.mw-progress-driven {
         @supports (animation-timeline: view()) {
+          // Reduced motion skips the animation below, so the width has to be set
+          // outright - the blanket rule in _base.scss keeps the transition instant.
+          @media (prefers-reduced-motion: reduce) {
+            width: var(--mw-progress-value);
+          }
+
           @media (prefers-reduced-motion: no-preference) {
-            animation: mw-progress-fill linear both;
+            // Longhands and never the shorthand, which esbuild collapses into one
+            // `animation:` that cannot carry a timeline.
+            animation-name: mw-progress-fill;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
             animation-timeline: view();
             // Starts once the bar is properly on screen and finishes well
             // before it reaches the middle, so it is full when it is read.
