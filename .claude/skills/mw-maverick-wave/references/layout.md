@@ -142,8 +142,9 @@ A fixed `mw-announcement` rides along without a class of its own - both cover
 the height of the pair, so they arrive as one block rather than the ribbon
 catching up. Focus inside either brings both back regardless of the scroll
 position, so tabbing never lands on a link that is off screen (WCAG 2.4.11).
-Without scroll timelines, or under `prefers-reduced-motion`, the bar is simply
-there.
+Under `prefers-reduced-motion` the bar is simply there, and so it is without
+scroll timelines unless `maverick-wave.min.js` is on the page - in Firefox that
+is what rides it in (`javascript.md`).
 
 **Localhost indicator.** Put `mw-localhost-indicator-activated` on the header
 and the shipped JS prepends a pulsing bar when the host is localhost/127.0.0.1/
@@ -322,8 +323,10 @@ is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
 **Parallax** - `mw-parallax` on the container plus a `mw-parallax-media` child
 moves the picture into its own layer. The container drops its own background and
 the layer reads `--mw-hero-background`, so the image stays configured in one
-place. Both modes run on the browser's scroll timeline - no listener, and no
-`background-attachment: fixed`, which iOS ignores.
+place. Both modes run on the browser's scroll timeline, and on no
+`background-attachment: fixed`, which iOS ignores. Firefox has neither timeline;
+there the shipped JS moves the layers instead, and without it the picture simply
+sits still (`javascript.md`).
 
 ```html
 <header class="mw-header mw-header-reveal">...</header>
@@ -467,19 +470,22 @@ with it; `mw-text-capitalize` is the plain transform.
 uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
 
 **Scroll entrance** - `mw-reveal` lets a block rise briefly as it scrolls into
-view, driven by the browser's scroll timeline (`animation-timeline: view()`) -
-no JavaScript, no observer. The block stays hidden until it is 8dvh above the
-bottom edge and has arrived by 34dvh, the same zone for every block whatever
-its height, so the motion happens where the eye is and is over before the
-block is read. Doubly guarded: `prefers-reduced-motion` turns it
-off, and a browser without scroll timelines renders the block in place instead
-of leaving it invisible. Put it on section content, not on the section itself -
-a screen-high band finishes its entrance before its content is halfway up.
+view, driven by the browser's scroll timeline (`animation-timeline: view()`).
+The block stays hidden while it is still below the bottom edge and has arrived
+three fifths of the way in - measured along its own entry, so it is never still
+transparent once it stands in its place, whatever its height. A block taller
+than the screen is capped at one viewport by the entry phase itself. Doubly guarded:
+`prefers-reduced-motion` turns it off, and a browser without scroll timelines
+renders the block in place instead of leaving it invisible. Firefox is that
+browser - there the shipped JS runs the entrance off an `IntersectionObserver`,
+so a page without the script keeps the block and loses only the motion
+(`javascript.md`). Put it on section content, not on the section itself - a
+screen-high band finishes its entrance before its content is halfway up.
 
 A row of cards crosses the viewport edge together, so `mw-reveal` on each of
 them rises as one slab. `mw-reveal-stagger` goes on the **grid** instead: every
-child reveals, and each one in a row 4dvh of scroll after the one before it -
-a wave across the row. One class, nothing per card. On `mw-grid-2` to `mw-grid-5` and
+child reveals, and each one in a row a tenth of that entry after the one
+before it - a wave across the row. One class, nothing per card. On `mw-grid-2` to `mw-grid-5` and
 their `-lg` variants the wave follows the actual columns at every breakpoint:
 four steps in a four-column row, two once it has collapsed to two. Any other
 container - `mw-columns-*`, a layout of your own - gets a fixed cycle of three.

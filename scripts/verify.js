@@ -22,13 +22,10 @@ const CSS = path.join(ROOT, 'dist', 'maverick-wave.min.css');
 const HTML = path.join(ROOT, 'dist', 'index.html');
 const JS = path.join(ROOT, 'src', 'js', 'main.js');
 
-// Everything that documents classes: the slash command plus every markdown file
-// of the maverick-wave skill. Collected by walking the tree, so a new reference
-// or example file is covered without touching this list.
-const DOCS = [
-  path.join(ROOT, '.claude', 'commands', 'mw.md'),
-  ...filesWithExt(path.join(ROOT, '.claude', 'skills'), '.md'),
-];
+// Everything that documents classes: every markdown file of the maverick-wave
+// skill. Collected by walking the tree, so a new reference or example file is
+// covered without touching this list.
+const DOCS = filesWithExt(path.join(ROOT, '.claude', 'skills'), '.md');
 
 // Tokens read by JavaScript or reserved for consumers, so "unused in CSS" is fine.
 // warning/info have no solid button variant, but every status offers the same

@@ -25,6 +25,9 @@
     initAccordions();
     initMobileNav();
     initProgressBars();
+    initReveals();
+    initHeaderReveal();
+    initParallax();
     initSmoothScrolling();
     initScrollSpy();
     initTabs();
@@ -530,6 +533,147 @@
     driven.forEach((bar) => obs.observe(bar));
   }
 
+  // ===== Scroll Reveal =====
+
+  // The cards ride the browser's own view timeline where there is one
+  // (_reveal.scss). Firefox has none, so there an observer stands in: hide what
+  // is still below the fold, run the same keyframes when it arrives.
+  function initReveals() {
+    if (CSS.supports('animation-timeline', 'view()')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const targets = document.querySelectorAll(
+      '.mw-reveal, .mw-reveal-stagger > *'
+    );
+    if (!targets.length) return;
+
+    // The wave the grid draws in CSS, rebuilt from the column count the browser
+    // actually rendered - cheaper than restating every grid's stagger cycle a
+    // second time, and right on a phone where the grid collapses to one column.
+    const staggerDelay = (el) => {
+      const grid = el.parentElement;
+      if (!grid || !grid.classList.contains('mw-reveal-stagger')) return 0;
+      const columns =
+        getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+      return ([...grid.children].indexOf(el) % columns) * 90;
+    };
+
+    const obs = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          entry.target.style.animationDelay = staggerDelay(entry.target) + 'ms';
+          entry.target.classList.replace('mw-reveal-hidden', 'mw-reveal-run');
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    targets.forEach((el) => {
+      // Whatever is on screen already has passed its entry range in a browser
+      // with timelines too, so it stays put instead of fading in after load
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      el.classList.add('mw-reveal-hidden');
+      obs.observe(el);
+    });
+  }
+
+  // Same story for the header that rides in over the first stretch of scroll
+  // (_header-reveal.scss). A toggle and not a scrub: mapping scroll to progress
+  // by hand would cost a rAF loop for a bar that is only ever in one of two
+  // places anyway.
+  function initHeaderReveal() {
+    const header = document.querySelector('.mw-header-reveal');
+    if (!header) return;
+    if (CSS.supports('animation-timeline', 'scroll()')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ribbon = document.querySelector(
+      '.mw-announcement:not(.mw-announcement-static)'
+    );
+
+    // The CSS range holds the bar away for the first 30% of 420px and has it
+    // fully in at the end - halfway through what is left is the closest a
+    // single threshold gets to that.
+    const threshold = 270;
+    let away = null;
+
+    const update = () => {
+      const next = window.scrollY < threshold;
+      if (next === away) return;
+      away = next;
+      header.classList.toggle('mw-header-away', next);
+      if (ribbon) ribbon.classList.toggle('mw-announcement-away', next);
+    };
+
+    update();
+
+    // A frame later, or the bar starts at the top and slides away in front of
+    // the reader - the transition would be armed before it is in position.
+    requestAnimationFrame(() => {
+      header.classList.add('mw-header-driven');
+      if (ribbon) ribbon.classList.add('mw-announcement-driven');
+    });
+
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
+  // And the parallax layers (_parallax.scss), the one of the four that needs a
+  // frame loop: the picture does not arrive somewhere, it is somewhere else at
+  // every scroll position. Only the progress is written, the travel stays in
+  // CSS where the depth variants can still reach it.
+  function initParallax() {
+    if (CSS.supports('animation-timeline', 'view()')) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const media = document.querySelectorAll('.mw-parallax-media');
+    if (!media.length) return;
+
+    // A pinned block never travels through the viewport, so its own timeline
+    // would stand still - the CSS plays it against the document's first screen
+    // instead, and so does this.
+    const layers = [...media].map((el) => {
+      el.classList.add('mw-parallax-driven');
+      return { el, pinned: Boolean(el.closest('.mw-parallax-sticky')) };
+    });
+
+    const clamp = (value) => Math.min(1, Math.max(0, value));
+
+    // What view() hands the animation over its cover pass: 0 when the top edge
+    // touches the bottom of the screen, 1 when the bottom edge leaves at the
+    // top. Clamped, because the fill holds a layer at whichever end is off
+    // screen.
+    const progress = (layer, viewport) => {
+      if (layer.pinned) return clamp(window.scrollY / viewport);
+      const rect = layer.el.getBoundingClientRect();
+      return clamp((viewport - rect.top) / (viewport + rect.height));
+    };
+
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const viewport = window.innerHeight;
+      // Every read before the first write, or each write makes the next read
+      // lay the page out again - a reflow per layer per frame.
+      const values = layers.map((layer) => progress(layer, viewport));
+      layers.forEach((layer, i) =>
+        layer.el.style.setProperty('--mw-parallax-progress', values[i])
+      );
+    };
+
+    const request = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+  }
+
   // ===== Smooth Scrolling =====
   // Where an anchor jump lands: scroll-padding-top, read per run because the
   // ribbon grows on small screens and can be dismissed
@@ -568,13 +712,19 @@
 
       // Scaled, or a jump to the next section takes as long as one across the
       // whole page; capped, or that one crawls
-      const duration = Math.min(1400, 420 + Math.abs(distance) * 0.35);
-      const start = performance.now();
+      const duration = Math.min(2000, 600 + Math.abs(distance) * 0.5);
       const token = {};
       glide = token;
 
+      // The clock starts on the first rendered frame and not on the click. The
+      // page can sit still for a few hundred ms between the two - a clock
+      // started at the click hands that time to the easing, and the scroll
+      // opens by jumping most of the way at once.
+      let start = null;
+
       function step(now) {
         if (glide !== token) return;
+        if (start === null) start = now;
         const t = Math.min(1, (now - start) / duration);
         const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
         // 'instant', or the smooth scroll-behavior in the stylesheet animates
@@ -616,6 +766,8 @@
         }
         targetElement.focus({ preventScroll: true });
 
+        // Not `behavior: 'smooth'`: the browser's own curve takes no duration,
+        // and the one it picks cannot be slowed down.
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
           window.scrollTo({ top: target, behavior: 'instant' });
         } else {
@@ -917,6 +1069,9 @@
 
   window.mwOpenModal = (id) => openModal(document.getElementById(id));
   window.mwCloseModal = (id) => closeModal(document.getElementById(id));
+  // The swatch hex labels read the computed colour, so anything that changes a
+  // root colour at runtime has to ask for them to be read again
+  window.mwRefreshColorSwatches = updateColorSwatchHexValues;
 
   // ===== Login Button =====
   function initHeaderLoginButton() {

@@ -63,6 +63,39 @@
     }
   }
 
+  // Firefox ships no scroll timelines, so there the script toggles these
+  // classes instead (main.js) - the same two positions, triggered instead of
+  // scrubbed. State and transition are separate because the script sets the
+  // state a frame earlier: together they would send the bar sliding away in
+  // front of the reader instead of having it gone already.
+  @media (prefers-reduced-motion: no-preference) {
+    .mw-header-reveal.mw-header-away {
+      top: calc(-1 * var(--mw-header-reveal-offset));
+      opacity: 0;
+    }
+
+    .mw-header-driven {
+      // The shared list plus `top`, which is not in it - writing only `top`
+      // here would drop the header's own colour and shadow transitions.
+      transition:
+        var(--mw-transition),
+        top var(--mw-duration-slow) var(--mw-ease-out);
+    }
+
+    .mw-announcement.mw-announcement-away {
+      transform: translateY(
+        calc(-1 * (var(--mw-header-height) + var(--mw-announcement-height)))
+      );
+      opacity: 0;
+    }
+
+    .mw-announcement-driven {
+      transition:
+        transform var(--mw-duration-slow) var(--mw-ease-out),
+        opacity var(--mw-duration-slow) var(--mw-ease-out);
+    }
+  }
+
   // `top` and not a transform: the off-canvas drawer inside the bar is
   // position: fixed, and a transform on the header would make it the drawer's
   // containing block - at every value, the resting one included.

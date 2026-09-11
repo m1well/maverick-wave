@@ -1,0 +1,142 @@
+<button
+  type="button"
+  class="palette-fab"
+  id="palette-fab"
+  aria-expanded="false"
+  aria-controls="palette-panel"
+  aria-label="Try another palette"
+>
+  <i class="fas fa-palette"></i>
+</button>
+
+<div class="palette-panel" id="palette-panel" hidden>
+  <h3 class="palette-heading">Palette</h3>
+  <p class="palette-hint">
+    Two colors. Everything else - bar, ink, borders, tints - is derived from
+    them at runtime.
+  </p>
+
+  <div class="palette-grid">
+    <button
+      type="button"
+      class="palette-item mw-active"
+      data-primary="#1031bb"
+      data-secondary="#bb5710"
+      data-dark="#171f30"
+      data-light="#e7e7f0"
+    >
+      Maverick
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#0f6f8c"
+      data-secondary="#e8862a"
+      data-dark="#0f1f26"
+      data-light="#e2edf1"
+    >
+      Deep Sea
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#c2321f"
+      data-secondary="#256f83"
+      data-dark="#13161a"
+      data-light="#f4e9e6"
+    >
+      Ember
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#2f7a3f"
+      data-secondary="#7f4dbd"
+      data-dark="#141f16"
+      data-light="#e6eee7"
+    >
+      Moss
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#8e3bd4"
+      data-secondary="#2fa38a"
+      data-dark="#1d1530"
+      data-light="#ece8f5"
+    >
+      Orchid
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#46617f"
+      data-secondary="#c08a2e"
+      data-dark="#1a1f26"
+      data-light="#e8ebef"
+    >
+      Slate
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#00b3ff"
+      data-secondary="#ff2d95"
+      data-dark="#0d1117"
+      data-light="#e6f3fb"
+    >
+      Neon
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#9a5f23"
+      data-secondary="#3b6ea5"
+      data-dark="#241c15"
+      data-light="#f2eadd"
+    >
+      Sand
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#12a37a"
+      data-secondary="#e2699b"
+      data-dark="#101f1b"
+      data-light="#e2f1ec"
+    >
+      Mint
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#4b2fc4"
+      data-secondary="#d9a72e"
+      data-dark="#171331"
+      data-light="#eae8f7"
+    >
+      Royal
+    </button>
+    <button
+      type="button"
+      class="palette-item"
+      data-primary="#9b1b4a"
+      data-secondary="#23a08d"
+      data-dark="#1e1220"
+      data-light="#f3e7ec"
+    >
+      Wine
+    </button>
+  </div>
+
+  <div class="palette-custom">
+    <label class="palette-field">
+      <span>Primary</span>
+      <input type="color" id="palette-primary" value="#1031bb" />
+    </label>
+    <label class="palette-field">
+      <span>Secondary</span>
+      <input type="color" id="palette-secondary" value="#bb5710" />
+    </label>
+  </div>
+</div>

@@ -83,27 +83,51 @@
       }
     }
 
+    // A grid row from `0fr` to `1fr`, and not `height: 0` to `auto`: `auto` is
+    // not an animatable value, and `interpolate-size`, which would make it one,
+    // is Chrome's alone - Firefox and Safari jumped the panel open instead of
+    // running the 900ms. A fraction interpolates in all three.
     &-content {
-      height: spacing('0');
+      display: grid;
+      grid-template-rows: 0fr;
       overflow: hidden;
-      transition: height var(--mw-duration-slower) var(--mw-ease-out);
+      transition: grid-template-rows var(--mw-duration-slower)
+        var(--mw-ease-out);
       background: var(--mw-card-background);
-      interpolate-size: allow-keywords;
 
       &-inner {
-        padding: spacing('4');
-        border-top: 1px solid var(--mw-border-accent);
+        // The row is never shorter than what the item contributes, and padding
+        // and a border do not collapse with it - so both travel along, or the
+        // shut panel keeps a 25px strip of itself on screen. No `overflow` here
+        // on purpose: the panel above already clips, and clipping twice would
+        // hide the overflow that makes a long panel scrollable.
+        min-height: 0;
+        padding: spacing('0') spacing('4');
+        border-top: 0 solid var(--mw-border-accent);
+        transition:
+          padding-block var(--mw-duration-slower) var(--mw-ease-out),
+          border-top-width var(--mw-duration-slower) var(--mw-ease-out);
+
         @include media-down('sm') {
           font-size: font-size('sm');
         }
       }
 
       @include active() {
-        height: auto;
+        grid-template-rows: 1fr;
         max-height: 500px;
         overflow-y: auto;
 
-        // Scrollbar styling
+        > .mw-accordion-content-inner {
+          padding-block: spacing('4');
+          border-top-width: 1px;
+        }
+
+        // Both spellings: the standard pair is what Firefox reads, the webkit
+        // pseudos are for Safari below 18.2.
+        scrollbar-width: thin;
+        scrollbar-color: var(--mw-primary-color-hover) var(--mw-card-background);
+
         &::-webkit-scrollbar {
           width: 6px;
         }

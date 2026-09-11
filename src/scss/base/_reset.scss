@@ -24,9 +24,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+    // `dvh` and not `vh`: on iOS `100vh` is the tall viewport behind the
+    // address bar, so the locked body stays taller than the screen and keeps a
+    // strip of rubber-band scroll under the modal.
     &:has(.mw-modal-open) {
       overflow: hidden;
-      height: 100vh;
+      height: 100dvh;
     }
   }
 

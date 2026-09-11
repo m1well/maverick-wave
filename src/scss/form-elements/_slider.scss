@@ -38,10 +38,14 @@
       transform: scale(1.1);
     }
 
+    // Same fill and ring as the webkit thumb above - Firefox paints its own
+    // grey thumb unless `background` is set, so leaving it out is not the same
+    // declaration set, it is a different slider.
     &::-moz-range-thumb {
       width: spacing('5');
       height: spacing('5');
-      border: 2px solid var(--fill);
+      background: var(--fill);
+      border: 2px solid var(--mw-border);
       border-radius: radius('full');
       transition:
         transform var(--mw-duration-fast) var(--mw-ease-out),
@@ -55,20 +59,6 @@
       background: transparent;
     }
 
-    // IE
-    &::-ms-fill-lower {
-      background: var(--fill);
-    }
-    &::-ms-fill-upper {
-      background: var(--track);
-    }
-    &::-ms-thumb {
-      width: spacing('5');
-      height: spacing('5');
-      border: 2px solid var(--fill);
-      border-radius: radius('full');
-    }
-
     &-sm {
       height: 6px;
       &::-webkit-slider-thumb {
@@ -76,10 +66,6 @@
         height: spacing('4');
       }
       &::-moz-range-thumb {
-        width: spacing('4');
-        height: spacing('4');
-      }
-      &::-ms-thumb {
         width: spacing('4');
         height: spacing('4');
       }
@@ -92,10 +78,6 @@
         height: spacing('6');
       }
       &::-moz-range-thumb {
-        width: spacing('6');
-        height: spacing('6');
-      }
-      &::-ms-thumb {
         width: spacing('6');
         height: spacing('6');
       }

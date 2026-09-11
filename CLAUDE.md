@@ -38,7 +38,7 @@ There are no test or lint scripts.
 
 **JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery and image sliders, theme toggle (persisted to localStorage, transitions suppressed during the flip), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs (which also get their ARIA and arrow-key handling here), alerts/toasts, modals, range inputs, dropdowns, language switcher, checkbox lists, kanban board, calendar.
 
-**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 60 partials from `src/partials/`. These compile into `dist/index.html`.
+**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 63 partials from `src/partials/`. These compile into `dist/index.html`.
 
 ## Naming Conventions
 

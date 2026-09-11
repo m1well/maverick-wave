@@ -146,6 +146,26 @@
     }
   }
 
+  // Firefox ships no scroll timelines, so there the script writes the progress
+  // and the travel is worked out here (main.js). Keeping the transform in CSS
+  // is what lets every depth variant above - and an inline
+  // `--mw-parallax-depth` - go on working untouched.
+  //
+  // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes
+  // below. Declared and not only used, so the frame before the script has
+  // written anything sits at rest instead of nowhere.
+  @media (prefers-reduced-motion: no-preference) {
+    .mw-parallax-driven {
+      --mw-parallax-progress: 0.5;
+
+      transform: translate3d(
+        0,
+        calc(var(--mw-parallax-depth) * (1 - 2 * var(--mw-parallax-progress))),
+        0
+      );
+    }
+  }
+
   @keyframes mw-parallax {
     from {
       transform: translate3d(0, var(--mw-parallax-depth), 0);

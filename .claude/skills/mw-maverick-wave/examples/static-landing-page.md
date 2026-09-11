@@ -20,7 +20,7 @@ accordion FAQ.
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -487,7 +487,7 @@ accordion FAQ.
       <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.js"></script>
     <script>
       // The only thing the shipped script does not cover: opening a modal.
       // Closing works through .mw-modal-close, the backdrop is wired above.
@@ -523,8 +523,9 @@ accordion FAQ.
 - `mw-reveal-stagger` goes on the grid (or `mw-columns-*`) and reveals every
   child as it scrolls in, the second and third of each three a beat later.
   `mw-reveal` on a single block reveals that block as one. Both are off under
-  `prefers-reduced-motion`, and a browser without scroll timelines renders the
-  blocks in place - never invisible.
+  `prefers-reduced-motion`. A page like this one loads the script, so Firefox -
+  which has no scroll timelines - runs the same entrance off an observer;
+  without the script the blocks stand in place, never invisible.
 - `mw-offer` on a card pushes the price row to the bottom of the body, so the
   prices in a row line up. The `mw-card-feature` frame around the middle plan
   reaches 29px above its card - the `mw-mt-10` on the grid is that room.

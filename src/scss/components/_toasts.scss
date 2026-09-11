@@ -9,7 +9,7 @@
     flex-direction: column;
     gap: spacing('3');
     width: min(380px, calc(100vw - #{2 * spacing('5')}));
-    max-height: calc(100vh - #{2 * spacing('5')});
+    max-height: calc(100dvh - #{2 * spacing('5')});
     overflow-y: auto;
     pointer-events: none;
 
