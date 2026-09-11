@@ -81,7 +81,7 @@
       --mw-corner-accent: var(--mw-corner-accent-hover);
     }
 
-    @include hover {
+    @include hover-move {
       transform: translateY(-2px);
     }
 

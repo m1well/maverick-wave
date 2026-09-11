@@ -42,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.5.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -344,6 +344,30 @@ layer of its own:
 </style>
 <link rel="stylesheet" href="maverick-wave.min.css" />
 ```
+
+### Site-wide variants
+
+Eight classes on `<html>` retune the whole look without touching markup or
+rebuilding. They stack.
+
+| Class               | Effect                                                                  |
+| ------------------- | ----------------------------------------------------------------------- |
+| `mw-corners-even`   | Drops the surface signature - every panel becomes an evenly rounded box |
+| `mw-accent-single`  | One brand colour instead of two; `mw-btn-secondary` turns outline       |
+| `mw-shadows-flat`   | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
+| `mw-hover-static`   | No hover travels - lifts and image zooms go, colour still responds      |
+| `mw-sections-plain` | The hatch behind `mw-section-alternate` collapses into the page colour  |
+| `mw-headings-caps`  | `h1`-`h3` in capitals                                                   |
+| `mw-btn-pill`       | Fully rounded buttons; form fields keep their radius                    |
+| `mw-media-mono`     | Photos grey until hovered                                               |
+
+Four properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
+squares the framework off), `--mw-font-family-heading`, `--mw-container-width`
+and `--mw-section-padding-block`.
+
+A variant of your own that retunes a theme-bound token has to target
+`:root.your-class` **and** `:root.your-class .mw-theme-light` - the light theme
+re-declares those on `<body>` and would shadow a root-only value.
 
 ### SCSS Source
 

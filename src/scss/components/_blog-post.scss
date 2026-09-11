@@ -274,14 +274,14 @@
         transition: var(--mw-transition);
         color: var(--mw-primary-text-color);
 
-        &:hover {
+        @include hover-move {
           transform: translateX(-7px);
         }
 
         &.next {
           flex-direction: row-reverse;
 
-          &:hover {
+          @include hover-move {
             transform: translateX(7px);
           }
         }

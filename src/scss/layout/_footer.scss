@@ -115,7 +115,7 @@
           border-color: var(--mw-primary-color);
         }
 
-        @include hover {
+        @include hover-move {
           transform: translateY(-2px);
         }
 

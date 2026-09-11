@@ -192,6 +192,46 @@ void root.offsetHeight; // commit the new colours with transitions off
 root.classList.remove('mw-theme-switching');
 ```
 
+## Site-wide variants
+
+Eight classes on `<html>` and four custom properties retune the whole look
+without a rebuild. They stack, and none of them need a class per element.
+
+| Class               | Effect                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| `mw-corners-even`   | Drops the surface signature - every card, panel and modal becomes an evenly rounded `radius('md')` box |
+| `mw-accent-single`  | `--mw-secondary-color` follows the primary; `mw-btn-secondary` turns outline so the two stay apart     |
+| `mw-shadows-flat`   | Elevation 1-3 to `none`. The dropdown (4) and the modal (5) keep their shadow                          |
+| `mw-hover-static`   | No hover travels - lifts, image zooms and slides go. Colour and border still respond                   |
+| `mw-sections-plain` | The diagonal hatch behind `mw-section-alternate` collapses into the page colour                        |
+| `mw-headings-caps`  | `h1`-`h3` in capitals with 0.045em tracking                                                            |
+| `mw-btn-pill`       | `mw-btn` fully rounded. Form fields keep their own radius                                              |
+| `mw-media-mono`     | Photos in `grayscale(1)` until their card, tile, gallery or slider is hovered                          |
+
+| Property                     | Effect                                                         |
+| ---------------------------- | -------------------------------------------------------------- |
+| `--mw-radius-scale`          | Multiplies the whole radius scale - `0` squares everything off |
+| `--mw-font-family-heading`   | Headline typeface; body copy is untouched                      |
+| `--mw-container-width`       | Where the content stops growing                                |
+| `--mw-section-padding-block` | Air above and below each section                               |
+
+**Writing your own.** A variant that retunes a _theme-bound_ token - anything in
+the dark/light maps, elevation and shadow above all - cannot be written on
+`:root` alone: `mw-theme-light` re-declares those on `<body>`, which shadows the
+root value for the entire subtree and the switch does nothing in light mode.
+Target both:
+
+```scss
+:root.my-variant,
+:root.my-variant .mw-theme-light {
+  --mw-elevation-2: none;
+}
+```
+
+The same trap the other way round: never copy a theme alias _into_ a token on
+`:root` (`--mw-x: var(--mw-page-background)`), because up there it still holds
+the dark value. Write that rule on the element instead.
+
 ## SCSS configuration
 
 Only `@use ... with (...)` works - a plain assignment before the `@use` has no

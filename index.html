@@ -151,7 +151,12 @@
         right: 18px;
         bottom: 82px;
         z-index: 400;
-        width: 300px;
+        width: 360px;
+        /* The variant list makes the panel taller than a laptop in landscape -
+           the top of it would be behind the browser chrome without this */
+        max-height: calc(100dvh - 120px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
         padding: 18px;
         border-radius: 12px;
         border: 1px solid var(--mw-border);
@@ -241,7 +246,111 @@
         cursor: pointer;
       }
 
-      @media (max-width: 576px) {
+      /* Single accent means the secondary picker writes a token nothing reads any
+         more - left live it is a knob that does nothing */
+      :root.mw-accent-single .palette-field:has(#palette-secondary) {
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      .palette-heading-split {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid var(--mw-border);
+      }
+
+      .variant-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-block: 9px;
+        font-size: 0.8rem;
+        color: var(--mw-text-color);
+        cursor: pointer;
+      }
+
+      .variant-label {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .variant-label small {
+        font-size: 0.68rem;
+        line-height: 1.35;
+        color: var(--mw-text-muted-color);
+      }
+
+      .variant-row + .variant-row {
+        border-top: 1px solid var(--mw-border);
+      }
+
+      .variant-row select {
+        flex-shrink: 0;
+        max-width: 110px;
+        padding: 3px 6px;
+        font-size: 0.75rem;
+        color: var(--mw-text-color);
+        border: 1px solid var(--mw-border);
+        border-radius: 6px;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      /* Drawn by hand rather than reusing mw-toggle: a framework switch would
+         reshape itself along with the variants it is there to control */
+      .variant-row input[type='checkbox'] {
+        appearance: none;
+        flex-shrink: 0;
+        position: relative;
+        width: 34px;
+        height: 18px;
+        margin: 0;
+        border: 1px solid var(--mw-border);
+        border-radius: 9px;
+        background: var(--mw-gray-background);
+        cursor: pointer;
+        transition: var(--mw-transition);
+      }
+
+      .variant-row input[type='checkbox']::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--mw-text-muted-color);
+        transition: var(--mw-transition);
+      }
+
+      .variant-row input[type='checkbox']:checked {
+        background: var(--mw-primary-color);
+        border-color: var(--mw-primary-color);
+      }
+
+      .variant-row input[type='checkbox']:checked::after {
+        left: 18px;
+        background: var(--mw-primary-accent-text-color);
+      }
+
+      .variant-setup {
+        margin-top: 14px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--mw-border);
+        background: var(--mw-gray-background);
+        color: var(--mw-text-muted-color);
+        font-family: var(--mw-font-family-mono);
+        font-size: 0.68rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      @media (max-width: 480px) {
         .palette-fab {
           right: 12px;
           bottom: 12px;
@@ -884,6 +993,88 @@
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape') toggle(false);
         });
+      });
+
+      // just for the showcase: the variant switches. Each one is a class on <html>
+      // or a single custom property, never a walk over the DOM - markup that
+      // arrives later (a modal, a toast, a kanban card) is covered by the same
+      // class that was already set. The readout at the bottom of the panel is the
+      // whole setup a project would carry to get the look it is currently seeing.
+      document.addEventListener('DOMContentLoaded', () => {
+        const list = document.getElementById('variant-list');
+        const setup = document.getElementById('variant-setup');
+        if (!list || !setup) return;
+
+        const root = document.documentElement;
+        const controls = [...list.querySelectorAll('input, select')];
+
+        const isOn = (input) =>
+          input.hasAttribute('data-variant-invert')
+            ? !input.checked
+            : input.checked;
+
+        const render = () => {
+          const classes = [];
+          const notes = [];
+          const props = [];
+
+          controls.forEach((control) => {
+            if (control.type !== 'checkbox') {
+              if (control.value) {
+                props.push(
+                  `  ${control.dataset.variantProp}: ${control.value};`
+                );
+              }
+              return;
+            }
+
+            // A targeted class is one the markup already ships, so its absence is
+            // the deviation worth naming - the rest are classes to add
+            const target = control.dataset.variantTarget;
+            if (target) {
+              if (!isOn(control)) {
+                notes.push(target + ': no ' + control.dataset.variantClass);
+              }
+            } else if (isOn(control)) {
+              classes.push(control.dataset.variantClass);
+            }
+          });
+
+          const lines = [];
+          if (classes.length) {
+            lines.push('html class="' + classes.join(' ') + '"');
+          }
+          lines.push(...notes);
+          if (props.length) lines.push(':root {', ...props, '}');
+
+          setup.textContent = lines.length
+            ? lines.join('\n')
+            : 'Default setup - nothing to change.';
+        };
+
+        const apply = (control) => {
+          if (control.type === 'checkbox') {
+            const target = control.dataset.variantTarget;
+            const el = target ? document.querySelector(target) : root;
+            el?.classList.toggle(control.dataset.variantClass, isOn(control));
+          } else if (control.value) {
+            root.style.setProperty(control.dataset.variantProp, control.value);
+          } else {
+            root.style.removeProperty(control.dataset.variantProp);
+          }
+        };
+
+        controls.forEach((control) =>
+          control.addEventListener('change', () => {
+            apply(control);
+            render();
+          })
+        );
+
+        // Applied on load too, so a browser that restored a checked box after a
+        // reload does not leave the page and the panel disagreeing
+        controls.forEach(apply);
+        render();
       });
 
       // for the modals - the framework handles both shapes, div and <dialog>
