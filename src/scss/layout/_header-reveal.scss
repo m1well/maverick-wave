@@ -1,0 +1,100 @@
+@layer mw.layout {
+  // For a page that opens on a full-bleed picture and wants nothing on top of
+  // it: the bar starts above the screen and rides in over the first stretch of
+  // scroll. Inside the @supports, so a browser without scroll timelines gets a
+  // normal header rather than none at all.
+  //
+  // Its own file, and not next to .mw-header: that one uses the `animation`
+  // shorthand, which a consumer bundler folds together with a timeline into a
+  // declaration no browser accepts.
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .mw-header-reveal {
+        animation-name: mw-header-reveal;
+        animation-timing-function: var(--mw-ease-out);
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 420px;
+      }
+
+      // The ribbon is glued under the bar, so it has to leave and arrive with
+      // it - left behind it would hang alone at the top of an otherwise clean
+      // hero. No class of its own: a ribbon on a page with a revealing header
+      // has no other sensible behaviour.
+      body:has(.mw-header-reveal)
+        .mw-announcement:not(.mw-announcement-static) {
+        animation-name: mw-announcement-reveal;
+        animation-timing-function: var(--mw-ease-out);
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 420px;
+      }
+    }
+  }
+
+  // Both cover the height of the pair, or the shorter traveller arrives first
+  // and the two come in as two things instead of one block. Without a ribbon
+  // that height is just the bar's.
+  .mw-header-reveal {
+    --mw-header-reveal-offset: var(--mw-header-height);
+  }
+
+  body:has(.mw-announcement:not(.mw-announcement-static)) .mw-header-reveal {
+    --mw-header-reveal-offset: calc(
+      var(--mw-header-height) + var(--mw-announcement-height)
+    );
+  }
+
+  // A keyboard reaches the chrome long before the first scroll does, and a focus
+  // ring on something that is off screen is WCAG 2.4.11 - so focus brings it
+  // back, either half of the pair pulling in the other. `!important` is the one
+  // author declaration that outranks a running animation; dropping
+  // `animation-name` instead leaves the element stuck on its last value, because
+  // a restarted scroll timeline only catches up on the next scroll.
+  body:has(.mw-header-reveal:focus-within, .mw-announcement:focus-within) {
+    .mw-header-reveal {
+      top: 0 !important;
+      opacity: 1 !important;
+    }
+
+    .mw-announcement:not(.mw-announcement-static) {
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+  // `top` and not a transform: the off-canvas drawer inside the bar is
+  // position: fixed, and a transform on the header would make it the drawer's
+  // containing block - at every value, the resting one included.
+  // The wait sits in the keyframes and not in the range, because a range that
+  // starts past 0 leaves the bar in its resting state below that point - so the
+  // header would be visible for exactly the stretch it should stay away for.
+  @keyframes mw-header-reveal {
+    0%,
+    30% {
+      top: calc(-1 * var(--mw-header-reveal-offset));
+      opacity: 0;
+    }
+
+    100% {
+      top: 0;
+      opacity: 1;
+    }
+  }
+
+  // The ribbon holds nothing fixed, so it can use the cheaper transform
+  @keyframes mw-announcement-reveal {
+    0%,
+    30% {
+      transform: translateY(
+        calc(-1 * (var(--mw-header-height) + var(--mw-announcement-height)))
+      );
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}

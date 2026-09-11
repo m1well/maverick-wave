@@ -41,10 +41,25 @@
           transition: var(--mw-transition);
         }
 
-        // ...so the content has to sit above it
-        > * {
+        // ...so the content has to sit above it - except the parallax layer,
+        // which is the one thing that belongs underneath
+        > *:not(.mw-parallax-media) {
           position: relative;
           z-index: z-index('card');
+        }
+
+        // Add `mw-parallax` here and a `.mw-parallax-media` child and the picture
+        // becomes its own layer, free to drift or to stay pinned. It reads the
+        // same token, so the image is still configured in one place - and a
+        // second media element carrying `mw-parallax-pattern` takes the other.
+        &:has(> .mw-parallax-media) {
+          background-image: none;
+
+          --mw-parallax-pattern-image: var(--mw-hero-pattern);
+
+          > .mw-parallax-media:not(.mw-parallax-pattern) {
+            background-image: var(--mw-hero-background);
+          }
         }
 
         // The same shadow the scroll cue already carries: the light theme lifts

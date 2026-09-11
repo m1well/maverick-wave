@@ -1,7 +1,11 @@
 @forward 'footer';
 @forward 'grid';
 @forward 'header';
+@forward 'header-reveal';
 @forward 'home';
 @forward 'main';
 @forward 'page-header';
 @forward 'section';
+
+// Last on purpose: mw-parallax-sticky has to beat the `position: relative`
+@forward 'parallax';

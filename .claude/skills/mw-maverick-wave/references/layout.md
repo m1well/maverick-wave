@@ -133,6 +133,18 @@ same height as the login and burger buttons.
   to configure dark-theme values to change it. The bar itself is the primary
   darkened toward black, `$header-surface` (14%) - see `theming.md`.
 
+**Reveal on scroll.** `mw-header-reveal` keeps the bar above the screen and
+rides it in over the first 420px of scroll - for a page that opens on a
+full-bleed hero and wants nothing on top of it. It animates `top` and not a
+transform, because a transform on the header would make it the containing block
+of the off-canvas drawer inside it, at every value including the resting one.
+A fixed `mw-announcement` rides along without a class of its own - both cover
+the height of the pair, so they arrive as one block rather than the ribbon
+catching up. Focus inside either brings both back regardless of the scroll
+position, so tabbing never lands on a link that is off screen (WCAG 2.4.11).
+Without scroll timelines, or under `prefers-reduced-motion`, the bar is simply
+there.
+
 **Localhost indicator.** Put `mw-localhost-indicator-activated` on the header
 and the shipped JS prepends a pulsing bar when the host is localhost/127.0.0.1/
 192.168.\*. In a SPA, reimplement it: add a `<div class="mw-localhost-indicator-pulse">`
@@ -306,6 +318,59 @@ it, so buttons under the hero text never land on top of the cue.
 whose text is not centred either - and gives the hero its full height back.
 Below `md` both variants sit in the corner, because the middle under the text
 is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
+
+**Parallax** - `mw-parallax` on the container plus a `mw-parallax-media` child
+moves the picture into its own layer. The container drops its own background and
+the layer reads `--mw-hero-background`, so the image stays configured in one
+place. Both modes run on the browser's scroll timeline - no listener, and no
+`background-attachment: fixed`, which iOS ignores.
+
+```html
+<header class="mw-header mw-header-reveal">...</header>
+
+<main class="mw-main">
+  <section class="mw-section mw-parallax-sticky mw-parallax-rise">
+    <div class="mw-container mw-parallax">
+      <div class="mw-parallax-media"></div>
+      <div class="mw-parallax-media mw-parallax-pattern"></div>
+      <div class="mw-hero">...</div>
+    </div>
+  </section>
+  <section class="mw-section">...</section>
+</main>
+```
+
+On its own, `mw-parallax` drifts the picture against the scroll by
+`--mw-parallax-depth` (`10vh`) - the layer overhangs the block by that much top
+and bottom, so no edge is ever uncovered.
+
+`mw-parallax-sticky` pins the block to the top of the screen and lets the page
+ride up over it. It goes on the element the page content is a **sibling** of -
+the section, not the hero - because everything after it is given
+`--mw-page-background` and a layer above, or the pinned picture shows through
+the transparent ones. Depth drops to `0` there: a pinned block does not travel
+through the viewport, so its `view()` timeline stands still with it.
+`mw-parallax-rise` puts it at `12vh` and runs the layer on the document's own
+scroll instead - the picture lifts, the text stays put. That works out to the
+same travel per scrolled pixel as a drifting band at `20vh`, which is measured
+over a much longer range.
+
+A second `mw-parallax-media` carrying `mw-parallax-pattern` puts a pattern over
+the picture. It travels a third of the distance the layer below it does, and
+that difference between the two is what reads as depth - one layer alone only
+slides. It matters most over a gradient: the travel is vertical, so only an edge
+across it - a rule, a grid, a hatch - ever shows the movement, and a gradient
+has none. In a hero the layer reads `$mw-hero-pattern`, the way the picture
+reads `$mw-hero-image`; anywhere else set `--mw-parallax-pattern-image` on it.
+`--mw-parallax-pattern-depth` is the dial, `4vh` next to a risen hero.
+
+Outside a hero the same classes build a standalone band: `mw-parallax`
+(`min-height: 42vh`), `mw-parallax-media` as an `<img>` or a div with a
+background image, `mw-parallax-content` for what sits on top, and
+`mw-parallax-dimmed` to turn the picture down and the text light.
+
+Without scroll timelines, or under `prefers-reduced-motion`, the picture stands
+still and nothing else changes.
 
 ## Grid
 

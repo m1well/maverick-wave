@@ -699,6 +699,10 @@ The height lives in `--mw-announcement-height` and drives the anchor scroll
 offset (`scroll-padding-top`) automatically - a taller ribbon raises the token
 instead of fighting the offset.
 
+On a page whose header carries `mw-header-reveal` the ribbon leaves and arrives
+with it, without a class of its own - both cover the height of the pair, so they
+come in as one block. See `references/layout.md`.
+
 ## Empty state
 
 ```html

@@ -226,6 +226,12 @@ effect, because the root colours are declared with `!default`.
   // stronger, more saturated blue, higher is paler with more contrast
   $header-active-tint: 25%,
   $mw-hero-image: url('/assets/hero.jpg'),
+  // a pattern layer over it, for a hero that parallaxes - see mw-parallax-pattern
+  $mw-hero-pattern: repeating-linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 5%) 0 1px,
+      transparent 1px 38px
+    ),
   // ink on that image - fixed, because the image is
   $mw-hero-text-color: var(--mw-dark-text-color),
   // per-theme treatment of that image - a filter, not an overlay, so the two
