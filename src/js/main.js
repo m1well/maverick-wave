@@ -531,7 +531,65 @@
   }
 
   // ===== Smooth Scrolling =====
+  // Where an anchor jump lands: scroll-padding-top, read per run because the
+  // ribbon grows on small screens and can be dismissed
+  function anchorOffset() {
+    const padding = parseFloat(
+      getComputedStyle(document.documentElement).scrollPaddingTop
+    );
+    return Number.isNaN(padding) ? 0 : padding;
+  }
+
+  // Anything the user does with the wheel or a finger outranks a running glide
+  let glide = null;
+  ['wheel', 'touchstart'].forEach((type) => {
+    window.addEventListener(type, () => (glide = null), { passive: true });
+  });
+
   function initSmoothScrolling() {
+    // A sticky target reports where it is pinned, not where it sits in the flow,
+    // and pinned is the top of the screen - so the browser's own jump moved the
+    // page by the header offset and stopped there. offsetTop follows it to the
+    // pin as well, so the position is taken with the pinning switched off. No
+    // paint happens in between, the style is back before the frame ends.
+    function documentTop(el) {
+      const inline = el.style.position;
+      const pinned = getComputedStyle(el).position === 'sticky';
+      if (pinned) el.style.position = 'static';
+      const y = el.getBoundingClientRect().top + window.scrollY;
+      if (pinned) el.style.position = inline;
+      return y;
+    }
+
+    function glideTo(targetY) {
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      if (!distance) return;
+
+      // Scaled, or a jump to the next section takes as long as one across the
+      // whole page; capped, or that one crawls
+      const duration = Math.min(1400, 420 + Math.abs(distance) * 0.35);
+      const start = performance.now();
+      const token = {};
+      glide = token;
+
+      function step(now) {
+        if (glide !== token) return;
+        const t = Math.min(1, (now - start) / duration);
+        const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        // 'instant', or the smooth scroll-behavior in the stylesheet animates
+        // every single step of this animation on top of it
+        window.scrollTo({
+          top: startY + distance * eased,
+          behavior: 'instant',
+        });
+        if (t < 1) requestAnimationFrame(step);
+        else glide = null;
+      }
+
+      requestAnimationFrame(step);
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
@@ -546,6 +604,28 @@
           menuBtn.classList.remove('open');
           nav.classList.remove('open');
         }
+
+        e.preventDefault();
+        const target = Math.max(0, documentTop(targetElement) - anchorOffset());
+
+        // The browser moves focus on an anchor jump of its own; preventDefault
+        // takes that away, and a skip link that only scrolls leaves the next Tab
+        // back where it started. -1 keeps the target out of the tab order.
+        if (!targetElement.hasAttribute('tabindex')) {
+          targetElement.setAttribute('tabindex', '-1');
+        }
+        targetElement.focus({ preventScroll: true });
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          window.scrollTo({ top: target, behavior: 'instant' });
+        } else {
+          glideTo(target);
+        }
+
+        // replaceState and not the default hash change: the glide is the
+        // navigation, and a history entry per section link buries the page the
+        // user arrived from
+        history.replaceState(null, '', targetId);
       });
     });
   }
@@ -557,21 +637,12 @@
 
     if (sections.length === 0 || navLinks.length === 0) return;
 
-    // Measured against scroll-padding-top, the same value an anchor jump lands on,
-    // and read per run - the ribbon grows on small screens and can be dismissed
-    function scrollOffset() {
-      const padding = parseFloat(
-        getComputedStyle(document.documentElement).scrollPaddingTop
-      );
-      // +2 absorbs subpixel rounding between the jump and the scroll position.
-      return (Number.isNaN(padding) ? 0 : padding) + 2;
-    }
-
     window.addEventListener(
       'scroll',
       debounce(function () {
         let current = '';
-        const offset = scrollOffset();
+        // +2 absorbs subpixel rounding between the jump and the scroll position
+        const offset = anchorOffset() + 2;
 
         sections.forEach((section) => {
           const sectionTop = section.offsetTop - offset;

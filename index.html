@@ -69,6 +69,31 @@
         border: 1px solid var(--mw-border);
       }
 
+      /* The parallax pattern demo: a gradient has no edge across the travel,
+         the second layer brings one */
+      .parallax-demo-ground {
+        background-image: linear-gradient(
+          158deg,
+          #3c4f78 0%,
+          #2a3550 45%,
+          #1b2334 100%
+        );
+      }
+
+      .parallax-demo-lines {
+        --mw-parallax-pattern-image:
+          repeating-linear-gradient(
+            to bottom,
+            rgb(255 255 255 / 24%) 0 1px,
+            transparent 1px 34px
+          ),
+          repeating-linear-gradient(
+            to right,
+            rgb(255 255 255 / 14%) 0 1px,
+            transparent 1px 34px
+          );
+      }
+
       /* A calendar fills its container; across the full page that stretches the
          cells to 150px, so the demos get a realistic column instead */
       .calendar-demo {
@@ -102,7 +127,7 @@
     <a class="mw-skip-link" href="#main">Skip to content</a>
 
     <!-- Header -->
-    <header class="mw-header mw-localhost-indicator-activated">
+    <header class="mw-header mw-header-reveal mw-localhost-indicator-activated">
       <div class="mw-container">
         @@include('./src/partials/header-container.html')
       </div>
@@ -110,8 +135,8 @@
 
     <main class="mw-main" id="main">
       <!-- Home section -->
-      <section id="home" class="mw-section">
-        <div class="mw-container">
+      <section id="home" class="mw-section mw-parallax-sticky mw-parallax-rise">
+        <div class="mw-container mw-parallax">
           @@include('./src/partials/home-container.html')
         </div>
       </section>
@@ -210,6 +235,7 @@
             <a href="#html-lists" class="mw-section-btn">HTML Lists</a>
             <a href="#item-lists" class="mw-section-btn">Item Lists</a>
             <a href="#stepper" class="mw-section-btn">Stepper</a>
+            <a href="#parallax" class="mw-section-btn">Parallax</a>
           </nav>
 
           <!-- Grid container -->
@@ -257,6 +283,11 @@
           <!-- Stepper container -->
           <div id="stepper">
             @@include('./src/partials/stepper-container.html')
+          </div>
+
+          <!-- Parallax container -->
+          <div id="parallax">
+            @@include('./src/partials/parallax-container.html')
           </div>
         </div>
       </section>

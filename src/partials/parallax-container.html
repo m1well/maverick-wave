@@ -1,0 +1,114 @@
+<h3 class="mw-section-subtitle">Parallax</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Two ways to play a picture against the scroll, both on the browser's scroll
+  timeline - no listener, and no
+  <code>background-attachment: fixed</code>, which iOS ignores. The image lives
+  in its own <code>mw-parallax-media</code> layer, as an
+  <code>&lt;img&gt;</code> or as a div with a background image. Where scroll
+  timelines are missing, or with <code>prefers-reduced-motion</code>, the
+  picture stands still and nothing else changes.
+</p>
+
+<h4 class="mw-text-medium mw-mb-2">
+  Drift - <code>mw-parallax</code>, the picture moves slower than the page
+</h4>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  How far it travels is <code>--mw-parallax-depth</code> (<code>10vh</code> by
+  default); the layer overhangs the block by exactly that much, so no edge is
+  ever uncovered. <code>mw-parallax-dimmed</code> turns the picture down and the
+  text light.
+</p>
+
+<div class="mw-grid-1 mw-gap-6 mw-mb-6">
+  <div class="mw-parallax mw-parallax-dimmed">
+    <img
+      class="mw-parallax-media"
+      src="images/slider-field.svg"
+      alt=""
+      loading="lazy"
+    />
+    <div class="mw-parallax-content mw-text-center">
+      <h3>Scroll past me</h3>
+      <p class="mw-mb-0">The field moves slower than the page does.</p>
+    </div>
+  </div>
+
+  <div class="mw-parallax" style="--mw-parallax-depth: 20vh">
+    <img
+      class="mw-parallax-media"
+      src="images/gallery-mountain.svg"
+      alt="Mountain range"
+      loading="lazy"
+    />
+  </div>
+</div>
+
+<h4 class="mw-text-medium mw-mb-2">
+  Reveal - <code>mw-parallax-sticky</code>, the picture stays and the page rides
+  over it
+</h4>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The home section of this page does it: the block pins itself to the top of the
+  screen and everything after it slides up over the picture. It goes on whatever
+  element the page content is a <strong>sibling</strong> of - the section around
+  a hero, not the hero itself - because that is what sticky and the sibling
+  selector need. Everything after it gets the page background and a layer above,
+  or the pinned picture shows through. Pair it with
+  <code>mw-header-reveal</code> on the header and the page opens on the picture
+  alone: the bar stays away for the first 130px of scroll and has ridden in by
+  420px.
+</p>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Add <code>mw-parallax-rise</code> next to it and the picture lifts by
+  <code>12vh</code> while the text stays where it is - a pinned block does not
+  travel through the viewport, so that layer runs on the document's own scroll
+  instead. <code>--mw-parallax-depth</code> is the dial, here as everywhere.
+</p>
+
+<h4 class="mw-text-medium mw-mb-2">
+  Pattern - <code>mw-parallax-pattern</code>, a second layer that makes the
+  movement visible
+</h4>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The travel is vertical, so only an edge across it - a rule, a grid, a hatch -
+  ever shows it. A gradient has none and slides without looking like it moves.
+  Add a second <code>mw-parallax-media</code> carrying
+  <code>mw-parallax-pattern</code>: it travels a third of the distance, and it
+  is the difference between the two layers that reads as depth. In a hero the
+  pattern comes from <code>$mw-hero-pattern</code>, the way the picture comes
+  from <code>$mw-hero-image</code>; anywhere else set
+  <code>--mw-parallax-pattern-image</code> on it.
+</p>
+
+<div class="mw-parallax mw-parallax-dimmed mw-mb-6">
+  <div class="mw-parallax-media parallax-demo-ground"></div>
+  <div class="mw-parallax-media mw-parallax-pattern parallax-demo-lines"></div>
+  <div class="mw-parallax-content mw-text-center">
+    <h3>The grid drifts, the gradient holds</h3>
+    <p class="mw-mb-0">
+      Both layers move. Only the one with edges tells you so.
+    </p>
+  </div>
+</div>
+
+<div class="mw-code-block">
+  <div class="mw-code-block-header">
+    <span class="mw-code-block-filename">index.html</span>
+    <span class="mw-code-block-language">HTML</span>
+  </div>
+  <div class="mw-code-container">
+    <pre><code>&lt;header class="mw-header mw-header-reveal"&gt;...&lt;/header&gt;
+
+&lt;main class="mw-main"&gt;
+  &lt;section class="mw-section mw-parallax-sticky mw-parallax-rise"&gt;
+    &lt;div class="mw-container mw-parallax"&gt;
+      &lt;div class="mw-parallax-media"&gt;&lt;/div&gt;
+      &lt;div class="mw-parallax-media mw-parallax-pattern"&gt;&lt;/div&gt;
+      &lt;div class="mw-hero"&gt;...&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class="mw-section"&gt;...&lt;/section&gt;
+&lt;/main&gt;</code></pre>
+  </div>
+</div>

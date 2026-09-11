@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.2.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.2.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.4.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -233,7 +233,8 @@ feature frame) ·
 `-highlight`, `-static`, color variants) · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
-**Navigation** `mw-header` + `mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
+**Navigation** `mw-header` (+ `mw-header-reveal`) + `mw-navbar` ·
+`mw-breadcrumbs` · `mw-pagination` ·
 `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
 `-caret`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
 `inverted`) · `mw-flag` (+ 23 country codes) ·
@@ -252,7 +253,9 @@ feature frame) ·
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
 `mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*` ·
-`mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) · `mw-footer`
+`mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
+`mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
+`-pattern`) · `mw-footer`
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -403,3 +406,9 @@ feature frame) ·
     control height and works on an `<a>` and a `<button>` alike.
     `mw-btn mw-btn-link` stays right where the link really is one of several
     buttons and has to line up with them - a card's actions, a button bar.
+29. **`mw-parallax-sticky` goes on the section, not on the hero.** Sticky pins
+    inside its parent, and the rule that lifts the page above the pinned picture
+    reaches that content as a _sibling_. Put the class on the hero itself and
+    nothing pins and nothing covers - no error, no effect, and the picture shows
+    through every transparent section below. `mw-parallax` and the
+    `mw-parallax-media` child stay where the image is: on the container.

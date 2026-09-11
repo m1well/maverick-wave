@@ -4,6 +4,10 @@ $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
 
 $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d1?q=80&w=1300&auto=format&fit=crop') !default;
 
+// A second, flatter layer over the image - see mw-parallax-pattern. Fine lines
+// or a grid, because a gradient has no edge across the travel to show it moving.
+$mw-hero-pattern: none !default;
+
 // Fixed to the light end rather than theme-bound: the photo does not change with
 // the theme, so its ink must not either. Use --mw-light-text-color on a bright one.
 $mw-hero-text-color: var(--mw-dark-text-color) !default;

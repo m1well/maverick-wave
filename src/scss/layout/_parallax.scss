@@ -1,0 +1,158 @@
+@use '../abstracts' as *;
+
+@layer mw.layout {
+  // The image gets its own layer instead of `background-attachment: fixed`: that
+  // one is ignored on iOS and sizes against the viewport rather than the block.
+  // Here a transform runs on the browser's own scroll timeline - no listener, no
+  // repaint per frame. Without timeline support the image simply sits still.
+  //
+  // The min-height is what makes a band with nothing but an image work at all;
+  // content taller than that grows past it.
+  .mw-parallax {
+    --mw-parallax-depth: 10vh;
+    --mw-parallax-pattern-depth: 3.5vh;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 42vh;
+    // `clip` and never `hidden`: hidden makes this a scroll container, and the
+    // view() timeline below would then resolve against this box instead of the
+    // viewport - the layer keeps its overhang and never moves
+    overflow: clip;
+    isolation: isolate;
+  }
+
+  // Overhangs the block by `depth` at the top and the bottom and travels exactly
+  // that distance, so no edge is ever uncovered. Works as an <img> and as a div
+  // carrying a background-image.
+  .mw-parallax-media {
+    position: absolute;
+    left: 0;
+    top: calc(-1 * var(--mw-parallax-depth));
+    width: 100%;
+    height: calc(100% + 2 * var(--mw-parallax-depth));
+    object-fit: cover;
+    background-position: center;
+    background-size: cover;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .mw-parallax-content {
+    position: relative;
+    z-index: z-index('lift');
+    width: 100%;
+    padding: spacing('10') spacing('6');
+  }
+
+  // The other way to use a picture against the scroll: the block stays pinned to
+  // the top of the screen and the rest of the page rides up over it.
+  //
+  // Goes on whatever element the page content is a *sibling* of - the section
+  // around a hero, not the hero itself - because that is what the rule below
+  // reaches the covering content through.
+  .mw-parallax-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }
+
+  // The picture holds still by default, so it needs neither overhang nor travel.
+  // Both selectors, because the class can sit on the block itself or on a
+  // section around one - and an inner .mw-parallax would hand the layer its own
+  // 10vh back through inheritance.
+  .mw-parallax-sticky,
+  .mw-parallax-sticky .mw-parallax {
+    --mw-parallax-depth: 0px;
+    --mw-parallax-pattern-depth: 0px;
+  }
+
+  // ...unless the picture should lift while the text stays put. 12vh over the
+  // first screen works out to the same travel per scrolled pixel as a drifting
+  // band at 20vh, which is measured against a much longer range.
+  .mw-parallax-rise,
+  .mw-parallax-rise .mw-parallax {
+    --mw-parallax-depth: 12vh;
+    --mw-parallax-pattern-depth: 4vh;
+  }
+
+  // A second layer on top of the first, added to the same media element. It
+  // travels a third of the distance, and it is that difference between the two
+  // that reads as depth - one layer alone only slides. What it carries is a
+  // pattern, because the travel is vertical and only an edge across it - a
+  // rule, a grid, a hatch - ever shows the movement. A gradient has none.
+  .mw-parallax-pattern {
+    --mw-parallax-depth: var(--mw-parallax-pattern-depth, 3.5vh);
+
+    background-image: var(--mw-parallax-pattern-image, none);
+  }
+
+  // Everything after it has to cover it, or the pinned picture shows through the
+  // gaps. The z-index needs the weight of a class to beat the plain
+  // `position: relative` those sections carry.
+  .mw-parallax-sticky ~ * {
+    position: relative;
+    z-index: 1;
+  }
+
+  // Zero specificity on purpose: it is a floor, not a rule. A section that
+  // paints its own surface - mw-section-alternate, a project's own band - has
+  // to win here, and this file is forwarded last.
+  :where(.mw-parallax-sticky ~ *) {
+    background: var(--mw-page-background);
+  }
+
+  // Ink on a photograph, the same pair the hero uses: the picture goes down, the
+  // text goes light. A band without content on it needs neither.
+  .mw-parallax-dimmed {
+    > .mw-parallax-media {
+      filter: brightness(0.5);
+    }
+
+    > .mw-parallax-content {
+      color: var(--mw-hero-text-color);
+
+      h1,
+      h2,
+      h3,
+      h4,
+      p {
+        text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+      }
+    }
+  }
+
+  // Longhands and never the shorthand, which esbuild collapses into one
+  // `animation:` that cannot carry a timeline. The default range is the whole
+  // cover pass, so the band keeps moving as long as any part of it is on screen.
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .mw-parallax-media {
+        animation-name: mw-parallax;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+      }
+
+      // A pinned block does not travel through the viewport, so its view()
+      // timeline stands still with it. The document's own scroll is what the
+      // picture has left to play against - over the first screen, because after
+      // that the page has covered it anyway.
+      .mw-parallax-sticky .mw-parallax-media {
+        animation-timeline: scroll(root);
+        animation-range: 0 100dvh;
+      }
+    }
+  }
+
+  @keyframes mw-parallax {
+    from {
+      transform: translate3d(0, var(--mw-parallax-depth), 0);
+    }
+
+    to {
+      transform: translate3d(0, calc(-1 * var(--mw-parallax-depth)), 0);
+    }
+  }
+}
