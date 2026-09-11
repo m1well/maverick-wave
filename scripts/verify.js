@@ -8,6 +8,7 @@
  *   3. every mw-* class in the markup exists in the built CSS
  *   4. the committed root release files exist and are not empty
  *   5. the CDN version pinned in the docs matches package.json
+ *   6. no `animation:` shorthand in a file that uses a scroll timeline
  *
  * Sources are scanned rather than hard-coded so a new partial is covered
  * automatically. Exits 1 on any error; warnings never fail the build.
@@ -26,7 +27,7 @@ const JS = path.join(ROOT, 'src', 'js', 'main.js');
 // or example file is covered without touching this list.
 const DOCS = [
   path.join(ROOT, '.claude', 'commands', 'mw.md'),
-  ...markdownFiles(path.join(ROOT, '.claude', 'skills')),
+  ...filesWithExt(path.join(ROOT, '.claude', 'skills'), '.md'),
 ];
 
 // Tokens read by JavaScript or reserved for consumers, so "unused in CSS" is fine.
@@ -44,12 +45,12 @@ const CLASS_ALLOWLIST = new Set([]);
 const read = (p) => (fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : null);
 const all = (str, re) => [...str.matchAll(re)].map((m) => m[1]);
 
-function markdownFiles(dir) {
+function filesWithExt(dir, ext) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) return markdownFiles(full);
-    return entry.name.endsWith('.md') ? [full] : [];
+    if (entry.isDirectory()) return filesWithExt(full, ext);
+    return entry.name.endsWith(ext) ? [full] : [];
   });
 }
 
@@ -157,6 +158,24 @@ for (const p of [path.join(ROOT, 'README.md'), ...DOCS]) {
   for (const v of stale) {
     errors.push(
       `stale CDN pin in ${path.relative(ROOT, p)}: maverick-wave@${v} - package.json is ${version}`
+    );
+  }
+}
+
+// --- 6: scroll timelines and the animation shorthand ------------------------
+// A consumer bundler (esbuild among them) folds the longhands plus
+// animation-timeline into one `animation: ... view()`, which no browser
+// accepts - the declaration is dropped and the element never animates. It only
+// shows up in the consuming project, never in our own build, so the source is
+// what has to be clean: no shorthand in a file that uses a timeline.
+// 5.0.0 and 5.2.0 both shipped empty progress bars this way.
+
+for (const f of filesWithExt(path.join(ROOT, 'src', 'scss'), '.scss')) {
+  const scss = read(f);
+  if (!scss || !scss.includes('animation-timeline')) continue;
+  for (const m of scss.match(/^\s*animation:.*/gm) || []) {
+    errors.push(
+      `${path.relative(ROOT, f)}: \`${m.trim()}\` - a file with a scroll timeline must use animation-* longhands, a bundler folds the shorthand and kills the timeline`
     );
   }
 }
