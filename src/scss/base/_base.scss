@@ -54,6 +54,10 @@
     // Same list, for a state that should feel instant rather than animated
     --mw-transition-fast: #{transition-list('--mw-duration-fast')};
 
+    // The whole scale is rem, so this one percentage moves type, spacing and
+    // control heights together. Breakpoints are px and stay where they are.
+    --mw-root-font-size: 100%;
+
     // Custom properties, so an application can tighten its forms without recompiling
     --mw-control-height-sm: #{$control-height-sm};
     --mw-control-height: #{$control-height};
