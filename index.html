@@ -21,7 +21,10 @@
       @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
       layer(vendor);
     </style>
-    <link rel="stylesheet" href="maverick-wave.min.css" />
+    <!-- ?v= so a release actually reaches a browser that has the last one
+         cached: the filename never changes, and without it a stale stylesheet
+         survives a normal reload -->
+    <link rel="stylesheet" href="maverick-wave.min.css?v={{VERSION}}" />
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link
@@ -336,8 +339,18 @@
         background: var(--mw-primary-accent-text-color);
       }
 
-      .variant-setup {
+      .variant-setup-label {
+        display: block;
         margin-top: 14px;
+        margin-bottom: 5px;
+        font-size: 0.7rem;
+        color: var(--mw-text-muted-color);
+      }
+
+      .variant-setup {
+        display: block;
+        width: 100%;
+        resize: vertical;
         padding: 10px;
         border-radius: 8px;
         border: 1px solid var(--mw-border);
@@ -367,7 +380,7 @@
       }
     </style>
 
-    <script src="maverick-wave.min.js"></script>
+    <script src="maverick-wave.min.js?v={{VERSION}}"></script>
   </head>
 
   <body>
@@ -904,6 +917,13 @@
 
         const root = document.documentElement;
 
+        // The values the markup ships with, so the setup box below can tell a
+        // chosen colour from the built-in one and print only the difference
+        const BUILT_IN = {
+          primary: primaryInput.value,
+          secondary: secondaryInput.value,
+        };
+
         const DARK_INK = '#131925';
         const LIGHT_INK = '#f2f6fc';
 
@@ -939,6 +959,7 @@
           void root.offsetHeight;
           root.classList.remove('mw-theme-switching');
           window.mwRefreshColorSwatches?.();
+          window.mwRefreshSetup?.();
         };
 
         const paint = (name, color) => {
@@ -993,6 +1014,79 @@
         document.addEventListener('keydown', (event) => {
           if (event.key === 'Escape') toggle(false);
         });
+
+        // The seam to the variants panel below, which prints and reads the whole
+        // setup - the palette is half of it. Only inline values count as chosen:
+        // anything still coming from the stylesheet is the built-in one.
+        const PAGE_GROUNDS = {
+          dark: '--mw-dark-page-background',
+          light: '--mw-light-page-background',
+        };
+
+        window.mwPalette = {
+          read: () => ({
+            primary: root.style.getPropertyValue('--mw-primary-color') || null,
+            secondary:
+              root.style.getPropertyValue('--mw-secondary-color') || null,
+            // The label colour ink() measured for each fill. It has to travel
+            // with the setup: a project that only copies the two brand colours
+            // keeps the stock accent text, and on a light brand tone that is an
+            // unreadable button. write() recomputes it, so pasting it back is
+            // harmless.
+            primaryInk:
+              root.style.getPropertyValue('--mw-primary-accent-text-color') ||
+              null,
+            secondaryInk:
+              root.style.getPropertyValue('--mw-secondary-accent-text-color') ||
+              null,
+            dark: root.style.getPropertyValue(PAGE_GROUNDS.dark) || null,
+            light: root.style.getPropertyValue(PAGE_GROUNDS.light) || null,
+          }),
+
+          write: ({ primary, secondary, dark, light }) => {
+            const current = window.mwPalette.read();
+            const same =
+              current.primary === primary &&
+              current.secondary === secondary &&
+              current.dark === dark &&
+              current.light === light;
+            // Typing into the setup box fires per keystroke, and settle() forces
+            // a reflow - so a run that changes nothing has to cost nothing
+            if (same) return;
+
+            [
+              ['primary', primary, primaryInput],
+              ['secondary', secondary, secondaryInput],
+            ].forEach(([name, value, input]) => {
+              if (value) {
+                paint(name, value);
+                input.value = value;
+              } else {
+                root.style.removeProperty(`--mw-${name}-color`);
+                root.style.removeProperty(`--mw-${name}-accent-text-color`);
+                input.value = BUILT_IN[name];
+              }
+            });
+
+            Object.entries(PAGE_GROUNDS).forEach(([key, prop]) => {
+              const value = key === 'dark' ? dark : light;
+              if (value) root.style.setProperty(prop, value);
+              else root.style.removeProperty(prop);
+            });
+
+            const shownPrimary = primary || BUILT_IN.primary;
+            const shownSecondary = secondary || BUILT_IN.secondary;
+            items.forEach((item) =>
+              item.classList.toggle(
+                'mw-active',
+                item.dataset.primary === shownPrimary &&
+                  item.dataset.secondary === shownSecondary
+              )
+            );
+
+            settle();
+          },
+        };
       });
 
       // just for the showcase: the variant switches. Each one is a class on <html>
@@ -1014,9 +1108,27 @@
             : input.checked;
 
         const render = () => {
+          // Never while it is being typed in - the box is an input as well as a
+          // readout, and rewriting it under the cursor would eat the paste
+          if (document.activeElement === setup) return;
+
           const classes = [];
           const notes = [];
           const props = [];
+
+          // The palette is part of the setup, and it is printed first because a
+          // project sets its brand colours before it retunes anything else
+          const palette = window.mwPalette?.read() ?? {};
+          [
+            ['--mw-primary-color', palette.primary],
+            ['--mw-primary-accent-text-color', palette.primaryInk],
+            ['--mw-secondary-color', palette.secondary],
+            ['--mw-secondary-accent-text-color', palette.secondaryInk],
+            ['--mw-dark-page-background', palette.dark],
+            ['--mw-light-page-background', palette.light],
+          ].forEach(([prop, value]) => {
+            if (value) props.push(`  ${prop}: ${value};`);
+          });
 
           controls.forEach((control) => {
             if (control.type !== 'checkbox') {
@@ -1047,7 +1159,7 @@
           lines.push(...notes);
           if (props.length) lines.push(':root {', ...props, '}');
 
-          setup.textContent = lines.length
+          setup.value = lines.length
             ? lines.join('\n')
             : 'Default setup - nothing to change.';
         };
@@ -1063,6 +1175,58 @@
             root.style.removeProperty(control.dataset.variantProp);
           }
         };
+
+        // The box read backwards: someone else's setup pasted in drives the
+        // switches, which drive the page. Anything the text does not mention
+        // falls back to the default, so an empty box is a reset.
+        const load = (text) => {
+          const named = new Set(
+            (text.match(/class\s*=\s*"([^"]*)"/)?.[1] || '')
+              .trim()
+              .split(/\s+/)
+              .filter(Boolean)
+          );
+          // `.mw-header: no mw-header-reveal` - a class the markup ships and the
+          // setup takes away, which is the deviation worth reading
+          const dropped = new Set(
+            [...text.matchAll(/:\s*no\s+([\w-]+)/g)].map((m) => m[1])
+          );
+          const props = new Map(
+            [...text.matchAll(/(--[\w-]+)\s*:\s*([^;\n}]+)/g)].map((m) => [
+              m[1],
+              m[2].trim(),
+            ])
+          );
+
+          window.mwPalette?.write({
+            primary: props.get('--mw-primary-color') ?? null,
+            secondary: props.get('--mw-secondary-color') ?? null,
+            dark: props.get('--mw-dark-page-background') ?? null,
+            light: props.get('--mw-light-page-background') ?? null,
+          });
+
+          controls.forEach((control) => {
+            if (control.type === 'checkbox') {
+              const name = control.dataset.variantClass;
+              const on = control.dataset.variantTarget
+                ? !dropped.has(name)
+                : named.has(name);
+              control.checked = control.hasAttribute('data-variant-invert')
+                ? !on
+                : on;
+            } else {
+              control.value = props.get(control.dataset.variantProp) ?? '';
+            }
+            apply(control);
+          });
+        };
+
+        // Picking a palette repaints the page, and the box has to say so
+        window.mwRefreshSetup = render;
+
+        setup.addEventListener('input', () => load(setup.value));
+        // Normalises what was pasted back into the shape render() writes
+        setup.addEventListener('blur', render);
 
         controls.forEach((control) =>
           control.addEventListener('change', () => {

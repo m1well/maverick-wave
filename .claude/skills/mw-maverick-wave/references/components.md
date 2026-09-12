@@ -28,7 +28,7 @@ exhaustive: what is not named does not exist.
   is, so do not override it away
 - **A link inside a sentence is `mw-link`, not `mw-btn mw-btn-link`.** The base
   class carries a control height, so in running text it lifts that one line to
-  2.25rem while the lines around it stay where they are. `mw-p-0` does not help
+  2.125rem while the lines around it stay where they are. `mw-p-0` does not help
   - the height does it, not the padding. Keep `mw-btn` only where the link
     really is a button in a row of buttons and has to line up with them
 - On a coarse pointer or below 768px `mw-btn` grows to a 2.75rem minimum height
@@ -1445,7 +1445,7 @@ deprecated). Any card fits into the content wrapper.
 <div class="mw-avatar mw-avatar-initials mw-avatar-xs">MW</div>
 ```
 
-- Sizes: `mw-avatar-xs` 32, `-sm` 64, default 96, `-lg` 144, `-xl` 250 px.
+- Sizes: `mw-avatar-xs` 32, `-sm` 64, default 96, `-lg` 144, `-xl` 210 px.
 - Shape: `mw-avatar-square`.
 - Colours `mw-avatar-primary`, `-secondary`, `-success`, `-warning`, `-danger`,
   `-info` tint the **border**. On `mw-avatar-initials` the same class also tints
@@ -1454,6 +1454,9 @@ deprecated). Any card fits into the content wrapper.
   the standard display for a signed-in user without a picture.
 - `mw-avatar-group` overlaps its avatars; `mw-avatar-group-sm` / `-lg` change
   the overlap.
+- Hover on an avatar **with an image** zooms the picture and sweeps a light
+  across it. Nothing to switch on. It is skipped on `mw-avatar-initials`, on
+  touch, under `prefers-reduced-motion` and under `mw-hover-static`.
 
 ## Item lists
 

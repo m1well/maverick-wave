@@ -42,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -153,9 +153,9 @@ assembled rather than designed.
 
   /* Control sizes - one height per step, shared by input, select, textarea
      and button, so a field and the button beside it line up */
-  --mw-control-height-sm: 2rem;
-  --mw-control-height: 2.25rem;
-  --mw-control-height-lg: 2.5rem;
+  --mw-control-height-sm: 1.875rem;
+  --mw-control-height: 2.125rem;
+  --mw-control-height-lg: 2.375rem;
   --mw-control-font-sm: 0.8rem;
   --mw-control-font: 0.9rem;
   --mw-control-font-lg: 1rem;
@@ -347,7 +347,7 @@ layer of its own:
 
 ### Site-wide variants
 
-Eight classes on `<html>` retune the whole look without touching markup or
+Nine classes on `<html>` retune the whole look without touching markup or
 rebuilding. They stack.
 
 | Class               | Effect                                                                  |
@@ -356,10 +356,11 @@ rebuilding. They stack.
 | `mw-accent-single`  | One brand colour instead of two; `mw-btn-secondary` turns outline       |
 | `mw-shadows-flat`   | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
 | `mw-hover-static`   | No hover travels - lifts and image zooms go, colour still responds      |
+| `mw-scroll-static`  | No scroll entrance - `mw-reveal` blocks sit where they land             |
 | `mw-sections-plain` | The hatch behind `mw-section-alternate` collapses into the page colour  |
 | `mw-headings-caps`  | `h1`-`h3` in capitals                                                   |
 | `mw-btn-pill`       | Fully rounded buttons; form fields keep their radius                    |
-| `mw-media-mono`     | Photos grey until hovered                                               |
+| `mw-btn-glass`      | Filled buttons become a translucent wash with a lit top edge            |
 
 Four properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
 squares the framework off), `--mw-font-family-heading`, `--mw-container-width`

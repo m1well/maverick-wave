@@ -4,11 +4,11 @@
 
 `mw-input`, `mw-select`, `mw-textarea` and `mw-btn` share one scale:
 
-| step  | height  | font   |
-| ----- | ------- | ------ |
-| `-sm` | 2rem    | 0.8rem |
-| base  | 2.25rem | 0.9rem |
-| `-lg` | 2.5rem  | 1rem   |
+| step  | height   | font   |
+| ----- | -------- | ------ |
+| `-sm` | 1.875rem | 0.8rem |
+| base  | 2.125rem | 0.9rem |
+| `-lg` | 2.375rem | 1rem   |
 
 A field and the button beside it are therefore the same height by construction -
 before 4.11.0 each control worked its own height out and an input, a select and

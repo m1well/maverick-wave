@@ -143,7 +143,8 @@
   <h3 class="palette-heading palette-heading-split">Variants</h3>
   <p class="palette-hint">
     Every switch is one class on &lt;html&gt; or one custom property - no build,
-    no rebuild. The setup at the bottom is what a project would carry.
+    no rebuild. The box at the bottom is what a project would carry, and it
+    reads back: paste someone else's setup in to see it.
   </p>
 
   <div id="variant-list">
@@ -190,6 +191,17 @@
 
     <label class="variant-row">
       <span class="variant-label">
+        Glass buttons
+        <small
+          >Filled buttons become tinted glass - the colour drops to a
+          translucent wash with a lit top edge.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-btn-glass" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
         Single accent color
         <small
           >Drop the second brand colour - hovers, tints and borders all come
@@ -197,17 +209,6 @@
         >
       </span>
       <input type="checkbox" data-variant-class="mw-accent-single" />
-    </label>
-
-    <label class="variant-row">
-      <span class="variant-label">
-        Photos in grey
-        <small
-          >Pictures stay grey until the pointer reaches them, so only the brand
-          carries colour.</small
-        >
-      </span>
-      <input type="checkbox" data-variant-class="mw-media-mono" />
     </label>
 
     <label class="variant-row">
@@ -254,6 +255,22 @@
         >
       </span>
       <input type="checkbox" data-variant-class="mw-hover-static" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Scroll reveal
+        <small
+          >Cards and sections rise into place as they scroll in. Off has
+          everything sit where it lands.</small
+        >
+      </span>
+      <input
+        type="checkbox"
+        checked
+        data-variant-class="mw-scroll-static"
+        data-variant-invert
+      />
     </label>
 
     <label class="variant-row">
@@ -321,5 +338,15 @@
     </label>
   </div>
 
-  <pre class="variant-setup" id="variant-setup"></pre>
+  <label class="variant-setup-label" for="variant-setup">
+    Setup - editable, paste one in to load it
+  </label>
+  <textarea
+    class="variant-setup"
+    id="variant-setup"
+    rows="4"
+    spellcheck="false"
+    autocapitalize="off"
+    autocorrect="off"
+  ></textarea>
 </div>

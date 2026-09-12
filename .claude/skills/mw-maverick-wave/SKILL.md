@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.6.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -195,8 +195,8 @@ back), `--mw-ease-spring` (a pop). Two ready-made transitions:
 for anything that should feel instant under the pointer. Both list their
 properties explicitly rather than saying `all`.
 
-**Control sizes** `--mw-control-height-sm|base|lg` = 2 / 2.25 / 2.5rem (an even
-32 / 36 / 40px step) and
+**Control sizes** `--mw-control-height-sm|base|lg` = 1.875 / 2.125 / 2.375rem (an
+even 30 / 34 / 38px step) and
 `--mw-control-font-sm|base|lg` = 0.8 / 0.9 / 1rem, shared by `mw-input`,
 `mw-select`, `mw-textarea` and `mw-btn`. A field and the button beside it are
 the same height by construction. Buttons run one font step above the fields.
@@ -402,7 +402,7 @@ feature frame) ·
 28. **A link in running text is `mw-link`, not `mw-btn mw-btn-link`.** Since
     4.13.0 there is a class for exactly that. `mw-btn` is `inline-flex` with
     `min-height: var(--mw-control-height)`, so a link written that way pulls its
-    own line up to 2.25rem while every line around it keeps the paragraph's
+    own line up to 2.125rem while every line around it keeps the paragraph's
     height - in a footer disclaimer at `font-size: sm` that is nearly double,
     and it reads as a layout bug. `mw-p-0` is not the fix it looks like: the
     height does it, not the padding. `mw-link` is the same look without the

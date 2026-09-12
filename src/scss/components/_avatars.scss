@@ -22,6 +22,35 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition: transform var(--mw-duration-slow) var(--mw-ease-out);
+    }
+
+    // `:has(img)` keeps the sweep off the initials variant, where it would just
+    // flash a white bar across the letters
+    &:has(img)::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        transparent 38%,
+        rgb(255 255 255 / 0.45) 50%,
+        transparent 62%
+      );
+      transform: translateX(-130%);
+      pointer-events: none;
+    }
+
+    @include hover-move {
+      img {
+        transform: scale(1.12);
+      }
+
+      // Transition only here, so the sweep resets instantly instead of travelling back
+      &:has(img)::after {
+        transform: translateX(130%);
+        transition: transform var(--mw-duration-slower) var(--mw-ease-out);
+      }
     }
 
     &-xs {

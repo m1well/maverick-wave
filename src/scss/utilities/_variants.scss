@@ -57,25 +57,55 @@
     border-radius: 999px;
   }
 
-  // Photos drained of colour until pointed at - the palette then comes only from
-  // the brand tones. Avatars stay out: a greyed-out face reads as disabled, and
-  // so does mw-media, which is the audio player and holds no picture at all.
-  :root.mw-media-mono {
-    .mw-card-img img,
-    .mw-card-img-contain img,
-    .mw-tile-img img,
-    .mw-gallery img,
-    .mw-image-slider img,
-    img.mw-blog-post-featured-image {
-      filter: grayscale(1);
-      transition: filter var(--mw-duration-zoom) var(--mw-ease-out);
-    }
+  // Tinted glass: a translucent wash with a vertical ramp and a specular line
+  // along the top edge, which is what gives the button its thickness.
+  //
+  // Deliberately without `backdrop-filter`, and that omission has to stay. The
+  // filter makes the button a containing block for its own fixed-position
+  // descendants, which drops a [data-tooltip] bubble inside the button instead
+  // of above it; and nested inside the header's own blur it flickers while the
+  // page scrolls. At the tint below there was next to nothing to see through.
+  //
+  // The tint stays heavy on purpose, and that is the other trade-off: a 20%
+  // wash reads as real glass, but the label then rides on whatever is behind
+  // it, and over a light card that contrast is gone. At 88/70 the label keeps
+  // roughly the fill's contrast.
+  //
+  // Hover and active are restated rather than inherited: this sits in
+  // mw.utilities, which outranks every rule in mw.components whatever its
+  // specificity, so the states would otherwise be flattened along with the fill.
+  :root.mw-btn-glass {
+    @each $name in ('primary', 'secondary', 'danger', 'success') {
+      .mw-btn-#{$name} {
+        background: linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--mw-#{$name}-color) 88%, transparent),
+          color-mix(in srgb, var(--mw-#{$name}-color) 70%, transparent)
+        );
+        border-color: color-mix(
+          in srgb,
+          var(--mw-#{$name}-color) 70%,
+          transparent
+        );
+        box-shadow:
+          inset 0 1px 0 rgb(255 255 255 / 28%),
+          0 1px 3px rgb(0 0 0 / 14%);
 
-    // The blog image carries the class itself rather than sitting in a wrapper,
-    // so it is the one that has to answer for its own hover
-    :is(.mw-card, .mw-tile, .mw-gallery, .mw-image-slider):hover img,
-    img.mw-blog-post-featured-image:hover {
-      filter: none;
+        &:hover:not(:disabled),
+        &.mw-active:not(:disabled),
+        &.active:not(:disabled) {
+          background: linear-gradient(
+            to bottom,
+            color-mix(in srgb, var(--mw-#{$name}-color) 97%, transparent),
+            color-mix(in srgb, var(--mw-#{$name}-color) 82%, transparent)
+          );
+          border-color: color-mix(
+            in srgb,
+            var(--mw-#{$name}-color) 85%,
+            transparent
+          );
+        }
+      }
     }
   }
 
