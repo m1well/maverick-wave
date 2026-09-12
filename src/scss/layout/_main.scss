@@ -157,8 +157,23 @@
     padding: spacing('2') spacing('5');
     border: 1px solid #{fade('hero-text-color', 22%)};
     border-radius: 999px;
-    background: fade('hero-text-color', 8%);
-    backdrop-filter: blur(4px);
+    // A vertical ramp and not a flat tint: glass is lit from above, and the
+    // gradient is what gives the pill a thickness instead of a fogged panel
+    background: linear-gradient(
+      to bottom,
+      #{fade('hero-text-color', 16%)},
+      #{fade('hero-text-color', 5%)}
+    );
+    // saturate() is what separates glass from frosted plastic: the blur alone
+    // greys out what shows through, and pushing the chroma back up is how a
+    // real lens reads. The two inset lines are the specular highlight - light
+    // catching the top edge, a fainter bounce off the bottom - and the outer
+    // shadow is what lifts the pill off the photo instead of pasting it on.
+    backdrop-filter: blur(14px) saturate(180%);
+    box-shadow:
+      inset 0 1px 0 #{fade('hero-text-color', 40%)},
+      inset 0 -1px 0 #{fade('hero-text-color', 12%)},
+      0 2px 12px rgb(0 0 0 / 18%);
     color: fade('hero-text-color', 88%);
     font-size: font-size('sm');
     font-weight: font-weight('medium');
@@ -309,6 +324,20 @@
       @starting-style {
         opacity: 0;
       }
+    }
+
+    // A press usually scales the trigger, and a transform makes it a containing
+    // block for the fixed-position bubble above - which would drop the label
+    // into the element being pressed. So it steps aside for the click instead;
+    // by then it has been read anyway. After the hover rule, same weight.
+    &:active::before,
+    &:active::after {
+      opacity: 0;
+      display: none;
+      // Not transitioned: `allow-discrete` holds `display: block` until the fade
+      // ends, and the bubble would spend those 180ms visibly sitting in the
+      // element. Going back out on release keeps the fade - that one is wanted.
+      transition: none;
     }
 
     // The clipping caveat above, lifted where the browser can do it: `fixed` takes

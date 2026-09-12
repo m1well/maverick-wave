@@ -91,12 +91,12 @@ $shadow-far-dark: 16% !default;
 $shadow-near-light: 21% !default;
 $shadow-far-light: 14% !default;
 
-// Control sizes - 32 / 36 / 40px, shared by input, select, textarea and button so
+// Control sizes - 30 / 34 / 38px, shared by input, select, textarea and button so
 // the row lines up. A minimum, not a fixed height, and it is what sets a field's
 // height: trimming `padding-block` moves the text inside the box, not the box.
-$control-height-sm: 2rem !default;
-$control-height: 2.25rem !default;
-$control-height-lg: 2.5rem !default;
+$control-height-sm: 1.875rem !default;
+$control-height: 2.125rem !default;
+$control-height-lg: 2.375rem !default;
 
 // All three fields share it; buttons stay one step above, because a button
 // carries a label and a field carries what the user typed

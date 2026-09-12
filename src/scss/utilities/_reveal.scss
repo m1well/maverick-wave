@@ -11,8 +11,7 @@
   // `animation:` that cannot carry a timeline.
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
-      .mw-reveal,
-      .mw-reveal-stagger > * {
+      :root:not(.mw-scroll-static) :is(.mw-reveal, .mw-reveal-stagger > *) {
         animation-name: mw-reveal;
         animation-timing-function: var(--mw-ease-out);
         animation-fill-mode: backwards;
@@ -45,6 +44,14 @@
     .mw-reveal-hidden {
       opacity: 0;
       transform: translateY(40px);
+    }
+
+    // The script has already hidden whatever was below the fold when the class
+    // arrives, and it only ever un-hides on intersection - without this the
+    // switch would leave those elements invisible instead of static.
+    :root.mw-scroll-static .mw-reveal-hidden {
+      opacity: 1;
+      transform: none;
     }
 
     .mw-reveal-run {
