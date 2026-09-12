@@ -42,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.7.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -347,7 +347,7 @@ layer of its own:
 
 ### Site-wide variants
 
-Nine classes on `<html>` retune the whole look without touching markup or
+Twelve classes on `<html>` retune the whole look without touching markup or
 rebuilding. They stack.
 
 | Class               | Effect                                                                  |
@@ -355,16 +355,20 @@ rebuilding. They stack.
 | `mw-corners-even`   | Drops the surface signature - every panel becomes an evenly rounded box |
 | `mw-accent-single`  | One brand colour instead of two; `mw-btn-secondary` turns outline       |
 | `mw-shadows-flat`   | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
+| `mw-surfaces-flush` | Cards, panels and footer on the page colour, held by their border       |
 | `mw-hover-static`   | No hover travels - lifts and image zooms go, colour still responds      |
 | `mw-scroll-static`  | No scroll entrance - `mw-reveal` blocks sit where they land             |
 | `mw-sections-plain` | The hatch behind `mw-section-alternate` collapses into the page colour  |
 | `mw-headings-caps`  | `h1`-`h3` in capitals                                                   |
 | `mw-btn-pill`       | Fully rounded buttons; form fields keep their radius                    |
+| `mw-btn-square`     | Buttons cut to a hard corner while the page keeps its radius            |
 | `mw-btn-glass`      | Filled buttons become a translucent wash with a lit top edge            |
+| `mw-btn-tactile`    | Filled buttons stand on a darker edge and sink onto it when pressed     |
 
-Four properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
-squares the framework off), `--mw-font-family-heading`, `--mw-container-width`
-and `--mw-section-padding-block`.
+Five properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
+squares the framework off), `--mw-root-font-size` moves the whole rem scale,
+plus `--mw-font-family-heading`, `--mw-container-width` and
+`--mw-section-padding-block`.
 
 A variant of your own that retunes a theme-bound token has to target
 `:root.your-class` **and** `:root.your-class .mw-theme-light` - the light theme

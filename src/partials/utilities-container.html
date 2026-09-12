@@ -426,7 +426,7 @@
 
 <h3 class="mw-mb-4 mw-mt-6">Site-wide Variants</h3>
 <p class="mw-text-muted mw-text-measure">
-  Nine classes on <code>&lt;html&gt;</code> retune the whole look without
+  Twelve classes on <code>&lt;html&gt;</code> retune the whole look without
   touching markup. They stack, and the palette button in the corner switches all
   of them live - the box at the bottom of that panel prints the setup a project
   would carry, and reads it back: paste one in to see someone else's.
@@ -443,6 +443,10 @@
   <li>
     <code>mw-shadows-flat</code> - elevation 1-3 to <code>none</code>, dropdown
     and modal keep theirs
+  </li>
+  <li>
+    <code>mw-surfaces-flush</code> - cards, panels and footer on the page
+    colour, held by their border
   </li>
   <li>
     <code>mw-hover-static</code> - no hover travels; colour and border still
@@ -462,12 +466,21 @@
     radius
   </li>
   <li>
+    <code>mw-btn-square</code> - the other end of that axis: buttons cut to a
+    hard corner while the page keeps its radius
+  </li>
+  <li>
+    <code>mw-btn-tactile</code> - filled buttons stand on a darker edge and sink
+    onto it when pressed
+  </li>
+  <li>
     <code>mw-btn-glass</code> - filled buttons become tinted glass with a lit
     top edge
   </li>
 </ul>
 <p class="mw-text-muted mw-text-measure">
-  Four properties do the rest: <code>--mw-radius-scale</code> multiplies every
-  radius, plus <code>--mw-font-family-heading</code>,
-  <code>--mw-container-width</code> and <code>--mw-section-padding-block</code>.
+  Five properties do the rest: <code>--mw-radius-scale</code> multiplies every
+  radius and <code>--mw-root-font-size</code> the whole rem scale, plus
+  <code>--mw-font-family-heading</code>, <code>--mw-container-width</code> and
+  <code>--mw-section-padding-block</code>.
 </p>

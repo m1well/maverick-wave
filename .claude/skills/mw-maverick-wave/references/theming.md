@@ -83,6 +83,7 @@ Safari 16.4+, Firefox 128+. The same range is declared as `browserslist` in
 | `--mw-container-gutter`, `--mw-container-width`                                                                                                                              | Page gutter of `mw-container` (fluid `clamp(1rem, 4.2vw + 0.5rem, 4rem)`, never below the safe-area inset) and the width derived from it (`min(1200px, 100% - 2 * gutter)`)                                                                                                                                                             |
 | `--mw-section-padding-block`                                                                                                                                                 | Top/bottom rhythm of `mw-section` (3.3rem, stepping down to 2.5rem below `md` and 1.75rem below `sm`)                                                                                                                                                                                                                                   |
 | `--mw-section-nav-height`                                                                                                                                                    | Height the sticky `mw-section-nav` reserves (3.7rem). Add it to `--mw-header-height` for the `scroll-margin-top` of anything the strip can cover                                                                                                                                                                                        |
+| `--mw-root-font-size`                                                                                                                                                        | Percentage the whole rem scale is built on (`100%`). Type, spacing and control heights move with it; px breakpoints do not                                                                                                                                                                                                              |
 | `--mw-calendar-dot`                                                                                                                                                          | Colour of a single calendar dot - set it per dot or per cell; the `mw-calendar-dot-*` classes are presets for it                                                                                                                                                                                                                        |
 | `--mw-scroll-hint-cover`                                                                                                                                                     | Colour the scroll hint on a tab bar fades into. Preset to the page, re-pointed to the card background inside `mw-card`, `mw-panel`, `mw-modal`, `mw-tile`, `mw-calendar`                                                                                                                                                                |
 | `--mw-elevation-1` … `-5`                                                                                                                                                    | Every shadow in the framework. Two layers per level - contact plus ambient. Never write a `box-shadow` by hand: a hand-rolled one is the wrong colour in one of the two themes                                                                                                                                                          |
@@ -194,27 +195,31 @@ root.classList.remove('mw-theme-switching');
 
 ## Site-wide variants
 
-Nine classes on `<html>` and four custom properties retune the whole look
+Twelve classes on `<html>` and five custom properties retune the whole look
 without a rebuild. They stack, and none of them need a class per element.
 
-| Class               | Effect                                                                                                                                                                  |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mw-corners-even`   | Drops the surface signature - every card, panel and modal becomes an evenly rounded `radius('md')` box                                                                  |
-| `mw-accent-single`  | `--mw-secondary-color` follows the primary; `mw-btn-secondary` turns outline so the two stay apart                                                                      |
-| `mw-shadows-flat`   | Elevation 1-3 to `none`. The dropdown (4) and the modal (5) keep their shadow                                                                                           |
-| `mw-hover-static`   | No hover travels - lifts, image zooms and slides go. Colour and border still respond                                                                                    |
-| `mw-scroll-static`  | No scroll entrance - `mw-reveal` and `mw-reveal-stagger` blocks sit where they land                                                                                     |
-| `mw-sections-plain` | The diagonal hatch behind `mw-section-alternate` collapses into the page colour                                                                                         |
-| `mw-headings-caps`  | `h1`-`h3` in capitals with 0.045em tracking                                                                                                                             |
-| `mw-btn-pill`       | `mw-btn` fully rounded. Form fields keep their own radius                                                                                                               |
-| `mw-btn-glass`      | Filled buttons become tinted glass: translucent wash, vertical ramp, specular top edge. No `backdrop-filter` - it would trap a fixed-position tooltip inside the button |
+| Class               | Effect                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mw-corners-even`   | Drops the surface signature - every card, panel and modal becomes an evenly rounded `radius('md')` box                                                                          |
+| `mw-accent-single`  | `--mw-secondary-color` follows the primary; `mw-btn-secondary` turns outline so the two stay apart                                                                              |
+| `mw-shadows-flat`   | Elevation 1-3 to `none`. The dropdown (4) and the modal (5) keep their shadow                                                                                                   |
+| `mw-surfaces-flush` | Card, panel and footer background drop to the page colour and the border is redrawn from the ink, because the old one is a neighbouring shade of a surface that is now the page |
+| `mw-hover-static`   | No hover travels - lifts, image zooms and slides go. Colour and border still respond                                                                                            |
+| `mw-scroll-static`  | No scroll entrance - `mw-reveal` and `mw-reveal-stagger` blocks sit where they land                                                                                             |
+| `mw-sections-plain` | The diagonal hatch behind `mw-section-alternate` collapses into the page colour                                                                                                 |
+| `mw-headings-caps`  | `h1`-`h3` in capitals with 0.045em tracking                                                                                                                                     |
+| `mw-btn-pill`       | `mw-btn` fully rounded. Form fields keep their own radius                                                                                                                       |
+| `mw-btn-square`     | `mw-btn` to `border-radius: 0`. The other end of the same axis, and unlike `--mw-radius-scale: 0` it leaves the rest of the page rounded                                        |
+| `mw-btn-glass`      | Filled buttons become tinted glass: translucent wash, vertical ramp, specular top edge. No `backdrop-filter` - it would trap a fixed-position tooltip inside the button         |
+| `mw-btn-tactile`    | The four solid variants stand on a 3px edge mixed toward black and travel its full height on `:active`. Outline, ghost and link have no fill to darken and are untouched        |
 
-| Property                     | Effect                                                         |
-| ---------------------------- | -------------------------------------------------------------- |
-| `--mw-radius-scale`          | Multiplies the whole radius scale - `0` squares everything off |
-| `--mw-font-family-heading`   | Headline typeface; body copy is untouched                      |
-| `--mw-container-width`       | Where the content stops growing                                |
-| `--mw-section-padding-block` | Air above and below each section                               |
+| Property                     | Effect                                                                                                                      |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `--mw-radius-scale`          | Multiplies the whole radius scale - `0` squares everything off                                                              |
+| `--mw-root-font-size`        | Percentage on `html`. The scale is rem, so type, padding and control heights move together; breakpoints are px and stay put |
+| `--mw-font-family-heading`   | Headline typeface; body copy is untouched                                                                                   |
+| `--mw-container-width`       | Where the content stops growing                                                                                             |
+| `--mw-section-padding-block` | Air above and below each section                                                                                            |
 
 **Writing your own.** A variant that retunes a _theme-bound_ token - anything in
 the dark/light maps, elevation and shadow above all - cannot be written on

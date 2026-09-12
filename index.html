@@ -124,40 +124,50 @@
 
       /* Palette switcher, showcase only. The framework derives every tone from
          the root colors, so the panel writes nothing but those. */
-      .palette-fab {
-        position: fixed;
-        right: 18px;
-        bottom: 18px;
-        z-index: 400;
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        border: 1px solid var(--mw-border-accent);
+      .palette-toggle {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 40px;
+        flex-shrink: 0;
+        border: none;
+        border-radius: calc(10px * var(--mw-radius-scale, 1));
         background: var(--mw-primary-color);
         color: var(--mw-primary-accent-text-color);
-        box-shadow: var(--mw-elevation-4);
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         cursor: pointer;
         transition: var(--mw-transition);
       }
 
-      .palette-fab:hover {
+      /* Below sm the panel would cover the very thing it is changing */
+      @media (min-width: 576px) {
+        .palette-toggle {
+          display: flex;
+        }
+      }
+
+      .palette-toggle:hover {
         background: var(--mw-primary-color-hover);
       }
 
-      .palette-fab:active {
-        transform: scale(0.92);
+      .palette-toggle:active {
+        transform: scale(0.94);
       }
 
       .palette-panel {
         position: fixed;
-        right: 18px;
-        bottom: 82px;
+        top: calc(var(--mw-header-height) + 8px);
+        /* Flush with the container edge, so it lines up with the button in the
+           header rather than sitting further out */
+        right: max(18px, calc((100% - var(--mw-container-width)) / 2));
         z-index: 400;
-        width: 360px;
+        /* Wide enough for three palettes in a row; the min() is for the narrow
+           end, where the panel would otherwise reach past the viewport */
+        width: min(440px, calc(100% - 24px));
         /* The variant list makes the panel taller than a laptop in landscape -
-           the top of it would be behind the browser chrome without this */
-        max-height: calc(100dvh - 120px);
+           it takes what is left under the header and scrolls the rest */
+        max-height: calc(100dvh - var(--mw-header-height) - 24px);
         overflow-y: auto;
         overscroll-behavior: contain;
         padding: 18px;
@@ -165,6 +175,26 @@
         border: 1px solid var(--mw-border);
         background: var(--mw-card-background);
         box-shadow: var(--mw-elevation-5);
+        transform: translateY(0);
+        opacity: 1;
+        /* display is in the list so allow-discrete keeps the panel mounted
+           through the fade out - `hidden` is the state the script writes */
+        transition-property: opacity, transform, display;
+        transition-duration: var(--mw-duration-base);
+        transition-timing-function: var(--mw-ease-out);
+        transition-behavior: allow-discrete;
+      }
+
+      @starting-style {
+        .palette-panel {
+          opacity: 0;
+          transform: translateY(-12px);
+        }
+      }
+
+      .palette-panel[hidden] {
+        opacity: 0;
+        transform: translateY(-12px);
       }
 
       .palette-heading {
@@ -181,7 +211,7 @@
 
       .palette-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 6px;
       }
 
@@ -291,7 +321,7 @@
 
       .variant-row select {
         flex-shrink: 0;
-        max-width: 110px;
+        max-width: 135px;
         padding: 3px 6px;
         font-size: 0.75rem;
         color: var(--mw-text-color);
@@ -361,22 +391,6 @@
         line-height: 1.5;
         white-space: pre-wrap;
         word-break: break-word;
-      }
-
-      @media (max-width: 480px) {
-        .palette-fab {
-          right: 12px;
-          bottom: 12px;
-          width: 46px;
-          height: 46px;
-        }
-
-        .palette-panel {
-          right: 12px;
-          left: 12px;
-          bottom: 68px;
-          width: auto;
-        }
       }
     </style>
 
@@ -908,12 +922,12 @@
       // root element repaints the page - bar, ink, borders and tints included.
       // Nothing is persisted - a palette is for looking at, a reload is the way back.
       document.addEventListener('DOMContentLoaded', () => {
-        const fab = document.getElementById('palette-fab');
+        const toggleBtn = document.getElementById('palette-toggle');
         const panel = document.getElementById('palette-panel');
         const primaryInput = document.getElementById('palette-primary');
         const secondaryInput = document.getElementById('palette-secondary');
         const items = [...document.querySelectorAll('.palette-item')];
-        if (!fab || !panel) return;
+        if (!toggleBtn || !panel) return;
 
         const root = document.documentElement;
 
@@ -1001,10 +1015,10 @@
 
         const toggle = (open) => {
           panel.hidden = !open;
-          fab.setAttribute('aria-expanded', String(open));
+          toggleBtn.setAttribute('aria-expanded', String(open));
         };
 
-        fab.addEventListener('click', (event) => {
+        toggleBtn.addEventListener('click', (event) => {
           event.stopPropagation();
           toggle(panel.hidden);
         });
@@ -1132,7 +1146,12 @@
 
           controls.forEach((control) => {
             if (control.type !== 'checkbox') {
-              if (control.value) {
+              // A select whose options are class names picks one of a set the
+              // markup cannot hold at the same time - a shape is one or none
+              if (!control.value) return;
+              if (control.hasAttribute('data-variant-classes')) {
+                classes.push(control.value);
+              } else {
                 props.push(
                   `  ${control.dataset.variantProp}: ${control.value};`
                 );
@@ -1164,11 +1183,17 @@
             : 'Default setup - nothing to change.';
         };
 
+        const optionClasses = (control) =>
+          [...control.options].map((option) => option.value).filter(Boolean);
+
         const apply = (control) => {
           if (control.type === 'checkbox') {
             const target = control.dataset.variantTarget;
             const el = target ? document.querySelector(target) : root;
             el?.classList.toggle(control.dataset.variantClass, isOn(control));
+          } else if (control.hasAttribute('data-variant-classes')) {
+            root.classList.remove(...optionClasses(control));
+            if (control.value) root.classList.add(control.value);
           } else if (control.value) {
             root.style.setProperty(control.dataset.variantProp, control.value);
           } else {
@@ -1214,6 +1239,9 @@
               control.checked = control.hasAttribute('data-variant-invert')
                 ? !on
                 : on;
+            } else if (control.hasAttribute('data-variant-classes')) {
+              control.value =
+                optionClasses(control).find((name) => named.has(name)) ?? '';
             } else {
               control.value = props.get(control.dataset.variantProp) ?? '';
             }

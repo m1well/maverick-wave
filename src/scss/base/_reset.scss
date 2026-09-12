@@ -10,6 +10,8 @@
   }
 
   html {
+    // Percent and not px, or a reader who raised their browser font loses it
+    font-size: var(--mw-root-font-size);
     scroll-behavior: smooth;
     min-width: 320px;
     scroll-padding-top: var(--mw-header-height);

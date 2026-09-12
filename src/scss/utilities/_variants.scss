@@ -42,6 +42,19 @@
     --mw-elevation-3: none;
   }
 
+  // Cards, panels and the footer give up their own tone and sit flush on the
+  // page, told apart by their line alone. That line then has to carry them:
+  // --mw-border is a neighbouring shade of the surface and reads as nothing once
+  // the surface *is* the page, so it is redrawn from the ink instead.
+  //
+  // Theme-bound tokens, so both selectors - see the note above.
+  :root.mw-surfaces-flush,
+  :root.mw-surfaces-flush .mw-theme-light {
+    --mw-card-background: var(--mw-page-background);
+    --mw-footer-background: var(--mw-page-background);
+    --mw-border: color-mix(in srgb, var(--mw-text-color) 20%, transparent);
+  }
+
   // The diagonal hatch behind an alternating section, dropped. Written on the
   // section and not as a token on :root: --mw-page-background is a theme alias
   // that only becomes the light one further down the tree, so a copy taken up
@@ -55,6 +68,35 @@
   // there is its own piece of geometry rather than one more override.
   :root.mw-btn-pill .mw-btn {
     border-radius: 999px;
+  }
+
+  // The other end of the same axis. Not --mw-radius-scale, which squares off the
+  // whole page - a page can want its cards round and its buttons cut.
+  :root.mw-btn-square .mw-btn {
+    border-radius: 0;
+  }
+
+  // A raised edge under the fill that the button sinks onto when pressed. The
+  // four solid variants only: outline, ghost and link have no fill to darken.
+  //
+  // Mixed toward black rather than taken from --mw-*-color-hover, which moves
+  // toward the light in one theme and away from it in the other - an edge has to
+  // be darker than its face in both.
+  :root.mw-btn-tactile {
+    @each $name in ('primary', 'secondary', 'danger', 'success') {
+      .mw-btn-#{$name} {
+        box-shadow: 0
+          3px
+          0
+          color-mix(in srgb, var(--mw-#{$name}-color) 72%, #000);
+
+        // Travels the full height of the edge, where the base button moves 1px
+        &:active:not(:disabled) {
+          transform: translateY(3px);
+          box-shadow: none;
+        }
+      }
+    }
   }
 
   // Tinted glass: a translucent wash with a vertical ramp and a specular line

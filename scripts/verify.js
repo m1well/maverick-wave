@@ -6,7 +6,7 @@
  *   1. every var(--mw-*) has a definition
  *   2. every --mw-* definition is used somewhere
  *   3. every mw-* class in the markup exists in the built CSS
- *   4. the committed root release files exist and are not empty
+ *   4. the committed root release files match a fresh build
  *   5. the CDN version pinned in the docs matches package.json
  *   6. no `animation:` shorthand in a file that uses a scroll timeline
  *
@@ -134,6 +134,16 @@ for (const f of ['maverick-wave.min.css', 'maverick-wave.min.js']) {
   if (!fs.existsSync(p) || fs.statSync(p).size === 0) {
     errors.push(
       `release file missing or empty: ${f} - run \`npm run prepack\` and commit it`
+    );
+    continue;
+  }
+  // `gulp release` runs the same sass/postcss/terser pipeline as the dist tasks
+  // and only writes elsewhere, so dist/ is what the committed file has to equal.
+  // Existing-and-not-empty was not enough: 5.7.0 shipped a root bundle four
+  // commits behind src/, and every CDN consumer got that one.
+  if (read(p) !== read(path.join(ROOT, 'dist', f))) {
+    errors.push(
+      `release file stale: ${f} differs from the fresh build in dist/ - run \`npm run prepack\` and commit it`
     );
   }
 }
