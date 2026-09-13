@@ -152,7 +152,9 @@
   // text goes light. A band without content on it needs neither.
   .mw-parallax-dimmed {
     > .mw-parallax-media {
-      filter: brightness(0.5);
+      // $hero-filter-dark's value, not the token: that one flips to 1.1 in the
+      // light theme, and this band's ink stays light in both
+      filter: brightness(0.7);
     }
 
     > .mw-parallax-content {
