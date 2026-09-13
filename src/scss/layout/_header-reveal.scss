@@ -63,11 +63,11 @@
     }
   }
 
-  // Firefox ships no scroll timelines, so there the script toggles these
-  // classes instead (main.js) - the same two positions, triggered instead of
-  // scrubbed. State and transition are separate because the script sets the
-  // state a frame earlier: together they would send the bar sliding away in
-  // front of the reader instead of having it gone already.
+  // Older Safari and Firefox ship no scroll timelines, so there the script
+  // toggles these classes instead (main.js) - the same two positions,
+  // triggered instead of scrubbed. State and transition are separate because
+  // the script sets the state a frame earlier: together they would send the
+  // bar sliding away in front of the reader instead of having it gone already.
   @media (prefers-reduced-motion: no-preference) {
     .mw-header-reveal.mw-header-away {
       top: calc(-1 * var(--mw-header-reveal-offset));

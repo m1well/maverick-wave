@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.11.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.11.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -265,7 +265,7 @@ feature frame) ·
 `mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*` ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
-`-pattern`) · `mw-footer`
+`-slow`, `-pattern`) · `mw-footer`
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -424,4 +424,6 @@ feature frame) ·
     reaches that content as a _sibling_. Put the class on the hero itself and
     nothing pins and nothing covers - no error, no effect, and the picture shows
     through every transparent section below. `mw-parallax` and the
-    `mw-parallax-media` child stay where the image is: on the container.
+    `mw-parallax-media` child stay where the image is: on the container. Same
+    split for `mw-parallax-slow`, and `--mw-parallax-slow-travel` goes with the
+    class on the section - on the inner block it never reaches the animation.

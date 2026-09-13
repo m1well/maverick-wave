@@ -35,11 +35,11 @@
     }
   }
 
-  // Firefox ships no scroll timelines at all, so there the script drives the
-  // same movement (main.js): `mw-reveal-hidden` while the element waits below
-  // the fold, `mw-reveal-run` once it enters. Both classes are added by the
-  // script and never by the markup - a page without JS keeps everything
-  // visible, which is what the guard above is for.
+  // Older Safari and Firefox ship no scroll timelines, so there the script
+  // drives the same movement (main.js): `mw-reveal-hidden` while the element
+  // waits below the fold, `mw-reveal-run` once it enters. Both classes are
+  // added by the script and never by the markup - a page without JS keeps
+  // everything visible, which is what the guard above is for.
   @media (prefers-reduced-motion: no-preference) {
     .mw-reveal-hidden {
       opacity: 0;
