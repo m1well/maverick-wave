@@ -62,7 +62,26 @@
   Add <code>mw-parallax-rise</code> next to it and the picture lifts by
   <code>12vh</code> while the text stays where it is - a pinned block does not
   travel through the viewport, so that layer runs on the document's own scroll
-  instead. <code>--mw-parallax-depth</code> is the dial, here as everywhere.
+  instead, over the first screen of it. That makes it a hero move: further down
+  the page those pixels are long gone and the picture holds still.
+  <code>--mw-parallax-depth</code> is the dial, here as everywhere. Several
+  pinned blocks on one page are fine, each takes over from the one before.
+</p>
+
+<h4 class="mw-text-medium mw-mb-2">
+  Slow - <code>mw-parallax-slow</code>, the block travels behind the page
+</h4>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The band before the components section on this page: it keeps its place in the
+  flow and moves at a quarter of your scrolling, so picture and text are still
+  going while the next section closes in from below. Pinning is the same move
+  with the tempo at zero.
+  <code>--mw-parallax-slow-travel</code> (<code>45vh</code>) is the dial and
+  reads against the block's own height - half the height is half speed, the full
+  height stands still. Going past it sends the block backwards. The dial belongs
+  on the element carrying the class, the height on the
+  <code>mw-parallax</code> block inside it: set on the inner block it never
+  reaches the animation and the tempo stays at the default.
 </p>
 
 <h4 class="mw-text-medium mw-mb-2">

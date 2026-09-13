@@ -86,6 +86,35 @@
     --mw-parallax-pattern-depth: 4vh;
   }
 
+  // A third way to use the scroll, between the two above: the block keeps its
+  // place in the flow but travels slower than the page, so the section after it
+  // closes in from below while picture and text are still moving.
+  //
+  // `exit` and never `cover`: the block leaves a gap where it used to sit, and
+  // the exit phase is the one that starts once its top edge is already past the
+  // top of the screen - which is where that gap then stays.
+  //
+  // Travel over the block's own height is what sets the tempo: half the height
+  // is half speed, the full height stands still and is mw-parallax-sticky.
+  .mw-parallax-slow {
+    --mw-parallax-slow-travel: 45vh;
+
+    position: relative;
+    z-index: 0;
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .mw-parallax-slow {
+        animation-name: mw-parallax-band;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+    }
+  }
+
   // A second layer on top of the first, added to the same media element. It
   // travels a third of the distance, and it is that difference between the two
   // that reads as depth - one layer alone only slides. What it carries is a
@@ -97,10 +126,15 @@
     background-image: var(--mw-parallax-pattern-image, none);
   }
 
-  // Everything after it has to cover it, or the pinned picture shows through the
-  // gaps. The z-index needs the weight of a class to beat the plain
-  // `position: relative` those sections carry.
-  .mw-parallax-sticky ~ * {
+  // Both variants above are overtaken rather than scrolled away, so everything
+  // after them has to cover them or the picture shows through the gaps. The
+  // z-index needs the weight of a class to beat the plain `position: relative`
+  // those sections carry.
+  //
+  // Except a pinned block: `position: relative` here and `sticky` above carry
+  // the same weight, and this rule is the later one - it would take the pinning
+  // away from every band after the first.
+  :is(.mw-parallax-sticky, .mw-parallax-slow) ~ *:not(.mw-parallax-sticky) {
     position: relative;
     z-index: 1;
   }
@@ -108,7 +142,9 @@
   // Zero specificity on purpose: it is a floor, not a rule. A section that
   // paints its own surface - mw-section-alternate, a project's own band - has
   // to win here, and this file is forwarded last.
-  :where(.mw-parallax-sticky ~ *) {
+  :where(
+    :is(.mw-parallax-sticky, .mw-parallax-slow) ~ *:not(.mw-parallax-sticky)
+  ) {
     background: var(--mw-page-background);
   }
 
@@ -155,10 +191,10 @@
     }
   }
 
-  // Firefox ships no scroll timelines, so there the script writes the progress
-  // and the travel is worked out here (main.js). Keeping the transform in CSS
-  // is what lets every depth variant above - and an inline
-  // `--mw-parallax-depth` - go on working untouched.
+  // Older Safari and Firefox ship no scroll timelines, so there the script
+  // writes the progress and the travel is worked out here (main.js). Keeping
+  // the transform in CSS is what lets every depth variant above - and an
+  // inline `--mw-parallax-depth` - go on working untouched.
   //
   // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes.
   @media (prefers-reduced-motion: no-preference) {
@@ -168,6 +204,16 @@
         calc(var(--mw-parallax-depth) * (1 - 2 * var(--mw-parallax-progress))),
         0
       );
+    }
+  }
+
+  @keyframes mw-parallax-band {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(var(--mw-parallax-slow-travel));
     }
   }
 

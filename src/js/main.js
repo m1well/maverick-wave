@@ -555,8 +555,9 @@
   // ===== Scroll Reveal =====
 
   // The cards ride the browser's own view timeline where there is one
-  // (_reveal.scss). Firefox has none, so there an observer stands in: hide what
-  // is still below the fold, run the same keyframes when it arrives.
+  // (_reveal.scss). Older Safari and Firefox have none, so there an observer
+  // stands in: hide what is still below the fold, run the same keyframes when
+  // it arrives.
   function initReveals() {
     if (CSS.supports('animation-timeline', 'view()')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

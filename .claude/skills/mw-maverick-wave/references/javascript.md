@@ -47,23 +47,23 @@ classes are the entire contract.
 | Color swatches      | Showcase-only (prints computed hex values); exposes `window.mwRefreshColorSwatches` to read them again after a root colour changed                                                                                                                                              | Not needed                                                                                                                                                                                                                   |
 | Dropdown            | Delegated to the document: closes the open `mw-dropdown` on Escape, on a click elsewhere and on a click on a `mw-dropdown-item`, and returns focus to the `summary`                                                                                                             | The `<details>` does the opening, the keyboard and the state on its own. Rebuild only the two behaviours markup cannot express - or bind `[attr.open]` and keep them in the component                                        |
 | Language switcher   | Keeps the trigger's flag and code in step with the chosen item, moves `mw-active` and `aria-current`, and fires `mw-language-change` (`detail: { lang, name }`) on the switcher                                                                                                 | Bind the trigger from your locale signal and switch the language in your own i18n service; the menu itself is a `<details>` and needs nothing                                                                                |
-| Scroll reveal       | Firefox only: an `IntersectionObserver` adds `mw-reveal-hidden` to what is still below the fold and swaps it for `mw-reveal-run` on entry, with an `animation-delay` per grid column                                                                                            | A directive per element - see `examples/angular-services.md`                                                                                                                                                                 |
-| Header reveal       | Firefox only: toggles `mw-header-away` and `mw-announcement-away` past 270px of scroll, and adds the transition class one frame later so the bar does not slide away on load                                                                                                    | The same two classes bound to a scroll signal, behind the same guard                                                                                                                                                         |
-| Parallax            | Firefox only: writes `--mw-parallax-progress` (0 to 1) on every `mw-parallax-media` from a `requestAnimationFrame` loop                                                                                                                                                         | The same, reading every layer's rect before writing to any of them                                                                                                                                                           |
+| Scroll reveal       | Older browsers only: an `IntersectionObserver` adds `mw-reveal-hidden` to what is still below the fold and swaps it for `mw-reveal-run` on entry, with an `animation-delay` per grid column                                                                                     | A directive per element - see `examples/angular-services.md`                                                                                                                                                                 |
+| Header reveal       | Older browsers only: toggles `mw-header-away` and `mw-announcement-away` past 270px of scroll, and adds the transition class one frame later so the bar does not slide away on load                                                                                             | The same two classes bound to a scroll signal, behind the same guard                                                                                                                                                         |
+| Parallax            | Older browsers only: writes `--mw-parallax-progress` (0 to 1) on every `mw-parallax-media` from a `requestAnimationFrame` loop                                                                                                                                                  | The same, reading every layer's rect before writing to any of them                                                                                                                                                           |
 
 ## Scroll-driven animations
 
 Four things ride the browser's own scroll timeline: `mw-reveal`,
-`mw-header-reveal`, `mw-parallax` and the `mw-progress-fill` scrub. In Chrome,
-Edge and Safari they need no script at all. Firefox ships no scroll timelines,
-so there - and only there - the shipped JS stands in for them. Each one checks
-`CSS.supports('animation-timeline', ...)` first and does nothing where the
-browser has it.
+`mw-header-reveal`, `mw-parallax` and the `mw-progress-fill` scrub. Chrome and
+Edge have had timelines since 115, Firefox since 158 and Safari since 26, and
+there they need no script at all. Older versions get the shipped JS instead.
+Each one checks `CSS.supports('animation-timeline', ...)` first and does nothing
+where the browser has it.
 
-Without the script Firefox loses the motion and nothing else: cards stand in
-place, the picture holds still. The exception is `mw-header-reveal`, where the
-bar then sits over the hero from the first paint - a layout difference, not a
-missing effect.
+Without the script an older browser loses the motion and nothing else: cards
+stand in place, the picture holds still. The exception is `mw-header-reveal`,
+where the bar then sits over the hero from the first paint - a layout
+difference, not a missing effect.
 
 ## Modals and progress bars
 

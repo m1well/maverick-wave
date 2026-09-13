@@ -323,10 +323,10 @@ is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
 **Parallax** - `mw-parallax` on the container plus a `mw-parallax-media` child
 moves the picture into its own layer. The container drops its own background and
 the layer reads `--mw-hero-background`, so the image stays configured in one
-place. Both modes run on the browser's scroll timeline, and on no
-`background-attachment: fixed`, which iOS ignores. Firefox has neither timeline;
-there the shipped JS moves the layers instead, and without it the picture simply
-sits still (`javascript.md`).
+place. Every mode runs on the browser's scroll timeline, and on no
+`background-attachment: fixed`, which iOS ignores. Older Safari and Firefox have
+no timelines; there the shipped JS moves the layers instead, and without it the
+picture simply sits still (`javascript.md`).
 
 ```html
 <header class="mw-header mw-header-reveal">...</header>
@@ -356,7 +356,9 @@ through the viewport, so its `view()` timeline stands still with it.
 `mw-parallax-rise` puts it at `12vh` and runs the layer on the document's own
 scroll instead - the picture lifts, the text stays put. That works out to the
 same travel per scrolled pixel as a drifting band at `20vh`, which is measured
-over a much longer range.
+over a much longer range. It is a hero move only: the range is the first screen
+of document scroll, so further down a page the picture holds still. Several
+pinned blocks on one page are fine, each takes over from the one before.
 
 A second `mw-parallax-media` carrying `mw-parallax-pattern` puts a pattern over
 the picture. It travels a third of the distance the layer below it does, and
@@ -370,7 +372,20 @@ reads `$mw-hero-image`; anywhere else set `--mw-parallax-pattern-image` on it.
 Outside a hero the same classes build a standalone band: `mw-parallax`
 (`min-height: 42vh`), `mw-parallax-media` as an `<img>` or a div with a
 background image, `mw-parallax-content` for what sits on top, and
-`mw-parallax-dimmed` to turn the picture down and the text light.
+`mw-parallax-dimmed` to turn the picture down and the text light. Drop the
+`mw-container` between section and block and the picture runs full width, with
+a `mw-container` inside `mw-parallax-content` around the text instead.
+
+`mw-parallax-slow` is the third mode and the one for a band mid-page: the block
+keeps its place in the flow and travels slower than the page, so picture and
+text are still moving while the next section closes in from below. Pinning is
+the same move with the tempo at zero. `--mw-parallax-slow-travel` (`45vh`) reads
+against the block's own height - half the height is half speed, the full height
+stands still, past it the block runs backwards. The dial belongs on the element
+carrying `mw-parallax-slow`, the height on the `mw-parallax` block inside it;
+put the dial on the inner block and it never reaches the animation. Everything
+after it gets the same page background and layer that a pinned block gives its
+siblings.
 
 Without scroll timelines, or under `prefers-reduced-motion`, the picture stands
 still and nothing else changes.

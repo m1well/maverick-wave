@@ -97,6 +97,21 @@
           );
       }
 
+      /* The travel has to sit on the animated section, the height on the block
+         inside it */
+      .parallax-band-demo {
+        --mw-parallax-slow-travel: 60vh;
+      }
+
+      .parallax-band-demo .mw-parallax {
+        min-height: 75vh;
+      }
+
+      /* Reuses the hero picture through the token, not a second download */
+      .parallax-band-demo .mw-parallax-media {
+        background-image: var(--mw-hero-background);
+      }
+
       /* A calendar fills its container; across the full page that stretches the
          cells to 150px, so the demos get a realistic column instead */
       .calendar-demo {
@@ -697,6 +712,22 @@
           <!-- Parallax container -->
           <div id="parallax">
             @@include('./src/partials/parallax-container.html')
+          </div>
+        </div>
+      </section>
+
+      <!-- Parallax band -->
+      <section class="mw-parallax-slow parallax-band-demo">
+        <div class="mw-parallax mw-parallax-dimmed">
+          <div class="mw-parallax-media"></div>
+          <div class="mw-parallax-content mw-text-center">
+            <div class="mw-container">
+              <h2>The page rides over the picture</h2>
+              <p class="mw-mb-0">
+                This band travels at a quarter of your scrolling. The components
+                close in from below.
+              </p>
+            </div>
           </div>
         </div>
       </section>
