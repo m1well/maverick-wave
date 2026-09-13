@@ -354,15 +354,15 @@
         border-top: 1px solid var(--mw-border);
       }
 
-      .variant-row select {
+      /* Width and the two size tokens are taken back from .mw-select for the
+         same reason the switch below is hand-drawn: the field must not resize
+         itself while it is the knob for density and radius */
+      .variant-row .mw-select {
+        --mw-radius-scale: 1;
+        --mw-control-height-sm: 1.875rem;
         flex-shrink: 0;
+        width: auto;
         max-width: 135px;
-        padding: 3px 6px;
-        font-size: 0.75rem;
-        color: var(--mw-text-color);
-        border: 1px solid var(--mw-border);
-        border-radius: 6px;
-        background: transparent;
         cursor: pointer;
       }
 
