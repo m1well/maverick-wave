@@ -2,17 +2,14 @@
 @use 'variables' as v;
 @use 'functions' as *;
 
-// `media-down` stops 0.02px short, or both ranges match at exactly 768px - an
-// iPad in portrait, where mw-hide-mobile and mw-hide-desktop would both hide.
-// 0.02 and not 1, because a viewport can be fractional (zoom, scaled display).
 @mixin media-up($breakpoint) {
-  @media (min-width: map.get(v.$breakpoints, $breakpoint)) {
+  @media (width >= #{map.get(v.$breakpoints, $breakpoint)}) {
     @content;
   }
 }
 
 @mixin media-down($breakpoint) {
-  @media (max-width: map.get(v.$breakpoints, $breakpoint) - 0.02px) {
+  @media (width < #{map.get(v.$breakpoints, $breakpoint)}) {
     @content;
   }
 }
@@ -231,7 +228,7 @@
 // the top arc where a fill already owns that corner.
 @mixin surface($border-width: 1px, $corners: 'both') {
   position: relative;
-  border-radius: radius('sm') radius('xl') radius('sm') radius('xl');
+  border-radius: radius-sharp() radius('xl') radius-sharp() radius('xl');
 
   &::after {
     @include corner-accent($border-width, $corners);
@@ -245,9 +242,43 @@
     border-radius: radius('md');
 
     &::after {
-      display: none;
+      @include corner-mark($border-width);
     }
   }
+}
+
+// Shared by both corner marks, which are meant to read as the same gesture at
+// two volumes: how far the arc runs along the horizontal against the vertical,
+// and where it stops being opaque. A percentage and not a length because the
+// mask is an ellipse - see corner-accent() for what that costs.
+$_corner-stretch: 1.5;
+$_corner-opaque: 55%;
+
+// What is left of the signature once the silhouette is switched off: the same
+// arc, on one corner, thinner and over a shorter run. The two-corner shape is
+// the loud half and mw-corners-even exists to turn it off - but a surface with
+// nothing left of it could have come from any framework, and this is the mark
+// that says otherwise. Deliberately quiet enough to read as a detail.
+//
+// Built from radius('md') because that is what the even box is drawn at, and
+// it follows --mw-radius-scale down to a square, where the arc becomes a
+// bracket in the corner rather than disappearing.
+@mixin corner-mark($border-width: 1px) {
+  $r: max(0px, calc(#{radius('md')} - #{$border-width}));
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1.5px solid var(--mw-corner-accent);
+  border-radius: $r;
+  $reach: max(18px, calc(#{radius('md')} * 2.2));
+
+  mask-image: radial-gradient(
+    ellipse calc(#{$reach} * #{$_corner-stretch}) #{$reach} at 100% 0,
+    #000 $_corner-opaque,
+    transparent 100%
+  );
 }
 
 // The arc alone, for a variant that redraws it without restating the shape
@@ -255,17 +286,36 @@
   // max(), not a bare subtraction: --mw-radius-scale can take the radius to 0,
   // and while a negative border-radius is clamped for us, a negative circle in
   // the mask below would throw the whole gradient away and lose the arc.
-  $sharp: max(0px, calc(#{radius('sm')} - #{$border-width}));
+  $sharp: max(0px, calc(#{radius-sharp()} - #{$border-width}));
   $round: max(0px, calc(#{radius('xl')} - #{$border-width}));
   // Opaque to where the curve ends, fading from there, so the arc runs into the
   // straight edge instead of stopping at the tangent. 1.8 is bounded by the
   // shortest surface: past about 2 the two arcs meet on a 50px box and read as
   // a frame.
-  $reach: calc(#{$round} * 1.8);
-  $top: radial-gradient(circle $reach at 100% 0, #000 $round, transparent 100%);
+  //
+  // The floor is what keeps the mark alive at --mw-radius-scale: 0. The reach
+  // is derived from the radius, so a squared-off page took it to a zero-width
+  // circle and the accent vanished on every surface at once - the one setting
+  // where the framework has least else left to recognise it by. At zero radius
+  // there is no curve to trace and the 22px run reads as a bracket instead.
+  $reach: max(22px, calc(#{$round} * 1.8));
+  // An ellipse and not a circle: with equal reach on both axes the arc reads as
+  // a quarter circle, and the mark looks like a corner radius someone forgot to
+  // finish. Half again as far along the horizontal gives it a direction - it
+  // sits on the top edge and turns down, rather than cutting the corner.
+  //
+  // The stop is a percentage here where the circle could take a length: on an
+  // ellipse a length would be measured along one axis only and the fade would
+  // start at different points on the two. The default sits where $round fell.
+  $reach-x: calc(#{$reach} * #{$_corner-stretch});
+  $top: radial-gradient(
+    ellipse $reach-x $reach at 100% 0,
+    #000 $_corner-opaque,
+    transparent 100%
+  );
   $bottom: radial-gradient(
-    circle $reach at 0 100%,
-    #000 $round,
+    ellipse $reach-x $reach at 0 100%,
+    #000 $_corner-opaque,
     transparent 100%
   );
 

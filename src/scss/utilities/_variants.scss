@@ -31,12 +31,10 @@
   // the modal, which genuinely float above content and keep their shadow - in a
   // flat page they are the only two things that should cast one.
   //
-  // The second selector is not optional: elevation is a theme alias, and the
-  // light theme re-declares it on <body>. A value written on :root alone is
-  // shadowed for the whole body subtree, so the switch would do nothing at all
-  // in light mode. Any variant that retunes a theme-bound token needs both.
-  :root.mw-shadows-flat,
-  :root.mw-shadows-flat .mw-theme-light {
+  // One selector, unlike mw-surfaces-flush below: the ramp is no longer declared
+  // per theme, so there is no copy further down the tree to shadow this one. The
+  // theme reaches it through --mw-shadow-near/-far instead - see elevation().
+  :root.mw-shadows-flat {
     --mw-elevation-1: none;
     --mw-elevation-2: none;
     --mw-elevation-3: none;
@@ -47,7 +45,9 @@
   // --mw-border is a neighbouring shade of the surface and reads as nothing once
   // the surface *is* the page, so it is redrawn from the ink instead.
   //
-  // Theme-bound tokens, so both selectors - see the note above.
+  // Theme-bound tokens, and those *are* re-declared on <body> when the toggle puts
+  // .mw-theme-light there - a value written on :root alone would be shadowed for
+  // the whole body subtree and the switch would do nothing in light mode.
   :root.mw-surfaces-flush,
   :root.mw-surfaces-flush .mw-theme-light {
     --mw-card-background: var(--mw-page-background);
@@ -157,6 +157,73 @@
     h3 {
       text-transform: uppercase;
       letter-spacing: 0.045em;
+    }
+  }
+
+  // The other axis to --mw-root-font-size, which zooms the whole page: there
+  // the layout is the same layout, larger. This moves the padding inside a
+  // surface and leaves the type alone, so a dense screen reads as well as a
+  // roomy one and only fits more on.
+  //
+  // --mw-section-padding-block is deliberately untouched: section spacing is
+  // its own switch, and both writing it would have the panel print a setup that
+  // contradicts itself. Steps along the spacing scale rather than free values,
+  // because that scale is what every other measure is built from - two of them
+  // down for compact, where the point is to fit more on screen, one up for
+  // roomy, where a second step would only look loose.
+  :root.mw-density-compact {
+    --mw-control-height-sm: 1.5rem;
+    --mw-control-height: 1.75rem;
+    --mw-control-height-lg: 2rem;
+
+    .mw-card-body {
+      padding: spacing('4') spacing('2') spacing('3');
+
+      @container mw-card (width >= #{$mw-card-wide}) {
+        padding: spacing('5') spacing('3') spacing('4');
+      }
+    }
+
+    .mw-panel-header,
+    .mw-panel-body {
+      padding: spacing('2') spacing('3');
+    }
+  }
+
+  :root.mw-density-roomy {
+    --mw-control-height-sm: 2.25rem;
+    --mw-control-height: 2.5rem;
+    --mw-control-height-lg: 2.75rem;
+
+    .mw-card-body {
+      padding: spacing('7') spacing('5') spacing('6');
+
+      @container mw-card (width >= #{$mw-card-wide}) {
+        padding: spacing('8') spacing('6') spacing('7');
+      }
+    }
+
+    .mw-panel-header,
+    .mw-panel-body {
+      padding: spacing('5') spacing('6');
+    }
+  }
+
+  :root.mw-links-underline {
+    .mw-link,
+    .mw-link-muted,
+    .mw-btn-link {
+      // The longhand, because the `text-decoration` shorthand resets
+      // text-decoration-thickness along with it and would drop the 1.5px
+      // link-look() draws the line at.
+      text-decoration-line: underline;
+
+      // The underline was the hover signal and is now the resting state, so the
+      // weight takes over: .mw-link carries no colour change of its own and
+      // would otherwise go completely dead under the pointer.
+      &:hover:not(:disabled) {
+        text-decoration-thickness: 3px;
+      }
     }
   }
 }

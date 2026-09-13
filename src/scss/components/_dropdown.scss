@@ -197,10 +197,67 @@
     overflow: visible;
   }
 
+  // The clipping caveat at the top of this file, lifted where the browser can do
+  // it. `fixed` takes the menu out of every ancestor's containing block and
+  // anchor positioning keeps it attached to the trigger, so an actions menu in a
+  // scrolling table or a clipping card is no longer cut in half - and the
+  // `:has()` list above becomes belt and braces rather than the only thing
+  // holding it together.
+  //
+  // `anchor-scope` is what makes this safe and why it is in the @supports test:
+  // an anchor name is global, so without it every menu on the page would resolve
+  // to whichever trigger came last in the DOM. Scoped to the dropdown, each menu
+  // sees its own.
+  @supports (anchor-scope: all) and (position-area: block-end) {
+    .mw-dropdown {
+      anchor-scope: --mw-dropdown-trigger;
+
+      > summary {
+        anchor-name: --mw-dropdown-trigger;
+      }
+    }
+
+    .mw-dropdown-menu {
+      position: fixed;
+      position-anchor: --mw-dropdown-trigger;
+      // Below the trigger, left edges aligned - the same place the absolute
+      // version sits. The inset properties it used are cleared, or they fight
+      // the position-area, which resolves them itself.
+      position-area: block-end span-inline-end;
+      // Flip up when the trigger sits low, in when it sits near the right edge.
+      // The menu has no arrow to contradict a flip, so unlike the tooltip it can
+      // take all of them.
+      position-try-fallbacks:
+        flip-block,
+        flip-inline,
+        flip-block flip-inline;
+      // Never taller than the room the fallback landed in
+      position-try-order: most-block-size;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      left: auto;
+      margin-block: spacing('2');
+      // The viewport cap no longer applies - what matters is the slot the anchor
+      // left, and 60dvh was measured against the window anyway
+      max-height: min(60dvh, 420px);
+    }
+
+    // Both variants are what position-try-fallbacks now does on its own, so they
+    // only have to stop pushing the menu around with insets
+    .mw-dropdown-end .mw-dropdown-menu {
+      position-area: block-end span-inline-start;
+    }
+
+    .mw-dropdown-up .mw-dropdown-menu {
+      position-area: block-start span-inline-end;
+    }
+  }
+
   // A menu opened by a thumb needs rows a thumb can hit, and the room to show
   // them - so it takes the trigger's full width rather than a 200px column
   // floating beside it.
-  @media (pointer: coarse), (max-width: #{breakpoint('sm')}) {
+  @media (pointer: coarse), (width <= #{breakpoint('sm')}) {
     .mw-dropdown-menu {
       min-width: max(100%, 240px);
     }

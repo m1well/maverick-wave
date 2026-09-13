@@ -1,6 +1,17 @@
+@use 'sass:list';
+@use 'sass:map';
 @use '../abstracts' as *;
 
 @layer mw.base {
+  // Registered because it is multiplied into all six duration tokens below: a
+  // value that does not parse takes every one of them with it, and a page with
+  // no transitions at all is a hard failure for a typo in one line.
+  @property --mw-motion-scale {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+
   // Active theme set and its token prefix, derived from $mw-theme-mode
   $_active-theme: $dark-theme-colors;
   $_active-prefix: 'dark';
@@ -8,6 +19,14 @@
   @if $mw-theme-mode == 'light' {
     $_active-theme: $light-theme-colors;
     $_active-prefix: 'light';
+  }
+
+  // Everything light-dark() can resolve on its own - see $theme-non-colors
+  $_theme-colors: ();
+  @each $name, $value in $dark-theme-colors {
+    @if not list.index($theme-non-colors, $name) {
+      $_theme-colors: map.set($_theme-colors, $name, $value);
+    }
   }
 
   // CSS Variables for theming and overriding
@@ -37,13 +56,19 @@
       --mw-light-#{$name}: #{$value};
     }
 
-    // The scale lives in the variables file - these are the runtime knobs
-    --mw-duration-instant: #{$duration-instant};
-    --mw-duration-fast: #{$duration-fast};
-    --mw-duration-base: #{$duration-base};
-    --mw-duration-slow: #{$duration-slow};
-    --mw-duration-slower: #{$duration-slower};
-    --mw-duration-zoom: #{$duration-zoom};
+    // The scale lives in the variables file - these are the runtime knobs.
+    // Multiplied through --mw-motion-scale so one number retunes the page's
+    // tempo, the way --mw-radius-scale does for its corners: the six stand in a
+    // fixed ratio to each other and have to move together. The reduced-motion
+    // block below writes plain 1ms over the top, untouched by any of this.
+    --mw-duration-instant: calc(
+      #{$duration-instant} * var(--mw-motion-scale, 1)
+    );
+    --mw-duration-fast: calc(#{$duration-fast} * var(--mw-motion-scale, 1));
+    --mw-duration-base: calc(#{$duration-base} * var(--mw-motion-scale, 1));
+    --mw-duration-slow: calc(#{$duration-slow} * var(--mw-motion-scale, 1));
+    --mw-duration-slower: calc(#{$duration-slower} * var(--mw-motion-scale, 1));
+    --mw-duration-zoom: calc(#{$duration-zoom} * var(--mw-motion-scale, 1));
     --mw-ease-out: #{$ease-out};
     --mw-ease-in-out: #{$ease-in-out};
     --mw-ease-spring: #{$ease-spring};
@@ -67,6 +92,12 @@
     --mw-control-font-lg: #{$control-font-lg};
     --mw-control-line-height: #{$control-line-height};
 
+    // One ramp for both themes - the theme reaches it through the two shadow
+    // tokens the levels are built from
+    @each $name, $value in $elevations {
+      --mw-#{$name}: #{$value};
+    }
+
     // Focus ring
     --mw-focus-ring-width: #{$focus-ring-width};
     --mw-focus-ring-offset: #{$focus-ring-offset};
@@ -75,7 +106,9 @@
     --mw-focus-halo-opacity: #{$focus-halo-opacity};
 
     // The only way the chrome the browser draws itself follows the theme:
-    // scrollbars, the select popup, the date picker panel, number spinners
+    // scrollbars, the select popup, the date picker panel, number spinners.
+    // Under `switchable` this is also what light-dark() reads, so the pair below
+    // does double duty and the @supports block widens it to `light dark`.
     @if $mw-theme-mode == 'light' {
       color-scheme: light;
     } @else {
@@ -138,6 +171,62 @@
       }
 
       color-scheme: light;
+    }
+
+    // The same two themes, declared once instead of twice. A custom property
+    // holding light-dark() is resolved where it is *used*, against that
+    // element's color-scheme - so one declaration on :root serves both, and a
+    // class further down switches every token by changing nothing but the
+    // scheme. The page then also follows the OS out of the box, which the
+    // class-only route could never do: before the script had run, a machine set
+    // to light still got the dark theme for a frame.
+    //
+    // The block above stays as the fallback for Chrome 119-122 and Safari
+    // 16.4-17.4, which are inside the declared browserslist but predate
+    // light-dark(). Drop it, and the two class rules with it, once the support
+    // floor moves past Chrome 123 / Safari 17.5.
+    @supports (color: light-dark(#000, #fff)) {
+      :root,
+      .mw-theme-light {
+        @each $name, $value in $_theme-colors {
+          --mw-#{$name}: light-dark(
+            var(--mw-light-#{$name}),
+            var(--mw-dark-#{$name})
+          );
+        }
+      }
+
+      :root {
+        color-scheme: light dark;
+      }
+
+      // Not a color, so it cannot ride along above - it follows the OS here and
+      // is overridden by whichever class the toggle puts on the body
+      @media (prefers-color-scheme: light) {
+        :root {
+          @each $name in $theme-non-colors {
+            --mw-#{$name}: var(--mw-light-#{$name});
+          }
+        }
+      }
+
+      .mw-theme-light {
+        color-scheme: light;
+
+        @each $name in $theme-non-colors {
+          --mw-#{$name}: var(--mw-light-#{$name});
+        }
+      }
+
+      // Only reachable once the OS says light: the explicit counterpart to the
+      // class above, so a reader who wants dark on a light machine gets it
+      .mw-theme-dark {
+        color-scheme: dark;
+
+        @each $name in $theme-non-colors {
+          --mw-#{$name}: var(--mw-dark-#{$name});
+        }
+      }
     }
   }
 

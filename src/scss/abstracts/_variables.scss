@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use 'sass:string';
 
 $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
@@ -162,17 +163,28 @@ $focus-halo-opacity: 28% !default;
   );
 }
 
-// Darker, fully opaque variant of a token
+// Darker by a share of the color's own lightness, hue and chroma kept. OKLch and
+// not `color-mix(..., black)`: mixing toward black in HSL takes the saturation
+// down with the lightness, so one $amount reads as a different step on every hue
+// - the yellow goes grey while the blue only dims. Here the six status colors
+// move by the same perceived amount.
 @function shade($name, $amount) {
+  $factor: math.div(100% - $amount, 100%);
+
   @return string.unquote(
-    'color-mix(in hsl, var(--mw-#{$name}), black #{$amount})'
+    'oklch(from var(--mw-#{$name}) calc(l * #{$factor}) c h)'
   );
 }
 
-// Lighter, fully opaque variant of a token
+// The other direction, toward white. Chroma is pulled back by the same share it
+// is lightened by, because a color lifted at full chroma reads as neon rather
+// than as a tint of itself - which is what the HSL mix did implicitly.
 @function tint($name, $amount) {
+  $lift: math.div($amount, 100%);
+  $rest: math.div(100% - $amount, 100%);
+
   @return string.unquote(
-    'color-mix(in hsl, var(--mw-#{$name}), white #{$amount})'
+    'oklch(from var(--mw-#{$name}) calc(l + (1 - l) * #{$lift}) calc(c * #{$rest}) h)'
   );
 }
 
@@ -183,8 +195,10 @@ $focus-halo-opacity: 28% !default;
   );
 }
 
-// Darkened straight toward black, $amount being how much of the color survives.
-// shade() washes out the saturation on the way, which a surface must not do.
+// Darkened straight toward black, $amount being how much of the color *survives*
+// - not how far its lightness moves, which is what shade() above scales. The two
+// part company at the deep end: at 14% shade() lands near L 0.05, where the hue
+// is clipped out of gamut, while this keeps the channel ratios and stays blue.
 @function deepen($name, $amount) {
   @return string.unquote(
     'color-mix(in srgb, var(--mw-#{$name}) #{$amount}, black)'
@@ -223,11 +237,16 @@ $focus-halo-opacity: 28% !default;
 
 // Near is the contact shadow that pins the box down, far the ambient spread that
 // says how high it floats. One layer alone reads as a blur, the pair as light.
-// Theme-prefixed tokens, so the ramp is declared once per theme.
-@function elevation($theme, $y-near, $blur-near, $y-far, $blur-far) {
+//
+// Built on the theme-resolved shadow tokens rather than a per-theme pair: the two
+// themes only ever differed in the colour of those two layers, never in the
+// geometry, so the ramp is one set of five and the theme reaches it through
+// --mw-shadow-near/-far. That also makes .mw-shadows-flat a single-selector
+// override again - it is no longer re-declared further down the tree.
+@function elevation($y-near, $blur-near, $y-far, $blur-far) {
   @return string.unquote(
-    '0 #{$y-near} #{$blur-near} var(--mw-#{$theme}-shadow-near),' +
-      ' 0 #{$y-far} #{$blur-far} var(--mw-#{$theme}-shadow-far)'
+    '0 #{$y-near} #{$blur-near} var(--mw-shadow-near),' +
+      ' 0 #{$y-far} #{$blur-far} var(--mw-shadow-far)'
   );
 }
 
@@ -307,6 +326,10 @@ $semantic-colors: (
   danger: var(--mw-danger-color),
 );
 
+// The theme keys that are not colors. light-dark() only takes <color>, so these
+// keep the alias-per-theme route while everything else resolves in one line.
+$theme-non-colors: ('hero-image-filter');
+
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
@@ -317,17 +340,11 @@ $dark-theme-colors: (
   'footer-background': surface('dark-page-background', $footer-surface-dark),
   'border': surface('dark-page-background', 1.35),
   'shadow': fade('dark-text-color', 30%),
-  // A component names a level instead of inventing another `0 5px 9px`
   'shadow-near': alpha(
       surface('dark-page-background', $shadow-cast-dark),
       $shadow-near-dark
     ),
   'shadow-far': fade('dark-text-color', $shadow-far-dark),
-  'elevation-1': elevation('dark', 1px, 2px, 1px, 4px),
-  'elevation-2': elevation('dark', 2px, 4px, 5px, 12px),
-  'elevation-3': elevation('dark', 3px, 6px, 10px, 24px),
-  'elevation-4': elevation('dark', 6px, 12px, 18px, 40px),
-  'elevation-5': elevation('dark', 10px, 20px, 30px, 64px),
   'text-color': $dark-text-color,
   'text-muted-color': muted(0.7),
   // Derived, so overriding a root color yields a readable dark variant for free
@@ -355,11 +372,6 @@ $light-theme-colors: (
   'shadow': fade('light-text-color', 30%),
   'shadow-near': fade('light-text-color', $shadow-near-light),
   'shadow-far': fade('light-text-color', $shadow-far-light),
-  'elevation-1': elevation('light', 1px, 2px, 1px, 4px),
-  'elevation-2': elevation('light', 2px, 4px, 5px, 12px),
-  'elevation-3': elevation('light', 3px, 6px, 10px, 24px),
-  'elevation-4': elevation('light', 6px, 12px, 18px, 40px),
-  'elevation-5': elevation('light', 10px, 20px, 30px, 64px),
   'text-color': $light-text-color,
   'text-muted-color': muted(0.5),
   // Other direction: a color too light to read on paper is deepened
@@ -375,6 +387,17 @@ $light-theme-colors: (
   'corner-accent': fade('light-primary-text-color', 80%),
   // Full strength is the frame a resting card must not have and a hovered one wants
   'corner-accent-hover': token('light-primary-text-color'),
+);
+
+// The elevation ramp, shared by both themes - see elevation(). A component names
+// a level instead of inventing another `0 5px 9px`.
+// Emitted as --mw-<key>.
+$elevations: (
+  'elevation-1': elevation(1px, 2px, 1px, 4px),
+  'elevation-2': elevation(2px, 4px, 5px, 12px),
+  'elevation-3': elevation(3px, 6px, 10px, 24px),
+  'elevation-4': elevation(6px, 12px, 18px, 40px),
+  'elevation-5': elevation(10px, 20px, 30px, 64px),
 );
 
 // Emitted as --mw-header-<key>. Built from the primary rather than a theme token,
@@ -463,6 +486,9 @@ $spacing: (
 // Breakpoints
 // Shared by _cards.scss and _pricing.scss, which have to agree on it
 $mw-card-narrow: 360px !default;
+// The other end of the same axis: at this width a card has the room for the
+// larger title and the roomier padding it used to get from a `md` viewport
+$mw-card-wide: 420px !default;
 
 $breakpoints: (
   'xs': 375px,

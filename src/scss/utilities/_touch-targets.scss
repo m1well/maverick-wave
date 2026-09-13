@@ -5,7 +5,7 @@
   // sizes are right under a pointer and too small under a thumb. Coarse *or*
   // narrow, because a tablet in landscape is wide and still finger-operated.
   // Loaded last, so these win without extra specificity.
-  @media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+  @media (pointer: coarse), (width <= #{breakpoint('md')}) {
     // Padding and line-height add up to ~35px, under the 44px a thumb needs. Only
     // the height grows: the padding sets the label's relationship to the edges.
     .mw-btn {

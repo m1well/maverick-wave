@@ -10,7 +10,7 @@
     height: 4px;
     background: var(--mw-warning-color);
     z-index: z-index('modal')-10;
-    animation: pulse-indicator 4s infinite;
+    animation: pulse-indicator motion(4s) infinite;
   }
 
   // Keyframes for the pulsing indicator

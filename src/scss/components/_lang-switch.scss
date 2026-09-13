@@ -52,7 +52,7 @@
   .mw-lang-switch .mw-dropdown-menu {
     min-width: 170px;
 
-    @media (pointer: coarse), (max-width: #{breakpoint('sm')}) {
+    @media (pointer: coarse), (width <= #{breakpoint('sm')}) {
       min-width: max(100%, 240px);
     }
   }

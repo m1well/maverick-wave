@@ -57,6 +57,7 @@
     margin: spacing('1') auto;
     padding: spacing('5') 0;
     width: min(100%, 900px);
+    container: mw-timeline / inline-size;
 
     // Center vertical line
     &::before {
@@ -185,7 +186,7 @@
       background: var(--mw-primary-color);
       border-color: var(--mw-primary-text-color);
       transform: scale(1.1);
-      animation: mw-pulse-ring-big 2s infinite;
+      animation: mw-pulse-ring-big motion(2s) infinite;
 
       .mw-timeline-big-date-main,
       .mw-timeline-big-date-sub {
@@ -193,9 +194,10 @@
       }
     }
 
-    @include media-down('sm') {
-      width: 100%;
-
+    // The two-sided layout collapses when the timeline itself runs out of room,
+    // not when the window does - the same timeline in a half-width column had
+    // its content overlapping the centre line on a wide desktop.
+    @container mw-timeline (width < #{breakpoint('sm')}) {
       // Line moves to the left
       &::before {
         left: 0;
@@ -258,6 +260,7 @@
     margin: spacing('1') auto;
     padding: spacing('3') 0;
     width: min(96%, 930px);
+    container: mw-timeline / inline-size;
 
     // Vertical line centered over the date column
     &::before {
@@ -319,12 +322,16 @@
       background: var(--mw-primary-color);
       color: var(--mw-primary-accent-text-color);
       transform: scale(1.1);
-      animation: mw-pulse-ring-simple 2s infinite;
+      animation: mw-pulse-ring-simple motion(2s) infinite;
     }
 
+    // The inset is a page-level call: on a phone the timeline takes the full
+    // width, however wide its column happens to be.
     @include media-down('sm') {
       width: 100%;
+    }
 
+    @container mw-timeline (width < #{breakpoint('sm')}) {
       &::before {
         left: 0;
         transform: none;

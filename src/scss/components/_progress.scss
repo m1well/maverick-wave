@@ -1,6 +1,15 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
+  // How far the bar is filled - written by the script, read by the keyframe at
+  // the bottom. Registered and not declared on the element: a `data-value` the
+  // script cannot parse lands on 0% instead of dropping `width` altogether.
+  @property --mw-progress-value {
+    syntax: '<length-percentage>';
+    inherits: true;
+    initial-value: 0%;
+  }
+
   .mw-progress {
     &-container {
       margin: spacing('1');
@@ -60,11 +69,6 @@
       // variant is on the element - preset to the default fill, re-pointed by
       // the variants at the bottom of the file
       --mw-progress-ink: var(--mw-secondary-accent-text-color);
-
-      // How far the bar is filled. Written by the script from data-value or from
-      // an inline width, and read by the keyframe below. Declared here so it has
-      // a definition rather than only a fallback - an unset bar is an empty one.
-      --mw-progress-value: 0;
 
       height: 100%;
       background: var(--mw-secondary-color);

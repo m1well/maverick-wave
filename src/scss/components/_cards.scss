@@ -58,14 +58,17 @@
       overflow: hidden;
     }
 
-    // Named, so the query cannot resolve to a container further up the tree. Only
-    // cards with a footer, and they claim their slot: inline-size containment
-    // computes the width as if the card were empty, so one that sizes to its
-    // content would collapse to its border.
-    &:has(.mw-card-footer) {
-      width: 100%;
-      container: mw-card / inline-size;
-    }
+    // Named, so the query cannot resolve to a container further up the tree.
+    // Every card, not only the ones with a footer: the title, the padding and
+    // the image height all used to step on a *viewport* breakpoint, so a card in
+    // a three-column grid on a wide desktop took the same 1.5rem title as the
+    // full-width one on a phone while being a third of its width.
+    //
+    // `width: 100%` is what makes it safe: inline-size containment computes the
+    // width as if the card were empty, so a card that sized to its content would
+    // otherwise collapse to its border.
+    width: 100%;
+    container: mw-card / inline-size;
 
     // The arc on the two round corners is the one mark that makes a card look
     // like this framework and not like a rounded box, so it is what the hover
@@ -168,6 +171,9 @@
     &-lg {
       --mw-card-img-height: 260px;
 
+      // On the window and not on the card: this declaration sits on the card,
+      // which is the container, and a container cannot query itself. The height
+      // of a picture is a question of room on screen anyway.
       @include media-up('sm') {
         --mw-card-img-height: 340px;
       }
@@ -176,6 +182,9 @@
     &-xl {
       --mw-card-img-height: 340px;
 
+      // On the window and not on the card: this declaration sits on the card,
+      // which is the container, and a container cannot query itself. The height
+      // of a picture is a question of room on screen anyway.
       @include media-up('sm') {
         --mw-card-img-height: 480px;
       }
@@ -187,7 +196,7 @@
       flex-grow: 1;
       padding: spacing('6') spacing('4') spacing('5');
 
-      @include media-up('sm') {
+      @container mw-card (width >= #{$mw-card-wide}) {
         padding: spacing('7') spacing('5') spacing('6');
       }
 
@@ -204,7 +213,7 @@
     &-title {
       margin-bottom: spacing('3');
       font-size: font-size('lg');
-      @include media-up('md') {
+      @container mw-card (width >= #{$mw-card-wide}) {
         font-size: font-size('xl');
       }
 
@@ -245,7 +254,7 @@
       line-height: 1.2;
       font-style: italic;
       color: var(--mw-text-muted-color);
-      @include media-up('md') {
+      @container mw-card (width >= #{$mw-card-wide}) {
         margin-bottom: spacing('3');
       }
     }
@@ -253,7 +262,7 @@
     &-text {
       margin: spacing('2') spacing('0') spacing('4') spacing('0');
       color: var(--mw-text-color);
-      @include media-down('sm') {
+      @container mw-card (width <= #{$mw-card-narrow}) {
         margin-bottom: spacing('2');
       }
     }
@@ -285,7 +294,7 @@
       // Stacked once the card is narrow, not once the window is - a card in a
       // three-column grid on a wide desktop is as narrow as the same card on a
       // phone and used to keep its actions in a cramped row anyway.
-      @container mw-card (max-width: #{$mw-card-narrow}) {
+      @container mw-card (width <= #{$mw-card-narrow}) {
         flex-direction: column;
         align-items: stretch;
         gap: spacing('2');
@@ -353,7 +362,7 @@
         justify-content: center;
         margin: spacing('0');
 
-        @include media-down('sm') {
+        @container mw-card (width <= #{$mw-card-narrow}) {
           font-size: font-size('sm');
         }
       }

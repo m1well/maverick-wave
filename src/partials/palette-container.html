@@ -173,10 +173,16 @@
   <p class="palette-hint">
     Every switch is one class on &lt;html&gt; or one custom property - no build,
     no rebuild. The box at the bottom is what a project would carry, and it
-    reads back: paste someone else's setup in to see it.
+    reads back: paste someone else's setup in to see it. The link does the same
+    - Copy link hands someone this page exactly as it stands.
   </p>
 
   <div id="variant-list">
+    <p class="variant-group">Shown in the preview</p>
+    <p class="variant-group-hint">
+      Surfaces, controls and type - the section at the bottom of this page.
+    </p>
+
     <label class="variant-row">
       <span class="variant-label">
         Distinctive card corners
@@ -251,30 +257,6 @@
 
     <label class="variant-row">
       <span class="variant-label">
-        Heading font
-        <small>The typeface for headlines. Body copy is unaffected.</small>
-      </span>
-      <select data-variant-prop="--mw-font-family-heading">
-        <option value="" selected>System</option>
-        <option value="Georgia, 'Times New Roman', serif">Serif</option>
-        <option
-          value="Optima, Candara, 'Gill Sans', 'Trebuchet MS', sans-serif"
-        >
-          Humanist
-        </option>
-      </select>
-    </label>
-
-    <label class="variant-row">
-      <span class="variant-label">
-        Uppercase headings
-        <small>Headlines set in capitals with wider letter spacing.</small>
-      </span>
-      <input type="checkbox" data-variant-class="mw-headings-caps" />
-    </label>
-
-    <label class="variant-row">
-      <span class="variant-label">
         Flat surfaces
         <small
           >Cards and panels lose their shadow and sit flat on the page.
@@ -297,6 +279,82 @@
 
     <label class="variant-row">
       <span class="variant-label">
+        Uppercase headings
+        <small>Headlines set in capitals with wider letter spacing.</small>
+      </span>
+      <input type="checkbox" data-variant-class="mw-headings-caps" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Underlined links
+        <small
+          >Links in running text carry their underline at rest instead of only
+          under the pointer.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-links-underline" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Density
+        <small
+          >How much padding sits inside cards, panels and controls. Type stays
+          the size it is - use Text size to scale everything together.</small
+        >
+      </span>
+      <select data-variant-classes>
+        <option value="mw-density-compact">Compact</option>
+        <option value="" selected>Default</option>
+        <option value="mw-density-roomy">Roomy</option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Text size
+        <small
+          >The base the whole scale is built on - type, padding and control
+          heights move together.</small
+        >
+      </span>
+      <select data-variant-prop="--mw-root-font-size">
+        <option value="93.75%">Compact</option>
+        <option value="" selected>Default</option>
+        <option value="106.25%">Large</option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Page width
+        <small
+          >How wide the content runs before it stops growing on a large
+          screen.</small
+        >
+      </span>
+      <select data-variant-prop="--mw-container-width">
+        <option value="min(800px, calc(100% - 2 * var(--mw-container-gutter)))">
+          800
+        </option>
+        <option value="min(960px, calc(100% - 2 * var(--mw-container-gutter)))">
+          960
+        </option>
+        <option value="" selected>1200 (default)</option>
+        <option
+          value="min(1440px, calc(100% - 2 * var(--mw-container-gutter)))"
+        >
+          1440
+        </option>
+        <option value="calc(100% - 2 * var(--mw-container-gutter))">
+          Full
+        </option>
+      </select>
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
         Static on hover
         <small
           >Nothing lifts or zooms under the pointer. Colours and borders still
@@ -308,19 +366,21 @@
 
     <label class="variant-row">
       <span class="variant-label">
-        Scroll reveal
+        Motion tempo
         <small
-          >Cards and sections rise into place as they scroll in. Off has
-          everything sit where it lands.</small
+          >How fast every transition and animation runs. Reduced-motion settings
+          still win over this.</small
         >
       </span>
-      <input
-        type="checkbox"
-        checked
-        data-variant-class="mw-scroll-static"
-        data-variant-invert
-      />
+      <select data-variant-prop="--mw-motion-scale">
+        <option value="0.6">Brisk</option>
+        <option value="" selected>Default</option>
+        <option value="1.6">Relaxed</option>
+      </select>
     </label>
+
+    <p class="variant-group">Elsewhere on the page</p>
+    <p class="variant-group-hint">The frame around it. Scroll to see these.</p>
 
     <label class="variant-row">
       <span class="variant-label">
@@ -353,17 +413,18 @@
 
     <label class="variant-row">
       <span class="variant-label">
-        Text size
+        Scroll reveal
         <small
-          >The base the whole scale is built on - type, padding and control
-          heights move together.</small
+          >Cards and sections rise into place as they scroll in. Off has
+          everything sit where it lands.</small
         >
       </span>
-      <select data-variant-prop="--mw-root-font-size">
-        <option value="93.75%">Compact</option>
-        <option value="" selected>Default</option>
-        <option value="106.25%">Large</option>
-      </select>
+      <input
+        type="checkbox"
+        checked
+        data-variant-class="mw-scroll-static"
+        data-variant-invert
+      />
     </label>
 
     <label class="variant-row">
@@ -379,38 +440,17 @@
         <option value="5.5rem">Airy</option>
       </select>
     </label>
-
-    <label class="variant-row">
-      <span class="variant-label">
-        Page width
-        <small
-          >How wide the content runs before it stops growing on a large
-          screen.</small
-        >
-      </span>
-      <select data-variant-prop="--mw-container-width">
-        <option value="min(800px, calc(100% - 2 * var(--mw-container-gutter)))">
-          800
-        </option>
-        <option value="min(960px, calc(100% - 2 * var(--mw-container-gutter)))">
-          960
-        </option>
-        <option value="" selected>1200 (default)</option>
-        <option
-          value="min(1440px, calc(100% - 2 * var(--mw-container-gutter)))"
-        >
-          1440
-        </option>
-        <option value="calc(100% - 2 * var(--mw-container-gutter))">
-          Full
-        </option>
-      </select>
-    </label>
   </div>
 
-  <label class="variant-setup-label" for="variant-setup">
-    Setup - editable, paste one in to load it
-  </label>
+  <div class="variant-setup-head">
+    <label class="variant-setup-label" for="variant-setup">
+      Setup - editable, paste one in to load it
+    </label>
+    <button type="button" class="variant-share" id="variant-share">
+      <i class="fas fa-link"></i>
+      <span id="variant-share-label">Copy link</span>
+    </button>
+  </div>
   <textarea
     class="variant-setup"
     id="variant-setup"

@@ -18,7 +18,13 @@ const STORAGE_KEY = 'mw-theme';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  readonly light = signal(localStorage.getItem(STORAGE_KEY) === 'light');
+  // With nothing stored the stylesheet already follows the OS, so the initial
+  // value only has to agree with what is on screen
+  readonly light = signal(
+    localStorage.getItem(STORAGE_KEY)
+      ? localStorage.getItem(STORAGE_KEY) === 'light'
+      : matchMedia('(prefers-color-scheme: light)').matches
+  );
 
   constructor() {
     effect(() => {
@@ -27,6 +33,9 @@ export class ThemeService {
 
       root.classList.add('mw-theme-switching');
       document.body.classList.toggle('mw-theme-light', light);
+      // the explicit counterpart - without it a dark choice on a light machine
+      // falls back to the OS preference
+      document.body.classList.toggle('mw-theme-dark', !light);
       void root.offsetHeight; // commit the colours with transitions off
       root.classList.remove('mw-theme-switching');
 

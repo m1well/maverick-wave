@@ -187,7 +187,7 @@
     }
 
     // The floor a thumb needs, over the visual size above
-    @media (pointer: coarse), (max-width: #{breakpoint('md')}) {
+    @media (pointer: coarse), (width <= #{breakpoint('md')}) {
       --mw-btn-icon-size: 2.75rem;
 
       &.mw-btn-sm {

@@ -27,10 +27,16 @@
   @return map.get(v.$breakpoints, $key);
 }
 
+// What --mw-radius-scale cannot take away, shared by both functions below: a
+// page at scale 0 is meant to read as square, not as cut out of sheet metal.
+// The smallest step the scale already has, so the hardest setting lands on it
+// rather than off the end.
+$_radius-floor: map.get(v.$radius, 'xs');
+
 // Emitted through --mw-radius-scale, so one number retunes every rounded box in
 // the framework at once - 0 squares them off, above 1 rounds them further, and
-// the corner arc follows. 'none' and 'full' pass through: a scaled 0 is still 0,
-// and a circle has to stay a circle.
+// the corner arc follows. 'none' and 'full' pass through: an explicit 0 stays
+// 0, and a circle has to stay a circle.
 @function radius($key) {
   $value: map.get(v.$radius, $key);
 
@@ -38,7 +44,29 @@
     @return $value;
   }
 
-  @return calc(#{$value} * var(--mw-radius-scale, 1));
+  @return max(#{$_radius-floor}, calc(#{$value} * var(--mw-radius-scale, 1)));
+}
+
+// The sharp pair of the surface signature, squared against the scale so the two
+// halves of the silhouette keep their relationship. Linear, a page turned up to
+// Round holds an 8.5px corner against a 34px arc and the pair stops reading as
+// one shape; squared, the sharp side opens up with it.
+@function radius-sharp() {
+  $scale: var(--mw-radius-scale, 1);
+
+  @return max(
+    #{$_radius-floor},
+    calc(#{map.get(v.$radius, 'sm')} * #{$scale} * #{$scale})
+  );
+}
+
+// For the animations that run on their own clock rather than off a state change
+// - spinners, shimmers, the pulses. The duration tokens carry --mw-motion-scale
+// already, but these name their own timing, and a motion setting that leaves
+// the one thing on screen that is permanently moving at its old speed is not a
+// motion setting. prefers-reduced-motion still overrides the result outright.
+@function motion($duration) {
+  @return calc(#{$duration} * var(--mw-motion-scale, 1));
 }
 
 // Function to get a z-index value from the z-index map

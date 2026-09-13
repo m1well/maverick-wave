@@ -84,7 +84,7 @@
       inset: 0;
       border-radius: inherit;
       background: inherit;
-      animation: mw-badge-pulse 1.8s var(--mw-ease-out) infinite;
+      animation: mw-badge-pulse motion(1.8s) var(--mw-ease-out) infinite;
     }
   }
 

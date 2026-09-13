@@ -16,12 +16,24 @@
     justify-content: center;
     padding: spacing('7');
     opacity: 0;
-    transition: opacity var(--mw-duration-base) var(--mw-ease-out);
+    // `display` in the list and `allow-discrete` behind it, or the overlay is
+    // taken off the page the frame the class comes off and the fade out never
+    // renders - the modal inside it would slide down over nothing. The dialog
+    // version below has had this; the div version was landing hard.
+    transition:
+      opacity var(--mw-duration-base) var(--mw-ease-out),
+      display var(--mw-duration-base) allow-discrete;
 
     // Show modal when class is added
     &.mw-modal-open {
       display: flex;
       opacity: 1;
+
+      // A box that goes from `display: none` starts at its end state otherwise,
+      // so there is nothing to fade from
+      @starting-style {
+        opacity: 0;
+      }
     }
   }
 

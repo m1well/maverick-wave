@@ -1,0 +1,136 @@
+<!--
+  Showcase only: a page-shaped preview for the variant switches. The sections
+  above show one component at a time, which is the wrong lens for a switch that
+  retunes everything at once - here the parts sit next to each other the way
+  they would on a real page, and a change reads as a change of look. One column,
+  because the panel is fixed over the right half while any of this is in use.
+-->
+<div class="preview-page">
+  <div class="preview-head">
+    <div>
+      <h3 class="preview-title">Quarterly report</h3>
+      <p class="preview-lede">
+        Numbers for Q3 are in. The
+        <a href="#preview" class="mw-link">full breakdown</a> sits in the sheet,
+        the short version is below.
+      </p>
+    </div>
+    <span class="mw-badge mw-badge-info">Draft</span>
+  </div>
+
+  <div class="mw-alert mw-alert-info mw-mb-5">
+    <div class="mw-alert-icon">
+      <i class="fas fa-circle-info"></i>
+    </div>
+    <div class="mw-alert-content">
+      <span class="mw-alert-title">Two figures are still provisional</span>
+      <p>Finance signs off on Friday, the rest is final.</p>
+    </div>
+  </div>
+
+  <div class="mw-grid-3 mw-gap-4 mw-mb-5">
+    <div class="mw-card">
+      <div class="mw-card-badge mw-card-addon-success">Best</div>
+      <div class="mw-card-body">
+        <h4 class="mw-card-title">
+          <span class="mw-card-title-icon">
+            <i class="fas fa-arrow-trend-up"></i>
+          </span>
+          Revenue
+        </h4>
+        <hr class="mw-card-title-divider" />
+        <p class="mw-card-subtitle">EUR 4.2m, up 12 percent</p>
+        <p class="mw-card-text">
+          Carried by the two enterprise deals that closed in September.
+        </p>
+        <div class="mw-card-footer">
+          <span class="mw-text-muted mw-text-xs">Updated today</span>
+          <button type="button" class="mw-btn mw-btn-link">Details</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mw-card">
+      <div class="mw-card-body">
+        <h4 class="mw-card-title">
+          <span class="mw-card-title-icon">
+            <i class="fas fa-user-minus"></i>
+          </span>
+          Churn
+        </h4>
+        <hr class="mw-card-title-divider" />
+        <p class="mw-card-subtitle">1.8 percent, flat</p>
+        <p class="mw-card-text">
+          Both accounts that left cited the same missing integration.
+        </p>
+        <div class="mw-card-footer">
+          <span class="mw-text-muted mw-text-xs">Updated today</span>
+          <button type="button" class="mw-btn mw-btn-link">Details</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mw-card">
+      <div class="mw-card-body">
+        <h4 class="mw-card-title">
+          <span class="mw-card-title-icon">
+            <i class="fas fa-users"></i>
+          </span>
+          Headcount
+        </h4>
+        <hr class="mw-card-title-divider" />
+        <p class="mw-card-subtitle">41 people, four hires</p>
+        <p class="mw-card-text">
+          Two of them on the platform team. One open role left this quarter.
+        </p>
+        <div class="mw-card-footer">
+          <span class="mw-text-muted mw-text-xs">Updated today</span>
+          <button type="button" class="mw-btn mw-btn-link">Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="preview-row mw-mb-5">
+    <input
+      type="text"
+      class="mw-input"
+      placeholder="Add a note"
+      aria-label="Add a note"
+    />
+    <select class="mw-select" aria-label="Reviewer">
+      <option>Send to finance</option>
+      <option>Send to the board</option>
+      <option>Keep to myself</option>
+    </select>
+    <label class="mw-toggle">
+      <input type="checkbox" checked />
+      <div class="mw-toggle-track"></div>
+      <span class="mw-toggle-label">Notify the team</span>
+    </label>
+  </div>
+
+  <div class="preview-actions mw-mb-5">
+    <button type="button" class="mw-btn mw-btn-primary">Publish</button>
+    <button type="button" class="mw-btn mw-btn-secondary">Save draft</button>
+    <button type="button" class="mw-btn mw-btn-outline">Discard</button>
+    <button type="button" class="mw-btn mw-btn-ghost">Cancel</button>
+  </div>
+
+  <div class="preview-status">
+    <span class="mw-spinner-border mw-spinner-sm"></span>
+    <span>
+      <strong>Syncing with the finance sheet</strong>
+      <small>The two provisional figures update when it finishes.</small>
+    </span>
+  </div>
+
+  <div class="mw-tags">
+    <span class="mw-tags-item">
+      <i class="fas fa-tag mw-tags-icon"></i>
+      Q3
+    </span>
+    <span class="mw-tags-item">finance</span>
+    <span class="mw-tags-item">internal</span>
+  </div>
+</div>

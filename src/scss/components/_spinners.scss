@@ -16,20 +16,20 @@
       border: 0.5rem solid var(--mw-border);
       border-radius: radius('full');
       border-top-color: var(--mw-primary-text-color);
-      animation: mw-spin 1.2s linear infinite;
+      animation: mw-spin motion(1.2s) linear infinite;
 
       &.mw-spinner-sm {
         width: $_size-sm;
         height: $_size-sm;
         border-width: 0.3rem;
-        animation: mw-spin 1.4s linear infinite;
+        animation: mw-spin motion(1.4s) linear infinite;
       }
 
       &.mw-spinner-lg {
         width: $_size-lg;
         height: $_size-lg;
         border-width: 0.7rem;
-        animation: mw-spin 1s linear infinite;
+        animation: mw-spin motion(1s) linear infinite;
       }
 
       &.mw-spinner-primary {
@@ -54,7 +54,7 @@
         border-radius: radius('full');
         display: inline-block;
         margin: spacing('0') spacing('2');
-        animation: mw-bounce 1.4s infinite ease-in-out both;
+        animation: mw-bounce motion(1.4s) infinite ease-in-out both;
 
         &:nth-child(1) {
           animation-delay: -0.32s;
@@ -110,7 +110,7 @@
         border: 0.5rem solid var(--mw-primary-text-color);
         border-color: var(--mw-primary-text-color) transparent
           var(--mw-primary-text-color) transparent;
-        animation: mw-spin 1.5s linear infinite;
+        animation: mw-spin motion(1.5s) linear infinite;
       }
 
       &.mw-spinner-sm {
