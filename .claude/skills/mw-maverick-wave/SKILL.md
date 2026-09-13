@@ -44,14 +44,14 @@ Load the one you need - do not read them all up front.
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.js"></script>
 ```
 
 Pin the version. The JS file is optional and only for server-rendered/static pages -
@@ -151,9 +151,9 @@ keys at all (negative gap is invalid CSS and is not generated).
 `5xl` 3, `6xl` 4.3 rem.
 
 **Breakpoints**: `xs` 375, `sm` 576, `md` 768, `lg` 992, `xl` 1200, `2xl` 1400 px.
-Column grids and most components are mobile-first (`min-width`); the ranges do
-not overlap, `media-down` stops 0.02px short of its breakpoint. Blocks that only
-adjust something on a phone stay `max-width`.
+Column grids and most components are mobile-first. The mixins emit range syntax
+(`media-up` is `width >= bp`, `media-down` is `width < bp`), so the two never
+overlap at the breakpoint itself and neither has to stop a fraction short of it.
 
 **Overriding.** Everything the framework emits sits in
 `@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities`.
@@ -187,16 +187,23 @@ Two shadows per level - a tight contact layer plus a wide ambient one:
 `0` is explicitly flat. Never write a `box-shadow` by hand - the twelve one-off
 values that used to exist are exactly what this replaced.
 
+**Glow** (`mw-glow`, `mw-glow-{primary,secondary,info,success,warning,danger}`).
+The same two-layer idea without the offset, so the surface reads as giving off
+the light rather than casting a shadow. For the one element on a screen that has
+to be seen first, and for nothing else.
+
 **Motion** `--mw-duration-instant|fast|base|slow|slower` = 110/180/300/520/900ms
 plus `--mw-duration-zoom` (650ms, for a large surface actually travelling),
 `--mw-ease-out` (things arriving - the default), `--mw-ease-in-out` (A to B and
 back), `--mw-ease-spring` (a pop). Two ready-made transitions:
 `var(--mw-transition)` for hover and focus states, `var(--mw-transition-fast)`
 for anything that should feel instant under the pointer. Both list their
-properties explicitly rather than saying `all`.
+properties explicitly rather than saying `all`. All six durations are multiplied
+by `--mw-motion-scale` (default 1), the tempo counterpart to
+`--mw-radius-scale`; `prefers-reduced-motion` overrides the result.
 
 **Control sizes** `--mw-control-height-sm|base|lg` = 1.875 / 2.125 / 2.375rem (an
-even 30 / 34 / 38px step) and
+even 30 / 34 / 38px step, moved by `mw-density-compact` and `-roomy`) and
 `--mw-control-font-sm|base|lg` = 0.8 / 0.9 / 1rem, shared by `mw-input`,
 `mw-select`, `mw-textarea` and `mw-btn`. A field and the button beside it are
 the same height by construction. Buttons run one font step above the fields.
@@ -264,7 +271,8 @@ feature frame) ·
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
 `mw-text-currency` · `mw-text-truncate` / `mw-text-clamp-2..5` /
 `mw-text-break` / `mw-text-nowrap` · `mw-text-balance` / `mw-text-pretty` /
-`mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` ·
+`mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` · `mw-glow` /
+`mw-glow-{primary,secondary,info,success,warning,danger}` ·
 `mw-corner-plain` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
@@ -342,10 +350,12 @@ feature frame) ·
     and the open state come from, and it works without script. The framework JS
     only adds Escape and click-outside. Writing your own div-plus-click loses all
     of it.
-17. **An open dropdown is clipped by anything that hides its overflow.** The menu
-    is absolutely positioned. The framework's own containers - panel, card, tile,
-    modal body, responsive table - lift the clip while a menu is open. On your
-    own container it is one line:
+17. **An open dropdown can be clipped by anything that hides its overflow.**
+    Where the browser supports anchor positioning the menu is `position: fixed`
+    and anchored to its trigger, so it escapes the clip on its own. Everywhere
+    else it is absolutely positioned and cut off. Either way the framework's own
+    containers (panel, card, tile, modal body, responsive table) lift the clip
+    while a menu is open. On your own container it is one line:
     `:has(.mw-dropdown[open]) { overflow: visible }`.
 18. **Never write `box-shadow` by hand.** Use `var(--mw-elevation-1..5)` or the
     `mw-elevation-*` class. A hand-rolled shadow is the wrong colour in one of

@@ -200,7 +200,7 @@
   // row survives the narrow-card stack and the action takes half of it. Here and
   // not in _cards.scss because the price is the guest - the footer's own rule is
   // right for everything that is not one.
-  @container mw-card (max-width: #{$mw-card-narrow}) {
+  @container mw-card (width <= #{$mw-card-narrow}) {
     .mw-card-footer:has(> .mw-price) {
       flex-direction: row;
       align-items: center;

@@ -183,8 +183,8 @@ as the header's first child under the same condition.
 `data-tooltip="..."` is a global attribute hook, not a class - it works on any
 element and shows a tooltip above it on hover or keyboard focus. It is pure CSS
 (a pseudo element on the trigger), which also means anything that clips its
-overflow cuts it off: a scroll container, or a card carrying a ribbon - plain
-cards do not clip. Close to the screen edge the bubble can run out of the
+overflow cuts it off: a scroll container, a tile, or a card carrying a ribbon -
+plain cards do not clip. Close to the screen edge the bubble can run out of the
 viewport, so keep long tooltips off the outermost elements.
 
 ## Sections
@@ -444,7 +444,7 @@ automatically.
 `mw-d-inline-block`, `mw-d-grid`, `mw-d-none`, `mw-d-contents`.
 
 **Responsive display** - `mw-d-{sm|md|lg|xl}-{none|block|flex|inline-flex|grid|inline-block}`.
-Mobile-first and min-width, like everything else here: `mw-d-md-flex` means
+Mobile-first like everything else here: `mw-d-md-flex` means
 "flex from the md breakpoint up", and the unprefixed class beside it is what
 applies below that. The pair `mw-d-none mw-d-md-flex` is hidden on a phone and a
 row from a tablet on. `mw-hide-mobile` (gone below md) and `mw-hide-desktop`
@@ -468,6 +468,11 @@ with it; `mw-text-capitalize` is the plain transform.
 
 **Elevation** - `mw-elevation-0` through `-5`, the same ramp every component
 uses. See the scale table in `SKILL.md`. Never hand-roll a `box-shadow`.
+
+**Glow** - `mw-glow` plus
+`mw-glow-{primary,secondary,info,success,warning,danger}`. Elevation without the
+offset, so the surface gives off the light instead of casting it. Once per
+screen at most.
 
 **Scroll entrance** - `mw-reveal` lets a block rise briefly as it scrolls into
 view, driven by the browser's scroll timeline (`animation-timeline: view()`).

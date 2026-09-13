@@ -70,7 +70,13 @@ const docs = DOCS.map(read).filter(Boolean).map(stripFrontmatter).join('\n');
 
 // --- 1 + 2: custom properties ---------------------------------------------
 
-const tokensDefined = new Set(all(css, /(--mw-[a-z0-9-]+)\s*:/g));
+// Two shapes count as a definition: a plain declaration, and an `@property`
+// registration - that one carries its value in `initial-value`, so the name is
+// followed by `{` and not by a colon.
+const tokensDefined = new Set([
+  ...all(css, /(--mw-[a-z0-9-]+)\s*:/g),
+  ...all(css, /@property\s+(--mw-[a-z0-9-]+)/g),
+]);
 // `\s*` after the paren: a long declaration wrapped by Prettier keeps its
 // newline inside var() all the way through the minifier, and a token used only
 // there would otherwise read as unused.

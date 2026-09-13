@@ -20,7 +20,7 @@ accordion FAQ.
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -487,7 +487,7 @@ accordion FAQ.
       <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.js"></script>
     <script>
       // The only thing the shipped script does not cover: opening a modal.
       // Closing works through .mw-modal-close, the backdrop is wired above.
@@ -505,7 +505,8 @@ accordion FAQ.
 ## Notes
 
 - The theme toggle needs no code - the script persists the choice under
-  `localStorage['mw-theme']`, toggles `mw-theme-light` on `<body>` and wraps the
+  `localStorage['mw-theme']`, toggles `mw-theme-light` / `mw-theme-dark` on
+  `<body>` and wraps the
   flip in `mw-theme-switching` so it starts no transitions.
 - The scroll spy sets `mw-active` on the `mw-navbar-link` whose `href` matches
   the `section[id]` currently in view - the `<section id="…">` elements are

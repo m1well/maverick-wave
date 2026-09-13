@@ -15,4 +15,21 @@
       box-shadow: var(--mw-elevation-#{$level});
     }
   }
+
+  // Light instead of shadow. Elevation says how far a surface floats above the
+  // page; this says it is the thing giving off the light - for the one element on
+  // a screen that has to be looked at first, and for nothing else.
+  //
+  // Two layers like elevation, and for the same reason: the tight one reads as
+  // the edge of the source, the wide one as the air around it. Both are
+  // offsetless, which is what separates a glow from a shadow - light does not
+  // fall downwards. Bare `.mw-glow` rides along on primary, because the brand
+  // colour is what a glow means unless it says otherwise.
+  @each $name, $col in $semantic-colors {
+    #{if($name == 'primary', '.mw-glow, ', '')}.mw-glow-#{$name} {
+      box-shadow:
+        0 0 6px color-mix(in srgb, #{$col} 45%, transparent),
+        0 0 26px color-mix(in srgb, #{$col} 28%, transparent);
+    }
+  }
 }

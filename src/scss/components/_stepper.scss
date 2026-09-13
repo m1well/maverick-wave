@@ -6,6 +6,7 @@
     display: flex;
     align-items: flex-start;
     width: 100%;
+    container: mw-stepper / inline-size;
 
     &-step {
       display: flex;
@@ -79,7 +80,9 @@
       }
     }
 
-    @include media-up('sm') {
+    // The step labels follow the strip's own width, not the window's - a
+    // stepper in a narrow card keeps the small label on a wide desktop.
+    @container mw-stepper (width >= #{breakpoint('sm')}) {
       &-label {
         font-size: font-size('xs');
       }

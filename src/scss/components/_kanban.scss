@@ -7,6 +7,8 @@
   // Room the ribbon needs in the top right corner of a ticket
   $_mw-kanban-ribbon-clearance: 66px;
   $_mw-kanban-ribbon-clearance-compact: 58px;
+  // Narrowest a lane may get before the board wraps it to the next row
+  $_mw-kanban-lane-min: 260px;
 
   @keyframes mw-kanban-card-in {
     from {
@@ -58,21 +60,20 @@
     --mw-kanban-column-min-height: 120px;
 
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
+    // As many lanes as fit at a readable width, the rest wrap. The board asks
+    // its own width, so one inside a panel wraps on a desktop too. `min()`
+    // against 100% keeps a lane out of a container narrower than the minimum.
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(#{$_mw-kanban-lane-min}, 100%), 1fr)
+    );
     gap: spacing('4');
     padding: spacing('4');
     background: var(--mw-kanban-background);
     border-radius: radius('md');
 
-    // Two lanes side by side stay readable, four do not
-    @include media-down('lg') {
-      grid-auto-flow: row;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
+    // Frame only - how tight the board sits on a phone is a viewport call
     @include media-down('sm') {
-      grid-template-columns: minmax(0, 1fr);
       gap: spacing('3');
       padding: spacing('3');
     }

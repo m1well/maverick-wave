@@ -23,7 +23,7 @@ The result is a framework that balances utility with simplicity, offering develo
 - A five-step elevation ramp and a motion scale, so every shadow and every transition in the framework comes from one place
 - Mobile as a first-class target: 44px touch targets on a coarse pointer, modals that become bottom sheets, press states on everything, and hover effects that do not latch after a tap
 - Easy Customization via CSS Custom Properties
-- Built-in Light & Dark Mode with optional theme switching
+- Built-in Light & Dark Mode - follows the OS by default, switchable per reader
 - SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
 - Modals as `<div>` or as `<dialog>` - the latter brings the focus trap, Escape and the inert background from the platform
 - Native form validation is styled through `:user-invalid`, alongside the class-driven error states for reactive forms
@@ -42,12 +42,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.8.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.9.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -130,7 +130,8 @@ assembled rather than designed.
 :root {
   /* Elevation. Each level is two shadows - a tight contact layer that gives
      the box weight, and a wide ambient one that says how high it floats.
-     Declared per theme, because the tones they are mixed from differ. */
+     One ramp for both themes; the theme arrives through the shadow tokens
+     the levels are built from. */
   --mw-elevation-1: /* resting: inputs, tags, small controls */;
   --mw-elevation-2: /* raised: cards and panels at rest */;
   --mw-elevation-3: /* floating: a card under the pointer */;
@@ -347,32 +348,42 @@ layer of its own:
 
 ### Site-wide variants
 
-Twelve classes on `<html>` retune the whole look without touching markup or
+Fifteen classes on `<html>` retune the whole look without touching markup or
 rebuilding. They stack.
 
-| Class               | Effect                                                                  |
-| ------------------- | ----------------------------------------------------------------------- |
-| `mw-corners-even`   | Drops the surface signature - every panel becomes an evenly rounded box |
-| `mw-accent-single`  | One brand colour instead of two; `mw-btn-secondary` turns outline       |
-| `mw-shadows-flat`   | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
-| `mw-surfaces-flush` | Cards, panels and footer on the page colour, held by their border       |
-| `mw-hover-static`   | No hover travels - lifts and image zooms go, colour still responds      |
-| `mw-scroll-static`  | No scroll entrance - `mw-reveal` blocks sit where they land             |
-| `mw-sections-plain` | The hatch behind `mw-section-alternate` collapses into the page colour  |
-| `mw-headings-caps`  | `h1`-`h3` in capitals                                                   |
-| `mw-btn-pill`       | Fully rounded buttons; form fields keep their radius                    |
-| `mw-btn-square`     | Buttons cut to a hard corner while the page keeps its radius            |
-| `mw-btn-glass`      | Filled buttons become a translucent wash with a lit top edge            |
-| `mw-btn-tactile`    | Filled buttons stand on a darker edge and sink onto it when pressed     |
+| Class                | Effect                                                                  |
+| -------------------- | ----------------------------------------------------------------------- |
+| `mw-corners-even`    | Drops the surface signature - every panel becomes an evenly rounded box |
+| `mw-accent-single`   | One brand colour instead of two; `mw-btn-secondary` turns outline       |
+| `mw-shadows-flat`    | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
+| `mw-surfaces-flush`  | Cards, panels and footer on the page colour, held by their border       |
+| `mw-hover-static`    | No hover travels - lifts and image zooms go, colour still responds      |
+| `mw-scroll-static`   | No scroll entrance - `mw-reveal` blocks sit where they land             |
+| `mw-sections-plain`  | The hatch behind `mw-section-alternate` collapses into the page colour  |
+| `mw-headings-caps`   | `h1`-`h3` in capitals                                                   |
+| `mw-links-underline` | Links underlined at rest; the stroke thickens on hover                  |
+| `mw-btn-pill`        | Fully rounded buttons; form fields keep their radius                    |
+| `mw-btn-square`      | Buttons cut to a hard corner while the page keeps its radius            |
+| `mw-btn-glass`       | Filled buttons become a translucent wash with a lit top edge            |
+| `mw-btn-tactile`     | Filled buttons stand on a darker edge and sink onto it when pressed     |
+| `mw-density-compact` | Less padding in cards, panels and controls; type stays put              |
+| `mw-density-roomy`   | More of the same                                                        |
 
-Five properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
+Six properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
 squares the framework off), `--mw-root-font-size` moves the whole rem scale,
-plus `--mw-font-family-heading`, `--mw-container-width` and
+`--mw-motion-scale` the tempo of every transition, plus
+`--mw-font-family-heading`, `--mw-container-width` and
 `--mw-section-padding-block`.
+
+The [showcase](https://maverick-wave.m1well.com) has a picker for all of them,
+and the URL carries whatever is set - send that link and the next person opens
+the page exactly as you left it. The panel prints the same setup as markup and
+CSS to copy into a project.
 
 A variant of your own that retunes a theme-bound token has to target
 `:root.your-class` **and** `:root.your-class .mw-theme-light` - the light theme
-re-declares those on `<body>` and would shadow a root-only value.
+re-declares those on `<body>` and would shadow a root-only value. The elevation
+tokens are the exception and need only `:root`.
 
 ### SCSS Source
 
@@ -458,7 +469,7 @@ above):
 > change detection. The behaviors it covers (accordion, tabs, modal close, mobile
 > nav, scroll spy, theme toggle, progress bars, sliders, alerts, galleries) are a
 > few lines each in a component - the framework's state classes are the whole
-> contract. Theme switching, for example, is a single class on `<body>`:
+> contract. Theme switching, for example, is a pair of classes on `<body>`:
 
 ```typescript
 // theme.service.ts - mw-theme-switching suppresses the transitions the flip
@@ -467,9 +478,15 @@ const root = document.documentElement;
 
 root.classList.add('mw-theme-switching');
 document.body.classList.toggle('mw-theme-light', isLight);
+// the explicit counterpart - without it a dark choice on a light machine
+// falls back to the OS preference
+document.body.classList.toggle('mw-theme-dark', !isLight);
 void root.offsetHeight;
 root.classList.remove('mw-theme-switching');
 ```
+
+With neither class the page follows `prefers-color-scheme`, so an app that has
+nothing stored yet can simply leave both off.
 
 The `mw-field` wrapper groups label, control, hint and error. Bind the error
 state yourself - the framework does not style Angular's `ng-invalid` /

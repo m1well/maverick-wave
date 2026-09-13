@@ -135,8 +135,19 @@ Two rules that prevent most colour bugs:
 
 ## Light & dark
 
-- Dark is the base. Light is applied by putting `mw-theme-light` on `<body>` -
-  that class only re-points the theme aliases at the `--mw-light-*` set.
+- Every theme token is declared once on `:root` as `light-dark(light, dark)`.
+  Which half applies is decided by `color-scheme` on the element that **uses**
+  the token, and `:root` carries `color-scheme: light dark` - so a page follows
+  the OS until someone chooses otherwise.
+- `mw-theme-light` and `mw-theme-dark` on `<body>` are that choice. They set
+  little more than `color-scheme`, and every token follows. `mw-theme-dark` is
+  not redundant: without it, a reader who picks dark on a machine set to light
+  would be pulled straight back to the OS preference.
+- Chrome 119-122 and Safari 16.4-17.4 are in the browserslist but predate
+  `light-dark()`. `base/_base.scss` keeps the old route for them behind
+  `@supports` - dark on `:root`, light by class, no OS tracking.
+- `--mw-hero-image-filter` is the one theme value that is not a colour and so
+  cannot ride along; it follows `prefers-color-scheme` instead.
 - Card, footer and border are derived from the page background by scaling its
   OKLch lightness and chroma by one factor. A card steps **away from the text
   colour** - darker than the page in the dark theme, lighter in the light one.
@@ -176,7 +187,9 @@ Two rules that prevent most colour bugs:
   or move it down with the bar.
 - Persisting the choice, the toggle UI and the initial class are the
   application's job in a SPA (`examples/angular-services.md`). The shipped JS
-  does it for static pages using `localStorage` under the key `mw-theme`.
+  does it for static pages using `localStorage` under the key `mw-theme`. With
+  nothing stored it takes the OS preference and keeps tracking it live, so
+  changing the system theme moves the page until the reader picks a side.
 - **Suppress transitions while the class flips.** Colour changes on nearly every
   element at once, and the shared `--mw-transition` turns that into thousands of
   concurrent animations - on a documentation-sized page it is seconds of blocked
@@ -189,29 +202,35 @@ const root = document.documentElement;
 
 root.classList.add('mw-theme-switching');
 document.body.classList.toggle('mw-theme-light', isLight);
+document.body.classList.toggle('mw-theme-dark', !isLight);
 void root.offsetHeight; // commit the new colours with transitions off
 root.classList.remove('mw-theme-switching');
 ```
 
 ## Site-wide variants
 
-Twelve classes on `<html>` and five custom properties retune the whole look
-without a rebuild. They stack, and none of them need a class per element.
+Fifteen classes on `<html>` and six custom properties retune the whole look
+without a rebuild. They stack, and none of them need a class per element. The
+showcase at https://maverick-wave.m1well.com has a picker for the set, and its
+URL carries the choice - a link is how a look gets agreed on before it is built.
 
-| Class               | Effect                                                                                                                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mw-corners-even`   | Drops the surface signature - every card, panel and modal becomes an evenly rounded `radius('md')` box                                                                          |
-| `mw-accent-single`  | `--mw-secondary-color` follows the primary; `mw-btn-secondary` turns outline so the two stay apart                                                                              |
-| `mw-shadows-flat`   | Elevation 1-3 to `none`. The dropdown (4) and the modal (5) keep their shadow                                                                                                   |
-| `mw-surfaces-flush` | Card, panel and footer background drop to the page colour and the border is redrawn from the ink, because the old one is a neighbouring shade of a surface that is now the page |
-| `mw-hover-static`   | No hover travels - lifts, image zooms and slides go. Colour and border still respond                                                                                            |
-| `mw-scroll-static`  | No scroll entrance - `mw-reveal` and `mw-reveal-stagger` blocks sit where they land                                                                                             |
-| `mw-sections-plain` | The diagonal hatch behind `mw-section-alternate` collapses into the page colour                                                                                                 |
-| `mw-headings-caps`  | `h1`-`h3` in capitals with 0.045em tracking                                                                                                                                     |
-| `mw-btn-pill`       | `mw-btn` fully rounded. Form fields keep their own radius                                                                                                                       |
-| `mw-btn-square`     | `mw-btn` to `border-radius: 0`. The other end of the same axis, and unlike `--mw-radius-scale: 0` it leaves the rest of the page rounded                                        |
-| `mw-btn-glass`      | Filled buttons become tinted glass: translucent wash, vertical ramp, specular top edge. No `backdrop-filter` - it would trap a fixed-position tooltip inside the button         |
-| `mw-btn-tactile`    | The four solid variants stand on a 3px edge mixed toward black and travel its full height on `:active`. Outline, ghost and link have no fill to darken and are untouched        |
+| Class                | Effect                                                                                                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mw-corners-even`    | Drops the surface signature - every card, panel and modal becomes an evenly rounded `radius('md')` box                                                                              |
+| `mw-accent-single`   | `--mw-secondary-color` follows the primary; `mw-btn-secondary` turns outline so the two stay apart                                                                                  |
+| `mw-shadows-flat`    | Elevation 1-3 to `none`. The dropdown (4) and the modal (5) keep their shadow                                                                                                       |
+| `mw-surfaces-flush`  | Card, panel and footer background drop to the page colour and the border is redrawn from the ink, because the old one is a neighbouring shade of a surface that is now the page     |
+| `mw-hover-static`    | No hover travels - lifts, image zooms and slides go. Colour and border still respond                                                                                                |
+| `mw-scroll-static`   | No scroll entrance - `mw-reveal` and `mw-reveal-stagger` blocks sit where they land                                                                                                 |
+| `mw-sections-plain`  | The diagonal hatch behind `mw-section-alternate` collapses into the page colour                                                                                                     |
+| `mw-headings-caps`   | `h1`-`h3` in capitals with 0.045em tracking                                                                                                                                         |
+| `mw-links-underline` | `mw-link`, `mw-link-muted` and `mw-btn-link` carry their underline at rest. The hover signal moves to the stroke, which thickens to 3px - `mw-link` has no colour change of its own |
+| `mw-btn-pill`        | `mw-btn` fully rounded. Form fields keep their own radius                                                                                                                           |
+| `mw-btn-square`      | `mw-btn` to `border-radius: 0`. The other end of the same axis, and unlike `--mw-radius-scale: 0` it leaves the rest of the page rounded                                            |
+| `mw-btn-glass`       | Filled buttons become tinted glass: translucent wash, vertical ramp, specular top edge. No `backdrop-filter` - it would trap a fixed-position tooltip inside the button             |
+| `mw-btn-tactile`     | The four solid variants stand on a 3px edge mixed toward black and travel its full height on `:active`. Outline, ghost and link have no fill to darken and are untouched            |
+| `mw-density-compact` | Card and panel padding and the three control heights drop one step down the spacing scale. Type is untouched - `--mw-root-font-size` is the switch that scales everything together  |
+| `mw-density-roomy`   | The same one step up                                                                                                                                                                |
 
 | Property                     | Effect                                                                                                                      |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
@@ -220,19 +239,23 @@ without a rebuild. They stack, and none of them need a class per element.
 | `--mw-font-family-heading`   | Headline typeface; body copy is untouched                                                                                   |
 | `--mw-container-width`       | Where the content stops growing                                                                                             |
 | `--mw-section-padding-block` | Air above and below each section                                                                                            |
+| `--mw-motion-scale`          | Multiplies all six duration tokens - `0.6` brisk, `1.6` relaxed. `prefers-reduced-motion` still overrides it                |
 
 **Writing your own.** A variant that retunes a _theme-bound_ token - anything in
-the dark/light maps, elevation and shadow above all - cannot be written on
-`:root` alone: `mw-theme-light` re-declares those on `<body>`, which shadows the
-root value for the entire subtree and the switch does nothing in light mode.
-Target both:
+the dark/light maps - cannot be written on `:root` alone: `mw-theme-light`
+re-declares those on `<body>`, which shadows the root value for the entire
+subtree and the switch does nothing in light mode. Target both:
 
 ```scss
 :root.my-variant,
 :root.my-variant .mw-theme-light {
-  --mw-elevation-2: none;
+  --mw-card-background: var(--mw-page-background);
 }
 ```
+
+`--mw-elevation-1..5` are the exception and need only `:root`: the ramp is one
+set for both themes and reaches the theme through `--mw-shadow-near/-far`, so
+there is no second declaration further down the tree to shadow it.
 
 The same trap the other way round: never copy a theme alias _into_ a token on
 `:root` (`--mw-x: var(--mw-page-background)`), because up there it still holds

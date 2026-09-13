@@ -292,6 +292,26 @@
         border-top: 1px solid var(--mw-border);
       }
 
+      /* Splits the list by where a switch shows up, because half of them act on
+         parts of the page the preview does not contain */
+      .variant-group {
+        margin: 20px 0 2px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--mw-text-color);
+      }
+
+      .variant-group:first-child {
+        margin-top: 4px;
+      }
+
+      .variant-group-hint {
+        margin: 0 0 4px;
+        font-size: 0.68rem;
+        line-height: 1.35;
+        color: var(--mw-text-muted-color);
+      }
+
       .variant-row {
         display: flex;
         align-items: center;
@@ -369,12 +389,127 @@
         background: var(--mw-primary-accent-text-color);
       }
 
+      /* The sticky bar would otherwise sit on the section title it jumps to */
+      #preview {
+        scroll-margin-top: calc(var(--mw-header-height) + 1rem);
+      }
+
+      .preview-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .preview-title {
+        margin: 0 0 0.35rem;
+      }
+
+      .preview-lede {
+        margin: 0;
+        max-inline-size: 60ch;
+      }
+
+      /* The panel is fixed over the right of the page, flush with the container
+         edge. Below xl there is no room to dodge it and it simply covers part of
+         the preview; from there the preview keeps to the strip beside it,
+         because a switch that moves something hidden behind the panel
+         demonstrates nothing. */
+      @media (width >= 1200px) {
+        body:has(.palette-panel:not([hidden])) #preview > .mw-container {
+          padding-inline-end: 460px;
+        }
+      }
+
+      /* Both wrap rather than squeezing a field to nothing on a phone */
+      .preview-row,
+      .preview-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .preview-row .mw-input {
+        flex: 1 1 12rem;
+      }
+
+      /* The one thing here that keeps moving without being touched, so Motion
+         tempo has something to show that a hover state cannot */
+      .preview-status {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 0 0 1.25rem;
+        font-size: 0.82rem;
+        color: var(--mw-text-muted-color);
+      }
+
+      .preview-status strong {
+        display: block;
+        color: var(--mw-text-color);
+        font-weight: 500;
+      }
+
+      .preview-status small {
+        font-size: 0.75rem;
+      }
+
+      .preview-row .mw-select {
+        flex: 0 1 14rem;
+      }
+
+      /* The spacing sits on the row and not on the label: the button is taller
+         than the caption beside it, so a margin under the label leaves the
+         button itself resting on the box */
+      .variant-setup-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 14px 0 10px;
+      }
+
       .variant-setup-label {
         display: block;
-        margin-top: 14px;
-        margin-bottom: 5px;
+        margin: 0;
         font-size: 0.7rem;
         color: var(--mw-text-muted-color);
+      }
+
+      /* The one control here that leads somewhere - everything else in the
+         panel only changes what is on screen. Carries the brand colour so it
+         reads as the way out rather than as one more switch. */
+      .variant-share {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+        padding: 5px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--mw-primary-color);
+        background: var(--mw-primary-color);
+        color: var(--mw-primary-accent-text-color);
+        font: inherit;
+        font-size: 0.72rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--mw-transition-fast);
+      }
+
+      .variant-share:hover {
+        background: var(--mw-primary-color-hover, var(--mw-primary-color));
+        transform: translateY(-1px);
+      }
+
+      .variant-share:active {
+        transform: translateY(0);
+      }
+
+      .variant-share:focus-visible {
+        outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+        outline-offset: var(--mw-focus-ring-offset);
       }
 
       .variant-setup {
@@ -401,7 +536,7 @@
     <a class="mw-skip-link" href="#main">Skip to content</a>
 
     <!-- Header -->
-    <header class="mw-header mw-header-reveal mw-localhost-indicator-activated">
+    <header class="mw-header mw-localhost-indicator-activated">
       <div class="mw-container">
         @@include('./src/partials/header-container.html')
       </div>
@@ -823,6 +958,18 @@
           @@include('./src/partials/history-container.html')
         </div>
       </section>
+      <!-- Preview section, showcase only - see the partial -->
+      <section id="preview" class="mw-section">
+        <div class="mw-container">
+          <h2 class="mw-section-title">Preview</h2>
+          <p class="mw-section-intro">
+            One page-shaped example, so the variant switches in the palette
+            panel have something to act on that is not a component gallery. Open
+            the panel and the page lands here.
+          </p>
+          @@include('./src/partials/preview-container.html')
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -1013,9 +1160,21 @@
           input.addEventListener('change', settle);
         });
 
+        const preview = document.getElementById('preview');
+
         const toggle = (open) => {
           panel.hidden = !open;
           toggleBtn.setAttribute('aria-expanded', String(open));
+
+          // Or the switches act on whatever section the reader is parked at,
+          // which is one component at a time and says little about a look.
+          //
+          // `instant` against the smooth default in the reset: the preview sits
+          // at the end of a page some 80 000px long, and over that distance a
+          // smooth scroll either crawls through every section on the way or, as
+          // here, never starts at all.
+          if (open)
+            preview?.scrollIntoView({ block: 'start', behavior: 'instant' });
         };
 
         toggleBtn.addEventListener('click', (event) => {
@@ -1116,6 +1275,58 @@
         const root = document.documentElement;
         const controls = [...list.querySelectorAll('input, select')];
 
+        // Built on every render, put into the address bar by nobody: a setup
+        // written to the URL as you go comes back on the next reload, and then
+        // the showcase opens in someone else's look for good. Copy link is the
+        // one way out of here, and what it hands over is this.
+        //
+        // URLSearchParams and not a hand-rolled separator: a value like the
+        // heading font or the page width is full of commas, quotes and brackets,
+        // and escaping those by hand is where this kind of thing breaks.
+        let shareUrl = location.origin + location.pathname;
+
+        const buildShareUrl = (classes, dropped, pairs) => {
+          const params = new URLSearchParams();
+          if (classes.length) params.set('c', classes.join(' '));
+          if (dropped.length) params.set('d', dropped.join(' '));
+          pairs.forEach(([prop, value]) => params.set(prop, value));
+
+          const query = params.toString();
+          return (
+            location.origin + location.pathname + (query ? '#' + query : '')
+          );
+        };
+
+        // Back into the shape load() reads, so the link and a pasted setup go
+        // through one parser rather than two that can drift apart. The target in
+        // front of `: no` is only there to make the line read like the printed
+        // one - load() matches on the class name alone.
+        const readHash = () => {
+          const params = new URLSearchParams(location.hash.slice(1));
+          const lines = [];
+
+          const classes = params.get('c');
+          if (classes) lines.push('html class="' + classes + '"');
+
+          (params.get('d') || '')
+            .split(/\s+/)
+            .filter(Boolean)
+            .forEach((name) => lines.push('markup: no ' + name));
+
+          const pairs = [...params.entries()].filter(([key]) =>
+            key.startsWith('--')
+          );
+          if (pairs.length) {
+            lines.push(
+              ':root {',
+              ...pairs.map(([key, value]) => `  ${key}: ${value};`),
+              '}'
+            );
+          }
+
+          return lines.length ? lines.join('\n') : null;
+        };
+
         const isOn = (input) =>
           input.hasAttribute('data-variant-invert')
             ? !input.checked
@@ -1127,8 +1338,10 @@
           if (document.activeElement === setup) return;
 
           const classes = [];
+          // Unformatted, because both the box and the link are written from
+          // these and formatting only one of the two ways is a bug waiting
           const notes = [];
-          const props = [];
+          const pairs = [];
 
           // The palette is part of the setup, and it is printed first because a
           // project sets its brand colours before it retunes anything else
@@ -1141,7 +1354,7 @@
             ['--mw-dark-page-background', palette.dark],
             ['--mw-light-page-background', palette.light],
           ].forEach(([prop, value]) => {
-            if (value) props.push(`  ${prop}: ${value};`);
+            if (value) pairs.push([prop, value]);
           });
 
           controls.forEach((control) => {
@@ -1152,9 +1365,7 @@
               if (control.hasAttribute('data-variant-classes')) {
                 classes.push(control.value);
               } else {
-                props.push(
-                  `  ${control.dataset.variantProp}: ${control.value};`
-                );
+                pairs.push([control.dataset.variantProp, control.value]);
               }
               return;
             }
@@ -1164,7 +1375,7 @@
             const target = control.dataset.variantTarget;
             if (target) {
               if (!isOn(control)) {
-                notes.push(target + ': no ' + control.dataset.variantClass);
+                notes.push([target, control.dataset.variantClass]);
               }
             } else if (isOn(control)) {
               classes.push(control.dataset.variantClass);
@@ -1175,12 +1386,24 @@
           if (classes.length) {
             lines.push('html class="' + classes.join(' ') + '"');
           }
-          lines.push(...notes);
-          if (props.length) lines.push(':root {', ...props, '}');
+          lines.push(...notes.map(([target, name]) => `${target}: no ${name}`));
+          if (pairs.length) {
+            lines.push(
+              ':root {',
+              ...pairs.map(([prop, value]) => `  ${prop}: ${value};`),
+              '}'
+            );
+          }
 
           setup.value = lines.length
             ? lines.join('\n')
             : 'Default setup - nothing to change.';
+
+          shareUrl = buildShareUrl(
+            classes,
+            notes.map(([, name]) => name),
+            pairs
+          );
         };
 
         const optionClasses = (control) =>
@@ -1252,21 +1475,103 @@
         // Picking a palette repaints the page, and the box has to say so
         window.mwRefreshSetup = render;
 
-        setup.addEventListener('input', () => load(setup.value));
+        setup.addEventListener('input', () => inPlace(() => load(setup.value)));
         // Normalises what was pasted back into the shape render() writes
         setup.addEventListener('blur', render);
 
+        // Type and spacing switches change the height of all 80 000px of page
+        // above the preview as well, so the section slides out from under
+        // whoever is watching it - Text size alone moves it by 16 000px. Hold
+        // its top edge where it was and the change happens in place.
+        //
+        // Only while the preview is on screen: correcting the scroll for someone
+        // parked up in the component sections would move *them* by those 16 000
+        // instead. `instant` because the smooth default would animate the
+        // correction as a scroll of its own.
+        const previewSection = document.getElementById('preview');
+
+        const inPlace = (change) => {
+          const box = previewSection?.getBoundingClientRect();
+          const watching =
+            box && box.bottom > 0 && box.top < window.innerHeight;
+          if (!watching) return change();
+
+          const before = box.top;
+          change();
+          const shift = previewSection.getBoundingClientRect().top - before;
+          if (shift) window.scrollBy({ top: shift, behavior: 'instant' });
+        };
+
         controls.forEach((control) =>
-          control.addEventListener('change', () => {
-            apply(control);
-            render();
-          })
+          control.addEventListener('change', () =>
+            inPlace(() => {
+              apply(control);
+              render();
+            })
+          )
         );
 
-        // Applied on load too, so a browser that restored a checked box after a
-        // reload does not leave the page and the panel disagreeing
-        controls.forEach(apply);
-        render();
+        const shared = readHash();
+        if (shared) {
+          // Drives the switches, which drive the page - then render() normalises
+          // the box and writes the link back in the order it prints
+          load(shared);
+          render();
+        } else {
+          // Without a link the showcase opens in its own look, every time. That
+          // has to be spelled out: Firefox restores form state across a reload,
+          // so the switches would otherwise come back set the way the last visit
+          // left them, and the page with them.
+          //
+          // The markup is the one source for that starting state - the written
+          // defaults for a plain switch, and for a targeted one whether the
+          // class it stands for is actually on the element it names. A header
+          // shipped without mw-header-reveal keeps it off.
+          controls.forEach((control) => {
+            const target = control.dataset.variantTarget;
+            const el = target && document.querySelector(target);
+
+            if (el) {
+              const present = el.classList.contains(
+                control.dataset.variantClass
+              );
+              control.checked = control.hasAttribute('data-variant-invert')
+                ? !present
+                : present;
+            } else if (control.type === 'checkbox') {
+              control.checked = control.defaultChecked;
+            } else {
+              const preset = [...control.options].find(
+                (o) => o.defaultSelected
+              );
+              control.value = preset ? preset.value : '';
+            }
+          });
+
+          controls.forEach(apply);
+          render();
+        }
+
+        document
+          .getElementById('variant-share')
+          ?.addEventListener('click', async (event) => {
+            const button = event.currentTarget;
+            const label = document.getElementById('variant-share-label');
+            try {
+              await navigator.clipboard.writeText(shareUrl);
+              label.textContent = 'Copied';
+            } catch {
+              // Denied permission or an insecure origin. The address bar is no
+              // help here - it never carries the setup - so hand the link over
+              // in the box instead, where it can be selected by hand.
+              setup.value = shareUrl;
+              setup.select();
+              label.textContent = 'Copy from the box';
+            }
+            setTimeout(() => {
+              label.textContent = 'Copy link';
+            }, 1600);
+          });
       });
 
       // for the modals - the framework handles both shapes, div and <dialog>

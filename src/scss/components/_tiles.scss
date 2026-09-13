@@ -57,7 +57,22 @@
     }
   }
 
+  // The tile sizes its type off its own width, not the window's. In
+  // `.mw-tiles-4col` on a wide desktop a tile is a quarter of 85% of the page -
+  // narrower than the same tile alone on a phone, where it used to be the one
+  // getting the small type.
+  //
+  // The cost: `container-type` makes the tile a containing block for its own
+  // fixed-position descendants, and unlike a card the tile clips - so a
+  // [data-tooltip] inside one is now cut off at its edge. Taken knowingly, there
+  // being nothing in a tile's anatomy that wants a tooltip. Drop the two lines
+  // below and the queries fall back to the window.
+  $_mw-tile-wide: 300px;
+  $_mw-tile-narrow: 220px;
+
   .mw-tile {
+    width: 100%;
+    container: mw-tile / inline-size;
     background: var(--mw-card-background);
     @include surface;
     padding: spacing('5');
@@ -116,11 +131,11 @@
       line-height: 1.2;
       text-align: center;
 
-      @include media-up('sm') {
+      @container mw-tile (width >= #{$_mw-tile-narrow}) {
         font-size: font-size('xl');
       }
 
-      @include media-up('md') {
+      @container mw-tile (width >= #{$_mw-tile-wide}) {
         font-size: font-size('2xl');
       }
     }
@@ -166,7 +181,7 @@
         font-size: font-size('md');
         margin-bottom: spacing('2');
 
-        @include media-up('md') {
+        @container mw-tile (width >= #{$_mw-tile-wide}) {
           font-size: font-size('lg');
         }
       }
@@ -194,11 +209,11 @@
         font-size: font-size('xl');
         margin-bottom: spacing('4');
 
-        @include media-up('sm') {
+        @container mw-tile (width >= #{$_mw-tile-narrow}) {
           font-size: font-size('2xl');
         }
 
-        @include media-up('md') {
+        @container mw-tile (width >= #{$_mw-tile-wide}) {
           font-size: font-size('3xl');
         }
       }
@@ -214,20 +229,30 @@
     }
   }
 
+  // A cramped tile reads better ranged left whatever the window is doing - a
+  // centred line inside 200px is two words and a gap. Every selector here is a
+  // child: a container cannot answer a query about itself, and the tile *is* the
+  // container - which is also why the padding below stays on the window.
+  @container mw-tile (width < #{$_mw-tile-narrow}) {
+    .mw-tile-header,
+    .mw-tile-body {
+      text-align: left;
+    }
+
+    .mw-tile-body {
+      margin-bottom: spacing('2');
+    }
+
+    .mw-tile-img {
+      width: 60px;
+      height: 60px;
+      margin: spacing('0') auto spacing('2');
+    }
+  }
+
   @include media-down('sm') {
     .mw-tile {
       padding: spacing('4');
-      text-align: left;
-
-      &-img {
-        width: 60px;
-        height: 60px;
-        margin: spacing('0') auto spacing('2');
-      }
-
-      &-body {
-        margin-bottom: spacing('2');
-      }
     }
   }
 }

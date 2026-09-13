@@ -1,6 +1,15 @@
 @use '../abstracts' as *;
 
 @layer mw.layout {
+  // Registered so a bad value cannot invalidate the calc() and drop the layer
+  // somewhere else. 0.5 and not 0 is the resting point - see the transform
+  // at the bottom of this file.
+  @property --mw-parallax-progress {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0.5;
+  }
+
   // The image gets its own layer instead of `background-attachment: fixed`: that
   // one is ignored on iOS and sizes against the viewport rather than the block.
   // Here a transform runs on the browser's own scroll timeline - no listener, no
@@ -151,13 +160,9 @@
   // is what lets every depth variant above - and an inline
   // `--mw-parallax-depth` - go on working untouched.
   //
-  // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes
-  // below. Declared and not only used, so the frame before the script has
-  // written anything sits at rest instead of nowhere.
+  // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes.
   @media (prefers-reduced-motion: no-preference) {
     .mw-parallax-driven {
-      --mw-parallax-progress: 0.5;
-
       transform: translate3d(
         0,
         calc(var(--mw-parallax-depth) * (1 - 2 * var(--mw-parallax-progress))),

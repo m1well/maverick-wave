@@ -224,13 +224,21 @@ picker.
   means it sits right, not left. Everything is vertically centered, so plain text
   lines up with a button next to it. Actions that no longer fit next to each
   other wrap.
-- The footer stacks to full-width children once the **card** is narrower than
-  360px, not once the window is - a card in a three-column grid is just as narrow
-  on a 1200px desktop as it is on a phone, and now looks the same in both. This
-  is a container query: a card that has a footer declares
-  `container: mw-card / inline-size` and takes `width: 100%`, so it fills its
-  slot instead of sizing to its content. Give such a card an explicit width if
-  you need it to hug its content.
+- The card measures **itself**, not the window - a card in a three-column grid
+  is just as narrow on a 1200px desktop as it is on a phone, and looks the same
+  in both. Every card declares `container: mw-card / inline-size` and takes
+  `width: 100%`, so it fills its slot instead of sizing to its content. Give a
+  card an explicit width if you need it to hug its content.
+- What steps on the card's own width: the footer stacks to full-width children
+  below 360px, and the title, the subtitle and the body padding step up at
+  420px. The image height is the one that still follows the window, because it
+  is declared on the card itself and a container cannot query itself.
+- `mw-tile` works the same way, and so do `mw-stepper` and both timelines: the
+  step labels shrink and the two-sided timeline collapses to one side once the
+  component is narrow, whatever the window does. One catch on tiles: a tile
+  clips its overflow, and being a container makes it the containing block for
+  `position: fixed`, so a `data-tooltip` **inside** a tile is cut off at its
+  edge. Cards do not clip and are unaffected.
 - `mw-card-badge` (top right corner) and `mw-card-ribbon` (diagonal banner) are
   absolutely positioned overlays; colour them with `mw-card-addon-primary`,
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
@@ -813,6 +821,10 @@ tables you know overflow, leave it off the ones that fit.
 A board is a grid of equally wide lanes; a ticket is a plain `mw-card` with
 `mw-kanban-card` on top. Everything except the counters and the composer is CSS.
 
+The board puts as many lanes in a row as fit at 260px each and wraps the rest
+onto the next. It measures its own width for that, so a board inside a panel or
+a half-width column wraps on a desktop too.
+
 ```html
 <div class="mw-kanban" style="--mw-kanban-column-min-height: 390px">
   <div class="mw-kanban-column">
@@ -1207,8 +1219,10 @@ Parts: `mw-dropdown-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
 picks rather than acts. Icons inside items keep one column, so labels line up
 whether or not every item has one.
 
-The menu is absolutely positioned and is clipped by any ancestor that hides its
-overflow. The framework's own containers lift that clip while a menu is open; on
+Where the browser supports anchor positioning the menu is `position: fixed`,
+anchored to its trigger and flipped into whichever side has room, so it escapes
+a clipping ancestor by itself. Everywhere else it is absolutely positioned and
+is clipped by any ancestor that hides its overflow. The framework's own containers lift that clip while a menu is open; on
 your own it is `:has(.mw-dropdown[open]) { overflow: visible }`.
 
 On a coarse pointer the rows grow to 2.75rem and the menu takes at least the

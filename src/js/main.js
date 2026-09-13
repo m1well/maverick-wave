@@ -334,22 +334,33 @@
       // Clean up potentially conflicting localStorage
       localStorage.removeItem('mw-theme');
 
-      // Ensure body class is correct for fixed mode (remove light if fixed dark)
-      if (themeMode === 'dark') {
-        body.classList.remove('mw-theme-light');
-      }
+      // Ensure body classes are correct for fixed mode
+      body.classList.remove('mw-theme-light', 'mw-theme-dark');
 
       return;
     }
 
     // mode switchable - only runs if themeMode === 'switchable'
-    let isLight = localStorage.getItem('mw-theme') === 'light';
+    const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+
+    // Only trust the OS where the stylesheet can act on it. Without light-dark()
+    // the theme tokens sit on :root as the dark set and the light one arrives by
+    // class alone, so a light machine would get a sun icon over a dark page.
+    const followsSystem =
+      window.CSS && CSS.supports('color', 'light-dark(#000, #fff)');
+    const preferred = () => followsSystem && systemLight.matches;
+
+    const stored = localStorage.getItem('mw-theme');
+    let isLight = stored ? stored === 'light' : preferred();
 
     // Function to apply theme styles and icon
     const applyTheme = (lightMode) => {
       // The forced reflow is the point: the new colours land while transitions are off
       root.classList.add('mw-theme-switching');
       body.classList.toggle('mw-theme-light', lightMode);
+      // The explicit counterpart, for dark on a machine set to light - without it
+      // the page would follow the OS straight back past the reader's choice
+      body.classList.toggle('mw-theme-dark', !lightMode);
       void root.offsetHeight;
       root.classList.remove('mw-theme-switching');
 
@@ -361,6 +372,14 @@
 
     // Set initial theme based on isLight
     applyTheme(isLight);
+
+    // Until the reader picks a side, the page keeps tracking the OS switch
+    systemLight.addEventListener('change', () => {
+      if (localStorage.getItem('mw-theme')) return;
+      isLight = preferred();
+      applyTheme(isLight);
+      updateColorSwatchHexValues();
+    });
 
     // Add click listener for switching
     themeToggle.addEventListener('click', () => {
