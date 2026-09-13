@@ -26,7 +26,13 @@
   // fall downwards. Bare `.mw-glow` rides along on primary, because the brand
   // colour is what a glow means unless it says otherwise.
   @each $name, $col in $semantic-colors {
-    #{if($name == 'primary', '.mw-glow, ', '')}.mw-glow-#{$name} {
+    $selector: '.mw-glow-#{$name}';
+
+    @if $name == 'primary' {
+      $selector: '.mw-glow, #{$selector}';
+    }
+
+    #{$selector} {
       box-shadow:
         0 0 6px color-mix(in srgb, #{$col} 45%, transparent),
         0 0 26px color-mix(in srgb, #{$col} 28%, transparent);
