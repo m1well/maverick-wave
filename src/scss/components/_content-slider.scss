@@ -9,21 +9,29 @@
     border-radius: radius('md');
     overflow: hidden;
 
+    // The slider caps at 600px, so past a tablet the viewport no longer says how
+    // much room it has. Named, so a query cannot resolve to a container above.
+    container: mw-slider / inline-size;
+
     // Heights variables for consistency
     $height-lg: 370px;
     $height-md: 320px;
     $height-sm: 250px;
+
+    // The slider widths the old viewport steps landed on, not the breakpoints
+    $wide: 560px;
+    $mid: 420px;
 
     &-base {
       position: relative;
       width: 100%;
       height: $height-sm;
 
-      @include media-up('sm') {
+      @container mw-slider (width >= #{$mid}) {
         height: $height-md;
       }
 
-      @include media-up('md') {
+      @container mw-slider (width >= #{$wide}) {
         height: $height-lg;
       }
     }
@@ -43,11 +51,11 @@
       height: $height-sm;
       pointer-events: none;
 
-      @include media-up('sm') {
+      @container mw-slider (width >= #{$mid}) {
         height: $height-md;
       }
 
-      @include media-up('md') {
+      @container mw-slider (width >= #{$wide}) {
         height: $height-lg;
       }
     }
@@ -86,11 +94,11 @@
       z-index: z-index('menu');
       width: 100%;
 
-      @include media-up('sm') {
+      @container mw-slider (width >= #{$mid}) {
         grid-template-columns: repeat(3, 1fr);
       }
 
-      @include media-up('md') {
+      @container mw-slider (width >= #{$wide}) {
         gap: spacing('3');
         padding: spacing('3');
       }
@@ -106,11 +114,11 @@
       z-index: z-index('menu');
       width: 100%;
 
-      @include media-up('sm') {
+      @container mw-slider (width >= #{$mid}) {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      @include media-up('md') {
+      @container mw-slider (width >= #{$wide}) {
         gap: spacing('3');
         padding: spacing('3');
       }

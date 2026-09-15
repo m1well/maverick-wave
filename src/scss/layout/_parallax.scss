@@ -24,7 +24,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 42vh;
+    min-height: 60vh;
     // `clip` and never `hidden`: hidden makes this a scroll container, and the
     // view() timeline below would then resolve against this box instead of the
     // viewport - the layer keeps its overhang and never moves
@@ -146,6 +146,20 @@
     :is(.mw-parallax-sticky, .mw-parallax-slow) ~ *:not(.mw-parallax-sticky)
   ) {
     background: var(--mw-page-background);
+  }
+
+  // `+` and not `~` like the two rules above: only the section that does the
+  // overtaking carries the edge, on every one after it the shadow would read as
+  // a seam across the page. Fixed values and not elevation(): this shadow lands
+  // on the picture rather than on a theme surface, and the light theme's 21%
+  // near layer disappears there - same reason mw-parallax-dimmed below
+  // hardcodes its brightness and its text-shadow.
+  :where(
+    :is(.mw-parallax-sticky, .mw-parallax-slow) + *:not(.mw-parallax-sticky)
+  ) {
+    box-shadow:
+      0 -6px 12px rgb(0 0 0 / 45%),
+      0 -20px 44px rgb(0 0 0 / 26%);
   }
 
   // Ink on a photograph, the same pair the hero uses: the picture goes down, the

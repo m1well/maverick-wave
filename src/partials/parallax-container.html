@@ -53,10 +53,13 @@
   element the page content is a <strong>sibling</strong> of - the section around
   a hero, not the hero itself - because that is what sticky and the sibling
   selector need. Everything after it gets the page background and a layer above,
-  or the pinned picture shows through. Pair it with
-  <code>mw-header-reveal</code> on the header and the page opens on the picture
-  alone: the bar stays away for the first 130px of scroll and has ridden in by
-  420px.
+  or the pinned picture shows through. The section right after it also gets an
+  upward shadow, so it reads as sliding over the picture rather than cutting it
+  off. That one carries fixed values instead of the elevation ramp: it lands on
+  the picture, not on a theme surface, and the light theme's shadows are cut for
+  paper and vanish there. Pair it with <code>mw-header-reveal</code> on the
+  header and the page opens on the picture alone: the bar stays away for the
+  first 130px of scroll and has ridden in by 420px.
 </p>
 <p class="mw-text-muted mw-text-measure mw-mb-6">
   Add <code>mw-parallax-rise</code> next to it and the picture lifts by
@@ -73,7 +76,7 @@
 </h4>
 <p class="mw-text-muted mw-text-measure mw-mb-6">
   The band before the components section on this page: it keeps its place in the
-  flow and moves at a quarter of your scrolling, so picture and text are still
+  flow and moves at a fifth of your scrolling, so picture and text are still
   going while the next section closes in from below. Pinning is the same move
   with the tempo at zero.
   <code>--mw-parallax-slow-travel</code> (<code>45vh</code>) is the dial and

@@ -257,7 +257,7 @@
   // A menu opened by a thumb needs rows a thumb can hit, and the room to show
   // them - so it takes the trigger's full width rather than a 200px column
   // floating beside it.
-  @media (pointer: coarse), (width <= #{breakpoint('sm')}) {
+  @include touch-context('sm') {
     .mw-dropdown-menu {
       min-width: max(100%, 240px);
     }

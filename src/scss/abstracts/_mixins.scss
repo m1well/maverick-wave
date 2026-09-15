@@ -149,6 +149,39 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+// Coarse *or* narrow, because a tablet in landscape is wide and still
+// finger-operated. Named so a consumer can put their own control under the same
+// condition instead of guessing it.
+@mixin touch-context($breakpoint: 'md') {
+  @media (pointer: coarse), (width <= #{breakpoint($breakpoint)}) {
+    @content;
+  }
+}
+
+// WCAG 2.5.8 floor for a control that is a line of text under a pointer and a
+// target under a thumb. Not for a link inside a sentence - those are exempt, and
+// a min-height there pushes the lines of the paragraph apart.
+@mixin touch-floor($size: 2.75rem) {
+  @include touch-context {
+    min-height: $size;
+    @content;
+  }
+}
+
+// Grows the hit area without touching the silhouette - for a control whose size
+// is the design: a 9px gallery dot, an 18px mini button. Neighbours need a gap
+// of at least twice $grow, or two hit areas overlap and a tap lands on the one
+// next door. Takes ::after, so it is out for anything carrying a `data-tooltip`.
+@mixin hit-area($grow: 6px) {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -#{$grow};
+  }
+}
+
 // One shape for every scroll container and the page itself
 @mixin scrollbar($thumb: var(--mw-text-muted-color), $track: transparent) {
   scrollbar-width: thin;

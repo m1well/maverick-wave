@@ -24,16 +24,12 @@
   }
 
   .mw-section-title {
-    font-size: font-size('2xl');
+    font-size: fluid('2xl', '3xl', $to: 'sm');
     margin-bottom: var(--mw-section-title-gap);
     text-align: center;
     position: relative;
 
     @include _section-rule(56px, 3px, spacing('-3'));
-
-    @include media-up('sm') {
-      font-size: font-size('3xl');
-    }
   }
 
   // The lead line under a section title. Every landing page writes this
@@ -51,7 +47,7 @@
   }
 
   .mw-section-subtitle {
-    font-size: font-size('xl');
+    font-size: fluid('xl', '2xl', $to: 'sm');
     // The step above a demo gap of spacing('6') - at spacing('8') the boundary
     // between two components read like the one between two demos
     margin: spacing('10') spacing('0') spacing('6') spacing('0');
@@ -64,10 +60,6 @@
       spacing('-2'),
       var(--mw-secondary-text-color)
     );
-
-    @include media-up('sm') {
-      font-size: font-size('2xl');
-    }
   }
 
   // Sticky, because the strip is the only way back: inside a long section the

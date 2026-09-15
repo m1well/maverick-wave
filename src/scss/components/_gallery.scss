@@ -1,9 +1,20 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
+  // Thresholds are the wrapper widths the old viewport steps landed on once the
+  // container gutter is taken off, not the breakpoints themselves.
+  $wide: 688px;
+  $narrow: 512px;
+
   .mw-gallery-container {
     max-width: 1100px;
+    // Inline-size containment computes the width as if the element were empty,
+    // so one dropped into a flex or grid slot would shrink to nothing without it
+    width: 100%;
     margin: spacing('1') auto;
+    // The wrapper and not .mw-gallery: the description and the dots are its
+    // siblings, and a container query only reaches descendants
+    container: mw-gallery / inline-size;
   }
 
   .mw-gallery {
@@ -119,7 +130,7 @@
     }
   }
 
-  @include media-down('md') {
+  @container mw-gallery (width < #{$wide}) {
     .mw-gallery {
       &-desc {
         font-size: font-size('sm');
@@ -134,7 +145,7 @@
     }
   }
 
-  @include media-down('sm') {
+  @container mw-gallery (width < #{$narrow}) {
     .mw-gallery {
       &-slide {
         aspect-ratio: 4 / 3;

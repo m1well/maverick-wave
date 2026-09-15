@@ -56,7 +56,8 @@
 &lt;html lang="en"&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
-    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;!-- viewport-fit=cover is what makes env(safe-area-inset-*) resolve on a notched phone --&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"&gt;
     &lt;title&gt;My MaverickWave Project&lt;/title&gt;
     &lt;!-- Framework CSS --&gt;
     &lt;link rel="stylesheet" href="path/to/maverick-wave.min.css"&gt;
@@ -200,9 +201,57 @@ body {
           <i class="fas fa-exclamation-triangle mw-mr-1"></i>
           Without <code>base</code> every component renders without colors - it
           carries the <code>:root</code> custom properties. A subset like the
-          one above compiles to roughly 98 kB raw / 15 kB gzipped, against 147
-          kB / 22.5 kB for the full build.
+          one above compiles to roughly 113 kB raw / 17 kB gzipped, against 281
+          kB / 40 kB for the full build.
         </p>
+
+        <h5 class="mw-mt-4">Mixins and Functions</h5>
+        <p>
+          <code>abstracts</code> brings these into your own rules. They exist on
+          the SCSS path only - the compiled CSS carries none of them.
+        </p>
+        <ul class="mw-list">
+          <li>
+            <code>fluid($min, $max, $from: 'xs', $to: 'md')</code> - a clamp
+            between two sizes. Each end is a key of <code>$font-sizes</code> or
+            a plain rem/px length, so a hero that does not sit on the scale
+            still gets one. The rem term is the point: a vw-only clamp ignores
+            the reader's font size. The default range stops at <code>md</code>,
+            a headline passes <code>$to: 'xl'</code>.
+          </li>
+          <li>
+            <code>media-up($bp)</code> / <code>media-down($bp)</code> - the
+            <code>$breakpoints</code> map as a query.
+          </li>
+          <li>
+            <code>touch-context($bp: 'md')</code> - coarse pointer
+            <em>or</em> narrow viewport, the condition every target-size rule in
+            the framework hangs under.
+          </li>
+          <li>
+            <code>touch-floor($size: 2.75rem)</code> - that condition plus a
+            <code>min-height</code>. Not for a link inside a sentence: WCAG
+            2.5.8 exempts those, and a <code>min-height</code> there pushes the
+            lines of the paragraph apart.
+          </li>
+          <li>
+            <code>hit-area($grow: 6px)</code> - grows the hit area through
+            <code>::after</code> without touching the silhouette, for a control
+            whose size is the design. Neighbours need a gap of at least twice
+            <code>$grow</code>, or two hit areas overlap.
+          </li>
+        </ul>
+        <pre
+          class="mw-code-block"
+        ><code>@use 'maverick-wave/src/scss/abstracts' as *;
+
+.hero h1 {
+  font-size: fluid(1.95rem, 4.2rem, $to: 'xl');
+}
+
+.my-close-button {
+  @include touch-floor;
+}</code></pre>
       </div>
     </div>
 

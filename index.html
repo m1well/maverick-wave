@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, minimum-scale=1, initial-scale=1"
+      content="width=device-width, minimum-scale=1, initial-scale=1, viewport-fit=cover"
     />
     <meta
       name="format-detection"
@@ -100,11 +100,12 @@
       /* The travel has to sit on the animated section, the height on the block
          inside it */
       .parallax-band-demo {
-        --mw-parallax-slow-travel: 60vh;
+        --mw-parallax-slow-travel: 72vh;
       }
 
       .parallax-band-demo .mw-parallax {
-        min-height: 75vh;
+        min-height: 88vh;
+        --mw-parallax-depth: 18vh;
       }
 
       /* Reuses the hero picture through the token, not a second download */
@@ -724,7 +725,7 @@
             <div class="mw-container">
               <h2>The page rides over the picture</h2>
               <p class="mw-mb-0">
-                This band travels at a quarter of your scrolling. The components
+                This band travels at a fifth of your scrolling. The components
                 close in from below.
               </p>
             </div>

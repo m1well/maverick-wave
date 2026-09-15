@@ -28,7 +28,8 @@
 - `mw-container` is `min(1200px, 100% - 2 * gutter)`, horizontally centered.
   Nest it inside every full-bleed band (header, section, footer), never around
   them. The gutter is fluid - `clamp(1rem, 4.2vw + 0.5rem, 4rem)`, never smaller
-  than the safe-area inset - so it lands on ~24px at 375px, ~32px at 576px,
+  than the safe-area inset (which needs `viewport-fit=cover` on the viewport
+  meta to be anything but 0) - so it lands on ~24px at 375px, ~32px at 576px,
   ~40px on a tablet and tops out at 64px, where the 1200px cap takes over. A
   percentage alone keeps too little on a phone and throws away too much on a
   desktop; stepping the gutter at a breakpoint instead would make the container
@@ -193,9 +194,9 @@ viewport, so keep long tooltips off the outermost elements.
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`)     |
 | `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                             |
-| `mw-section-title`                  | Centered `3xl` heading with a decorative primary underline - landing pages                                         |
+| `mw-section-title`                  | Centered heading with a decorative primary underline, `2xl` growing to `3xl` up to 576px - landing pages           |
 | `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                           |
-| `mw-section-subtitle`               | Centered `2xl` heading with a thin secondary underline                                                             |
+| `mw-section-subtitle`               | Centered heading with a thin secondary underline, `xl` growing to `2xl` up to 576px                                |
 | `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows |
 
 ```html
@@ -351,7 +352,12 @@ and bottom, so no edge is ever uncovered.
 ride up over it. It goes on the element the page content is a **sibling** of -
 the section, not the hero - because everything after it is given
 `--mw-page-background` and a layer above, or the pinned picture shows through
-the transparent ones. Depth drops to `0` there: a pinned block does not travel
+the transparent ones. The one section directly after it also gets an upward
+shadow, so the overlap reads as a surface sliding over the picture instead of a
+cut. Fixed values, not the elevation ramp - the shadow falls on the picture
+rather than on a theme surface, and the light theme's near layer is cut for
+paper and disappears there. It sits at `:where()` weight, so a plain rule of
+your own overrides it. Depth drops to `0` there: a pinned block does not travel
 through the viewport, so its `view()` timeline stands still with it.
 `mw-parallax-rise` puts it at `12vh` and runs the layer on the document's own
 scroll instead - the picture lifts, the text stays put. That works out to the
@@ -370,7 +376,7 @@ reads `$mw-hero-image`; anywhere else set `--mw-parallax-pattern-image` on it.
 `--mw-parallax-pattern-depth` is the dial, `4vh` next to a risen hero.
 
 Outside a hero the same classes build a standalone band: `mw-parallax`
-(`min-height: 42vh`), `mw-parallax-media` as an `<img>` or a div with a
+(`min-height: 60vh`), `mw-parallax-media` as an `<img>` or a div with a
 background image, `mw-parallax-content` for what sits on top, and
 `mw-parallax-dimmed` to turn the picture down and the text light. Drop the
 `mw-container` between section and block and the picture runs full width, with
@@ -385,7 +391,7 @@ stands still, past it the block runs backwards. The dial belongs on the element
 carrying `mw-parallax-slow`, the height on the `mw-parallax` block inside it;
 put the dial on the inner block and it never reaches the animation. Everything
 after it gets the same page background and layer that a pinned block gives its
-siblings.
+siblings, and the section directly after it the same edge shadow.
 
 Without scroll timelines, or under `prefers-reduced-motion`, the picture stands
 still and nothing else changes.

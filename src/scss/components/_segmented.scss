@@ -92,6 +92,10 @@
   // the width of the shortest, so the items follow their own content instead.
   .mw-segmented-auto {
     width: auto;
+    // Shrink-to-fit sizes this off the labels, which on a 320px screen is wider
+    // than the screen. The items already carry `min-width: 0` and truncate, so
+    // the cap only ever bites where the row genuinely has no room.
+    max-width: 100%;
 
     .mw-segmented-item {
       flex: 0 1 auto;

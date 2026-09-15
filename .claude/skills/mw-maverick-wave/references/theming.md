@@ -353,6 +353,61 @@ they are all `var()` references anyway:
 }
 ```
 
+## Mixins and functions
+
+`@use 'maverick-wave/src/scss/abstracts' as *` brings the whole set in - the
+tokens, the functions and the mixins. They exist on the SCSS path only; the
+compiled CSS carries none of them, so a CDN project cannot reach them.
+
+Functions read the maps: `spacing('4')`, `font-size('lg')`,
+`font-weight('bold')`, `radius('md')`, `breakpoint('md')`, `color('primary-color')`,
+`z-index('menu')`, `motion('base')`.
+
+```scss
+@use 'maverick-wave/src/scss/abstracts' as *;
+
+.hero-title {
+  font-size: fluid(1.95rem, 4.2rem, $to: 'xl');
+  margin-bottom: spacing('6');
+}
+
+.my-icon-button {
+  @include touch-floor;
+}
+
+.my-dot {
+  @include hit-area(7px);
+}
+```
+
+- `fluid($min, $max, $from: 'xs', $to: 'md')` - a clamp between two sizes. Each
+  end is a key of `$font-sizes` or a plain rem/px length, so a hero that does
+  not sit on the scale still gets one. The rem term is what the vw-only form
+  throws away: a size in vw alone ignores the reader's font size and stops
+  responding to zoom. The default range ends at `md` because that is where the
+  stepped heading sizes it replaces reached their largest value - a headline
+  that should keep growing passes `$to: 'xl'`.
+- `media-up($bp)` / `media-down($bp)` - the `$breakpoints` map as range syntax,
+  `width >= bp` and `width < bp`, so the two never overlap at the breakpoint.
+- `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport. Every
+  target-size rule in the framework hangs under it; put your own control under
+  the same condition instead of guessing it.
+- `touch-floor($size: 2.75rem)` - that condition plus a `min-height`, and it
+  takes a `@content` block for whatever else the control needs there. Not for a
+  link inside a sentence: WCAG 2.5.8 exempts those, and a `min-height` there
+  pushes the lines of the paragraph apart.
+- `hit-area($grow: 6px)` - grows the hit area through `::after` without touching
+  the silhouette, for a control whose size is the design. Neighbours need a gap
+  of at least twice `$grow`, or two hit areas overlap and a tap lands on the one
+  next door. It takes `::after`, so it is out for anything carrying a
+  `data-tooltip`.
+- `hover` / `hover-move` - a hover effect that only runs where hovering is real.
+  See the pitfall on latching `:hover`.
+- `focus-ring`, `focus-ring-inset`, `field-focus`, `focus-halo` - the ring, in
+  its four shapes.
+- `truncate`, `scrollbar`, `surface`, `corner-accent` - the shared silhouette
+  and the one-line helpers the components use.
+
 ## Overriding a component
 
 Tokens cover colour and rhythm; for anything else write a normal rule. The
@@ -378,7 +433,7 @@ Give it a layer of its own:
 
 ## Importing only what you need
 
-The full stylesheet is ~200 kB raw / ~31 kB gzipped. Marketing components
+The full stylesheet is ~281 kB raw / ~40 kB gzipped. Marketing components
 (`blog-post`, `gallery`, `content-slider`, `techstack-bucket`, `tiles`,
 `coming-soon`, `ratings`, `home`, `hero`) are dead weight in an application, and
 Angular bundle budgets notice.
@@ -419,7 +474,7 @@ way the full build does.
 @use 'maverick-wave/src/scss/utilities';
 ```
 
-That set compiles to ~100 kB raw / ~17 kB gzipped - half the full build.
+That set compiles to ~137 kB raw / ~21 kB gzipped - about half the full build.
 
 Details worth knowing:
 
@@ -427,8 +482,8 @@ Details worth knowing:
   before any other module loads it, so the `with (...)` line goes at the top of
   the file. Configuring `main` instead pulls in everything again.
 - `base` forwards `reset`, `base` and `typography`. If you already have your own
-  reset, `@use '.../base/base'` gives you the `:root` block alone (~11 kB with a
-  component or two).
+  reset, `@use '.../base/base'` gives you the `:root` block alone (~15 kB raw /
+  ~3 kB gzipped).
 - Module names are the file names without the leading underscore:
   `components/_buttons.scss` becomes `components/buttons`.
 - Layer index files (`components`, `form-elements`, `layout`, `utilities`,
