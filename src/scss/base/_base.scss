@@ -152,6 +152,13 @@
       calc(100% - 2 * var(--mw-container-gutter))
     );
     --mw-section-padding-block: #{spacing('10')};
+    // The third regime beside the stepped default and the two flat presets:
+    // spacing that grows with the screen. It starts at the value a phone already
+    // gets below `sm` and reaches the airy preset at `xl`, so a desktop pushes
+    // less content past per wheel notch while the phone carries none of that air.
+    // Point `--mw-section-padding-block` at it to switch a page over - a choice
+    // like the presets are, not the default.
+    --mw-section-padding-fluid: #{fluid(spacing('7'), spacing('12'), $to: 'xl')};
     --mw-section-title-gap: #{spacing('7')};
     --mw-scroll-hint-offset: #{spacing('9')};
     --mw-scroll-hint-inline: var(--mw-container-gutter);

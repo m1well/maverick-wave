@@ -196,14 +196,14 @@ pointing at the trigger in every combination.
 
 ## Sections
 
-| Class                               | Use                                                                                                                |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`)     |
-| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                             |
-| `mw-section-title`                  | Centered heading with a decorative primary underline, `2xl` growing to `3xl` up to 576px - landing pages           |
-| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                           |
-| `mw-section-subtitle`               | Centered heading with a thin secondary underline, `xl` growing to `2xl` up to 576px                                |
-| `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows |
+| Class                               | Use                                                                                                                                                                                             |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`); point it at `--mw-section-padding-fluid` for spacing that grows with the screen |
+| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                                                                                                          |
+| `mw-section-title`                  | Centered heading with a decorative primary underline, `2xl` growing to `3xl` up to 576px - landing pages                                                                                        |
+| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                                                                                                        |
+| `mw-section-subtitle`               | Centered heading with a thin secondary underline, `xl` growing to `2xl` up to 576px                                                                                                             |
+| `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows                                                                              |
 
 ```html
 <section class="mw-section mw-section-alternate">
