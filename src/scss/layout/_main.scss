@@ -284,25 +284,6 @@
   [data-tooltip] {
     position: relative;
 
-    // The placement API: the text is the attribute, the side is a class. Both
-    // axes are custom properties rather than rules, so `below` and `end` compose
-    // without a rule per pairing - and the arrow reads only the block axis,
-    // because it points at the trigger whichever way the bubble is aligned.
-    --_mw-tooltip-block: block-start;
-    --_mw-tooltip-inline: center;
-
-    &.mw-tooltip-below {
-      --_mw-tooltip-block: block-end;
-    }
-
-    &.mw-tooltip-end {
-      --_mw-tooltip-inline: span-inline-start;
-    }
-
-    &.mw-tooltip-start {
-      --_mw-tooltip-inline: span-inline-end;
-    }
-
     &::before {
       content: attr(data-tooltip);
       position: absolute;
@@ -345,40 +326,53 @@
       z-index: z-index('tooltip');
     }
 
-    // What the modifiers mean without anchor positioning. Kept in its own
-    // `@supports not` rather than reset inside the anchored path: a modifier
-    // carries a class more weight than such a reset, so the two would fight
-    // instead of replace - which is exactly how the absolute placement used to
-    // survive into the anchored path and land the bubble on its own trigger.
-    @supports not (position-area: block-start) {
-      &.mw-tooltip-below {
-        &::before {
-          top: 100%;
-          bottom: auto;
-          margin-top: $_mw-tooltip-gap + $_mw-tooltip-arrow;
-          margin-bottom: 0;
-        }
+    // The placement API: the text is the attribute, the side is a class. The
+    // three steer different properties - block axis, inline axis - so `below`
+    // and `end` compose without a rule for the pairing.
+    //
+    // They place the bubble against the trigger rather than joining the anchored
+    // path below, and that is the point, not a shortcut. The reason to want them
+    // is a control in a fixed header, and that header carries a backdrop-filter,
+    // which makes it the containing block for anything `fixed` inside it.
+    // `block-end` is then the few pixels between the trigger and the header's own
+    // bottom edge, the bubble does not fit, and it gets pushed back over the
+    // trigger it belongs to. What this gives up is the clipping immunity the
+    // anchored path buys - a modifier inside a scroll container is cut off.
+    &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start) {
+      &::before,
+      &::after {
+        position: absolute;
+        position-area: none;
+      }
+    }
 
-        &::after {
-          top: 100%;
-          bottom: auto;
-          margin-top: $_mw-tooltip-arrow-inset;
-          margin-bottom: 0;
-        }
+    &.mw-tooltip-below {
+      &::before {
+        top: 100%;
+        bottom: auto;
+        margin-top: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+        margin-bottom: 0;
       }
 
-      // Only the bubble moves - the arrow stays on the trigger it points at.
-      &.mw-tooltip-end::before {
-        left: auto;
-        right: 0;
-        transform: none;
+      &::after {
+        top: 100%;
+        bottom: auto;
+        margin-top: $_mw-tooltip-arrow-inset;
+        margin-bottom: 0;
       }
+    }
 
-      &.mw-tooltip-start::before {
-        left: 0;
-        right: auto;
-        transform: none;
-      }
+    // Only the bubble moves - the arrow stays centred on the trigger it points at.
+    &.mw-tooltip-end::before {
+      left: auto;
+      right: 0;
+      transform: none;
+    }
+
+    &.mw-tooltip-start::before {
+      left: 0;
+      right: auto;
+      transform: none;
     }
 
     &:hover::before,
@@ -428,13 +422,13 @@
       }
 
       &::before {
-        position-area: var(--_mw-tooltip-block) var(--_mw-tooltip-inline);
+        position-area: block-start;
         transform: none;
       }
 
       // The turn stays - it is the arrow's shape, not its placement.
       &::after {
-        position-area: var(--_mw-tooltip-block) center;
+        position-area: block-start;
         transform: rotate(45deg);
       }
     }
