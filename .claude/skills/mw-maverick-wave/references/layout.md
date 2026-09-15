@@ -185,8 +185,14 @@ as the header's first child under the same condition.
 element and shows a tooltip above it on hover or keyboard focus. It is pure CSS
 (a pseudo element on the trigger), which also means anything that clips its
 overflow cuts it off: a scroll container, a tile, or a card carrying a ribbon -
-plain cards do not clip. Close to the screen edge the bubble can run out of the
-viewport, so keep long tooltips off the outermost elements.
+plain cards do not clip.
+
+Three classes steer where it lands, and they combine: `mw-tooltip-below` puts it
+under the trigger instead of over it - for a control in a fixed header, where
+above is off the screen - and `mw-tooltip-end` / `mw-tooltip-start` line the
+bubble up with that edge of the trigger instead of centring it, which is what
+keeps a tooltip on an outermost element inside the viewport. The arrow keeps
+pointing at the trigger in every combination.
 
 ## Sections
 
