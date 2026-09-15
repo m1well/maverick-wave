@@ -231,9 +231,10 @@
       // Keeps a rubber-band scroll inside the panel from moving the page
       overscroll-behavior: contain;
       padding: calc(
-          var(--mw-header-height) + #{spacing('6')} + env(safe-area-inset-top)
+          var(--mw-header-height) + #{spacing('6')} +
+            env(safe-area-inset-top, 0px)
         )
-        spacing('4') calc(#{spacing('6')} + env(safe-area-inset-bottom));
+        spacing('4') calc(#{spacing('6')} + env(safe-area-inset-bottom, 0px));
     }
 
     .mw-navbar-item {

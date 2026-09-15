@@ -38,21 +38,29 @@ The result is a framework that balances utility with simplicity, offering develo
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.12.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.13.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.12.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.13.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
 
 Always pin to a specific version in production for stability.
+
+`viewport-fit=cover` is not optional. The container gutter, the mobile nav panel
+and the modals budget for the cutout with `env(safe-area-inset-*)`, and iOS
+resolves every one of those to `0` without it. On localhost the framework writes
+a console warning when it is missing.
 
 ### 2. Direct Download
 
@@ -418,6 +426,38 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
 > Plain variable assignments before `@use` have no effect - the framework
 > declares its root colors with `!default`, which only `@use ... with` feeds.
 
+### Mixins and Functions
+
+`@use 'maverick-wave/src/scss/abstracts' as *` brings these into your own rules.
+They exist on the SCSS path only - the compiled CSS carries none of them.
+
+- `fluid($min, $max, $from: 'xs', $to: 'md')` - a clamp between two sizes. Each
+  end is a key of `$font-sizes` or a plain rem/px length, so a hero that does not
+  sit on the scale still gets one. The rem term is the point: a vw-only clamp
+  ignores the reader's font size. The default range stops at `md`, a headline
+  passes `$to: 'xl'`.
+- `media-up($bp)` / `media-down($bp)` - the `$breakpoints` map as a query.
+- `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
+  every target-size rule in the framework hangs under.
+- `touch-floor($size: 2.75rem)` - that condition plus a `min-height`. Not for a
+  link inside a sentence: WCAG 2.5.8 exempts those, and a `min-height` there
+  pushes the lines of the paragraph apart.
+- `hit-area($grow: 6px)` - grows the hit area through `::after` without touching
+  the silhouette, for a control whose size is the design. Neighbours need a gap
+  of at least twice `$grow`, or two hit areas overlap.
+
+```scss
+@use 'maverick-wave/src/scss/abstracts' as *;
+
+.hero h1 {
+  font-size: fluid(1.95rem, 4.2rem, $to: 'xl');
+}
+
+.my-close-button {
+  @include touch-floor;
+}
+```
+
 ### Importing Only What You Need
 
 Every layer forwards one module per file and no `@extend` crosses a file
@@ -445,8 +485,8 @@ have no use for the marketing components (`blog-post`, `gallery`,
 @use 'maverick-wave/src/scss/utilities';
 ```
 
-A typical application subset like the one above compiles to roughly 85 kB raw /
-14 kB gzipped, against 196 kB / 30 kB for the full build.
+A typical application subset like the one above compiles to roughly 113 kB raw /
+17 kB gzipped, against 281 kB / 40 kB for the full build.
 
 > **`base` is not optional.** It carries the `:root` custom properties - without
 > it every component renders without colors. If you bring your own reset, use

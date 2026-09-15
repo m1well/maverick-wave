@@ -15,12 +15,15 @@ accordion FAQ.
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Acme Analytics</title>
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.12.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.13.0/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -487,7 +490,7 @@ accordion FAQ.
       <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.12.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.13.0/maverick-wave.min.js"></script>
     <script>
       // The only thing the shipped script does not cover: opening a modal.
       // Closing works through .mw-modal-close, the backdrop is wired above.

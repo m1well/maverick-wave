@@ -188,7 +188,8 @@ picker.
 - Active position: `mw-active` on the item.
 - `mw-segmented-secondary` switches the active fill to the secondary colour,
   `mw-segmented-auto` shrinks the control to its content instead of filling the
-  row. `disabled` works on an item.
+  row - capped at `100%`, so labels wider than a 320px screen truncate instead
+  of pushing the row off it. `disabled` works on an item.
 - Items reach a 2.5rem minimum height on a coarse pointer.
 
 ## Cards
@@ -233,9 +234,10 @@ picker.
   below 360px, and the title, the subtitle and the body padding step up at
   420px. The image height is the one that still follows the window, because it
   is declared on the card itself and a container cannot query itself.
-- `mw-tile` works the same way, and so do `mw-stepper` and both timelines: the
-  step labels shrink and the two-sided timeline collapses to one side once the
-  component is narrow, whatever the window does. One catch on tiles: a tile
+- `mw-tile` works the same way, and so do `mw-stepper`, both timelines, the
+  gallery wrapper and the image slider: the step labels shrink and the two-sided
+  timeline collapses to one side once the component is narrow, whatever the
+  window does. One catch on tiles: a tile
   clips its overflow, and being a container makes it the containing block for
   `position: fixed`, so a `data-tooltip` **inside** a tile is cut off at its
   edge. Cards do not clip and are unaffected.
@@ -890,26 +892,26 @@ a half-width column wraps on a desktop too.
 </div>
 ```
 
-| Class                     | Role                                                                                     |
-| ------------------------- | ---------------------------------------------------------------------------------------- |
-| `mw-kanban`               | Board. Grid, one column per lane, same width for all of them                             |
-| `mw-kanban-plain`         | Board without its own surface or padding - for a board that already sits on a panel      |
-| `mw-kanban-compact`       | Tighter padding, description clamped to 2 lines instead of 4, lane floor 90px            |
-| `mw-kanban-column`        | Lane: dashed border, flex column                                                         |
-| `mw-kanban-column-header` | Title + counter + add button in one row                                                  |
-| `mw-kanban-title`         | Lane title, uppercase, truncates                                                         |
-| `mw-kanban-count`         | Ticket counter pill                                                                      |
-| `mw-kanban-add`           | Sits **on** `mw-btn` - only trims it to the header line height                           |
-| `mw-kanban-column-body`   | Ticket stack; fills the lane so the empty state stays centred                            |
-| `mw-kanban-card`          | Ticket. Needs `mw-card` next to it                                                       |
-| `mw-kanban-card-title`    | Ticket title                                                                             |
-| `mw-kanban-card-text`     | Description, clamped to 4 lines (2 on a compact board)                                   |
-| `mw-kanban-card-footer`   | Rule + key on the left, avatar and actions on the right                                  |
-| `mw-kanban-card-id`       | Ticket key, monospaced so equal-length keys line up across cards                         |
-| `mw-kanban-card-actions`  | Right-hand group; resets the avatar margin                                               |
-| `mw-kanban-action`        | 26px square icon button (32px below `md`), `mw-kanban-action-danger` turns the hover red |
-| `mw-kanban-empty`         | Placeholder; hides itself as soon as the lane holds a ticket or an open composer         |
-| `mw-kanban-card-in`       | One-shot entry animation for a freshly created ticket                                    |
+| Class                     | Role                                                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `mw-kanban`               | Board. Grid, one column per lane, same width for all of them                                                     |
+| `mw-kanban-plain`         | Board without its own surface or padding - for a board that already sits on a panel                              |
+| `mw-kanban-compact`       | Tighter padding, description clamped to 2 lines instead of 4, lane floor 90px                                    |
+| `mw-kanban-column`        | Lane: dashed border, flex column                                                                                 |
+| `mw-kanban-column-header` | Title + counter + add button in one row                                                                          |
+| `mw-kanban-title`         | Lane title, uppercase, truncates                                                                                 |
+| `mw-kanban-count`         | Ticket counter pill                                                                                              |
+| `mw-kanban-add`           | Sits **on** `mw-btn` - only trims it to the header line height                                                   |
+| `mw-kanban-column-body`   | Ticket stack; fills the lane so the empty state stays centred                                                    |
+| `mw-kanban-card`          | Ticket. Needs `mw-card` next to it                                                                               |
+| `mw-kanban-card-title`    | Ticket title                                                                                                     |
+| `mw-kanban-card-text`     | Description, clamped to 4 lines (2 on a compact board)                                                           |
+| `mw-kanban-card-footer`   | Rule + key on the left, avatar and actions on the right                                                          |
+| `mw-kanban-card-id`       | Ticket key, monospaced so equal-length keys line up across cards                                                 |
+| `mw-kanban-card-actions`  | Right-hand group; resets the avatar margin                                                                       |
+| `mw-kanban-action`        | 26px square icon button (32px below `md`, hit area grown to 44px), `mw-kanban-action-danger` turns the hover red |
+| `mw-kanban-empty`         | Placeholder; hides itself as soon as the lane holds a ticket or an open composer                                 |
+| `mw-kanban-card-in`       | One-shot entry animation for a freshly created ticket                                                            |
 
 - **Priority is the regular `mw-card-ribbon`** and brings its own colour through
   `mw-card-addon-danger|warning|info`. It has to be a **direct child** of the
@@ -1645,7 +1647,14 @@ variants apply to it too), `mw-divider-vertical` needs a flex row with a height.
 
 The dots (`mw-gallery-dot`, active one gets `mw-active`) are generated by the
 shipped JS, as is the track transform. In a SPA, render the dots and set
-`transform: translateX(...)` yourself.
+`transform: translateX(...)` yourself. Swipe is single-finger and decided by the
+dominant axis, so a page scroll that drifts sideways does not page the gallery.
+
+`mw-gallery-container` is a query container (`mw-gallery`), and the caption size,
+the dot size and the 4:3 crop follow _its_ width - 688px and 512px - not the
+viewport. A gallery in a half-width column therefore takes its narrow layout
+there. Keep the wrapper: a container query only reaches descendants, and the
+caption and the dots are siblings of `mw-gallery`.
 
 `mw-image-slider` swaps a base image against overlays through indexed buttons:
 
@@ -1666,7 +1675,10 @@ shipped JS, as is the track transform. In a SPA, render the dots and set
 ```
 
 Control grids: `mw-image-slider-controls-grid-2`, `-grid-3`. Visible overlay and
-current button carry `active`.
+current button carry `active`. `mw-image-slider` is its own query container
+(`mw-slider`): the three heights (250 / 320 / 370px) and the control columns
+switch at 420px and 560px of slider width, because the slider caps at 600px and
+past a tablet the viewport says nothing about the room it has.
 
 ## Blog post
 
@@ -1809,7 +1821,9 @@ is no highlighting engine - wrap spans yourself or plug in Prism/highlight.js.
 </div>
 ```
 
-`mw-techstack-item-sm` is the logo-only chip; the info block is optional.
+`mw-techstack-item-sm` is the logo-only chip; the info block is optional. On a
+coarse pointer the chip itself grows from 32px to 2.5rem - it often carries a
+`data-tooltip`, which owns the pseudo-element a grown hit area would need.
 
 ## Coming soon
 

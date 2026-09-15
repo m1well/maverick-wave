@@ -33,6 +33,7 @@
     initTabs();
     initAlerts();
     initLocalhostIndicator();
+    warnMissingViewportFit();
     initFormSliders();
     initModals();
     initHeaderLoginButton();
@@ -287,17 +288,42 @@
     if (nextBtn)
       nextBtn.addEventListener('click', () => goToSlide(current + 1));
 
-    // Optional: Swipe support
+    // Optional: Swipe support. The dominant axis decides, not the horizontal
+    // distance alone - a finger scrolling the page down drifts sideways as it
+    // goes, and 50px of that is not a swipe. Passive because neither handler
+    // cancels the gesture, and without the flag the browser waits for them
+    // before it may scroll.
     let startX = 0;
+    let startY = 0;
+    let swiping = false;
+
     track.addEventListener(
       'touchstart',
-      (e) => (startX = e.touches[0].clientX)
+      (e) => {
+        // A second finger is a pinch or a two-hand hold, never a swipe
+        swiping = e.touches.length === 1;
+        if (!swiping) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      },
+      { passive: true }
     );
-    track.addEventListener('touchend', (e) => {
-      const delta = e.changedTouches[0].clientX - startX;
-      if (delta > 50) goToSlide(current - 1);
-      if (delta < -50) goToSlide(current + 1);
-    });
+
+    track.addEventListener('touchcancel', () => (swiping = false));
+
+    track.addEventListener(
+      'touchend',
+      (e) => {
+        if (!swiping) return;
+        swiping = false;
+        const deltaX = e.changedTouches[0].clientX - startX;
+        const deltaY = e.changedTouches[0].clientY - startY;
+        if (Math.abs(deltaX) < 50) return;
+        if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+        goToSlide(current + (deltaX < 0 ? 1 : -1));
+      },
+      { passive: true }
+    );
 
     goToSlide(0);
   }
@@ -674,7 +700,11 @@
 
     const update = () => {
       queued = false;
-      const viewport = window.innerHeight;
+      // The layout viewport, not innerHeight: on a phone that one is the visual
+      // viewport and grows by up to a hundred pixels as the URL bar slides away
+      // mid-scroll, which steps every layer at once. clientHeight only moves on
+      // a real resize.
+      const viewport = document.documentElement.clientHeight;
       // Every read before the first write, or each write makes the next read
       // lay the page out again - a reflow per layer per frame.
       const values = layers.map((layer) => progress(layer, viewport));
@@ -839,7 +869,8 @@
             }
           }
         });
-      }, 100)
+      }, 100),
+      { passive: true }
     );
   }
 
@@ -975,24 +1006,40 @@
   }
 
   // ===== Utility Functions =====
+  function isLocalhost() {
+    const host = window.location.hostname;
+    return (
+      host === 'localhost' || host === '127.0.0.1' || host.includes('192.168.')
+    );
+  }
+
   function initLocalhostIndicator() {
     const activated = document.querySelector(
       '.mw-localhost-indicator-activated'
     );
     const header = document.querySelector('.mw-header');
 
-    if (activated) {
-      const isLocalhost =
-        window.location.hostname === 'localhost' ||
-        window.location.hostname === '127.0.0.1' ||
-        window.location.hostname.includes('192.168.');
-
-      if (isLocalhost) {
-        const indicator = document.createElement('div');
-        indicator.className = 'mw-localhost-indicator-pulse';
-        header.prepend(indicator);
-      }
+    if (activated && isLocalhost()) {
+      const indicator = document.createElement('div');
+      indicator.className = 'mw-localhost-indicator-pulse';
+      header.prepend(indicator);
     }
+  }
+
+  // iOS resolves every safe-area inset to 0 without it, so the gutter, the nav
+  // panel and the modals lose their cutout budget - silently, hence the warning.
+  function warnMissingViewportFit() {
+    if (!isLocalhost()) return;
+
+    const meta = document.querySelector('meta[name="viewport"]');
+    const content = meta ? meta.getAttribute('content') || '' : '';
+    if (/viewport-fit\s*=\s*cover/.test(content)) return;
+
+    console.warn(
+      'MaverickWave: <meta name="viewport"> is missing viewport-fit=cover. ' +
+        'env(safe-area-inset-*) resolves to 0 without it, so notched phones ' +
+        'lose the gutter, the nav panel and the modal padding that expect it.'
+    );
   }
 
   // ===== Form Sliders =====

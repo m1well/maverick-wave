@@ -44,31 +44,14 @@
     letter-spacing: -0.01em;
   }
 
-  // Two steps, not one. With the single jump at 576px, everything between there
-  // and a tablet kept the full desktop headline - 3rem of h1 across a 690px
-  // column is a third of the screen before the first line of copy.
+  // The clamp ends where the two steps it replaces ended, so a phone and a
+  // desktop are unchanged and only the widths between them move.
   h1 {
-    font-size: font-size('3xl');
-
-    @include media-up('sm') {
-      font-size: font-size('4xl');
-    }
-
-    @include media-up('md') {
-      font-size: font-size('5xl');
-    }
+    font-size: fluid('3xl', '5xl');
   }
 
   h2 {
-    font-size: font-size('2xl');
-
-    @include media-up('sm') {
-      font-size: font-size('3xl');
-    }
-
-    @include media-up('md') {
-      font-size: font-size('4xl');
-    }
+    font-size: fluid('2xl', '4xl');
   }
 
   h3 {
