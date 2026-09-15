@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../abstracts' as *;
 
 @layer mw.layout {
@@ -268,9 +269,39 @@
   // scroll on a phone. Hence `allow-discrete` and the starting style.
   $_mw-tooltip-arrow: 6px;
   $_mw-tooltip-gap: 8px;
+  // A square turned 45deg rather than a border triangle: it reads the same from
+  // above and from below, so the second placement costs no second arrow and a
+  // flip never has to repaint anything. The diagonal carries the visible width,
+  // so the side is the visible height doubled over root two.
+  $_mw-tooltip-arrow-side: math.div($_mw-tooltip-arrow * 2, math.sqrt(2));
+  // Half a side short of where the triangle's edge sat, so the turned square is
+  // centred on the bubble's edge and only its outer half shows. The inner half
+  // lands on the bubble in the same colour, which is what makes it read as one
+  // shape rather than a diamond stuck to a box.
+  $_mw-tooltip-arrow-inset: $_mw-tooltip-gap +
+    $_mw-tooltip-arrow - math.div($_mw-tooltip-arrow-side, 2);
 
   [data-tooltip] {
     position: relative;
+
+    // The placement API: the text is the attribute, the side is a class. Both
+    // axes are custom properties rather than rules, so `below` and `end` compose
+    // without a rule per pairing - and the arrow reads only the block axis,
+    // because it points at the trigger whichever way the bubble is aligned.
+    --_mw-tooltip-block: block-start;
+    --_mw-tooltip-inline: center;
+
+    &.mw-tooltip-below {
+      --_mw-tooltip-block: block-end;
+    }
+
+    &.mw-tooltip-end {
+      --_mw-tooltip-inline: span-inline-start;
+    }
+
+    &.mw-tooltip-start {
+      --_mw-tooltip-inline: span-inline-end;
+    }
 
     &::before {
       content: attr(data-tooltip);
@@ -301,17 +332,53 @@
       position: absolute;
       bottom: 100%;
       left: 50%;
-      transform: translateX(-50%);
-      margin-bottom: $_mw-tooltip-gap;
-      border: $_mw-tooltip-arrow solid transparent;
-      border-bottom-width: 0;
-      border-top-color: var(--mw-gray-color);
+      transform: translateX(-50%) rotate(45deg);
+      margin-bottom: $_mw-tooltip-arrow-inset;
+      width: $_mw-tooltip-arrow-side;
+      height: $_mw-tooltip-arrow-side;
+      background: var(--mw-gray-color);
       opacity: 0;
       display: none;
       transition:
         opacity var(--mw-duration-fast) var(--mw-ease-out),
         display var(--mw-duration-fast) allow-discrete;
       z-index: z-index('tooltip');
+    }
+
+    // What the modifiers mean without anchor positioning. Kept in its own
+    // `@supports not` rather than reset inside the anchored path: a modifier
+    // carries a class more weight than such a reset, so the two would fight
+    // instead of replace - which is exactly how the absolute placement used to
+    // survive into the anchored path and land the bubble on its own trigger.
+    @supports not (position-area: block-start) {
+      &.mw-tooltip-below {
+        &::before {
+          top: 100%;
+          bottom: auto;
+          margin-top: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+          margin-bottom: 0;
+        }
+
+        &::after {
+          top: 100%;
+          bottom: auto;
+          margin-top: $_mw-tooltip-arrow-inset;
+          margin-bottom: 0;
+        }
+      }
+
+      // Only the bubble moves - the arrow stays on the trigger it points at.
+      &.mw-tooltip-end::before {
+        left: auto;
+        right: 0;
+        transform: none;
+      }
+
+      &.mw-tooltip-start::before {
+        left: 0;
+        right: auto;
+        transform: none;
+      }
     }
 
     &:hover::before,
@@ -345,18 +412,30 @@
     // it attached. No `anchor-name` needed - a pseudo element is implicitly
     // anchored to the element it comes from.
     //
-    // No `position-try-fallbacks: flip-block` on purpose: the arrow is a border
-    // triangle and would still point up, into a bubble that flipped below.
+    // Still no `position-try-fallbacks: flip-block`, and no longer because of the
+    // arrow - the turned square survives a flip. Bubble and arrow are two
+    // separately anchored boxes, so each would decide on its own whether it fits,
+    // and the tiny one nearly always does: the label flips, the arrow stays.
     @supports (position-area: block-start) {
       &::before,
       &::after {
         position: fixed;
-        position-area: block-start;
         // The absolute placement these replace - left as-is they fight the
         // position-area, which resolves the inset properties itself.
         bottom: auto;
         left: auto;
+        top: auto;
+      }
+
+      &::before {
+        position-area: var(--_mw-tooltip-block) var(--_mw-tooltip-inline);
         transform: none;
+      }
+
+      // The turn stays - it is the arrow's shape, not its placement.
+      &::after {
+        position-area: var(--_mw-tooltip-block) center;
+        transform: rotate(45deg);
       }
     }
   }

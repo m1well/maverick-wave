@@ -230,6 +230,14 @@
   card, because cards only clip their content when they carry a ribbon. What
   does still cut it off: a scroll container, and the edge of the screen.
 </p>
+<p class="mw-text-muted">
+  Add <code>mw-tooltip-below</code> to put it underneath instead - for a control
+  in a fixed header, where above is off the screen.
+  <code>mw-tooltip-end</code> and <code>mw-tooltip-start</code> line the bubble
+  up with that edge of the trigger rather than centring it, for a trigger close
+  to the side of the screen. The two axes combine, and the arrow keeps pointing
+  at the trigger by itself.
+</p>
 <div class="mw-card mw-card-simple">
   <p class="mw-mb-4">
     Works on inline elements too:
@@ -254,6 +262,27 @@
     >
       Long text
     </span>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-tooltip-below"
+      data-tooltip="This one sits underneath"
+    >
+      Below
+    </button>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-tooltip-end"
+      data-tooltip="Right edge on the trigger's right edge"
+    >
+      End
+    </button>
+    <button
+      type="button"
+      class="mw-btn mw-btn-outline mw-tooltip-below mw-tooltip-end"
+      data-tooltip="Both at once, no extra rule needed"
+    >
+      Below + end
+    </button>
   </div>
 </div>
 
