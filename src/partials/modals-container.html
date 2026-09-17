@@ -1,22 +1,25 @@
 <h3 class="mw-section-subtitle">Simple Modals</h3>
 <p class="mw-text-muted mw-mb-6">
-  JavaScript-controlled modals - perfect for e.g. Angular apps using class
-  toggling.
+  A <code>&lt;dialog&gt;</code> carrying the same <code>mw-modal</code> classes.
+  Escape, the focus trap, the inert page behind it and the body scroll lock come
+  from the element - only opening it needs a line of script. The older
+  <code>mw-modal-overlay</code> div is still styled for markup that predates
+  this.
 </p>
 
 <!-- Size Triggers -->
 <h4 class="mw-mb-3">Modal Sizes</h4>
 <div class="mw-grid-4 mw-mb-8">
-  <button onclick="openModal('modal-sm')" class="mw-btn mw-btn-outline">
+  <button data-mw-modal="modal-sm" class="mw-btn mw-btn-outline">
     Small Modal
   </button>
-  <button onclick="openModal('modal-default')" class="mw-btn mw-btn-outline">
+  <button data-mw-modal="modal-default" class="mw-btn mw-btn-outline">
     Default Modal
   </button>
-  <button onclick="openModal('modal-lg')" class="mw-btn mw-btn-outline">
+  <button data-mw-modal="modal-lg" class="mw-btn mw-btn-outline">
     Large Modal
   </button>
-  <button onclick="openModal('modal-xl')" class="mw-btn mw-btn-outline">
+  <button data-mw-modal="modal-xl" class="mw-btn mw-btn-outline">
     XL Modal
   </button>
 </div>
@@ -24,212 +27,160 @@
 <!-- Example Triggers -->
 <h4 class="mw-mb-3">Examples</h4>
 <div class="mw-grid-2 mw-mb-8">
-  <button onclick="openModal('modal-form')" class="mw-btn mw-btn-primary">
+  <button data-mw-modal="modal-form" class="mw-btn mw-btn-primary">
     Open Form Modal
   </button>
   <button data-mw-modal="modal-confirm" class="mw-btn mw-btn-secondary">
-    Open Confirmation (&lt;dialog&gt;)
+    Open Delete Confirmation
   </button>
 </div>
 
+<!-- The close buttons carry no handler - the framework script closes the dialog
+     they sit in - and closedby="any" dismisses it on a backdrop click, so there
+     is no mw-modal-backdrop element either. `data-mw-modal` on a trigger opens
+     the dialog with that id. -->
 <!-- Small Modal -->
-<div id="modal-sm" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-sm">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">Small Modal</h4>
-      <button onclick="closeModal('modal-sm')" class="mw-modal-close">
-        &#120299;
-      </button>
-    </div>
-    <div class="mw-modal-body">
-      <p class="mw-text-muted">
-        Max-width <strong>370px</strong>. Good for short confirmations or
-        alerts.
-      </p>
-    </div>
-    <div class="mw-modal-footer">
-      <button onclick="closeModal('modal-sm')" class="mw-btn mw-btn-outline">
-        Close
-      </button>
-    </div>
+<dialog id="modal-sm" class="mw-modal mw-modal-sm" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">Small Modal</h4>
+    <button class="mw-modal-close">&#120299;</button>
   </div>
-  <div class="mw-modal-backdrop" onclick="closeModal('modal-sm')"></div>
-</div>
+  <div class="mw-modal-body">
+    <p class="mw-text-muted">
+      Max-width <strong>370px</strong>. Good for short confirmations or alerts.
+    </p>
+  </div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Close</button>
+  </div>
+</dialog>
 
 <!-- Default Modal -->
-<div id="modal-default" class="mw-modal-overlay">
-  <div class="mw-modal">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">Default Modal</h4>
-      <button onclick="closeModal('modal-default')" class="mw-modal-close">
-        &#120299;
-      </button>
-    </div>
-    <div class="mw-modal-body">
-      <p class="mw-text-muted">
-        Max-width <strong>520px</strong>. The default size - fits most use
-        cases.
-      </p>
-    </div>
-    <div class="mw-modal-footer">
-      <button
-        onclick="closeModal('modal-default')"
-        class="mw-btn mw-btn-outline"
-      >
-        Cancel
-      </button>
-      <button
-        onclick="closeModal('modal-default')"
-        class="mw-btn mw-btn-primary"
-      >
-        Confirm
-      </button>
-    </div>
+<dialog id="modal-default" class="mw-modal" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">Default Modal</h4>
+    <button class="mw-modal-close">&#120299;</button>
   </div>
-  <div class="mw-modal-backdrop" onclick="closeModal('modal-default')"></div>
-</div>
+  <div class="mw-modal-body">
+    <p class="mw-text-muted">
+      Max-width <strong>520px</strong>. The default size - fits most use cases.
+    </p>
+  </div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+    <button class="mw-modal-close mw-btn mw-btn-primary">Confirm</button>
+  </div>
+</dialog>
 
 <!-- Large Modal -->
-<div id="modal-lg" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-lg">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">Large Modal</h4>
-      <button onclick="closeModal('modal-lg')" class="mw-modal-close">
-        &#120299;
-      </button>
-    </div>
-    <div class="mw-modal-body">
-      <p class="mw-text-muted">
-        Max-width <strong>720px</strong>. More room for richer content or forms.
-      </p>
-    </div>
-    <div class="mw-modal-footer">
-      <button onclick="closeModal('modal-lg')" class="mw-btn mw-btn-outline">
-        Cancel
-      </button>
-      <button onclick="closeModal('modal-lg')" class="mw-btn mw-btn-primary">
-        Confirm
-      </button>
-    </div>
+<dialog id="modal-lg" class="mw-modal mw-modal-lg" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">Large Modal</h4>
+    <button class="mw-modal-close">&#120299;</button>
   </div>
-  <div class="mw-modal-backdrop" onclick="closeModal('modal-lg')"></div>
-</div>
+  <div class="mw-modal-body">
+    <p class="mw-text-muted">
+      Max-width <strong>720px</strong>. More room for richer content or forms.
+    </p>
+  </div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+    <button class="mw-modal-close mw-btn mw-btn-primary">Confirm</button>
+  </div>
+</dialog>
 
 <!-- XL Modal -->
-<div id="modal-xl" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-xl">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">XL Modal</h4>
-      <button onclick="closeModal('modal-xl')" class="mw-modal-close">
-        &#120299;
-      </button>
-    </div>
-    <div class="mw-modal-body">
-      <p class="mw-text-muted">
-        Max-width <strong>960px</strong>. Use for detail views, data tables, or
-        complex layouts.
-      </p>
-    </div>
-    <div class="mw-modal-footer">
-      <button onclick="closeModal('modal-xl')" class="mw-btn mw-btn-outline">
-        Cancel
-      </button>
-      <button onclick="closeModal('modal-xl')" class="mw-btn mw-btn-primary">
-        Confirm
-      </button>
-    </div>
+<dialog id="modal-xl" class="mw-modal mw-modal-xl" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">XL Modal</h4>
+    <button class="mw-modal-close">&#120299;</button>
   </div>
-  <div class="mw-modal-backdrop" onclick="closeModal('modal-xl')"></div>
-</div>
+  <div class="mw-modal-body">
+    <p class="mw-text-muted">
+      Max-width <strong>960px</strong>. Use for detail views, data tables, or
+      complex layouts.
+    </p>
+  </div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+    <button class="mw-modal-close mw-btn mw-btn-primary">Confirm</button>
+  </div>
+</dialog>
 
 <!-- Form Modal -->
-<div id="modal-form" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-lg">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">New Contact</h4>
-      <button onclick="closeModal('modal-form')" class="mw-modal-close">
-        &#120299;
-      </button>
-    </div>
-    <div class="mw-modal-body">
-      <div class="mw-grid-2 mw-mb-3">
-        <label for="modal-firstname">
-          <span>First Name</span>
-          <input
-            id="modal-firstname"
-            type="text"
-            class="mw-input"
-            placeholder="Jane"
-          />
-        </label>
-        <label for="modal-lastname">
-          <span>Last Name</span>
-          <input
-            id="modal-lastname"
-            type="text"
-            class="mw-input"
-            placeholder="Doe"
-          />
-        </label>
-      </div>
-      <div class="mw-mb-3">
-        <label for="modal-email">
-          <span>Email</span>
-          <input
-            id="modal-email"
-            type="email"
-            class="mw-input"
-            placeholder="jane@example.com"
-          />
-        </label>
-      </div>
-      <div class="mw-mb-3">
-        <label for="modal-role">
-          <span>Role</span>
-          <select id="modal-role" class="mw-select">
-            <option value="" disabled selected>Select a role</option>
-            <option>Developer</option>
-            <option>Designer</option>
-            <option>Product Manager</option>
-            <option>Other</option>
-          </select>
-        </label>
-      </div>
-      <div class="mw-mb-3">
-        <label for="modal-notes">
-          <span>Notes</span>
-          <textarea
-            id="modal-notes"
-            rows="3"
-            class="mw-textarea"
-            placeholder="Optional notes..."
-          ></textarea>
-        </label>
-      </div>
-      <label class="mw-toggle">
-        <input type="checkbox" />
-        <div class="mw-toggle-track"></div>
-        <span class="mw-toggle-label">Send welcome email</span>
+<dialog id="modal-form" class="mw-modal mw-modal-lg" closedby="any">
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title">New Contact</h4>
+    <button class="mw-modal-close">&#120299;</button>
+  </div>
+  <div class="mw-modal-body">
+    <div class="mw-grid-2 mw-mb-3">
+      <label for="modal-firstname">
+        <span>First Name</span>
+        <input
+          id="modal-firstname"
+          type="text"
+          class="mw-input"
+          placeholder="Jane"
+        />
+      </label>
+      <label for="modal-lastname">
+        <span>Last Name</span>
+        <input
+          id="modal-lastname"
+          type="text"
+          class="mw-input"
+          placeholder="Doe"
+        />
       </label>
     </div>
-    <div class="mw-modal-footer">
-      <button onclick="closeModal('modal-form')" class="mw-btn mw-btn-outline">
-        Cancel
-      </button>
-      <button onclick="closeModal('modal-form')" class="mw-btn mw-btn-primary">
-        Save Contact
-      </button>
+    <div class="mw-mb-3">
+      <label for="modal-email">
+        <span>Email</span>
+        <input
+          id="modal-email"
+          type="email"
+          class="mw-input"
+          placeholder="jane@example.com"
+        />
+      </label>
     </div>
+    <div class="mw-mb-3">
+      <label for="modal-role">
+        <span>Role</span>
+        <select id="modal-role" class="mw-select">
+          <option value="" disabled selected>Select a role</option>
+          <option>Developer</option>
+          <option>Designer</option>
+          <option>Product Manager</option>
+          <option>Other</option>
+        </select>
+      </label>
+    </div>
+    <div class="mw-mb-3">
+      <label for="modal-notes">
+        <span>Notes</span>
+        <textarea
+          id="modal-notes"
+          rows="3"
+          class="mw-textarea"
+          placeholder="Optional notes..."
+        ></textarea>
+      </label>
+    </div>
+    <label class="mw-toggle">
+      <input type="checkbox" />
+      <div class="mw-toggle-track"></div>
+      <span class="mw-toggle-label">Send welcome email</span>
+    </label>
   </div>
-  <div class="mw-modal-backdrop" onclick="closeModal('modal-form')"></div>
-</div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+    <button class="mw-modal-close mw-btn mw-btn-primary">Save Contact</button>
+  </div>
+</dialog>
 
 <!-- Confirmation Modal -->
-<!-- Same classes, a <dialog> instead of a div: Escape, the focus trap, the
-     inert page behind it and the scroll lock all come from the element. The
-     close buttons need no onclick - the framework script closes the dialog
-     they sit in - and closedby="any" is what dismisses it on a backdrop
-     click, so there is no mw-modal-backdrop either. -->
 <dialog id="modal-confirm" class="mw-modal mw-modal-sm" closedby="any">
   <div class="mw-modal-header">
     <h4 class="mw-modal-title">Delete Item</h4>
