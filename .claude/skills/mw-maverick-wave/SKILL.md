@@ -48,18 +48,20 @@ Load the one you need - do not read them all up front.
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5.15.0/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.15.0/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.js"></script>
 ```
 
-Pin the version. The JS file is optional and only for server-rendered/static pages -
-see below. `viewport-fit=cover` is not optional - see pitfall 30.
+`@5` keeps this snippet current; in a real project pin the exact version so a
+build stays reproducible. The JS file is optional and only for
+server-rendered/static pages - see below. `viewport-fit=cover` is not optional -
+see pitfall 30.
 
 ### Angular (or any SPA)
 
@@ -129,7 +131,7 @@ The classes that mean something _other_ than "on" keep their own names:
 | Checkbox list item (`li`)                    | `mw-selected`                                            |
 | Calendar day, picked                         | `mw-selected`                                            |
 | Kanban ticket being edited                   | `mw-kanban-editing`                                      |
-| Modal overlay                                | `mw-modal-open`                                          |
+| Modal, older overlay div                     | `mw-modal-open` (a `<dialog>` carries `open` itself)     |
 | Alert, dismissing / dismissed                | `mw-alert-closing` → `mw-alert-closed` (`display: none`) |
 | Field wrapper in error                       | `mw-field-has-error`                                     |
 | Single form control in error                 | `mw-form-element-error`                                  |
@@ -234,8 +236,9 @@ none of them survive into the compiled CSS. Full list in `references/theming.md`
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
 - `touch-floor($size: 2.75rem)` - that condition plus a `min-height`.
-- `hit-area($grow: 6px)` - grows the hit area through `::after` without touching
-  the silhouette.
+- `hit-area($grow: 6px, $box: 1.5rem)` - grows the hit area through `::after`
+  without touching the silhouette. An element carrying a `data-tooltip` owns that
+  pseudo for its arrow, so those are skipped and grow to `$box` instead.
 - `hover` / `hover-move`, `focus-ring`, `focus-ring-inset`, `field-focus`,
   `truncate`, `surface`.
 

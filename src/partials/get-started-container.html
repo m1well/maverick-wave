@@ -276,9 +276,11 @@ body {
           <code>DOMContentLoaded</code> and writes straight into the DOM - in a
           SPA everything rendered afterwards stays uninitialized, and the class
           toggles happen behind change detection. Rebuild the behaviors in
-          components; the state classes (<code>active</code>, <code>open</code>,
-          <code>mw-modal-open</code>, <code>mw-selected</code>) are the whole
-          contract.
+          components; the state classes (<code>mw-active</code>,
+          <code>open</code>, <code>mw-selected</code>) are the whole contract. A
+          modal is the exception - write it as a
+          <code>&lt;dialog class="mw-modal"&gt;</code> and the element brings
+          Escape, the focus trap and the scroll lock with it.
         </p>
         <p>
           Alternatively, use the CDN link directly in

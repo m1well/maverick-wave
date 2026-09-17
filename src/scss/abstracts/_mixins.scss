@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:math';
 @use 'variables' as v;
 @use 'functions' as *;
 
@@ -171,14 +172,26 @@
 // Grows the hit area without touching the silhouette - for a control whose size
 // is the design: a 9px gallery dot, an 18px mini button. Neighbours need a gap
 // of at least twice $grow, or two hit areas overlap and a tap lands on the one
-// next door. Takes ::after, so it is out for anything carrying a `data-tooltip`.
-@mixin hit-area($grow: 6px) {
+// next door.
+//
+// A `data-tooltip` owns both pseudo-elements, so the overlay has nowhere to go
+// and used to land on the arrow, leaving its paint on the trigger as a grey
+// diamond. The selector carries that exclusion rather than a note to callers,
+// who apply this to a class and cannot see which instance has the attribute.
+// Those grow the box instead - it costs the silhouette, but of the two only the
+// target is load-bearing under a thumb.
+@mixin hit-area($grow: 6px, $box: 1.5rem) {
   position: relative;
 
-  &::after {
+  &:not([data-tooltip])::after {
     content: '';
     position: absolute;
     inset: -#{$grow};
+  }
+
+  &[data-tooltip] {
+    min-width: $box;
+    min-height: $box;
   }
 }
 
@@ -287,6 +300,15 @@
 $_corner-stretch: 1.5;
 $_corner-opaque: 55%;
 
+// `surface(0)` is the natural way to say "no border to subtract", but a unitless
+// zero makes every `calc(<length> - 0)` below invalid - and an invalid calc takes
+// its whole declaration with it. Losing the radius and the mask leaves the accent
+// as a plain 2px border all the way round the box, which is how a modal ended up
+// framed instead of cornered.
+@function _accent-width($value) {
+  @return if(math.is-unitless($value), $value * 1px, $value);
+}
+
 // What is left of the signature once the silhouette is switched off: the same
 // arc, on one corner, thinner and over a shorter run. The two-corner shape is
 // the loud half and mw-corners-even exists to turn it off - but a surface with
@@ -297,7 +319,8 @@ $_corner-opaque: 55%;
 // it follows --mw-radius-scale down to a square, where the arc becomes a
 // bracket in the corner rather than disappearing.
 @mixin corner-mark($border-width: 1px) {
-  $r: max(0px, calc(#{radius('md')} - #{$border-width}));
+  $width: _accent-width($border-width);
+  $r: max(0px, calc(#{radius('md')} - #{$width}));
 
   content: '';
   position: absolute;
@@ -319,8 +342,9 @@ $_corner-opaque: 55%;
   // max(), not a bare subtraction: --mw-radius-scale can take the radius to 0,
   // and while a negative border-radius is clamped for us, a negative circle in
   // the mask below would throw the whole gradient away and lose the arc.
-  $sharp: max(0px, calc(#{radius-sharp()} - #{$border-width}));
-  $round: max(0px, calc(#{radius('xl')} - #{$border-width}));
+  $width: _accent-width($border-width);
+  $sharp: max(0px, calc(#{radius-sharp()} - #{$width}));
+  $round: max(0px, calc(#{radius('xl')} - #{$width}));
   // Opaque to where the curve ends, fading from there, so the arc runs into the
   // straight edge instead of stopping at the tangent. 1.8 is bounded by the
   // shortest surface: past about 2 the two arcs meet on a 50px box and read as

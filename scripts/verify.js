@@ -155,22 +155,35 @@ for (const f of ['maverick-wave.min.css', 'maverick-wave.min.js']) {
 }
 
 // --- 5: pinned CDN version -------------------------------------------------
-// Every jsDelivr snippet in the docs pins a version, which is the right advice
-// and the reason it goes stale: 5.0.0 shipped with six snippets still on 4.28.0.
+// Two rules, because the two places are read at different times. The README is
+// where someone decides how to pull the framework in, so it names the exact
+// version - release.sh rewrites it, and this catches a bump that went around the
+// script. The skills are installed outside this repo and never get that rewrite,
+// so they carry a major range; an exact pin there is stale the day the next
+// version ships and nobody notices, which is how 5.0.0 went out with six
+// snippets still on 4.28.0.
 
 const { version } = require(path.join(ROOT, 'package.json'));
+const EXACT_PIN = /maverick-wave@([0-9]+\.[0-9]+\.[0-9]+)/g;
 
-for (const p of [path.join(ROOT, 'README.md'), ...DOCS]) {
+const readme = read(path.join(ROOT, 'README.md'));
+if (readme) {
+  for (const v of new Set(
+    all(readme, EXACT_PIN).filter((v) => v !== version)
+  )) {
+    errors.push(
+      `stale CDN pin in README.md: maverick-wave@${v} - package.json is ${version}`
+    );
+  }
+}
+
+const major = version.split('.')[0];
+for (const p of DOCS) {
   const md = read(p);
   if (!md) continue;
-  const stale = new Set(
-    all(md, /maverick-wave@([0-9]+\.[0-9]+\.[0-9]+)/g).filter(
-      (v) => v !== version
-    )
-  );
-  for (const v of stale) {
+  for (const v of new Set(all(md, EXACT_PIN))) {
     errors.push(
-      `stale CDN pin in ${path.relative(ROOT, p)}: maverick-wave@${v} - package.json is ${version}`
+      `exact CDN pin in ${path.relative(ROOT, p)}: maverick-wave@${v} - a skill carries @${major}, so it never goes stale`
     );
   }
 }

@@ -338,11 +338,29 @@
     // bottom edge, the bubble does not fit, and it gets pushed back over the
     // trigger it belongs to. What this gives up is the clipping immunity the
     // anchored path buys - a modifier inside a scroll container is cut off.
+    //
+    // Opting out has to restore the placement, not just the positioning scheme:
+    // the anchored path below is the later rule and clears `bottom`, `top`,
+    // `left` and the centring transform so `position-area` can resolve them
+    // itself. Leave that cleared and the box falls to its static position, which
+    // for a pseudo element is inside the trigger it is supposed to sit above.
+    // The three rules under this one then move the one edge each of them owns.
     &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start) {
       &::before,
       &::after {
         position: absolute;
         position-area: none;
+        bottom: 100%;
+        top: auto;
+        left: 50%;
+      }
+
+      &::before {
+        transform: translateX(-50%);
+      }
+
+      &::after {
+        transform: translateX(-50%) rotate(45deg);
       }
     }
 

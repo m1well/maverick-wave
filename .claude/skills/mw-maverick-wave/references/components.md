@@ -590,43 +590,6 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
 ## Modal
 
 ```html
-<div id="delete-modal" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-sm">
-    <div class="mw-modal-header">
-      <h4 class="mw-modal-title">Delete invoice</h4>
-      <button class="mw-modal-close" type="button">&#120299;</button>
-    </div>
-    <div class="mw-modal-body">
-      <p>Invoice 2026-0042 will be removed.</p>
-    </div>
-    <div class="mw-modal-footer">
-      <p class="mw-actions-note">This action cannot be undone.</p>
-      <button class="mw-btn mw-btn-outline">Cancel</button>
-      <button class="mw-btn mw-btn-danger">Delete</button>
-    </div>
-  </div>
-  <div class="mw-modal-backdrop"></div>
-</div>
-```
-
-- The overlay is `display: none` until `mw-modal-open` is added to it. That
-  class is the whole open/close mechanism.
-- Body scroll lock is automatic: the stylesheet uses
-  `body:has(.mw-modal-open)`. Nothing to implement.
-- Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
-  `mw-modal-xl` 960px. Height is capped at 80-92dvh, the body scrolls.
-- `mw-modal-backdrop` is the click-to-close surface; put the close handler on it.
-- `mw-modal-body` takes a `mw-form` directly - the form brings the field gaps,
-  the body brings the padding.
-- `mw-actions-note` is the muted line above the buttons - see below.
-
-Angular: `<div class="mw-modal-overlay" [class.mw-modal-open]="isOpen()">`.
-
-### The same modal as a `<dialog>`
-
-Same classes, no overlay wrapper and no backdrop element:
-
-```html
 <dialog id="delete-modal" class="mw-modal mw-modal-sm" closedby="any">
   <div class="mw-modal-header">
     <h4 class="mw-modal-title">Delete invoice</h4>
@@ -634,22 +597,58 @@ Same classes, no overlay wrapper and no backdrop element:
       &#120299;
     </button>
   </div>
-  <div class="mw-modal-body">…</div>
-  <div class="mw-modal-footer">…</div>
+  <div class="mw-modal-body">
+    <p>Invoice 2026-0042 will be removed.</p>
+  </div>
+  <div class="mw-modal-footer">
+    <p class="mw-actions-note">This action cannot be undone.</p>
+    <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+    <button class="mw-btn mw-btn-danger">Delete</button>
+  </div>
 </dialog>
 ```
 
-- Escape, the focus trap, `inert` on the page behind it and the scroll lock all
-  come from the element. Prefer this shape for anything that asks a question.
+- Escape, the focus trap, `inert` on the page behind it and the body scroll lock
+  all come from the element. There is no overlay wrapper and no backdrop div.
 - Opened with `showModal()`, closed with `close()`. `main.js` wires the close
-  buttons and exposes `mwOpenModal(id)` / `mwCloseModal(id)`, both of which take
-  either shape. A trigger can also carry `data-mw-modal="delete-modal"`.
+  buttons and exposes `mwOpenModal(id)` / `mwCloseModal(id)`; a trigger can also
+  carry `data-mw-modal="delete-modal"` and needs no script at all.
 - `closedby="any"` dismisses it on a backdrop click; where that attribute is not
-  understood the script handles the click instead.
-- Sizes, the bottom sheet below 576px and every `mw-modal-*` part behave exactly
-  as above - those rules are class-based.
+  understood yet the script handles the click instead.
+- Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
+  `mw-modal-xl` 960px. Height is capped at 80-92dvh, the body scrolls. Below
+  576px it becomes a bottom sheet.
+- `mw-modal-close` is the hook, not a look: on the header X it styles the button,
+  on a footer action it only closes. Combine it with `mw-btn mw-btn-primary` and
+  the button keeps its own paint.
+- `mw-modal-body` takes a `mw-form` directly - the form brings the field gaps,
+  the body brings the padding.
+- `mw-actions-note` is the muted line above the buttons - see below.
+- Name it with `aria-labelledby` pointing at the `mw-modal-title`; `role` and
+  `aria-modal` come from `showModal()`. Without `autofocus` the browser focuses
+  the first focusable element, usually the close button.
 
-Angular: bind nothing, call `showModal()` on a `viewChild` ref.
+Angular: `[open]="isOpen()"` does **not** work - the attribute opens a non-modal
+dialog with no top layer, backdrop or focus trap. It takes a directive calling
+`showModal()`, see `examples/angular-services.md`.
+
+### The older overlay div
+
+Still styled, for markup that predates the `<dialog>` above. It cannot trap
+focus or make the page inert, so it is not what to write now.
+
+```html
+<div id="delete-modal" class="mw-modal-overlay">
+  <div class="mw-modal mw-modal-sm">…</div>
+  <div class="mw-modal-backdrop"></div>
+</div>
+```
+
+- `display: none` until `mw-modal-open` is added to the overlay - that class is
+  the whole open/close mechanism, in Angular
+  `[class.mw-modal-open]="isOpen()"`.
+- Body scroll lock comes from `body:has(.mw-modal-open)`.
+- `mw-modal-backdrop` is the click-to-close surface; put the handler on it.
 
 ## Alerts & toasts
 

@@ -29,7 +29,7 @@ classes are the entire contract.
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Accordion           | Toggles `mw-active` on `mw-accordion-header` and the following `mw-accordion-content`, and writes `aria-expanded` when the header is a `<button>`                                                                                                                               | `[class.mw-active]="isOpen()"` and `[attr.aria-expanded]="isOpen()"` on the header, `mw-active` on the panel                                                                                                                       |
 | Tabs                | `data-tab` → panel `id`; sets `mw-active` on nav item and panel, and wires the whole tablist: `role`, `aria-selected`, `aria-controls`, `aria-labelledby`, a roving `tabindex` and arrow/Home/End keys                                                                          | Track the selected index/key, bind `mw-active` on both; drop `data-tab`                                                                                                                                                            |
-| Modal               | Click on `mw-modal-close` removes `mw-modal-open` from the overlay                                                                                                                                                                                                              | `[class.mw-modal-open]="isOpen()"`; backdrop click closes. Opening is not in the script at all (the showcase has its own `openModal`)                                                                                              |
+| Modal               | `data-mw-modal="<id>"` on a trigger opens that modal; a click on `mw-modal-close` closes the `<dialog>` it sits in, or clears `mw-modal-open` on an overlay div                                                                                                                 | A `<dialog>` needs a directive calling `showModal()` - `[open]` only opens it non-modally. See `examples/angular-services.md`                                                                                                      |
 | Mobile nav          | Toggles `open` on `mw-menu-btn` and `mw-navbar`, writes `aria-expanded` when the button is a `<button>`, closes on anchor click and on Escape (focus returns to the button)                                                                                                     | One signal, bound to both; reset it on navigation end                                                                                                                                                                              |
 | Scroll spy          | Sets `mw-active` on `mw-navbar-link` from the scroll position                                                                                                                                                                                                                   | Router-based: `routerLinkActive="mw-active"`                                                                                                                                                                                       |
 | Anchor scrolling    | Intercepts `a[href^="#"]` and runs its own eased scroll - duration scales with distance, capped at 1.4s, cancelled by wheel or touch. Lands on `scroll-padding-top`, moves focus to the target, writes the hash with `replaceState`, and measures a sticky target unpinned      | The router; for in-page anchors `scrollIntoView({ behavior: 'smooth' })` or your own animation                                                                                                                                     |
@@ -69,10 +69,10 @@ difference, not a missing effect.
 ## Modals and progress bars
 
 `mwOpenModal(id)` / `mwCloseModal(id)` are on `window` and handle both modal
-shapes - the `mw-modal-overlay` div and a `<dialog class="mw-modal">`. Close
-buttons and `data-mw-modal="<id>"` triggers are delegated from the document, so
-markup rendered later still works. A `<dialog>` needs none of it in a SPA: call
-`showModal()` and `close()` on the element.
+shapes - a `<dialog class="mw-modal">` and the older `mw-modal-overlay` div.
+Close buttons and `data-mw-modal="<id>"` triggers are delegated from the
+document, so markup rendered later still works and a static page needs no code
+of its own. In a SPA, call `showModal()` and `close()` on the element instead.
 
 `mw-progress-fill` takes its target width from `data-value="75"` or an inline
 `style="width: 75%"`. Where scroll-driven animations are supported the bar fills
@@ -93,8 +93,8 @@ other spelling exists.
 Pure CSS, nothing to wire up: hover, focus and press states, the card lift,
 tooltips (`data-tooltip`), `mw-rating` (via `data-rating`), the responsive table
 card view (`data-label`), all grids and utilities, the body scroll lock while a
-modal is open (`body:has(.mw-modal-open)`), the modal turning into a bottom
-sheet below 576px, toast entry animations, the sticky table header, the scroll
+modal is open (from the `<dialog>` element, or `body:has(.mw-modal-open)` for an
+overlay div), the modal turning into a bottom sheet below 576px, toast entry animations, the sticky table header, the scroll
 hint on a tab bar (four gradients, no scroll listener), the kanban empty-lane
 placeholder (hidden via `:has()` as soon as the lane holds a ticket), touch
 target sizing on a coarse pointer, `prefers-reduced-motion` handling.
@@ -108,17 +108,16 @@ still a working menu, not a broken one.
 ## When you do keep the shipped JS
 
 For a static page, a landing page or a server-rendered site (Thymeleaf, Twig,
-Jekyll, plain HTML) it is exactly right - load it at the end of `<body>`. The
-only manual part is opening a modal, which the script does not cover:
+Jekyll, plain HTML) it is exactly right - load it at the end of `<body>` and
+write no JavaScript at all. A modal opens from its trigger:
 
 ```html
+<button class="mw-btn mw-btn-primary" data-mw-modal="demo">Book a demo</button>
+
+<dialog id="demo" class="mw-modal" closedby="any">
+  …
+  <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
+</dialog>
+
 <script src="maverick-wave.min.js"></script>
-<script>
-  function openModal(id) {
-    document.getElementById(id).classList.add('mw-modal-open');
-  }
-  function closeModal(id) {
-    document.getElementById(id).classList.remove('mw-modal-open');
-  }
-</script>
 ```

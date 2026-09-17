@@ -146,6 +146,12 @@
     padding: spacing('0');
     border: none;
     color: inherit;
+    // `.mw-modal` carries `position: relative` from surface(), which is what its
+    // corner accent is drawn against - and being an author rule it beats the UA's
+    // `dialog:modal { position: fixed }`. The dialog then centres itself in the
+    // document rather than the viewport, so on a long page it opens somewhere far
+    // above the fold with only its backdrop to show for it.
+    position: fixed;
     // In the top layer there is nothing left to sit above
     z-index: auto;
     // The UA centres a dialog with auto margins; these keep that while giving
@@ -267,8 +273,13 @@
     justify-content: flex-end;
   }
 
-  // Close button
-  .mw-modal-close {
+  // Close button. `:not(.mw-btn)` because the class is two things at once: the
+  // hook main.js closes a dialog by, and the look of the X in the header. A
+  // footer button that dismisses carries both it and `mw-btn mw-btn-primary` -
+  // and this rule sits after the button styles in the same layer at the same
+  // specificity, so without the guard it wins and paints the primary action in
+  // `background: none`.
+  .mw-modal-close:not(.mw-btn) {
     background: none;
     font-size: font-size('md');
     cursor: pointer;

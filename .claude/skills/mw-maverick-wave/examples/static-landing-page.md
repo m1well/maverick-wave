@@ -23,7 +23,7 @@ accordion FAQ.
 
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.15.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.css"
     />
     <link
       rel="stylesheet"
@@ -123,7 +123,7 @@ accordion FAQ.
                 <button
                   type="button"
                   class="mw-btn mw-btn-primary mw-btn-lg"
-                  onclick="openModal('demo')"
+                  data-mw-modal="demo"
                 >
                   Book a demo
                 </button>
@@ -302,7 +302,7 @@ accordion FAQ.
                   <button
                     type="button"
                     class="mw-btn mw-btn-outline"
-                    onclick="openModal('demo')"
+                    data-mw-modal="demo"
                   >
                     Contact us
                   </button>
@@ -412,11 +412,7 @@ accordion FAQ.
               <!-- A link in running text is mw-link, not a button class - it
                    keeps the line height of the paragraph around it -->
               <p>
-                <button
-                  type="button"
-                  class="mw-link"
-                  onclick="openModal('demo')"
-                >
+                <button type="button" class="mw-link" data-mw-modal="demo">
                   Book a 20 minute demo</button
                 >, no sales pitch.
               </p>
@@ -454,53 +450,42 @@ accordion FAQ.
       </div>
     </footer>
 
-    <!-- Modal: markup stays in the DOM, mw-modal-open shows it -->
-    <div id="demo" class="mw-modal-overlay">
-      <div class="mw-modal">
-        <div class="mw-modal-header">
-          <h4 class="mw-modal-title">Book a demo</h4>
-          <button type="button" class="mw-modal-close">&#120299;</button>
-        </div>
-        <div class="mw-modal-body">
-          <form class="mw-form">
-            <div class="mw-field">
-              <label class="mw-field-label mw-required" for="demo-email"
-                >Email</label
-              >
-              <div class="mw-input-group">
-                <span class="mw-input-group-prefix"
-                  ><i class="fas fa-envelope"></i
-                ></span>
-                <input id="demo-email" type="email" class="mw-input" required />
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="mw-modal-footer">
-          <button
-            type="button"
-            class="mw-btn mw-btn-outline"
-            onclick="closeModal('demo')"
-          >
-            Cancel
-          </button>
-          <button type="button" class="mw-btn mw-btn-primary">Send</button>
-        </div>
+    <!-- Markup stays in the DOM; a trigger carrying data-mw-modal="demo" opens
+         it, .mw-modal-close closes it, closedby="any" dismisses on the backdrop -->
+    <dialog
+      id="demo"
+      class="mw-modal"
+      closedby="any"
+      aria-labelledby="demo-title"
+    >
+      <div class="mw-modal-header">
+        <h4 class="mw-modal-title" id="demo-title">Book a demo</h4>
+        <button type="button" class="mw-modal-close">&#120299;</button>
       </div>
-      <div class="mw-modal-backdrop" onclick="closeModal('demo')"></div>
-    </div>
+      <div class="mw-modal-body">
+        <form class="mw-form">
+          <div class="mw-field">
+            <label class="mw-field-label mw-required" for="demo-email"
+              >Email</label
+            >
+            <div class="mw-input-group">
+              <span class="mw-input-group-prefix"
+                ><i class="fas fa-envelope"></i
+              ></span>
+              <input id="demo-email" type="email" class="mw-input" required />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mw-modal-footer">
+        <button type="button" class="mw-modal-close mw-btn mw-btn-outline">
+          Cancel
+        </button>
+        <button type="button" class="mw-btn mw-btn-primary">Send</button>
+      </div>
+    </dialog>
 
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.15.0/maverick-wave.min.js"></script>
-    <script>
-      // The only thing the shipped script does not cover: opening a modal.
-      // Closing works through .mw-modal-close, the backdrop is wired above.
-      function openModal(id) {
-        document.getElementById(id).classList.add('mw-modal-open');
-      }
-      function closeModal(id) {
-        document.getElementById(id).classList.remove('mw-modal-open');
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
