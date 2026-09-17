@@ -147,6 +147,30 @@ Under `prefers-reduced-motion` the bar is simply there, and so it is without
 scroll timelines unless `maverick-wave.min.js` is on the page - in Firefox that
 is what rides it in (`javascript.md`).
 
+**Something that stays.** `mw-header-keep` on a control inside the bar - the
+login button, the burger - holds it in place while the bar rides in behind it:
+it travels the bar's own distance the other way, so it waits at the exact
+position it will hold in the arrived bar and nothing jumps at the end. On a
+narrow screen that is what puts the burger on the hero before the bar exists.
+Opening the drawer brings the bar in with it, because the drawer hangs off the
+header and would otherwise sit a header height too high. One consequence: the
+bar loses its fade as soon as one of these is on it, since a group's opacity
+cannot be taken back by a child.
+
+```html
+<button class="mw-login-btn mw-header-keep" type="button">
+  <i class="fas fa-lock"></i>
+</button>
+```
+
+- Focus on a keep control leaves the bar where it is. The rescue that pulls it
+  back (WCAG 2.4.11) is for what hides behind it - a control in front of it is
+  on screen already, and without the exception a click on the theme toggle would
+  haul in the whole header. Tabbing to anything else in the bar still brings it.
+- While it floats it carries a ring and a soft shadow, so a dark control still
+  reads on a dark picture; both are gone once the bar is there. That occupies
+  `box-shadow`, so a keep element cannot bring a shadow of its own.
+
 **Localhost indicator.** Put `mw-localhost-indicator-activated` on the header
 and the shipped JS prepends a pulsing bar when the host is localhost/127.0.0.1/
 192.168.\*. In a SPA, reimplement it: add a `<div class="mw-localhost-indicator-pulse">`

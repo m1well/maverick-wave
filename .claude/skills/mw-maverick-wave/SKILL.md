@@ -272,8 +272,8 @@ feature frame) ·
 `-highlight`, `-static`, color variants) · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
-**Navigation** `mw-header` (+ `mw-header-reveal`) + `mw-navbar` ·
-`mw-breadcrumbs` · `mw-pagination` ·
+**Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
+`mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
 `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
 `-caret`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
 `inverted`) · `mw-flag` (+ 23 country codes) ·
