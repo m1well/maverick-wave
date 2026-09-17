@@ -59,7 +59,14 @@
   the picture, not on a theme surface, and the light theme's shadows are cut for
   paper and vanish there. Pair it with <code>mw-header-reveal</code> on the
   header and the page opens on the picture alone: the bar stays away for the
-  first 130px of scroll and has ridden in by 420px.
+  first 130px of scroll and has ridden in by 420px. A control marked
+  <code>mw-header-keep</code> sits that ride out - it travels the bar's distance
+  the other way and waits at the position it will hold once the bar is there, so
+  a login button is on the picture from the first frame and nothing jumps at the
+  end. On a narrow screen it is how the burger reaches the reader before the bar
+  exists. While it floats it carries a ring and a soft shadow so a dark control
+  still reads on a dark picture, and focus leaves the bar alone - it is on
+  screen already, so a click on the theme toggle no longer hauls the header in.
 </p>
 <p class="mw-text-muted mw-text-measure mw-mb-6">
   Add <code>mw-parallax-rise</code> next to it and the picture lifts by
@@ -119,7 +126,11 @@
     <span class="mw-code-block-language">HTML</span>
   </div>
   <div class="mw-code-container">
-    <pre><code>&lt;header class="mw-header mw-header-reveal"&gt;...&lt;/header&gt;
+    <pre><code>&lt;header class="mw-header mw-header-reveal"&gt;
+  ...
+  &lt;button class="mw-login-btn mw-header-keep"&gt;...&lt;/button&gt;
+  &lt;button class="mw-menu-btn mw-header-keep"&gt;...&lt;/button&gt;
+&lt;/header&gt;
 
 &lt;main class="mw-main"&gt;
   &lt;section class="mw-section mw-parallax-sticky mw-parallax-rise"&gt;

@@ -1,3 +1,12 @@
+// Floating free over a picture, a control has to carry its own edge - the burger
+// and the login button bring a primary surface, the theme toggle is a dark pill
+// that a dark photo swallows. It travels with the float and not with the class,
+// or the ring would still be there in the arrived bar, on one control and not
+// its neighbour. Fixed values and not the elevation ramp, the same call the
+// parallax shadow makes: this lands on the picture, not on a theme surface, and
+// the light theme cuts its shadows for paper.
+$float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
+
 @layer mw.layout {
   // For a page that opens on a full-bleed picture and wants nothing on top of
   // it: the bar starts above the screen and rides in over the first stretch of
@@ -15,6 +24,28 @@
         animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 420px;
+      }
+
+      // Anything carrying mw-header-keep sits the ride out: the bar travels,
+      // the element travels the same distance back and stays where it is. The
+      // distance is the bar's own, so it waits at the position it will hold in
+      // the arrived bar - nothing jumps at the end, the bar just closes in
+      // behind it. For a login or burger button that has to be reachable while
+      // the hero is still untouched.
+      .mw-header-reveal .mw-header-keep {
+        animation-name: mw-header-keep;
+        animation-timing-function: var(--mw-ease-out);
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 420px;
+      }
+
+      // A group's opacity cannot be taken back by a child, so the fade has to
+      // go as soon as something is meant to stay visible through it. No loss:
+      // the bar is off screen for that stretch anyway, the fade only softened
+      // the last few pixels of the arrival.
+      .mw-header-reveal:has(.mw-header-keep) {
+        animation-name: mw-header-slide;
       }
 
       // The ribbon is glued under the bar, so it has to leave and arrive with
@@ -51,15 +82,45 @@
   // author declaration that outranks a running animation; dropping
   // `animation-name` instead leaves the element stuck on its last value, because
   // a restarted scroll timeline only catches up on the next scroll.
-  body:has(.mw-header-reveal:focus-within, .mw-announcement:focus-within) {
+  //
+  // A keep element is on screen already and needs no rescue, so it is left out -
+  // otherwise a click on the theme toggle, which focuses it, would haul in the
+  // whole bar. It takes `:focus` on a descendant and not `:focus-within` on the
+  // header: within also matches every wrapper around the focused control, and no
+  // `:not()` on those can tell which one holds the keep.
+  body:has(
+    .mw-header-reveal :focus:not(.mw-header-keep, .mw-header-keep *),
+    .mw-announcement:focus-within
+  ) {
     .mw-header-reveal {
       top: 0 !important;
       opacity: 1 !important;
     }
 
+    .mw-header-keep {
+      translate: none !important;
+      box-shadow: none !important;
+    }
+
     .mw-announcement:not(.mw-announcement-static) {
       transform: none !important;
       opacity: 1 !important;
+    }
+  }
+
+  // Same treatment while the drawer is open, which mw-header-keep makes
+  // reachable long before the bar arrives. The drawer is fixed but hangs off
+  // the header - backdrop-filter makes that one its containing block, the way a
+  // transform would - so with the bar still away it would sit a header height
+  // too high.
+  body:has(.mw-header-reveal):has(.mw-navbar.open) {
+    .mw-header-reveal {
+      top: 0 !important;
+    }
+
+    .mw-header-keep {
+      translate: none !important;
+      box-shadow: none !important;
     }
   }
 
@@ -72,6 +133,15 @@
     .mw-header-reveal.mw-header-away {
       top: calc(-1 * var(--mw-header-reveal-offset));
       opacity: 0;
+
+      &:has(.mw-header-keep) {
+        opacity: 1;
+      }
+
+      .mw-header-keep {
+        translate: 0 var(--mw-header-reveal-offset);
+        box-shadow: $float-edge;
+      }
     }
 
     .mw-header-driven {
@@ -80,6 +150,12 @@
       transition:
         var(--mw-transition),
         top var(--mw-duration-slow) var(--mw-ease-out);
+
+      .mw-header-keep {
+        transition:
+          translate var(--mw-duration-slow) var(--mw-ease-out),
+          box-shadow var(--mw-duration-slow) var(--mw-ease-out);
+      }
     }
 
     .mw-announcement.mw-announcement-away {
@@ -112,6 +188,35 @@
     100% {
       top: 0;
       opacity: 1;
+    }
+  }
+
+  // The same ride without the fade, for a bar something stays visible through
+  @keyframes mw-header-slide {
+    0%,
+    30% {
+      top: calc(-1 * var(--mw-header-reveal-offset));
+    }
+
+    100% {
+      top: 0;
+    }
+  }
+
+  // `translate` and not `transform`: the burger puts its hover lift and its
+  // press on transform, and a running animation outranks an author declaration
+  // - it would hold the button flat for the rest of the page. The standalone
+  // property stacks with the shorthand instead of replacing it.
+  @keyframes mw-header-keep {
+    0%,
+    30% {
+      translate: 0 var(--mw-header-reveal-offset);
+      box-shadow: $float-edge;
+    }
+
+    100% {
+      translate: none;
+      box-shadow: none;
     }
   }
 
