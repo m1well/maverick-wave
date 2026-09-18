@@ -1,0 +1,341 @@
+<h3 class="mw-section-subtitle">Lunch menu</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  Nothing below is a lunch-menu component. It is <code>mw-card</code>,
+  <code>mw-price</code>, <code>mw-date-stamp</code> and two grid classes - a
+  weekly menu is a composition, not a widget. One day per row: five columns
+  would squeeze a dish name into a fifth of the page, and a wrapping grid would
+  orphan the fifth card into a row of its own. <code>mw-grid-even</code> gives
+  every row the height of the tallest, so a day with a second line of
+  description does not make its card taller than the rest of the week.
+</p>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  <code>mw-date-stamp</code> answers to the card, not the viewport. On a narrow
+  card it is a muted line above the title; once the card is wide enough that a
+  single column would leave its right half empty - as every card in a stacked
+  list is - the same markup becomes the column on the left. Because the width it
+  switches at is the card's, a stamp behaves the same whichever grid it is
+  dropped into. <code>mw-date-stamp-today</code> fills that column instead of
+  recolouring it: the price is already primary, and two blues compete where one
+  would point.
+</p>
+
+<div class="mw-container-narrow">
+  <div class="mw-grid-1 mw-grid-even">
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Mon</span>
+          <span class="mw-date-stamp-date">14.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <h4 class="mw-text-base mw-text-bold mw-mb-2">
+            Lentils with spaetzle
+          </h4>
+          <p class="mw-text-sm mw-text-muted mw-mb-0">
+            Two sausages, a splash of vinegar, and bread on the side.
+          </p>
+        </div>
+        <p class="mw-price mw-price-xs">
+          <span class="mw-price-amount">10.90</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+      </div>
+    </article>
+
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Tue</span>
+          <span class="mw-date-stamp-date">15.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <h4 class="mw-text-base mw-text-bold mw-mb-2">Roast pork</h4>
+          <p class="mw-text-sm mw-text-muted mw-mb-0">
+            Bread dumpling, red cabbage and a dark gravy.
+          </p>
+        </div>
+        <p class="mw-price mw-price-xs">
+          <span class="mw-price-amount">11.90</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+      </div>
+    </article>
+
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Wed</span>
+          <span class="mw-date-stamp-date">16.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <h4 class="mw-text-base mw-text-bold mw-mb-2">Cheese spaetzle</h4>
+          <p class="mw-text-sm mw-text-muted mw-mb-0">
+            Hand-scraped, mountain cheese, roasted onions, leaf salad.
+          </p>
+          <p class="mw-tags">
+            <span class="mw-tag mw-tag-success">veggie</span>
+          </p>
+        </div>
+        <p class="mw-price mw-price-xs">
+          <span class="mw-price-amount">10.50</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+      </div>
+    </article>
+
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Thu</span>
+          <span class="mw-date-stamp-date">17.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <h4 class="mw-text-base mw-text-bold mw-mb-2">
+            Schnitzel in cream sauce
+          </h4>
+          <p class="mw-text-sm mw-text-muted mw-mb-0">
+            Pork, with spaetzle and a small salad.
+          </p>
+        </div>
+        <p class="mw-price mw-price-xs">
+          <span class="mw-price-amount">12.90</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+      </div>
+    </article>
+
+    <article class="mw-card mw-offer">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp mw-date-stamp-today">
+          <span class="mw-sr-only">Today,</span>
+          <span class="mw-date-stamp-day">Fri</span>
+          <span class="mw-date-stamp-date">18.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <h4 class="mw-text-base mw-text-bold mw-mb-2">Baked fish fillet</h4>
+          <p class="mw-text-sm mw-text-muted mw-mb-0">
+            In beer batter, with warm potato salad and remoulade.
+          </p>
+        </div>
+        <p class="mw-price mw-price-xs">
+          <span class="mw-price-amount">11.90</span>
+          <span class="mw-price-currency">Euro</span>
+        </p>
+      </div>
+    </article>
+  </div>
+</div>
+
+<h3 class="mw-card-title mw-mb-4 mw-mt-10">Two dishes a day</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The day is the card, so a second dish is another row inside it rather than a
+  second card. With a price per dish there is nothing left for a price column to
+  hold, so it goes instead where a printed menu puts it - on a
+  <code>mw-leader-row</code>, at the end of the line it prices. The stamp does
+  not change at all: it still centres against whatever the card holds beside it,
+  two rows or ten.
+</p>
+
+<div class="mw-container-narrow">
+  <div class="mw-grid-1 mw-grid-even">
+    <article class="mw-card">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Mon</span>
+          <span class="mw-date-stamp-date">14.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <div class="mw-item-list">
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Lentils with spaetzle
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  10.90 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Two sausages and a splash of vinegar.
+              </p>
+            </div>
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Potato soup with marjoram
+                  <span class="mw-tag mw-tag-success">veggie</span>
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  6.50 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                With a slice of farmhouse bread.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="mw-card">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Tue</span>
+          <span class="mw-date-stamp-date">15.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <div class="mw-item-list">
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Roast pork
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  11.90 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Bread dumpling, red cabbage, dark gravy.
+              </p>
+            </div>
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Cheese spaetzle
+                  <span class="mw-tag mw-tag-success">veggie</span>
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  10.50 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Mountain cheese, roasted onions, leaf salad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="mw-card">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Wed</span>
+          <span class="mw-date-stamp-date">16.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <div class="mw-item-list">
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Barley stew
+                  <span class="mw-tag mw-tag-success">veggie</span>
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  9.50 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Root vegetables, simmered since morning.
+              </p>
+            </div>
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Beef roulade
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  13.50 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Mashed potato and green beans.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="mw-card">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp">
+          <span class="mw-date-stamp-day">Thu</span>
+          <span class="mw-date-stamp-date">17.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <div class="mw-item-list">
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Schnitzel in cream sauce
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  12.90 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Pork, with spaetzle and a small salad.
+              </p>
+            </div>
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Mushroom ragout
+                  <span class="mw-tag mw-tag-success">veggie</span>
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  10.90 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                With a bread dumpling.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+    <article class="mw-card">
+      <div class="mw-card-body">
+        <p class="mw-date-stamp mw-date-stamp-today">
+          <span class="mw-sr-only">Today,</span>
+          <span class="mw-date-stamp-day">Fri</span>
+          <span class="mw-date-stamp-date">18.09.</span>
+        </p>
+        <div class="mw-date-stamp-body">
+          <div class="mw-item-list">
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Baked fish fillet
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  11.90 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Beer batter, warm potato salad, remoulade.
+              </p>
+            </div>
+            <div>
+              <p class="mw-leader-row mw-leader-row-top">
+                <span class="mw-leader-row-label mw-text-bold">
+                  Pancake soup
+                </span>
+                <span class="mw-leader-row-value mw-text-bold mw-text-primary">
+                  5.80 &euro;
+                </span>
+              </p>
+              <p class="mw-text-sm mw-text-muted mw-mb-0">
+                Beef broth with chives.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<p class="mw-text-muted mw-text-sm mw-mt-6">
+  The menu changes every week. No reservation, while the pot lasts.
+</p>

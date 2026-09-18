@@ -23,17 +23,48 @@
 // Only the slope is in vw: a size in vw alone ignores the reader's font size and
 // stops responding to zoom, the rem term is what keeps that alive.
 @function fluid($min, $max, $from: 'xs', $to: 'md') {
-  $min-rem: _to-rem($min, 'min');
-  $max-rem: _to-rem($max, 'max');
-  $vw-from: math.div(map.get(v.$breakpoints, $from), 16px);
-  $vw-to: math.div(map.get(v.$breakpoints, $to), 16px);
+  @return _ramp(
+    _to-rem($min, 'min'),
+    _to-rem($max, 'max'),
+    math.div(map.get(v.$breakpoints, $from), 16px),
+    math.div(map.get(v.$breakpoints, $to), 16px),
+    vw
+  );
+}
 
-  $slope: math.div($max-rem - $min-rem, $vw-to - $vw-from);
-  $intercept: $min-rem - $slope * $vw-from;
+// The same ramp against the container instead of the viewport. For anything
+// inside a `@container` block: sizing there off vw means a 440px card on a
+// 1400px screen takes the width a 900px card was measured for, which is the
+// mismatch container queries exist to remove. The endpoints are container
+// widths rather than breakpoint names, because a container has no breakpoints.
+@function fluid-container($min, $max, $from, $to) {
+  $from-rem: _to-rem($from, 'from');
+  $to-rem: _to-rem($to, 'to');
+
+  @if $from-rem == $to-rem {
+    @error "fluid-container(): $from and $to must differ, both are #{$from}.";
+  }
+
+  @return _ramp(
+    _to-rem($min, 'min'),
+    _to-rem($max, 'max'),
+    $from-rem,
+    $to-rem,
+    cqi
+  );
+}
+
+// Both of the above draw the same line through (from, min) and (to, max) and
+// disagree only on what measures the axis. Shared so a change to the rem term -
+// the part that keeps the size responding to zoom - cannot reach one and miss
+// the other.
+@function _ramp($min-rem, $max-rem, $from-rem, $to-rem, $unit) {
+  $slope: math.div($max-rem - $min-rem, $to-rem - $from-rem);
+  $intercept: $min-rem - $slope * $from-rem;
 
   @return clamp(
     #{$min-rem}rem,
-    #{_round4($intercept)}rem + #{_round4($slope * 100)}vw,
+    #{_round4($intercept)}rem + #{_round4($slope * 100)}#{$unit},
     #{$max-rem}rem
   );
 }

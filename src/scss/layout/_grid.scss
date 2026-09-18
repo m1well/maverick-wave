@@ -159,6 +159,12 @@ $_column-steps-lg: (
     grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
   }
 
+  // Every row as tall as the tallest rather than as tall as its own contents.
+  // A modifier, not a grid of its own - it needs one of the above to size.
+  .mw-grid-even {
+    grid-auto-rows: 1fr;
+  }
+
   .mw-grid-lg {
     @extend %grid-base-lg;
   }

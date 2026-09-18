@@ -389,6 +389,11 @@ Functions read the maps: `spacing('4')`, `font-size('lg')`,
   responding to zoom. The default range ends at `md` because that is where the
   stepped heading sizes it replaces reached their largest value - a headline
   that should keep growing passes `$to: 'xl'`.
+- `fluid-container($min, $max, $from, $to)` - the same ramp measured against the
+  container instead of the viewport, so the slope lands in `cqi`. For anything
+  inside a `@container` block: sizing there off `vw` hands a 440px card in a
+  1400px window the measurements a 900px card was drawn for. The endpoints are
+  container widths, not breakpoint names, because a container has none.
 - `media-up($bp)` / `media-down($bp)` - the `$breakpoints` map as range syntax,
   `width >= bp` and `width < bp`, so the two never overlap at the breakpoint.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport. Every

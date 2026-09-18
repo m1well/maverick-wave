@@ -10,6 +10,22 @@
     flex-direction: column;
   }
 
+  // Set in from the container it sits in, and giving that back a step at a time
+  // as the screen shrinks. For a column of full-width cards, which at 1200px
+  // leaves more empty card than content.
+  .mw-container-narrow {
+    width: 80%;
+    margin-inline: auto;
+
+    @include media-down('lg') {
+      width: 90%;
+    }
+
+    @include media-down('md') {
+      width: 100%;
+    }
+  }
+
   .mw-container {
     width: var(--mw-container-width);
     margin: spacing('0') auto;
