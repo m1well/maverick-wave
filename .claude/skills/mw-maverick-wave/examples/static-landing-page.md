@@ -50,7 +50,7 @@ accordion FAQ.
         </div>
 
         <div class="mw-header-actions">
-          <!-- Four links: mw-navbar-medium, so the drawer kicks in one
+          <!-- Four links: mw-navbar-medium, so the panel takes over one
                breakpoint later than the bare navbar would -->
           <nav class="mw-navbar mw-navbar-medium">
             <ul class="mw-navbar-list">

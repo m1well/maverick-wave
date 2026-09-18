@@ -126,7 +126,7 @@ The classes that mean something _other_ than "on" keep their own names:
 | Component                                    | State class                                              |
 | -------------------------------------------- | -------------------------------------------------------- |
 | Anything switchable, "on"                    | `mw-active` (`active` deprecated)                        |
-| Burger button + navbar drawer                | `open` (no prefix)                                       |
+| Burger button + navbar panel                 | `open` (no prefix), plus `mw-nav-open` on `<body>`       |
 | Stepper indicator / label / connector / step | `mw-active`, `mw-done`                                   |
 | Checkbox list item (`li`)                    | `mw-selected`                                            |
 | Calendar day, picked                         | `mw-selected`                                            |

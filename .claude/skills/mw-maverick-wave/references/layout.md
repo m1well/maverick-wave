@@ -106,10 +106,21 @@ its children are styled through descendant selectors:
 - **Collapse breakpoint follows the item count**: default (1-3 items) collapses
   at `md`, `mw-navbar-medium` (4-5) at `lg`, `mw-navbar-large` (6+) at `xl`.
   Pick the class by how many links you have.
-- Below the breakpoint the list is hidden and `mw-menu-btn` appears. Opening the
-  drawer means adding `open` to **both** `mw-menu-btn` and `mw-navbar`, and
-  setting `aria-expanded` on the button - below the breakpoint it is the only
-  route to the navigation, so it has to be a real `<button>`, not a `<div>`.
+- Below the breakpoint the list becomes a panel under the bar, full width, and
+  `mw-menu-btn` appears. Opening it means `open` on **both** `mw-menu-btn` and
+  `mw-navbar`, `mw-nav-open` on the `<body>`, and `aria-expanded` on the button -
+  below the breakpoint it is the only route to the navigation, so it has to be a
+  real `<button>`, not a `<div>`.
+- `mw-nav-open` is the state the scrim, the scroll lock and the rules that hold
+  the bar and the burger in place all key off. A class the script sets, not
+  `:has(.mw-navbar.open)`: the burger is the control that closes the panel, and
+  it cannot wait for a selector that has to re-match the document from a class
+  change several levels down. Forget it and the panel opens without a scrim, the
+  page behind it still scrolls, and on a `mw-header-reveal` bar the burger sits a
+  header height below the panel it belongs to.
+- The rows stack and run the full width of the panel. From `sm` they turn into a
+  wrapping row of pills, so a wide screen below the collapse breakpoint does not
+  get a tall band with four links in its left corner.
 - The active link carries `mw-active` (bare `active` still works but is
   deprecated).
 - `mw-profile-btn` is the signed-in pill, next to or instead of the login button:
@@ -138,7 +149,7 @@ same height as the login and burger buttons.
 rides it in over the first 420px of scroll - for a page that opens on a
 full-bleed hero and wants nothing on top of it. It animates `top` and not a
 transform, because a transform on the header would make it the containing block
-of the off-canvas drawer inside it, at every value including the resting one.
+for anything fixed inside it, at every value including the resting one.
 A fixed `mw-announcement` rides along without a class of its own - both cover
 the height of the pair, so they arrive as one block rather than the ribbon
 catching up. Focus inside either brings both back regardless of the scroll
@@ -152,9 +163,10 @@ login button, the burger - holds it in place while the bar rides in behind it:
 it travels the bar's own distance the other way, so it waits at the exact
 position it will hold in the arrived bar and nothing jumps at the end. On a
 narrow screen that is what puts the burger on the hero before the bar exists.
-Opening the drawer brings the bar in with it, because the drawer hangs off the
-header and would otherwise sit a header height too high. One consequence: the
-bar loses its fade as soon as one of these is on it, since a group's opacity
+Opening the panel brings the bar in with it and parks the keep controls back on
+their own positions - the panel hangs off the bar, and the burger is the X the
+moment the panel is out, so it has to sit where the burger sat. One consequence:
+the bar loses its fade as soon as one of these is on it, since a group's opacity
 cannot be taken back by a child.
 
 ```html
