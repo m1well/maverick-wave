@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // The block that says how to reach someone - postal address, phone, mail.
+  // Belongs on an <address>, which is what the one font-style is for: the
+  // element is italic by default, and nobody sets an address in italics.
+  .mw-contact {
+    font-style: normal;
+    display: grid;
+    gap: spacing('3');
+
+    > * {
+      margin: 0;
+    }
+
+    &-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: spacing('1') spacing('4');
+    }
+
+    // Sized rather than auto, so the values line up under each other however
+    // long the words in front of them are
+    &-label {
+      flex: 0 0 5rem;
+      color: var(--mw-text-muted-color);
+    }
+  }
+}

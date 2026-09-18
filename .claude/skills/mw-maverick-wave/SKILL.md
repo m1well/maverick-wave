@@ -232,6 +232,8 @@ none of them survive into the compiled CSS. Full list in `references/theming.md`
   end a key of `$font-sizes` or a plain rem/px length. The rem term is the
   point: a vw-only clamp ignores the reader's font size and stops responding to
   zoom. A headline passes `$to: 'xl'`.
+- `fluid-container($min, $max, $from, $to)` - the same ramp in `cqi` against the
+  container. Use it instead of `fluid()` inside a `@container` block.
 - `media-up($bp)` / `media-down($bp)` - the breakpoint map as a query.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
@@ -255,10 +257,13 @@ Everything below is documented in `references/components.md` unless marked other
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
 `mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
-`mw-item-list` family · `mw-offer` (+ `-head`, `-name`)
+`mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
+`mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
+`mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·
+`mw-contact` (+ `-row`, `-label`)
 
 **Pricing** `mw-price` (+ `-amount`, `-fraction`, `-currency`, `-original`,
-`-period`, `-word`, `-note`, `sm`/`lg`, `inline`, `center`, `plain`)
+`-period`, `-word`, `-note`, `xs`/`sm`/`lg`, `inline`, `center`, `plain`)
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
 `hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
@@ -290,8 +295,10 @@ feature frame) ·
 `mw-input-group` · `mw-prefilled` · `mw-form` / `mw-form-group` /
 `mw-form-actions` · `mw-login`
 
-**Layout** (`references/layout.md`) `mw-main` · `mw-container` · `mw-content` ·
-`mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*` ·
+**Layout** (`references/layout.md`) `mw-main` · `mw-container` (+ `-narrow`) ·
+`mw-content` ·
+`mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*`
+(+ `mw-grid-even`) ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
 `-slow`, `-pattern`) · `mw-footer`

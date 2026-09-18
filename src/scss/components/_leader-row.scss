@@ -1,0 +1,89 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // Dots on the baseline, not under the descenders; em so they follow font-size
+  $_mw-leader-baseline-lift: 0.34em;
+
+  // A label on the left, its value on the right, a dotted line bridging the
+  // gap. The line is the whole point: over a wide row the eye loses track of
+  // which value belongs to which label, which is why every printed menu, index
+  // and invoice draws one.
+  //
+  // The leader is the row's own ::before rather than an element in the markup.
+  // A generated box on a flex container is a flex item, so "order" can place it
+  // between the two spans - and generated content stays out of the
+  // accessibility tree, where a filler element would need aria-hidden.
+  .mw-leader-row {
+    --mw-leader-row-style: dotted;
+    --mw-leader-row-width: 2px;
+    --mw-leader-row-color: var(--mw-border);
+
+    display: flex;
+    // The values never shrink, so without a wrap the label is the only thing
+    // left to give - and it gives until it is one letter per line
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: spacing('3');
+    margin: 0;
+
+    &::before {
+      content: '';
+      order: 1;
+      flex: 1 1 auto;
+      // Keeps a stub of line visible when label and value nearly fill the row
+      min-width: spacing('6');
+      border-bottom: var(--mw-leader-row-width) var(--mw-leader-row-style)
+        var(--mw-leader-row-color);
+      margin-bottom: $_mw-leader-baseline-lift;
+    }
+
+    &-label {
+      order: 0;
+      // No min-width override: the default floor is the longest word, so the
+      // label wraps between words and stops there instead of going to nothing.
+      // Past that floor the row wraps rather than the label shrinking further.
+      //
+      // The row also works as a dl group, and a dd carries 40px of browser margin
+      margin: 0;
+    }
+
+    &-value {
+      order: 2;
+      flex-shrink: 0;
+      margin: 0;
+      // A price or a page number must not break, and a column of them only
+      // lines up with tabular figures.
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    // Two values in one row read as a single long range with only a gap between
+    // them. The mark takes the leader's colour, so retuning a row moves both.
+    // It hangs off the first of the pair, not the second: once the row wraps, a
+    // trailing mark reads as "continues below" and a leading one as a slip.
+    &-value:has(+ &-value)::after {
+      content: '|';
+      margin-left: spacing('3');
+      color: var(--mw-leader-row-color);
+    }
+
+    &-dashed {
+      --mw-leader-row-style: dashed;
+    }
+
+    &-solid {
+      --mw-leader-row-style: solid;
+      --mw-leader-row-width: 1px;
+    }
+
+    &-top {
+      align-items: flex-start;
+
+      &::before {
+        // flex-start pins the leader to the top edge, so it drops to the first
+        // line's baseline itself instead of being lifted off the last one
+        margin: calc(1lh - #{$_mw-leader-baseline-lift}) 0 0;
+      }
+    }
+  }
+}

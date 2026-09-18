@@ -35,6 +35,11 @@
   desktop; stepping the gutter at a breakpoint instead would make the container
   jump backwards at the step. Both values are tokens,
   `--mw-container-gutter` and `--mw-container-width`.
+- `mw-container-narrow` sits **inside** a `mw-container` and gives the content
+  80% of it, back to 90% below `lg` and the full width below `md`. For a column
+  of full-width cards, where a 1200px line leaves more empty card than content.
+  It centers itself; put nothing else in it that has to line up with the
+  headings outside.
 - `mw-content` (`flex: 1` + top padding) is the alternative to `mw-section` when
   a page has one single content area. `mw-content-centered` centers it
   vertically over the full viewport - login pages, error pages.
@@ -458,6 +463,11 @@ way.
 | `mw-grid-auto-md` | min 350px                                       | automatic                    |
 | `mw-grid-flex`    | 12 columns + `mw-col-span-1` … `mw-col-span-12` | single column below `md`     |
 | `mw-grid`         | no template, just grid + gap                    | -                            |
+
+`mw-grid-even` is a modifier, not a grid - add it to one of the above and every
+row becomes as tall as the tallest instead of as tall as its own contents. For a
+column of cards that should end on one line even when one of them carries an
+extra sentence.
 
 Every one of them has a `-lg` twin with a wider gap (2.5rem instead of 1.35rem):
 `mw-grid-2-lg`, `mw-grid-3-lg`, `mw-grid-4-lg`, `mw-grid-5-lg`, `mw-grid-1-lg`,

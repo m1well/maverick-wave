@@ -91,6 +91,10 @@
   }
 
   // Size. Only the token moves - see the `em` above.
+  .mw-price-xs {
+    --mw-price-size: #{font-size('lg')};
+  }
+
   .mw-price-sm {
     --mw-price-size: #{font-size('xl')};
   }

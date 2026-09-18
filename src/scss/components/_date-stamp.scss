@@ -1,0 +1,141 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // Every fluid value here runs the same ramp: from the width the two-column
+  // layout starts at to the width a day card stops growing at. Against the
+  // container, not the viewport - the layout switch below is a container query,
+  // and sizing off vw would hand a narrow card in a wide window the
+  // measurements of a wide one.
+  @function _stamp-ramp($min, $max) {
+    @return fluid-container($min, $max, $mw-card-wide, 900px);
+  }
+
+  // Named because the today fill cancels the paddings to reach the card border,
+  // and the price variant repeats the track list - two copies would drift apart.
+  $_mw-date-stamp-pad-top: _stamp-ramp(spacing('4'), spacing('6'));
+  $_mw-date-stamp-pad-bottom: _stamp-ramp(spacing('3'), spacing('5'));
+  $_mw-date-stamp-day-col: _stamp-ramp(4.25rem, 7rem);
+  $_mw-date-stamp-gap: _stamp-ramp(spacing('4'), spacing('7'));
+  $_mw-date-stamp-day-size: _stamp-ramp('xl', '3xl');
+
+  // The date on a dated card - an event, a changelog entry, a day on a menu.
+  // Narrow, it is a line above the title. Wide, it turns into a column beside
+  // the content, which is the only thing that fills the right half of a card
+  // that has a whole row to itself.
+  .mw-date-stamp {
+    display: flex;
+    align-items: baseline;
+    gap: spacing('3');
+    margin-bottom: spacing('4');
+    color: var(--mw-text-muted-color);
+
+    &-day {
+      font-size: font-size('sm');
+      font-weight: font-weight('bold');
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    &-date {
+      font-size: font-size('sm');
+      font-variant-numeric: tabular-nums;
+    }
+
+    // A fill, not a text colour: the price on the same card is already primary,
+    // and two blues compete where one would point. The padding is pulled back
+    // out again so the fill bleeds around the line instead of indenting it.
+    &-today {
+      padding: spacing('2') spacing('3');
+      margin-inline: spacing('-3');
+      margin-block-start: spacing('-2');
+      border-radius: radius('sm') radius('lg') radius('sm') radius('lg');
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+    }
+  }
+
+  // No box of its own until there are two columns to be one of, so the card body
+  // keeps seeing the title, the text and the price as its own children - which
+  // is what mw-offer and mw-card-body's last-child rule both select on
+  .mw-date-stamp-body {
+    display: contents;
+  }
+
+  @container mw-card (width >= #{$mw-card-wide}) {
+    // The rule sits here and not in _cards.scss because the stamp is the guest -
+    // the card body's own single column is right for everything that is not one
+    .mw-card-body:has(> .mw-date-stamp) {
+      display: grid;
+      grid-template-columns: $_mw-date-stamp-day-col minmax(0, 1fr);
+      // On the same curve as the column, so the dish keeps the width the day
+      // and the price give up rather than losing it again to the gutters
+      column-gap: $_mw-date-stamp-gap;
+      padding-block: $_mw-date-stamp-pad-top $_mw-date-stamp-pad-bottom;
+    }
+
+    // A third track, for the one price that covers the whole day - it is what the
+    // right half of a wide card is otherwise spent on. Only when there is a
+    // price: with a dish per row it travels with its dish, and an empty track
+    // would still charge the card a gap.
+    .mw-card-body:has(> .mw-date-stamp):has(> .mw-price) {
+      grid-template-columns: $_mw-date-stamp-day-col minmax(0, 1fr) auto;
+    }
+
+    // The row is left to stretch to the body, so a today fill can span the whole
+    // card - which means each column has to centre its own content instead
+    .mw-date-stamp-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    // The card body zeroes its own last child, but the wrapper hides ours from
+    // that rule - without this a trailing tag row adds a paragraph margin
+    .mw-date-stamp-body > *:last-child {
+      margin-bottom: spacing('0');
+    }
+
+    // Beside the dish it prices, not under the description that follows it. The
+    // second selector only exists to outrank mw-offer, which pushes a price to
+    // the bottom of the card and ties with the first on specificity alone.
+    .mw-card-body:has(> .mw-date-stamp) > .mw-price,
+    .mw-offer > .mw-card-body:has(> .mw-date-stamp) > .mw-price {
+      align-self: center;
+      justify-self: end;
+      margin-top: spacing('0');
+      padding-top: spacing('0');
+      text-align: right;
+    }
+
+    .mw-date-stamp {
+      flex-direction: column;
+      align-items: flex-start;
+      // Stretched to the row, so the day and the date centre against the title
+      // and description beside them rather than hanging off the first line
+      justify-content: center;
+      gap: spacing('2');
+      margin-bottom: spacing('0');
+    }
+
+    // Top edge of the card to its bottom one: the body's padding is handed back
+    // so the fill reaches the border. Only the two left corners are rounded, and
+    // to the card's own arc less the 1px it sits inside - the right edge is an
+    // inside edge and a cut is what reads as one.
+    .mw-date-stamp-today {
+      margin-block: calc(-1 * #{$_mw-date-stamp-pad-top})
+        calc(-1 * #{$_mw-date-stamp-pad-bottom});
+      margin-inline: calc(-1 * #{spacing('5')}) 0;
+      padding-block: $_mw-date-stamp-pad-top $_mw-date-stamp-pad-bottom;
+      padding-inline: spacing('5');
+      border-radius: calc(#{radius-sharp()} - 1px) 0 0
+        calc(#{radius('xl')} - 1px);
+    }
+
+    .mw-date-stamp-day {
+      // Tracks the column it sits in, or it would outgrow it on the way down
+      font-size: $_mw-date-stamp-day-size;
+      line-height: 1;
+      letter-spacing: 0.02em;
+    }
+  }
+}

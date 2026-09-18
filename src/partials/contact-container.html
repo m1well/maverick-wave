@@ -1,0 +1,85 @@
+<h3 class="mw-section-subtitle">Contact</h3>
+<p class="mw-text-muted mw-text-measure mw-mb-6">
+  The practical block at the end of a site - when we are open, how to reach us.
+  Only the second half is a component: <code>mw-contact</code> is an
+  <code>&lt;address&gt;</code> with its italics undone and a label column that
+  keeps the values under each other. The hours are a <code>&lt;dl&gt;</code> of
+  <code>mw-leader-row</code>, because a day and its times with a line between
+  them is the row that component already is.
+</p>
+
+<div class="mw-grid-auto-md">
+  <article class="mw-card">
+    <div class="mw-card-body">
+      <h4 class="mw-card-title">
+        <span class="mw-card-title-icon">
+          <i class="fas fa-clock" aria-hidden="true"></i>
+        </span>
+        Opening hours
+      </h4>
+      <hr class="mw-card-title-divider" />
+
+      <dl class="mw-item-list">
+        <div class="mw-leader-row">
+          <dt class="mw-leader-row-label">Monday to Friday</dt>
+          <dd class="mw-leader-row-value">11.30 - 14.00</dd>
+          <dd class="mw-leader-row-value">17.00 - 23.00</dd>
+        </div>
+        <div class="mw-leader-row">
+          <dt class="mw-leader-row-label">Saturday</dt>
+          <dd class="mw-leader-row-value">17.00 - 23.00</dd>
+        </div>
+        <div class="mw-leader-row">
+          <dt class="mw-leader-row-label">Sunday</dt>
+          <dd class="mw-leader-row-value">11.30 - 20.00</dd>
+        </div>
+      </dl>
+
+      <p class="mw-text-sm mw-text-muted mw-mt-6 mw-mb-0">
+        Hot food all day on Sunday. Otherwise the kitchen closes an hour before
+        the house does.
+      </p>
+    </div>
+  </article>
+
+  <article class="mw-card mw-card-addon-secondary">
+    <div class="mw-card-body">
+      <h4 class="mw-card-title">
+        <span class="mw-card-title-icon">
+          <i class="fas fa-location-dot" aria-hidden="true"></i>
+        </span>
+        How to reach us
+      </h4>
+      <hr class="mw-card-title-divider" />
+
+      <address class="mw-contact mw-mb-6">
+        <p class="mw-text-bold">Gasthaus Lamm</p>
+        <p>
+          Marktplatz 3<br />
+          72622 Musterhausen
+        </p>
+        <p class="mw-contact-row">
+          <span class="mw-contact-label">Phone</span>
+          <a class="mw-link" href="tel:+497123456789">07123 456789</a>
+        </p>
+        <p class="mw-contact-row">
+          <span class="mw-contact-label">Email</span>
+          <a class="mw-link" href="mailto:info@gasthaus-lamm.de"
+            >info@gasthaus-lamm.de</a
+          >
+        </p>
+      </address>
+
+      <div class="mw-button-bar mw-button-bar-left">
+        <a class="mw-btn mw-btn-primary" href="tel:+497123456789">
+          <i class="fas fa-phone" aria-hidden="true"></i>
+          Call us
+        </a>
+        <a class="mw-btn mw-btn-outline" href="mailto:info@gasthaus-lamm.de">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          Write us
+        </a>
+      </div>
+    </div>
+  </article>
+</div>
