@@ -6,13 +6,19 @@
  *   1. every var(--mw-*) has a definition
  *   2. every --mw-* definition is used somewhere
  *   3. every mw-* class in the markup exists in the built CSS
- *   4. the committed root release files match a fresh build
- *   5. the CDN version pinned in the docs matches package.json
+ *   4. the committed root release files match a fresh build   (--release)
+ *   5. the CDN version pinned in the docs matches package.json (--release)
  *   6. no `animation:` shorthand in a file that uses a scroll timeline
+ *
+ * 4 and 5 describe the release state, which release.sh produces on the release
+ * branch - on main they are stale by construction and would fail every CI run.
+ * They run under `--release`, which release.sh calls after prepack.
  *
  * Sources are scanned rather than hard-coded so a new partial is covered
  * automatically. Exits 1 on any error; warnings never fail the build.
  */
+
+const RELEASE = process.argv.includes('--release');
 
 const fs = require('fs');
 const path = require('path');
@@ -133,9 +139,11 @@ for (const [c, where] of [...classesInMarkup].sort()) {
 // --- 4: root release files -------------------------------------------------
 // These are committed and consumed via jsDelivr and the GitHub release page.
 // 4.22.0 shipped without them after `gulp clean` deleted them and the deletion
-// got committed - this check makes CI fail instead.
+// got committed - this check stops the release instead.
 
-for (const f of ['maverick-wave.min.css', 'maverick-wave.min.js']) {
+for (const f of RELEASE
+  ? ['maverick-wave.min.css', 'maverick-wave.min.js']
+  : []) {
   const p = path.join(ROOT, f);
   if (!fs.existsSync(p) || fs.statSync(p).size === 0) {
     errors.push(
@@ -166,7 +174,10 @@ for (const f of ['maverick-wave.min.css', 'maverick-wave.min.js']) {
 const { version } = require(path.join(ROOT, 'package.json'));
 const EXACT_PIN = /maverick-wave@([0-9]+\.[0-9]+\.[0-9]+)/g;
 
-const readme = read(path.join(ROOT, 'README.md'));
+// Only the README half is release state - release.sh rewrites that pin. The
+// skills are installed outside this repo, never get the rewrite, and carry a
+// major range, so an exact pin there is wrong on every branch.
+const readme = RELEASE ? read(path.join(ROOT, 'README.md')) : null;
 if (readme) {
   for (const v of new Set(
     all(readme, EXACT_PIN).filter((v) => v !== version)

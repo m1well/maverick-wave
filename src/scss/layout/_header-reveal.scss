@@ -1,18 +1,10 @@
-// Floating free over a picture, a control has to carry its own edge - the burger
-// and the login button bring a primary surface, the theme toggle is a dark pill
-// that a dark photo swallows. It travels with the float and not with the class,
-// or the ring would still be there in the arrived bar, on one control and not
-// its neighbour. Fixed values and not the elevation ramp, the same call the
-// parallax shadow makes: this lands on the picture, not on a theme surface, and
-// the light theme cuts its shadows for paper.
+// Carried by the float and not by the class, or the ring would still be there in
+// the arrived bar. Fixed values and not the elevation ramp: this lands on a
+// picture, not on a theme surface, and the light theme cuts its shadows for paper.
 $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
 
 @layer mw.layout {
-  // For a page that opens on a full-bleed picture and wants nothing on top of
-  // it: the bar starts above the screen and rides in over the first stretch of
-  // scroll. Inside the @supports, so a browser without scroll timelines gets a
-  // normal header rather than none at all.
-  //
+  // The bar starts above the screen and rides in over the first stretch of scroll.
   // Its own file, and not next to .mw-header: that one uses the `animation`
   // shorthand, which a consumer bundler folds together with a timeline into a
   // declaration no browser accepts.
@@ -26,12 +18,8 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
         animation-range: 0 420px;
       }
 
-      // Anything carrying mw-header-keep sits the ride out: the bar travels,
-      // the element travels the same distance back and stays where it is. The
-      // distance is the bar's own, so it waits at the position it will hold in
-      // the arrived bar - nothing jumps at the end, the bar just closes in
-      // behind it. For a login or burger button that has to be reachable while
-      // the hero is still untouched.
+      // The bar travels, a keep element travels the same distance back and stays
+      // put - for a burger that has to be reachable while the hero is untouched.
       .mw-header-reveal .mw-header-keep {
         animation-name: mw-header-keep;
         animation-timing-function: var(--mw-ease-out);
@@ -40,18 +28,14 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
         animation-range: 0 420px;
       }
 
-      // A group's opacity cannot be taken back by a child, so the fade has to
-      // go as soon as something is meant to stay visible through it. No loss:
-      // the bar is off screen for that stretch anyway, the fade only softened
-      // the last few pixels of the arrival.
+      // A group's opacity cannot be taken back by a child, so the fade goes as
+      // soon as something is meant to stay visible through it.
       .mw-header-reveal:has(.mw-header-keep) {
         animation-name: mw-header-slide;
       }
 
-      // The ribbon is glued under the bar, so it has to leave and arrive with
-      // it - left behind it would hang alone at the top of an otherwise clean
-      // hero. No class of its own: a ribbon on a page with a revealing header
-      // has no other sensible behaviour.
+      // Glued under the bar, so it leaves and arrives with it. No class of its
+      // own: a ribbon under a revealing header has no other sensible behaviour.
       body:has(.mw-header-reveal)
         .mw-announcement:not(.mw-announcement-static) {
         animation-name: mw-announcement-reveal;
@@ -63,9 +47,8 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // Both cover the height of the pair, or the shorter traveller arrives first
-  // and the two come in as two things instead of one block. Without a ribbon
-  // that height is just the bar's.
+  // Both cover the height of the pair, or the shorter traveller arrives first and
+  // the two come in as two things instead of one block.
   .mw-header-reveal {
     --mw-header-reveal-offset: var(--mw-header-height);
   }
@@ -76,18 +59,12 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     );
   }
 
-  // A keyboard reaches the chrome long before the first scroll does, and a focus
-  // ring on something that is off screen is WCAG 2.4.11 - so focus brings it
-  // back, either half of the pair pulling in the other. `!important` is the one
-  // author declaration that outranks a running animation; dropping
-  // `animation-name` instead leaves the element stuck on its last value, because
-  // a restarted scroll timeline only catches up on the next scroll.
-  //
-  // A keep element is on screen already and needs no rescue, so it is left out -
-  // otherwise a click on the theme toggle, which focuses it, would haul in the
-  // whole bar. It takes `:focus` on a descendant and not `:focus-within` on the
-  // header: within also matches every wrapper around the focused control, and no
-  // `:not()` on those can tell which one holds the keep.
+  // A focus ring on something off screen is WCAG 2.4.11, so focus brings the bar
+  // back. `!important` is the one author declaration that outranks a running
+  // animation; `animation-name: none` would strand the element on its last value
+  // until the next scroll. Keeps are left out - they are on screen already, and a
+  // click on the theme toggle would otherwise haul in the whole bar. `:focus` on a
+  // descendant and not `:focus-within`: that matches every wrapper too.
   body:has(
     .mw-header-reveal :focus:not(.mw-header-keep, .mw-header-keep *),
     .mw-announcement:focus-within
@@ -108,43 +85,36 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // Same treatment while the panel is open. The panel hangs off the bar, so the
-  // bar has to be in place for it to open anywhere sensible - and the burger,
-  // which is the X from the moment the panel is out, has to stay on the burger's
-  // own position rather than a header height below it.
+  // The panel hangs off the bar, so the bar has to be in place - and the burger,
+  // which is the X while the panel is out, has to stay on its own position.
   //
-  // A class the script sets, and not `:has(.mw-navbar.open)`: this is the one
-  // rule in the file that has to hold on every engine, and `:has()` against a
-  // class toggled deep in the subtree is exactly where WebKit's style
-  // invalidation has been unreliable. The burger is the control that closes the
-  // panel - it cannot be the thing that waits for a repaint.
+  // A class the script sets, not `:has(.mw-navbar.open)`: the burger is the
+  // control that closes the panel and cannot wait for a selector re-match, which
+  // is where WebKit's invalidation has been unreliable.
   //
-  // The distance is set to zero rather than each position that reads it being
-  // overridden. Four mechanisms carry the pair - the bar's `top` and the keep
-  // element's `translate`, each once as a class and once as a keyframe - and
-  // every one of them resolves this one property, so zeroing it parks all four
-  // at the arrived position at once. Overriding the values instead means
-  // `!important` against a running animation, and WebKit does not reliably hand
-  // that win to the author: the bar came in, the burger kept its offset, and the
-  // X sat a header height below the panel it belongs to.
+  // Zeroing the distance rather than overriding each position that reads it: four
+  // mechanisms carry the pair - `top` and `translate`, each once as a class and
+  // once as a keyframe - and all four resolve this one property. Overriding the
+  // values instead pits `!important` against a running animation, which WebKit
+  // does not reliably hand to the author.
   body.mw-nav-open {
     .mw-header-reveal {
-      --mw-header-reveal-offset: 0px;
+      // The ribbon variant above raises the same property from a `:has()`, which
+      // counts its argument and outranks this rule - author against author, which
+      // every engine resolves the same way, not author against an animation.
+      --mw-header-reveal-offset: 0px !important;
       opacity: 1 !important;
     }
 
-    // Not carried by the offset: this one is pure decoration for a control
-    // floating over a picture, and there is no picture behind an open panel.
+    // Not carried by the offset, and there is no picture behind an open panel.
     .mw-header-keep {
       box-shadow: none !important;
     }
   }
 
-  // Older Safari and Firefox ship no scroll timelines, so there the script
-  // toggles these classes instead (main.js) - the same two positions,
-  // triggered instead of scrubbed. State and transition are separate because
-  // the script sets the state a frame earlier: together they would send the
-  // bar sliding away in front of the reader instead of having it gone already.
+  // No scroll timelines: the script toggles these classes instead (main.js).
+  // State and transition are separate because the script sets the state a frame
+  // earlier - together the bar would slide away in front of the reader.
   @media (prefers-reduced-motion: no-preference) {
     .mw-header-reveal.mw-header-away {
       top: calc(-1 * var(--mw-header-reveal-offset));
@@ -161,8 +131,7 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
 
     .mw-header-driven {
-      // The shared list plus `top`, which is not in it - writing only `top`
-      // here would drop the header's own colour and shadow transitions.
+      // The shared list plus `top`: writing only `top` drops the bar's own.
       transition:
         var(--mw-transition),
         top var(--mw-duration-slow) var(--mw-ease-out);
@@ -188,12 +157,10 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // `top` and not a transform: a transform on the header would make it the
-  // containing block for anything fixed inside it - at every value, the resting
-  // one included - and the bar is chrome that other things hang off.
-  // The wait sits in the keyframes and not in the range, because a range that
-  // starts past 0 leaves the bar in its resting state below that point - so the
-  // header would be visible for exactly the stretch it should stay away for.
+  // `top` and not a transform: that would make the header the containing block
+  // for anything fixed inside it, at every value. The wait sits in the keyframes
+  // and not in the range - a range starting past 0 leaves the bar resting, and
+  // visible, for exactly the stretch it should stay away for.
   @keyframes mw-header-reveal {
     0%,
     30% {
@@ -219,10 +186,8 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // `translate` and not `transform`: the burger puts its hover lift and its
-  // press on transform, and a running animation outranks an author declaration
-  // - it would hold the button flat for the rest of the page. The standalone
-  // property stacks with the shorthand instead of replacing it.
+  // `translate` and not `transform`: the burger puts its hover lift on transform,
+  // and a running animation would hold it flat for the rest of the page.
   @keyframes mw-header-keep {
     0%,
     30% {
