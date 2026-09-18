@@ -108,14 +108,20 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // Same treatment while the drawer is open, which mw-header-keep makes
-  // reachable long before the bar arrives. The drawer is fixed but hangs off
-  // the header - backdrop-filter makes that one its containing block, the way a
-  // transform would - so with the bar still away it would sit a header height
-  // too high.
-  body:has(.mw-header-reveal):has(.mw-navbar.open) {
+  // Same treatment while the panel is open. The panel hangs off the bar, so the
+  // bar has to be in place for it to open anywhere sensible - and the burger,
+  // which is the X from the moment the panel is out, has to stay on the burger's
+  // own position rather than a header height below it.
+  //
+  // A class the script sets, and not `:has(.mw-navbar.open)`: this is the one
+  // rule in the file that has to hold on every engine, and `:has()` against a
+  // class toggled deep in the subtree is exactly where WebKit's style
+  // invalidation has been unreliable. The burger is the control that closes the
+  // panel - it cannot be the thing that waits for a repaint.
+  body.mw-nav-open {
     .mw-header-reveal {
       top: 0 !important;
+      opacity: 1 !important;
     }
 
     .mw-header-keep {
@@ -172,9 +178,9 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     }
   }
 
-  // `top` and not a transform: the off-canvas drawer inside the bar is
-  // position: fixed, and a transform on the header would make it the drawer's
-  // containing block - at every value, the resting one included.
+  // `top` and not a transform: a transform on the header would make it the
+  // containing block for anything fixed inside it - at every value, the resting
+  // one included - and the bar is chrome that other things hang off.
   // The wait sits in the keyframes and not in the range, because a range that
   // starts past 0 leaves the bar in its resting state below that point - so the
   // header would be visible for exactly the stretch it should stay away for.

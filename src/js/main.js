@@ -36,7 +36,6 @@
     warnMissingViewportFit();
     initFormSliders();
     initModals();
-    initHeaderLoginButton();
     initImageSliders();
     initCheckboxLists();
     initKanbanBoards();
@@ -507,6 +506,11 @@
     function setOpen(open) {
       menuBtn.classList.toggle('open', open);
       navbar.classList.toggle('open', open);
+      // The scrim and the rules that pin the bar and the burger in place hang
+      // off this one class rather than off `:has(.mw-navbar.open)` - a selector
+      // that has to re-match the whole document from a class change several
+      // levels down, which is where WebKit's invalidation has let it slip.
+      document.body.classList.toggle('mw-nav-open', open);
       if (announces) menuBtn.setAttribute('aria-expanded', String(open));
     }
 
@@ -516,9 +520,11 @@
       setOpen(!navbar.classList.contains('open'));
     }
 
-    // Add multiple event listeners for better iOS compatibility
+    // One listener, not two. The button carries touch-action: manipulation, so
+    // its click arrives without the 300ms wait that the extra touchstart was
+    // there to skip - and with both, a touch fires the toggle twice on any
+    // engine that still synthesises the click.
     menuBtn.addEventListener('click', toggleMenu);
-    menuBtn.addEventListener('touchstart', toggleMenu, { passive: false });
 
     // The scrim is a body pseudo-element, so its taps land on the document
     document.addEventListener('click', function (e) {
@@ -527,7 +533,7 @@
       setOpen(false);
     });
 
-    // Or Escape strands the keyboard user in a drawer that is no longer there
+    // Or Escape strands the keyboard user in a panel that is no longer there
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
       if (!navbar.classList.contains('open')) return;
@@ -803,6 +809,10 @@
         if (menuBtn && nav) {
           menuBtn.classList.remove('open');
           nav.classList.remove('open');
+          document.body.classList.remove('mw-nav-open');
+          if (menuBtn.tagName === 'BUTTON') {
+            menuBtn.setAttribute('aria-expanded', 'false');
+          }
         }
 
         e.preventDefault();
@@ -1139,26 +1149,6 @@
   // The swatch hex labels read the computed colour, so anything that changes a
   // root colour at runtime has to ask for them to be read again
   window.mwRefreshColorSwatches = updateColorSwatchHexValues;
-
-  // ===== Login Button =====
-  function initHeaderLoginButton() {
-    const loginButton = document.getElementById('login-button');
-
-    if (loginButton) {
-      loginButton.addEventListener('click', function () {
-        const icon = this.querySelector('i');
-
-        // Toggle between fa-user-lock and fa-user-tag
-        if (icon.classList.contains('fa-lock')) {
-          icon.classList.remove('fa-lock');
-          icon.classList.add('fa-lock-open');
-        } else {
-          icon.classList.remove('fa-lock-open');
-          icon.classList.add('fa-lock');
-        }
-      });
-    }
-  }
 
   // ===== Image Sliders =====
   function initImageSliders() {
