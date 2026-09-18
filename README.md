@@ -45,12 +45,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.20.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.21.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.20.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.21.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -261,7 +261,7 @@ Everything that fills a surface with one of the six colours reads the matching
 token: buttons and mini buttons, the burger button, table and panel headers,
 card badges and ribbons, segmented and tab items, stepper dots, calendar
 selection, timeline dates, accordion headers and progress labels. The burger
-button switches to `--mw-secondary-accent-text-color` while the drawer is open,
+button switches to `--mw-secondary-accent-text-color` while the panel is open,
 because its surface does the same - `--mw-header-burgerbutton-color` and
 `--mw-header-burgerbutton-open-color` override the two states individually.
 

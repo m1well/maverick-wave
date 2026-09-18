@@ -118,14 +118,24 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   // class toggled deep in the subtree is exactly where WebKit's style
   // invalidation has been unreliable. The burger is the control that closes the
   // panel - it cannot be the thing that waits for a repaint.
+  //
+  // The distance is set to zero rather than each position that reads it being
+  // overridden. Four mechanisms carry the pair - the bar's `top` and the keep
+  // element's `translate`, each once as a class and once as a keyframe - and
+  // every one of them resolves this one property, so zeroing it parks all four
+  // at the arrived position at once. Overriding the values instead means
+  // `!important` against a running animation, and WebKit does not reliably hand
+  // that win to the author: the bar came in, the burger kept its offset, and the
+  // X sat a header height below the panel it belongs to.
   body.mw-nav-open {
     .mw-header-reveal {
-      top: 0 !important;
+      --mw-header-reveal-offset: 0px;
       opacity: 1 !important;
     }
 
+    // Not carried by the offset: this one is pure decoration for a control
+    // floating over a picture, and there is no picture behind an open panel.
     .mw-header-keep {
-      translate: none !important;
       box-shadow: none !important;
     }
   }

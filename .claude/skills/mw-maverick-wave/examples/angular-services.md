@@ -347,8 +347,10 @@ export class FaqComponent {
 
 ## Header with mobile navigation
 
-The drawer needs `open` on **both** the burger button and the navbar. Close it
-on every navigation.
+The panel needs `open` on **both** the burger button and the navbar, plus
+`mw-nav-open` on the `<body>` - the scrim, the scroll lock and the rules that
+hold the bar and the burger in place all key off that one class, and nothing in
+the template can reach the body element. Close it on every navigation.
 
 ```ts
 @Component({
@@ -406,8 +408,11 @@ on every navigation.
 })
 export class HeaderComponent {
   protected readonly menuOpen = signal(false);
+  private readonly body = inject(DOCUMENT).body;
 
   constructor(router: Router) {
+    effect(() => this.body.classList.toggle('mw-nav-open', this.menuOpen()));
+
     router.events
       .pipe(
         filter((e) => e instanceof NavigationEnd),
