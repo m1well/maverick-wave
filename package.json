@@ -1,8 +1,8 @@
 {
   "name": "maverick-wave",
-  "version": "5.21.0",
+  "version": "5.22.0",
   "config": {
-    "version_short": "5.21"
+    "version_short": "5.22"
   },
   "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
   "main": "src/js/main.js",
@@ -15,6 +15,7 @@
     "start": "gulp",
     "build": "gulp clean && gulp build",
     "verify": "node scripts/verify.js",
+    "verify:release": "node scripts/verify.js --release",
     "prepack": "gulp release"
   },
   "repository": {

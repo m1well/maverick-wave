@@ -11,6 +11,12 @@ echo "## point the README CDN snippets at this version"
 sed -i '' -E "s|maverick-wave@[0-9]+\.[0-9]+\.[0-9]+|maverick-wave@${VERSION}|g" README.md
 echo "## make a new release"
 npm run build && npm run prepack
+echo "## verify the release state - bundles and CDN pin, which only exist here"
+if ! npm run verify:release; then
+  echo "## verify failed - nothing pushed, nothing published"
+  git checkout main
+  exit 1
+fi
 echo "## add all changes and push it"
 git add --all
 git commit -m "release: ${VERSION}"
