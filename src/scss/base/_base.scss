@@ -159,7 +159,12 @@
     // Point `--mw-section-padding-block` at it to switch a page over - a choice
     // like the presets are, not the default.
     --mw-section-padding-fluid: #{fluid(spacing('7'), spacing('12'), $to: 'xl')};
-    --mw-section-title-gap: #{spacing('7')};
+    // The section head: the gap it leaves to the content below, the space
+    // between its rule and the title, and the mark sitting on that rule.
+    --mw-section-head-gap: #{spacing('10')};
+    --mw-section-head-pad: #{spacing('6')};
+    --mw-section-head-mark-width: 80px;
+    --mw-section-head-mark-color: var(--mw-primary-color);
     --mw-scroll-hint-offset: #{spacing('9')};
     --mw-scroll-hint-inline: var(--mw-container-gutter);
     --mw-scroll-hint-reserve: #{spacing('10')};

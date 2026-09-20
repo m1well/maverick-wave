@@ -1,65 +1,135 @@
 @use '../abstracts' as *;
 
 @layer mw.layout {
-  // The rule under a section heading. Shared, so the two levels cannot drift
-  // apart in width and weight - the subtitle carried the wider mark, which reads
-  // as the louder one under the smaller heading. Colour is where they do part.
-  @mixin _section-rule(
-    $width,
-    $height,
-    $offset,
-    $color: var(--mw-primary-text-color)
-  ) {
-    &::after {
+  // The head of a section: a rule, a title, and the line that says what the
+  // section is. All three left-aligned, and that is the whole point of the
+  // component. Centred running text moves its own left edge with every line
+  // break, so the eye has to find the start of each line instead of jumping
+  // to a fixed position - fine for a heading, tiring from the third line of
+  // body copy on. Aligned, title, lead and content below share one edge, and
+  // that edge is what holds a section together.
+  .mw-section-head {
+    position: relative;
+    margin-bottom: var(--mw-section-head-gap);
+    padding-top: var(--mw-section-head-pad);
+    // Two pixels and not one: the diagonal pattern of mw-section-alternate
+    // swallows a hairline, and the rule is the thing that has to survive on
+    // every background the framework paints.
+    border-top: 2px solid var(--mw-border);
+
+    // The rule stays quiet so it reads as a boundary and not as a border, and
+    // quiet is still hard to see on a patterned band. Hence the mark:
+    // a short, thicker piece of the accent colour sitting on the line at the
+    // edge everything else starts from. It carries the weight the full-width
+    // rule deliberately does not have.
+    &::before {
       content: '';
       position: absolute;
-      bottom: $offset;
-      left: 50%;
-      transform: translateX(-50%);
-      width: $width;
-      height: $height;
+      top: 0;
+      left: 0;
+      transform: translateY(-50%);
+      width: var(--mw-section-head-mark-width);
+      height: 4px;
       border-radius: radius('xs');
-      background: $color;
+      background: var(--mw-section-head-mark-color);
     }
   }
 
-  .mw-section-title {
-    font-size: fluid('2xl', '3xl', $to: 'sm');
-    margin-bottom: var(--mw-section-title-gap);
-    text-align: center;
-    position: relative;
-
-    @include _section-rule(56px, 3px, spacing('-3'));
-  }
-
-  // The lead line under a section title. Every landing page writes this
-  // paragraph, and it always wants the same four things: centred, muted,
-  // narrower than the container so it reads as a line rather than a block, and
-  // pulled up toward the title it belongs to - the title's gap is sized for the
-  // content below, not for its own subtitle.
-  .mw-section-intro {
-    max-width: 46rem;
-    margin: spacing('-3') auto spacing('9');
-    font-size: font-size('md');
-    color: var(--mw-text-muted-color);
-    text-align: center;
+  .mw-section-head-title {
+    margin: spacing('0');
+    font-size: fluid('2xl', '4xl', $to: 'lg');
+    line-height: 1;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
+  // Two limits, and the narrower one wins: 65 characters is where a line stops
+  // being comfortable, four fifths is what keeps the paragraph from filling the
+  // container edge to edge on a wide screen. Below md only the character count
+  // is left - four fifths of a phone is a column nothing fits in.
+  .mw-section-head-intro {
+    max-width: 75ch;
+    margin: spacing('4') spacing('0') spacing('0');
+    font-size: font-size('md');
+    line-height: 1.6;
+    color: var(--mw-text-muted-color);
+    text-wrap: pretty;
+
+    @include media-up('md') {
+      max-width: min(80%, 70ch);
+    }
+
+    p {
+      margin: spacing('0');
+    }
+
+    p + p {
+      margin-top: spacing('4');
+    }
+  }
+
+  // Opt-in, because a single section on a legal page numbered "01" is noise.
+  // The browser counts, so no page keeps its own running order in the markup -
+  // and the number sits at the far end of the rule rather than above the title:
+  // the mark opens the line, the number closes it, and the title keeps the
+  // first thing read on the left.
+  .mw-section-head-numbered {
+    counter-increment: mw-section-head;
+
+    &::after {
+      content: counter(mw-section-head, decimal-leading-zero);
+      position: absolute;
+      top: var(--mw-section-head-pad);
+      right: 7px;
+      color: var(--mw-text-muted-color);
+      font-size: font-size('sm');
+      font-weight: font-weight('medium');
+      line-height: 1;
+      // The tracking sits after the last digit too, so it has to come back off
+      // the right or the number stands a space short of the edge it aligns to.
+      letter-spacing: 0.2em;
+    }
+
+    // The number owns the right end of the first line - a long title runs into
+    // it otherwise, and on a phone that is one word, not a rare case.
+    .mw-section-head-title {
+      padding-right: spacing('10');
+    }
+  }
+
+  // The mark is the one coloured thing in the head, so it is where a section
+  // picks up a tone - a danger notice, a success story, a section that belongs
+  // to a product colour.
+  $_mw-section-head-colors: (secondary, success, warning, danger, info);
+
+  @each $name in $_mw-section-head-colors {
+    .mw-section-head-#{$name} {
+      --mw-section-head-mark-color: var(--mw-#{$name}-color);
+    }
+  }
+
+  // The level below the head: the boundary inside a section, not around it.
+  // Same left edge, and the rule shrinks to a mark of its own so the two
+  // levels read as a hierarchy rather than as two of the same thing.
   .mw-section-subtitle {
     font-size: fluid('xl', '2xl', $to: 'sm');
-    // The step above a demo gap of spacing('6') - at spacing('8') the boundary
-    // between two components read like the one between two demos
-    margin: spacing('10') spacing('0') spacing('6') spacing('0');
-    text-align: center;
+    // One step above the demo gap of spacing('6'), and that step is the whole
+    // margin the boundary between two components has over the one between two
+    // demos - the heading leans toward what it names, not toward what came
+    // before it.
+    margin: spacing('8') spacing('0') spacing('4') spacing('0');
     position: relative;
 
-    @include _section-rule(
-      32px,
-      2px,
-      spacing('-2'),
-      var(--mw-secondary-text-color)
-    );
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: spacing('-2');
+      left: 0;
+      width: 32px;
+      height: 2px;
+      border-radius: radius('xs');
+      background: var(--mw-secondary-text-color);
+    }
   }
 
   // Sticky, because the strip is the only way back: inside a long section the
@@ -135,7 +205,7 @@
     // The section boundary steps down to 56px on a phone, so the component
     // boundary steps with it or the two stop being distinguishable
     .mw-section-subtitle {
-      margin-top: spacing('7');
+      margin-top: spacing('6');
     }
   }
 

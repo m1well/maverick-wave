@@ -241,15 +241,22 @@ pointing at the trigger in every combination.
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`); point it at `--mw-section-padding-fluid` for spacing that grows with the screen |
 | `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                                                                                                          |
-| `mw-section-title`                  | Centered heading with a decorative primary underline, `2xl` growing to `3xl` up to 576px - landing pages                                                                                        |
-| `mw-section-intro`                  | The lead paragraph under a section title - centred, muted, 46rem measure                                                                                                                        |
-| `mw-section-subtitle`               | Centered heading with a thin secondary underline, `xl` growing to `2xl` up to 576px                                                                                                             |
+| `mw-section-head`                   | The opening of a section: hairline rule, a mark on its left end, title and lead - all on one left edge. Variants `-secondary`, `-success`, `-warning`, `-danger`, `-info` recolour the mark     |
+| `mw-section-head-title`             | The heading inside it, `2xl` growing to `4xl` up to 992px, tight tracking                                                                                                                       |
+| `mw-section-head-intro`             | The lead under it - muted, 65 characters, and from `md` up at most four fifths of the container                                                                                                 |
+| `mw-section-head-numbered`          | Adds the running number at the right end of the rule; the browser counts, restarting per `mw-main`                                                                                              |
+| `mw-section-subtitle`               | Left-aligned heading with a thin secondary underline, `xl` growing to `2xl` up to 576px - the level inside a section                                                                            |
 | `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows                                                                              |
 
 ```html
 <section class="mw-section mw-section-alternate">
   <div class="mw-container">
-    <h2 class="mw-section-title">Components</h2>
+    <div class="mw-section-head mw-section-head-numbered">
+      <h2 class="mw-section-head-title">Components</h2>
+      <p class="mw-section-head-intro">
+        The everyday parts - buttons, tags, alerts and their many friends.
+      </p>
+    </div>
     <nav class="mw-section-nav">
       <a href="#buttons" class="mw-section-btn"
         ><i class="fas fa-hand-pointer"></i> Buttons</a
@@ -262,13 +269,26 @@ pointing at the trigger in every combination.
 </section>
 ```
 
+**Why the head is left-aligned and has no centred variant.** Centred running
+text moves its own left edge with every line break, so the eye has to find the
+start of each line instead of returning to a fixed position - unnoticeable over
+two lines, tiring from the third or fourth on. Aligned, the title, the lead and
+the content below share one edge, and that shared edge is what makes a band of
+elements read as one section. A hero, a single call to action or a caption is
+short enough to centre; a section head is not, so the framework does not offer
+the choice.
+
+Its tokens: `--mw-section-head-gap` (space to the content below),
+`--mw-section-head-pad` (rule to title), `--mw-section-head-mark-width` (80px)
+and `--mw-section-head-mark-color`.
+
 The strip sticks at `--mw-header-height` and is `--mw-section-nav-height` tall
 (3.7rem). Anything it can cover on a jump needs the sum as `scroll-margin-top`;
 a block wrapping a `mw-section-subtitle` gets that from the framework already.
 
 ## Page header
 
-The application counterpart to `mw-section-title`: title and subtitle left,
+The application counterpart to `mw-section-head`: title and subtitle left,
 actions right, wrapping when it gets tight. Below `sm` the actions take the full
 width.
 
