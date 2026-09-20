@@ -237,16 +237,16 @@ pointing at the trigger in every combination.
 
 ## Sections
 
-| Class                               | Use                                                                                                                                                                                             |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`); point it at `--mw-section-padding-fluid` for spacing that grows with the screen |
-| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                                                                                                          |
-| `mw-section-head`                   | The opening of a section: hairline rule, a mark on its left end, title and lead - all on one left edge. Variants `-secondary`, `-success`, `-warning`, `-danger`, `-info` recolour the mark     |
-| `mw-section-head-title`             | The heading inside it, `2xl` growing to `4xl` up to 992px, tight tracking                                                                                                                       |
-| `mw-section-head-intro`             | The lead under it - muted, 65 characters, and from `md` up at most four fifths of the container                                                                                                 |
-| `mw-section-head-numbered`          | Adds the running number at the right end of the rule; the browser counts, restarting per `mw-main`                                                                                              |
-| `mw-section-subtitle`               | Left-aligned heading with a thin secondary underline, `xl` growing to `2xl` up to 576px - the level inside a section                                                                            |
-| `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows                                                                              |
+| Class                               | Use                                                                                                                                                                                                                                                                                              |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `mw-section`                        | Vertical rhythm for a page band - `--mw-section-padding-block`, 3.3rem (2.5rem below `md`, 1.75rem below `sm`). Point it at `--mw-section-padding-compact` or `--mw-section-padding-airy`, which step down the same way, or at `--mw-section-padding-fluid`, which ramps with the screen instead |
+| `mw-section-alternate`              | Diagonal pattern background; combine with `mw-section`                                                                                                                                                                                                                                           |
+| `mw-section-head`                   | The opening of a section: hairline rule, a mark on its left end, title and lead - all on one left edge. Variants `-secondary`, `-success`, `-warning`, `-danger`, `-info` recolour the mark                                                                                                      |
+| `mw-section-head-title`             | The heading inside it, `2xl` growing to `4xl` up to 992px, tight tracking                                                                                                                                                                                                                        |
+| `mw-section-head-intro`             | The lead under it - muted, 65 characters, and from `md` up at most four fifths of the container                                                                                                                                                                                                  |
+| `mw-section-head-numbered`          | Adds the running number at the right end of the rule; the browser counts, restarting per `mw-main`                                                                                                                                                                                               |
+| `mw-section-subtitle`               | Left-aligned heading with a thin secondary underline, `xl` growing to `2xl` up to 576px - the level inside a section. A paragraph right under it is treated as its lead and gets the gap to the content from the framework - no margin utility needed                                            |
+| `mw-section-nav` + `mw-section-btn` | Sticky single-row strip of outline-style jump links; parks under the header and scrolls sideways when it overflows                                                                                                                                                                               |
 
 ```html
 <section class="mw-section mw-section-alternate">
@@ -281,6 +281,12 @@ the choice.
 Its tokens: `--mw-section-head-gap` (space to the content below),
 `--mw-section-head-pad` (rule to title), `--mw-section-head-mark-width` (80px)
 and `--mw-section-head-mark-color`.
+
+The first two are multiples of `--mw-section-head-step`, which is derived from
+`--mw-section-padding-block` - so a section spacing preset moves the heads with
+it, and the fluid preset carries them along without a ramp of its own. A head
+with no `mw-section-head-intro` takes a smaller gap: the gap sized to follow a
+paragraph reads as a hole under a rule and one line of type.
 
 The strip sticks at `--mw-header-height` and is `--mw-section-nav-height` tall
 (3.7rem). Anything it can cover on a jump needs the sum as `scroll-margin-top`;

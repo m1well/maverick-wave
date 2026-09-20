@@ -152,17 +152,33 @@
       calc(100% - 2 * var(--mw-container-gutter))
     );
     --mw-section-padding-block: #{spacing('10')};
-    // The third regime beside the stepped default and the two flat presets:
+    // The two presets, as tokens rather than the values themselves: a preset is
+    // picked by pointing `--mw-section-padding-block` at one, and that lands
+    // inline on the element, where a media query cannot reach it. Named here,
+    // the phone steps below apply to a preset as much as to the default - a
+    // compact page stays the tightest of the three at every width.
+    --mw-section-padding-compact: #{spacing('8')};
+    --mw-section-padding-airy: #{spacing('12')};
+    // The third regime beside the stepped default and the two stepped presets:
     // spacing that grows with the screen. It starts at the value a phone already
     // gets below `sm` and reaches the airy preset at `xl`, so a desktop pushes
     // less content past per wheel notch while the phone carries none of that air.
-    // Point `--mw-section-padding-block` at it to switch a page over - a choice
-    // like the presets are, not the default.
+    // Needs no steps of its own - the ramp is the steps.
     --mw-section-padding-fluid: #{fluid(spacing('7'), spacing('12'), $to: 'xl')};
     // The section head: the gap it leaves to the content below, the space
     // between its rule and the title, and the mark sitting on that rule.
-    --mw-section-head-gap: #{spacing('10')};
-    --mw-section-head-pad: #{spacing('6')};
+    //
+    // One step, and every measure in a head is a multiple of it. It follows the
+    // section rhythm, so the spacing switch moves the heads with it and the
+    // fluid preset needs no ramp of its own - at a fraction of the swing,
+    // because a head is a boundary inside the page and would otherwise grow
+    // past the section it opens. The multipliers land on today's values at the
+    // default rhythm.
+    --mw-section-head-step: calc(
+      #{spacing('4')} + var(--mw-section-padding-block) * 0.18
+    );
+    --mw-section-head-gap: calc(var(--mw-section-head-step) * 1.86);
+    --mw-section-head-pad: var(--mw-section-head-step);
     --mw-section-head-mark-width: 80px;
     --mw-section-head-mark-color: var(--mw-primary-color);
     --mw-scroll-hint-offset: #{spacing('9')};

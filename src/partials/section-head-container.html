@@ -1,6 +1,6 @@
 <h3 class="mw-section-subtitle">Section Head</h3>
 
-<p class="mw-text-muted mw-mb-6">
+<p class="mw-text-muted">
   The opening of a section: a hairline rule, a mark sitting on its left end, the
   title, and the line that says what follows. Everything starts at one edge -
   centred body copy moves its own left edge with every line break, so the eye
@@ -37,7 +37,7 @@
         <h2 class="mw-section-head-title">About me</h2>
         <p class="mw-section-head-intro">
           A section head without a lead works the same way - the next one below
-          shows it.
+          shows it, and takes a smaller gap to the content for it.
         </p>
       </div>
 
@@ -55,7 +55,10 @@
       <code>-success</code>, <code>-warning</code>, <code>-danger</code> and
       <code>-info</code>. Its length is
       <code>--mw-section-head-mark-width</code> (80px), the gap to the content
-      below <code>--mw-section-head-gap</code>.
+      below <code>--mw-section-head-gap</code>. That gap and the space above the
+      title are multiples of <code>--mw-section-head-step</code>, which follows
+      <code>--mw-section-padding-block</code> - so the section spacing picker in
+      the palette panel moves the heads along with the page.
     </p>
     <div class="mw-card mw-card-simple">
       <div class="mw-section-head mw-section-head-secondary">
