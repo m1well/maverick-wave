@@ -16,33 +16,76 @@
     );
   }
 
-  // Initialize all components when DOM is ready
-  document.addEventListener('DOMContentLoaded', function () {
-    // Initialize all components
-    initGalleries();
+  // Every element that gets listeners of its own is remembered here, so running
+  // init() again over markup that is already wired does nothing to it. A
+  // WeakSet and not an attribute: nothing to clean up, nothing in the DOM, and
+  // an element that is removed takes its entry with it.
+  const wired = new WeakSet();
+
+  function fresh(el) {
+    if (!el || wired.has(el)) return false;
+    wired.add(el);
+    return true;
+  }
+
+  // Bound to the document, the window, or the one element of its kind a page
+  // has. Running any of this twice would double the listeners, so it happens
+  // once and is not part of init().
+  let pageWired = false;
+
+  function initPage() {
+    if (pageWired) return;
+    pageWired = true;
+
     initThemeToggle();
     initColorSwatches();
-    initAccordions();
     initMobileNav();
-    initProgressBars();
-    initReveals();
     initHeaderReveal();
     initParallax();
     initSmoothScrolling();
     initScrollSpy();
-    initTabs();
-    initAlerts();
+    initModals();
+    initDropdowns();
+    initTagRemovals();
+    initCopyButtons();
     initLocalhostIndicator();
     warnMissingViewportFit();
-    initFormSliders();
-    initModals();
-    initImageSliders();
-    initCheckboxLists();
-    initKanbanBoards();
-    initCalendars();
-    initDropdowns();
-    initLangSwitches();
+  }
+
+  // Everything that binds per element - and therefore can meet markup that
+  // arrived after the page did.
+  function initComponents(root) {
+    const scope = root || document;
+
+    initGalleries(scope);
+    initAccordions(scope);
+    initProgressBars(scope);
+    initReveals(scope);
+    initTabs(scope);
+    initAlerts(scope);
+    initFormSliders(scope);
+    initImageSliders(scope);
+    initCheckboxLists(scope);
+    initKanbanBoards(scope);
+    initCalendars(scope);
+    initLangSwitches(scope);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    initPage();
+    initComponents(document);
   });
+
+  // The way back in for anything that renders after DOMContentLoaded: an htmx
+  // swap, a modal filled from a fetch, a view transition that replaces the
+  // page body. Call it with the subtree that changed, or with nothing for the
+  // whole document - elements already wired are skipped either way.
+  window.MaverickWave = {
+    init: function (root) {
+      initPage();
+      initComponents(root);
+    },
+  };
 
   // The menu is a <details>, so only two things are left: close on an outside
   // click and close on Escape. Delegated, so a menu added later works too.
@@ -86,8 +129,9 @@
   // Keeps the trigger in step with the choice and announces it - which language
   // actually loads is the application's business, usually the URL or the server:
   //   document.addEventListener('mw-language-change', (e) => e.detail.lang)
-  function initLangSwitches() {
-    document.querySelectorAll('.mw-lang-switch').forEach((languageSwitch) => {
+  function initLangSwitches(root) {
+    root.querySelectorAll('.mw-lang-switch').forEach((languageSwitch) => {
+      if (!fresh(languageSwitch)) return;
       const items = languageSwitch.querySelectorAll('[data-mw-lang]');
       const summary = languageSwitch.querySelector('summary');
       const triggerFlag = languageSwitch.querySelector('summary .mw-flag');
@@ -128,12 +172,13 @@
   }
 
   // ===== Checkbox Lists =====
-  function initCheckboxLists() {
-    const checkboxLists = document.querySelectorAll(
+  function initCheckboxLists(root) {
+    const checkboxLists = root.querySelectorAll(
       '.mw-item-list-checkbox, .mw-item-list-checkbox-scroll'
     );
 
     checkboxLists.forEach((list) => {
+      if (!fresh(list)) return;
       const listItems = list.querySelectorAll('li');
 
       listItems.forEach((item) => {
@@ -155,7 +200,7 @@
           ) {
             return;
           }
-          toggleCheckbox(this);
+          toggleCheckboxRow(this);
         });
 
         // Add change handler to the checkbox itself
@@ -190,15 +235,13 @@
         });
       });
     });
-
-    // Listen for custom events (optional - for debugging or external handling)
-    document.addEventListener('checkboxToggle', function (event) {
-      console.log('Checkbox toggled:', event.detail.checked, event.detail.item);
-    });
   }
 
-  // Global function for manual checkbox toggling (for onclick attributes)
-  window.toggleCheckbox = function (listItem) {
+  // Public helper for toggling a checkbox row from application code. Prefixed
+  // like the three below it - an unprefixed global is one collision away from
+  // somebody else's toggleCheckbox. The list itself calls the local function,
+  // so the behaviour does not depend on what the global is called.
+  function toggleCheckboxRow(listItem) {
     const checkbox = listItem.querySelector('input[type="checkbox"]');
     if (!checkbox) return;
 
@@ -220,11 +263,47 @@
         detail: { checked: checkbox.checked, item: listItem },
       })
     );
-  };
+  }
+
+  window.mwToggleCheckbox = toggleCheckboxRow;
+
+  // A removable tag removes itself. Delegated, so the showcase needs no inline
+  // onclick for it and a page with a Content-Security-Policy can use it.
+  function initTagRemovals() {
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('.mw-tags-remove');
+      if (!button) return;
+
+      const item = button.closest('.mw-tags-item');
+      if (item) item.remove();
+    });
+  }
+
+  // data-mw-copy="text to copy" on a button puts that text on the clipboard.
+  // Empty value means: take it from the input the button sits next to, which
+  // is what an input group with a copy button is.
+  function initCopyButtons() {
+    document.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-mw-copy]');
+      if (!button || !navigator.clipboard) return;
+
+      const own = button.getAttribute('data-mw-copy');
+      const field = button.closest('.mw-input-group')?.querySelector('input');
+      const text = own || field?.value;
+      if (!text) return;
+
+      navigator.clipboard.writeText(text).then(() => {
+        button.dispatchEvent(
+          new CustomEvent('mwCopied', { bubbles: true, detail: { text } })
+        );
+      });
+    });
+  }
 
   // ===== Gallery Component =====
-  function initGalleries() {
-    document.querySelectorAll('.mw-gallery').forEach((gallery) => {
+  function initGalleries(root) {
+    root.querySelectorAll('.mw-gallery').forEach((gallery) => {
+      if (!fresh(gallery)) return;
       // Dots and caption sit next to .mw-gallery, not inside it, so the
       // container is the scope - with the parent as a fallback, otherwise a
       // markup without the wrapper would silently stay dead
@@ -332,7 +411,6 @@
     const themeToggle = document.querySelector('.mw-theme-toggle');
     if (!themeToggle) return;
 
-    const body = document.body;
     const root = document.documentElement;
     const icon = themeToggle.querySelector('.mw-theme-toggle-slider i');
 
@@ -359,8 +437,8 @@
       // Clean up potentially conflicting localStorage
       localStorage.removeItem('mw-theme');
 
-      // Ensure body classes are correct for fixed mode
-      body.classList.remove('mw-theme-light', 'mw-theme-dark');
+      // Ensure the theme classes are gone for fixed mode
+      root.classList.remove('mw-theme-light', 'mw-theme-dark');
 
       return;
     }
@@ -382,10 +460,13 @@
     const applyTheme = (lightMode) => {
       // The forced reflow is the point: the new colours land while transitions are off
       root.classList.add('mw-theme-switching');
-      body.classList.toggle('mw-theme-light', lightMode);
+      // On <html> and not on <body>: a script in the <head> runs before the
+      // body exists, and that script is the only way to apply a stored choice
+      // before the first paint instead of flashing the other theme first.
+      root.classList.toggle('mw-theme-light', lightMode);
       // The explicit counterpart, for dark on a machine set to light - without it
       // the page would follow the OS straight back past the reader's choice
-      body.classList.toggle('mw-theme-dark', !lightMode);
+      root.classList.toggle('mw-theme-dark', !lightMode);
       void root.offsetHeight;
       root.classList.remove('mw-theme-switching');
 
@@ -474,9 +555,10 @@
   }
 
   // ===== Accordions =====
-  function initAccordions() {
-    const accordionHeaders = document.querySelectorAll('.mw-accordion-header');
+  function initAccordions(root) {
+    const accordionHeaders = root.querySelectorAll('.mw-accordion-header');
     accordionHeaders.forEach((header) => {
+      if (!fresh(header)) return;
       // A header written as a <button> announces whether its panel is open.
       // Only when the markup says so - setting it on a <div> without a role
       // would claim a state for something that is not a control.
@@ -546,8 +628,10 @@
 
   // The fill is driven from CSS where the browser can do it (_progress.scss), so
   // this only hands the target width over and switches the animation on
-  function initProgressBars() {
-    const fills = document.querySelectorAll('.mw-progress-fill');
+  function initProgressBars(root) {
+    const fills = Array.from(root.querySelectorAll('.mw-progress-fill')).filter(
+      fresh
+    );
     if (!fills.length) return;
 
     const scrollDriven = CSS.supports('animation-timeline', 'view()');
@@ -590,13 +674,13 @@
   // (_reveal.scss). Older Safari and Firefox have none, so there an observer
   // stands in: hide what is still below the fold, run the same keyframes when
   // it arrives.
-  function initReveals() {
+  function initReveals(root) {
     if (CSS.supports('animation-timeline', 'view()')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const targets = document.querySelectorAll(
-      '.mw-reveal, .mw-reveal-stagger > *'
-    );
+    const targets = Array.from(
+      root.querySelectorAll('.mw-reveal, .mw-reveal-stagger > *')
+    ).filter(fresh);
     if (!targets.length) return;
 
     // The wave the grid draws in CSS, rebuilt from the column count the browser
@@ -908,8 +992,9 @@
 
   // Set here and not in the markup, so a page that already ships .mw-tabs gets the
   // tablist semantics by loading the script
-  function initTabs() {
-    document.querySelectorAll('.mw-tabs-nav').forEach((nav) => {
+  function initTabs(root) {
+    root.querySelectorAll('.mw-tabs-nav').forEach((nav) => {
+      if (!fresh(nav)) return;
       const items = Array.from(nav.querySelectorAll('.mw-tabs-nav-item'));
       if (!items.length) return;
 
@@ -988,10 +1073,11 @@
   }
 
   // ===== Alerts =====
-  function initAlerts() {
-    const alertCloseButtons = document.querySelectorAll('.mw-alert-close');
+  function initAlerts(root) {
+    const alertCloseButtons = root.querySelectorAll('.mw-alert-close');
 
     alertCloseButtons.forEach((button) => {
+      if (!fresh(button)) return;
       button.addEventListener('click', function () {
         const alert = this.closest('.mw-alert');
         if (!alert) return;
@@ -1053,8 +1139,9 @@
   }
 
   // ===== Form Sliders =====
-  function initFormSliders() {
-    document.querySelectorAll('.mw-slider-container').forEach((wrapper) => {
+  function initFormSliders(root) {
+    root.querySelectorAll('.mw-slider-container').forEach((wrapper) => {
+      if (!fresh(wrapper)) return;
       const slider = wrapper.querySelector('.mw-slider');
       const badge = wrapper.querySelector('.mw-slider-value');
       if (!slider || !badge) return;
@@ -1151,10 +1238,11 @@
   window.mwRefreshColorSwatches = updateColorSwatchHexValues;
 
   // ===== Image Sliders =====
-  function initImageSliders() {
-    const sliders = document.querySelectorAll('.mw-image-slider');
+  function initImageSliders(root) {
+    const sliders = root.querySelectorAll('.mw-image-slider');
 
     sliders.forEach((slider) => {
+      if (!fresh(slider)) return;
       const overlayImages = slider.querySelectorAll(
         '.mw-image-slider-overlay-image'
       );
@@ -1191,8 +1279,10 @@
   }
 
   // ===== Kanban Boards =====
-  function initKanbanBoards() {
-    document.querySelectorAll('.mw-kanban').forEach(initKanbanBoard);
+  function initKanbanBoards(root) {
+    root.querySelectorAll('.mw-kanban').forEach((board) => {
+      if (fresh(board)) initKanbanBoard(board);
+    });
   }
 
   function initKanbanBoard(board) {
@@ -1418,8 +1508,10 @@
     refresh();
   }
   // ===== Calendars =====
-  function initCalendars() {
-    document.querySelectorAll('[data-calendar]').forEach(initCalendar);
+  function initCalendars(root) {
+    root.querySelectorAll('[data-calendar]').forEach((calendar) => {
+      if (fresh(calendar)) initCalendar(calendar);
+    });
   }
 
   // Status dots come in as {"2026-08-19": ["success", "warning"]}

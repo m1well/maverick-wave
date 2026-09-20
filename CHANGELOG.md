@@ -6,6 +6,20 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.25.0] - 2026-09-20
+
+### Added
+
+- print stylesheet
+- `main-lean` entry point
+- `mw-home-start` for a hero at the left container edge
+- `mw-grid-from-*` keeps a grid single column up to that breakpoint
+
+### Changed
+
+- more "mobile first" design
+- `mw-home` carries the container width
+
 ## [5.24.0] - 2026-09-20
 
 ### Changed

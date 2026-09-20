@@ -36,6 +36,10 @@ There are no test or lint scripts.
 - `utilities/` - Spacing, flex, display utility classes
 - `main.scss` - Entry point using `@use`/`@forward` (not `@import`)
 
+**Mobile-first** - The unprefixed block is the phone layout; `media-up($bp)` adds
+to it. `media-down($bp)` only for rules that set what the base never sets, or
+where the narrow layout costs more properties than the wide one.
+
 **JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery and image sliders, theme toggle (persisted to localStorage, transitions suppressed during the flip), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs (which also get their ARIA and arrow-key handling here), alerts/toasts, modals, range inputs, dropdowns, language switcher, checkbox lists, kanban board, calendar.
 
 **HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 63 partials from `src/partials/`. These compile into `dist/index.html`.

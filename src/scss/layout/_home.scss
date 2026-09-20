@@ -5,11 +5,17 @@
     justify-items: center;
     align-items: center;
     text-align: center;
+    // The hero container runs the full width of the screen (see _main.scss), so
+    // the content has to produce the container width itself - otherwise it
+    // starts at a different edge than the header and every section below it.
+    // The gutter is already inside the token, hence no inline padding here.
+    width: var(--mw-container-width);
+    margin-inline: auto;
 
     &-content {
-      padding: spacing('9') spacing('4');
+      padding: spacing('9') spacing('0');
       @include media-up('sm') {
-        padding: spacing('6');
+        padding-block: spacing('6');
       }
 
       &-fade {
@@ -25,6 +31,19 @@
       @include media-up('sm') {
         width: min(75%, 700px);
       }
+    }
+  }
+
+  // A hero that points somewhere instead of sitting in the middle: the signet,
+  // the headline and the buttons all start at the edge the rest of the page
+  // starts at. Centred is still the default - a hero is short enough for it,
+  // which is exactly what a section head is not.
+  .mw-home-start {
+    justify-items: start;
+    text-align: left;
+
+    .mw-home-text {
+      margin-inline: 0;
     }
   }
 

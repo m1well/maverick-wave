@@ -113,11 +113,9 @@
   // levels read as a hierarchy rather than as two of the same thing.
   .mw-section-subtitle {
     font-size: fluid('xl', '2xl', $to: 'sm');
-    // One step above the demo gap of spacing('6'), and that step is the whole
-    // margin the boundary between two components has over the one between two
-    // demos - the heading leans toward what it names, not toward what came
-    // before it.
-    margin: spacing('8') spacing('0') spacing('4') spacing('0');
+    // The section boundary is 56px on a phone, so the component boundary sits
+    // with it or the two stop being distinguishable
+    margin: spacing('6') spacing('0') spacing('4') spacing('0');
     position: relative;
 
     &::after {
@@ -201,11 +199,13 @@
     }
   }
 
-  @include media-down('sm') {
-    // The section boundary steps down to 56px on a phone, so the component
-    // boundary steps with it or the two stop being distinguishable
+  @include media-up('sm') {
+    // One step above the demo gap of spacing('6'), and that step is the whole
+    // margin the boundary between two components has over the one between two
+    // demos - the heading leans toward what it names, not toward what came
+    // before it.
     .mw-section-subtitle {
-      margin-top: spacing('6');
+      margin-top: spacing('8');
     }
   }
 

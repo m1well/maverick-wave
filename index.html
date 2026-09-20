@@ -25,6 +25,19 @@
          cached: the filename never changes, and without it a stale stylesheet
          survives a normal reload -->
     <link rel="stylesheet" href="maverick-wave.min.css?v={{VERSION}}" />
+
+    <!-- Applies a stored theme choice before the first paint. Without it a
+         reader whose choice differs from the OS sees the other theme for a
+         frame, because main.js only runs at the end of the body. Inline and
+         synchronous on purpose - an external file would paint first. -->
+    <script>
+      (function () {
+        var stored = localStorage.getItem('mw-theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.classList.add('mw-theme-' + stored);
+        }
+      })();
+    </script>
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link

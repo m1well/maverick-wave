@@ -63,7 +63,9 @@
       align-items: flex-start;
       width: 100%;
       max-width: 68ch;
-      margin-inline: auto;
+      // Left, like everything else that carries running text. It used to centre
+      // itself, which only ever matched a page whose headings were centred too.
+      margin-inline: 0;
       padding: spacing('6') spacing('7');
       font-weight: font-weight('normal');
       line-height: 1.7;
@@ -76,6 +78,11 @@
 
       @include hover-move {
         transform: none;
+      }
+
+      // For the page that does centre its blocks
+      &-center {
+        margin-inline: auto;
       }
 
       strong {

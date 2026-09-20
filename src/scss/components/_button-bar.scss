@@ -3,7 +3,8 @@
 @layer mw.components {
   .mw-button-bar {
     display: flex;
-    gap: spacing('3');
+    flex-direction: column;
+    gap: spacing('2');
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
@@ -11,17 +12,20 @@
     border-radius: radius('md');
     padding: spacing('2');
 
+    .mw-btn {
+      width: 100%;
+    }
+
     &:hover {
       border-color: var(--mw-border-accent);
     }
 
-    @include media-down('sm') {
-      flex-direction: column;
-      gap: spacing('2');
+    @include media-up('sm') {
+      flex-direction: row;
+      gap: spacing('3');
 
       .mw-btn {
-        width: 100%;
-        min-width: 0;
+        width: auto;
       }
     }
   }

@@ -396,6 +396,10 @@ Functions read the maps: `spacing('4')`, `font-size('lg')`,
   container widths, not breakpoint names, because a container has none.
 - `media-up($bp)` / `media-down($bp)` - the `$breakpoints` map as range syntax,
   `width >= bp` and `width < bp`, so the two never overlap at the breakpoint.
+  `media-up` is the direction the framework is written in: the base block is the
+  phone and each breakpoint adds to it. `media-down` is for a rule that sets what
+  the base never sets - turned around it would hard-wire an inherited value - and
+  for a narrow layout that costs more properties than the wide one.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport. Every
   target-size rule in the framework hangs under it; put your own control under
   the same condition instead of guessing it.
@@ -440,7 +444,7 @@ Give it a layer of its own:
 
 ## Importing only what you need
 
-The full stylesheet is ~281 kB raw / ~40 kB gzipped. Marketing components
+The full stylesheet is ~290 kB raw / ~41 kB gzipped. Marketing components
 (`blog-post`, `gallery`, `content-slider`, `techstack-bucket`, `tiles`,
 `coming-soon`, `ratings`, `home`, `hero`) are dead weight in an application, and
 Angular bundle budgets notice.
@@ -451,6 +455,22 @@ boundary, so partial imports are safe. **The one thing you must not drop is
 colourless. The cascade layer order comes along on its own: every module loads
 `abstracts`, which declares it, so a hand-picked subset orders itself the same
 way the full build does.
+
+**The short way is `main-lean`**: the whole framework minus every component -
+tokens, reset, typography, the complete layout and all utilities, ~98 kB raw /
+~16 kB gzipped. Configure it like `main` and add the components next to it:
+
+```scss
+@use 'maverick-wave/src/scss/main-lean' with (
+  $primary-color: #0f766e
+);
+@use 'maverick-wave/src/scss/components/buttons';
+@use 'maverick-wave/src/scss/components/cards';
+@use 'maverick-wave/src/scss/components/alerts';
+```
+
+Those three land at ~19 kB gzipped against ~41 kB for the full build. Pick the
+files by hand, as below, when you also want to leave parts of the layout out.
 
 ```scss
 // styles.scss - configure first, then pick

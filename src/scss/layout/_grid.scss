@@ -51,6 +51,10 @@ $_column-steps-lg: (
   ),
 );
 
+// The breakpoints a grid can be pushed to. Outside the layer blocks for the
+// same reason as the steps above: both read it.
+$_grid-from: ('sm', 'md', 'lg', 'xl');
+
 @layer mw.layout {
   %grid-base {
     display: grid;
@@ -290,6 +294,19 @@ $_column-steps-lg: (
     }
   }
 
+  // Every ramp above turns two-column at `sm`, and 576px is generous for a
+  // column of running text next to a picture. This pushes the whole ramp up:
+  // single column until the breakpoint named, the grid's own steps from there.
+  // A modifier, so it works on all of them - and it has to come after them,
+  // because it carries the same specificity and wins on order alone.
+  @each $breakpoint in $_grid-from {
+    .mw-grid-from-#{$breakpoint} {
+      @include media-down($breakpoint) {
+        @include _single-column;
+      }
+    }
+  }
+
   // A feature card grows outwards - its frame and its label bar reach into the
   // gap, and two rows of them would touch. The card asks for the room, but the
   // grid has to hand it over: written next to the card it would sit in
@@ -348,6 +365,17 @@ $_column-steps-lg: (
   @each $count, $steps in $_column-steps-lg {
     .mw-grid-#{$count}-lg {
       @include _reveal-ramp($steps);
+    }
+  }
+
+  // Below its breakpoint the grid is one column, so the stagger has to count in
+  // one too - otherwise two cards standing above each other rise on different
+  // beats. Last, so it beats the ramp it corrects at equal specificity.
+  @each $breakpoint in $_grid-from {
+    .mw-grid-from-#{$breakpoint} {
+      @include media-down($breakpoint) {
+        @include _reveal-stagger(1);
+      }
     }
   }
 }

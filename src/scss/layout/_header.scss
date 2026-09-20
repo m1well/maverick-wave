@@ -529,16 +529,19 @@
     }
   }
 
-  // Profile button - avatar plus the signed-in name
+  // Profile button - a round avatar until there is room for the signed-in name
+  // beside it
   .mw-profile-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: spacing('3');
     height: 40px;
-    padding: spacing('0') spacing('4') spacing('0') spacing('1');
+    width: 40px;
+    padding: spacing('0');
     background: transparent;
     border: 1px solid var(--mw-header-border);
-    border-radius: radius('2xl');
+    border-radius: radius('full');
     color: var(--mw-header-text-color);
     cursor: pointer;
     transition: var(--mw-transition);
@@ -583,14 +586,18 @@
       font-size: font-size('xl');
     }
 
-    @include media-down('md') {
-      padding: spacing('0');
-      width: 40px;
-      justify-content: center;
-      border-radius: radius('full');
+    .mw-profile-btn-name {
+      display: none;
+    }
+
+    @include media-up('md') {
+      width: auto;
+      justify-content: normal;
+      padding: spacing('0') spacing('4') spacing('0') spacing('1');
+      border-radius: radius('2xl');
 
       .mw-profile-btn-name {
-        display: none;
+        display: inline;
       }
     }
   }

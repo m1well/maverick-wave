@@ -9,13 +9,14 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: flex-end;
-      row-gap: spacing('1');
+      justify-content: flex-start;
+      column-gap: spacing('6');
+      row-gap: spacing('2');
 
-      @include media-down('sm') {
-        justify-content: flex-start;
-        column-gap: spacing('6');
-        row-gap: spacing('2');
+      @include media-up('sm') {
+        justify-content: flex-end;
+        column-gap: normal;
+        row-gap: spacing('1');
       }
     }
 

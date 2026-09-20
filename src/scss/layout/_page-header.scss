@@ -34,11 +34,11 @@
       flex-wrap: wrap;
       align-items: center;
       gap: spacing('3');
-      margin-left: auto;
+      width: 100%;
 
-      @include media-down('sm') {
-        width: 100%;
-        margin-left: spacing('0');
+      @include media-up('sm') {
+        width: auto;
+        margin-left: auto;
       }
     }
 

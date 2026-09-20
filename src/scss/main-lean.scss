@@ -1,0 +1,16 @@
+// The same framework without the 48 components: tokens, reset, typography,
+// grid, container, section, header, footer and every utility. Add the
+// components the page actually uses next to it, each one its own file:
+//
+//   @use 'maverick-wave/src/scss/main-lean' with ($primary-color: #1b1b1d);
+//   @use 'maverick-wave/src/scss/components/buttons';
+//   @use 'maverick-wave/src/scss/components/cards';
+//
+// The configuration goes on this file, not on the component imports - they
+// read the tokens it forwards. A landing page that uses eight components lands
+// around a third of the full build; the components carry the rest.
+@forward 'abstracts/variables';
+
+@use 'base';
+@use 'layout';
+@use 'utilities';

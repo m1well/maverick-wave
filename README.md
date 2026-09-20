@@ -45,12 +45,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.24.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.25.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.24.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.25.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -437,6 +437,8 @@ They exist on the SCSS path only - the compiled CSS carries none of them.
   ignores the reader's font size. The default range stops at `md`, a headline
   passes `$to: 'xl'`.
 - `media-up($bp)` / `media-down($bp)` - the `$breakpoints` map as a query.
+  `media-up` is the direction the framework is written in: the base block is the
+  phone, each breakpoint adds to it.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
 - `touch-floor($size: 2.75rem)` - that condition plus a `min-height`. Not for a

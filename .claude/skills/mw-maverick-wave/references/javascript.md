@@ -2,15 +2,28 @@
 
 ## What `maverick-wave.min.js` is
 
-One vanilla IIFE, no dependencies, ~24 kB. It queries the DOM **once** on
-`DOMContentLoaded` and attaches listeners. There is no re-init API, no
-`MutationObserver`, no exported module - it is built for a server-rendered or
-static page.
+One vanilla IIFE, no dependencies, ~24 kB. It queries the DOM on
+`DOMContentLoaded` and attaches listeners. No `MutationObserver`, no exported
+module - it is built for a server-rendered or static page.
+
+Markup that arrives later gets wired through the one public entry point:
+
+```js
+window.MaverickWave.init(subtree); // or init() for the whole document
+```
+
+Call it after an htmx swap, after filling a modal from a fetch, or after a view
+transition replaced the body. Every element that already carries listeners is
+skipped, so calling it twice over the same markup does nothing - the components
+are safe to re-run, the document- and window-level behaviour is wired once and
+never again.
+
+What that does **not** make it is a SPA library - see below.
 
 ## Why a SPA must not load it
 
-- It runs once during bootstrap. Anything rendered afterwards - i.e. everything
-  in a routed application - never gets initialised.
+- Anything rendered after bootstrap needs `MaverickWave.init()` by hand, for
+  every subtree, on every render - in a routed application that is all of it.
 - It writes straight into the DOM (class toggles, generated elements, inline
   styles). In Angular that happens outside change detection; in a zoneless app
   the framework never learns about it, and on the next re-render your bindings
@@ -23,6 +36,29 @@ in a Vite entry point. Load the **CSS only** and rebuild the handful of
 behaviours in components. Each one is a few lines - the framework's state
 classes are the entire contract.
 
+## The theme has to be applied before the first paint
+
+`main.js` sits at the end of the body, so a stored choice that differs from the
+operating system reaches the page one frame too late - the reader sees the other
+theme flash. The fix is five lines in the `<head>`, inline and synchronous,
+before the stylesheet has painted anything:
+
+```html
+<script>
+  (function () {
+    var stored = localStorage.getItem('mw-theme');
+    if (stored === 'light' || stored === 'dark') {
+      document.documentElement.classList.add('mw-theme-' + stored);
+    }
+  })();
+</script>
+```
+
+That is also why the toggle writes the class on `<html>` and not on `<body>`:
+in the head there is no body yet. An external file would not help - it paints
+first. With nothing stored, nothing happens here and the page follows the OS on
+its own through `light-dark()`.
+
 ## Behaviour inventory
 
 | Behaviour           | What the shipped JS does                                                                                                                                                                                                                                                        | What to do instead                                                                                                                                                                                                                 |
@@ -33,11 +69,11 @@ classes are the entire contract.
 | Mobile nav          | Toggles `open` on `mw-menu-btn` and `mw-navbar` plus `mw-nav-open` on `<body>`, writes `aria-expanded` when the button is a `<button>`, closes on anchor click and on Escape (focus returns to the button)                                                                      | One signal, bound to all three - the body class carries the scrim, the scroll lock and the pinning of the bar; reset it on navigation end                                                                                          |
 | Scroll spy          | Sets `mw-active` on `mw-navbar-link` from the scroll position                                                                                                                                                                                                                   | Router-based: `routerLinkActive="mw-active"`                                                                                                                                                                                       |
 | Anchor scrolling    | Intercepts `a[href^="#"]` and runs its own eased scroll - duration scales with distance, capped at 1.4s, cancelled by wheel or touch. Lands on `scroll-padding-top`, moves focus to the target, writes the hash with `replaceState`, and measures a sticky target unpinned      | The router; for in-page anchors `scrollIntoView({ behavior: 'smooth' })` or your own animation                                                                                                                                     |
-| Theme toggle        | `localStorage['mw-theme']`, toggles `mw-theme-light` / `mw-theme-dark` on `<body>` and `mw-active` on the toggle, wrapped in `mw-theme-switching` on `<html>` so the flip starts no transitions. With nothing stored it takes `prefers-color-scheme` and keeps following it     | A theme service - see `examples/angular-services.md`                                                                                                                                                                               |
+| Theme toggle        | `localStorage['mw-theme']`, toggles `mw-theme-light` / `mw-theme-dark` on `<html>` and `mw-active` on the toggle, wrapped in `mw-theme-switching` on `<html>` so the flip starts no transitions. With nothing stored it takes `prefers-color-scheme` and keeps following it     | A theme service - see `examples/angular-services.md`                                                                                                                                                                               |
 | Progress bar        | `IntersectionObserver` sets `width` from `data-value`                                                                                                                                                                                                                           | Bind `[style.width.%]="value()"` on `mw-progress-fill`                                                                                                                                                                             |
 | Slider              | On `input`, sets `--value` (track fill) and `data-value` (badge text)                                                                                                                                                                                                           | Bind `[style.--value.%]` and `[attr.data-value]`                                                                                                                                                                                   |
 | Alerts              | Close button adds `mw-alert-closing` (fade out), then `mw-alert-closed` (`display: none`) after `--mw-duration-base`                                                                                                                                                            | Remove the alert from the list/signal                                                                                                                                                                                              |
-| Checkbox lists      | Adds `mw-selected` to the `li`, emits a `checkboxToggle` event, exposes `window.toggleCheckbox`                                                                                                                                                                                 | `[class.mw-selected]="item.checked"`                                                                                                                                                                                               |
+| Checkbox lists      | Adds `mw-selected` to the `li`, emits a `checkboxToggle` event, exposes `window.mwToggleCheckbox`                                                                                                                                                                               | `[class.mw-selected]="item.checked"`                                                                                                                                                                                               |
 | Gallery             | Generates the dots, moves the track, swipe handling (single finger, dominant axis, passive listeners), writes `mw-gallery-desc`                                                                                                                                                 | Render dots in the template, bind the track transform and `mw-active` on the current dot                                                                                                                                           |
 | Image slider        | Toggles `mw-active` on the overlay image and the control button with the matching `data-index`                                                                                                                                                                                  | Bind `mw-active` from the selected index                                                                                                                                                                                           |
 | Kanban board        | Counts the tickets per lane, moves a card between lanes (`data-kanban-move`) and marks the arrival with `mw-kanban-card-moved-forward` / `-back`, clones `mw-kanban-card-template` on save, derives the next key from `data-kanban-prefix`, toggles `mw-active` on the composer | Keep the tickets in a signal/store and render the lanes from it; `mw-active` on the composer, `mw-kanban-editing` on the ticket it replaces. Neither the `<template>` nor the `mw-kanban-composer-*` hook classes are needed       |

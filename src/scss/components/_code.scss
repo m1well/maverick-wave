@@ -42,15 +42,15 @@
       white-space: pre-wrap;
       display: block;
       line-height: 1.5;
+      font-size: font-size('3xs');
 
-      @include media-down('sm') {
+      @include media-up('xs') {
         font-size: font-size('2xs');
-        white-space: pre-wrap;
-        word-break: break-word;
       }
 
-      @include media-down('xs') {
-        font-size: font-size('3xs');
+      // Back to the shared `code, pre` size
+      @include media-up('sm') {
+        font-size: font-size('xs');
       }
     }
   }
@@ -80,10 +80,13 @@
     &-filename {
       font-weight: font-weight('medium');
       margin-right: spacing('2');
+      font-size: font-size('2xs');
+      // The header wraps at this width, so the language chip needs its own line
+      margin-bottom: spacing('1');
 
-      @include media-down('sm') {
-        font-size: font-size('2xs');
-        margin-bottom: spacing('1');
+      @include media-up('sm') {
+        font-size: font-size('xs');
+        margin-bottom: spacing('0');
       }
     }
 
@@ -102,19 +105,16 @@
       border: none;
       max-width: 100%;
       overflow-x: auto;
+      font-size: font-size('3xs');
+      padding: spacing('1');
 
-      @include media-down('sm') {
+      @include media-up('xs') {
         font-size: font-size('2xs');
-        padding: spacing('1');
-
-        code {
-          white-space: pre-wrap;
-          word-break: break-word;
-        }
       }
 
-      @include media-down('xs') {
-        font-size: font-size('3xs');
+      @include media-up('sm') {
+        font-size: font-size('xs');
+        padding: spacing('4');
       }
     }
   }
@@ -213,18 +213,6 @@
     overflow-x: auto;
     position: relative;
 
-    // Add horizontal scrolling indicator for small screens
-    @include media-down('sm') {
-      background-position:
-        left center,
-        right center;
-      background-repeat: no-repeat;
-      background-size:
-        20px 100%,
-        20px 100%;
-      background-attachment: local, local;
-    }
-
     & > * {
       max-width: 100%;
     }
@@ -234,14 +222,15 @@
       width: 100%;
 
       pre {
-        white-space: pre;
+        white-space: pre-wrap;
+        word-break: break-word;
         width: 100%;
         overflow-x: auto;
 
-        // For very small screens, allow wrapping
-        @include media-down('xs') {
-          white-space: pre-wrap;
-          word-break: break-word;
+        // From here the box can scroll a long line instead of splitting it
+        @include media-up('xs') {
+          white-space: pre;
+          word-break: normal;
         }
       }
 
