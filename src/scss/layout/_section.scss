@@ -17,6 +17,12 @@
     // every background the framework paints.
     border-top: 2px solid var(--mw-border);
 
+    // A head without a lead is a rule and one line of type, and the gap sized
+    // to follow a paragraph reads as a hole under it
+    &:not(:has(.mw-section-head-intro)) {
+      --mw-section-head-gap: calc(var(--mw-section-head-step) * 1.3);
+    }
+
     // The rule stays quiet so it reads as a boundary and not as a border, and
     // quiet is still hard to see on a patterned band. Hence the mark:
     // a short, thicker piece of the accent colour sitting on the line at the
@@ -49,7 +55,7 @@
   // is left - four fifths of a phone is a column nothing fits in.
   .mw-section-head-intro {
     max-width: 75ch;
-    margin: spacing('4') spacing('0') spacing('0');
+    margin: calc(var(--mw-section-head-step) * 0.56) spacing('0') spacing('0');
     font-size: font-size('md');
     line-height: 1.6;
     color: var(--mw-text-muted-color);
@@ -113,9 +119,11 @@
   // levels read as a hierarchy rather than as two of the same thing.
   .mw-section-subtitle {
     font-size: fluid('xl', '2xl', $to: 'sm');
-    // The section boundary is 56px on a phone, so the component boundary sits
-    // with it or the two stop being distinguishable
-    margin: spacing('6') spacing('0') spacing('4') spacing('0');
+    // The section boundary steps down on a phone, so the component boundary
+    // sits with it or the two stop being distinguishable
+    margin-block: var(--mw-section-head-step)
+      calc(var(--mw-section-head-step) * 0.56);
+    margin-inline: spacing('0');
     position: relative;
 
     &::after {
@@ -128,6 +136,21 @@
       border-radius: radius('xs');
       background: var(--mw-secondary-text-color);
     }
+  }
+
+  // The lead under a subtitle is a plain paragraph, so nothing but this gives it
+  // the gap to the content - every page would otherwise spell it out per instance.
+  // Two selectors because a lead sometimes runs to a second paragraph, and the
+  // gap has to sit under the last one.
+  .mw-section-subtitle + p,
+  .mw-section-subtitle + p + p {
+    margin-bottom: var(--mw-section-head-step);
+  }
+
+  // Nothing between the heading and the content: the heading carries the gap the
+  // lead would have carried
+  .mw-section-subtitle:not(:has(+ p)) {
+    margin-bottom: var(--mw-section-head-step);
   }
 
   // Sticky, because the strip is the only way back: inside a long section the
@@ -200,12 +223,12 @@
   }
 
   @include media-up('sm') {
-    // One step above the demo gap of spacing('6'), and that step is the whole
-    // margin the boundary between two components has over the one between two
-    // demos - the heading leans toward what it names, not toward what came
-    // before it.
+    // Half a step more than the gap it leaves below itself, and that difference
+    // is the whole margin the boundary between two components has over the one
+    // between two demos - the heading leans toward what it names, not toward
+    // what came before it.
     .mw-section-subtitle {
-      margin-top: spacing('8');
+      margin-top: calc(var(--mw-section-head-step) * 1.49);
     }
   }
 

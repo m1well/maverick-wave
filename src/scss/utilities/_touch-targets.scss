@@ -139,12 +139,16 @@
   @include media-down('md') {
     :root {
       --mw-section-padding-block: #{spacing('9')};
+      --mw-section-padding-compact: #{spacing('7')};
+      --mw-section-padding-airy: #{spacing('10')};
     }
   }
 
   @include media-down('sm') {
     :root {
       --mw-section-padding-block: #{spacing('7')};
+      --mw-section-padding-compact: #{spacing('6')};
+      --mw-section-padding-airy: #{spacing('9')};
     }
   }
 
