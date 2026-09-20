@@ -143,11 +143,13 @@ accordion FAQ.
       <!-- Features -->
       <section id="features" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">Features</h2>
-          <p class="mw-section-intro">
-            Three things every team asks about on the first call - and the
-            numbers behind them.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Features</h2>
+            <p class="mw-section-head-intro">
+              Three things every team asks about on the first call - and the
+              numbers behind them.
+            </p>
+          </div>
 
           <!-- mw-reveal-stagger on the grid: every card rises as it scrolls
                in, the second and third of each row a beat later -->
@@ -217,10 +219,12 @@ accordion FAQ.
       <!-- Pricing -->
       <section id="pricing" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Pricing</h2>
-          <p class="mw-section-intro">
-            Per workspace, per month. Every plan starts with a 14 day trial.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Pricing</h2>
+            <p class="mw-section-head-intro">
+              Per workspace, per month. Every plan starts with a 14 day trial.
+            </p>
+          </div>
 
           <!-- mw-offer pushes the price row to the bottom of the body, so the
                three prices line up although the lists differ in length. The
@@ -316,10 +320,12 @@ accordion FAQ.
       <!-- Voices -->
       <section id="voices" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">Voices</h2>
-          <p class="mw-section-intro">
-            What teams say after the first quarter.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Voices</h2>
+            <p class="mw-section-head-intro">
+              What teams say after the first quarter.
+            </p>
+          </div>
 
           <!-- Quotes of unequal length: columns, not a grid. The stagger
                works on the column children just the same -->
@@ -367,7 +373,9 @@ accordion FAQ.
       <!-- FAQ -->
       <section id="faq" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">FAQ</h2>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">FAQ</h2>
+          </div>
 
           <div class="mw-accordion">
             <div class="mw-accordion-item">

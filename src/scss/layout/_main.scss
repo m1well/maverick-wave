@@ -8,6 +8,9 @@
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
+    // Numbered section heads count per page body, so a second main on the same
+    // document starts at 01 again instead of continuing the first one.
+    counter-reset: mw-section-head;
   }
 
   // Set in from the container it sits in, and giving that back a step at a time

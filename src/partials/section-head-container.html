@@ -1,0 +1,74 @@
+<h3 class="mw-section-subtitle">Section Head</h3>
+
+<p class="mw-text-muted mw-mb-6">
+  The opening of a section: a hairline rule, a mark sitting on its left end, the
+  title, and the line that says what follows. Everything starts at one edge -
+  centred body copy moves its own left edge with every line break, so the eye
+  has to find the start of each line instead of jumping to a fixed position.
+  Fine for a heading, tiring from the third line on.
+</p>
+
+<div class="mw-grid-1">
+  <div>
+    <h3 class="mw-mb-4">Title, Lead and Mark</h3>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-section-head">
+        <h2 class="mw-section-head-title">Foundations</h2>
+        <p class="mw-section-head-intro">
+          The raw material - type, color, spacing and the small utilities
+          everything else is built from. The lead stops at 65 characters, or at
+          four fifths of the container, whichever comes first.
+        </p>
+      </div>
+      <p class="mw-mb-0">The content of the section starts here.</p>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Numbered</h3>
+    <p class="mw-text-muted mw-mb-4">
+      <code>mw-section-head-numbered</code> counts in the browser, so no page
+      keeps its own running order in the markup. The number closes the rule the
+      mark opens, and the counter restarts per <code>mw-main</code>. Opt-in: a
+      single section on a legal page numbered "01" is noise.
+    </p>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-section-head mw-section-head-numbered">
+        <h2 class="mw-section-head-title">About me</h2>
+        <p class="mw-section-head-intro">
+          A section head without a lead works the same way - the next one below
+          shows it.
+        </p>
+      </div>
+
+      <div class="mw-section-head mw-section-head-numbered">
+        <h2 class="mw-section-head-title">Contact</h2>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Colored Mark</h3>
+    <p class="mw-text-muted mw-mb-4">
+      The mark is the one colored thing in the head, so it is where a section
+      picks up a tone: <code>mw-section-head-secondary</code>,
+      <code>-success</code>, <code>-warning</code>, <code>-danger</code> and
+      <code>-info</code>. Its length is
+      <code>--mw-section-head-mark-width</code> (80px), the gap to the content
+      below <code>--mw-section-head-gap</code>.
+    </p>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-section-head mw-section-head-secondary">
+        <h2 class="mw-section-head-title">Secondary</h2>
+      </div>
+
+      <div class="mw-section-head mw-section-head-danger">
+        <h2 class="mw-section-head-title">Danger</h2>
+      </div>
+
+      <div class="mw-section-head mw-section-head-success">
+        <h2 class="mw-section-head-title">Success</h2>
+      </div>
+    </div>
+  </div>
+</div>

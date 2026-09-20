@@ -576,7 +576,9 @@
       <!-- Get started section -->
       <section id="get-started" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Get started</h2>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Get started</h2>
+          </div>
           @@include('./src/partials/get-started-container.html')
         </div>
       </section>
@@ -584,7 +586,9 @@
       <!-- Documentation section -->
       <section id="documentation" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">Documentation</h2>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Documentation</h2>
+          </div>
           @@include('./src/partials/documentation-container.html')
         </div>
       </section>
@@ -592,11 +596,13 @@
       <!-- Foundations section -->
       <section id="foundations" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Foundations</h2>
-          <p class="mw-section-intro">
-            The raw material - type, color, spacing and the small utilities
-            everything else is built from.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Foundations</h2>
+            <p class="mw-section-head-intro">
+              The raw material - type, color, spacing and the small utilities
+              everything else is built from.
+            </p>
+          </div>
           <nav class="mw-section-nav">
             <a href="#typography" class="mw-section-btn">Typography</a>
             <a href="#colors" class="mw-section-btn">Main Colors</a>
@@ -643,12 +649,15 @@
       <!-- Layout section -->
       <section id="layout" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">Layout</h2>
-          <p class="mw-section-intro">
-            The bones of a page - grids, cards, panels and the containers that
-            hold content together.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Layout</h2>
+            <p class="mw-section-head-intro">
+              The bones of a page - grids, cards, panels and the containers that
+              hold content together.
+            </p>
+          </div>
           <nav class="mw-section-nav">
+            <a href="#section-head" class="mw-section-btn">Section Head</a>
             <a href="#grid" class="mw-section-btn">Grid System</a>
             <a href="#cards" class="mw-section-btn">Cards</a>
             <a href="#panels" class="mw-section-btn">Panels</a>
@@ -663,6 +672,11 @@
             <a href="#stepper" class="mw-section-btn">Stepper</a>
             <a href="#parallax" class="mw-section-btn">Parallax</a>
           </nav>
+
+          <!-- Section head container -->
+          <div id="section-head">
+            @@include('./src/partials/section-head-container.html')
+          </div>
 
           <!-- Grid container -->
           <div id="grid">@@include('./src/partials/grid-container.html')</div>
@@ -742,11 +756,13 @@
       <!-- Components section -->
       <section id="components" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Components</h2>
-          <p class="mw-section-intro">
-            The everyday parts - buttons, tags, alerts and their many friends,
-            ready to drop in.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Components</h2>
+            <p class="mw-section-head-intro">
+              The everyday parts - buttons, tags, alerts and their many friends,
+              ready to drop in.
+            </p>
+          </div>
           <nav class="mw-section-nav">
             <a href="#buttons" class="mw-section-btn">Buttons</a>
             <a href="#button-bar" class="mw-section-btn">Button Bar</a>
@@ -849,11 +865,13 @@
       <!-- Forms section -->
       <section id="forms" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">Forms</h2>
-          <p class="mw-section-intro">
-            Inputs, selects, toggles and validation - fields and buttons share
-            one height scale by construction.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Forms</h2>
+            <p class="mw-section-head-intro">
+              Inputs, selects, toggles and validation - fields and buttons share
+              one height scale by construction.
+            </p>
+          </div>
           <nav class="mw-section-nav">
             <a href="#form-elements" class="mw-section-btn">Form Elements</a>
             <a href="#input-group" class="mw-section-btn">Input Group</a>
@@ -894,11 +912,13 @@
       <!-- Data & display section -->
       <section id="data-display" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Data & Display</h2>
-          <p class="mw-section-intro">
-            Tables, boards, timelines and long-form content - everything that
-            shows real data.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Data & Display</h2>
+            <p class="mw-section-head-intro">
+              Tables, boards, timelines and long-form content - everything that
+              shows real data.
+            </p>
+          </div>
           <nav class="mw-section-nav">
             <a href="#page-header" class="mw-section-btn">Page Header</a>
             <a href="#meta-info" class="mw-section-btn">Meta Info</a>
@@ -1000,23 +1020,27 @@
       <!-- History section -->
       <section id="history" class="mw-section mw-section-alternate">
         <div class="mw-container">
-          <h2 class="mw-section-title">History</h2>
-          <p class="mw-section-intro">
-            The major releases so far. Everything in between - the minors and
-            the patch releases - sits in the changelog.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">History</h2>
+            <p class="mw-section-head-intro">
+              The major releases so far. Everything in between - the minors and
+              the patch releases - sits in the changelog.
+            </p>
+          </div>
           @@include('./src/partials/history-container.html')
         </div>
       </section>
       <!-- Preview section, showcase only - see the partial -->
       <section id="preview" class="mw-section">
         <div class="mw-container">
-          <h2 class="mw-section-title">Preview</h2>
-          <p class="mw-section-intro">
-            One page-shaped example, so the variant switches in the palette
-            panel have something to act on that is not a component gallery. Open
-            the panel and the page lands here.
-          </p>
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Preview</h2>
+            <p class="mw-section-head-intro">
+              One page-shaped example, so the variant switches in the palette
+              panel have something to act on that is not a component gallery.
+              Open the panel and the page lands here.
+            </p>
+          </div>
           @@include('./src/partials/preview-container.html')
         </div>
       </section>

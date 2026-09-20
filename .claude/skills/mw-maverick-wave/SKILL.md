@@ -156,9 +156,9 @@ keys at all (negative gap is invalid CSS and is not generated).
 **Font sizes** (`mw-text-3xs` … `mw-text-6xl`): `3xs` 0.6, `2xs` 0.7, `xs` 0.8,
 `sm` 0.9, `base` 1, `md` 1.1, `lg` 1.3, `xl` 1.5, `2xl` 1.8, `3xl` 2.2, `4xl` 2.5,
 `5xl` 3, `6xl` 4.3 rem. The utility classes are single steps; `h1`, `h2`,
-`mw-section-title` and `mw-section-subtitle` interpolate instead - `h1` runs
-`3xl` to `5xl` between 375px and 768px, `h2` `2xl` to `4xl`, the two section
-headings one step each up to 576px. The endpoints are the values the old
+`mw-section-head-title` and `mw-section-subtitle` interpolate instead - `h1`
+runs `3xl` to `5xl` between 375px and 768px, `h2` `2xl` to `4xl`, the head title
+`2xl` to `4xl` up to 992px and the subtitle one step up to 576px. The endpoints are the values the old
 breakpoint steps had, so a phone and a desktop look the same and only the widths
 between them moved.
 
@@ -297,7 +297,8 @@ feature frame) ·
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` (+ `-narrow`) ·
 `mw-content` ·
-`mw-section` (+ `mw-section-intro`) · `mw-page-header` · `mw-grid-*`
+`mw-section` · `mw-section-head` (+ `-title`, `-intro`, `-numbered`, colours) ·
+`mw-page-header` · `mw-grid-*`
 (+ `mw-grid-even`) ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
