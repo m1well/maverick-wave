@@ -20,9 +20,12 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
+    // The page gutter is the container's job, a second inset only narrows the tile
     &-4col {
-      width: 85%;
-      grid-template-columns: repeat(2, 1fr);
+      @include media-up('sm') {
+        width: 85%;
+        grid-template-columns: repeat(2, 1fr);
+      }
 
       @include media-up('md') {
         grid-template-columns: repeat(3, 1fr);
@@ -31,28 +34,12 @@
       @include media-up('lg') {
         grid-template-columns: repeat(4, 1fr);
       }
-
-      @include media-down('sm') {
-        grid-template-columns: 1fr;
-        // Full width from here on - the page gutter is the container's job,
-        // a second inset only narrows the tile
-        width: 100%;
-        padding: spacing('0');
-        gap: spacing('4');
-      }
     }
 
     &-2col {
-      width: 75%;
-      grid-template-columns: repeat(2, 1fr);
-
-      @include media-down('sm') {
-        grid-template-columns: 1fr;
-        // Full width from here on - the page gutter is the container's job,
-        // a second inset only narrows the tile
-        width: 100%;
-        padding: spacing('0');
-        gap: spacing('4');
+      @include media-up('sm') {
+        width: 75%;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   }
@@ -75,7 +62,7 @@
     container: mw-tile / inline-size;
     background: var(--mw-card-background);
     @include surface;
-    padding: spacing('5');
+    padding: spacing('4');
     box-shadow: var(--mw-elevation-2);
     transition: var(--mw-transition);
     border: 1px solid var(--mw-border);
@@ -83,6 +70,11 @@
     display: flex;
     flex-direction: column;
     cursor: pointer;
+
+    // Ahead of the size modifiers below, which take over from 'sm'
+    @include media-up('sm') {
+      padding: spacing('5');
+    }
 
     // Same hover as a card, arc included - a tile is the larger clickable
     // relative of one, and a pair that looks alike has to react alike.
@@ -169,7 +161,9 @@
     }
 
     &-sm {
-      padding: spacing('4');
+      @include media-up('sm') {
+        padding: spacing('4');
+      }
 
       .mw-tile-img {
         width: 80px;
@@ -197,7 +191,9 @@
     }
 
     &-lg {
-      padding: spacing('6');
+      @include media-up('sm') {
+        padding: spacing('6');
+      }
 
       .mw-tile-img {
         width: 120px;
@@ -247,12 +243,6 @@
       width: 60px;
       height: 60px;
       margin: spacing('0') auto spacing('2');
-    }
-  }
-
-  @include media-down('sm') {
-    .mw-tile {
-      padding: spacing('4');
     }
   }
 }

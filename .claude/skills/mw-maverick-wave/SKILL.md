@@ -75,6 +75,22 @@ Or from the npm package via SCSS: `@use 'maverick-wave/src/scss/main';`
 (details and configuration in `references/theming.md`). The viewport meta above
 belongs in `src/index.html` there, with `viewport-fit=cover` just the same.
 
+**`main-lean` for a page that uses a handful of components.** The full build is
+~41 kB gzipped and carries all 48 of them. `main-lean` is the same framework
+without any component - tokens, reset, typography, layout, utilities - and the
+components come in one by one next to it:
+
+```scss
+@use 'maverick-wave/src/scss/main-lean' with (
+  $primary-color: #1b1b1d
+);
+@use 'maverick-wave/src/scss/components/buttons';
+@use 'maverick-wave/src/scss/components/cards';
+```
+
+That lands at ~16 kB gzipped plus what the components add (three of them ≈ 19 kB
+in total). The configuration goes on `main-lean`, not on the component imports.
+
 > **Never load `maverick-wave.min.js` in a SPA.** Everything in it is wired up
 > once on `DOMContentLoaded` and writes straight into the DOM. In an Angular
 > app that fires once during bootstrap: components rendered later are never
@@ -166,6 +182,11 @@ between them moved.
 Column grids and most components are mobile-first. The mixins emit range syntax
 (`media-up` is `width >= bp`, `media-down` is `width < bp`), so the two never
 overlap at the breakpoint itself and neither has to stop a fraction short of it.
+Write `media-up`: the base block is the phone and each breakpoint adds to it.
+`media-down` is right in three cases - a rule that sets what the base never sets
+(turned around it would hard-wire an inherited value), a narrow layout that costs
+more properties than the wide one (the navbar sheet, the modal bottom sheet), and
+a class that only ever means "below here", like `mw-hide-mobile`.
 
 **Overriding.** Everything the framework emits sits in
 `@layer mw.reset, mw.base, mw.forms, mw.components, mw.layout, mw.utilities`.
@@ -234,7 +255,8 @@ none of them survive into the compiled CSS. Full list in `references/theming.md`
   zoom. A headline passes `$to: 'xl'`.
 - `fluid-container($min, $max, $from, $to)` - the same ramp in `cqi` against the
   container. Use it instead of `fluid()` inside a `@container` block.
-- `media-up($bp)` / `media-down($bp)` - the breakpoint map as a query.
+- `media-up($bp)` / `media-down($bp)` - the breakpoint map as a query. `media-up`
+  is the default direction, see **Breakpoints** above.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
 - `touch-floor($size: 2.75rem)` - that condition plus a `min-height`.
@@ -299,7 +321,7 @@ feature frame) ·
 `mw-content` ·
 `mw-section` · `mw-section-head` (+ `-title`, `-intro`, `-numbered`, colours) ·
 `mw-page-header` · `mw-grid-*`
-(+ `mw-grid-even`) ·
+(+ `mw-grid-even`, `mw-grid-from-{sm,md,lg,xl}`) ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
 `-slow`, `-pattern`) · `mw-footer`
@@ -312,7 +334,7 @@ feature frame) ·
 `mw-glow-{primary,secondary,info,success,warning,danger}` ·
 `mw-corner-plain` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
-`mw-hide-mobile` / `mw-hide-desktop` · `mw-overflow-*` / `mw-snap-x` ·
+`mw-hide-mobile` / `mw-hide-desktop` / `mw-hide-print` / `mw-print-only` · `mw-overflow-*` / `mw-snap-x` ·
 `mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
 
 ## Pitfalls
@@ -477,13 +499,18 @@ feature frame) ·
     directly after the block, so the overlap reads as a surface and not a cut.
     It sits at `:where()` weight, so a plain `box-shadow` of your own on that
     section replaces it.
-30. **`viewport-fit=cover` belongs in the viewport meta.** The container
+30. **A stored theme needs a script in the `<head>`.** `main.js` runs at the
+    end of the body, so a reader whose choice differs from the OS sees the
+    other theme for one frame. Five inline lines in the head apply it before
+    the first paint - the snippet is in `references/javascript.md`. The theme
+    classes live on `<html>` for exactly this reason.
+31. **`viewport-fit=cover` belongs in the viewport meta.** The container
     gutter, the mobile nav panel and the modal padding all budget for the
     cutout with `env(safe-area-inset-*)`, and iOS resolves every one of those
     to `0` without it - on a notched phone the content then sits under the
     rounded corner. Nothing errors, which is why the shipped JS writes a
     console warning on localhost when the meta is missing.
-31. **Half the layout reads its own width, not the viewport.** `mw-card`,
+32. **Half the layout reads its own width, not the viewport.** `mw-card`,
     `mw-tile`, `mw-stepper`, both timelines and - since 5.13.0 -
     `mw-gallery-container` and `mw-image-slider` are `@container` queries, so
     any of them in a half-width column takes its narrow layout there while the

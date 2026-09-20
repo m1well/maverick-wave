@@ -335,7 +335,12 @@ width.
 
 A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
 mode with the background image from `--mw-hero-background`.
-`mw-home-content-fade` fades the content in.
+`mw-home-content-fade` fades the content in. `mw-home-start` puts the whole
+block against the left container edge instead of centring it - for a hero that
+points somewhere rather than sitting in the middle. `mw-home` carries the
+container width itself, because the hero container runs the full width of the
+screen; without that the hero content would start at a different edge than
+every section below it.
 
 The image is treated per theme through `--mw-hero-image-filter` - a filter, not
 a tinted overlay: `$hero-filter-dark` (`brightness(0.7)`) against
@@ -489,6 +494,13 @@ row becomes as tall as the tallest instead of as tall as its own contents. For a
 column of cards that should end on one line even when one of them carries an
 extra sentence.
 
+`mw-grid-from-sm|md|lg|xl` is the second modifier: it holds the grid at one
+column until that breakpoint, and the grid's own ramp takes over from there.
+Every ramp turns two-column at `sm`, and 576px is generous for running text
+next to a picture - `mw-grid-2 mw-grid-from-md` is the pair that fixes that.
+It also resets the `mw-reveal-stagger` cycle below the breakpoint, so two cards
+standing above each other do not rise on different beats.
+
 Every one of them has a `-lg` twin with a wider gap (2.5rem instead of 1.35rem):
 `mw-grid-2-lg`, `mw-grid-3-lg`, `mw-grid-4-lg`, `mw-grid-5-lg`, `mw-grid-1-lg`,
 `mw-grid-auto-lg`, `mw-grid-flex-lg`, `mw-grid-lg`.
@@ -542,6 +554,16 @@ Mobile-first like everything else here: `mw-d-md-flex` means
 applies below that. The pair `mw-d-none mw-d-md-flex` is hidden on a phone and a
 row from a tablet on. `mw-hide-mobile` (gone below md) and `mw-hide-desktop`
 (gone from md up) spell out the two everyone actually reaches for.
+
+**Print** - the framework ships a print stylesheet, so a page that is dark on
+screen comes out of the printer as black on white: the surface, ink, border and
+elevation tokens are redeclared for paper, the fixed chrome (header, ribbon,
+section nav, scroll cue, burger, theme toggle, toasts) is dropped, cards keep a
+hairline instead of a tone, headings do not end a page and cards, rows and
+figures are not torn across one. A link in `mw-prose` or `mw-disclaimer` that
+points at an http(s) address prints its target after the text. `mw-hide-print`
+takes an element off the paper, `mw-print-only` is the note that exists only
+there. Nothing to switch on.
 
 **Text overflow** - `mw-text-truncate` is one line ending in an ellipsis and
 carries `min-width: 0` with it, which is the reason truncation "does not work"

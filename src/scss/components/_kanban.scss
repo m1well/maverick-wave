@@ -67,15 +67,15 @@
       auto-fit,
       minmax(min(#{$_mw-kanban-lane-min}, 100%), 1fr)
     );
-    gap: spacing('4');
-    padding: spacing('4');
+    // Frame only - how tight the board sits on a phone is a viewport call
+    gap: spacing('3');
+    padding: spacing('3');
     background: var(--mw-kanban-background);
     border-radius: radius('md');
 
-    // Frame only - how tight the board sits on a phone is a viewport call
-    @include media-down('sm') {
-      gap: spacing('3');
-      padding: spacing('3');
+    @include media-up('sm') {
+      gap: spacing('4');
+      padding: spacing('4');
     }
   }
 

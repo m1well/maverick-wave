@@ -1,0 +1,107 @@
+@use '../abstracts' as *;
+
+// Last layer on purpose: these rules have to win against the components they
+// flatten, and a media query adds no specificity of its own.
+@layer mw.utilities {
+  // Hidden on screen, shown on paper. Before the print block and not after it:
+  // both rules have the same specificity, so the later one would win in print
+  // too and the note would never appear.
+  .mw-print-only {
+    display: none;
+  }
+
+  @media print {
+    // Paper is white and ink is black, whatever the screen was told to be. The
+    // tokens are redeclared on .mw-theme-light too - that copy sits further
+    // down the tree and would otherwise shadow the one on :root.
+    :root,
+    .mw-theme-light {
+      --mw-page-background: #fff;
+      --mw-card-background: #fff;
+      --mw-footer-background: #fff;
+      --mw-text-color: #000;
+      --mw-text-muted-color: #333;
+      --mw-border: #999;
+      --mw-border-accent: #666;
+
+      // No toner for depth that paper cannot show anyway. Level 0 is not in the
+      // list: it is flat by definition and nothing reads it as a variable.
+      --mw-elevation-1: none;
+      --mw-elevation-2: none;
+      --mw-elevation-3: none;
+      --mw-elevation-4: none;
+      --mw-elevation-5: none;
+    }
+
+    body {
+      background: #fff;
+      color: #000;
+    }
+
+    // Chrome that is fixed on screen would print on the first page and cover
+    // what is underneath, and navigation is useless on paper either way.
+    .mw-header,
+    .mw-announcement:not(.mw-announcement-static),
+    .mw-section-nav,
+    .mw-scroll-hint,
+    .mw-menu-btn,
+    .mw-theme-toggle,
+    .mw-skip-link,
+    .mw-toast-stack,
+    .mw-hide-print {
+      display: none;
+    }
+
+    // The counterpart: a note that only makes sense on the printed page
+    .mw-print-only {
+      display: revert;
+    }
+
+    // A surface without its tone still needs an edge to be a surface
+    .mw-card,
+    .mw-panel,
+    .mw-tile,
+    .mw-alert,
+    .mw-info {
+      border: 1px solid #999;
+      background: #fff;
+    }
+
+    // Anything that is one thing should not be torn across two pages
+    .mw-card,
+    .mw-panel,
+    .mw-tile,
+    .mw-section-head,
+    .mw-leader-row,
+    .mw-item-list-item,
+    tr,
+    figure,
+    blockquote {
+      break-inside: avoid;
+    }
+
+    // A heading at the foot of a page belongs to the next one
+    h1,
+    h2,
+    h3,
+    .mw-section-head-title,
+    .mw-section-subtitle {
+      break-after: avoid;
+    }
+
+    // Screen rhythm is scroll distance; on paper it is wasted sheets
+    .mw-section {
+      padding-block: spacing('6');
+    }
+
+    // A link is only worth printing when its target comes with it. Internal
+    // anchors and mail links stay quiet - the first says nothing on paper, the
+    // second already shows the address as its text.
+    .mw-prose a[href^='http']::after,
+    .mw-disclaimer a[href^='http']::after {
+      content: ' (' attr(href) ')';
+      font-size: font-size('xs');
+      word-break: break-all;
+    }
+  }
+}

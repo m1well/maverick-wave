@@ -10,7 +10,8 @@
 
     th,
     td {
-      padding: spacing('3') spacing('4');
+      padding: spacing('2') spacing('3');
+      font-size: font-size('xs');
       text-align: left;
       border: 1px solid var(--mw-border);
       color: var(--mw-text-muted-color);
@@ -40,11 +41,12 @@
       }
     }
 
-    @include media-down('sm') {
+    @include media-up('sm') {
       th,
       td {
-        padding: spacing('2') spacing('3');
-        font-size: font-size('xs');
+        padding: spacing('3') spacing('4');
+        // Back to whatever the table is set in - the base size is the phone step
+        font-size: inherit;
       }
     }
   }

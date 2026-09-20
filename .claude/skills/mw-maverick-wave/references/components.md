@@ -1319,6 +1319,10 @@ edge drops and the key sits 1px lower.
 - The cursor is `default` because a figure is usually not clickable. On `<a>`
   and `<button>` it turns into a pointer automatically; on anything else use
   `mw-info-clickable`.
+- `mw-info-block` is the same surface carrying a paragraph: 68 characters
+  wide, left-aligned, and it does not lift on hover. It sits at the left edge
+  like everything else with running text in it - `mw-info-block-center` puts it
+  back in the middle of its container.
 - `mw-info-mini` is the 20px status dot: sizes `-sm`, `-lg`, `-xl`, colours
   `-primary`, `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
 
