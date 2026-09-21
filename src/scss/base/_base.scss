@@ -131,12 +131,21 @@
     // header height
     --mw-header-height: #{$header-height};
 
-    // Read by the anchor offset of anything the sticky section nav can cover
-    --mw-section-nav-height: 3.7rem;
+    // Read by the anchor offset of anything the sticky section nav can cover.
+    // The strip at its tallest: a 2.75rem button under a thumb plus its two
+    // 0.5rem paddings. Rounded up rather than down - a pointer gets 2px of
+    // slack, and the offset may overshoot but must not undershoot.
+    --mw-section-nav-height: 3.75rem;
 
     // The anchor scroll offset is calculated from it, so a taller ribbon raises
     // this token rather than fighting the offset
     --mw-announcement-height: 2.7rem;
+
+    // What each layer of sticky chrome below the header adds to the scroll
+    // offset in the reset. A length and not a bare 0 - calc() cannot add a
+    // unitless one.
+    --mw-announcement-offset: 0px;
+    --mw-section-nav-offset: 0px;
 
     // Fluid rather than stepped: ~24px at 375px up to 64px, where the 1200px cap
     // takes over. Stepping at a breakpoint makes the container jump *backwards*
@@ -160,11 +169,12 @@
     --mw-section-padding-compact: #{spacing('8')};
     --mw-section-padding-airy: #{spacing('12')};
     // The third regime beside the stepped default and the two stepped presets:
-    // spacing that grows with the screen. It starts at the value a phone already
-    // gets below `sm` and reaches the airy preset at `xl`, so a desktop pushes
-    // less content past per wheel notch while the phone carries none of that air.
-    // Needs no steps of its own - the ramp is the steps.
-    --mw-section-padding-fluid: #{fluid(spacing('7'), spacing('12'), $to: 'xl')};
+    // spacing that grows with the screen. Both ends sit beside the spacing scale
+    // rather than on it: the nearest steps are a phone value the default already
+    // has and a desktop value the airy preset already is, and a ramp that ends
+    // where a preset ends is a preset. Needs no steps of its own - the ramp is
+    // the steps.
+    --mw-section-padding-fluid: #{fluid(35px, 65px, $to: 'xl')};
     // The section head: the gap it leaves to the content below, the space
     // between its rule and the title, and the mark sitting on that rule.
     //

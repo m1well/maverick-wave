@@ -280,13 +280,13 @@
       flex-shrink: 0;
       text-wrap: balance;
 
-      /* push the last element all the way right - a single one included */
+      // The last element goes right whether it has company or not, so a lone
+      // button sits where the confirming one sits in a pair
       > *:last-child {
         margin-left: auto;
         text-align: right;
       }
 
-      // Ensure buttons maintain their size
       .mw-btn {
         flex-shrink: 0;
       }

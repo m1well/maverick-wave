@@ -19,10 +19,12 @@
       gap: spacing('1') spacing('4');
     }
 
-    // Sized rather than auto, so the values line up under each other however
-    // long the words in front of them are
+    // A floor rather than a fixed size, so the values line up under each other
+    // however long the words in front of them are - and a label longer than the
+    // column still gets its room instead of running into the value beside it
     &-label {
-      flex: 0 0 5rem;
+      flex: 0 0 auto;
+      min-width: 5rem;
       color: var(--mw-text-muted-color);
     }
   }

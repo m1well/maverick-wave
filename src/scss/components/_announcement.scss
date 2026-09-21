@@ -60,9 +60,7 @@
   // page without a ribbon keeps the plain offset - and a static ribbon does not
   // count, it scrolls with the content.
   html:has(.mw-announcement:not(.mw-announcement-static)) {
-    scroll-padding-top: calc(
-      var(--mw-header-height) + var(--mw-announcement-height)
-    );
+    --mw-announcement-offset: var(--mw-announcement-height);
   }
 
   // On a phone the line wraps and the ribbon grows - the height token follows,

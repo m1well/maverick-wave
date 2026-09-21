@@ -1,6 +1,14 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
+  // -scrollable is the older spelling of -max-height-md
+  $_mw-panel-heights: (
+    'max-height-sm': 300px,
+    'max-height-md': 500px,
+    'max-height-lg': 700px,
+    'scrollable': 500px,
+  );
+
   .mw-panel {
     background: var(--mw-card-background);
     @include surface(2px);
@@ -8,13 +16,15 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 100%;
-    margin: spacing('1');
 
     &-header {
       padding: spacing('4') spacing('5');
       border-bottom: 1px solid var(--mw-border-accent);
       display: flex;
+      // A title with an action beside it runs out of room on a phone long
+      // before the title runs out of words
+      flex-wrap: wrap;
+      gap: spacing('3');
       justify-content: space-between;
       align-items: center;
       margin: spacing('0');
@@ -48,7 +58,6 @@
       gap: spacing('3');
     }
 
-    // Panel variants
     &-primary {
       .mw-panel-header {
         background: var(--mw-primary-color);
@@ -72,56 +81,13 @@
       @include corner-accent(2px, 'bottom');
     }
 
-    // Scrollable variant for fixed height
-    &-scrollable {
-      max-height: 500px;
-
-      .mw-panel-body {
-        overflow-y: auto;
-        max-height: calc(500px - #{2 * spacing('4')} - 2px);
-      }
-    }
-
-    // Scrollable variants for max height
-    &-max-height {
-      &-sm {
-        max-height: 300px;
-        min-height: 0;
+    // Only the cap - the body already scrolls and already takes what the header
+    // and footer leave it. `align-self` because a grid row stretches its items
+    // first, and a stretched panel reaches the cap from above whatever it says.
+    @each $name, $height in $_mw-panel-heights {
+      &-#{$name} {
+        max-height: $height;
         align-self: start;
-        .mw-panel-body {
-          max-height: calc(300px - #{2 * spacing('4')} - 2px);
-          overflow-y: auto;
-        }
-      }
-
-      &-md {
-        max-height: 500px;
-        min-height: 0;
-        align-self: start;
-        .mw-panel-body {
-          max-height: calc(500px - #{2 * spacing('4')} - 2px);
-          overflow-y: auto;
-        }
-      }
-
-      &-lg {
-        max-height: 700px;
-        min-height: 0;
-        align-self: start;
-        .mw-panel-body {
-          max-height: calc(700px - #{2 * spacing('4')} - 2px);
-          overflow-y: auto;
-        }
-      }
-    }
-
-    @include media-down('sm') {
-      font-size: font-size('sm');
-
-      &-header {
-        h3 {
-          font-size: font-size('sm');
-        }
       }
     }
   }

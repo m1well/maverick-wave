@@ -20,7 +20,7 @@
 
       &-fade {
         @extend .mw-home-content;
-        animation: fadeIn var(--mw-duration-slower) var(--mw-ease-out);
+        animation: mw-home-fade var(--mw-duration-slower) var(--mw-ease-out);
       }
     }
 
@@ -47,7 +47,7 @@
     }
   }
 
-  @keyframes fadeIn {
+  @keyframes mw-home-fade {
     from {
       opacity: 0;
       transform: translateX(-8px) translateY(-23px);
