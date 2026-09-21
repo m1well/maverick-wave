@@ -10,7 +10,7 @@
 // Outside the layer blocks below, because both read it - the columns are emitted
 // in `mw.layout`, the reveal cycle in `mw.utilities`, and a Sass variable declared
 // inside an `@layer` block is local to it.
-$_column-steps: (
+$column-steps: (
   2: (
     ('sm', 2, null),
   ),
@@ -55,6 +55,37 @@ $_column-steps-lg: (
 // same reason as the steps above: both read it.
 $_grid-from: ('sm', 'md', 'lg', 'xl');
 
+@mixin columns($count) {
+  grid-template-columns: repeat($count, minmax(0, 1fr));
+}
+
+@mixin single-column {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+// Outside the layer block, because a Sass mixin declared inside one is local to
+// it - and the footer builds its own columns from the same ramp.
+//
+// $base-gap is for the -lg ramp, whose placeholder carries the desktop gap and
+// has to come back down to the default air on a phone
+@mixin column-grid($steps, $base-gap: null) {
+  @include single-column;
+  @if $base-gap {
+    gap: spacing($base-gap);
+  }
+
+  @each $breakpoint, $cols, $gap in $steps {
+    @include media-up($breakpoint) {
+      @if $cols {
+        @include columns($cols);
+      }
+      @if $gap {
+        gap: spacing($gap);
+      }
+    }
+  }
+}
+
 @layer mw.layout {
   %grid-base {
     display: grid;
@@ -64,34 +95,6 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
   %grid-base-lg {
     display: grid;
     gap: spacing('9');
-  }
-
-  @mixin _columns($count) {
-    grid-template-columns: repeat($count, minmax(0, 1fr));
-  }
-
-  @mixin _single-column {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  // $base-gap is for the -lg ramp, whose placeholder carries the desktop gap and
-  // has to come back down to the default air on a phone
-  @mixin _column-grid($steps, $base-gap: null) {
-    @include _single-column;
-    @if $base-gap {
-      gap: spacing($base-gap);
-    }
-
-    @each $breakpoint, $cols, $gap in $steps {
-      @include media-up($breakpoint) {
-        @if $cols {
-          @include _columns($cols);
-        }
-        @if $gap {
-          gap: spacing($gap);
-        }
-      }
-    }
   }
 
   // The child reset a full-width single column needs: a card that carries its own
@@ -111,14 +114,14 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 
   .mw-grid-1 {
     @extend %grid-base;
-    @include _single-column;
+    @include single-column;
     @include _stretch-children;
   }
 
-  @each $count, $steps in $_column-steps {
+  @each $count, $steps in $column-steps {
     .mw-grid-#{$count} {
       @extend %grid-base;
-      @include _column-grid($steps);
+      @include column-grid($steps);
     }
   }
 
@@ -133,24 +136,24 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
   }
 
   .mw-tiles:not(.mw-tiles-2col):not(.mw-tiles-4col) {
-    @include _column-grid(map.get($_column-steps, 3));
+    @include column-grid(map.get($column-steps, 3));
   }
 
   .mw-tiles-2col {
-    @include _column-grid(map.get($_column-steps, 2));
+    @include column-grid(map.get($column-steps, 2));
   }
 
   .mw-tiles-4col {
-    @include _column-grid(map.get($_column-steps, 4));
+    @include column-grid(map.get($column-steps, 4));
   }
 
   .mw-grid-flex {
     @extend %grid-base;
 
-    @include _columns(12);
+    @include columns(12);
 
     @include media-down('md') {
-      @include _single-column;
+      @include single-column;
 
       > * {
         grid-column: 1 / -1 !important;
@@ -197,7 +200,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 
   .mw-grid-1-lg {
     @extend %grid-base-lg;
-    @include _single-column;
+    @include single-column;
     @include _stretch-children;
   }
 
@@ -206,7 +209,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
       @extend %grid-base-lg;
       // A phone gets the same air between cards whichever ramp is used; the -lg
       // in the name is about the desktop end of it.
-      @include _column-grid($steps, '6');
+      @include column-grid($steps, '6');
     }
   }
 
@@ -217,10 +220,10 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 
   .mw-grid-flex-lg {
     @extend %grid-base-lg;
-    @include _columns(12);
+    @include columns(12);
 
     @include media-down('md') {
-      @include _single-column;
+      @include single-column;
       gap: spacing('5');
       > * {
         grid-column: 1 / -1 !important;
@@ -285,7 +288,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
   );
 
   @mixin _stack($justify, $child-width) {
-    @include _single-column;
+    @include single-column;
     justify-items: $justify;
 
     > * {
@@ -324,7 +327,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
   @each $breakpoint in $_grid-from {
     .mw-grid-from-#{$breakpoint} {
       @include media-down($breakpoint) {
-        @include _single-column;
+        @include single-column;
       }
     }
   }
@@ -334,7 +337,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
   // grid has to hand it over: written next to the card it would sit in
   // `mw.components` and lose to every gap above, no matter how specific.
   [class*='mw-grid-']:has(> .mw-card-feature) {
-    row-gap: 48px;
+    row-gap: spacing('10');
   }
 }
 
@@ -378,7 +381,7 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
     }
   }
 
-  @each $count, $steps in $_column-steps {
+  @each $count, $steps in $column-steps {
     .mw-grid-#{$count} {
       @include _reveal-ramp($steps);
     }

@@ -586,10 +586,10 @@
     const announces = menuBtn.tagName === 'BUTTON';
 
     function setOpen(open) {
-      menuBtn.classList.toggle('open', open);
-      navbar.classList.toggle('open', open);
+      menuBtn.classList.toggle('mw-active', open);
+      navbar.classList.toggle('mw-active', open);
       // The scrim and the rules that pin the bar and the burger in place hang
-      // off this one class rather than off `:has(.mw-navbar.open)` - a selector
+      // off this one class rather than off `:has(.mw-navbar.mw-active)` - a selector
       // that has to re-match the whole document from a class change several
       // levels down, which is where WebKit's invalidation has let it slip.
       document.body.classList.toggle('mw-nav-open', open);
@@ -599,7 +599,7 @@
     function toggleMenu(e) {
       e.preventDefault();
       e.stopPropagation();
-      setOpen(!navbar.classList.contains('open'));
+      setOpen(!navbar.classList.contains('mw-active'));
     }
 
     // One listener, not two. The button carries touch-action: manipulation, so
@@ -610,7 +610,7 @@
 
     // The scrim is a body pseudo-element, so its taps land on the document
     document.addEventListener('click', function (e) {
-      if (!navbar.classList.contains('open')) return;
+      if (!navbar.classList.contains('mw-active')) return;
       if (navbar.contains(e.target) || menuBtn.contains(e.target)) return;
       setOpen(false);
     });
@@ -618,7 +618,7 @@
     // Or Escape strands the keyboard user in a panel that is no longer there
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
-      if (!navbar.classList.contains('open')) return;
+      if (!navbar.classList.contains('mw-active')) return;
       setOpen(false);
       menuBtn.focus();
     });
@@ -891,8 +891,8 @@
         const menuBtn = document.querySelector('.mw-menu-btn');
         const nav = document.querySelector('.mw-navbar');
         if (menuBtn && nav) {
-          menuBtn.classList.remove('open');
-          nav.classList.remove('open');
+          menuBtn.classList.remove('mw-active');
+          nav.classList.remove('mw-active');
           document.body.classList.remove('mw-nav-open');
           if (menuBtn.tagName === 'BUTTON') {
             menuBtn.setAttribute('aria-expanded', 'false');

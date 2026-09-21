@@ -1,4 +1,3 @@
-@use 'sass:math';
 @use '../abstracts' as *;
 
 @layer mw.layout {
@@ -34,180 +33,133 @@
     margin: spacing('0') auto;
     padding: spacing('0');
 
-    @supports (selector(:has(.mw-hero))) {
-      &:has(.mw-hero) {
+    &:has(.mw-hero) {
+      position: relative;
+      width: 100%;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: cover;
+      background-position: center;
+      background-image: var(--mw-hero-background);
+
+      // Set on the container so a hero without .mw-home gets it too
+      color: var(--mw-hero-text-color);
+
+      // backdrop-filter and not an overlay - see $hero-filter-dark. On the pseudo
+      // element, so the content in front of the image stays unfiltered.
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        backdrop-filter: var(--mw-hero-image-filter);
+        z-index: z-index('lift');
+        pointer-events: none;
+        transition: var(--mw-transition);
+      }
+
+      // ...so the content has to sit above it - except the parallax layer,
+      // which is the one thing that belongs underneath
+      > *:not(.mw-parallax-media) {
         position: relative;
-        width: 100%;
-        min-height: 100dvh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-size: cover;
-        background-position: center;
-        background-image: var(--mw-hero-background);
+        z-index: z-index('card');
+      }
 
-        // Set on the container so a hero without .mw-home gets it too
-        color: var(--mw-hero-text-color);
+      // Add `mw-parallax` here and a `.mw-parallax-media` child and the picture
+      // becomes its own layer, free to drift or to stay pinned. It reads the
+      // same token, so the image is still configured in one place - and a
+      // second media element carrying `mw-parallax-pattern` takes the other.
+      &:has(> .mw-parallax-media) {
+        background-image: none;
 
-        // backdrop-filter and not an overlay - see $hero-filter-dark. On the pseudo
-        // element, so the content in front of the image stays unfiltered.
-        &::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          backdrop-filter: var(--mw-hero-image-filter);
-          z-index: z-index('lift');
-          pointer-events: none;
-          transition: var(--mw-transition);
+        --mw-parallax-pattern-image: var(--mw-hero-pattern);
+
+        > .mw-parallax-media:not(.mw-parallax-pattern) {
+          background-image: var(--mw-hero-background);
         }
+      }
 
-        // ...so the content has to sit above it - except the parallax layer,
-        // which is the one thing that belongs underneath
-        > *:not(.mw-parallax-media) {
-          position: relative;
-          z-index: z-index('card');
-        }
+      // The same shadow the scroll cue already carries: the light theme lifts
+      // the photo to brightness(1.1) and pale ink alone stops holding its edge
+      h1,
+      h2,
+      h3,
+      p {
+        text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+      }
 
-        // Add `mw-parallax` here and a `.mw-parallax-media` child and the picture
-        // becomes its own layer, free to drift or to stay pinned. It reads the
-        // same token, so the image is still configured in one place - and a
-        // second media element carrying `mw-parallax-pattern` takes the other.
-        &:has(> .mw-parallax-media) {
-          background-image: none;
+      // ...except anything that paints its own surface: a card in the hero is
+      // still a card, or its text is light on a light card in the light theme
+      .mw-card,
+      .mw-panel,
+      .mw-modal,
+      .mw-tile,
+      .mw-calendar:not(.mw-calendar-plain) {
+        color: var(--mw-text-color);
 
-          --mw-parallax-pattern-image: var(--mw-hero-pattern);
-
-          > .mw-parallax-media:not(.mw-parallax-pattern) {
-            background-image: var(--mw-hero-background);
-          }
-        }
-
-        // The same shadow the scroll cue already carries: the light theme lifts
-        // the photo to brightness(1.1) and pale ink alone stops holding its edge
         h1,
         h2,
         h3,
         p {
-          text-shadow: 0 1px 4px rgb(0 0 0 / 65%);
+          text-shadow: none;
         }
+      }
 
-        // ...except anything that paints its own surface: a card in the hero is
-        // still a card, or its text is light on a light card in the light theme
-        .mw-card,
-        .mw-panel,
-        .mw-modal,
-        .mw-tile,
-        .mw-calendar:not(.mw-calendar-plain) {
-          color: var(--mw-text-color);
+      // ...and except the outline button, for the opposite reason: its tone is
+      // picked to read on the page background and goes quiet over a photograph.
+      // The hover is restated because this selector is exactly as specific as
+      // `.mw-btn-outline:hover:not(:disabled)` and the layer order beats it.
+      .mw-btn-outline {
+        border-color: color-mix(
+          in srgb,
+          var(--mw-hero-text-color) 45%,
+          transparent
+        );
+        background: rgb(0 0 0 / 30%);
+        backdrop-filter: blur(6px);
+        color: var(--mw-hero-text-color);
 
-          h1,
-          h2,
-          h3,
-          p {
-            text-shadow: none;
-          }
+        &:hover:not(:disabled) {
+          background: var(--mw-primary-color);
+          border-color: var(--mw-primary-color);
+          color: var(--mw-primary-accent-text-color);
         }
+      }
 
-        // ...and except the outline button, for the opposite reason: its tone is
-        // picked to read on the page background and goes quiet over a photograph.
-        // The hover is restated because this selector is exactly as specific as
-        // `.mw-btn-outline:hover:not(:disabled)` and the layer order beats it.
-        .mw-btn-outline {
-          border-color: color-mix(
-            in srgb,
-            var(--mw-hero-text-color) 45%,
-            transparent
-          );
-          background: rgb(0 0 0 / 30%);
-          backdrop-filter: blur(6px);
-          color: var(--mw-hero-text-color);
+      // The bar floats over the hero, so centring against the full viewport hides
+      // a badge or a kicker underneath it. Guarded - no header, no offset.
+      body:has(.mw-header) & {
+        padding-top: calc(var(--mw-header-height) + #{spacing('7')});
+      }
 
-          &:hover:not(:disabled) {
-            background: var(--mw-primary-color);
-            border-color: var(--mw-primary-color);
-            color: var(--mw-primary-accent-text-color);
-          }
-        }
+      // The cue is out of flow, so buttons under the hero text would park on top
+      // of it. Only when there is one, or every hero pays for a feature it lacks.
+      &:has(> .mw-scroll-hint) {
+        padding-bottom: calc(
+          var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
+        );
+      }
 
-        // The bar floats over the hero, so centring against the full viewport hides
-        // a badge or a kicker underneath it. Guarded - no header, no offset.
-        body:has(.mw-header) & {
-          padding-top: calc(var(--mw-header-height) + #{spacing('7')});
-        }
+      // ...except in the corner: the end variant stands beside the content
+      &:has(> .mw-scroll-hint-end) {
+        padding-bottom: spacing('0');
+      }
 
-        // The cue is out of flow, so buttons under the hero text would park on top
-        // of it. Only when there is one, or every hero pays for a feature it lacks.
+      // On a phone the corner is tight too, so both variants get the strip back.
+      // Last of the three: a media query adds no specificity and would lose to
+      // the end rule above. Smaller than on the desktop, or the full reserve
+      // tips the container past 100dvh and pushes the cue off screen.
+      @include media-down('md') {
         &:has(> .mw-scroll-hint) {
+          --mw-scroll-hint-reserve: #{spacing('6')};
+
           padding-bottom: calc(
             var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
           );
         }
-
-        // ...except in the corner: the end variant stands beside the content
-        &:has(> .mw-scroll-hint-end) {
-          padding-bottom: spacing('0');
-        }
-
-        // On a phone the corner is tight too, so both variants get the strip back.
-        // Last of the three: a media query adds no specificity and would lose to
-        // the end rule above. Smaller than on the desktop, or the full reserve
-        // tips the container past 100dvh and pushes the cue off screen.
-        @include media-down('md') {
-          &:has(> .mw-scroll-hint) {
-            --mw-scroll-hint-reserve: #{spacing('6')};
-
-            padding-bottom: calc(
-              var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
-            );
-          }
-        }
       }
     }
-  }
-
-  // Glass rather than a fill: on a hero image a solid badge is the loudest thing
-  // on the screen and plain text sinks into the picture.
-  .mw-hero-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: spacing('3');
-    max-width: 100%;
-    margin-bottom: spacing('6');
-    padding: spacing('2') spacing('5');
-    border: 1px solid #{fade('hero-text-color', 22%)};
-    border-radius: 999px;
-    // A vertical ramp and not a flat tint: glass is lit from above, and the
-    // gradient is what gives the pill a thickness instead of a fogged panel
-    background: linear-gradient(
-      to bottom,
-      #{fade('hero-text-color', 16%)},
-      #{fade('hero-text-color', 5%)}
-    );
-    // saturate() is what separates glass from frosted plastic: the blur alone
-    // greys out what shows through, and pushing the chroma back up is how a
-    // real lens reads. The two inset lines are the specular highlight - light
-    // catching the top edge, a fainter bounce off the bottom - and the outer
-    // shadow is what lifts the pill off the photo instead of pasting it on.
-    backdrop-filter: blur(14px) saturate(180%);
-    box-shadow:
-      inset 0 1px 0 #{fade('hero-text-color', 40%)},
-      inset 0 -1px 0 #{fade('hero-text-color', 12%)},
-      0 2px 12px rgb(0 0 0 / 18%);
-    color: fade('hero-text-color', 88%);
-    font-size: font-size('sm');
-    font-weight: font-weight('medium');
-    letter-spacing: 0.02em;
-  }
-
-  // Carries the secondary colour, because the badge is a state, not a label -
-  // override `background` for a different one
-  .mw-hero-badge-dot {
-    width: 8px;
-    height: 8px;
-    flex-shrink: 0;
-    border-radius: radius('full');
-    background: var(--mw-secondary-color);
   }
 
   // Belongs to the hero container, not to the flow below it, so the cue sits on
@@ -280,194 +232,5 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  // A pseudo element on the trigger, so an ancestor with `overflow: hidden` cuts
-  // it off. Hidden means `display: none`: a laid-out box still counts towards the
-  // page's overflow, and a 280px bubble near the right edge added 50px of sideways
-  // scroll on a phone. Hence `allow-discrete` and the starting style.
-  $_mw-tooltip-arrow: 6px;
-  $_mw-tooltip-gap: 8px;
-  // A square turned 45deg rather than a border triangle: it reads the same from
-  // above and from below, so the second placement costs no second arrow and a
-  // flip never has to repaint anything. The diagonal carries the visible width,
-  // so the side is the visible height doubled over root two.
-  $_mw-tooltip-arrow-side: math.div($_mw-tooltip-arrow * 2, math.sqrt(2));
-  // Half a side short of where the triangle's edge sat, so the turned square is
-  // centred on the bubble's edge and only its outer half shows. The inner half
-  // lands on the bubble in the same colour, which is what makes it read as one
-  // shape rather than a diamond stuck to a box.
-  $_mw-tooltip-arrow-inset: $_mw-tooltip-gap +
-    $_mw-tooltip-arrow - math.div($_mw-tooltip-arrow-side, 2);
-
-  [data-tooltip] {
-    position: relative;
-
-    &::before {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      margin-bottom: $_mw-tooltip-gap + $_mw-tooltip-arrow;
-      max-width: min(280px, 90vw);
-      width: max-content;
-      padding: spacing('1') spacing('2');
-      background: var(--mw-gray-color);
-      color: $fixed-surface-text;
-      font-size: font-size('xs');
-      border-radius: radius('xs');
-      box-shadow: var(--mw-elevation-2);
-      pointer-events: none;
-      opacity: 0;
-      display: none;
-      transition:
-        opacity var(--mw-duration-fast) var(--mw-ease-out),
-        display var(--mw-duration-fast) allow-discrete;
-      z-index: z-index('tooltip');
-    }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-      margin-bottom: $_mw-tooltip-arrow-inset;
-      width: $_mw-tooltip-arrow-side;
-      height: $_mw-tooltip-arrow-side;
-      background: var(--mw-gray-color);
-      opacity: 0;
-      display: none;
-      transition:
-        opacity var(--mw-duration-fast) var(--mw-ease-out),
-        display var(--mw-duration-fast) allow-discrete;
-      z-index: z-index('tooltip');
-    }
-
-    // The placement API: the text is the attribute, the side is a class. The
-    // three steer different properties - block axis, inline axis - so `below`
-    // and `end` compose without a rule for the pairing.
-    //
-    // They place the bubble against the trigger rather than joining the anchored
-    // path below, and that is the point, not a shortcut. The reason to want them
-    // is a control in a fixed header, and that header carries a backdrop-filter,
-    // which makes it the containing block for anything `fixed` inside it.
-    // `block-end` is then the few pixels between the trigger and the header's own
-    // bottom edge, the bubble does not fit, and it gets pushed back over the
-    // trigger it belongs to. What this gives up is the clipping immunity the
-    // anchored path buys - a modifier inside a scroll container is cut off.
-    //
-    // Opting out has to restore the placement, not just the positioning scheme:
-    // the anchored path below is the later rule and clears `bottom`, `top`,
-    // `left` and the centring transform so `position-area` can resolve them
-    // itself. Leave that cleared and the box falls to its static position, which
-    // for a pseudo element is inside the trigger it is supposed to sit above.
-    // The three rules under this one then move the one edge each of them owns.
-    &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start) {
-      &::before,
-      &::after {
-        position: absolute;
-        position-area: none;
-        bottom: 100%;
-        top: auto;
-        left: 50%;
-      }
-
-      &::before {
-        transform: translateX(-50%);
-      }
-
-      &::after {
-        transform: translateX(-50%) rotate(45deg);
-      }
-    }
-
-    &.mw-tooltip-below {
-      &::before {
-        top: 100%;
-        bottom: auto;
-        margin-top: $_mw-tooltip-gap + $_mw-tooltip-arrow;
-        margin-bottom: 0;
-      }
-
-      &::after {
-        top: 100%;
-        bottom: auto;
-        margin-top: $_mw-tooltip-arrow-inset;
-        margin-bottom: 0;
-      }
-    }
-
-    // Only the bubble moves - the arrow stays centred on the trigger it points at.
-    &.mw-tooltip-end::before {
-      left: auto;
-      right: 0;
-      transform: none;
-    }
-
-    &.mw-tooltip-start::before {
-      left: 0;
-      right: auto;
-      transform: none;
-    }
-
-    &:hover::before,
-    &:hover::after,
-    &:focus-visible::before,
-    &:focus-visible::after {
-      opacity: 1;
-      display: block;
-
-      @starting-style {
-        opacity: 0;
-      }
-    }
-
-    // A press usually scales the trigger, and a transform makes it a containing
-    // block for the fixed-position bubble above - which would drop the label
-    // into the element being pressed. So it steps aside for the click instead;
-    // by then it has been read anyway. After the hover rule, same weight.
-    &:active::before,
-    &:active::after {
-      opacity: 0;
-      display: none;
-      // Not transitioned: `allow-discrete` holds `display: block` until the fade
-      // ends, and the bubble would spend those 180ms visibly sitting in the
-      // element. Going back out on release keeps the fade - that one is wanted.
-      transition: none;
-    }
-
-    // The clipping caveat above, lifted where the browser can do it: `fixed` takes
-    // the bubble out of the trigger's containing block, anchor positioning keeps
-    // it attached. No `anchor-name` needed - a pseudo element is implicitly
-    // anchored to the element it comes from.
-    //
-    // Still no `position-try-fallbacks: flip-block`, and no longer because of the
-    // arrow - the turned square survives a flip. Bubble and arrow are two
-    // separately anchored boxes, so each would decide on its own whether it fits,
-    // and the tiny one nearly always does: the label flips, the arrow stays.
-    @supports (position-area: block-start) {
-      &::before,
-      &::after {
-        position: fixed;
-        // The absolute placement these replace - left as-is they fight the
-        // position-area, which resolves the inset properties itself.
-        bottom: auto;
-        left: auto;
-        top: auto;
-      }
-
-      &::before {
-        position-area: block-start;
-        transform: none;
-      }
-
-      // The turn stays - it is the arrow's shape, not its placement.
-      &::after {
-        position-area: block-start;
-        transform: rotate(45deg);
-      }
-    }
   }
 }
