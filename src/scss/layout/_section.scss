@@ -1,6 +1,9 @@
 @use '../abstracts' as *;
 
 @layer mw.layout {
+  // Every multiplier below is a count of `--mw-section-head-step` (_base.scss),
+  // which is where the rhythm is set and where changing it belongs.
+  //
   // The head of a section: a rule, a title, and the line that says what the
   // section is. All three left-aligned, and that is the whole point of the
   // component. Centred running text moves its own left edge with every line
@@ -49,12 +52,12 @@
     text-wrap: balance;
   }
 
-  // Two limits, and the narrower one wins: 65 characters is where a line stops
+  // Two limits, and the narrower one wins: 70 characters is where a line stops
   // being comfortable, four fifths is what keeps the paragraph from filling the
   // container edge to edge on a wide screen. Below md only the character count
   // is left - four fifths of a phone is a column nothing fits in.
   .mw-section-head-intro {
-    max-width: 75ch;
+    max-width: 70ch;
     margin: calc(var(--mw-section-head-step) * 0.56) spacing('0') spacing('0');
     font-size: font-size('md');
     line-height: 1.6;
@@ -86,13 +89,13 @@
       content: counter(mw-section-head, decimal-leading-zero);
       position: absolute;
       top: var(--mw-section-head-pad);
-      right: 7px;
+      // The tracking sits after the last digit too, so it comes back off the
+      // right - in em, or it stops matching the moment the size changes
+      right: -0.2em;
       color: var(--mw-text-muted-color);
       font-size: font-size('sm');
       font-weight: font-weight('medium');
       line-height: 1;
-      // The tracking sits after the last digit too, so it has to come back off
-      // the right or the number stands a space short of the edge it aligns to.
       letter-spacing: 0.2em;
     }
 
@@ -237,7 +240,7 @@
     // between two demos - the heading leans toward what it names, not toward
     // what came before it.
     .mw-section-subtitle {
-      margin-top: calc(var(--mw-section-head-step) * 1.49);
+      margin-top: calc(var(--mw-section-head-step) * 1.5);
     }
   }
 
@@ -249,22 +252,26 @@
     // padding pushes exactly that much of it past the bottom of the screen -
     // and with it the scroll cue sitting on its lower edge. A hero is the full
     // screen by definition and brings its own breathing room.
-    @supports (selector(:has(.mw-hero))) {
-      &:has(.mw-hero) {
-        padding-block: spacing('0');
-      }
+    &:has(.mw-hero) {
+      padding-block: spacing('0');
     }
   }
 
   .mw-section-alternate {
     position: relative;
-    --s: 5px;
-    --c1: var(--mw-page-background);
-    --c2: var(--mw-section-alternate-pattern);
-    --g: var(--c2) -5% 5%, var(--c1) 0 45%;
     background:
-      linear-gradient(0deg, #0000 10%, var(--c1) 0 40%, #0000 0),
-      repeating-linear-gradient(-45deg, var(--g)) var(--c1);
-    background-size: var(--s) var(--s);
+      linear-gradient(
+        0deg,
+        transparent 10%,
+        var(--mw-page-background) 0 40%,
+        transparent 0
+      ),
+      repeating-linear-gradient(
+          -45deg,
+          var(--mw-section-alternate-pattern) -5% 5%,
+          var(--mw-page-background) 0 45%
+        )
+        var(--mw-page-background);
+    background-size: 5px 5px;
   }
 }

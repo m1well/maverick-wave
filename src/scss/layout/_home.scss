@@ -13,9 +13,12 @@
     margin-inline: auto;
 
     &-content {
-      padding: spacing('9') spacing('0');
+      // The hero is 100dvh tall either way, so the phone - which has the least
+      // of it to give away - gets the smaller band, not the larger one
+      padding-block: spacing('6');
+
       @include media-up('sm') {
-        padding-block: spacing('6');
+        padding-block: spacing('9');
       }
 
       &-fade {

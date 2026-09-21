@@ -1,0 +1,193 @@
+@use 'sass:math';
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // A pseudo element on the trigger, so an ancestor with `overflow: hidden` cuts
+  // it off. Hidden means `display: none`: a laid-out box still counts towards the
+  // page's overflow, and a 280px bubble near the right edge added 50px of sideways
+  // scroll on a phone. Hence `allow-discrete` and the starting style.
+  $_mw-tooltip-arrow: 6px;
+  $_mw-tooltip-gap: 8px;
+  // A square turned 45deg rather than a border triangle: it reads the same from
+  // above and from below, so the second placement costs no second arrow and a
+  // flip never has to repaint anything. The diagonal carries the visible width,
+  // so the side is the visible height doubled over root two.
+  $_mw-tooltip-arrow-side: math.div($_mw-tooltip-arrow * 2, math.sqrt(2));
+  // Half a side short of where the triangle's edge sat, so the turned square is
+  // centred on the bubble's edge and only its outer half shows. The inner half
+  // lands on the bubble in the same colour, which is what makes it read as one
+  // shape rather than a diamond stuck to a box.
+  $_mw-tooltip-arrow-inset: $_mw-tooltip-gap +
+    $_mw-tooltip-arrow - math.div($_mw-tooltip-arrow-side, 2);
+
+  [data-tooltip] {
+    position: relative;
+
+    &::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+      max-width: min(280px, 90vw);
+      width: max-content;
+      padding: spacing('1') spacing('2');
+      background: var(--mw-gray-color);
+      color: $fixed-surface-text;
+      font-size: font-size('xs');
+      border-radius: radius('xs');
+      box-shadow: var(--mw-elevation-2);
+      pointer-events: none;
+      opacity: 0;
+      display: none;
+      transition:
+        opacity var(--mw-duration-fast) var(--mw-ease-out),
+        display var(--mw-duration-fast) allow-discrete;
+      z-index: z-index('tooltip');
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      margin-bottom: $_mw-tooltip-arrow-inset;
+      width: $_mw-tooltip-arrow-side;
+      height: $_mw-tooltip-arrow-side;
+      background: var(--mw-gray-color);
+      opacity: 0;
+      display: none;
+      transition:
+        opacity var(--mw-duration-fast) var(--mw-ease-out),
+        display var(--mw-duration-fast) allow-discrete;
+      z-index: z-index('tooltip');
+    }
+
+    // The placement API: the text is the attribute, the side is a class. The
+    // three steer different properties - block axis, inline axis - so `below`
+    // and `end` compose without a rule for the pairing.
+    //
+    // They place the bubble against the trigger rather than joining the anchored
+    // path below, and that is the point, not a shortcut. The reason to want them
+    // is a control in a fixed header, and that header carries a backdrop-filter,
+    // which makes it the containing block for anything `fixed` inside it.
+    // `block-end` is then the few pixels between the trigger and the header's own
+    // bottom edge, the bubble does not fit, and it gets pushed back over the
+    // trigger it belongs to. What this gives up is the clipping immunity the
+    // anchored path buys - a modifier inside a scroll container is cut off.
+    //
+    // Opting out has to restore the placement, not just the positioning scheme:
+    // the anchored path below is the later rule and clears `bottom`, `top`,
+    // `left` and the centring transform so `position-area` can resolve them
+    // itself. Leave that cleared and the box falls to its static position, which
+    // for a pseudo element is inside the trigger it is supposed to sit above.
+    // The three rules under this one then move the one edge each of them owns.
+    &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start) {
+      &::before,
+      &::after {
+        position: absolute;
+        position-area: none;
+        bottom: 100%;
+        top: auto;
+        left: 50%;
+      }
+
+      &::before {
+        transform: translateX(-50%);
+      }
+
+      &::after {
+        transform: translateX(-50%) rotate(45deg);
+      }
+    }
+
+    &.mw-tooltip-below {
+      &::before {
+        top: 100%;
+        bottom: auto;
+        margin-top: $_mw-tooltip-gap + $_mw-tooltip-arrow;
+        margin-bottom: 0;
+      }
+
+      &::after {
+        top: 100%;
+        bottom: auto;
+        margin-top: $_mw-tooltip-arrow-inset;
+        margin-bottom: 0;
+      }
+    }
+
+    // Only the bubble moves - the arrow stays centred on the trigger it points at.
+    &.mw-tooltip-end::before {
+      left: auto;
+      right: 0;
+      transform: none;
+    }
+
+    &.mw-tooltip-start::before {
+      left: 0;
+      right: auto;
+      transform: none;
+    }
+
+    &:hover::before,
+    &:hover::after,
+    &:focus-visible::before,
+    &:focus-visible::after {
+      opacity: 1;
+      display: block;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    // A press usually scales the trigger, and a transform makes it a containing
+    // block for the fixed-position bubble above - which would drop the label
+    // into the element being pressed. So it steps aside for the click instead;
+    // by then it has been read anyway. After the hover rule, same weight.
+    &:active::before,
+    &:active::after {
+      opacity: 0;
+      display: none;
+      // Not transitioned: `allow-discrete` holds `display: block` until the fade
+      // ends, and the bubble would spend those 180ms visibly sitting in the
+      // element. Going back out on release keeps the fade - that one is wanted.
+      transition: none;
+    }
+
+    // The clipping caveat above, lifted where the browser can do it: `fixed` takes
+    // the bubble out of the trigger's containing block, anchor positioning keeps
+    // it attached. No `anchor-name` needed - a pseudo element is implicitly
+    // anchored to the element it comes from.
+    //
+    // Still no `position-try-fallbacks: flip-block`, and no longer because of the
+    // arrow - the turned square survives a flip. Bubble and arrow are two
+    // separately anchored boxes, so each would decide on its own whether it fits,
+    // and the tiny one nearly always does: the label flips, the arrow stays.
+    @supports (position-area: block-start) {
+      &::before,
+      &::after {
+        position: fixed;
+        // The absolute placement these replace - left as-is they fight the
+        // position-area, which resolves the inset properties itself.
+        bottom: auto;
+        left: auto;
+        top: auto;
+      }
+
+      &::before {
+        position-area: block-start;
+        transform: none;
+      }
+
+      // The turn stays - it is the arrow's shape, not its placement.
+      &::after {
+        position-area: block-start;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

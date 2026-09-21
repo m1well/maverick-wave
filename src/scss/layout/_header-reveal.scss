@@ -88,7 +88,7 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   // The panel hangs off the bar, so the bar has to be in place - and the burger,
   // which is the X while the panel is out, has to stay on its own position.
   //
-  // A class the script sets, not `:has(.mw-navbar.open)`: the burger is the
+  // A class the script sets, not `:has(.mw-navbar.mw-active)`: the burger is the
   // control that closes the panel and cannot wait for a selector re-match, which
   // is where WebKit's invalidation has been unreliable.
   //

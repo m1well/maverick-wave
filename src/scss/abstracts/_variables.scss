@@ -520,7 +520,13 @@ $z-index: (
   'lift': 3,
   'card': 10,
   'menu': 30,
+  // The scrim sits under the bar, the panel hangs off it, the logo clears the
+  // panel and the burger stays on top of all of them while it is the X.
+  'header-scrim': 99,
   'header': 100,
+  'header-panel': 103,
+  'header-logo': 105,
+  'header-burger': 110,
   'spinner': 300,
   'modal': 500,
   'tooltip': 700,

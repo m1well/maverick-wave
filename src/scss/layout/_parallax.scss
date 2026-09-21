@@ -24,7 +24,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    min-height: 60vh;
+    min-height: 60dvh;
     // `clip` and never `hidden`: hidden makes this a scroll container, and the
     // view() timeline below would then resolve against this box instead of the
     // viewport - the layer keeps its overhang and never moves

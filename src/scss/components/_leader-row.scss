@@ -10,7 +10,7 @@
   // and invoice draws one.
   //
   // The leader is the row's own ::before rather than an element in the markup.
-  // A generated box on a flex container is a flex item, so "order" can place it
+  // A generated box on a grid container is a grid item, so "order" can place it
   // between the two spans - and generated content stays out of the
   // accessibility tree, where a filler element would need aria-hidden.
   .mw-leader-row {
@@ -18,20 +18,27 @@
     --mw-leader-row-width: 2px;
     --mw-leader-row-color: var(--mw-border);
 
-    display: flex;
-    // The values never shrink, so without a wrap the label is the only thing
-    // left to give - and it gives until it is one letter per line
-    flex-wrap: wrap;
-    align-items: flex-end;
+    // Grid, not a wrapping flex row. Flex fills a line greedily and moves the
+    // next item down before it shrinks anything, so a label that still fit on
+    // its own line kept it and pushed the value underneath - on a phone the
+    // row then read as text, dashes, and a number stranded on the line below.
+    // A grid column gives instead: the label breaks between its words and the
+    // value stays where it belongs.
+    //
+    // The leader column holds a stub of line when label and value nearly fill
+    // the row. Anything past the two declared columns - a second value - takes
+    // a column of its own.
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(spacing('6'), 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: end;
     gap: spacing('3');
     margin: 0;
 
     &::before {
       content: '';
       order: 1;
-      flex: 1 1 auto;
-      // Keeps a stub of line visible when label and value nearly fill the row
-      min-width: spacing('6');
       border-bottom: var(--mw-leader-row-width) var(--mw-leader-row-style)
         var(--mw-leader-row-color);
       margin-bottom: $_mw-leader-baseline-lift;
@@ -39,17 +46,16 @@
 
     &-label {
       order: 0;
-      // No min-width override: the default floor is the longest word, so the
-      // label wraps between words and stops there instead of going to nothing.
-      // Past that floor the row wraps rather than the label shrinking further.
-      //
+      // Words first, and the column floor is zero, so a single word wider than
+      // what is left of the row breaks inside itself rather than running past
+      // the edge - a German compound noun reaches that point on a phone.
+      overflow-wrap: break-word;
       // The row also works as a dl group, and a dd carries 40px of browser margin
       margin: 0;
     }
 
     &-value {
       order: 2;
-      flex-shrink: 0;
       margin: 0;
       // A price or a page number must not break, and a column of them only
       // lines up with tabular figures.
@@ -59,8 +65,8 @@
 
     // Two values in one row read as a single long range with only a gap between
     // them. The mark takes the leader's colour, so retuning a row moves both.
-    // It hangs off the first of the pair, not the second: once the row wraps, a
-    // trailing mark reads as "continues below" and a leading one as a slip.
+    // It hangs off the first of the pair, not the second, where a trailing mark
+    // would read as "and there is more" at the end of the row.
     &-value:has(+ &-value)::after {
       content: '|';
       margin-left: spacing('3');
@@ -77,10 +83,10 @@
     }
 
     &-top {
-      align-items: flex-start;
+      align-items: start;
 
       &::before {
-        // flex-start pins the leader to the top edge, so it drops to the first
+        // start pins the leader to the top edge, so it drops to the first
         // line's baseline itself instead of being lifted off the last one
         margin: calc(1lh - #{$_mw-leader-baseline-lift}) 0 0;
       }

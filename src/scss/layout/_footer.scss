@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../abstracts' as *;
+@use 'grid';
 
 @layer mw.layout {
   .mw-footer {
@@ -7,31 +8,34 @@
     padding: spacing('7') spacing('0');
     border-top: 1px solid var(--mw-border-accent);
 
+    // The same ramp .mw-grid-4 rides, read from the one place it is written
     &-top {
       display: grid;
-      grid-template-columns: 1fr;
       gap: spacing('6');
       margin-bottom: spacing('6');
 
-      @include media-up('sm') {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include media-up('lg') {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      @include grid.column-grid(map.get(grid.$column-steps, 4));
     }
 
     &-column {
       h3 {
-        font-size: font-size('lg');
-        margin-bottom: spacing('4');
+        font-size: font-size('md');
+        margin-bottom: spacing('3');
         color: var(--mw-primary-text-color);
+
+        @include media-up('sm') {
+          font-size: font-size('lg');
+          margin-bottom: spacing('4');
+        }
       }
 
       p {
         color: var(--mw-text-muted-color);
-        margin-bottom: spacing('3');
+        margin-bottom: spacing('2');
+
+        @include media-up('sm') {
+          margin-bottom: spacing('3');
+        }
       }
 
       ul {
@@ -48,7 +52,8 @@
             text-decoration: none;
             padding-bottom: 2px;
 
-            // subtle default underline via box‐shadow
+            // Always drawn, unlike the navbar's: a footer link sits in a list of
+            // them and needs to read as a link without being pointed at first
             &::after {
               content: '';
               position: absolute;
@@ -88,11 +93,6 @@
       row-gap: spacing('3');
       margin: spacing('6') auto;
 
-      &.mod-wrap {
-        width: 330px;
-        max-width: 100%;
-      }
-
       a {
         position: relative;
         display: flex;
@@ -124,43 +124,10 @@
           transition-duration: var(--mw-duration-instant);
         }
       }
-    }
 
-    .mw-disclaimer {
-      text-align: center;
-      color: var(--mw-text-muted-color);
-      font-size: font-size('sm');
-      width: min(85%, 700px);
-      margin: spacing('0') auto spacing('3') auto;
-      line-height: 1.4;
-    }
-
-    .mw-copyright {
-      text-align: center;
-      color: var(--mw-text-muted-color);
-      font-size: font-size('sm');
-      padding-top: spacing('4');
-      margin: spacing('7') auto spacing('1') auto;
-      width: 100%;
-      border-top: 1px solid var(--mw-border-accent);
-    }
-
-    .mw-last-updated {
-      text-align: center;
-      color: var(--mw-text-muted-color);
-      font-size: font-size('xs');
-      padding-top: spacing('0');
-      margin: spacing('1') auto;
-    }
-
-    @include media-up('md') {
-      .mw-social-links {
+      @include media-up('md') {
         column-gap: spacing('8');
         row-gap: spacing('4');
-
-        &.mod-wrap {
-          width: 420px;
-        }
 
         a {
           width: 48px;
@@ -170,51 +137,46 @@
       }
     }
 
-    @include media-up('lg') {
-      .mw-social-links {
-        &.mod-wrap {
-          width: 510px;
-        }
+    .mw-disclaimer {
+      text-align: center;
+      color: var(--mw-text-muted-color);
+      font-size: font-size('xs');
+      width: 100%;
+      margin: spacing('0') auto spacing('3') auto;
+      line-height: 1.4;
+
+      // A 15% inset inside a container that already keeps a gutter only narrows
+      // the line to no purpose - so it waits until there is a line to narrow
+      @include media-up('sm') {
+        width: min(85%, 700px);
+        font-size: font-size('sm');
       }
     }
 
-    @include media-down('sm') {
-      &-column {
-        h3 {
-          font-size: font-size('md');
-          margin-bottom: spacing('3');
-        }
+    .mw-copyright {
+      text-align: center;
+      color: var(--mw-text-muted-color);
+      font-size: font-size('xs');
+      padding-top: spacing('4');
+      margin: spacing('5') auto spacing('1') auto;
+      width: 100%;
+      border-top: 1px solid var(--mw-border-accent);
 
-        p {
-          margin-bottom: spacing('2');
-        }
+      @include media-up('sm') {
+        font-size: font-size('sm');
+        margin-top: spacing('7');
       }
+    }
 
-      .mw-social-links {
-        gap: spacing('3');
+    .mw-last-updated {
+      text-align: center;
+      color: var(--mw-text-muted-color);
+      font-size: font-size('2xs');
+      padding-top: spacing('0');
+      margin: spacing('1') auto;
 
-        &.mod-wrap {
-          column-gap: spacing('6');
-          row-gap: spacing('3');
-          max-width: 100%;
-          padding: spacing('0') spacing('4');
-        }
-      }
-
-      // A second 15% inset inside a container that already keeps a gutter only
-      // narrows the line to no purpose
-      .mw-disclaimer {
-        width: 100%;
+      @include media-up('sm') {
         font-size: font-size('xs');
-      }
-
-      .mw-copyright {
-        margin-top: spacing('5');
-        font-size: font-size('xs');
-      }
-
-      .mw-last-updated {
-        font-size: font-size('2xs');
       }
     }
   }
