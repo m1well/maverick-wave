@@ -14,7 +14,13 @@
     font-size: var(--mw-root-font-size);
     scroll-behavior: smooth;
     min-width: 320px;
-    scroll-padding-top: var(--mw-header-height);
+    // Each layer of sticky chrome contributes its own term, so a page carrying
+    // both a ribbon and a section nav reserves for both - two rules setting one
+    // offset would have the later layer silently win instead.
+    scroll-padding-top: calc(
+      var(--mw-header-height) + var(--mw-announcement-offset) +
+        var(--mw-section-nav-offset)
+    );
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     @include scrollbar(var(--mw-border), transparent);

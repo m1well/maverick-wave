@@ -176,11 +176,17 @@
     @include scrollbar;
   }
 
-  // The strip parks under the header, so a jump to a component clears both
+  // The strip parks under the header, so everything scrolled to - an anchor and
+  // a tab stop alike - has to clear both. The reset reserves the header, this
+  // adds the strip on top of it for as long as a page carries one.
+  html:has(.mw-section-nav) {
+    --mw-section-nav-offset: var(--mw-section-nav-height);
+  }
+
+  // The offset above lands a target flush under the strip; this is the air
+  // between the two.
   .mw-container > div:has(> .mw-section-subtitle) {
-    scroll-margin-top: calc(
-      var(--mw-header-height) + var(--mw-section-nav-height) + #{spacing('5')}
-    );
+    scroll-margin-top: spacing('5');
   }
 
   .mw-section-btn {
@@ -215,6 +221,9 @@
 
     @include focus-ring;
     @include tappable;
+    // It sits under the floor on its own, in a strip that scrolls sideways
+    // under the thumb - a near miss here costs a jump, not just a retry
+    @include touch-floor;
 
     &:disabled {
       cursor: not-allowed;

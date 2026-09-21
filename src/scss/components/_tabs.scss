@@ -132,7 +132,7 @@
         display: block;
         // 1.1s to reveal a tab panel means a second of blank space after every
         // click. A panel switch is a state change, not an entrance.
-        animation: fadeIn var(--mw-duration-base) var(--mw-ease-out);
+        animation: mw-tabs-fade var(--mw-duration-base) var(--mw-ease-out);
       }
     }
 
@@ -281,7 +281,7 @@
     }
   }
 
-  @keyframes fadeIn {
+  @keyframes mw-tabs-fade {
     from {
       opacity: 0;
     }

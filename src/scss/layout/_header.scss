@@ -518,17 +518,6 @@
     }
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   // Profile button - a round avatar until there is room for the signed-in name
   // beside it
   .mw-profile-btn {

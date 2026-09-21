@@ -1,51 +1,8 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
-  .mw-tiles {
-    width: 100%;
-    margin: spacing('0') auto;
-    padding: spacing('0');
-    display: grid;
-    gap: spacing('4');
-    grid-template-columns: 1fr;
-
-    @include media-up('sm') {
-      grid-template-columns: repeat(2, 1fr);
-      width: 80%;
-      padding: spacing('3');
-      gap: spacing('6');
-    }
-
-    @include media-up('lg') {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    // The page gutter is the container's job, a second inset only narrows the tile
-    &-4col {
-      @include media-up('sm') {
-        width: 85%;
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      @include media-up('md') {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      @include media-up('lg') {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    &-2col {
-      @include media-up('sm') {
-        width: 75%;
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  }
-
   // The tile sizes its type off its own width, not the window's. In
-  // `.mw-tiles-4col` on a wide desktop a tile is a quarter of 85% of the page -
+  // `.mw-tiles-4col` on a wide desktop a tile is a quarter of the container -
   // narrower than the same tile alone on a phone, where it used to be the one
   // getting the small type.
   //
@@ -69,7 +26,6 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
 
     // Ahead of the size modifiers below, which take over from 'sm'
     @include media-up('sm') {
@@ -90,13 +46,22 @@
 
     @include hover-move {
       transform: translateY(-2px);
+
+      // The whole tile is the target, unlike a card where the image frame
+      // owns its own hover - a tile is one face, not a stack of regions.
+      .mw-tile-img img {
+        transform: scale(1.05);
+      }
     }
 
     // A tile is tapped, so it needs a press of its own - the lift above never
-    // runs on a finger.
-    &:active {
-      transform: scale(0.985);
-      transition-duration: var(--mw-duration-instant);
+    // runs on a finger. Guarded like every other travel in the framework; what
+    // is left without it is the latched hover, which is feedback enough.
+    @media (prefers-reduced-motion: no-preference) {
+      &:active {
+        transform: scale(0.985);
+        transition-duration: var(--mw-duration-instant);
+      }
     }
 
     &-img {
@@ -145,6 +110,13 @@
         font-size: font-size('sm');
         line-height: 1.3;
 
+        // The ramp the header takes: a tile filling a phone is a wide
+        // container and reads at full size, one squeezed into a desktop
+        // column stays small.
+        @container mw-tile (width >= #{$_mw-tile-narrow}) {
+          font-size: font-size('base');
+        }
+
         &:last-child {
           margin-bottom: spacing('0');
         }
@@ -186,6 +158,10 @@
 
         p {
           font-size: font-size('xs');
+
+          @container mw-tile (width >= #{$_mw-tile-narrow}) {
+            font-size: font-size('sm');
+          }
         }
       }
     }
@@ -223,6 +199,24 @@
         }
       }
     }
+  }
+
+  // A tile is only a control when the markup makes it one. The look above is a
+  // surface and stays on a div; everything a finger or a keyboard needs sits
+  // here, where the element itself answers for it - a hand cursor on a div
+  // promises a click nothing handles, and a ring on it would never be reached.
+  a.mw-tile,
+  button.mw-tile {
+    cursor: pointer;
+    // A button brings its own font, alignment and colour, and the tile's own
+    // children set none of the three
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    text-decoration: none;
+
+    @include focus-ring;
+    @include tappable;
   }
 
   // A cramped tile reads better ranged left whatever the window is doing - a

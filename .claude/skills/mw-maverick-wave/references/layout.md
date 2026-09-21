@@ -289,8 +289,8 @@ with no `mw-section-head-intro` takes a smaller gap: the gap sized to follow a
 paragraph reads as a hole under a rule and one line of type.
 
 The strip sticks at `--mw-header-height` and is `--mw-section-nav-height` tall
-(3.7rem). Anything it can cover on a jump needs the sum as `scroll-margin-top`;
-a block wrapping a `mw-section-subtitle` gets that from the framework already.
+(3.75rem). A page carrying one adds that height to `scroll-padding-top` on its
+own, so anchors and tab stops both clear it - nothing to add per target.
 
 ## Page header
 

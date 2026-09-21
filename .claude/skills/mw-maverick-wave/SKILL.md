@@ -116,6 +116,9 @@ system monospace stack behind it. Load a font yourself and either set the three
 
 - Classes: `mw-` prefix, kebab-case: `.mw-button-bar`, `.mw-item-list-compact`
 - Tokens: `--mw-` prefix: `--mw-primary-color`, `--mw-border-accent`
+- Keyframes: `mw-` prefix too (`mw-toast-in`, `mw-home-fade`). `@keyframes` is
+  global, so an unprefixed name in your app and one in the framework are the
+  same animation - the loser disappears without an error
 - Variants are suffixes on the base class: `mw-btn` + `mw-btn-primary`,
   `mw-alert` + `mw-alert-danger`
 - Colour variant names are the same everywhere: `primary`, `secondary`,
@@ -379,7 +382,8 @@ feature frame) ·
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
     `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm`,
     `mw-select-sm` and `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
-    44px, and list rows / menu items / pager pages / accordion headers 2.75rem.
+    44px, `mw-section-btn` 2.75rem, and list rows / menu items / pager pages /
+    accordion headers 2.75rem.
     `mw-btn-mini` keeps its 18px circle - it sits in tag rows and table cells
     where a bigger one would shift the layout - and grows its _hit area_ to 28px
     via a pseudo-element, and `mw-kanban-action` does the same - its 32px box
@@ -475,6 +479,10 @@ feature frame) ·
     with it, so `<button type="button" class="mw-tabs-nav-item" data-tab="...">`
     is the whole markup. The burger is the worst of the five to get wrong:
     below the collapse breakpoint it is the only route to the navigation.
+    `mw-tile` is the same rule from the other side: the class paints a surface
+    on anything, but the hand cursor, the focus ring and the tap handling only
+    come with `<a class="mw-tile">` or `<button class="mw-tile">`. On a `<div>`
+    you get the look and nothing a keyboard can reach.
     If you build your own clickable thing: the element decides whether anyone
     without a mouse can use it, the class only decides how it looks.
 28. **A link in running text is `mw-link`, not `mw-btn mw-btn-link`.** Since

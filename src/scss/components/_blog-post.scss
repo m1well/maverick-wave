@@ -8,13 +8,14 @@
     // One-shot entrance, not a loop, so it belongs on the scale. It ran for
     // 1.6s before - long enough that the reader is into the second paragraph
     // while the page is still arriving.
-    animation: pageReveal var(--mw-duration-slower) var(--mw-ease-out) forwards;
+    animation: mw-page-reveal var(--mw-duration-slower) var(--mw-ease-out)
+      forwards;
     border-radius: radius('sm') radius('2xl') radius('sm') radius('2xl');
     box-shadow:
       var(--mw-border) 0 30px 60px -18px inset,
       var(--mw-border) 0 18px 36px -18px inset;
 
-    @keyframes pageReveal {
+    @keyframes mw-page-reveal {
       0% {
         opacity: 0;
         transform: translateY(-30px) rotateX(10deg);
@@ -81,10 +82,10 @@
         margin-bottom: spacing('4');
         font-size: font-size('xl');
         box-shadow: var(--mw-elevation-2);
-        animation: iconFlip var(--mw-duration-slower) var(--mw-ease-out)
+        animation: mw-icon-flip var(--mw-duration-slower) var(--mw-ease-out)
           forwards;
 
-        @keyframes iconFlip {
+        @keyframes mw-icon-flip {
           0% {
             transform: rotateY(90deg);
           }

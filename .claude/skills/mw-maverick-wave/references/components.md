@@ -492,29 +492,36 @@ A bordered box with a header rule - the "titled section" of an application.
 ```
 
 - Header colour: `mw-panel-primary`, `mw-panel-secondary`; without them the
-  header is neutral.
+  header is neutral. Title and action sit at opposite ends and wrap to two rows
+  when the panel gets too narrow for both.
 - Height: `mw-panel-scrollable` (500px), `mw-panel-max-height-sm` (300px),
   `-md` (500px), `-lg` (700px) - the body scrolls, header and footer stay.
-- `mw-panel` has `min-height: 100%`, so panels in a grid row end up equally tall.
+- Panels in a grid row end up equally tall on their own - a grid item stretches.
+  A height variant opts out with `align-self: start`.
 
 ## Tiles
 
-Compact, clickable info blocks in a fixed 3-column grid.
+Compact info blocks. The look is on the class, the click is on the element: put
+`mw-tile` on an `<a>` or a `<button>` and it gets the hand cursor, the focus ring
+and the tap handling. On a `<div>` it stays a plain surface - no cursor, no ring,
+because there would be nothing to reach by keyboard.
 
 ```html
 <div class="mw-tiles mw-tiles-2col">
-  <div class="mw-tile">
+  <a href="/billing" class="mw-tile">
     <div class="mw-tile-img"><img src="icon.png" alt="" /></div>
     <h3 class="mw-tile-header">Billing</h3>
     <div class="mw-tile-body">
       <p>Invoices and payments</p>
     </div>
     <div class="mw-tile-footer">Updated 2026-01-02</div>
-  </div>
+  </a>
 </div>
 ```
 
-Container: `mw-tiles` (3 columns), `mw-tiles-2col`, `mw-tiles-4col`.
+Container: `mw-tiles` (1 / 2 at `sm` / 3 at `md`), `mw-tiles-2col` (1 / 2 at
+`sm`), `mw-tiles-4col` (1 / 2 at `sm` / 4 at `lg`) - the same ramps `mw-grid-3`,
+`-2` and `-4` use, and the full container width like any other grid.
 Tile sizes: `mw-tile-sm`, `mw-tile-lg`.
 
 ## Accordion

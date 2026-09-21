@@ -122,6 +122,28 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
     }
   }
 
+  // The container half of the tile component. Here and not in `_tiles.scss`,
+  // because it is one of the ramps above and a component file cannot reach them.
+  //
+  // The guard is what makes a modifier replace the bare ramp rather than layer
+  // on it: both step at the same breakpoints, so which one holds a given width
+  // would otherwise come down to media query order.
+  .mw-tiles {
+    @extend %grid-base;
+  }
+
+  .mw-tiles:not(.mw-tiles-2col):not(.mw-tiles-4col) {
+    @include _column-grid(map.get($_column-steps, 3));
+  }
+
+  .mw-tiles-2col {
+    @include _column-grid(map.get($_column-steps, 2));
+  }
+
+  .mw-tiles-4col {
+    @include _column-grid(map.get($_column-steps, 4));
+  }
+
   .mw-grid-flex {
     @extend %grid-base;
 
