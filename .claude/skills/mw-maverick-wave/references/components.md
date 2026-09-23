@@ -623,8 +623,8 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
 - `closedby="any"` dismisses it on a backdrop click; where that attribute is not
   understood yet the script handles the click instead.
 - Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
-  `mw-modal-xl` 960px. Height is capped at 80-92dvh, the body scrolls. Below
-  576px it becomes a bottom sheet.
+  `mw-modal-xl` 960px. Height is capped at 80-92dvh (`--mw-modal-max-height`),
+  the body scrolls. Below 576px it becomes a bottom sheet.
 - `mw-modal-close` is the hook, not a look: on the header X it styles the button,
   on a footer action it only closes. Combine it with `mw-btn mw-btn-primary` and
   the button keeps its own paint.
@@ -1233,8 +1233,9 @@ a clipping ancestor by itself. Everywhere else it is absolutely positioned and
 is clipped by any ancestor that hides its overflow. The framework's own containers lift that clip while a menu is open; on
 your own it is `:has(.mw-dropdown[open]) { overflow: visible }`.
 
-On a coarse pointer the rows grow to 2.75rem and the menu takes at least the
-trigger's full width.
+The menu is at least 200px wide; `--mw-dropdown-min-width` on the dropdown or a
+wrapper changes that. On a coarse pointer the rows grow to 2.75rem and the menu
+takes at least the trigger's full width.
 
 ## Language switcher
 
@@ -1475,9 +1476,9 @@ deprecated). Any card fits into the content wrapper.
 - Shape: `mw-avatar-square`.
 - `mw-avatar-landscape` (3:2) and `mw-avatar-portrait` (9:16) for a photo that
   is not square - meant for `-lg` and `-xl`, with 20px corners that
-  `mw-avatar-square` still sharpens. A landscape avatar keeps the height of its
-  size step, a portrait one the width; on `-lg` a portrait is 2:3 instead, as
-  tall as the 9:16 one and wider.
+  `mw-avatar-square` still sharpens. Both run larger than the round step:
+  landscape `-lg` 273, `-xl` 399 px wide, shrinking to fit a narrower column;
+  portrait `-xl` 242 px wide at 9:16, `-lg` 2:3 at 295 px tall.
 - Every avatar carries the accent arc on its top-right corner, inside the frame
   (`--mw-corner-accent`). It stays as it is on hover.
 - Colours `mw-avatar-primary`, `-secondary`, `-success`, `-warning`, `-danger`,

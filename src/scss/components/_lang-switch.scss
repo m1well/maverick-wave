@@ -47,14 +47,10 @@
   }
 
   // A language list is short and its labels are one word - the 200px default
-  // menu leaves half of it empty. The one place it must not be narrowed is under
-  // a thumb, where the dropdown widens every menu on purpose.
-  .mw-lang-switch .mw-dropdown-menu {
-    min-width: 170px;
-
-    @include touch-context('sm') {
-      min-width: max(100%, 240px);
-    }
+  // menu leaves half of it empty. Through the dropdown's property, so under a
+  // thumb the dropdown's own widening still wins.
+  .mw-lang-switch {
+    --mw-dropdown-min-width: 170px;
   }
 
   .mw-lang-switch-name {

@@ -42,9 +42,10 @@
     background: var(--mw-card-background);
     @include surface(0);
     box-shadow: var(--mw-elevation-5);
+    --mw-modal-max-height: 85dvh;
     max-width: 520px;
     width: 100%;
-    max-height: 85dvh;
+    max-height: var(--mw-modal-max-height);
     display: flex;
     flex-direction: column;
     z-index: z-index('modal');
@@ -61,15 +62,15 @@
     // two read as the same modal rendered twice.
     &.mw-modal-sm {
       max-width: 370px;
-      max-height: 80dvh;
+      --mw-modal-max-height: 80dvh;
     }
     &.mw-modal-lg {
       max-width: 720px;
-      max-height: 90dvh;
+      --mw-modal-max-height: 90dvh;
     }
     &.mw-modal-xl {
       max-width: 960px;
-      max-height: 92dvh;
+      --mw-modal-max-height: 92dvh;
     }
   }
 
@@ -85,7 +86,7 @@
     .mw-modal.mw-modal-lg,
     .mw-modal.mw-modal-xl {
       max-width: 100%;
-      max-height: 92dvh;
+      --mw-modal-max-height: 92dvh;
       border-radius: radius('xl') radius('xl') radius('none') radius('none');
       padding-bottom: env(safe-area-inset-bottom, 0px);
       // Straight up from the bottom edge - a sheet does not scale in
@@ -173,6 +174,13 @@
       display var(--mw-duration-base) allow-discrete;
 
     &[open] {
+      // Not the flex column of the div version: iOS WebKit squeezes a scrolling
+      // flex item inside a top-layer dialog to a sliver, so the header shows and
+      // the body is gone. Desktop browsers and Playwright's WebKit do not show it.
+      // The 1fr row takes what max-height leaves, so the body scrolls in it.
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr);
       opacity: 1;
       transform: scale(1) translateY(0);
 
@@ -182,6 +190,12 @@
         opacity: 0;
         transform: scale(0.96) translateY(12px);
       }
+    }
+
+    // Without it an absolute child - screen reader text, a tooltip - anchors to
+    // the dialog, escapes the body's scroll and makes the whole dialog scroll
+    .mw-modal-body {
+      position: relative;
     }
 
     &::backdrop {
