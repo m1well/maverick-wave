@@ -1,12 +1,18 @@
 {
   "name": "maverick-wave",
-  "version": "5.30.0",
+  "version": "5.31.0",
   "config": {
-    "version_short": "5.30"
+    "version_short": "5.31"
   },
   "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
   "main": "src/js/main.js",
   "style": "src/scss/main.scss",
+  "files": [
+    "maverick-wave.min.css",
+    "maverick-wave.min.js",
+    "src/scss",
+    "src/js"
+  ],
   "scripts": {
     "clean": "gulp clean",
     "format": "prettier --check \"**/*.{scss,js,json,html,md}\"",
