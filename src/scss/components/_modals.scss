@@ -174,13 +174,13 @@
       display var(--mw-duration-base) allow-discrete;
 
     &[open] {
-      // Not the flex column of the div version: iOS WebKit squeezes a scrolling
-      // flex item inside a top-layer dialog to a sliver, so the header shows and
-      // the body is gone. Desktop browsers and Playwright's WebKit do not show it.
-      // The 1fr row takes what max-height leaves, so the body scrolls in it.
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      grid-template-columns: minmax(0, 1fr);
+      // A block, not the flex column of the div version and not a grid: iOS
+      // WebKit takes the intrinsic height of a scrolling flex or grid item in a
+      // top-layer dialog as zero. A dialog shorter than its cap then shows its
+      // header and footer and nothing between - a grid only hides it until the
+      // content outgrows the cap. Desktop browsers and Playwright's WebKit do not
+      // show it, so only a real iPhone can confirm a change here.
+      display: block;
       opacity: 1;
       transform: scale(1) translateY(0);
 
@@ -192,10 +192,17 @@
       }
     }
 
-    // Without it an absolute child - screen reader text, a tooltip - anchors to
-    // the dialog, escapes the body's scroll and makes the whole dialog scroll
+    // With no row to scroll in, the body gets a cap of its own: the dialog's,
+    // less the room its header and footer take (61px each on a phone sheet)
     .mw-modal-body {
+      max-height: calc(var(--mw-modal-max-height) - 8rem);
+      // Without it an absolute child - screen reader text, a tooltip - anchors to
+      // the dialog, escapes the body's scroll and makes the whole dialog scroll
       position: relative;
+    }
+
+    &:not(:has(> .mw-modal-footer)) .mw-modal-body {
+      max-height: calc(var(--mw-modal-max-height) - 4rem);
     }
 
     &::backdrop {
@@ -242,6 +249,13 @@
         }
       }
     }
+  }
+
+  // Neither shape locks the page scroll behind it - the <dialog> only makes the
+  // page inert, which still lets a finger or a wheel move it
+  :root:has(dialog.mw-modal[open], .mw-modal-overlay.mw-modal-open) {
+    overflow: hidden;
+    scrollbar-gutter: stable; // Or the page shifts by the hidden scrollbar
   }
 
   // Modal sections
