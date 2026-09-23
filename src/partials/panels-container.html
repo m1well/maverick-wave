@@ -1,175 +1,126 @@
 <h3 class="mw-section-subtitle">Panels</h3>
 <p class="mw-text-muted mw-text-measure">
   A card whose header and footer are part of the frame rather than the content.
-  The body scrolls on its own, which is what the max-height variants are for.
+  <code>mw-panel-primary</code> and <code>mw-panel-secondary</code> fill the
+  header. The body scrolls on its own, which is what the max-height variants are
+  for: <code>mw-panel-max-height-sm</code>, <code>-md</code> and
+  <code>-lg</code> cap the panel at 300, 500 and 700px.
+  <code>mw-panel-scrollable</code> is the older name for md.
 </p>
 
-<div class="mw-grid-1 mw-mb-6">
-  <div class="mw-panel">
-    <h4 class="mw-panel-header">Default Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This is a default panel with header, body, and footer sections. Panels
-        are useful for grouping related content.
-      </p>
+<div class="mw-grid-2-lg mw-mb-6">
+  <div>
+    <div class="mw-segmented mw-mb-4" data-modifier-demo="panel-color-demo">
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Default
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-panel-primary"
+      >
+        Primary
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-panel-secondary"
+      >
+        Secondary
+      </button>
     </div>
-    <div class="mw-panel-footer">
-      <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
-      <button type="button" class="mw-btn mw-btn-primary">Save</button>
-    </div>
-  </div>
-</div>
-
-<div class="mw-grid-3-lg">
-  <div class="mw-panel mw-panel-primary">
-    <h4 class="mw-panel-header">Primary Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This is a primary panel with a colored header. You can use different
-        panel variants to indicate different types of content.
-      </p>
-    </div>
-    <div class="mw-panel-footer">
-      <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
-      <button type="button" class="mw-btn mw-btn-primary">Save</button>
-    </div>
-  </div>
-
-  <div class="mw-panel mw-panel-secondary">
-    <h4 class="mw-panel-header">Secondary Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This is a secondary panel with a colored header. Panels can contain any
-        type of content, including forms, tables, or other components.
-      </p>
-    </div>
-  </div>
-
-  <div class="mw-panel mw-panel-scrollable">
-    <h4 class="mw-panel-header">Scrollable Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This panel has a fixed maximum height of 500px and will scroll when
-        content exceeds this height. Scrollable panels are ideal for displaying
-        large amounts of content in a constrained space.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
-        mauris.
-      </p>
-      <p>
-        Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu
-        tellus.
-      </p>
-      <p>
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae.
-      </p>
-      <p>
-        Pellentesque habitant morbi tristique senectus et netus et malesuada
-        fames ac turpis egestas.
-      </p>
-      <p>
-        Ut aliquam sollicitudin iaculis. Praesent ac semper ante. Interdum et
-        malesuada fames ac ante ipsum primis in faucibus.
-      </p>
-      <p>
-        Mauris egestas elit vel nunc maximus, in aliquam magna vehicula. Cras
-        vitae sapien a erat facilisis faucibus.
-      </p>
-      <p>
-        Donec dignissim, odio ac imperdiet luctus, elit lorem eleifend massa,
-        sed efficitur turpis velit vel odio.
-      </p>
-      <p>
-        Suspendisse potenti. Nullam gravida fermentum turpis eu ultrices.
-        Curabitur imperdiet imperdiet lacus.
-      </p>
-      <p>
-        Praesent ac semper ante. Interdum et malesuada fames ac ante ipsum
-        primis in faucibus.
-      </p>
-    </div>
-    <div class="mw-panel-footer">
-      <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
-      <button type="button" class="mw-btn mw-btn-primary">Save</button>
-    </div>
-  </div>
-</div>
-
-<div class="mw-grid-2 mw-my-6">
-  <div class="mw-panel mw-panel-primary mw-panel-max-height-md">
-    <h4 class="mw-panel-header">Medium Height Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This panel uses the medium height variant (500px) and will scroll when
-        content exceeds this height.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
-        mauris.
-      </p>
-      <p>
-        Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu
-        tellus.
-      </p>
-      <p>
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae.
-      </p>
-      <p>
-        Pellentesque habitant morbi tristique senectus et netus et malesuada
-        fames ac turpis egestas.
-      </p>
-      <p>
-        Ut aliquam sollicitudin iaculis. Praesent ac semper ante. Interdum et
-        malesuada fames ac ante ipsum primis in faucibus.
-      </p>
-      <p>
-        Mauris egestas elit vel nunc maximus, in aliquam magna vehicula. Cras
-        vitae sapien a erat facilisis faucibus.
-      </p>
-      <p>
-        Donec dignissim, odio ac imperdiet luctus, elit lorem eleifend massa,
-        sed efficitur turpis velit vel odio.
-      </p>
-    </div>
-    <div class="mw-panel-footer">
-      <button type="button" class="mw-btn mw-btn-primary">OK</button>
+    <div class="mw-panel" id="panel-color-demo">
+      <h4 class="mw-panel-header">Panel</h4>
+      <div class="mw-panel-body">
+        <p>
+          This is a panel with header, body, and footer sections. Panels are
+          useful for grouping related content, including forms, tables, or other
+          components.
+        </p>
+      </div>
+      <div class="mw-panel-footer">
+        <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
+        <button type="button" class="mw-btn mw-btn-primary">Save</button>
+      </div>
     </div>
   </div>
 
-  <div class="mw-panel mw-panel-secondary mw-panel-max-height-sm">
-    <h4 class="mw-panel-header">Small Height Panel</h4>
-    <div class="mw-panel-body">
-      <p>
-        This panel uses the small height variant (300px) and will scroll when
-        content exceeds this height. Ideal for compact UI elements.
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
-        mauris.
-      </p>
-      <p>
-        Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu
-        tellus.
-      </p>
-      <p>
-        Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae.
-      </p>
-      <p>
-        Pellentesque habitant morbi tristique senectus et netus et malesuada
-        fames ac turpis egestas.
-      </p>
-      <p>
-        Ut aliquam sollicitudin iaculis. Praesent ac semper ante. Interdum et
-        malesuada fames ac ante ipsum primis in faucibus.
-      </p>
+  <div>
+    <div class="mw-segmented mw-mb-4" data-modifier-demo="panel-height-demo">
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-panel-max-height-sm"
+      >
+        300px
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier="mw-panel-max-height-md"
+      >
+        500px
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-panel-max-height-lg"
+      >
+        700px
+      </button>
     </div>
-    <div class="mw-panel-footer">
-      <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
-      <button type="button" class="mw-btn mw-btn-secondary">Submit</button>
+    <div class="mw-panel mw-panel-max-height-md" id="panel-height-demo">
+      <h4 class="mw-panel-header">Scrollable Panel</h4>
+      <div class="mw-panel-body">
+        <p>
+          The body scrolls once the content outgrows the cap. Header and footer
+          stay where they are.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui
+          mauris.
+        </p>
+        <p>
+          Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu
+          tellus.
+        </p>
+        <p>
+          Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+          posuere cubilia Curae.
+        </p>
+        <p>
+          Pellentesque habitant morbi tristique senectus et netus et malesuada
+          fames ac turpis egestas.
+        </p>
+        <p>
+          Ut aliquam sollicitudin iaculis. Praesent ac semper ante. Interdum et
+          malesuada fames ac ante ipsum primis in faucibus.
+        </p>
+        <p>
+          Mauris egestas elit vel nunc maximus, in aliquam magna vehicula. Cras
+          vitae sapien a erat facilisis faucibus.
+        </p>
+        <p>
+          Donec dignissim, odio ac imperdiet luctus, elit lorem eleifend massa,
+          sed efficitur turpis velit vel odio.
+        </p>
+        <p>
+          Suspendisse potenti. Nullam gravida fermentum turpis eu ultrices.
+          Curabitur imperdiet imperdiet lacus.
+        </p>
+        <p>
+          Praesent ac semper ante. Interdum et malesuada fames ac ante ipsum
+          primis in faucibus.
+        </p>
+      </div>
+      <div class="mw-panel-footer">
+        <button type="button" class="mw-btn mw-btn-outline">Cancel</button>
+        <button type="button" class="mw-btn mw-btn-primary">Save</button>
+      </div>
     </div>
   </div>
 </div>

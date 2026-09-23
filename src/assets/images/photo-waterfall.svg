@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Waterfall between mossy cliffs">
+  <defs>
+    <linearGradient id="wf-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8cc7df"/>
+      <stop offset="1" stop-color="#e6f3ee"/>
+    </linearGradient>
+    <linearGradient id="wf-water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d6eef6"/>
+      <stop offset="1" stop-color="#f7fcff"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#wf-sky)"/>
+  <polygon points="0,120 110,90 200,150 230,800 0,800" fill="#4d6b4f"/>
+  <polygon points="600,80 480,110 390,170 370,800 600,800" fill="#435f46"/>
+  <polygon points="0,260 90,240 180,300 200,800 0,800" fill="#3a5540"/>
+  <polygon points="600,300 470,280 400,330 390,800 600,800" fill="#34503b"/>
+  <rect x="226" y="150" width="148" height="560" fill="url(#wf-water)"/>
+  <g stroke="#b5dcea" stroke-width="3" stroke-linecap="round">
+    <line x1="250" y1="170" x2="250" y2="690"/>
+    <line x1="290" y1="160" x2="290" y2="700"/>
+    <line x1="330" y1="175" x2="330" y2="690"/>
+    <line x1="356" y1="165" x2="356" y2="700"/>
+  </g>
+  <ellipse cx="300" cy="730" rx="300" ry="90" fill="#5d9fb5"/>
+  <g fill="#fff" opacity="0.8">
+    <circle cx="240" cy="700" r="34"/>
+    <circle cx="300" cy="690" r="40"/>
+    <circle cx="360" cy="702" r="32"/>
+  </g>
+  <polygon points="0,760 160,740 220,800 0,800" fill="#26392b"/>
+  <polygon points="600,750 430,745 380,800 600,800" fill="#26392b"/>
+</svg>

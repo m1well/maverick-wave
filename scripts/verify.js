@@ -118,7 +118,8 @@ const keyframesInCss = new Set(all(css, /@keyframes\s+(mw-[a-z0-9-]+)/g));
 const classesInJs = new Set(all(js, /\.?(mw-[a-z0-9-]+)/g));
 
 const classesInMarkup = new Map(); // class -> where it was seen
-for (const attr of html.matchAll(/class\s*=\s*"([^"]*)"/g)) {
+// data-modifier: the showcase switches put that class on their demo
+for (const attr of html.matchAll(/(?:class|data-modifier)\s*=\s*"([^"]*)"/g)) {
   for (const c of attr[1].split(/\s+/)) {
     if (c.startsWith('mw-') && !classesInMarkup.has(c)) {
       classesInMarkup.set(c, 'showcase');

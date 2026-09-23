@@ -1,0 +1,180 @@
+@use '../abstracts' as *;
+@use 'overlay-btn';
+
+@layer mw.components {
+  $two-up: 560px;
+  $three-up: 880px;
+  $gaps: (
+    '': spacing('6'),
+    '-gap-sm': spacing('3'),
+    '-gap-lg': spacing('7'),
+  );
+
+  // On a landscape phone the width follows from this cap
+  $max-height: 78svh;
+
+  .mw-portrait-gallery {
+    position: relative;
+    // Inline-size containment would collapse the box in a flex or grid slot
+    width: 100%;
+    container: mw-portrait-gallery / inline-size;
+  }
+
+  .mw-portrait-gallery-track {
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    border-radius: radius('lg');
+    scrollbar-width: none;
+    @include focus-ring;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  .mw-portrait-gallery-slide {
+    position: relative;
+    flex: none;
+    // The next slide peeks in at the edge
+    width: min(86cqi, $max-height * 3 / 4);
+    aspect-ratio: 3 / 4;
+    margin: spacing('0');
+    overflow: hidden;
+    border-radius: radius('lg');
+    background: $fixed-stage;
+    scroll-snap-align: start;
+
+    > img,
+    > video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    > figcaption {
+      position: absolute;
+      inset: auto 0 0;
+      padding: spacing('10') spacing('5') spacing('5');
+      background: linear-gradient(to top, rgb(0 0 0 / 72%), transparent);
+      color: $fixed-surface-text;
+      font-size: font-size('sm');
+      line-height: 1.45;
+      text-shadow: 0 1px 3px rgb(0 0 0 / 50%);
+
+      strong {
+        display: block;
+        font-size: font-size('md');
+      }
+    }
+  }
+
+  .mw-portrait-gallery-tall .mw-portrait-gallery-slide {
+    width: min(86cqi, $max-height * 9 / 16);
+    aspect-ratio: 9 / 16;
+  }
+
+  .mw-portrait-gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: spacing('4');
+    margin-top: spacing('5');
+  }
+
+  .mw-portrait-gallery-dot {
+    width: 7px;
+    height: 7px;
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('full');
+    background: var(--mw-gray-color);
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include hit-area(6px);
+    @include focus-ring;
+
+    &.mw-active {
+      background: var(--mw-primary-text-color);
+      transform: scale(1.45);
+    }
+  }
+
+  @each $suffix, $gap in $gaps {
+    .mw-portrait-gallery#{$suffix} .mw-portrait-gallery-track {
+      gap: $gap;
+    }
+  }
+
+  @container mw-portrait-gallery (width >= #{$two-up}) {
+    .mw-portrait-gallery-dots {
+      display: none;
+    }
+  }
+
+  // The widths subtract the gaps, so each gap restates them - every two-up
+  // rule before every three-up one, or a modifier's two-up rule would win
+  @each $up, $share, $gaps-in-row in ($two-up 2.25 1, $three-up 3 2) {
+    @container mw-portrait-gallery (width >= #{$up}) {
+      @each $suffix, $gap in $gaps {
+        $room: calc(100cqi - $gaps-in-row * $gap);
+
+        .mw-portrait-gallery#{$suffix} .mw-portrait-gallery-slide {
+          width: min($room / $share, $max-height * 3 / 4);
+        }
+
+        .mw-portrait-gallery#{$suffix}.mw-portrait-gallery-tall
+          .mw-portrait-gallery-slide {
+          width: min($room / $share, $max-height * 9 / 16);
+        }
+      }
+    }
+  }
+
+  // A finger swipes, so the arrows are for a mouse only
+  .mw-portrait-gallery-prev,
+  .mw-portrait-gallery-next {
+    display: none;
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    z-index: z-index('lift');
+
+    @media (hover: hover) and (pointer: fine) {
+      display: inline-flex;
+    }
+  }
+
+  .mw-portrait-gallery-prev {
+    left: spacing('4');
+  }
+
+  .mw-portrait-gallery-next {
+    right: spacing('4');
+  }
+
+  // Centred on the photos, not on photos plus the dot row
+  .mw-portrait-gallery:has(.mw-portrait-gallery-dots) {
+    .mw-portrait-gallery-prev,
+    .mw-portrait-gallery-next {
+      translate: 0 calc(-50% - #{spacing('5')});
+    }
+  }
+
+  @container mw-portrait-gallery (width >= #{$two-up}) {
+    .mw-portrait-gallery:has(.mw-portrait-gallery-dots) {
+      .mw-portrait-gallery-prev,
+      .mw-portrait-gallery-next {
+        translate: 0 -50%;
+      }
+    }
+  }
+}

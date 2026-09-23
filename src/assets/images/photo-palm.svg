@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Palm tree against a sunset over the sea">
+  <defs>
+    <linearGradient id="pm-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c1f4a"/>
+      <stop offset="0.55" stop-color="#d9587a"/>
+      <stop offset="1" stop-color="#f7b267"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="520" fill="url(#pm-sky)"/>
+  <circle cx="470" cy="500" r="120" fill="#ffd27a"/>
+  <rect y="500" width="800" height="300" fill="#3a2a5a"/>
+  <g fill="#ffd27a" opacity="0.6">
+    <rect x="380" y="530" width="180" height="6" rx="3"/>
+    <rect x="400" y="566" width="140" height="6" rx="3"/>
+    <rect x="420" y="604" width="100" height="6" rx="3"/>
+    <rect x="440" y="644" width="60" height="6" rx="3"/>
+  </g>
+  <path d="M0,720 C200,690 420,700 800,740 L800,800 L0,800 Z" fill="#1c1430"/>
+  <path d="M200,730 C210,600 230,420 290,250 L304,254 C250,420 232,600 226,730 Z" fill="#1c1430"/>
+  <g fill="#1c1430">
+    <path d="M296,252 C360,190 450,190 520,240 C440,220 380,230 300,262 Z"/>
+    <path d="M296,252 C340,180 330,120 280,80 C310,140 300,190 290,250 Z"/>
+    <path d="M296,252 C220,190 140,200 90,250 C160,228 220,232 292,262 Z"/>
+    <path d="M296,252 C380,250 440,300 470,370 C420,310 370,290 300,266 Z"/>
+    <path d="M296,252 C220,260 170,310 150,380 C190,320 240,290 294,266 Z"/>
+  </g>
+</svg>

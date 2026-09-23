@@ -41,7 +41,10 @@
     &:hover {
       box-shadow: var(--mw-elevation-3);
       border-color: var(--mw-border-accent);
-      --mw-corner-accent: var(--mw-corner-accent-hover);
+
+      &::after {
+        --mw-corner-accent: var(--mw-corner-accent-hover);
+      }
     }
 
     @include hover-move {

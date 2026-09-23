@@ -13,11 +13,30 @@
     <p class="mw-text-muted">
       This is the basic table that supports all functions except the complete
       responsive feeling with the cards - five columns do not fit a phone, so it
-      sits in a <code>mw-table-responsive</code> wrapper
+      sits in a <code>mw-table-responsive</code> wrapper.
+      <code>mw-table-compact</code> is the same table with less spacing and
+      smaller type.
     </p>
 
+    <div class="mw-segmented mw-mb-4" data-modifier-demo="table-demo">
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Default
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-table-compact"
+      >
+        Compact
+      </button>
+    </div>
+
     <div class="mw-table-responsive">
-      <table class="mw-table">
+      <table class="mw-table" id="table-demo">
         <thead>
           <tr>
             <th>#</th>
@@ -62,44 +81,6 @@
       alignment, use <strong>mw-text-numeric</strong>. For the input side there
       is <strong>mw-input-numeric</strong>.
     </p>
-  </div>
-
-  <div class="mw-card mw-card-simple mw-mb-6">
-    <h4 class="mw-mb-2">Compact Table</h4>
-    <p class="mw-text-muted">
-      Same table as basic table but a bit with less spacing and smaller fonts
-    </p>
-
-    <table class="mw-table mw-table-compact">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Position</th>
-          <th>Location</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mara Kessler</td>
-          <td>Developer</td>
-          <td>New York</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Tom Aldridge</td>
-          <td>Designer</td>
-          <td>London</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Jonas Reuter</td>
-          <td>Manager</td>
-          <td>Berlin</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 
   <div class="mw-card mw-card-simple mw-mb-6">

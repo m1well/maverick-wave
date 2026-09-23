@@ -72,8 +72,9 @@
 
     // The arc on the two round corners is the one mark that makes a card look
     // like this framework and not like a rounded box, so it is what the hover
-    // pulls on. Recoloured through the token the mixin already reads, which is
-    // why the rule sits on the card and not on its ::after.
+    // pulls on. Recoloured through the token the mixin already reads - on the
+    // ::after alone, because set on the card it inherits into every arc inside
+    // it, an avatar's or a nested card's.
     &::after {
       transition: var(--mw-transition);
     }
@@ -81,7 +82,10 @@
     &:hover {
       box-shadow: var(--mw-elevation-3);
       border-color: var(--mw-border-accent);
-      --mw-corner-accent: var(--mw-corner-accent-hover);
+
+      &::after {
+        --mw-corner-accent: var(--mw-corner-accent-hover);
+      }
     }
 
     // Pointer-guarded, unlike the colour and shadow above: on touch `:hover`

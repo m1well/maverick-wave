@@ -28,7 +28,23 @@
 
   <div>
     <h4 class="mw-mb-3">Sliding Border List</h4>
-    <div class="mw-item-list-slide mw-mb-6">
+    <div class="mw-segmented mw-mb-3" data-modifier-demo="slide-list-demo">
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Primary
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-slide-secondary"
+      >
+        Secondary
+      </button>
+    </div>
+    <div class="mw-item-list-slide mw-mb-6" id="slide-list-demo">
       <div>
         <strong>Dashboard Overview</strong>
         <p class="mw-text-sm mw-text-muted mw-mb-0">
@@ -45,24 +61,6 @@
         <strong>Settings & Preferences</strong>
         <p class="mw-text-sm mw-text-muted mw-mb-0">
           Customize your experience and configure options.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h4 class="mw-mb-3">Sliding Border List - Secondary</h4>
-    <div class="mw-item-list-slide mw-item-list-slide-secondary mw-mb-6">
-      <div>
-        <strong>Dashboard Overview</strong>
-        <p class="mw-text-sm mw-text-muted mw-mb-0">
-          Monitor your key metrics and performance indicators.
-        </p>
-      </div>
-      <div>
-        <strong>Analytics Reports</strong>
-        <p class="mw-text-sm mw-text-muted mw-mb-0">
-          Detailed insights into your data and user behavior.
         </p>
       </div>
     </div>
@@ -97,10 +95,33 @@
 </div>
 
 <!-- New Checkbox Lists Section -->
-<div class="mw-grid-3-lg">
+<div class="mw-grid-2-lg">
   <div>
-    <h4 class="mw-mb-3">Basic Checkbox List</h4>
-    <ul class="mw-item-list-checkbox">
+    <h4 class="mw-mb-3">Checkbox List</h4>
+    <div class="mw-segmented mw-mb-3" data-modifier-demo="checkbox-list-demo">
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-checkbox-compact"
+      >
+        Compact
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Default
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-checkbox-large"
+      >
+        Large
+      </button>
+    </div>
+    <ul class="mw-item-list-checkbox" id="checkbox-list-demo">
       <li>
         <label class="mw-checkbox">
           <input type="checkbox" />
@@ -132,40 +153,6 @@
           <div class="mw-checkbox-content">
             <p class="mw-checkbox-label">📧 Email Notifications</p>
           </div>
-        </label>
-      </li>
-    </ul>
-  </div>
-
-  <div>
-    <h4 class="mw-mb-3">Large Checkbox List</h4>
-    <ul class="mw-item-list-checkbox mw-item-list-checkbox-large mw-mb-6">
-      <li>
-        <label class="mw-checkbox mw-checkbox-lg">
-          <input type="checkbox" />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">🎯 Project Alpha</span>
-        </label>
-      </li>
-      <li>
-        <label class="mw-checkbox mw-checkbox-lg">
-          <input type="checkbox" checked />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">🚀 Project Beta</span>
-        </label>
-      </li>
-      <li class="mw-selected">
-        <label class="mw-checkbox mw-checkbox-lg">
-          <input type="checkbox" checked />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">⭐ Project Gamma</span>
-        </label>
-      </li>
-      <li>
-        <label class="mw-checkbox mw-checkbox-lg">
-          <input type="checkbox" />
-          <span class="mw-checkbox-box"></span>
-          <span class="mw-checkbox-label">🔥 Project Delta</span>
         </label>
       </li>
     </ul>
@@ -321,8 +308,43 @@
 
 <div class="mw-grid-1 mw-mb-4">
   <div>
-    <h4 class="mw-mb-3">Basic Scrollable List</h4>
-    <div class="mw-item-list-scroll mw-mb-4">
+    <h4 class="mw-mb-3">Scrollable List</h4>
+    <p class="mw-text-muted">
+      <code>mw-item-list-scroll-sm</code>, <code>-lg</code> and
+      <code>-xl</code> change the height. Any other height is a
+      <code>style="max-height: 160px"</code> on the list.
+    </p>
+    <div class="mw-segmented mw-mb-3" data-modifier-demo="scroll-list-demo">
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-scroll-sm"
+      >
+        200px
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        300px
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-scroll-lg"
+      >
+        400px
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-item-list-scroll-xl"
+      >
+        500px
+      </button>
+    </div>
+    <div class="mw-item-list-scroll mw-mb-4" id="scroll-list-demo">
       <div>Dashboard Overview</div>
       <div>User Management</div>
       <div>Analytics & Reports</div>
@@ -341,78 +363,6 @@
       <div>Performance Monitoring</div>
       <div>Backup & Recovery</div>
       <div>Advanced Analytics</div>
-    </div>
-  </div>
-</div>
-
-<div class="mw-grid-4-lg">
-  <div>
-    <h4 class="mw-mb-3">Small Height</h4>
-    <div class="mw-item-list-scroll mw-item-list-scroll-sm mw-mb-4">
-      <div>Quick Action 1</div>
-      <div>Quick Action 2</div>
-      <div>Quick Action 3</div>
-      <div>Quick Action 4</div>
-      <div>Quick Action 5</div>
-      <div>Quick Action 6</div>
-      <div>Quick Action 7</div>
-      <div>Quick Action 8</div>
-      <div>Quick Action 9</div>
-      <div>Quick Action 10</div>
-    </div>
-  </div>
-  <div>
-    <h4 class="mw-mb-3">Custom Height (160px)</h4>
-    <div class="mw-item-list-scroll mw-mb-6" style="max-height: 160px">
-      <div>Custom sized container</div>
-      <div>Flexible height control</div>
-      <div>Adaptable to needs</div>
-      <div>Perfect for any use case</div>
-      <div>Responsive design</div>
-      <div>Scalable solution</div>
-      <div>Versatile component</div>
-    </div>
-  </div>
-  <div>
-    <h4 class="mw-mb-3">Large Height</h4>
-    <div class="mw-item-list-scroll mw-item-list-scroll-lg mw-mb-4">
-      <div>Quick Action 1</div>
-      <div>Quick Action 2</div>
-      <div>Quick Action 3</div>
-      <div>Quick Action 4</div>
-      <div>Quick Action 5</div>
-      <div>Quick Action 6</div>
-      <div>Quick Action 7</div>
-      <div>Quick Action 8</div>
-      <div>Quick Action 9</div>
-      <div>Quick Action 10</div>
-      <div>Quick Action 11</div>
-      <div>Quick Action 12</div>
-      <div>Quick Action 13</div>
-      <div>Quick Action 14</div>
-    </div>
-  </div>
-  <div>
-    <h4 class="mw-mb-3">Xtra Large Height</h4>
-    <div class="mw-item-list-scroll mw-item-list-scroll-xl mw-mb-4">
-      <div>Quick Action 1</div>
-      <div>Quick Action 2</div>
-      <div>Quick Action 3</div>
-      <div>Quick Action 4</div>
-      <div>Quick Action 5</div>
-      <div>Quick Action 6</div>
-      <div>Quick Action 7</div>
-      <div>Quick Action 8</div>
-      <div>Quick Action 9</div>
-      <div>Quick Action 10</div>
-      <div>Quick Action 11</div>
-      <div>Quick Action 12</div>
-      <div>Quick Action 13</div>
-      <div>Quick Action 14</div>
-      <div>Quick Action 15</div>
-      <div>Quick Action 16</div>
-      <div>Quick Action 17</div>
-      <div>Quick Action 18</div>
     </div>
   </div>
 </div>

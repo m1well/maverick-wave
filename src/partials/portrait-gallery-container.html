@@ -1,0 +1,175 @@
+<h3 class="mw-section-subtitle">Portrait Gallery</h3>
+<p class="mw-text-muted mw-text-measure">
+  Upright photos in a strip the browser scrolls itself: a swipe on a phone,
+  arrows under a mouse, and the next photo always peeks in at the edge. One
+  slide on a phone, two and a half on a tablet, three on a desktop. A photo in
+  the other orientation - the lake below - is not cropped to a sliver but shown
+  whole, over a blurred copy of itself.
+  <code>mw-portrait-gallery-gap-sm</code> and
+  <code>mw-portrait-gallery-gap-lg</code> change the gaps.
+</p>
+
+<div class="mw-segmented mw-mb-5" data-modifier-demo="portrait-demo">
+  <button
+    type="button"
+    class="mw-segmented-item"
+    data-modifier="mw-portrait-gallery-gap-sm"
+  >
+    Gap sm
+  </button>
+  <button type="button" class="mw-segmented-item mw-active" data-modifier="">
+    Default
+  </button>
+  <button
+    type="button"
+    class="mw-segmented-item"
+    data-modifier="mw-portrait-gallery-gap-lg"
+  >
+    Gap lg
+  </button>
+</div>
+
+<div class="mw-portrait-gallery mw-mb-8" id="portrait-demo">
+  <div
+    class="mw-portrait-gallery-track"
+    tabindex="0"
+    aria-label="Portrait photos"
+  >
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-lighthouse.svg"
+        alt="Lighthouse on a cliff at dusk"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+      <figcaption>
+        <strong>North Cape</strong>
+        The lamp comes on just after the sun goes.
+      </figcaption>
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-peak.svg"
+        alt="Snowy mountain peak under a starry sky"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+      <figcaption>
+        <strong>Summit night</strong>
+        3,000 metres and one thermos of tea.
+      </figcaption>
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/gallery-lake.svg"
+        alt="Peaceful lake"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+      <figcaption>
+        <strong>Landscape, not cropped</strong>
+        Shown whole over a blurred copy of itself.
+      </figcaption>
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-forest-path.svg"
+        alt="Path through a sunlit forest"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-tower.svg"
+        alt="Television tower above the city at night"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+      <figcaption>
+        <strong>Blue hour</strong>
+        The tower, the moon and not a single cloud.
+      </figcaption>
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-waterfall.svg"
+        alt="Waterfall between mossy cliffs"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</div>
+
+<h4 class="mw-text-medium mw-mb-2">Story shape</h4>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-portrait-gallery-tall</code> turns the slides into 9:16, the shape of
+  a phone screen - for stories, reels and screenshots. A video works like a
+  photo; the square balloon gets the same blurred frame the lake did.
+</p>
+
+<div class="mw-portrait-gallery mw-portrait-gallery-tall">
+  <div
+    class="mw-portrait-gallery-track"
+    tabindex="0"
+    aria-label="Story-shaped photos"
+  >
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/story-beach.svg"
+        alt="Beach at sunset with waves running up the sand"
+        width="720"
+        height="1280"
+        loading="lazy"
+      />
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <video
+        src="media/story-sunrise.mp4"
+        poster="media/story-sunrise.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <figcaption>
+        <strong>Sunrise</strong>
+        A muted, looping video.
+      </figcaption>
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/story-aurora.svg"
+        alt="Northern lights over a snowy forest"
+        width="720"
+        height="1280"
+        loading="lazy"
+      />
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/photo-balloon.svg"
+        alt="Hot air balloon in a morning sky"
+        width="800"
+        height="800"
+        loading="lazy"
+      />
+    </figure>
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="images/story-stars.svg"
+        alt="Tent glowing under the milky way"
+        width="720"
+        height="1280"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</div>

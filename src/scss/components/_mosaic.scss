@@ -1,0 +1,83 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  .mw-mosaic {
+    display: grid;
+    // Two columns on a phone, four at most, in whatever box it sits
+    grid-template-columns: repeat(auto-fill, minmax(max(120px, 22%), 1fr));
+    // Equal rows sized by the square tiles' aspect-ratio
+    grid-auto-rows: 1fr;
+    grid-auto-flow: dense;
+    // Dense packing reorders the tiles; Tab follows what the eye sees
+    reading-flow: grid-rows;
+    gap: spacing('4');
+  }
+
+  .mw-mosaic-gap-sm {
+    gap: spacing('1');
+  }
+
+  .mw-mosaic-gap-lg {
+    gap: spacing('5');
+  }
+
+  .mw-mosaic-item {
+    position: relative;
+    margin: spacing('0');
+    // Only sizes the rows; stretched both ways, or the ratio sizes the tile
+    aspect-ratio: 1;
+    place-self: stretch;
+    overflow: hidden;
+    border-radius: radius('sm');
+    background: var(--mw-card-background);
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
+
+    > a {
+      position: absolute;
+      inset: 0;
+      display: block;
+      @include tappable;
+      @include focus-ring-inset(-3px);
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
+    }
+
+    > figcaption {
+      display: none;
+    }
+
+    @include hover-move {
+      img {
+        transform: scale(1.05);
+      }
+    }
+
+    &:has(> a:active) {
+      transform: scale(0.97);
+      transition-duration: var(--mw-duration-instant);
+    }
+  }
+
+  // Picked by the script from the photo's shape unless one is set by hand
+  .mw-mosaic-wide {
+    grid-column: span 2;
+    aspect-ratio: 2;
+  }
+
+  .mw-mosaic-tall {
+    grid-row: span 2;
+    aspect-ratio: 1 / 2;
+  }
+
+  .mw-mosaic-big {
+    grid-column: span 2;
+    grid-row: span 2;
+    aspect-ratio: 1;
+  }
+}

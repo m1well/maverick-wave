@@ -47,6 +47,9 @@ $info-color: #0780ca !default;
 // take --mw-accent-text-color: tooltip, mw-btn-mini, mw-info-mini, gallery arrows
 $fixed-surface-text: #efefef !default;
 
+// Near-black behind a photo in both themes: it is judged against black
+$fixed-stage: #0b0d12 !default;
+
 // Darkening in both themes: the label on a solid surface is $accent-text-color,
 // and lightening the surface is what breaks it
 $hover-shift: 15% !default;

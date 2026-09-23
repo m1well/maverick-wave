@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="720" height="1280" role="img" aria-label="Tent glowing under the milky way">
+  <defs>
+    <linearGradient id="ss-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#070b1f"/>
+      <stop offset="0.7" stop-color="#1d2a5a"/>
+      <stop offset="1" stop-color="#40518a"/>
+    </linearGradient>
+    <radialGradient id="ss-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffcf7a" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#ffcf7a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="720" height="1280" fill="url(#ss-sky)"/>
+  <ellipse cx="360" cy="420" rx="520" ry="90" transform="rotate(-58 360 420)" fill="#b9c4f0" opacity="0.14"/>
+  <ellipse cx="360" cy="420" rx="420" ry="40" transform="rotate(-58 360 420)" fill="#e6e9ff" opacity="0.14"/>
+  <g fill="#fff">
+    <circle cx="80" cy="120" r="2.4"/>
+    <circle cx="200" cy="260" r="1.6"/>
+    <circle cx="610" cy="90" r="2.2"/>
+    <circle cx="520" cy="300" r="1.4"/>
+    <circle cx="400" cy="160" r="1.8"/>
+    <circle cx="120" cy="520" r="1.4"/>
+    <circle cx="650" cy="560" r="2"/>
+    <circle cx="300" cy="620" r="1.2"/>
+    <circle cx="560" cy="720" r="1.4"/>
+    <circle cx="60" cy="760" r="1.8"/>
+    <circle cx="260" cy="420" r="1.2"/>
+    <circle cx="460" cy="480" r="1.6"/>
+  </g>
+  <polygon points="0,900 140,800 260,870 400,760 540,860 720,780 720,1280 0,1280" fill="#141c3a"/>
+  <polygon points="0,1000 200,950 420,1010 720,940 720,1280 0,1280" fill="#0c1228"/>
+  <circle cx="360" cy="1030" r="160" fill="url(#ss-glow)"/>
+  <polygon points="280,1090 360,960 440,1090" fill="#f3a64a"/>
+  <polygon points="345,1090 360,1030 375,1090" fill="#7a3f1a"/>
+</svg>

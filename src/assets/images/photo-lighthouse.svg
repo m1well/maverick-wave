@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Lighthouse on a cliff at dusk">
+  <defs>
+    <linearGradient id="lh-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#18234a"/>
+      <stop offset="0.55" stop-color="#6d4a8c"/>
+      <stop offset="1" stop-color="#f2a36b"/>
+    </linearGradient>
+    <linearGradient id="lh-sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5b86"/>
+      <stop offset="1" stop-color="#101c33"/>
+    </linearGradient>
+    <linearGradient id="lh-beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff4c9" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#fff4c9" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="560" fill="url(#lh-sky)"/>
+  <g fill="#fff">
+    <circle cx="420" cy="70" r="2"/>
+    <circle cx="520" cy="130" r="1.5"/>
+    <circle cx="300" cy="110" r="1.5"/>
+    <circle cx="80" cy="60" r="2"/>
+    <circle cx="210" cy="190" r="1.2"/>
+    <circle cx="560" cy="40" r="1.2"/>
+  </g>
+  <rect y="540" width="600" height="260" fill="url(#lh-sea)"/>
+  <g stroke="#f7c08f" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round">
+    <line x1="330" y1="566" x2="470" y2="566"/>
+    <line x1="360" y1="598" x2="540" y2="598"/>
+    <line x1="400" y1="640" x2="520" y2="640"/>
+    <line x1="430" y1="690" x2="590" y2="690"/>
+  </g>
+  <polygon points="160,350 600,250 600,440" fill="url(#lh-beam)"/>
+  <circle cx="150" cy="355" r="46" fill="#ffe9a6" opacity="0.25"/>
+  <polygon points="-10,800 -10,570 60,556 150,590 230,604 300,646 360,706 404,800" fill="#0c1426"/>
+  <polygon points="128,592 172,592 164,380 136,380" fill="#f1ece4"/>
+  <polygon points="130,540 170,540 168.5,500 131.5,500" fill="#c8433b"/>
+  <polygon points="133,460 167,460 165.5,420 134.5,420" fill="#c8433b"/>
+  <rect x="124" y="368" width="52" height="12" rx="2" fill="#2a2f45"/>
+  <rect x="136" y="338" width="28" height="30" fill="#ffe9a6"/>
+  <polygon points="130,340 170,340 150,314" fill="#2a2f45"/>
+</svg>

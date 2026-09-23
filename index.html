@@ -133,6 +133,20 @@
         margin-inline: auto;
       }
 
+      /* Here, not inline - inline it would outrank the compact value too */
+      #kanban-demo {
+        --mw-kanban-column-min-height: 390px;
+      }
+
+      #kanban-demo.mw-kanban-compact {
+        --mw-kanban-column-min-height: 210px;
+      }
+
+      /* A compact calendar has no dots, so its legend has nothing to explain */
+      .calendar-demo .mw-calendar-compact .mw-calendar-legend {
+        display: none;
+      }
+
       /* Medium screens */
       @media (max-width: 992px) {
         /* Two calendars side by side squeeze their cells below md, so they
@@ -943,6 +957,12 @@
             <a href="#pagination" class="mw-section-btn">Pagination</a>
             <a href="#timelines" class="mw-section-btn">Timelines</a>
             <a href="#gallery" class="mw-section-btn">Image Gallery</a>
+            <a href="#portrait-gallery" class="mw-section-btn"
+              >Portrait Gallery</a
+            >
+            <a href="#mosaic" class="mw-section-btn">Mosaic</a>
+            <a href="#feed" class="mw-section-btn">Photo Feed</a>
+            <a href="#stories" class="mw-section-btn">Story Archive</a>
             <a href="#techstack-bucket" class="mw-section-btn"
               >Technology Stack Bucket</a
             >
@@ -1001,6 +1021,24 @@
           <!-- Gallery container-->
           <div id="gallery">
             @@include('./src/partials/gallery-container.html')
+          </div>
+
+          <!-- Portrait gallery container-->
+          <div id="portrait-gallery">
+            @@include('./src/partials/portrait-gallery-container.html')
+          </div>
+
+          <!-- Mosaic container-->
+          <div id="mosaic">
+            @@include('./src/partials/mosaic-container.html')
+          </div>
+
+          <!-- Feed container-->
+          <div id="feed">@@include('./src/partials/feed-container.html')</div>
+
+          <!-- Stories container-->
+          <div id="stories">
+            @@include('./src/partials/stories-container.html')
           </div>
 
           <!-- Tech stack container-->
@@ -1149,6 +1187,33 @@
           item.addEventListener('click', () => apply(item));
         });
         apply(cycleSwitch.querySelector('.mw-active'));
+      });
+
+      // just for the showcase: the switches above the photo layouts put one of
+      // their modifiers on the demo they name and take the others off
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[data-modifier-demo]').forEach((group) => {
+          const target = document.getElementById(group.dataset.modifierDemo);
+          const items = group.querySelectorAll('.mw-segmented-item');
+          items.forEach((item) => {
+            item.setAttribute(
+              'aria-pressed',
+              String(item.classList.contains('mw-active'))
+            );
+            item.addEventListener('click', () => {
+              items.forEach((other) => {
+                other.classList.toggle('mw-active', other === item);
+                other.setAttribute('aria-pressed', String(other === item));
+                if (other.dataset.modifier) {
+                  target.classList.remove(other.dataset.modifier);
+                }
+              });
+              if (item.dataset.modifier) {
+                target.classList.add(item.dataset.modifier);
+              }
+            });
+          });
+        });
       });
 
       // just for the showcase: the palette switcher. Every tone in the framework
