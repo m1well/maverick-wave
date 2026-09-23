@@ -1,0 +1,506 @@
+<h3 class="mw-section-subtitle">Photo Feed</h3>
+<p class="mw-text-muted mw-text-measure">
+  Photos in the grid everyone knows from their phone, in a framed box that shows
+  three rows and scrolls - <code>mw-feed-rows-2</code> shows two,
+  <code>mw-feed-plain</code> drops the frame. A strip of the next row stays in
+  view, so the box reads as scrollable. A tap opens the photo as a card, with
+  its text if the <code>figcaption</code> has any. No script: the tile is a
+  button with <code>popovertarget</code>, the card a <code>popover</code> - in
+  Angular that is <code>[attr.popovertarget]</code> and a matching
+  <code>[id]</code>. <code>mw-feed-square</code> switches to square tiles.
+</p>
+
+<div class="mw-d-flex mw-flex-wrap mw-gap-3 mw-mb-5">
+  <div class="mw-segmented" data-modifier-demo="feed-demo">
+    <button type="button" class="mw-segmented-item mw-active" data-modifier="">
+      3 rows
+    </button>
+    <button
+      type="button"
+      class="mw-segmented-item"
+      data-modifier="mw-feed-rows-2"
+    >
+      2 rows
+    </button>
+  </div>
+  <div class="mw-segmented" data-modifier-demo="feed-demo">
+    <button type="button" class="mw-segmented-item mw-active" data-modifier="">
+      Frame
+    </button>
+    <button
+      type="button"
+      class="mw-segmented-item"
+      data-modifier="mw-feed-plain"
+    >
+      Plain
+    </button>
+  </div>
+</div>
+
+<div class="mw-container-narrow">
+  <div class="mw-feed" id="feed-demo">
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-lighthouse">
+        <img
+          src="images/photo-lighthouse.svg"
+          alt="Lighthouse on a cliff at dusk"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-lighthouse" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-lighthouse"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-lighthouse.svg"
+          alt="Lighthouse on a cliff at dusk"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>
+            Last light over the north cape. Stood there until the lamp came on.
+          </p>
+          <time datetime="2026-08-12">12 August 2026</time>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-balloon">
+        <img
+          src="images/photo-balloon.svg"
+          alt="Hot air balloon in a morning sky"
+          width="800"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-balloon" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-balloon"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-balloon.svg"
+          alt="Hot air balloon in a morning sky"
+          width="800"
+          height="800"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>Up before sunrise for this one.</p>
+          <time datetime="2026-07-30">30 July 2026</time>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-ocean">
+        <img
+          src="images/gallery-ocean.svg"
+          alt="Ocean waves rolling to the horizon"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-ocean" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-ocean"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-ocean.svg"
+          alt="Ocean waves rolling to the horizon"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-peak">
+        <img
+          src="images/photo-peak.svg"
+          alt="Snowy mountain peak under a starry sky"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-peak" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-peak"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-peak.svg"
+          alt="Snowy mountain peak under a starry sky"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>
+            3,000 metres, one thermos of tea and far too many stars to count.
+          </p>
+          <p>#alps #nightsky</p>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-palm">
+        <img
+          src="images/photo-palm.svg"
+          alt="Palm tree against a sunset over the sea"
+          width="800"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-palm" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-palm"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-palm.svg"
+          alt="Palm tree against a sunset over the sea"
+          width="800"
+          height="800"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-city">
+        <img
+          src="images/gallery-city.svg"
+          alt="City skyline at night"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-city" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-city"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-city.svg"
+          alt="City skyline at night"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-forest">
+        <img
+          src="images/photo-forest-path.svg"
+          alt="Path through a sunlit forest"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-forest" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-forest"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-forest-path.svg"
+          alt="Path through a sunlit forest"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>Found the quiet trail. Nobody else for two hours.</p>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-tower">
+        <img
+          src="images/photo-tower.svg"
+          alt="Television tower above the city at night"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-tower" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-tower"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-tower.svg"
+          alt="Television tower above the city at night"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-waterfall">
+        <img
+          src="images/photo-waterfall.svg"
+          alt="Waterfall between mossy cliffs"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-waterfall" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-waterfall"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/photo-waterfall.svg"
+          alt="Waterfall between mossy cliffs"
+          width="600"
+          height="800"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>Two hours up the gorge. #waterfall #hiking</p>
+          <time datetime="2026-06-18">18 June 2026</time>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-lake">
+        <img
+          src="images/gallery-lake.svg"
+          alt="Peaceful lake"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-lake" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-lake"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-lake.svg"
+          alt="Peaceful lake"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-aurora">
+        <img
+          src="images/story-aurora.svg"
+          alt="Northern lights over a snowy forest"
+          width="720"
+          height="1280"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-aurora" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-aurora"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/story-aurora.svg"
+          alt="Northern lights over a snowy forest"
+          width="720"
+          height="1280"
+          loading="lazy"
+        />
+        <figcaption><p>Minus eighteen degrees. Nobody minded.</p></figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-desert">
+        <img
+          src="images/gallery-desert.svg"
+          alt="Desert dunes"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-desert" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-desert"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-desert.svg"
+          alt="Desert dunes"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-stars">
+        <img
+          src="images/story-stars.svg"
+          alt="Tent glowing under the milky way"
+          width="720"
+          height="1280"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-stars" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-stars"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/story-stars.svg"
+          alt="Tent glowing under the milky way"
+          width="720"
+          height="1280"
+          loading="lazy"
+        />
+        <figcaption>
+          <p>Camp at 2,400 metres.</p>
+          <time datetime="2026-05-30">30 May 2026</time>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-mountain">
+        <img
+          src="images/gallery-mountain.svg"
+          alt="Mountain range at sunrise"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-mountain" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-mountain"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-mountain.svg"
+          alt="Mountain range at sunrise"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+    <div class="mw-feed-item">
+      <button type="button" popovertarget="post-snow">
+        <img
+          src="images/gallery-snow.svg"
+          alt="Snowy hills"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </button>
+      <figure class="mw-feed-post" id="post-snow" popover>
+        <button
+          type="button"
+          class="mw-overlay-btn mw-feed-post-close"
+          popovertarget="post-snow"
+          popovertargetaction="hide"
+          aria-label="Close"
+        >
+          &#120299;
+        </button>
+        <img
+          src="images/gallery-snow.svg"
+          alt="Snowy hills"
+          width="800"
+          height="450"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+  </div>
+</div>

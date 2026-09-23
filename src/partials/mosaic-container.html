@@ -1,0 +1,173 @@
+<h3 class="mw-section-subtitle">Mosaic</h3>
+<p class="mw-text-muted mw-text-measure">
+  Photos of any shape in one grid. The script reads each photo's proportions
+  from its <code>width</code> and <code>height</code> and gives it a tile to
+  match - wide for landscape, tall for portrait, square for the rest - and the
+  smaller tiles fill the holes. The tile crops, the lightbox does not: a tap
+  opens the photo whole with its caption, and a swipe moves on to the next one.
+  <code>mw-mosaic-gap-sm</code> and <code>mw-mosaic-gap-lg</code> change the
+  gaps.
+</p>
+
+<div class="mw-segmented mw-mb-5" data-modifier-demo="mosaic-demo">
+  <button
+    type="button"
+    class="mw-segmented-item"
+    data-modifier="mw-mosaic-gap-sm"
+  >
+    Gap sm
+  </button>
+  <button type="button" class="mw-segmented-item mw-active" data-modifier="">
+    Default
+  </button>
+  <button
+    type="button"
+    class="mw-segmented-item"
+    data-modifier="mw-mosaic-gap-lg"
+  >
+    Gap lg
+  </button>
+</div>
+
+<div class="mw-mosaic" id="mosaic-demo">
+  <figure class="mw-mosaic-item mw-mosaic-big">
+    <a href="images/gallery-mountain.svg">
+      <img
+        src="images/gallery-mountain.svg"
+        alt="Mountain range at sunrise"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>
+      First light on the ridge. <code>mw-mosaic-big</code> makes a photo the
+      centrepiece.
+    </figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-peak.svg">
+      <img
+        src="images/photo-peak.svg"
+        alt="Snowy mountain peak under a starry sky"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>Summit night, 3,000 metres up.</figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-balloon.svg">
+      <img
+        src="images/photo-balloon.svg"
+        alt="Hot air balloon in a morning sky"
+        width="800"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-palm.svg">
+      <img
+        src="images/photo-palm.svg"
+        alt="Palm tree against a sunset over the sea"
+        width="800"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>The last evening on the island.</figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/gallery-lake.svg">
+      <img
+        src="images/gallery-lake.svg"
+        alt="Peaceful lake"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-tower.svg">
+      <img
+        src="images/photo-tower.svg"
+        alt="Television tower above the city at night"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-waterfall.svg">
+      <img
+        src="images/photo-waterfall.svg"
+        alt="Waterfall between mossy cliffs"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>Two hours up the gorge, and worth every step of it.</figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/gallery-city.svg">
+      <img
+        src="images/gallery-city.svg"
+        alt="City skyline at night"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/photo-lighthouse.svg">
+      <img
+        src="images/photo-lighthouse.svg"
+        alt="Lighthouse on a cliff at dusk"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/story-aurora.svg">
+      <img
+        src="images/story-aurora.svg"
+        alt="Northern lights over a snowy forest"
+        width="720"
+        height="1280"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>Minus eighteen degrees. Nobody minded.</figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/gallery-desert.svg">
+      <img
+        src="images/gallery-desert.svg"
+        alt="Desert dunes"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+  <figure class="mw-mosaic-item">
+    <a href="images/gallery-snow.svg">
+      <img
+        src="images/gallery-snow.svg"
+        alt="Snowy hills"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+  </figure>
+</div>

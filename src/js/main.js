@@ -45,6 +45,7 @@
     initSmoothScrolling();
     initScrollSpy();
     initModals();
+    initLightbox();
     initDropdowns();
     initTagRemovals();
     initCopyButtons();
@@ -58,6 +59,9 @@
     const scope = root || document;
 
     initGalleries(scope);
+    initPortraitGalleries(scope);
+    initMosaics(scope);
+    initStoryReels(scope);
     initAccordions(scope);
     initProgressBars(scope);
     initReveals(scope);
@@ -404,6 +408,405 @@
     );
 
     goToSlide(0);
+  }
+
+  const ICON_PATHS = {
+    close: 'M6 6l12 12M18 6L6 18',
+    prev: 'M15 5l-7 7 7 7',
+    next: 'M9 5l7 7-7 7',
+  };
+
+  function iconButton(className, label, name) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = className;
+    button.setAttribute('aria-label', label);
+    button.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' +
+      ICON_PATHS[name] +
+      '"/></svg>';
+    return button;
+  }
+
+  // The natural size once loaded, the width and height attributes before
+  function mediaRatio(media) {
+    const width =
+      media.naturalWidth || media.videoWidth || +media.getAttribute('width');
+    const height =
+      media.naturalHeight || media.videoHeight || +media.getAttribute('height');
+    return width && height ? width / height : 0;
+  }
+
+  // Read from the scroll position, so swipe, trackpad and arrows agree
+  function stripControls(track, step, prev, next, onIndex) {
+    function update() {
+      const end = track.scrollWidth - track.clientWidth - 2;
+      const last = track.children.length - 1;
+      onIndex(
+        track.scrollLeft >= end ? last : Math.round(track.scrollLeft / step())
+      );
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= end;
+    }
+
+    prev.addEventListener('click', () => track.scrollBy({ left: -step() }));
+    next.addEventListener('click', () => track.scrollBy({ left: step() }));
+    track.addEventListener('scroll', update, { passive: true });
+    return update;
+  }
+
+  // Past 1.4x off the frame's shape, a crop would cut away most of the photo
+  function fitMedia(frame, media) {
+    if (frame.classList.contains('mw-fit-cover')) return;
+    const video = media.tagName === 'VIDEO';
+    const forced = frame.classList.contains('mw-fit-contain');
+
+    function apply() {
+      if (!forced) {
+        const ratio = mediaRatio(media);
+        if (!ratio || !frame.clientHeight) return;
+
+        const off = ratio / (frame.clientWidth / frame.clientHeight);
+        frame.classList.toggle('mw-fit-contain', Math.max(off, 1 / off) >= 1.4);
+      }
+
+      const src = video ? media.poster : media.currentSrc || media.src;
+      if (
+        frame.classList.contains('mw-fit-contain') &&
+        src &&
+        !frame.querySelector(':scope > .mw-fit-backdrop')
+      ) {
+        const backdrop = document.createElement('img');
+        backdrop.className = 'mw-fit-backdrop';
+        backdrop.alt = '';
+        backdrop.src = src;
+        frame.prepend(backdrop);
+      }
+    }
+
+    // Watched, not measured once: a frame in a closed tab has no shape yet
+    new ResizeObserver(apply).observe(frame);
+    media.addEventListener(video ? 'loadedmetadata' : 'load', apply);
+  }
+
+  // ===== Portrait Gallery =====
+  function initPortraitGalleries(root) {
+    root.querySelectorAll('.mw-portrait-gallery').forEach((gallery) => {
+      if (fresh(gallery)) initPortraitGallery(gallery);
+    });
+  }
+
+  function initPortraitGallery(gallery) {
+    const track = gallery.querySelector('.mw-portrait-gallery-track');
+    if (!track) return;
+    const slides = Array.from(track.children);
+
+    slides.forEach((slide) => {
+      const media = slide.querySelector(':scope > img, :scope > video');
+      if (media) fitMedia(slide, media);
+    });
+
+    if (slides.length < 2) return;
+
+    const prev = iconButton(
+      'mw-overlay-btn mw-portrait-gallery-prev',
+      'Previous image',
+      'prev'
+    );
+    const next = iconButton(
+      'mw-overlay-btn mw-portrait-gallery-next',
+      'Next image',
+      'next'
+    );
+    const dots = document.createElement('div');
+    dots.className = 'mw-portrait-gallery-dots';
+
+    // Measured on every use: the slide width follows the container query
+    const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+
+    slides.forEach((slide, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'mw-portrait-gallery-dot';
+      dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+      dot.addEventListener('click', () => track.scrollTo({ left: i * step() }));
+      dots.appendChild(dot);
+    });
+
+    gallery.append(prev, next, dots);
+    stripControls(track, step, prev, next, (index) => {
+      Array.from(dots.children).forEach((dot, i) => {
+        dot.classList.toggle('mw-active', i === index);
+      });
+    })();
+  }
+
+  // ===== Mosaic =====
+  function initMosaics(root) {
+    root.querySelectorAll('.mw-mosaic-item').forEach((item) => {
+      if (!fresh(item)) return;
+      const img = item.querySelector('img');
+      const shaped = ['mw-mosaic-wide', 'mw-mosaic-tall', 'mw-mosaic-big'].some(
+        (name) => item.classList.contains(name)
+      );
+      if (!img || shaped) return;
+
+      function shape() {
+        const ratio = mediaRatio(img);
+        if (ratio >= 1.3) item.classList.add('mw-mosaic-wide');
+        else if (ratio && ratio <= 0.8) item.classList.add('mw-mosaic-tall');
+        return ratio > 0;
+      }
+
+      if (!shape()) img.addEventListener('load', shape, { once: true });
+    });
+  }
+
+  // ===== Lightbox =====
+  function initLightbox() {
+    let lightbox = null;
+
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href]');
+      const group = link && link.closest('.mw-mosaic, [data-mw-lightbox]');
+      if (!group || !link.querySelector('img') || e.defaultPrevented) return;
+      // A click meant to open the photo elsewhere stays a link
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+        return;
+      }
+      e.preventDefault();
+
+      // In reading order, which a dense grid does not keep to the source one
+      const links = Array.from(group.querySelectorAll('a[href]'))
+        .filter((a) => a.querySelector('img'))
+        .map((a) => ({ a, box: a.getBoundingClientRect() }))
+        .sort(
+          (x, y) => Math.round(x.box.top - y.box.top) || x.box.left - y.box.left
+        )
+        .map(({ a }) => a);
+      lightbox = lightbox || createLightbox();
+      lightbox.open(links, links.indexOf(link));
+    });
+  }
+
+  function createLightbox() {
+    const dialog = document.createElement('dialog');
+    dialog.className = 'mw-lightbox';
+    dialog.setAttribute('aria-label', 'Image viewer');
+
+    const bar = document.createElement('div');
+    bar.className = 'mw-lightbox-bar';
+    const prev = iconButton(
+      'mw-overlay-btn mw-lightbox-prev',
+      'Previous image',
+      'prev'
+    );
+    const next = iconButton(
+      'mw-overlay-btn mw-lightbox-next',
+      'Next image',
+      'next'
+    );
+    const close = iconButton(
+      'mw-overlay-btn mw-lightbox-close',
+      'Close',
+      'close'
+    );
+    close.autofocus = true;
+    const count = document.createElement('span');
+    count.className = 'mw-lightbox-count';
+    count.setAttribute('aria-live', 'polite');
+    const track = document.createElement('div');
+    track.className = 'mw-lightbox-track';
+
+    bar.append(prev, count, next, close);
+    dialog.append(bar, track);
+    document.body.appendChild(dialog);
+
+    let links = [];
+    let current = -1;
+
+    function load(i) {
+      const img = track.children[i] && track.children[i].querySelector('img');
+      if (img && !img.src) img.src = img.dataset.src;
+    }
+
+    const update = stripControls(
+      track,
+      () => track.clientWidth,
+      prev,
+      next,
+      (index) => {
+        if (index === current) return;
+        current = index;
+        count.textContent = index + 1 + ' / ' + links.length;
+        [index - 1, index, index + 1].forEach(load);
+      }
+    );
+
+    close.addEventListener('click', () => dialog.close());
+
+    // The stage around the photo is the backdrop here
+    track.addEventListener('click', (e) => {
+      if (e.target.classList.contains('mw-lightbox-slide')) dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prev.click();
+      else if (e.key === 'ArrowRight') next.click();
+    });
+
+    // Back on the tile of the photo the reader stopped at, not the one opened
+    dialog.addEventListener('close', () => {
+      // The event arrives a task late; a viewer opened again by then stays
+      if (dialog.open) return;
+      if (links[current]) links[current].focus();
+    });
+
+    return {
+      open(list, index) {
+        links = list;
+        current = -1;
+        track.replaceChildren(...list.map(lightboxSlide));
+        dialog.showModal();
+        track.scrollTo({
+          left: index * track.clientWidth,
+          behavior: 'instant',
+        });
+        update();
+      },
+    };
+  }
+
+  function lightboxSlide(link) {
+    const slide = document.createElement('figure');
+    slide.className = 'mw-lightbox-slide';
+    const img = document.createElement('img');
+    img.dataset.src = link.href;
+    img.alt = link.querySelector('img').alt;
+    img.decoding = 'async';
+    slide.appendChild(img);
+
+    const figure = link.closest('figure');
+    const caption = figure && figure.querySelector('figcaption');
+    if (caption) {
+      const text = document.createElement('figcaption');
+      caption.childNodes.forEach((node) => text.append(node.cloneNode(true)));
+      slide.appendChild(text);
+    }
+    return slide;
+  }
+
+  // ===== Story Reels =====
+  // CSS plays the story; this adds tap steps, video on its turn, close at end
+  function initStoryReels(root) {
+    root.querySelectorAll('.mw-story-reel').forEach((reel) => {
+      if (fresh(reel)) initStoryReel(reel);
+    });
+  }
+
+  function initStoryReel(reel) {
+    const frames = Array.from(
+      reel.querySelectorAll(':scope > img, :scope > video')
+    );
+    const back = iconButton('mw-story-reel-prev', 'Previous', 'prev');
+    const forward = iconButton('mw-story-reel-next', 'Next', 'next');
+    const pause = reel.querySelector('.mw-story-reel-pause input');
+    const close = reel.querySelector('[popovertargetaction="hide"]');
+    // The popover focuses it on open, so the arrow keys reach the reel at once
+    if (close) close.autofocus = true;
+    reel.append(back, forward);
+
+    const clocks = () =>
+      reel
+        .getAnimations({ subtree: true })
+        .filter((animation) => animation instanceof CSSAnimation);
+
+    // The fill runs through the whole story, so it tells the current frame
+    function current() {
+      const fill = clocks().find(
+        (animation) => animation.animationName === 'mw-story-reel-fill'
+      );
+      if (!fill) return null;
+      // Frames past the ones the stylesheet times are hidden and do not count
+      const count = frames.filter(
+        (frame) => getComputedStyle(frame).display !== 'none'
+      ).length;
+      const length = fill.effect.getTiming().duration / count;
+      return { count, length, index: Math.floor(fill.currentTime / length) };
+    }
+
+    function play(frame) {
+      frames.forEach((other) => {
+        if (other.tagName === 'VIDEO' && other !== frame) other.pause();
+      });
+      if (!frame || frame.tagName !== 'VIDEO') return;
+      frame.currentTime = 0;
+      if (!pause || !pause.checked) frame.play().catch(() => {});
+    }
+
+    function step(delta) {
+      const now = current();
+      if (!now) return;
+      const target = Math.max(now.index + delta, 0);
+      if (target >= now.count) {
+        reel.hidePopover();
+        return;
+      }
+      // Past the 1ms reveal by a margin, or rounding lands just short of it
+      const time = target * now.length + 20;
+      clocks().forEach((animation) => (animation.currentTime = time));
+      play(frames[target]);
+    }
+
+    // The video on screen keeps to the story's clock: held or paused, it stops
+    function syncVideo(held) {
+      const now = reel.matches(':popover-open') && current();
+      const frame = now && frames[now.index];
+      if (!frame || frame.tagName !== 'VIDEO') return;
+      if (held || (pause && pause.checked)) frame.pause();
+      else frame.play().catch(() => {});
+    }
+
+    // A hold pauses the story in CSS; letting go must not also step it
+    let pressed = 0;
+    reel.addEventListener('pointerdown', (e) => {
+      pressed = e.timeStamp;
+      syncVideo(true);
+    });
+    ['pointerup', 'pointercancel'].forEach((type) => {
+      reel.addEventListener(type, () => syncVideo(false));
+    });
+
+    function onTap(delta) {
+      return (e) => {
+        if (e.detail && e.timeStamp - pressed > 250) return;
+        step(delta);
+      };
+    }
+
+    back.addEventListener('click', onTap(-1));
+    forward.addEventListener('click', onTap(1));
+
+    // A seek backwards ends the reveals it skips too; only the current frame plays
+    reel.addEventListener('animationend', (e) => {
+      if (e.animationName === 'mw-story-reel-fill') {
+        reel.hidePopover();
+      } else if (e.animationName === 'mw-story-reel-frame') {
+        const now = current();
+        if (now && frames[now.index] === e.target) play(e.target);
+      }
+    });
+
+    reel.addEventListener('toggle', (e) => {
+      play(e.newState === 'open' ? frames[0] : null);
+    });
+
+    if (pause) pause.addEventListener('change', () => syncVideo(false));
+
+    reel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
   }
 
   // ===== Theme Toggle =====

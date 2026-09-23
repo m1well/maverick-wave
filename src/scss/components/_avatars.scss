@@ -25,6 +25,21 @@
       transition: transform var(--mw-duration-slow) var(--mw-ease-out);
     }
 
+    // Inside the frame, as on a card: the clip lets nothing paint over the border
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border: 2px solid var(--mw-corner-accent);
+      border-radius: inherit;
+      mask-image: radial-gradient(
+        ellipse 75% 50% at 100% 0,
+        #000 55%,
+        transparent 100%
+      );
+    }
+
     // `:has(img)` keeps the sweep off the initials variant, where it would just
     // flash a white bar across the letters
     &:has(img)::after {
@@ -82,8 +97,23 @@
       font-size: font-size('6xl');
     }
 
+    // Above -square, so that one still sharpens them
+    &-landscape,
+    &-portrait {
+      border-radius: radius('xl');
+
+      // The card's arc, same radius - 5px stands in for the 4-6px frame of lg/xl
+      &::before {
+        @include corner-accent(5px, 'top');
+      }
+    }
+
     &-square {
       border-radius: radius('sm');
+
+      &::before {
+        border-radius: max(0px, calc(#{radius('sm')} - 3px));
+      }
     }
 
     // Initials - for users without a picture. Centers its text content and puts
@@ -174,6 +204,28 @@
         width: 210px;
         height: 210px;
         border-width: 6px;
+      }
+    }
+
+    // Below the size steps on purpose - they set both axes, the ratio frees one
+    &-landscape {
+      width: auto;
+      aspect-ratio: 3 / 2;
+    }
+
+    &-portrait {
+      height: auto;
+      aspect-ratio: 9 / 16;
+    }
+
+    // 9:16 this small reads as a sliver - wider at the same height instead
+    &-lg.mw-avatar-portrait {
+      width: auto;
+      height: calc(120px * 16 / 9);
+      aspect-ratio: 2 / 3;
+
+      @include media-up('sm') {
+        height: calc(144px * 16 / 9);
       }
     }
   }

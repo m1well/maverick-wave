@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+@layer mw.utilities {
+  // Set by the script when the photo's shape is too far off the frame's
+  .mw-fit-contain {
+    > img:not(.mw-fit-backdrop),
+    > video {
+      object-fit: contain;
+    }
+
+    > .mw-fit-backdrop {
+      display: block;
+    }
+  }
+
+  // Made once and kept; the frame can turn back to a crop on a resize
+  .mw-fit-backdrop {
+    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // Scaled, or the blur fades into a pale rim at the edges
+    transform: scale(1.2);
+    filter: blur(24px) brightness(0.7) saturate(1.2);
+    pointer-events: none;
+  }
+}

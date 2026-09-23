@@ -1,0 +1,203 @@
+@use '../abstracts' as *;
+@use 'overlay-btn';
+
+@layer mw.components {
+  // A strip of the next row stays in view, so the box reads as scrollable
+  $peek: 0.3;
+  $gap: 2px;
+  $rows: (
+    '': 3,
+    '.mw-feed-rows-2': 2,
+  );
+
+  .mw-feed {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    // The ratio further down sizes the grid; the frame goes around it
+    box-sizing: content-box;
+    padding: spacing('3');
+    border: 1px solid var(--mw-border-accent);
+    border-radius: radius('lg');
+    background: var(--mw-card-background);
+    gap: $gap;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: spacing('3');
+    @include scrollbar;
+
+    @include media-up('md') {
+      padding: spacing('4');
+      scroll-padding-top: spacing('4');
+    }
+  }
+
+  .mw-feed-plain {
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('none');
+    background: none;
+    scroll-padding-top: 0;
+  }
+
+  // Once posts overflow: box height from its width, rows splitting it exactly
+  @each $rows-modifier, $count in $rows {
+    $more: ':has(> :nth-child(#{$count * 3 + 1}))';
+
+    .mw-feed#{$rows-modifier}#{$more} {
+      aspect-ratio: #{9} / #{4 * ($count + $peek)};
+      grid-auto-rows: calc((100% - #{$count} * #{$gap}) / #{$count + $peek});
+    }
+
+    .mw-feed#{$rows-modifier}.mw-feed-square#{$more} {
+      aspect-ratio: #{3} / #{$count + $peek};
+    }
+  }
+
+  .mw-feed-item {
+    position: relative;
+    margin: spacing('0');
+    // Sizes free rows only; stretched both ways, so box-sized rows win
+    aspect-ratio: 3 / 4;
+    place-self: stretch;
+    overflow: hidden;
+    scroll-snap-align: start;
+    background: var(--mw-card-background);
+
+    // A link to a page of its own, or a button that opens the photo in place
+    > a,
+    > button {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      padding: spacing('0');
+      border: none;
+      background: none;
+      cursor: pointer;
+      @include tappable;
+      @include focus-ring-inset(-3px);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgb(0 0 0 / 0%);
+        transition: background-color var(--mw-duration-fast) var(--mw-ease-out);
+      }
+
+      &:hover::after {
+        background: rgb(0 0 0 / 18%);
+      }
+
+      &:active::after {
+        background: rgb(0 0 0 / 30%);
+        transition-duration: var(--mw-duration-instant);
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .mw-feed-square .mw-feed-item {
+    aspect-ratio: 1;
+  }
+
+  .mw-feed-post {
+    // Not only the UA rule, or a browser without popovers shows it in the grid
+    display: none;
+    width: min(32rem, 100vw - 2rem);
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('md');
+    overflow: hidden auto;
+    overscroll-behavior: contain;
+    background: var(--mw-card-background);
+    color: var(--mw-text-color);
+    box-shadow: var(--mw-elevation-5);
+    opacity: 0;
+    transform: scale(0.96);
+    transition:
+      opacity var(--mw-duration-base) var(--mw-ease-out),
+      transform var(--mw-duration-base) var(--mw-ease-out),
+      overlay var(--mw-duration-base) allow-discrete,
+      display var(--mw-duration-base) allow-discrete;
+
+    &:popover-open {
+      display: block;
+      opacity: 1;
+      transform: none;
+
+      @starting-style {
+        opacity: 0;
+        transform: scale(0.96);
+      }
+    }
+
+    &::backdrop {
+      background: var(--mw-overlay-background);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      transition:
+        opacity var(--mw-duration-base) var(--mw-ease-out),
+        overlay var(--mw-duration-base) allow-discrete,
+        display var(--mw-duration-base) allow-discrete;
+    }
+
+    &:popover-open::backdrop {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    > img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 78dvh;
+      object-fit: contain;
+      background: $fixed-stage;
+    }
+
+    > figcaption {
+      padding: spacing('4') spacing('5') spacing('5');
+      font-size: font-size('sm');
+      line-height: 1.55;
+
+      > * {
+        margin: spacing('0');
+      }
+
+      > * + * {
+        margin-top: spacing('2');
+      }
+
+      time,
+      small {
+        display: block;
+        color: var(--mw-text-muted-color);
+        font-size: font-size('xs');
+      }
+    }
+  }
+
+  .mw-feed-post-close {
+    position: absolute;
+    top: spacing('3');
+    right: spacing('3');
+  }
+
+  // A popover does not lock the page scroll behind it
+  :root:has(.mw-feed-post:popover-open) {
+    overflow: hidden;
+    scrollbar-gutter: stable; // Or the page shifts by the hidden scrollbar
+  }
+}

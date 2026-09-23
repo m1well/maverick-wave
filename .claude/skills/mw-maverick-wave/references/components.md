@@ -1473,6 +1473,13 @@ deprecated). Any card fits into the content wrapper.
 
 - Sizes: `mw-avatar-xs` 32, `-sm` 64, default 96, `-lg` 144, `-xl` 210 px.
 - Shape: `mw-avatar-square`.
+- `mw-avatar-landscape` (3:2) and `mw-avatar-portrait` (9:16) for a photo that
+  is not square - meant for `-lg` and `-xl`, with 20px corners that
+  `mw-avatar-square` still sharpens. A landscape avatar keeps the height of its
+  size step, a portrait one the width; on `-lg` a portrait is 2:3 instead, as
+  tall as the 9:16 one and wider.
+- Every avatar carries the accent arc on its top-right corner, inside the frame
+  (`--mw-corner-accent`). It stays as it is on hover.
 - Colours `mw-avatar-primary`, `-secondary`, `-success`, `-warning`, `-danger`,
   `-info` tint the **border**. On `mw-avatar-initials` the same class also tints
   the **surface**, so both can be combined.
@@ -1801,6 +1808,211 @@ current button carry `active`. `mw-image-slider` is its own query container
 (`mw-slider`): the three heights (250 / 320 / 370px) and the control columns
 switch at 420px and 560px of slider width, because the slider caps at 600px and
 past a tablet the viewport says nothing about the room it has.
+
+## Mosaic
+
+Photos of any shape in one grid; a tap opens the lightbox.
+
+```html
+<div class="mw-mosaic">
+  <figure class="mw-mosaic-item mw-mosaic-big">
+    <a href="ridge-full.jpg">
+      <img
+        src="ridge.jpg"
+        alt="Mountain range at sunrise"
+        width="800"
+        height="450"
+        loading="lazy"
+      />
+    </a>
+    <figcaption>First light on the ridge.</figcaption>
+  </figure>
+  <figure class="mw-mosaic-item">…</figure>
+</div>
+```
+
+- Two columns on a phone, four at most, from the width of the box it sits in.
+- The script shapes each tile from the photo's proportions - the `width` and
+  `height` attributes, else the natural size once loaded: `mw-mosaic-wide` from
+  1.3:1, `mw-mosaic-tall` from 1:1.25, square otherwise. A shape class set by
+  hand wins; `mw-mosaic-big` (2×2) is only ever set by hand. Without the script
+  every tile is square.
+- `grid-auto-flow: dense` fills the holes and moves tiles away from their source
+  order. `reading-flow: grid-rows` makes Tab follow the eye where the browser
+  has it (Chromium so far).
+- Gaps: `mw-mosaic-gap-sm`, `-gap-lg`.
+- The tile crops, the lightbox does not. The `figcaption` is hidden in the tile
+  and shown in the lightbox.
+
+### Lightbox
+
+A click on a link that holds an image - inside `mw-mosaic` or any element with
+`data-mw-lightbox` - opens the photo full screen instead of following the link.
+The script builds the viewer once, a `<dialog class="mw-lightbox">`, with one
+slide per image of the group in reading order, the full image from the link's
+`href` and the caption copied from the `figcaption`. Swipe, arrow keys or the
+arrows page through it; Escape, the cross or a click on the stage beside the
+photo close it, and focus returns to the tile of the last photo viewed. A click
+with a modifier key stays a link.
+
+Without `main.js`, build it yourself: a `<dialog class="mw-lightbox">` holding
+`mw-lightbox-bar` (with `mw-lightbox-prev`, `mw-lightbox-count`,
+`mw-lightbox-next` and `mw-lightbox-close`, all `mw-overlay-btn`) and
+`mw-lightbox-track` with one `<figure class="mw-lightbox-slide">` per photo. The
+track is a scroll-snap strip; the page scroll is locked while the dialog is open.
+
+## Portrait gallery
+
+```html
+<div class="mw-portrait-gallery">
+  <div
+    class="mw-portrait-gallery-track"
+    tabindex="0"
+    aria-label="Portrait photos"
+  >
+    <figure class="mw-portrait-gallery-slide">
+      <img
+        src="cape.jpg"
+        alt="Lighthouse on a cliff at dusk"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+      <figcaption>
+        <strong>North Cape</strong>
+        The lamp comes on just after the sun goes.
+      </figcaption>
+    </figure>
+  </div>
+</div>
+```
+
+- Upright 3:4 slides in a native scroll-snap strip, the next one peeking in.
+  One slide below 560px of gallery width, two and a quarter from there, three
+  from 880px - a container query, so a gallery in a narrow column stays at one.
+  The height is capped at 78svh, which a landscape phone needs.
+- `mw-portrait-gallery-tall`: 9:16, for stories, reels and screenshots. A
+  `<video>` works in place of an `<img>`.
+- Gaps: `mw-portrait-gallery-gap-sm`, `-gap-lg`.
+- The script adds the arrows (`mw-portrait-gallery-prev` / `-next`, for a mouse
+  only) and the dots (`mw-portrait-gallery-dots` / `-dot`, below 560px, the
+  current one `mw-active`).
+- A photo more than 1.4× off the slide's shape is shown whole over a blurred
+  copy of itself instead of cropped: the script sets `mw-fit-contain` on the
+  slide and prepends a `mw-fit-backdrop` image, and checks again on every
+  resize. `mw-fit-contain` set by hand forces it, `mw-fit-cover` on the slide
+  turns it off.
+
+## Photo feed
+
+The three-column grid from a phone's photo app, in a framed box that scrolls.
+
+```html
+<div class="mw-feed">
+  <div class="mw-feed-item">
+    <button type="button" popovertarget="post-cape">
+      <img
+        src="cape.jpg"
+        alt="Lighthouse on a cliff at dusk"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+    </button>
+    <figure class="mw-feed-post" id="post-cape" popover>
+      <button
+        type="button"
+        class="mw-overlay-btn mw-feed-post-close"
+        popovertarget="post-cape"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+      <img
+        src="cape.jpg"
+        alt="Lighthouse on a cliff at dusk"
+        width="600"
+        height="800"
+        loading="lazy"
+      />
+      <figcaption>
+        <p>Stood there until the lamp came on.</p>
+        <time datetime="2026-08-12">12 August 2026</time>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+```
+
+- 3:4 tiles, 2px apart; `mw-feed-square` for square ones.
+- Past three rows the box scrolls, with a strip of the next row in view so it
+  reads as scrollable. `mw-feed-rows-2` shows two rows, `mw-feed-plain` drops
+  the frame.
+- No script: the tile is a button with `popovertarget`, the post a `popover`.
+  In Angular that is `[attr.popovertarget]` and a matching `[id]`. A tile can be
+  an `<a>` to a page of its own instead.
+- `time` and `small` in the caption are set as a muted line. The page scroll is
+  locked while a post is open.
+
+## Story archive
+
+```html
+<div class="mw-stories" aria-label="Story archive">
+  <button type="button" class="mw-story" popovertarget="story-coast">
+    <span class="mw-story-cover"><img src="beach.jpg" alt="" /></span>
+    <span class="mw-story-label">Coast</span>
+  </button>
+  <div class="mw-story-reel" id="story-coast" popover>
+    <div class="mw-story-reel-head">
+      <span>Coast</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-coast"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img src="beach.jpg" alt="Beach at sunset" loading="lazy" />
+    <video
+      src="sunrise.mp4"
+      poster="sunrise.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+    ></video>
+  </div>
+</div>
+```
+
+- The row scrolls sideways, with a shadow on the side that has more behind it;
+  a mouse gets a thin scrollbar.
+- Playback is CSS: every frame shows for five seconds, a segmented bar in the
+  head counts them off, and holding the story (`:active`) or ticking the pause
+  checkbox stops it. Full screen on a phone, phone-shaped (9:16) from `sm` up.
+- Twelve frames at most - the timing is written out for twelve. Later frames
+  are hidden and the story ends after the twelfth.
+- Under `prefers-reduced-motion` nothing plays: the frames become a vertical
+  strip to swipe, and the bar follows the scroll where the browser has scroll
+  timelines.
+- The script adds tap zones (`mw-story-reel-prev` on the left 30%, `-next` on
+  the rest), arrow keys, focus on the close button when the story opens, a video
+  that starts when its frame comes up and stops with the story, and closes the
+  story at its end.
+
+## Overlay button
+
+`mw-overlay-btn` is the round 44px button that sits on a photo - dark and
+translucent in both themes, with light ink and an inline `<svg>` sized for it.
+`:disabled` hides it. The lightbox, the portrait gallery, the feed post and the
+story reel use it for their close and arrow buttons.
 
 ## Blog post
 

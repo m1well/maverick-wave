@@ -1,0 +1,47 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  .mw-overlay-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('full');
+    background: rgb(0 0 0 / 38%);
+    color: $fixed-surface-text;
+    font-size: font-size('md');
+    line-height: 1;
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include focus-ring;
+
+    svg {
+      width: 1.375rem;
+      height: 1.375rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    &:hover {
+      background: rgb(0 0 0 / 62%);
+    }
+
+    &:active {
+      transform: scale(0.9);
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    &:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

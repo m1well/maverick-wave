@@ -391,6 +391,8 @@ $_corner-opaque: 55%;
 
   @if $corners == 'bottom' {
     mask-image: $bottom;
+  } @else if $corners == 'top' {
+    mask-image: $top;
   } @else {
     mask-image: $top, $bottom;
   }

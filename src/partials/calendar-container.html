@@ -26,10 +26,26 @@
 </div>
 
 <div class="mw-grid-2 calendar-demos mw-my-6">
-  <div>
+  <div class="calendar-demo">
     <h4 class="mw-mb-2">Month</h4>
+    <div class="mw-segmented mw-mb-4" data-modifier-demo="calendar-month">
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Default
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-calendar-compact"
+      >
+        Compact
+      </button>
+    </div>
     <div
-      class="mw-calendar calendar-demo"
+      class="mw-calendar"
       id="calendar-month"
       data-calendar="month"
       data-calendar-locale="en-GB"
@@ -79,44 +95,26 @@
     </div>
   </div>
 
-  <div>
-    <h4 class="mw-mb-2">Compact Month</h4>
-    <div
-      class="mw-calendar mw-calendar-compact calendar-demo"
-      id="calendar-compact"
-      data-calendar="month"
-      data-calendar-locale="en-GB"
-    >
-      <div class="mw-calendar-header">
-        <button
-          type="button"
-          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
-          data-calendar-nav="-1"
-          aria-label="Previous month"
-        >
-          <i class="fas fa-chevron-left"></i>
-        </button>
-
-        <div class="mw-calendar-title" aria-live="polite"></div>
-
-        <button
-          type="button"
-          class="mw-btn mw-btn-outline mw-btn-sm mw-calendar-nav"
-          data-calendar-nav="1"
-          aria-label="Next month"
-        >
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-
-      <div class="mw-calendar-grid"></div>
-    </div>
-  </div>
-
-  <div>
+  <div class="calendar-demo">
     <h4 class="mw-mb-2">Week</h4>
+    <div class="mw-segmented mw-mb-4" data-modifier-demo="calendar-week">
+      <button
+        type="button"
+        class="mw-segmented-item mw-active"
+        data-modifier=""
+      >
+        Default
+      </button>
+      <button
+        type="button"
+        class="mw-segmented-item"
+        data-modifier="mw-calendar-compact"
+      >
+        Compact
+      </button>
+    </div>
     <div
-      class="mw-calendar calendar-demo"
+      class="mw-calendar"
       id="calendar-week"
       data-calendar="week"
       data-calendar-locale="en-GB"

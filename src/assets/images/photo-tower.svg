@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Television tower above the city at night">
+  <defs>
+    <linearGradient id="tw-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1433"/>
+      <stop offset="0.6" stop-color="#3b2d63"/>
+      <stop offset="1" stop-color="#b0628a"/>
+    </linearGradient>
+    <pattern id="tw-win" width="16" height="22" patternUnits="userSpaceOnUse">
+      <rect x="4" y="6" width="6" height="8" fill="#ffd98a" opacity="0.7"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="800" fill="url(#tw-sky)"/>
+  <circle cx="120" cy="120" r="34" fill="#f4e7c8"/>
+  <circle cx="134" cy="110" r="34" fill="#12183a"/>
+  <rect x="318" y="40" width="4" height="90" fill="#c9c3dd"/>
+  <circle cx="320" cy="38" r="5" fill="#ff7b6b"/>
+  <polygon points="310,130 330,130 338,800 302,800" fill="#241f43"/>
+  <ellipse cx="320" cy="250" rx="46" ry="42" fill="#2e2856"/>
+  <rect x="274" y="246" width="92" height="8" fill="#ffd98a" opacity="0.8"/>
+  <g fill="#1a1633">
+    <rect x="0" y="560" width="90" height="240"/>
+    <rect x="100" y="620" width="70" height="180"/>
+    <rect x="180" y="520" width="80" height="280"/>
+    <rect x="380" y="580" width="90" height="220"/>
+    <rect x="480" y="500" width="120" height="300"/>
+  </g>
+  <g fill="url(#tw-win)">
+    <rect x="0" y="560" width="90" height="240"/>
+    <rect x="100" y="620" width="70" height="180"/>
+    <rect x="180" y="520" width="80" height="280"/>
+    <rect x="380" y="580" width="90" height="220"/>
+    <rect x="480" y="500" width="120" height="300"/>
+  </g>
+</svg>

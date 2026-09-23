@@ -1,0 +1,182 @@
+<h3 class="mw-section-subtitle">Story Archive</h3>
+<p class="mw-text-muted mw-text-measure">
+  Stories that stay. A circle opens its story full screen on a phone and
+  phone-shaped on a desktop; every frame shows for five seconds and a bar at the
+  top counts them off - that part is CSS alone. A few lines of script add the
+  rest: a tap on the right moves on, on the left goes back (arrows under a
+  mouse), a video starts when its frame comes up, the story closes at its end.
+  Holding a finger on it or the pause button stops it; Escape, the cross or a
+  click beside it close it. With reduced motion set in the system nothing plays
+  by itself - the frames become a strip to swipe through instead.
+</p>
+
+<div class="mw-stories" aria-label="Story archive">
+  <button type="button" class="mw-story" popovertarget="story-coast">
+    <span class="mw-story-cover"
+      ><img src="images/story-beach.svg" alt=""
+    /></span>
+    <span class="mw-story-label">Coast</span>
+  </button>
+  <div class="mw-story-reel" id="story-coast" popover>
+    <div class="mw-story-reel-head">
+      <span>Coast</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-coast"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img
+      src="images/story-beach.svg"
+      alt="Beach at sunset with waves running up the sand"
+      loading="lazy"
+    />
+    <video
+      src="media/story-sunrise.mp4"
+      poster="media/story-sunrise.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+    ></video>
+    <img
+      src="images/photo-lighthouse.svg"
+      alt="Lighthouse on a cliff at dusk"
+      loading="lazy"
+    />
+  </div>
+  <button type="button" class="mw-story" popovertarget="story-nights">
+    <span class="mw-story-cover"
+      ><img src="images/story-stars.svg" alt=""
+    /></span>
+    <span class="mw-story-label">Nights</span>
+  </button>
+  <div class="mw-story-reel" id="story-nights" popover>
+    <div class="mw-story-reel-head">
+      <span>Nights</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-nights"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img
+      src="images/story-stars.svg"
+      alt="Tent glowing under the milky way"
+      loading="lazy"
+    />
+    <img
+      src="images/photo-tower.svg"
+      alt="Television tower above the city at night"
+      loading="lazy"
+    />
+  </div>
+  <button type="button" class="mw-story" popovertarget="story-north">
+    <span class="mw-story-cover"
+      ><img src="images/story-aurora.svg" alt=""
+    /></span>
+    <span class="mw-story-label">North</span>
+  </button>
+  <div class="mw-story-reel" id="story-north" popover>
+    <div class="mw-story-reel-head">
+      <span>North</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-north"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img
+      src="images/story-aurora.svg"
+      alt="Northern lights over a snowy forest"
+      loading="lazy"
+    />
+    <img
+      src="images/photo-peak.svg"
+      alt="Snowy mountain peak under a starry sky"
+      loading="lazy"
+    />
+  </div>
+  <button type="button" class="mw-story" popovertarget="story-hikes">
+    <span class="mw-story-cover"
+      ><img src="images/photo-forest-path.svg" alt=""
+    /></span>
+    <span class="mw-story-label">Hikes</span>
+  </button>
+  <div class="mw-story-reel" id="story-hikes" popover>
+    <div class="mw-story-reel-head">
+      <span>Hikes</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-hikes"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img
+      src="images/photo-forest-path.svg"
+      alt="Path through a sunlit forest"
+      loading="lazy"
+    />
+    <img
+      src="images/photo-waterfall.svg"
+      alt="Waterfall between mossy cliffs"
+      loading="lazy"
+    />
+  </div>
+  <button type="button" class="mw-story" popovertarget="story-sky">
+    <span class="mw-story-cover"
+      ><img src="images/photo-balloon.svg" alt=""
+    /></span>
+    <span class="mw-story-label">Up high</span>
+  </button>
+  <div class="mw-story-reel" id="story-sky" popover>
+    <div class="mw-story-reel-head">
+      <span>Up high</span>
+      <label class="mw-overlay-btn mw-story-reel-pause"
+        ><input type="checkbox" aria-label="Pause"
+      /></label>
+      <button
+        type="button"
+        class="mw-overlay-btn"
+        popovertarget="story-sky"
+        popovertargetaction="hide"
+        aria-label="Close"
+      >
+        &#120299;
+      </button>
+    </div>
+    <img
+      src="images/photo-balloon.svg"
+      alt="Hot air balloon in a morning sky"
+      loading="lazy"
+    />
+  </div>
+</div>

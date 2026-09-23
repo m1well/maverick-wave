@@ -1,0 +1,178 @@
+@use '../abstracts' as *;
+@use 'overlay-btn';
+
+@layer mw.components {
+  dialog.mw-lightbox {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: $fixed-stage;
+    color: $fixed-surface-text;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    // The brand ink disappears on the stage
+    --mw-focus-ring-color: #{$fixed-surface-text};
+    opacity: 0;
+    transition:
+      opacity var(--mw-duration-base) var(--mw-ease-out),
+      overlay var(--mw-duration-base) allow-discrete,
+      display var(--mw-duration-base) allow-discrete;
+
+    &[open] {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    &::backdrop {
+      background: transparent;
+    }
+  }
+
+  // A <dialog> does not lock the page scroll behind it
+  :root:has(dialog.mw-lightbox[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable; // Or the page shifts by the hidden scrollbar
+  }
+
+  .mw-lightbox-track {
+    display: flex;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
+  }
+
+  .mw-lightbox-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('4');
+    margin: spacing('0');
+    padding: 4.25rem spacing('3')
+      calc(#{spacing('6')} + env(safe-area-inset-bottom, 0px));
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+
+    img {
+      display: block;
+      flex: 0 1 auto;
+      min-height: 0;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: radius('xs');
+      user-select: none;
+    }
+
+    figcaption {
+      flex: none;
+      max-width: 60ch;
+      max-height: 30%;
+      overflow-y: auto;
+      padding-inline: spacing('3');
+      color: rgb(239 239 239 / 88%);
+      font-size: font-size('sm');
+      line-height: 1.5;
+      text-align: center;
+
+      > * {
+        margin: spacing('0');
+      }
+
+      > * + * {
+        margin-top: spacing('2');
+      }
+
+      time,
+      small {
+        display: block;
+        color: rgb(239 239 239 / 60%);
+        font-size: font-size('xs');
+      }
+    }
+  }
+
+  // On a phone the arrows sit in the bar, off the photo
+  .mw-lightbox-bar {
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: z-index('lift');
+    display: flex;
+    align-items: center;
+    gap: spacing('1');
+    padding: max(#{spacing('3')}, env(safe-area-inset-top, 0px)) spacing('3')
+      spacing('5');
+    background: linear-gradient(rgb(0 0 0 / 55%), transparent);
+
+    .mw-lightbox-close {
+      margin-left: auto;
+    }
+  }
+
+  .mw-lightbox-count {
+    min-width: 4.5em;
+    font-size: font-size('sm');
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+  }
+
+  @include media-up('md') {
+    .mw-lightbox-slide {
+      padding-inline: 5.5rem;
+    }
+
+    .mw-lightbox-bar {
+      padding-left: spacing('6');
+    }
+
+    .mw-lightbox-count {
+      order: -1;
+      text-align: left;
+    }
+
+    // Fixed works because the bar has no transform or filter to trap them
+    .mw-lightbox-prev,
+    .mw-lightbox-next {
+      position: fixed;
+      top: 50%;
+      translate: 0 -50%;
+      width: 3.25rem;
+      height: 3.25rem;
+      background: rgb(255 255 255 / 10%);
+
+      &:hover {
+        background: rgb(255 255 255 / 20%);
+      }
+    }
+
+    .mw-lightbox-prev {
+      left: spacing('6');
+    }
+
+    .mw-lightbox-next {
+      right: spacing('6');
+    }
+  }
+}

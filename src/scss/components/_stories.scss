@@ -1,0 +1,443 @@
+@use '../abstracts' as *;
+@use 'overlay-btn';
+
+@layer mw.components {
+  $frame-height: min(92dvh, 56rem);
+  $frame-time: 5s;
+  // Frames per story the timing is written out for
+  $max-frames: 12;
+
+  // A bar cut into as many segments as the story has frames
+  @function segments($color, $count) {
+    @return repeating-linear-gradient(
+      to right,
+      $color 0 calc(100% / #{$count} - 3px),
+      transparent 0 calc(100% / #{$count})
+    );
+  }
+
+  .mw-stories {
+    display: flex;
+    gap: spacing('5');
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-block: spacing('2');
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    @include scroll-hint;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    // A finger swipes the row, a mouse wheel cannot - it gets the bar
+    @media (hover: hover) and (pointer: fine) {
+      scrollbar-width: thin;
+    }
+  }
+
+  .mw-story {
+    flex: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: spacing('2');
+    width: 4.75rem;
+    padding: spacing('0');
+    border: none;
+    border-radius: radius('md');
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    scroll-snap-align: start;
+    @include tappable;
+    @include focus-ring;
+
+    &:active .mw-story-cover {
+      transform: scale(0.93);
+      transition-duration: var(--mw-duration-instant);
+    }
+  }
+
+  .mw-story-cover {
+    display: block;
+    width: 4.25rem;
+    height: 4.25rem;
+    padding: 3px;
+    border-radius: radius('full');
+    // The ink tones, not the fills: the ring has to carry on a dark page too
+    background: linear-gradient(
+      45deg,
+      var(--mw-secondary-text-color),
+      var(--mw-primary-text-color)
+    );
+    transition: transform var(--mw-duration-fast) var(--mw-ease-out);
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      // The token that follows the surface - the page, or a card around the row
+      border: 2px solid var(--mw-scroll-hint-cover, var(--mw-page-background));
+      border-radius: radius('full');
+      object-fit: cover;
+    }
+  }
+
+  .mw-story-label {
+    max-width: 100%;
+    font-size: font-size('xs');
+    @include truncate;
+  }
+
+  // A vertical snap strip: swipe, wheel and arrow keys page through it natively
+  .mw-story-reel {
+    // Not only the UA rule, or a browser without popovers shows it in the row
+    display: none;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: spacing('0');
+    border: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none;
+    background: #000;
+    color: $fixed-surface-text;
+    --mw-focus-ring-color: #{$fixed-surface-text};
+    // A long press pauses, so it must not open the image menu as well
+    user-select: none;
+    -webkit-touch-callout: none;
+    opacity: 0;
+    transition:
+      opacity var(--mw-duration-base) var(--mw-ease-out),
+      overlay var(--mw-duration-base) allow-discrete,
+      display var(--mw-duration-base) allow-discrete;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:popover-open {
+      display: block;
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    &::backdrop {
+      background: rgb(0 0 0 / 88%);
+      opacity: 0;
+      transition:
+        opacity var(--mw-duration-base) var(--mw-ease-out),
+        overlay var(--mw-duration-base) allow-discrete,
+        display var(--mw-duration-base) allow-discrete;
+    }
+
+    &:popover-open::backdrop {
+      opacity: 1;
+
+      @starting-style {
+        opacity: 0;
+      }
+    }
+
+    > img,
+    > video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    // Wider than a phone held upright: the story keeps its phone shape
+    @include media-up('sm') {
+      width: calc(#{$frame-height} * 9 / 16);
+      height: $frame-height;
+      margin: auto;
+      border-radius: radius('lg');
+    }
+  }
+
+  .mw-story-reel-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    gap: spacing('1');
+    height: 5rem;
+    // Laid over the first frame instead of pushing it down
+    margin-bottom: -5rem;
+    padding: calc(max(#{spacing('3')}, env(safe-area-inset-top, 0px)) + 0.75rem)
+      spacing('3') 0 spacing('5');
+    background: linear-gradient(rgb(0 0 0 / 55%), transparent);
+    font-size: font-size('sm');
+    font-weight: font-weight('bold');
+    text-shadow: 0 1px 3px rgb(0 0 0 / 60%);
+
+    > span {
+      flex: 1;
+      min-width: 0;
+      @include truncate;
+    }
+
+    .mw-overlay-btn {
+      margin-top: -#{spacing('3')};
+      background: transparent;
+    }
+
+    // The progress bar: the track and the fill drawn over it
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: max(#{spacing('3')}, env(safe-area-inset-top, 0px));
+      left: spacing('3');
+      right: spacing('3');
+      height: 2px;
+      border-radius: 2px;
+    }
+
+    &::before {
+      background: rgb(255 255 255 / 35%);
+    }
+
+    &::after {
+      background: $fixed-surface-text;
+    }
+  }
+
+  // A checkbox, so pausing needs no script: two bars, a triangle once paused
+  .mw-story-reel-pause {
+    position: relative;
+
+    input {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    &:has(:focus-visible) {
+      outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+      outline-offset: var(--mw-focus-ring-offset);
+    }
+
+    &::before {
+      content: '';
+      width: 10px;
+      height: 13px;
+      border-inline: 3px solid currentColor;
+    }
+
+    &:has(:checked)::before {
+      width: 0;
+      height: 0;
+      margin-left: 3px;
+      border-inline: 0;
+      border-left: 11px solid currentColor;
+      border-block: 7px solid transparent;
+    }
+  }
+
+  // Built by the script: left a third back, the rest on
+  .mw-story-reel-prev,
+  .mw-story-reel-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: spacing('0') spacing('3');
+    border: none;
+    background: none;
+    color: $fixed-surface-text;
+    cursor: pointer;
+    @include tappable;
+    @include focus-ring-inset(-4px);
+
+    svg {
+      width: 1.75rem;
+      height: 1.75rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0;
+      filter: drop-shadow(0 1px 2px rgb(0 0 0 / 60%));
+      transition: opacity var(--mw-duration-fast) var(--mw-ease-out);
+    }
+
+    &:focus-visible svg {
+      opacity: 1;
+    }
+
+    // A finger taps the halves blind; a mouse gets the arrows to aim at
+    @media (hover: hover) and (pointer: fine) {
+      svg {
+        opacity: 0.7;
+      }
+
+      &:hover svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  .mw-story-reel-prev {
+    left: 0;
+    width: 30%;
+  }
+
+  .mw-story-reel-next {
+    right: 0;
+    width: 70%;
+    justify-content: flex-end;
+  }
+
+  // Longhands only in this file: the shorthand would reset the scroll timeline
+  @media (prefers-reduced-motion: no-preference) {
+    .mw-story-reel {
+      overflow: hidden;
+      scroll-snap-type: none;
+
+      > img,
+      > video {
+        position: absolute;
+        inset: 0;
+      }
+
+      > :nth-child(n + 2 of img, video) {
+        visibility: hidden;
+        animation-name: mw-story-reel-frame;
+        animation-duration: 1ms;
+        animation-timing-function: step-end;
+        animation-fill-mode: forwards;
+      }
+
+      @for $frame from 2 through $max-frames {
+        > :nth-child(#{$frame} of img, video) {
+          animation-delay: ($frame - 1) * $frame-time;
+        }
+      }
+
+      // Untimed, they would show at once on top of the first
+      > :nth-child(n + #{$max-frames + 1} of img, video) {
+        display: none;
+      }
+    }
+
+    .mw-story-reel-head::after {
+      clip-path: inset(0 100% 0 0);
+      animation-name: mw-story-reel-fill;
+      animation-duration: $frame-time;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+
+    // One segment per frame, and the fill takes as long as all of them
+    @for $frames from 2 through $max-frames {
+      .mw-story-reel:has(
+          > :nth-child(#{$frames} of img, video):nth-last-child(1 of img, video)
+        )
+        .mw-story-reel-head {
+        &::before {
+          background: segments(rgb(255 255 255 / 35%), $frames);
+        }
+
+        &::after {
+          background: segments($fixed-surface-text, $frames);
+          animation-duration: $frames * $frame-time;
+        }
+      }
+    }
+
+    // A longer story ends at the last timed frame
+    .mw-story-reel:has(> :nth-child(#{$max-frames + 1} of img, video))
+      .mw-story-reel-head {
+      &::before {
+        background: segments(rgb(255 255 255 / 35%), $max-frames);
+      }
+
+      &::after {
+        background: segments($fixed-surface-text, $max-frames);
+        animation-duration: $max-frames * $frame-time;
+      }
+    }
+
+    .mw-story-reel:is(:active, :has(.mw-story-reel-pause :checked)) {
+      > *,
+      .mw-story-reel-head::after {
+        animation-play-state: paused;
+      }
+    }
+  }
+
+  // No autoplay with reduced motion: the frames stay a strip to page through
+  @media (prefers-reduced-motion: reduce) {
+    .mw-story-reel-pause,
+    .mw-story-reel-prev,
+    .mw-story-reel-next {
+      display: none;
+    }
+
+    .mw-story-reel-head::after {
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .mw-story-reel-head::after {
+        animation-name: mw-story-reel-scroll;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll();
+      }
+    }
+
+    @supports not (animation-timeline: scroll()) {
+      .mw-story-reel-head {
+        &::before,
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @keyframes mw-story-reel-frame {
+    to {
+      visibility: visible;
+    }
+  }
+
+  @keyframes mw-story-reel-fill {
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes mw-story-reel-scroll {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  // A popover does not lock the page scroll behind it
+  :root:has(.mw-story-reel:popover-open) {
+    overflow: hidden;
+    scrollbar-gutter: stable; // Or the page shifts by the hidden scrollbar
+  }
+}

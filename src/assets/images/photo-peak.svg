@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800" role="img" aria-label="Snowy mountain peak under a starry sky">
+  <defs>
+    <linearGradient id="pk-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1330"/>
+      <stop offset="0.6" stop-color="#2d3f73"/>
+      <stop offset="1" stop-color="#9fb2d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="800" fill="url(#pk-sky)"/>
+  <g fill="#fff">
+    <circle cx="60" cy="80" r="2"/>
+    <circle cx="140" cy="160" r="1.4"/>
+    <circle cx="250" cy="60" r="1.8"/>
+    <circle cx="380" cy="120" r="1.4"/>
+    <circle cx="470" cy="50" r="2.2"/>
+    <circle cx="540" cy="190" r="1.4"/>
+    <circle cx="90" cy="250" r="1.2"/>
+    <circle cx="500" cy="280" r="1.2"/>
+    <circle cx="330" cy="210" r="1"/>
+  </g>
+  <circle cx="470" cy="130" r="28" fill="#f4ecd6"/>
+  <polygon points="300,190 600,600 600,800 0,800 0,640" fill="#5d7aa6"/>
+  <polygon points="300,190 356,266 334,258 318,280 298,262 276,284 262,258 246,262" fill="#eef4fa"/>
+  <polygon points="300,190 600,600 600,800 380,800 330,420" fill="#46618c"/>
+  <polygon points="0,700 120,600 250,690 380,610 520,700 600,660 600,800 0,800" fill="#2d4468"/>
+  <polygon points="0,760 150,700 300,770 460,710 600,760 600,800 0,800" fill="#1a2b47"/>
+</svg>

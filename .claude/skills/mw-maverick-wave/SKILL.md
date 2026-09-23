@@ -309,8 +309,10 @@ feature frame) ·
 `inverted`) · `mw-flag` (+ 23 country codes) ·
 `mw-section-nav` (`references/layout.md`)
 
-**Media & content** `mw-avatar` (+ `initials`, `group`) · `mw-gallery` ·
-`mw-image-slider` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
+**Media & content** `mw-avatar` (+ `initials`, `group`, `landscape`,
+`portrait`) · `mw-gallery` · `mw-image-slider` · `mw-mosaic` (+ lightbox) ·
+`mw-portrait-gallery` · `mw-feed` · `mw-stories` / `mw-story-reel` ·
+`mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
 `-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
 `mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
 `mw-kbd` · `mw-list` family
