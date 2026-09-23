@@ -43,7 +43,7 @@
     top: calc(100% + #{spacing('2')});
     left: 0;
     z-index: z-index('menu');
-    min-width: 200px;
+    min-width: var(--mw-dropdown-min-width, 200px);
     // Never wider than the screen it opens on, whatever the longest item says
     max-width: min(320px, calc(100vw - 2 * var(--mw-container-gutter)));
     padding: spacing('2');
@@ -252,6 +252,21 @@
     .mw-dropdown-up .mw-dropdown-menu {
       position-area: block-start span-inline-end;
     }
+
+    // In the bar a menu hangs off the bar's lower edge, not the trigger's - the
+    // trigger sits mid-bar, and a menu a few pixels under it starts inside it.
+    // Only a sideways flip is left, a menu above the bar would be off screen.
+    .mw-header-actions .mw-dropdown-menu {
+      position-area: none;
+      position-try-fallbacks: flip-inline;
+      top: var(--mw-header-height);
+      left: anchor(left);
+    }
+
+    .mw-header-actions .mw-dropdown-end .mw-dropdown-menu {
+      left: auto;
+      right: anchor(right);
+    }
   }
 
   // A menu opened by a thumb needs rows a thumb can hit, and the room to show
@@ -260,6 +275,14 @@
   @include touch-context('sm') {
     .mw-dropdown-menu {
       min-width: max(100%, 240px);
+
+      // A fixed menu's 100% is its containing block - the viewport, or a whole
+      // bar with a backdrop filter - which slid a header menu under the logo.
+      // The plain 240px is for a Safari that anchors but cannot measure yet.
+      @supports (anchor-scope: all) and (position-area: block-end) {
+        min-width: 240px;
+        min-width: max(anchor-size(width), 240px);
+      }
     }
 
     .mw-dropdown-item {

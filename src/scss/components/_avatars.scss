@@ -58,7 +58,7 @@
 
     @include hover-move {
       img {
-        transform: scale(1.12);
+        transform: scale(1.06);
       }
 
       // Transition only here, so the sweep resets instantly instead of travelling back
@@ -218,14 +218,46 @@
       aspect-ratio: 9 / 16;
     }
 
+    // Width-driven, so max-width can shrink it to a narrow column at 3:2
+    &-lg.mw-avatar-landscape,
+    &-xl.mw-avatar-landscape {
+      height: auto;
+      max-width: 100%;
+    }
+
+    // Over the round step - a photo shows more of the person than a face
+    &-lg.mw-avatar-landscape {
+      width: 228px;
+
+      @include media-up('sm') {
+        width: 273px;
+      }
+    }
+
+    &-xl.mw-avatar-landscape {
+      width: 285px;
+
+      @include media-up('sm') {
+        width: 399px;
+      }
+    }
+
+    &-xl.mw-avatar-portrait {
+      width: 172px;
+
+      @include media-up('sm') {
+        width: 242px;
+      }
+    }
+
     // 9:16 this small reads as a sliver - wider at the same height instead
     &-lg.mw-avatar-portrait {
       width: auto;
-      height: calc(120px * 16 / 9);
+      height: calc(138px * 16 / 9);
       aspect-ratio: 2 / 3;
 
       @include media-up('sm') {
-        height: calc(144px * 16 / 9);
+        height: calc(166px * 16 / 9);
       }
     }
   }
