@@ -6,6 +6,19 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.32.0] - 2026-09-24
+
+### Added
+
+- `mw-home-bottom` puts the hero text on the lower edge
+- `mw-home-actions` for the hero buttons, stacked at one width on a phone
+- `$hero-ink-lightness` for text colors on the hero
+
+### Fixed
+
+- `mw-home-start` started left of the container edge
+- testimonial quotes fill their card in an equal-height grid
+
 ## [5.31.0] - 2026-09-23
 
 ### Fixed

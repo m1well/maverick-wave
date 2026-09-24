@@ -1,6 +1,7 @@
-// The same framework without the 48 components: tokens, reset, typography,
-// grid, container, section, header, footer and every utility. Add the
-// components the page actually uses next to it, each one its own file:
+// The same framework without the components, bar the two at the end: tokens,
+// reset, typography, grid, container, section, header, footer and every
+// utility. Add the components the page actually uses next to it, each one its
+// own file:
 //
 //   @use 'maverick-wave/src/scss/main-lean' with ($primary-color: #1b1b1d);
 //   @use 'maverick-wave/src/scss/components/buttons';
@@ -14,3 +15,7 @@
 @use 'base';
 @use 'layout';
 @use 'utilities';
+
+// The layout uses these two: data-tooltip in the footer, the badge in the hero
+@use 'components/tooltip';
+@use 'components/hero-badge';
