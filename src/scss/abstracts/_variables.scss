@@ -60,6 +60,8 @@ $hover-shift: 15% !default;
 // light one - and 0.58 is as low as that end goes without moving three colors.
 $ink-lightness-dark: 0.52 !default;
 $ink-lightness-light: 0.58 !default;
+// On the hero photo 0.52 measured 1.2-2.7:1, 0.72 clears 3:1 and keeps the hue
+$hero-ink-lightness: 0.72 !default;
 // How much primary the muted gray picks up, so it belongs to the palette. 0% is true gray.
 $muted-tint: 23% !default;
 

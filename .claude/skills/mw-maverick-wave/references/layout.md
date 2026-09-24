@@ -331,7 +331,7 @@ width.
         <h1>Product<span class="mw-text-primary">Name</span></h1>
         <p>Subline</p>
       </div>
-      <div class="mw-d-flex mw-gap-8 mw-justify-center mw-mb-7">
+      <div class="mw-home-actions mw-mb-7">
         <button class="mw-btn mw-btn-primary mw-btn-lg">Get started</button>
       </div>
     </div>
@@ -343,7 +343,12 @@ A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
 mode with the background image from `--mw-hero-background`.
 `mw-home-content-fade` fades the content in. `mw-home-start` puts the whole
 block against the left container edge instead of centring it - for a hero that
-points somewhere rather than sitting in the middle. `mw-home` carries the
+points somewhere rather than sitting in the middle. `mw-home-bottom` moves it to
+the lower edge, for a photo whose subject fills the top; it keeps clear of a
+`mw-scroll-hint-end` on its own. `mw-text-primary` and the other five colours
+are lifted inside `mw-home-text`, so an accent word stays readable on the photo.
+`mw-home-actions` holds the buttons under the text: a row from `sm` up, one
+column of equal-width buttons on a phone. `mw-home` carries the
 container width itself, because the hero container runs the full width of the
 screen; without that the hero content would start at a different edge than
 every section below it.

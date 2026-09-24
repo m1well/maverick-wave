@@ -24,6 +24,8 @@
     // surface - inside it the quote keeps only the edge and the quotation marks
     // as its sign.
     blockquote {
+      // Grows with the card, or a short quote's tint stops halfway down it
+      flex-grow: 1;
       background: color-mix(in srgb, var(--mw-secondary-color) 6%, transparent);
       border-left-color: color-mix(
         in srgb,

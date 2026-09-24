@@ -296,6 +296,8 @@ effect, because the root colours are declared with `!default`.
   $hover-shift: 15%,
   $ink-lightness-dark: 0.68,
   $ink-lightness-light: 0.55,
+  // mw-text-* inside mw-home-text, which sits on the hero photo
+  $hero-ink-lightness: 0.72,
   $muted-tint: 12%,
   // the surface stack - distance of card and footer from the page
   $card-surface-dark: 0.85,
@@ -463,9 +465,10 @@ colourless. The cascade layer order comes along on its own: every module loads
 `abstracts`, which declares it, so a hand-picked subset orders itself the same
 way the full build does.
 
-**The short way is `main-lean`**: the whole framework minus every component -
+**The short way is `main-lean`**: the whole framework minus the components -
 tokens, reset, typography, the complete layout and all utilities, ~98 kB raw /
-~16 kB gzipped. Configure it like `main` and add the components next to it:
+~16 kB gzipped. Tooltip and hero badge ride along, because the footer and the
+hero use them. Configure it like `main` and add the components next to it:
 
 ```scss
 @use 'maverick-wave/src/scss/main-lean' with (

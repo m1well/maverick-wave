@@ -66,6 +66,11 @@
         z-index: z-index('card');
       }
 
+      // .mw-home sizes itself in % of this flex item, which must not shrink
+      > .mw-hero {
+        width: 100%;
+      }
+
       // Add `mw-parallax` here and a `.mw-parallax-media` child and the picture
       // becomes its own layer, free to drift or to stay pinned. It reads the
       // same token, so the image is still configured in one place - and a
@@ -157,6 +162,21 @@
           padding-bottom: calc(
             var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
           );
+        }
+      }
+
+      // Bottom text shares the lower edge with the cue below lg, phones too
+      &:has(.mw-home-bottom) {
+        align-items: flex-end;
+
+        @include media-down('lg') {
+          &:has(> .mw-scroll-hint) {
+            --mw-scroll-hint-reserve: #{spacing('10')};
+
+            padding-bottom: calc(
+              var(--mw-scroll-hint-offset) + var(--mw-scroll-hint-reserve)
+            );
+          }
         }
       }
     }

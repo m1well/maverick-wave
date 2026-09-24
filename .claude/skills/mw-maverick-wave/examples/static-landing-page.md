@@ -119,7 +119,7 @@ accordion FAQ.
                   dashboard for the whole company, live in an afternoon.
                 </p>
               </div>
-              <div class="mw-d-flex mw-gap-8 mw-justify-center">
+              <div class="mw-home-actions">
                 <button
                   type="button"
                   class="mw-btn mw-btn-primary mw-btn-lg"

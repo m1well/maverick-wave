@@ -77,8 +77,9 @@ belongs in `src/index.html` there, with `viewport-fit=cover` just the same.
 
 **`main-lean` for a page that uses a handful of components.** The full build is
 ~41 kB gzipped and carries all 48 of them. `main-lean` is the same framework
-without any component - tokens, reset, typography, layout, utilities - and the
-components come in one by one next to it:
+without the components - tokens, reset, typography, layout, utilities, plus the
+tooltip and the hero badge the layout itself uses - and the components come in
+one by one next to it:
 
 ```scss
 @use 'maverick-wave/src/scss/main-lean' with (

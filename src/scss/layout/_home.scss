@@ -31,6 +31,15 @@
       width: 85%;
       position: relative;
       margin: spacing('0') auto spacing('4');
+
+      // The hero is dark in both themes, the light theme's inks sink into it
+      @each $name, $value in $semantic-colors {
+        --mw-#{$name}-text-color: #{ink-on-dark(
+            '#{$name}-color',
+            $hero-ink-lightness
+          )};
+      }
+
       @include media-up('sm') {
         width: min(75%, 700px);
       }
@@ -45,8 +54,45 @@
     justify-items: start;
     text-align: left;
 
+    // 85% of a phone leaves a ragged strip right of left-aligned text
     .mw-home-text {
+      width: min(100%, 42rem);
       margin-inline: 0;
+    }
+
+    .mw-home-actions {
+      margin-inline: 0;
+
+      @include media-up('sm') {
+        justify-content: flex-start;
+      }
+    }
+  }
+
+  // Two buttons that wrap onto two lines at their own widths read as a
+  // staircase, so a phone stacks them at one width instead
+  .mw-home-actions {
+    display: flex;
+    flex-direction: column;
+    gap: spacing('4');
+    width: min(100%, 20rem);
+    margin-inline: auto;
+
+    @include media-up('sm') {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: spacing('5');
+      width: auto;
+    }
+  }
+
+  // The rem floor matters: a pure vh band gives the least on a flat screen
+  .mw-home-bottom {
+    padding-block: spacing('6') spacing('4');
+
+    @include media-up('md') {
+      padding-block: spacing('9') clamp(5.5rem, 12vh, 9rem);
     }
   }
 
