@@ -12,6 +12,24 @@
     counter-reset: mw-section-head;
   }
 
+  // The fixed header and the ribbon under it take no room in the flow. A page
+  // that opens with a hero lets them lie over the picture; every other page
+  // keeps the room free where it starts - a section or the content wrapper -
+  // on top of the space that one has anyway. The same tokens as
+  // scroll-padding-top, so a ribbon that is not there costs nothing.
+  body:has(.mw-header) .mw-main > .mw-section:first-child:not(:has(.mw-hero)) {
+    padding-top: calc(
+      var(--mw-header-height) + var(--mw-announcement-offset) +
+        var(--mw-section-padding-block)
+    );
+  }
+
+  body:has(.mw-header) .mw-main > .mw-content:first-child:not(:has(.mw-hero)) {
+    padding-top: calc(
+      var(--mw-header-height) + var(--mw-announcement-offset) + #{spacing('7')}
+    );
+  }
+
   // Takes the full container on a phone and steps inwards as the screen grows.
   // For a column of full-width cards, which at 1200px leaves more empty card
   // than content.
