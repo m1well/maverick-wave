@@ -1,0 +1,294 @@
+@use '../abstracts' as *;
+
+// A laptop and a phone drawn in CSS, with a page on the glass: a screenshot
+// that scrolls, or a live page in an iframe scaled to fit. For showing a site
+// the way people meet it, next to the prose that sells it.
+
+// Hardware is the same colour in both themes, like the stage behind a photo
+$frame: #1b1d22;
+$frame-edge: #3a3d45;
+$frame-lip: #0c0d10;
+
+// The screenshot at its lower edge. Percentages in translate are the image's
+// own height, cqh is the glass: the difference is the way down, and min()
+// keeps a picture shorter than the glass where it is.
+@mixin tour {
+  translate: 0 min(0px, calc(100cqh - 100%));
+  transition-duration: var(--mw-device-tour);
+  // A scroll has no ease: it moves at one speed until it stops
+  transition-timing-function: linear;
+}
+
+@layer mw.components {
+  @keyframes mw-device-nudge {
+    0%,
+    100% {
+      translate: -50% 0;
+    }
+
+    50% {
+      translate: -50% 22%;
+    }
+  }
+
+  .mw-device {
+    // How long the screenshot takes to reach its end on hover or on a tap
+    --mw-device-tour: #{motion(7s)};
+    // The width a live page in an iframe is laid out at before it is scaled
+    --mw-device-viewport: 1280px;
+
+    position: relative;
+    display: block;
+    width: 100%;
+    container-type: inline-size;
+
+    @include active {
+      > .mw-device-screen > :is(img, video) {
+        @include tour;
+      }
+    }
+  }
+
+  // Written as a button the device tours on a tap. The frame is the control,
+  // so it takes the button reset and nothing of the button look.
+  button.mw-device {
+    @include tappable;
+    @include focus-ring;
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: start;
+    cursor: pointer;
+
+    &:active {
+      translate: 0 1px;
+    }
+
+    @include active {
+      > .mw-device-screen::after {
+        opacity: 0;
+      }
+    }
+  }
+
+  // ----- Glass -------------------------------------------------------------
+
+  .mw-device-screen {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+    background-color: $fixed-stage;
+
+    > img,
+    > video {
+      display: block;
+      width: 100%;
+      height: auto;
+      // The way back once the tour is over. The tour sets its own pace: a
+      // transition takes its timing from the state it moves into.
+      transition: translate var(--mw-duration-zoom) var(--mw-ease-out);
+    }
+
+    // A live page: laid out at the device's viewport, then scaled to the glass.
+    // tan(atan2()) is the one way CSS divides two lengths into a number.
+    > iframe {
+      --_scale: tan(atan2(100cqw, var(--mw-device-viewport)));
+
+      display: block;
+      width: var(--mw-device-viewport);
+      height: calc(100cqh / var(--_scale));
+      border: 0;
+      transform: scale(var(--_scale));
+      transform-origin: 0 0;
+    }
+  }
+
+  // The cue that the glass can be tapped: a chevron that bobs on the lower
+  // edge, gone while the tour runs. A loop on its own clock, like a spinner.
+  button.mw-device > .mw-device-screen::after {
+    content: '';
+    position: absolute;
+    bottom: 5cqh;
+    left: 50%;
+    z-index: z-index('lift');
+    width: clamp(1.5rem, 9cqw, 2.25rem);
+    aspect-ratio: 1;
+    border-radius: radius('full');
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+        center / 55% no-repeat,
+      color-mix(in srgb, #000 55%, transparent);
+    pointer-events: none;
+    transition: opacity var(--mw-transition-fast);
+    animation-name: mw-device-nudge;
+    animation-duration: #{motion(1.8s)};
+    animation-timing-function: var(--mw-ease-in-out);
+    animation-iteration-count: infinite;
+  }
+
+  // ----- Laptop ------------------------------------------------------------
+
+  .mw-device-laptop {
+    // The camera in the bezel
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.5cqw;
+      left: 50%;
+      z-index: z-index('lift');
+      width: 0.6cqw;
+      aspect-ratio: 1;
+      translate: -50% 0;
+      border-radius: radius('full');
+      background-color: $frame-edge;
+    }
+
+    // The lid: a bezel around the glass, wider at the chin, sharp at the
+    // hinge where it meets the base. The base reaches past it on both sides.
+    > .mw-device-screen {
+      margin-inline: 6cqw;
+      aspect-ratio: 16 / 10;
+      border: 1.5cqw solid $frame;
+      border-bottom-width: 2.4cqw;
+      border-radius: 1.6cqw 1.6cqw 0 0;
+      box-shadow: var(--mw-elevation-4);
+    }
+
+    // The base: a bevel along the top edge, the lip in the middle where a
+    // thumb opens the lid, round on the way down
+    &::after {
+      content: '';
+      display: block;
+      height: 2.2cqw;
+      border-radius: 0 0 1.4cqw 1.4cqw / 0 0 100% 100%;
+      background:
+        linear-gradient($frame-lip, $frame-lip) 50% 0 / 14cqw 0.8cqw no-repeat,
+        linear-gradient(#4a4d55, $frame 30%, #202329);
+      box-shadow: var(--mw-elevation-4);
+    }
+
+    @include hover-move {
+      > .mw-device-screen > img {
+        @include tour;
+      }
+    }
+  }
+
+  // ----- Phone -------------------------------------------------------------
+
+  // The body is the glass's border, not padding on the phone: a length in cqw
+  // on the phone itself would measure the container around it, the one on
+  // its child measures the phone. The radius here only shapes the focus ring
+  // - percentages, for the same reason, against the phone's own box.
+  .mw-device-phone {
+    --mw-device-viewport: 390px;
+
+    max-width: 22rem;
+    margin-inline: auto;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 14% / 6.46%;
+
+    > .mw-device-screen {
+      height: 100%;
+      border: 3cqw solid $frame;
+      border-radius: 14cqw;
+      box-shadow: var(--mw-elevation-4);
+    }
+
+    // The island, drawn on the glass so the clip keeps it inside the curve
+    > .mw-device-screen::before {
+      content: '';
+      position: absolute;
+      top: 3.5cqw;
+      left: 50%;
+      z-index: z-index('lift');
+      width: 27cqw;
+      height: 7.5cqw;
+      translate: -50% 0;
+      border-radius: radius('full');
+      background-color: #000;
+    }
+
+    // Mute switch and the two volume keys on the left, power on the right.
+    // One strip each; the gaps between the keys are transparent.
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 1.4cqw;
+      border-radius: 0.7cqw;
+    }
+
+    &::before {
+      top: 22cqw;
+      left: -1.3cqw;
+      height: 34cqw;
+      background: linear-gradient(
+        $frame-edge 0 18%,
+        transparent 18% 30%,
+        $frame-edge 30% 62%,
+        transparent 62% 68%,
+        $frame-edge 68% 100%
+      );
+    }
+
+    &::after {
+      top: 32cqw;
+      right: -1.3cqw;
+      height: 18cqw;
+      background-color: $frame-edge;
+    }
+  }
+
+  // ----- Both together -----------------------------------------------------
+
+  // The phone stands over the laptop's lower right corner and hangs a little
+  // below the base - the laptop's margin is the room for that overhang
+  .mw-devices {
+    position: relative;
+    container-type: inline-size;
+
+    > .mw-device-laptop {
+      margin-bottom: 4cqw;
+    }
+
+    > .mw-device-phone {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      z-index: z-index('lift');
+      width: 20cqw;
+      max-width: none;
+    }
+
+    // Too narrow for a phone anyone could read: it stands under the laptop
+    @container (width < 30rem) {
+      > .mw-device-laptop {
+        margin-bottom: 0;
+      }
+
+      // Relative and not static: the keys on its sides are placed against
+      // the phone, and static would hand them to the container
+      > .mw-device-phone {
+        position: relative;
+        inset: auto;
+        width: 60%;
+        margin: spacing('7') auto 0;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mw-device {
+      --mw-device-tour: 1ms;
+    }
+
+    button.mw-device > .mw-device-screen::after {
+      animation: none;
+    }
+  }
+}

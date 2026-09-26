@@ -1,0 +1,65 @@
+<h3 class="mw-section-subtitle">Device Frames</h3>
+<p class="mw-text-muted mw-text-measure">
+  A laptop and a phone drawn in CSS, with a page on the glass - for showing a
+  site the way people meet it, next to the prose that sells it.
+  <code>mw-devices</code> stands the phone over the laptop's corner; each frame
+  is an <code>mw-device</code> with <code>mw-device-laptop</code> or
+  <code>mw-device-phone</code> and an <code>mw-device-screen</code> inside. A
+  screenshot on the glass scrolls to its end while the pointer rests on the
+  laptop, and a device written as a <code>&lt;button&gt;</code> tours it on a
+  tap: to the end, a pause, and back.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  An <code>iframe</code> instead of the picture shows the live page, laid out at
+  <code>--mw-device-viewport</code> and scaled to the glass, so it scrolls by
+  hand like the real thing. Both frames also stand on their own; the phone then
+  takes a column of up to 22rem.
+</p>
+
+<div class="mw-devices mw-mt-7">
+  <div class="mw-device mw-device-laptop">
+    <span class="mw-device-screen">
+      <img
+        src="images/mockup-desktop.svg"
+        alt="A bakery's homepage on a laptop"
+        loading="lazy"
+      />
+    </span>
+  </div>
+  <button
+    type="button"
+    class="mw-device mw-device-phone"
+    aria-label="Scroll through the phone view"
+  >
+    <span class="mw-device-screen">
+      <img src="images/mockup-phone.svg" alt="" loading="lazy" />
+    </span>
+  </button>
+</div>
+
+<p class="mw-text-muted mw-text-measure mw-mt-10">
+  The same frames with a live site: m1well.com, laid out once at 1280px and once
+  at 390px. Scroll the phone by hand, page through the laptop - nothing here is
+  a picture.
+</p>
+
+<div class="mw-devices mw-mt-7">
+  <div class="mw-device mw-device-laptop">
+    <span class="mw-device-screen">
+      <iframe
+        src="https://m1well.com"
+        title="m1well.com on a laptop"
+        loading="lazy"
+      ></iframe>
+    </span>
+  </div>
+  <div class="mw-device mw-device-phone">
+    <span class="mw-device-screen">
+      <iframe
+        src="https://m1well.com"
+        title="m1well.com on a phone"
+        loading="lazy"
+      ></iframe>
+    </span>
+  </div>
+</div>

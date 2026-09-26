@@ -319,7 +319,8 @@ feature frame) ·
 `portrait`) · `mw-gallery` · `mw-image-slider` · `mw-mosaic` (+ lightbox) ·
 `mw-portrait-gallery` · `mw-feed` · `mw-stories` / `mw-story-reel` ·
 `mw-deck` + `mw-slide` (a presentation page, + `mw-deck-frame`,
-`mw-deck-card` to embed it) · `mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
+`mw-deck-card` to embed it) · `mw-devices` + `mw-device` (+ `-laptop`, `-phone`,
+`-screen`; a screenshot or an iframe on the glass) · `mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
 `-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
 `mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
 `mw-kbd` · `mw-list` family
