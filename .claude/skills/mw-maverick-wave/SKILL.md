@@ -304,9 +304,9 @@ feature frame) ·
 `-highlight`, `-static`, color variants) · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
-**Occasions** `mw-occasion-snow` and nine more on `<html>` (+ `mw-occasion-scroll`,
-`mw-occasion-sm` / `-lg`, `mw-occasion-spot`, `mw-occasion-skip`); scheduled by
-`src/js/occasions.js` in the `<head>`
+**Occasions** `mw-occasion-snow` and nine more on `<html>` or a single surface
+(+ `mw-occasion-scroll`, `mw-occasion-sm` / `-lg`, `mw-occasion-spot`,
+`mw-occasion-skip`); scheduled by `src/js/occasions.js` in the `<head>`
 
 **Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
 `mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
