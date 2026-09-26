@@ -1,0 +1,156 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  .mw-faq {
+    --mw-faq-gutter: 0px;
+    --mw-faq-icon: 2rem;
+
+    border-top: 1px solid var(--mw-border);
+  }
+
+  .mw-faq-item {
+    border-bottom: 1px solid var(--mw-border);
+
+    // A row from 0fr to 1fr and not a height to auto: auto only interpolates
+    // where interpolate-size exists, which is Chrome alone
+    &::details-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition:
+        grid-template-rows var(--mw-duration-slow) var(--mw-ease-out),
+        content-visibility var(--mw-duration-slow) allow-discrete;
+    }
+
+    &[open]::details-content {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  .mw-faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: spacing('4');
+    padding: spacing('4') var(--mw-faq-gutter);
+    list-style: none;
+    font-family: var(--mw-font-family-heading);
+    font-size: font-size('base');
+    font-weight: font-weight('medium');
+    line-height: 1.4;
+    cursor: pointer;
+    transition: color var(--mw-duration-base) var(--mw-ease-out);
+    @include tappable;
+    @include focus-ring-inset;
+
+    @include media-up('sm') {
+      padding-block: spacing('5');
+      font-size: font-size('md');
+    }
+
+    // Safari before 18.4 draws its triangle here and not as ::marker
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &:hover {
+      color: var(--mw-primary-text-color);
+    }
+
+    // Plus into minus: the second layer is the vertical bar, folded to 0
+    &::after {
+      content: '';
+      flex-shrink: 0;
+      width: var(--mw-faq-icon);
+      height: var(--mw-faq-icon);
+      border: 1px solid var(--mw-border-accent);
+      border-radius: radius('full');
+      background:
+        linear-gradient(currentColor, currentColor) center / 0.75rem 2px
+          no-repeat,
+        linear-gradient(currentColor, currentColor) center / 2px 0.75rem
+          no-repeat;
+      color: var(--mw-primary-text-color);
+      transition:
+        background-size var(--mw-duration-slow) var(--mw-ease-out),
+        background-color var(--mw-duration-base) var(--mw-ease-out),
+        border-color var(--mw-duration-base) var(--mw-ease-out),
+        color var(--mw-duration-base) var(--mw-ease-out),
+        rotate var(--mw-duration-slow) var(--mw-ease-out),
+        scale var(--mw-duration-fast) var(--mw-ease-out);
+    }
+
+    &:hover::after {
+      border-color: var(--mw-primary-color);
+    }
+
+    &:active::after {
+      scale: 0.88;
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    [open] > & {
+      color: var(--mw-primary-text-color);
+
+      &::after {
+        rotate: 180deg;
+        border-color: var(--mw-primary-color);
+        background-color: var(--mw-primary-color);
+        background-size:
+          0.75rem 2px,
+          2px 0;
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+  }
+
+  // No padding-block here: a grid item keeps its padding in a 0fr row, so the
+  // shut answer would show a strip of it. The last margin is clipped instead.
+  .mw-faq-answer {
+    min-height: 0;
+    overflow: hidden;
+    padding-inline: var(--mw-faq-gutter);
+    hyphens: auto;
+
+    @include media-up('sm') {
+      padding-inline-end: calc(
+        var(--mw-faq-gutter) + var(--mw-faq-icon) + #{spacing('4')}
+      );
+    }
+
+    > * {
+      max-width: 68ch;
+      margin-block: 0 spacing('3');
+    }
+
+    > :last-child {
+      margin-bottom: spacing('5');
+    }
+  }
+
+  .mw-faq-cards {
+    --mw-faq-gutter: #{spacing('4')};
+
+    display: grid;
+    gap: spacing('3');
+    border-top: none;
+
+    @include media-up('sm') {
+      --mw-faq-gutter: #{spacing('5')};
+    }
+
+    > .mw-faq-item {
+      border: 1px solid var(--mw-border);
+      background: var(--mw-card-background);
+      box-shadow: var(--mw-elevation-1);
+      @include surface;
+      transition:
+        border-color var(--mw-duration-base) var(--mw-ease-out),
+        box-shadow var(--mw-duration-base) var(--mw-ease-out);
+
+      &[open] {
+        border-color: var(--mw-primary-color);
+        box-shadow: var(--mw-elevation-3);
+      }
+    }
+  }
+}

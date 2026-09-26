@@ -559,6 +559,31 @@ placed straight into `mw-accordion-content` never collapses when closed.
 Toggling is JS - see `references/javascript.md`; the shipped script keeps
 `aria-expanded` in step when the header is a button.
 
+## FAQ
+
+```html
+<div class="mw-faq">
+  <details class="mw-faq-item" id="question-1" name="faq" open>
+    <summary class="mw-faq-question">Question</summary>
+    <div class="mw-faq-answer">
+      <p>Answer</p>
+    </div>
+  </details>
+</div>
+```
+
+Variant: `mw-faq-cards` - every question its own card with the corner arc,
+the open one framed in the primary colour. Default is a list on hairlines.
+
+Native `<details>`, no script needed: `open` on an item shows it on arrival, a
+shared `name` keeps one answer open at a time, find-in-page opens the item that
+holds the match. The answer animates through a grid row on `::details-content`
+(Chrome 131, Firefox 143, Safari 18.4); older engines open without animation.
+Answers grow to full height - no 500px cap as in `mw-accordion`, which makes
+this the component for questions and answers on a page. The plus and minus
+are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
+`references/javascript.md`.
+
 ## Tabs
 
 ```html

@@ -6,6 +6,12 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.37.0] - 2026-09-26
+
+### Added
+
+- FAQ (`mw-faq`, `mw-faq-cards`) on native details, a link to a question opens it
+
 ## [5.36.0] - 2026-09-26
 
 ### Fixed
