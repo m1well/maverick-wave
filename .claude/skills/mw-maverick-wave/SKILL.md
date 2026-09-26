@@ -282,7 +282,8 @@ Everything below is documented in `references/components.md` unless marked other
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
-`mw-panel` · `mw-tile` · `mw-accordion` · `mw-tabs` · `mw-modal` ·
+`mw-panel` · `mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
+`mw-modal` ·
 `mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
 `mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·

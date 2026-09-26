@@ -1,0 +1,87 @@
+<h3 class="mw-section-subtitle">FAQ</h3>
+<p class="mw-text-muted mw-text-measure">
+  Questions and answers on native <code>&lt;details&gt;</code>: they open
+  without script, the browser's find-in-page reaches a closed answer, and
+  nothing caps a long one. <code>open</code> on an item shows it on arrival, a
+  shared <code>name</code> keeps one answer open at a time, and a link to an
+  item's <code>id</code> opens it.
+</p>
+
+<div class="mw-grid-2-lg">
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Default - first one open</h3>
+    <div class="mw-faq">
+      <details class="mw-faq-item" id="faq-demo-1" open>
+        <summary class="mw-faq-question">Does it need JavaScript?</summary>
+        <div class="mw-faq-answer">
+          <p>
+            No. Every item is a details element, so it opens and closes on its
+            own and the animation is CSS. The script only opens an item that a
+            link points at.
+          </p>
+        </div>
+      </details>
+      <details class="mw-faq-item" id="faq-demo-2">
+        <summary class="mw-faq-question">
+          What happens to a very long answer?
+        </summary>
+        <div class="mw-faq-answer">
+          <p>
+            It grows to its full height. There is no inner scrollbar, so a long
+            answer on a phone reads like the rest of the page.
+          </p>
+          <p>
+            Paragraphs keep a readable measure and hyphenate in the language of
+            the page.
+          </p>
+        </div>
+      </details>
+      <details class="mw-faq-item" id="faq-demo-3">
+        <summary class="mw-faq-question">Can I link to one question?</summary>
+        <div class="mw-faq-answer">
+          <p>
+            Yes - <a class="mw-link" href="#faq-demo-6">this link</a> opens the
+            last question on the right.
+          </p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Cards - one open at a time</h3>
+    <div class="mw-faq mw-faq-cards">
+      <details class="mw-faq-item" id="faq-demo-4" name="faq-demo">
+        <summary class="mw-faq-question">
+          What does the name attribute do?
+        </summary>
+        <div class="mw-faq-answer">
+          <p>
+            Items that share a name form a group, and the browser closes the
+            open one when another opens.
+          </p>
+        </div>
+      </details>
+      <details class="mw-faq-item" id="faq-demo-5" name="faq-demo">
+        <summary class="mw-faq-question">
+          When are cards the better choice?
+        </summary>
+        <div class="mw-faq-answer">
+          <p>
+            On a busy page or a coloured section, where hairlines get lost. The
+            plain list suits a calm page with a narrow column.
+          </p>
+        </div>
+      </details>
+      <details class="mw-faq-item" id="faq-demo-6" name="faq-demo">
+        <summary class="mw-faq-question">Does the search find answers?</summary>
+        <div class="mw-faq-answer">
+          <p>
+            Find-in-page opens the item that holds the match, in every browser
+            that ships the reveal for details.
+          </p>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>

@@ -51,6 +51,7 @@
     initCopyButtons();
     initLocalhostIndicator();
     initOccasions();
+    initFaqLinks();
     warnMissingViewportFit();
   }
 
@@ -1479,6 +1480,19 @@
     return Number.isNaN(padding) ? 0 : padding;
   }
 
+  function openFaqItem(target) {
+    const item = target && target.closest('.mw-faq-item');
+    if (item) item.open = true;
+  }
+
+  // Same-page anchors go through initSmoothScrolling and never fire hashchange
+  function initFaqLinks() {
+    const openFromHash = () =>
+      openFaqItem(document.getElementById(location.hash.slice(1)));
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+  }
+
   // Anything the user does with the wheel or a finger outranks a running glide
   let glide = null;
   ['wheel', 'touchstart'].forEach((type) => {
@@ -1542,6 +1556,7 @@
 
         const targetElement = document.querySelector(targetId);
         if (!targetElement) return;
+        openFaqItem(targetElement);
 
         const menuBtn = document.querySelector('.mw-menu-btn');
         const nav = document.querySelector('.mw-navbar');
