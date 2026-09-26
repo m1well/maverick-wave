@@ -88,12 +88,6 @@
     initComponents(document);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start);
-  } else {
-    start();
-  }
-
   // The way back in for anything that renders after DOMContentLoaded: an htmx
   // swap, a modal filled from a fetch, a view transition that replaces the
   // page body. Call it with the subtree that changed, or with nothing for the
@@ -2958,5 +2952,13 @@
         '--mw-occasion-lap': String(i % 2),
       });
     }
+  }
+
+  // Last, not next to start(): a script that arrives after the parse starts at
+  // once, and every const below start() would still be uninitialised
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();
