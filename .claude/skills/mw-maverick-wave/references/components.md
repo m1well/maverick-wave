@@ -2145,7 +2145,7 @@ loading="lazy" title="…"></iframe></div>`, `mw-deck-frame-portrait` for a
 Seasonal decoration on every surface, switched by one class on `<html>`:
 `mw-occasion-snow`, `-christmas`, `-newyear`, `-spring`, `-easter`, `-summer`,
 `-autumn`, `-football`, `-birthday`, `-anniversary`. Module
-`components/occasions`, about 8 kB gzipped - mostly inline SVG, so the CSP's
+`components/occasions`, about 9 kB gzipped - mostly inline SVG, so the CSP's
 `img-src` has to allow `data:`.
 
 - **Surfaces**: `mw-card`, `mw-panel`, `mw-testimonial`, unless nested in one
@@ -2156,6 +2156,9 @@ Seasonal decoration on every surface, switched by one class on `<html>`:
 - **While one is on**, surfaces get 2-9px more `margin-top`, `mw-panel` gets
   `overflow: visible`, panel headers and testimonials as much top padding as
   the piece hangs in. A slight overlap with the heading is intended.
+- **One surface only**: the effect class on the surface itself
+  (`<div class="mw-card mw-occasion-easter mw-occasion-lg">`), size and scroll
+  too. It skips the site's occasion; intro and particles stay off.
 - `mw-occasion-scroll`: pieces land as their surface scrolls in, main.js adds
   particles scrubbed by the page scroll. No scroll timelines: static.
 - `mw-occasion-sm` / `-lg` set `--mw-occasion-scale` (0.88 / 1.1, piece size)

@@ -8,6 +8,7 @@
 //
 //   <html class="mw-occasion-snow">                       static, CSS only
 //   <html class="mw-occasion-snow mw-occasion-scroll">    arrives with the scroll
+//   <div class="mw-card mw-occasion-snow">                this card alone
 //
 // The intro overlay and the particles that drift with the scroll are the two
 // parts that need the script; everything they show is drawn here.
@@ -391,16 +392,6 @@ $_effects: (
   anniversary
 );
 
-// Cards, panels and testimonials, unless inside one another - a nested card
-// would stack a second garland into the first - plus whatever opts in
-$_surfaces: '.mw-card, .mw-panel, .mw-testimonial';
-$_surface: ':is(#{$_surfaces}):not(:is(#{$_surfaces}) *, .mw-occasion-skip)';
-$_host: '#{$_surface}, .mw-occasion-spot';
-
-@function _on($effect, $mode: '') {
-  @return ':root#{$mode}.mw-occasion-#{$effect} :is(#{$_host})';
-}
-
 @function _list-classes() {
   $classes: ();
 
@@ -409,6 +400,30 @@ $_host: '#{$_surface}, .mw-occasion-spot';
   }
 
   @return $classes;
+}
+
+$_effect-classes: _list-classes();
+
+// Cards, panels and testimonials, unless inside one another - a nested card
+// would stack a second garland into the first - plus whatever opts in. A
+// surface with an effect class of its own shows that one and leaves the site's.
+$_surfaces: '.mw-card, .mw-panel, .mw-testimonial';
+$_carriers: '#{$_surfaces}, .mw-occasion-spot';
+$_surface: ':is(#{$_surfaces}):not(:is(#{$_surfaces}) *, .mw-occasion-skip, #{$_effect-classes})';
+$_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
+
+// Every surface while the site wears the effect, and the one surface that
+// carries it itself - a single card showing it off. $mode goes where the
+// effect class sits, on the root or on that surface.
+@function _on($effect, $mode: '', $then: '::before') {
+  @return ':root#{$mode}.mw-occasion-#{$effect} :is(#{$_host})#{$then}, ' +
+    '.mw-occasion-#{$effect}#{$mode}:is(#{$_carriers})#{$then}';
+}
+
+// The same without the spots, for what a surface draws on its own background
+@function _surface-on($effect) {
+  @return ':root.mw-occasion-#{$effect} #{$_surface}, ' +
+    '.mw-occasion-#{$effect}:is(#{$_surfaces})';
 }
 
 @function _scaled($value) {
@@ -423,7 +438,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
 // So every piece sits top left, mirrored because the art is drawn for a right
 // corner. transform and not `scale`: the arrival animations own that one.
 @mixin _corner($effect, $top, $width, $height, $side: -4px) {
-  #{_on($effect)}::before {
+  #{_on($effect)} {
     top: _scaled($top);
     left: _scaled($side);
     width: _scaled($width);
@@ -440,7 +455,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
 // surface's own width, which a viewport query cannot: a card in a three-column
 // grid is as narrow as a phone.
 @mixin _edge($effect, $top, $height, $left: 4px) {
-  #{_on($effect)}::before {
+  #{_on($effect)} {
     top: $top;
     left: $left;
     width: min(
@@ -528,12 +543,13 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     --mw-occasion-amount: 1;
   }
 
-  :root.mw-occasion-sm {
+  // On the root for the site, on a surface for that one surface
+  .mw-occasion-sm {
     --mw-occasion-scale: 0.88;
     --mw-occasion-amount: 0.55;
   }
 
-  :root.mw-occasion-lg {
+  .mw-occasion-lg {
     --mw-occasion-scale: 1.1;
     --mw-occasion-amount: 1.3;
   }
@@ -556,37 +572,40 @@ $_host: '#{$_surface}, .mw-occasion-spot';
   );
 
   @each $effect, $reach in $_reach {
-    :root.mw-occasion-#{$effect} {
+    .mw-occasion-#{$effect} {
       --mw-occasion-reach: #{$reach};
     }
   }
 
-  :root:is(#{_list-classes()}) {
-    // Room above for what rises over the top edge - stacked in one column on a
-    // phone, the piece would otherwise reach into the surface above
-    #{$_surface} {
-      margin-top: calc(6px + 30px * (var(--mw-occasion-scale) - 1));
-    }
+  // Room above for what rises over the top edge - stacked in one column on a
+  // phone, the piece would otherwise reach into the surface above
+  :root:is(#{$_effect-classes}) #{$_surface},
+  :is(#{$_effect-classes}):is(#{$_surfaces}) {
+    margin-top: calc(6px + 30px * (var(--mw-occasion-scale) - 1));
+  }
 
-    // A panel clips for its rounded header, which rounds itself - the same
-    // escape the dropdown uses, for as long as an occasion is on
-    .mw-panel:not(:is(#{$_surfaces}) *, .mw-occasion-skip) {
-      overflow: visible;
+  // A panel clips for its rounded header, which rounds itself - the same
+  // escape the dropdown uses, for as long as an occasion is on
+  :root:is(#{$_effect-classes})
+    .mw-panel:not(:is(#{$_surfaces}) *, .mw-occasion-skip),
+  .mw-panel:is(#{$_effect-classes}) {
+    overflow: visible;
 
-      > :is(.mw-panel-header, .mw-panel-body):first-child {
-        padding-top: max(
-          #{spacing('4')},
-          calc(var(--mw-occasion-reach) * var(--mw-occasion-scale))
-        );
-      }
-    }
-
-    .mw-testimonial:not(:is(#{$_surfaces}) *, .mw-occasion-skip) {
+    > :is(.mw-panel-header, .mw-panel-body):first-child {
       padding-top: max(
-        #{spacing('5')},
+        #{spacing('4')},
         calc(var(--mw-occasion-reach) * var(--mw-occasion-scale))
       );
     }
+  }
+
+  :root:is(#{$_effect-classes})
+    .mw-testimonial:not(:is(#{$_surfaces}) *, .mw-occasion-skip),
+  .mw-testimonial:is(#{$_effect-classes}) {
+    padding-top: max(
+      #{spacing('5')},
+      calc(var(--mw-occasion-reach) * var(--mw-occasion-scale))
+    );
   }
 
   :where(.mw-occasion-spot) {
@@ -596,7 +615,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
   // Shared by every effect. z-index 1 keeps the piece above the text and the
   // corner arc, and the card badge - also 1, but later - above the piece.
   @each $effect in $_effects {
-    #{_on($effect)}::before {
+    #{_on($effect)} {
       content: '';
       position: absolute;
       z-index: 1;
@@ -634,7 +653,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     transform-origin: 50% _deep(11px);
   }
 
-  #{_on('snow')}:nth-child(even)::before {
+  #{_on('snow', $then: ':nth-child(even)::before')} {
     background-position:
       40% _deep(13px),
       76% _deep(13px),
@@ -644,11 +663,11 @@ $_host: '#{$_surface}, .mw-occasion-spot';
       0 0;
   }
 
-  #{_on('snow', '.mw-occasion-sm')}::before {
+  #{_on('snow', '.mw-occasion-sm')} {
     background-size: _snow-sizes(1);
   }
 
-  #{_on('snow', '.mw-occasion-lg')}::before {
+  #{_on('snow', '.mw-occasion-lg')} {
     background-size: _snow-sizes(3);
   }
 
@@ -672,16 +691,16 @@ $_host: '#{$_surface}, .mw-occasion-spot';
   }
 
   // Same baubles, shuffled - repeating the images would double their weight
-  #{_on(christmas)}:nth-child(even)::before {
+  #{_on(christmas, $then: ':nth-child(even)::before')} {
     background-position: _bauble-positions(62% 34% 88% 0);
   }
 
-  #{_on(christmas, '.mw-occasion-sm')}::before {
+  #{_on(christmas, '.mw-occasion-sm')} {
     background-size: _bauble-sizes(2);
     background-position: _bauble-positions(34% 74% 0 0);
   }
 
-  #{_on(christmas, '.mw-occasion-lg')}::before {
+  #{_on(christmas, '.mw-occasion-lg')} {
     background-size: _bauble-sizes(4);
     background-position: _bauble-positions(18% 40% 62% 84%);
   }
@@ -706,7 +725,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     background-image: $_sun;
   }
 
-  :root.mw-occasion-summer #{$_surface} {
+  #{_surface-on(summer)} {
     background-image: radial-gradient(
       26rem 16rem at 0 0,
       rgb(255 214 90 / calc(0.13 * var(--mw-occasion-amount))),
@@ -724,7 +743,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     background-image: $_ball;
   }
 
-  :root.mw-occasion-football #{$_surface} {
+  #{_surface-on(football)} {
     background-image: linear-gradient(
       90deg,
       var(--mw-occasion-flag-1) 0 33.34%,
@@ -798,12 +817,13 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     @media (prefers-reduced-motion: no-preference) {
       // Timed by the card's entry, which even the last card on a page completes;
       // 60vh keeps a tall card from arriving only at the top of the screen
-      :root.mw-occasion-scroll :is(#{$_host}) {
+      :root.mw-occasion-scroll :is(#{$_host}),
+      .mw-occasion-scroll:is(#{$_effect-classes}):is(#{$_carriers}) {
         view-timeline: --mw-occasion-arrival;
       }
 
       @each $effect, $arrival in $_arrivals {
-        #{_on($effect, '.mw-occasion-scroll')}::before {
+        #{_on($effect, '.mw-occasion-scroll')} {
           animation-name: mw-occasion-#{$arrival};
           animation-duration: auto;
           animation-timing-function: linear;
@@ -1590,7 +1610,7 @@ $_host: '#{$_surface}, .mw-occasion-spot';
   }
 
   @media print, (forced-colors: active) {
-    :is(#{$_host})::before,
+    :is(#{$_carriers})::before,
     .mw-occasion-intro,
     .mw-occasion-drift {
       display: none;
