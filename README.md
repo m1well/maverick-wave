@@ -45,24 +45,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-<<<<<<< HEAD
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.css"
-||||||| d95ea64
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.css"
-=======
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.css"
->>>>>>> main
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.36.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-<<<<<<< HEAD
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.js"></script>
-||||||| d95ea64
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.js"></script>
-=======
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.35.0/maverick-wave.min.js"></script>
->>>>>>> main
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.36.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
