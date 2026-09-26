@@ -50,6 +50,7 @@
     initTagRemovals();
     initCopyButtons();
     initLocalhostIndicator();
+    initOccasions();
     warnMissingViewportFit();
   }
 
@@ -62,6 +63,7 @@
     initPortraitGalleries(scope);
     initMosaics(scope);
     initStoryReels(scope);
+    initDecks(scope);
     initAccordions(scope);
     initProgressBars(scope);
     initReveals(scope);
@@ -75,10 +77,16 @@
     initLangSwitches(scope);
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    initPage();
+  // A failure in the page-wide part must not take the components with it,
+  // and a script that arrives after the parse (async, injected) still starts
+  function start() {
+    try {
+      initPage();
+    } catch (error) {
+      console.error('MaverickWave: page behaviour not initialised', error);
+    }
     initComponents(document);
-  });
+  }
 
   // The way back in for anything that renders after DOMContentLoaded: an htmx
   // swap, a modal filled from a fetch, a view transition that replaces the
@@ -807,6 +815,250 @@
       if (e.key === 'ArrowLeft') step(-1);
       else if (e.key === 'ArrowRight') step(1);
     });
+  }
+
+  // ===== Decks =====
+  // The swipe is the browser's own scroll snap. This adds what snapping cannot:
+  // buttons, keys and the wheel, counter, progress, fullscreen and the entrance.
+  // A deck that fails leaves the others, and the rest of the page, working.
+  function initDecks(root) {
+    root.querySelectorAll('.mw-deck').forEach((deck) => {
+      if (!fresh(deck)) return;
+      try {
+        initDeck(deck);
+      } catch (error) {
+        console.error('MaverickWave: deck not initialised', error);
+      }
+    });
+  }
+
+  function initDeck(deck) {
+    const scroller = deck.querySelector('.mw-deck-slides');
+    if (!scroller) return;
+    const slides = Array.from(scroller.children).filter((child) =>
+      child.classList.contains('mw-slide')
+    );
+    if (!slides.length) return;
+
+    const across = !deck.classList.contains('mw-deck-portrait');
+    // A deck that is the page takes the keys, the wheel and the address bar;
+    // one sitting inside a page leaves them to it
+    const page = deck === document.body;
+    const counter = deck.querySelector('.mw-deck-counter');
+    const segments = deck.querySelector('.mw-deck-segments');
+    const pad = (n) => String(n).padStart(2, '0');
+    const start = Number.parseInt(location.hash.slice(1), 10) - 1;
+    const first = page && start > 0 && start < slides.length ? start : 0;
+    // Where the controls count from - set at once, while the slide itself is
+    // only lit a frame later, after its entrance could be painted
+    let current = first;
+    let lit = -1;
+    let started = false;
+
+    if (segments) {
+      segments.replaceChildren(
+        ...slides.map(() => document.createElement('span'))
+      );
+    }
+
+    function activate(index) {
+      if (index < 0 || index >= slides.length) return;
+      current = index;
+      if (index === lit) return;
+      lit = index;
+      slides.forEach((slide, i) => setActive(slide, i === index));
+      if (counter) {
+        const now = document.createElement('span');
+        now.className = 'mw-deck-counter-current';
+        now.textContent = pad(index + 1);
+        counter.replaceChildren(now, ' / ' + pad(slides.length));
+      }
+      deck.style.setProperty(
+        '--mw-deck-progress',
+        String((index + 1) / slides.length)
+      );
+      if (segments) {
+        Array.from(segments.children).forEach((segment, i) =>
+          segment.classList.toggle('mw-done', i <= index)
+        );
+      }
+      // A sandboxed frame or a page from the file system may refuse it
+      if (page) {
+        try {
+          history.replaceState(history.state, '', '#' + (index + 1));
+        } catch {
+          // the slide number in the address is a convenience, not a feature
+        }
+      }
+    }
+
+    const offset = (slide) => (across ? slide.offsetLeft : slide.offsetTop);
+
+    function show(index, smooth = true) {
+      const slide = slides[Math.max(0, Math.min(slides.length - 1, index))];
+      const reduced =
+        window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scroller.scrollTo({
+        left: across ? slide.offsetLeft : 0,
+        top: across ? 0 : slide.offsetTop,
+        behavior: smooth && !reduced ? 'smooth' : 'auto',
+      });
+    }
+
+    // The slide nearest the scroll position is the one on screen. Read from
+    // the position rather than an observer's threshold, so it holds for any
+    // slide size and in a browser without IntersectionObserver.
+    function nearest() {
+      const position = across ? scroller.scrollLeft : scroller.scrollTop;
+      let best = 0;
+      slides.forEach((slide, i) => {
+        if (
+          Math.abs(offset(slide) - position) <
+          Math.abs(offset(slides[best]) - position)
+        ) {
+          best = i;
+        }
+      });
+      return best;
+    }
+
+    let queued = false;
+    scroller.addEventListener(
+      'scroll',
+      () => {
+        if (!started || queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          activate(nearest());
+        });
+      },
+      { passive: true }
+    );
+
+    const fullscreenElement = () =>
+      document.fullscreenElement || document.webkitFullscreenElement;
+    const fullscreenEnabled =
+      document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    const fullscreenTarget = page ? document.documentElement : deck;
+
+    function toggleFullscreen() {
+      if (!fullscreenEnabled) return;
+      try {
+        const result = fullscreenElement()
+          ? (document.exitFullscreen || document.webkitExitFullscreen).call(
+              document
+            )
+          : (
+              fullscreenTarget.requestFullscreen ||
+              fullscreenTarget.webkitRequestFullscreen
+            ).call(fullscreenTarget);
+        // Refused by the browser or by the frame around the deck
+        if (result && result.catch) result.catch(() => {});
+      } catch {
+        // same refusal in a browser that throws instead of rejecting
+      }
+    }
+
+    // No fullscreen for anything but video on an iPhone, or in a frame
+    // without allow="fullscreen" - the button goes
+    if (!fullscreenEnabled) {
+      deck.querySelectorAll('[data-deck-fullscreen]').forEach((button) => {
+        button.hidden = true;
+      });
+    }
+
+    // Fullscreen or a turn changes the width, and the slide would stop half-way
+    const settle = () => show(current, false);
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach((type) => {
+      document.addEventListener(type, () => {
+        deck.classList.toggle(
+          'mw-deck-fullscreen',
+          Boolean(fullscreenElement())
+        );
+        settle();
+      });
+    });
+    window.addEventListener('resize', settle);
+
+    deck.addEventListener('click', (e) => {
+      if (!(e.target instanceof Element)) return;
+      const control = e.target.closest(
+        '[data-deck-goto], [data-deck-next], [data-deck-prev], [data-deck-fullscreen]'
+      );
+      if (!control) return;
+      if (control.hasAttribute('data-deck-goto')) {
+        const index = slides.findIndex(
+          (slide) => slide.id === control.dataset.deckGoto
+        );
+        if (index >= 0) show(index);
+      } else if (control.hasAttribute('data-deck-next')) show(current + 1);
+      else if (control.hasAttribute('data-deck-prev')) show(current - 1);
+      else toggleFullscreen();
+    });
+
+    (page ? document : deck).addEventListener('keydown', (e) => {
+      if (e.defaultPrevented || e.isComposing) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const focus = e.target instanceof Element ? e.target : document.body;
+      if (focus.closest('input, textarea, select, [contenteditable]')) return;
+      // Space presses a button reached by keyboard. One focused by a click -
+      // fullscreen, a jump tile - must not be pressed again by the next page.
+      if (
+        e.key === ' ' &&
+        focus.closest('button, a, summary') &&
+        focus.matches(':focus-visible')
+      ) {
+        return;
+      }
+      const steps = {
+        ArrowRight: 1,
+        ArrowDown: 1,
+        PageDown: 1,
+        ' ': e.shiftKey ? -1 : 1,
+        ArrowLeft: -1,
+        ArrowUp: -1,
+        PageUp: -1,
+      };
+      if (e.key in steps) show(current + steps[e.key]);
+      else if (e.key === 'Home') show(0);
+      else if (e.key === 'End') show(slides.length - 1);
+      else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+      else return;
+      e.preventDefault();
+    });
+
+    // A wheel does not move a landscape deck at all and a portrait one only
+    // over the phone, so it pages itself. Embedded in another page the wheel
+    // belongs to that page, and a pinch on a trackpad (ctrlKey) stays a zoom.
+    if (page && window.self === window.top) {
+      let locked = false;
+      document.addEventListener(
+        'wheel',
+        (e) => {
+          if (e.ctrlKey) return;
+          if (!across && scroller.contains(e.target)) return;
+          if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+          e.preventDefault();
+          if (locked || Math.abs(e.deltaY) < 8) return;
+          locked = true;
+          show(current + Math.sign(e.deltaY));
+          setTimeout(() => (locked = false), 700);
+        },
+        { passive: false }
+      );
+    }
+
+    deck.classList.add('mw-deck-ready');
+    show(first, false);
+    // The entrance needs one painted frame in its hidden state
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        started = true;
+        activate(first);
+      })
+    );
   }
 
   // ===== Theme Toggle =====
@@ -2194,5 +2446,521 @@
     });
 
     render();
+  }
+
+  // ===== Occasions =====
+  // The CSS draws every piece, occasions.js in <head> picks the occasion before
+  // the first paint. This plays the two parts that need a script once the page
+  // is there: the intro over the whole page and the particles that drift with
+  // the scroll. An SPA sets the classes on <html> itself - see
+  // references/javascript.md.
+  //
+  // No constants at this level: start() can run before the end of this file
+  // has been evaluated, and a const read at that point throws.
+  function initOccasions() {
+    const effects = [
+      'snow',
+      'christmas',
+      'newyear',
+      'spring',
+      'easter',
+      'summer',
+      'autumn',
+      'football',
+      'birthday',
+      'anniversary',
+    ];
+    const html = document.documentElement;
+    const params = new URLSearchParams(location.search);
+    const preview = params.get('mw-occasion');
+
+    // A preview on a page without occasions.js - a customer's site that has
+    // not booked anything yet - applies here, a moment later
+    if (
+      effects.includes(preview) &&
+      !html.classList.contains('mw-occasion-' + preview)
+    ) {
+      effects.forEach((name) => html.classList.remove('mw-occasion-' + name));
+      html.classList.add('mw-occasion-' + preview);
+      html.classList.toggle(
+        'mw-occasion-scroll',
+        params.has('mw-occasion-scroll')
+      );
+      html.classList.toggle(
+        'mw-occasion-sm',
+        params.get('mw-occasion-size') === 'sm'
+      );
+      html.classList.toggle(
+        'mw-occasion-lg',
+        params.get('mw-occasion-size') === 'lg'
+      );
+      if (params.has('mw-occasion-intro')) {
+        html.setAttribute('data-mw-occasion-intro', 'preview');
+      }
+    }
+
+    const effect = effects.find((name) =>
+      html.classList.contains('mw-occasion-' + name)
+    );
+    if (!effect) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    if (html.classList.contains('mw-occasion-scroll')) {
+      startOccasionDrift(effect);
+    }
+
+    // 'preview' plays on every load, an empty value once per visit
+    const intro = html.getAttribute('data-mw-occasion-intro');
+    const saveData = navigator.connection && navigator.connection.saveData;
+    if (
+      intro !== null &&
+      !saveData &&
+      (intro === 'preview' || !occasionSeen(effect))
+    ) {
+      whenShown(() => playOccasionIntro(effect));
+    }
+  }
+
+  // Once per visit - on every page it would be a nuisance by the third click
+  function occasionSeen(effect) {
+    try {
+      if (sessionStorage.getItem('mw-occasion-intro') === effect) return true;
+      sessionStorage.setItem('mw-occasion-intro', effect);
+    } catch {
+      // Storage blocked: twice is better than never
+    }
+    return false;
+  }
+
+  // After the load, so it does not compete with the page for the first frames,
+  // and not into a background tab, where nobody would see it
+  function whenShown(run) {
+    function visible() {
+      if (!document.hidden) return run();
+      document.addEventListener('visibilitychange', function wait() {
+        if (document.hidden) return;
+        document.removeEventListener('visibilitychange', wait);
+        run();
+      });
+    }
+
+    if (document.readyState === 'complete') visible();
+    else window.addEventListener('load', visible, { once: true });
+  }
+
+  function between(min, max) {
+    return min + Math.random() * (max - min);
+  }
+
+  function pick(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  function signed(min, max) {
+    return (Math.random() < 0.5 ? -1 : 1) * between(min, max);
+  }
+
+  // CSSOM and not a style attribute - a CSP without 'unsafe-inline' allows
+  // the one and drops the other
+  function occasionParticle(layer, shape, motion, vars) {
+    const el = document.createElement('span');
+    el.className =
+      'mw-occasion-particle mw-occasion-' + shape + ' mw-occasion-' + motion;
+    Object.keys(vars).forEach((name) => el.style.setProperty(name, vars[name]));
+    layer.appendChild(el);
+  }
+
+  // A phone gets fewer particles than a desktop, a slow device half of that
+  function occasionDensity() {
+    const area = (window.innerWidth * window.innerHeight) / (1440 * 900);
+    const weak =
+      (navigator.hardwareConcurrency || 8) <= 4 ||
+      (navigator.deviceMemory || 8) <= 4;
+    return (
+      Math.min(1, Math.max(0.4, area)) * (weak ? 0.5 : 1) * occasionAmount()
+    );
+  }
+
+  // --mw-occasion-amount, set by mw-occasion-sm / -lg or by the site itself
+  function occasionAmount() {
+    const amount = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        '--mw-occasion-amount'
+      )
+    );
+    return amount > 0 ? amount : 1;
+  }
+
+  // Confetti flips end over end. A leaf or a petal that did the same would
+  // spend half its fall edge-on, a sliver nobody reads as a leaf - it mostly
+  // turns in the plane and only tilts.
+  function occasionAxis(flip) {
+    if (flip === 'soft') {
+      return (
+        between(0.2, 0.6).toFixed(2) + ' ' + between(0, 0.5).toFixed(2) + ' 1'
+      );
+    }
+    return flip ? '1 ' + between(0, 1).toFixed(2) + ' 0.3' : 'z';
+  }
+
+  function occasionFall(layer, count, shapes, o) {
+    for (let i = 0; i < count; i++) {
+      occasionParticle(layer, pick(shapes), o.rising ? 'rising' : 'falling', {
+        '--mw-occasion-x': between(-5, 100).toFixed(1) + 'vw',
+        '--mw-occasion-drift':
+          between(o.drift[0], o.drift[1]).toFixed(1) + 'vw',
+        '--mw-occasion-size': between(o.size[0], o.size[1]).toFixed(1) + 'px',
+        '--mw-occasion-time': between(o.time[0], o.time[1]).toFixed(2) + 's',
+        '--mw-occasion-delay': between(0, o.spread).toFixed(2) + 's',
+        '--mw-occasion-sway': between(6, 22).toFixed(0) + 'px',
+        '--mw-occasion-sway-time': between(1.2, 2.4).toFixed(2) + 's',
+        '--mw-occasion-spin': signed(0.3, o.spin || 0.3).toFixed(2) + 'turn',
+        '--mw-occasion-spin-time': between(2.5, 5).toFixed(2) + 's',
+        '--mw-occasion-axis': occasionAxis(o.flip),
+      });
+    }
+  }
+
+  // Two confetti cannons in the bottom corners, a second volley a moment later
+  function occasionBurst(layer, count, shapes, o) {
+    for (let i = 0; i < count; i++) {
+      const left = i % 2 === 0;
+      occasionParticle(layer, pick(shapes), 'bursting', {
+        '--mw-occasion-x': left ? '-2vw' : '100vw',
+        '--mw-occasion-dx': (left ? 1 : -1) * between(8, 62) + 'vw',
+        '--mw-occasion-peak': between(55, 92) + 'vh',
+        '--mw-occasion-size': between(o.size[0], o.size[1]).toFixed(1) + 'px',
+        '--mw-occasion-time': between(2.6, 3.6).toFixed(2) + 's',
+        '--mw-occasion-delay':
+          (between(0, 0.35) + (i % 3 === 2 ? 0.9 : 0)).toFixed(2) + 's',
+        '--mw-occasion-spin': signed(1.5, o.spin).toFixed(2) + 'turn',
+        '--mw-occasion-spin-time': between(0.8, 1.6).toFixed(2) + 's',
+        '--mw-occasion-axis': occasionAxis(o.flip),
+      });
+    }
+  }
+
+  // Glints of sunlight, most of them near the sun in the top right corner
+  function occasionTwinkle(layer, count) {
+    for (let i = 0; i < count; i++) {
+      occasionParticle(layer, 'glint', 'twinkling', {
+        '--mw-occasion-x': between(35, 96).toFixed(1) + 'vw',
+        '--mw-occasion-y': between(4, 62).toFixed(1) + 'vh',
+        '--mw-occasion-size': between(14, 30).toFixed(1) + 'px',
+        '--mw-occasion-time': between(1.2, 2.2).toFixed(2) + 's',
+        '--mw-occasion-delay': between(0.4, 2.8).toFixed(2) + 's',
+        '--mw-occasion-spin': signed(0.1, 0.25).toFixed(2) + 'turn',
+      });
+    }
+  }
+
+  function occasionFireworks(layer, bursts, sparks) {
+    const tints = ['#ffd166', '#fff1c1', '#ff6b6b', '#4cc9f0', '#c4a7ff'];
+
+    for (let b = 0; b < bursts; b++) {
+      const x = between(14, 86).toFixed(1) + 'vw';
+      const y = between(14, 46).toFixed(1) + 'vh';
+      const start = b * 0.55 + between(0, 0.2);
+      const bang = (start + 0.65).toFixed(2) + 's';
+
+      occasionParticle(layer, 'trail', 'launching', {
+        '--mw-occasion-x': x,
+        '--mw-occasion-y': y,
+        '--mw-occasion-size': '6px',
+        '--mw-occasion-delay': start.toFixed(2) + 's',
+      });
+      occasionParticle(layer, 'flash', 'flashing', {
+        '--mw-occasion-x': x,
+        '--mw-occasion-y': y,
+        '--mw-occasion-size': '26vmin',
+        '--mw-occasion-delay': bang,
+      });
+
+      for (let i = 0; i < sparks; i++) {
+        const inner = i % 3 === 0;
+        const angle = (360 / sparks) * i + between(-5, 5);
+        const reach = inner ? between(6, 10) : between(14, 22);
+        const rad = (angle * Math.PI) / 180;
+        occasionParticle(layer, 'spark', 'exploding', {
+          '--mw-occasion-x': x,
+          '--mw-occasion-y': y,
+          '--mw-occasion-dx': (Math.cos(rad) * reach).toFixed(2) + 'vmin',
+          '--mw-occasion-dy': (Math.sin(rad) * reach).toFixed(2) + 'vmin',
+          '--mw-occasion-angle': (angle + 90).toFixed(0) + 'deg',
+          '--mw-occasion-size': inner ? '12px' : '20px',
+          '--mw-occasion-tint': tints[b % tints.length],
+          '--mw-occasion-time': between(1.3, 1.8).toFixed(2) + 's',
+          '--mw-occasion-delay': bang,
+        });
+      }
+    }
+  }
+
+  // Attributes only - a style attribute in here would fall to the CSP
+  function occasionTree() {
+    const lights = [
+      [46.5, 46.5],
+      [61, 48.5],
+      [74.5, 45.1],
+      [39, 74],
+      [53.7, 77],
+      [68.2, 75.6],
+      [81.3, 70.3],
+      [31.6, 103.7],
+      [49.8, 107.5],
+      [69.3, 106.5],
+      [88.6, 100.3],
+    ]
+      .map(
+        ([x, y]) =>
+          '<g class="mw-occasion-tree-light">' +
+          `<circle cx="${x}" cy="${y}" r="4.6" fill="url(#mw-tree-light)"/>` +
+          `<circle cx="${x}" cy="${y}" r="1.4" fill="#fffbe6"/></g>`
+      )
+      .join('');
+
+    return (
+      '<svg class="mw-occasion-tree" viewBox="0 0 120 150">' +
+      '<defs>' +
+      '<linearGradient id="mw-tree-fir" x1="0" x2="1"><stop offset="0" stop-color="#2a7a45"/><stop offset=".55" stop-color="#17532d"/><stop offset="1" stop-color="#0d3a1e"/></linearGradient>' +
+      '<radialGradient id="mw-tree-light"><stop offset="0" stop-color="#fffbe6"/><stop offset=".35" stop-color="#ffe08a"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="mw-tree-glow"><stop offset="0" stop-color="#fff3b0" stop-opacity=".9"/><stop offset="1" stop-color="#ffd166" stop-opacity="0"/></radialGradient>' +
+      '<linearGradient id="mw-tree-gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4c2"/><stop offset=".5" stop-color="#f1c84b"/><stop offset="1" stop-color="#b8860b"/></linearGradient>' +
+      '</defs>' +
+      '<rect x="53" y="108" width="14" height="18" rx="2" fill="#6b4226"/>' +
+      '<g fill="url(#mw-tree-fir)">' +
+      '<path d="M60 56C70 76 86 94 106 112C84 106 36 106 14 112C34 94 50 76 60 56Z"/>' +
+      '<path d="M60 32C68 48 80 64 96 80C80 76 40 76 24 80C40 64 52 48 60 32Z"/>' +
+      '<path d="M60 12C66 24 74 36 86 50C76 47 44 47 34 50C46 36 54 24 60 12Z"/>' +
+      '</g>' +
+      '<g fill="none" stroke="#e9c46a" stroke-width="1.4" stroke-opacity=".85">' +
+      '<path d="M40 44Q62 54 80 42"/><path d="M30 70Q60 86 88 66"/><path d="M22 100Q62 118 100 94"/>' +
+      '</g>' +
+      '<circle cx="54" cy="38" r="3.4" fill="#d62839"/><circle cx="68" cy="39" r="3" fill="#e9b949"/>' +
+      '<circle cx="46" cy="62" r="3.4" fill="#e9b949"/><circle cx="74" cy="62" r="3.4" fill="#d62839"/><circle cx="60" cy="66" r="3" fill="#cfd6de"/>' +
+      '<circle cx="40" cy="94" r="3.6" fill="#d62839"/><circle cx="62" cy="95" r="3.6" fill="#e9b949"/><circle cx="84" cy="92" r="3.4" fill="#cfd6de"/>' +
+      '<g>' +
+      lights +
+      '</g>' +
+      '<circle class="mw-occasion-tree-glow" cx="60" cy="12" r="18" fill="url(#mw-tree-glow)"/>' +
+      '<path class="mw-occasion-tree-star" fill="url(#mw-tree-gold)" d="M60 3L62.23 8.93L68.56 9.22L63.61 13.17L65.29 19.28L60 15.8L54.71 19.28L56.39 13.17L51.44 9.22L57.77 8.93Z"/>' +
+      '</svg>'
+    );
+  }
+
+  // One recipe per occasion: what the intro throws, how many, how fast
+  function occasionRecipes() {
+    const petals = {
+      size: [18, 28],
+      drift: [12, 40],
+      time: [3, 4.2],
+      spread: 1.4,
+      spin: 1.2,
+      flip: 'soft',
+    };
+
+    return {
+      snow: (layer, n) =>
+        occasionFall(layer, n(70), ['flake', 'flake', 'flake', 'crystal'], {
+          size: [6, 17],
+          drift: [-4, 6],
+          time: [4.2, 6.2],
+          spread: 2.4,
+          spin: 0.5,
+        }),
+      christmas: (layer, n) => {
+        layer.insertAdjacentHTML('beforeend', occasionTree());
+        occasionFall(layer, n(34), ['flake', 'flake', 'star'], {
+          size: [6, 16],
+          drift: [-4, 6],
+          time: [4.4, 6.4],
+          spread: 2.4,
+          spin: 0.6,
+        });
+      },
+      newyear: (layer, n) =>
+        occasionFireworks(
+          layer,
+          Math.min(6, Math.max(3, n(5))),
+          Math.max(18, n(36))
+        ),
+      spring: (layer, n) => occasionFall(layer, n(44), ['petal'], petals),
+      easter: (layer, n) => occasionFall(layer, n(44), ['petal'], petals),
+      summer: (layer, n) => {
+        const sun = document.createElement('div');
+        sun.className = 'mw-occasion-sun';
+        layer.appendChild(sun);
+        occasionTwinkle(layer, n(18));
+      },
+      autumn: (layer, n) =>
+        occasionFall(layer, n(32), ['maple', 'oak', 'birch'], {
+          size: [30, 46],
+          drift: [-8, 22],
+          time: [3, 4.2],
+          spread: 1.4,
+          spin: 1.5,
+          flip: 'soft',
+        }),
+      football: (layer, n) => {
+        occasionBurst(layer, n(80), ['strip'], {
+          size: [12, 20],
+          spin: 5,
+          flip: true,
+        });
+        occasionBurst(layer, 3, ['ball'], { size: [34, 46], spin: 3 });
+      },
+      birthday: (layer, n) => {
+        occasionBurst(layer, n(90), ['confetti'], {
+          size: [10, 15],
+          spin: 5,
+          flip: true,
+        });
+        occasionFall(layer, Math.max(4, n(8)), ['balloon'], {
+          size: [44, 62],
+          drift: [-6, 6],
+          time: [3.8, 4.8],
+          spread: 0.8,
+          rising: true,
+        });
+      },
+      anniversary: (layer, n) =>
+        occasionBurst(layer, n(90), ['confetti', 'confetti', 'glint'], {
+          size: [10, 16],
+          spin: 5,
+          flip: true,
+        }),
+    };
+  }
+
+  // Click-through from the first frame; any click, key or scroll takes it
+  // away early instead of making the reader wait for it
+  function playOccasionIntro(effect) {
+    const layer = document.createElement('div');
+    layer.className = 'mw-occasion-intro mw-occasion-intro-' + effect;
+    layer.setAttribute('aria-hidden', 'true');
+    const density = occasionDensity();
+    occasionRecipes()[effect](layer, (count) =>
+      Math.max(1, Math.round(count * density))
+    );
+    document.body.appendChild(layer);
+
+    const events = ['pointerdown', 'keydown', 'wheel', 'touchmove'];
+    function remove() {
+      layer.remove();
+      events.forEach((type) => window.removeEventListener(type, leave));
+    }
+    function leave() {
+      layer.classList.add('mw-occasion-leaving');
+      setTimeout(remove, 350);
+    }
+
+    events.forEach((type) =>
+      window.addEventListener(type, leave, { once: true, passive: true })
+    );
+    layer.addEventListener('animationend', (event) => {
+      if (event.target === layer) remove();
+    });
+  }
+
+  // Scrubbed by the scroll on the compositor, so it stands still whenever the
+  // page does. A lap is a little more than a screen of scrolling, which makes
+  // the count a matter of page length.
+  function startOccasionDrift(effect) {
+    // Not CSS.supports: Firefox behind its flag parses the syntax, but plays
+    // the whole page as one lap - pieces that crawl read as stuck
+    if (!window.ScrollTimeline) return;
+
+    const layer = document.createElement('div');
+    layer.className = 'mw-occasion-drift';
+    layer.setAttribute('aria-hidden', 'true');
+    if (effect === 'summer') occasionBeams(layer);
+    else occasionDriftParticles(layer, effect);
+    document.body.appendChild(layer);
+
+    function laps() {
+      const scrollable = document.documentElement.scrollHeight - innerHeight;
+      layer.style.setProperty(
+        '--mw-occasion-laps',
+        String(Math.max(1, Math.round(scrollable / (innerHeight * 1.2))))
+      );
+    }
+    laps();
+    window.addEventListener('load', laps);
+    window.addEventListener('resize', debounce(laps, 200), { passive: true });
+  }
+
+  // Sizes at a 1280px window, scaled with it within limits. Smaller than this a
+  // leaf on the page reads as a speck, and a speck as a rendering fault.
+  function occasionDriftParticles(layer, effect) {
+    const shapes = {
+      snow: ['flake', 'flake', 'crystal'],
+      christmas: ['flake', 'flake', 'star'],
+      newyear: ['glint'],
+      spring: ['petal'],
+      easter: ['petal'],
+      autumn: ['maple', 'oak', 'birch'],
+      football: ['strip'],
+      birthday: ['confetti'],
+      anniversary: ['confetti', 'glint'],
+    }[effect];
+    const sizes = {
+      flake: [9, 16],
+      crystal: [16, 22],
+      star: [14, 20],
+      glint: [16, 24],
+      petal: [18, 26],
+      maple: [28, 40],
+      oak: [28, 40],
+      birch: [24, 34],
+      strip: [12, 18],
+      confetti: [11, 17],
+    };
+    const scale = Math.min(1.15, Math.max(0.85, window.innerWidth / 1280));
+    const count = Math.round(
+      (window.innerWidth < 768 ? 11 : 18) * occasionAmount()
+    );
+
+    for (let i = 0; i < count; i++) {
+      const shape = shapes[i % shapes.length];
+      const soft = ['maple', 'oak', 'birch', 'petal'].includes(shape);
+      occasionParticle(layer, shape, 'falling', {
+        '--mw-occasion-x':
+          ((i + between(0.1, 0.9)) * (100 / count)).toFixed(1) + 'vw',
+        '--mw-occasion-size':
+          (between(sizes[shape][0], sizes[shape][1]) * scale).toFixed(1) + 'px',
+        '--mw-occasion-start': (((i * 37) % 100) * 0.3).toFixed(1) + '%',
+        '--mw-occasion-lap': String(i % 3),
+        '--mw-occasion-drift': between(-6, 6).toFixed(1) + 'vw',
+        '--mw-occasion-sway': between(8, 24).toFixed(0) + 'px',
+        '--mw-occasion-spin': signed(0.5, 2).toFixed(2) + 'turn',
+        '--mw-occasion-axis': occasionAxis(
+          soft ? 'soft' : ['confetti', 'strip'].includes(shape)
+        ),
+      });
+    }
+  }
+
+  // Summer has no particles, it has rays - fanned out from above the top right
+  // corner and swinging with the scroll
+  function occasionBeams(layer) {
+    const count = Math.round(5 * Math.min(1.4, occasionAmount()));
+
+    for (let i = 0; i < count; i++) {
+      occasionParticle(layer, 'beam', 'beaming', {
+        '--mw-occasion-size': between(9, 16).toFixed(1) + 'vw',
+        '--mw-occasion-angle':
+          (24 + (i * 54) / Math.max(1, count - 1) + between(-3, 3)).toFixed(1) +
+          'deg',
+        '--mw-occasion-lap': String(i % 2),
+      });
+    }
+  }
+
+  // Last, not next to start(): a script that arrives after the parse starts at
+  // once, and every const below start() would still be uninitialised
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
   }
 })();

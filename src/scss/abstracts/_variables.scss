@@ -536,6 +536,8 @@ $z-index: (
   'modal': 500,
   'tooltip': 700,
   'alert': 900,
+  // The intro overlay of an occasion - five seconds, above everything
+  'occasion': 1000,
 );
 
 // Native select arrow, drawn as a background layer because `appearance: none`

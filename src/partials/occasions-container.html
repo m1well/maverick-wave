@@ -1,0 +1,146 @@
+<h3 class="mw-section-subtitle">Occasions</h3>
+<p class="mw-text-muted mw-text-measure">
+  Seasonal decoration on every card, panel and testimonial - snow in winter, a
+  garland at Christmas, leaves in autumn. Pick one below and this page reloads
+  wearing it. <strong>Static</strong> is CSS alone: the pieces sit on the
+  surfaces and nothing moves. <strong>Arrive with the scroll</strong> lets each
+  piece land as its surface scrolls in, with a few particles drifting along -
+  scroll down after the reload to see it. <strong>Intro</strong> plays five
+  seconds over the page right after the reload; any click or scroll ends it. The
+  size turns both: smaller pieces and less of everything, or more.
+</p>
+
+<form
+  class="mw-card mw-card-simple mw-occasion-skip mw-mb-8"
+  method="get"
+  action="#occasions"
+>
+  <div class="mw-grid-3 mw-gap-5">
+    <div class="mw-field">
+      <label class="mw-field-label" for="occasion-effect">Occasion</label>
+      <select id="occasion-effect" class="mw-select" name="mw-occasion">
+        <option value="snow">Snow</option>
+        <option value="christmas">Christmas</option>
+        <option value="newyear">New Year</option>
+        <option value="spring">Spring</option>
+        <option value="easter">Easter</option>
+        <option value="summer">Summer</option>
+        <option value="autumn">Autumn</option>
+        <option value="football">Football</option>
+        <option value="birthday">Birthday</option>
+        <option value="anniversary">Anniversary</option>
+      </select>
+    </div>
+
+    <div class="mw-field">
+      <label class="mw-field-label" for="occasion-size">Size</label>
+      <select id="occasion-size" class="mw-select" name="mw-occasion-size">
+        <option value="sm">Small - mw-occasion-sm</option>
+        <option value="" selected>Normal</option>
+        <option value="lg">Large - mw-occasion-lg</option>
+      </select>
+    </div>
+
+    <div class="mw-field">
+      <span class="mw-field-label">Motion</span>
+      <div class="mw-checkbox-group">
+        <label class="mw-checkbox">
+          <input type="checkbox" name="mw-occasion-scroll" />
+          <div class="mw-checkbox-box"></div>
+          <div class="mw-checkbox-label">Arrive with the scroll</div>
+        </label>
+        <label class="mw-checkbox">
+          <input type="checkbox" name="mw-occasion-intro" />
+          <div class="mw-checkbox-box"></div>
+          <div class="mw-checkbox-label">Intro after the reload</div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="mw-form-actions mw-mt-5">
+    <a class="mw-btn mw-btn-outline" href="?#occasions">Off</a>
+    <button type="submit" class="mw-btn mw-btn-primary">
+      Show on this page
+    </button>
+  </div>
+</form>
+
+<div class="mw-grid-3 mw-gap-6 mw-mb-8">
+  <div class="mw-card">
+    <div class="mw-card-body">
+      <h4 class="mw-card-title">A plain card</h4>
+      <p class="mw-card-text">
+        Carries the piece on its top left corner, or along part of the top edge.
+      </p>
+    </div>
+  </div>
+
+  <div class="mw-card">
+    <div class="mw-card-body">
+      <h4 class="mw-card-title">The signature corner</h4>
+      <p class="mw-card-text">
+        Stays free - the arc on the top right shows through every occasion.
+      </p>
+    </div>
+  </div>
+
+  <div class="mw-card">
+    <div class="mw-card-badge">New</div>
+    <div class="mw-card-body">
+      <h4 class="mw-card-title">With a badge</h4>
+      <p class="mw-card-text">
+        The badge keeps its corner, the edge pieces never reach it.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="mw-card mw-mb-8">
+  <div class="mw-card-body">
+    <h4 class="mw-card-title">A card across the whole page</h4>
+    <p class="mw-card-text">
+      The snow, the garland and the bunting cover half of a narrow surface and
+      40% of a wide one, never more than 400px - on this card they end well
+      before the middle.
+    </p>
+  </div>
+</div>
+
+<div class="mw-panel mw-mb-8">
+  <div class="mw-panel-header">
+    <h4 class="mw-m-0">A panel</h4>
+  </div>
+  <div class="mw-panel-body">
+    Panels and testimonials are decorated like cards. Anything else opts in with
+    <code>mw-occasion-spot</code>, a surface opts out with
+    <code>mw-occasion-skip</code>.
+  </div>
+</div>
+
+<pre
+  class="mw-code-block"
+><code>&lt;!-- CSS only: the class, and the surfaces are decorated --&gt;
+&lt;html class="mw-occasion-snow"&gt;
+
+&lt;!-- Smaller pieces and less of everything, or more: -sm and -lg --&gt;
+&lt;html class="mw-occasion-snow mw-occasion-sm"&gt;
+
+&lt;!-- Arrives with the scroll, plays the intro once per visit (main.js) --&gt;
+&lt;html class="mw-occasion-christmas mw-occasion-scroll" data-mw-occasion-intro&gt;
+
+&lt;!-- Scheduled: occasions.js in the head picks today's entry before the
+     first paint, the shortest window wins --&gt;
+&lt;html data-mw-occasions='[
+  {"effect": "snow", "from": "2026-12-05", "until": "2027-02-05", "yearly": true, "size": "sm"},
+  {"effect": "christmas", "from": "2026-12-18", "until": "2026-12-26", "yearly": true, "scroll": true, "intro": true}
+]'&gt;
+&lt;head&gt;
+  &lt;script src="https://cdn.jsdelivr.net/npm/maverick-wave@5/src/js/occasions.js"&gt;&lt;/script&gt;
+
+&lt;!-- The same as the form above, on any page that loads main.js --&gt;
+?mw-occasion=autumn&amp;mw-occasion-size=lg&amp;mw-occasion-scroll&amp;mw-occasion-intro
+
+&lt;!-- Any other surface opts in, one opts out --&gt;
+&lt;div class="mw-tile mw-occasion-spot"&gt;...&lt;/div&gt;
+&lt;div class="mw-card mw-occasion-skip"&gt;...&lt;/div&gt;</code></pre>

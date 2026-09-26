@@ -124,7 +124,7 @@
     font-size: fluid('xl', '2xl', $to: 'sm');
     // The section boundary steps down on a phone, so the component boundary
     // sits with it or the two stop being distinguishable
-    margin-block: var(--mw-section-head-step)
+    margin-block: calc(var(--mw-section-head-step) * 1.5)
       calc(var(--mw-section-head-step) * 0.56);
     margin-inline: spacing('0');
     position: relative;
@@ -235,12 +235,12 @@
   }
 
   @include media-up('sm') {
-    // Half a step more than the gap it leaves below itself, and that difference
-    // is the whole margin the boundary between two components has over the one
+    // A step more than the gap it leaves below itself, and that difference is
+    // the whole margin the boundary between two components has over the one
     // between two demos - the heading leans toward what it names, not toward
     // what came before it.
     .mw-section-subtitle {
-      margin-top: calc(var(--mw-section-head-step) * 1.5);
+      margin-top: calc(var(--mw-section-head-step) * 2);
     }
   }
 

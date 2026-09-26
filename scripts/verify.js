@@ -25,7 +25,9 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const CSS = path.join(ROOT, 'dist', 'maverick-wave.min.css');
-const HTML = path.join(ROOT, 'dist', 'index.html');
+// The showcase and every page built with it - the demo decks in dist/decks/
+// are pages of their own
+const HTML_FILES = filesWithExt(path.join(ROOT, 'dist'), '.html');
 const JS = path.join(ROOT, 'src', 'js', 'main.js');
 
 // Everything that documents classes: every markdown file of the maverick-wave
@@ -61,8 +63,8 @@ const errors = [];
 const warnings = [];
 
 const css = read(CSS);
-const html = read(HTML);
-if (!css || !html) {
+const html = HTML_FILES.map(read).filter(Boolean).join('\n');
+if (!css || !read(path.join(ROOT, 'dist', 'index.html'))) {
   console.error(
     'dist/ is missing or incomplete - run `npm run build` before `npm run verify`.'
   );
@@ -224,6 +226,17 @@ for (const f of filesWithExt(path.join(ROOT, 'src', 'scss'), '.scss')) {
     errors.push(
       `${path.relative(ROOT, f)}: \`${m.trim()}\` - a file with a scroll timeline must use animation-* longhands, a bundler folds the shorthand and kills the timeline`
     );
+  }
+}
+
+// --- 7: the bundle is main.js ---------------------------------------------
+// 5.34.0 shipped the occasions head script as maverick-wave.min.js - a build
+// glob picked up both files and the second overwrote the first.
+
+for (const f of ['dist/maverick-wave.min.js', 'maverick-wave.min.js']) {
+  const bundle = read(path.join(ROOT, f));
+  if (bundle !== null && !/MaverickWave\s*=/.test(bundle)) {
+    errors.push(`${f} does not define window.MaverickWave - it is not main.js`);
   }
 }
 
