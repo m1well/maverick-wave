@@ -303,6 +303,10 @@ feature frame) ·
 `-highlight`, `-static`, color variants) · `mw-empty-state` ·
 `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
 
+**Occasions** `mw-occasion-snow` and nine more on `<html>` (+ `mw-occasion-scroll`,
+`mw-occasion-sm` / `-lg`, `mw-occasion-spot`, `mw-occasion-skip`); scheduled by
+`src/js/occasions.js` in the `<head>`
+
 **Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
 `mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
 `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
@@ -313,7 +317,8 @@ feature frame) ·
 **Media & content** `mw-avatar` (+ `initials`, `group`, `landscape`,
 `portrait`) · `mw-gallery` · `mw-image-slider` · `mw-mosaic` (+ lightbox) ·
 `mw-portrait-gallery` · `mw-feed` · `mw-stories` / `mw-story-reel` ·
-`mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
+`mw-deck` + `mw-slide` (a presentation page, + `mw-deck-frame`,
+`mw-deck-card` to embed it) · `mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
 `-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
 `mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
 `mw-kbd` · `mw-list` family
@@ -531,3 +536,7 @@ feature frame) ·
     `container-type: inline-size` computes the width as if the element were
     empty, so one dropped into a flex or grid slot needs a width - the
     framework sets `width: 100%` on its own containers already.
+33. **A scheduled occasion needs `src/js/occasions.js` in the `<head>`.**
+    `data-mw-occasions` on `<html>` does nothing without it - main.js only
+    plays the intro and the particles. Late classes would shift every card by
+    the room an occasion adds above it, which is why the choice moved there.

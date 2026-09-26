@@ -2008,6 +2008,164 @@ The three-column grid from a phone's photo app, in a framed box that scrolls.
   that starts when its frame comes up and stops with the story, and closes the
   story at its end.
 
+## Presentation deck
+
+A deck is a page of its own: `mw-deck` on `<body>` plus `mw-deck-landscape`
+(tablet, laptop, projector) or `mw-deck-portrait` (phone). Modules:
+`components/deck` (pulls in `deck-blocks` and `buttons`) for the deck page,
+`components/deck-frame` (pulls in `cards`) for the page that embeds it.
+
+```html
+<body class="mw-deck mw-deck-landscape">
+  <header class="mw-deck-head">
+    <span class="mw-deck-brand">Northwind<small>Wholesale offer</small></span>
+    <div class="mw-deck-tools">
+      <span class="mw-deck-counter">01 / 10</span>
+      <button
+        type="button"
+        class="mw-deck-btn"
+        data-deck-fullscreen
+        aria-label="Fullscreen"
+      >
+        <svg class="mw-deck-icon-expand" viewBox="0 0 24 24">…</svg>
+        <svg class="mw-deck-icon-collapse" viewBox="0 0 24 24">…</svg>
+      </button>
+    </div>
+  </header>
+  <main class="mw-deck-slides">
+    <section class="mw-slide mw-slide-split" aria-label="Title">
+      <div class="mw-deck-media" data-deck-in="2"><svg>…</svg></div>
+      <div>
+        <p class="mw-deck-kicker" data-deck-in><b>01</b> Espresso</p>
+        <h1 class="mw-deck-title mw-deck-title-xl" data-deck-in="2">
+          Coffee they <em>come back for.</em>
+        </h1>
+      </div>
+    </section>
+  </main>
+  <footer class="mw-deck-foot">
+    <div class="mw-deck-progress"></div>
+    <div class="mw-deck-arrows">
+      <button
+        type="button"
+        class="mw-deck-btn"
+        data-deck-prev
+        aria-label="Previous"
+      >
+        …
+      </button>
+      <button
+        type="button"
+        class="mw-deck-btn"
+        data-deck-next
+        aria-label="Next"
+      >
+        …
+      </button>
+    </div>
+  </footer>
+  <div class="mw-deck-rotate" role="note">…</div>
+</body>
+```
+
+Portrait wraps head and slides in `mw-deck-stage` with an empty
+`mw-deck-segments` first, and puts an optional `mw-deck-aside`
+(`mw-deck-kicker`, `mw-deck-aside-title`, a `p`, `mw-deck-arrows`, a link)
+before the stage - it shows from `lg` next to the phone.
+
+- **Slides** `mw-slide`. Layout (landscape): `-split` (two columns),
+  `-reverse` (first child to the right), `-stack` (head row, content row),
+  `-statement` (to the lower edge, portrait too), `-cover` (the first
+  `mw-deck-image` fills the slide). Surface: `-surface` (card), `-dark` (the
+  header bar's colour), `-primary`, `-cover`. Head, foot and segments take the
+  surface of the slide on screen by themselves.
+- **Blocks** `mw-deck-kicker` (`b` = number in the brand), `-title` (+`-xl`,
+  `em`/`strong` in the brand, `mw-deck-unit`), `-lead`, `-text`, `-media`,
+  `-image` (+`-right`, `-zoom`, `-top`, `-top-tall`), `-images` (one wide over
+  two, `figcaption`), `-facts` (`dl`, +`-3`), `-figures` (`dl`, value in `dd`
+  after `dt`), `-columns`, `-list`, `-chips`, `-actions` (holds `mw-btn`),
+  `-jumps` (buttons with `data-deck-goto`, `mw-deck-jump-hint`), `-steps`
+  (`ol`), `-notes` (`ol`, numbered like `mw-deck-marker`), `-table`
+  (+`mw-deck-table-total` row), `-quote` + `-source`, `-price`, `-package`
+  (+`-highlight`), `-legend` (+`-bar`, `-line`), `-swipe`, `-bottom`.
+- **Drawings** `mw-deck-drawing` + `mw-deck-draw`: `mw-deck-stroke`,
+  `-stroke-bold`, `-stroke-fine` with `pathLength="1"` draw themselves, then
+  `mw-deck-area` (+`-muted`, `-light`), `mw-deck-marker` and `text` fade in.
+  `mw-deck-dashed` never animates. `mw-deck-illustration` keeps its own
+  colours, `mw-deck-flow` runs a dashed line, `mw-deck-cascade` fades its
+  children in one by one.
+- **Chart** `mw-deck-chart` with `mw-deck-chart-grid`, `-bars` (a `g` per
+  column holding `-hit` and `-bar`), `-line`, `-point`, `-value`. Bars in the
+  primary, the line in the secondary colour. The SVG is generated, not drawn.
+- `data-deck-in` (value 2-7 for later) fades an element in when its slide
+  comes up - only once the script added `mw-deck-ready`.
+- Knobs on `.mw-deck`: `--mw-deck-title-weight`, `-title-tracking`,
+  `-title-leading`, `-title-case`, `--mw-deck-radius`. Colours and fonts come
+  from the theme tokens, nothing else to set.
+- The chrome - progress, done segments, `mw-deck-counter-current`, the round
+  `mw-deck-btn` under the pointer - wears the second colour.
+  `mw-deck-accent-primary` on the deck keeps it to the first, `mw-accent-single`
+  on `<html>` does the same site-wide.
+- The script sets `mw-deck-ready` and `mw-deck-fullscreen`. Before that - or
+  when it never runs - the slides keep their scrollbar and the controls that
+  need it stay hidden, so the deck still pages by hand.
+- Embedding: `<div class="mw-deck-frame"><iframe src="…" allow="fullscreen"
+loading="lazy" title="…"></iframe></div>`, `mw-deck-frame-portrait` for a
+  phone deck, both inside `mw-deck-embed` with `mw-deck-embed-info` and
+  `mw-deck-embed-actions` beside it. `mw-deck-card` on an `mw-card` link keeps
+  the 4:3 preview uncropped.
+
+## Occasions
+
+Seasonal decoration on every surface, switched by one class on `<html>`:
+`mw-occasion-snow`, `-christmas`, `-newyear`, `-spring`, `-easter`, `-summer`,
+`-autumn`, `-football`, `-birthday`, `-anniversary`. Module
+`components/occasions`, about 8 kB gzipped - mostly inline SVG, so the CSP's
+`img-src` has to allow `data:`.
+
+- **Surfaces**: `mw-card`, `mw-panel`, `mw-testimonial`, unless nested in one
+  another; anything else opts in with `mw-occasion-spot`, one opts out with
+  `mw-occasion-skip`. The piece is the surface's `::before`, top left - the
+  top right carries the signature arc. Snow, garland and bunting cover
+  `min(400px, max(40%, min(50%, 384px)))` of the top edge.
+- **While one is on**, surfaces get 2-9px more `margin-top`, `mw-panel` gets
+  `overflow: visible`, panel headers and testimonials as much top padding as
+  the piece hangs in. A slight overlap with the heading is intended.
+- `mw-occasion-scroll`: pieces land as their surface scrolls in, main.js adds
+  particles scrubbed by the page scroll. No scroll timelines: static.
+- `mw-occasion-sm` / `-lg` set `--mw-occasion-scale` (0.88 / 1.1, piece size)
+  and `--mw-occasion-amount` (0.55 / 1.3: snow depth, drips, baubles,
+  particles). main.js reads the amount from CSS - any value set there counts.
+- `data-mw-occasion-intro`: five seconds over the page, once per visit; the
+  value `preview` plays on every load. Click-through, gone on any input.
+- `--mw-occasion-color-1..5` colour confetti, bunting and balloons,
+  `--mw-occasion-flag-1..3` the football stripe (black, red, gold).
+- Reduced motion: static only. Save-Data: no intro.
+
+**Scheduled**: the entries go on `<html>` as `data-mw-occasions`, and
+`src/js/occasions.js` - a classic script in `<head>` - sets today's classes
+before the first paint. main.js does not schedule; without the head script
+the attribute does nothing.
+
+```json
+[
+  {
+    "effect": "christmas",
+    "from": "2026-12-18",
+    "until": "2026-12-26",
+    "yearly": true,
+    "scroll": true,
+    "intro": true,
+    "size": "sm"
+  }
+]
+```
+
+Local days, `until` included; `yearly` keeps month and day and may run over
+New Year; the shortest active window wins; unknown effects are skipped.
+Preview on any page with main.js:
+`?mw-occasion=autumn&mw-occasion-size=lg&mw-occasion-scroll&mw-occasion-intro`.
+
 ## Overlay button
 
 `mw-overlay-btn` is the round 44px button that sits on a photo - dark and

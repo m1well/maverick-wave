@@ -16,6 +16,7 @@ const cssnano = require('cssnano');
 // the whole file - cheaper than a build log nobody reads.
 const cssnanoPreset = ['default', { calc: false }];
 const terser = require('gulp-terser');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const rename = require('gulp-rename');
@@ -29,6 +30,7 @@ const paths = {
   dist: 'dist',
   scss: 'src/scss/**/*.scss',
   html: '*.html',
+  decks: 'src/decks/*.html',
   js: 'src/js/*.js',
   assets: 'src/assets/**/*',
 };
@@ -42,15 +44,24 @@ function convertDateFormat(dateStr) {
 
 // Process HTML files
 gulp.task('html', function () {
-  return gulp
-    .src(paths.html)
-    .pipe(
-      fileinclude({
-        prefix: '@@',
-        basepath: '@file',
-      })
-    )
-    .pipe(gulp.dest(paths.dist));
+  return (
+    gulp
+      .src([paths.html, paths.decks], { base: paths.root })
+      .pipe(
+        fileinclude({
+          prefix: '@@',
+          basepath: '@file',
+        })
+      )
+      // The demo decks live in src/decks and are served from decks/ next to
+      // the showcase that embeds them
+      .pipe(
+        rename((file) => {
+          file.dirname = file.dirname.replace(/^src[\\/]?/, '');
+        })
+      )
+      .pipe(gulp.dest(paths.dist))
+  );
 });
 
 // Process SCSS files
@@ -99,6 +110,15 @@ gulp.task('inject-build-info', function () {
   // Get package.json data
   const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
+  // The version alone missed every build between two releases: a browser kept
+  // the script of the last release and a new component did nothing
+  const assetHash = crypto
+    .createHash('sha256')
+    .update(fs.readFileSync(path.join(paths.dist, 'maverick-wave.min.css')))
+    .update(fs.readFileSync(path.join(paths.dist, 'maverick-wave.min.js')))
+    .digest('hex')
+    .slice(0, 10);
+
   // Create build info object
   const buildInfo = {
     name: packageJson.name,
@@ -112,6 +132,7 @@ gulp.task('inject-build-info', function () {
       let contents = file.contents.toString();
 
       // Replace placeholders with actual values
+      contents = contents.replace(/\{\{ASSET_HASH\}\}/g, assetHash);
       contents = contents.replace(/\{\{VERSION\}\}/g, buildInfo.version);
       contents = contents.replace(
         /\{\{LAST_BUILD_DATE\}\}/g,
@@ -130,7 +151,7 @@ gulp.task('inject-build-info', function () {
   });
 
   return gulp
-    .src(path.join(paths.dist, '*.html'))
+    .src(path.join(paths.dist, '**/*.html'), { base: paths.dist })
     .pipe(injectBuildInfo)
     .pipe(gulp.dest(paths.dist));
 });
@@ -144,10 +165,15 @@ gulp.task('clean', async function () {
 
 // Watch for changes
 gulp.task('watch', function () {
-  gulp.watch(paths.scss, gulp.series('scss-build'));
+  // The pages carry a hash of the built files, so they follow every rebuild
+  gulp.watch(
+    paths.scss,
+    gulp.series('scss-build', 'html', 'inject-build-info')
+  );
   gulp.watch('*.html', gulp.series('html', 'inject-build-info'));
   gulp.watch('src/partials/*.html', gulp.series('html', 'inject-build-info'));
-  gulp.watch(paths.js, gulp.series('js-build'));
+  gulp.watch(paths.decks, gulp.series('html', 'inject-build-info'));
+  gulp.watch(paths.js, gulp.series('js-build', 'html', 'inject-build-info'));
   gulp.watch(paths.assets, gulp.series('assets'));
 });
 

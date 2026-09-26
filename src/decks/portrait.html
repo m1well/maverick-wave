@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="robots" content="noindex" />
+    <title>Guided hiking weekends · Summit Trails</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg" />
+    <link
+      rel="stylesheet"
+      href="../maverick-wave.min.css?v={{VERSION}}.{{ASSET_HASH}}"
+    />
+    <!-- Same stored theme as the showcase, applied before the first paint. In
+         a frame whose storage the browser blocks, reading it throws. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('mw-theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.classList.add('mw-theme-' + stored);
+          }
+        } catch (error) {}
+      })();
+    </script>
+    <script
+      src="../maverick-wave.min.js?v={{VERSION}}.{{ASSET_HASH}}"
+      defer
+    ></script>
+  </head>
+  <body class="mw-deck mw-deck-portrait">
+    <aside class="mw-deck-aside">
+      <p class="mw-deck-kicker">Example · portrait for phones</p>
+      <p class="mw-deck-aside-title">Guided hiking weekends</p>
+      <p>
+        Made for the phone: sent as a link, paged through with a thumb. Here on
+        a computer with the arrow keys, the mouse wheel or the buttons.
+      </p>
+      <div class="mw-deck-arrows">
+        <button
+          type="button"
+          class="mw-deck-btn"
+          data-deck-prev
+          aria-label="Previous slide"
+        >
+          <svg viewBox="0 0 24 24"><path d="M5 15l7-7 7 7" /></svg>
+        </button>
+        <button
+          type="button"
+          class="mw-deck-btn"
+          data-deck-next
+          aria-label="Next slide"
+        >
+          <svg viewBox="0 0 24 24"><path d="M5 9l7 7 7-7" /></svg>
+        </button>
+      </div>
+      <a href="../index.html#deck" target="_top">Back to MaverickWave</a>
+    </aside>
+
+    <div class="mw-deck-stage">
+      <div class="mw-deck-segments"></div>
+      <header class="mw-deck-head">
+        <span class="mw-deck-brand"
+          >Summit Trails<small
+            >Invented names, for demonstration only</small
+          ></span
+        >
+        <div class="mw-deck-tools">
+          <span class="mw-deck-counter">01 / 10</span>
+          <button
+            type="button"
+            class="mw-deck-btn"
+            data-deck-fullscreen
+            aria-label="Toggle fullscreen"
+          >
+            <svg class="mw-deck-icon-expand" viewBox="0 0 24 24">
+              <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+            </svg>
+            <svg class="mw-deck-icon-collapse" viewBox="0 0 24 24">
+              <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="mw-deck-slides">
+        <section class="mw-slide mw-slide-cover" aria-label="Title">
+          <figure class="mw-deck-image mw-deck-image-zoom">
+            <img
+              src="../images/photo-peak.svg"
+              alt="A summit above the clouds at dawn"
+            />
+          </figure>
+          <p class="mw-deck-kicker" data-deck-in>
+            Guided weekends · May to October
+          </p>
+          <h1 class="mw-deck-title mw-deck-title-xl" data-deck-in="2">
+            Two days, one ridge, <em>no rush.</em>
+          </h1>
+          <p class="mw-deck-text" data-deck-in="3">
+            For people who would rather walk than plan: we carry the map, book
+            the hut and know where the view is.
+          </p>
+          <p class="mw-deck-swipe" data-deck-in="4">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 14l6-6 6 6" />
+            </svg>
+            Swipe up
+          </p>
+        </section>
+
+        <section class="mw-slide mw-slide-statement" aria-label="What it is">
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>What it is</p>
+            <h2 class="mw-deck-title mw-deck-title-xl" data-deck-in="2">
+              A weekend that starts at the trailhead, <em>not in traffic.</em>
+            </h2>
+            <p class="mw-deck-text" data-deck-in="3">
+              We meet at the station on Saturday morning. Twelve people at most,
+              two guides, one night in a mountain hut.
+            </p>
+          </div>
+        </section>
+
+        <section class="mw-slide mw-slide-surface" aria-label="Day one">
+          <figure class="mw-deck-image mw-deck-image-top mw-deck-image-zoom">
+            <img
+              src="../images/photo-forest-path.svg"
+              alt="A path through a sunny forest"
+            />
+          </figure>
+          <div>
+            <p class="mw-deck-kicker" data-deck-in><b>01</b> Saturday</p>
+            <h2 class="mw-deck-title" data-deck-in="2">
+              Through the forest to the hut
+            </h2>
+            <p class="mw-deck-text" data-deck-in="3">
+              A steady climb in the shade, lunch by the stream, the hut in time
+              for cake.
+            </p>
+            <p class="mw-deck-chips" data-deck-in="4">
+              <span>14 km</span><span>900 m up</span><span>6 hours</span>
+            </p>
+          </div>
+        </section>
+
+        <section class="mw-slide" aria-label="Day two">
+          <figure
+            class="mw-deck-image mw-deck-image-top mw-deck-image-top-tall mw-deck-image-zoom"
+          >
+            <img
+              src="../images/gallery-mountain.svg"
+              alt="A ridge between two peaks"
+            />
+          </figure>
+          <div>
+            <p class="mw-deck-kicker" data-deck-in><b>02</b> Sunday</p>
+            <h2 class="mw-deck-title" data-deck-in="2">
+              Along the ridge at sunrise
+            </h2>
+            <p class="mw-deck-chips" data-deck-in="3">
+              <span>11 km</span><span>400 m up</span><span>1,300 m down</span>
+            </p>
+          </div>
+        </section>
+
+        <section class="mw-slide" aria-label="The weekend">
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>The weekend</p>
+            <h2 class="mw-deck-title" data-deck-in="2">
+              Four moments, one arc
+            </h2>
+          </div>
+          <ol class="mw-deck-steps">
+            <li data-deck-in="2">
+              <h3>Station, 8:30</h3>
+              <p>Coffee, a short briefing, poles for anyone who wants them.</p>
+            </li>
+            <li data-deck-in="3">
+              <h3>The hut, 16:00</h3>
+              <p>Dorm or double room, dinner at a long table.</p>
+            </li>
+            <li data-deck-in="4">
+              <h3>Ridge, 6:00</h3>
+              <p>Head torches on, sunrise from the top.</p>
+            </li>
+            <li data-deck-in="5">
+              <h3>Valley, 15:00</h3>
+              <p>A swim in the lake, then the train home.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="mw-slide" aria-label="Impressions">
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>Impressions</p>
+            <h2 class="mw-deck-title" data-deck-in="2">From last summer</h2>
+          </div>
+          <div class="mw-deck-images" data-deck-in="3">
+            <figure class="mw-deck-image">
+              <img src="../images/photo-waterfall.svg" alt="" />
+              <figcaption>The falls below the hut</figcaption>
+            </figure>
+            <figure class="mw-deck-image">
+              <img src="../images/story-stars.svg" alt="" />
+              <figcaption>Night at 2,100 m</figcaption>
+            </figure>
+            <figure class="mw-deck-image">
+              <img src="../images/gallery-lake.svg" alt="" />
+              <figcaption>The lake on day two</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="mw-slide mw-slide-surface" aria-label="Included">
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>Included</p>
+            <h2 class="mw-deck-title" data-deck-in="2">
+              What you do not have to think about
+            </h2>
+          </div>
+          <ul class="mw-deck-list" data-deck-in="3">
+            <li>
+              <span>Two certified guides</span><span>for twelve people</span>
+            </li>
+            <li>
+              <span>Night in the hut</span
+              ><span>with dinner and breakfast</span>
+            </li>
+            <li>
+              <span>Lunch on both days</span><span>vegetarian on request</span>
+            </li>
+            <li>
+              <span>Luggage transfer</span><span>you carry a day pack</span>
+            </li>
+          </ul>
+          <p class="mw-deck-text mw-deck-bottom" data-deck-in="4">
+            Not included: the train to the station and good boots - we check the
+            boots on Saturday morning.
+          </p>
+        </section>
+
+        <section class="mw-slide" aria-label="Prices">
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>Prices per person</p>
+            <h2 class="mw-deck-title" data-deck-in="2">Three ways to join</h2>
+          </div>
+          <div data-deck-in="3">
+            <div class="mw-deck-package">
+              <h3>Dorm</h3>
+              <b>189 €</b>
+              <p>Bunk in a room for eight, sheets included.</p>
+            </div>
+            <div class="mw-deck-package mw-deck-package-highlight">
+              <h3>Double room</h3>
+              <b>229 €</b>
+              <p>Our most booked option - two beds, a window to the east.</p>
+            </div>
+            <div class="mw-deck-package">
+              <h3>Private group</h3>
+              <b>1,690 €</b>
+              <p>The whole weekend for up to eight friends, on your date.</p>
+            </div>
+          </div>
+          <p class="mw-deck-price mw-deck-bottom" data-deck-in="4">
+            from 189 €<small>per person</small>
+          </p>
+        </section>
+
+        <section
+          class="mw-slide mw-slide-surface mw-slide-statement"
+          aria-label="A voice"
+        >
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>A voice</p>
+            <blockquote class="mw-deck-quote" data-deck-in="2">
+              We were on the ridge when the sun came up and nobody said a word.
+              Best Sunday of the year.
+            </blockquote>
+            <p class="mw-deck-source" data-deck-in="3">
+              From a message after the September weekend
+            </p>
+          </div>
+        </section>
+
+        <section
+          class="mw-slide mw-slide-primary mw-slide-statement"
+          aria-label="Booking"
+        >
+          <div>
+            <p class="mw-deck-kicker" data-deck-in>Booking</p>
+            <h2 class="mw-deck-title mw-deck-title-xl" data-deck-in="2">
+              Which weekend works for you?
+            </h2>
+            <p class="mw-deck-text" data-deck-in="3">
+              Tell us the date and how many you are - we answer the same day.
+            </p>
+            <div class="mw-deck-actions" data-deck-in="4">
+              <a
+                class="mw-btn mw-btn-primary"
+                href="mailto:hello@summit-trails.example"
+                >Ask for a date</a
+              >
+              <a
+                class="mw-btn mw-btn-outline"
+                href="../index.html#deck"
+                target="_top"
+                >Back to MaverickWave</a
+              >
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

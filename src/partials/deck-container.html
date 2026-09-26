@@ -1,0 +1,188 @@
+<h3 class="mw-section-subtitle">Presentations</h3>
+<p class="mw-text-muted mw-text-measure">
+  A link instead of a slide file. A deck is a page of its own with
+  <code>mw-deck</code> on the body: landscape for tablets, laptops and
+  projectors, or portrait for a phone - sent as a link and paged with a thumb.
+  The swipe is the browser's scroll snap; the script adds arrow keys, the mouse
+  wheel, jump buttons, counter, progress and fullscreen. Colours, fonts and
+  buttons come from the MaverickWave setup of the page, so a deck looks like the
+  site it belongs to. Inside another page it sits in <code>mw-deck-frame</code>,
+  and <code>mw-deck-card</code> links to it.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  The chrome over the slides - counter, progress, the round buttons under the
+  pointer - wears the second colour. <code>mw-deck-accent-primary</code> on the
+  deck keeps it to the first, and <code>mw-accent-single</code> on the site does
+  the same everywhere. Without the script the slides keep their scrollbar and
+  the controls that would do nothing stay hidden.
+</p>
+
+<div class="mw-grid-2 mw-mt-7">
+  <a
+    class="mw-card mw-deck-card mw-card-addon-secondary"
+    href="decks/landscape.html"
+  >
+    <div class="mw-card-img">
+      <img src="images/gallery-desert.svg" alt="" loading="lazy" />
+    </div>
+    <div class="mw-card-badge">Landscape · from tablet</div>
+    <div class="mw-card-body">
+      <p class="mw-text-eyebrow mw-mb-2">Explaining an offer</p>
+      <h4 class="mw-card-title">Northwind Coffee Roasters</h4>
+      <p class="mw-card-text">
+        A wholesale offer for a café, slide by slide: three blends to jump
+        between, a plan that draws itself, deliveries as a chart and a price
+        without small print.
+      </p>
+    </div>
+  </a>
+  <a
+    class="mw-card mw-deck-card mw-card-addon-secondary"
+    href="decks/portrait.html"
+  >
+    <div class="mw-card-img">
+      <img src="images/photo-peak.svg" alt="" loading="lazy" />
+    </div>
+    <div class="mw-card-badge">Portrait · for phones</div>
+    <div class="mw-card-body">
+      <p class="mw-text-eyebrow mw-mb-2">Selling a trip</p>
+      <h4 class="mw-card-title">Summit Trails</h4>
+      <p class="mw-card-text">
+        Guided hiking weekends to swipe through: the two days, pictures from
+        last summer, what is included and three prices.
+      </p>
+    </div>
+  </a>
+</div>
+
+<div class="mw-mt-9">
+  <span class="mw-field-label mw-d-block mw-mb-2" id="deck-accent-label"
+    >Chrome accent in the decks below</span
+  >
+  <div class="mw-segmented" role="group" aria-labelledby="deck-accent-label">
+    <button
+      type="button"
+      class="mw-segmented-item mw-active"
+      data-chrome-accent=""
+      aria-pressed="true"
+    >
+      Second colour
+    </button>
+    <button
+      type="button"
+      class="mw-segmented-item"
+      data-chrome-accent="primary"
+      aria-pressed="false"
+    >
+      Primary only
+    </button>
+  </div>
+</div>
+
+<div class="mw-deck-embed mw-mt-7">
+  <div class="mw-deck-frame">
+    <iframe
+      src="decks/landscape.html"
+      title="Presentation: Northwind Coffee Roasters"
+      loading="lazy"
+      allow="fullscreen"
+    ></iframe>
+  </div>
+  <div class="mw-deck-embed-info">
+    <p class="mw-text-eyebrow">Landscape · from tablet</p>
+    <p>
+      Page with the arrow keys once you clicked into it, with a swipe or the
+      buttons bottom right. The button top right switches to fullscreen. On a
+      phone held upright the deck asks to be turned.
+    </p>
+    <div class="mw-deck-embed-actions">
+      <a
+        class="mw-btn mw-btn-primary"
+        href="decks/landscape.html"
+        target="_blank"
+        rel="noopener"
+        >Open on its own</a
+      >
+    </div>
+  </div>
+</div>
+
+<div class="mw-deck-embed mw-mt-9">
+  <div class="mw-deck-frame mw-deck-frame-portrait">
+    <iframe
+      src="decks/portrait.html"
+      title="Presentation: Summit Trails"
+      loading="lazy"
+      allow="fullscreen"
+    ></iframe>
+  </div>
+  <div class="mw-deck-embed-info">
+    <p class="mw-text-eyebrow">Portrait · for phones</p>
+    <p>
+      Swipe up, or use the arrow keys after one click into it. Opened on its own
+      on a computer, the deck stands in a phone-shaped stage with a column of
+      text and the arrows beside it.
+    </p>
+    <div class="mw-deck-embed-actions">
+      <a
+        class="mw-btn mw-btn-primary"
+        href="decks/portrait.html"
+        target="_blank"
+        rel="noopener"
+        >Open on its own</a
+      >
+    </div>
+  </div>
+</div>
+
+<script>
+  // Showcase only. The decks are pages of their own and would not see the
+  // palette, the variants or the theme picked on this one - copied into the
+  // frames as they change, the way a site's own stylesheet carries them.
+  (function () {
+    var root = document.documentElement;
+    var frames = document.querySelectorAll('#deck iframe');
+    var switches = document.querySelectorAll('[data-chrome-accent]');
+    var primaryOnly = false;
+
+    function mirror(frame) {
+      try {
+        var doc = frame.contentDocument;
+        if (!doc || !doc.body) return;
+        doc.documentElement.className = root.className;
+        doc.documentElement.style.cssText = root.style.cssText;
+        doc.body.classList.toggle('mw-deck-accent-primary', primaryOnly);
+      } catch (error) {
+        // a frame from another origin keeps its own look
+      }
+    }
+
+    function mirrorAll() {
+      frames.forEach(mirror);
+    }
+
+    frames.forEach(function (frame) {
+      frame.addEventListener('load', function () {
+        mirror(frame);
+      });
+      mirror(frame);
+    });
+
+    new MutationObserver(mirrorAll).observe(root, {
+      attributes: true,
+      attributeFilter: ['class', 'style'],
+    });
+
+    switches.forEach(function (button) {
+      button.addEventListener('click', function () {
+        primaryOnly = button.dataset.chromeAccent === 'primary';
+        switches.forEach(function (other) {
+          var on = other === button;
+          other.classList.toggle('mw-active', on);
+          other.setAttribute('aria-pressed', String(on));
+        });
+        mirrorAll();
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,102 @@
+@use '../abstracts' as *;
+@use 'cards';
+
+// A deck shown inside a normal page: the iframe that holds it, the column of
+// text beside it, and a card that links to it. The deck itself is a page of
+// its own and loads _deck.scss.
+
+@layer mw.components {
+  .mw-deck-frame {
+    // The window below every layer of sticky chrome: a frame taller than that
+    // can never be seen whole
+    --mw-deck-frame-room: calc(
+      100dvh - var(--mw-header-height) - var(--mw-announcement-offset) - var(
+          --mw-section-nav-offset
+        )
+    );
+
+    position: relative;
+    overflow: hidden;
+    margin-inline: auto;
+    background-color: $fixed-stage;
+    box-shadow: var(--mw-elevation-4);
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  // As wide as the column but never taller than the room. On a phone it
+  // stands upright: the deck then asks to be turned.
+  .mw-deck-frame:not(.mw-deck-frame-portrait) {
+    @include surface;
+    width: min(100%, calc((var(--mw-deck-frame-room) - 6rem) * 1.6));
+    aspect-ratio: 16 / 10;
+
+    @include media-down('md') {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  // The shape of the phone the deck was made for, rounded like one - the
+  // accent arcs follow that curve instead of the surface signature
+  .mw-deck-frame-portrait {
+    height: min(844px, calc(var(--mw-deck-frame-room) - 4rem));
+    max-width: 100%;
+    aspect-ratio: 390 / 844;
+    border-radius: 2rem;
+
+    &::after {
+      @include corner-accent;
+      border-radius: inherit;
+    }
+  }
+
+  // Frame and text: stacked, and side by side once a portrait frame leaves
+  // room for the text
+  .mw-deck-embed {
+    display: grid;
+    gap: spacing('8');
+
+    &:has(> .mw-deck-frame-portrait) {
+      @include media-up('md') {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: spacing('11');
+      }
+    }
+  }
+
+  .mw-deck-embed-info {
+    max-width: 60ch;
+
+    > p {
+      margin-bottom: 0;
+    }
+
+    > p + p {
+      margin-top: spacing('4');
+    }
+  }
+
+  .mw-deck-embed-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: spacing('3');
+    margin-top: spacing('7');
+  }
+
+  // The preview is a screenshot of the first slide: it keeps its 4:3 instead
+  // of being cropped to the card's image height
+  .mw-deck-card {
+    color: inherit;
+
+    .mw-card-img {
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+  }
+}

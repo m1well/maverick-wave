@@ -21,10 +21,14 @@
       @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
       layer(vendor);
     </style>
-    <!-- ?v= so a release actually reaches a browser that has the last one
+    <!-- ?v= so every build actually reaches a browser that has the last one
          cached: the filename never changes, and without it a stale stylesheet
-         survives a normal reload -->
-    <link rel="stylesheet" href="maverick-wave.min.css?v={{VERSION}}" />
+         survives a normal reload. The hash of the built files, because the
+         version stays the same between two releases -->
+    <link
+      rel="stylesheet"
+      href="maverick-wave.min.css?v={{VERSION}}.{{ASSET_HASH}}"
+    />
 
     <!-- Applies a stored theme choice before the first paint. Without it a
          reader whose choice differs from the OS sees the other theme for a
@@ -572,7 +576,7 @@
       }
     </style>
 
-    <script src="maverick-wave.min.js?v={{VERSION}}"></script>
+    <script src="maverick-wave.min.js?v={{VERSION}}.{{ASSET_HASH}}"></script>
   </head>
 
   <body>
@@ -963,14 +967,10 @@
             <a href="#mosaic" class="mw-section-btn">Mosaic</a>
             <a href="#feed" class="mw-section-btn">Photo Feed</a>
             <a href="#stories" class="mw-section-btn">Story Archive</a>
-            <a href="#techstack-bucket" class="mw-section-btn"
-              >Technology Stack Bucket</a
-            >
             <a href="#content-slider" class="mw-section-btn">Content Slider</a>
             <a href="#testimonials" class="mw-section-btn">Testimonials</a>
             <a href="#prose" class="mw-section-btn">Prose</a>
             <a href="#media" class="mw-section-btn">Media</a>
-            <a href="#blog-posts" class="mw-section-btn">Blog Posts</a>
           </nav>
 
           <!-- Page Header container -->
@@ -1041,11 +1041,6 @@
             @@include('./src/partials/stories-container.html')
           </div>
 
-          <!-- Tech stack container-->
-          <div id="techstack-bucket">
-            @@include('./src/partials/techstack-bucket-container.html')
-          </div>
-
           <!-- Content slider container-->
           <div id="content-slider">
             @@include('./src/partials/content-slider-container.html')
@@ -1061,6 +1056,41 @@
 
           <!-- Media container-->
           <div id="media">@@include('./src/partials/media-container.html')</div>
+        </div>
+      </section>
+
+      <!-- Specials section -->
+      <section id="specials" class="mw-section mw-section-alternate">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Specials</h2>
+            <p class="mw-section-head-intro">
+              Whole pages and site-wide extras rather than building blocks - an
+              article, a slide deck, a tool stack and a seasonal dress for every
+              card.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#deck" class="mw-section-btn">Presentations</a>
+            <a href="#techstack-bucket" class="mw-section-btn"
+              >Technology Stack Bucket</a
+            >
+            <a href="#occasions" class="mw-section-btn">Occasions</a>
+            <a href="#blog-posts" class="mw-section-btn">Blog Posts</a>
+          </nav>
+
+          <!-- Deck container-->
+          <div id="deck">@@include('./src/partials/deck-container.html')</div>
+
+          <!-- Tech stack container-->
+          <div id="techstack-bucket">
+            @@include('./src/partials/techstack-bucket-container.html')
+          </div>
+
+          <!-- Occasions container -->
+          <div id="occasions">
+            @@include('./src/partials/occasions-container.html')
+          </div>
 
           <!-- Blogposts container-->
           <div id="blog-posts">
@@ -1069,7 +1099,7 @@
         </div>
       </section>
       <!-- History section -->
-      <section id="history" class="mw-section mw-section-alternate">
+      <section id="history" class="mw-section">
         <div class="mw-container">
           <div class="mw-section-head">
             <h2 class="mw-section-head-title">History</h2>
@@ -1082,7 +1112,7 @@
         </div>
       </section>
       <!-- Preview section, showcase only - see the partial -->
-      <section id="preview" class="mw-section">
+      <section id="preview" class="mw-section mw-section-alternate">
         <div class="mw-container">
           <div class="mw-section-head">
             <h2 class="mw-section-head-title">Preview</h2>

@@ -25,7 +25,9 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const CSS = path.join(ROOT, 'dist', 'maverick-wave.min.css');
-const HTML = path.join(ROOT, 'dist', 'index.html');
+// The showcase and every page built with it - the demo decks in dist/decks/
+// are pages of their own
+const HTML_FILES = filesWithExt(path.join(ROOT, 'dist'), '.html');
 const JS = path.join(ROOT, 'src', 'js', 'main.js');
 
 // Everything that documents classes: every markdown file of the maverick-wave
@@ -61,8 +63,8 @@ const errors = [];
 const warnings = [];
 
 const css = read(CSS);
-const html = read(HTML);
-if (!css || !html) {
+const html = HTML_FILES.map(read).filter(Boolean).join('\n');
+if (!css || !read(path.join(ROOT, 'dist', 'index.html'))) {
   console.error(
     'dist/ is missing or incomplete - run `npm run build` before `npm run verify`.'
   );

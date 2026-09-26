@@ -1,0 +1,700 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+@use 'buttons';
+@use 'deck-blocks';
+
+@layer mw.components {
+  // The theme's dark inks are cut for 3:1 on a card. A slide sets small type
+  // in them on the page ground, and a projector takes a share of every contrast.
+  $_ink-dark: 0.66;
+  $_primary-ink-dark: ink-on-dark('primary-color', $_ink-dark);
+  $_secondary-ink-dark: ink-on-dark('secondary-color', $_ink-dark);
+
+  // What a slide, and the chrome over it, paints with. Every surface a slide can
+  // have sets all of them, so a block never has to know which surface it sits
+  // on. `mark` is the brand as ink on that surface, `fill` the brand as a solid
+  // with `fill-ink` on top; `accent` and `accent-fill` are the same pair in the
+  // second colour, which the chrome over the slides wears.
+  $_tones: (
+    'page': (
+      ground: var(--mw-page-background),
+      ink: var(--mw-text-color),
+      mark: var(--mw-deck-first-ink),
+      fill: var(--mw-primary-color),
+      fill-ink: var(--mw-primary-accent-text-color),
+      accent: var(--mw-deck-second-ink),
+      accent-fill: var(--mw-deck-second),
+      accent-fill-ink: var(--mw-deck-second-label),
+    ),
+    'surface': (
+      ground: var(--mw-card-background),
+      ink: var(--mw-text-color),
+      mark: var(--mw-deck-first-ink),
+      fill: var(--mw-primary-color),
+      fill-ink: var(--mw-primary-accent-text-color),
+      accent: var(--mw-deck-second-ink),
+      accent-fill: var(--mw-deck-second),
+      accent-fill-ink: var(--mw-deck-second-label),
+    ),
+    // The header bar's surface: dark in both themes and tinted with the brand,
+    // and its active link colour is already cut to read on it
+    'dark': (
+        ground: var(--mw-header-background),
+        ink: var(--mw-header-text-color),
+        mark: var(--mw-header-navbar-list-active-color),
+        fill: var(--mw-primary-color),
+        fill-ink: var(--mw-primary-accent-text-color),
+        accent: var(--mw-deck-second-ink-dark),
+        accent-fill: var(--mw-deck-second),
+        accent-fill-ink: var(--mw-deck-second-label),
+      ),
+    // The second colour on the first one rarely holds a 2px line - here the
+    // chrome takes the label colour instead
+    'primary': (
+        ground: var(--mw-primary-color),
+        ink: var(--mw-primary-accent-text-color),
+        mark: var(--mw-primary-accent-text-color),
+        fill: var(--mw-primary-accent-text-color),
+        fill-ink: var(--mw-primary-color),
+        accent: var(--mw-primary-accent-text-color),
+        accent-fill: var(--mw-primary-accent-text-color),
+        accent-fill-ink: var(--mw-primary-color),
+      ),
+    // A photo under a dark gradient - judged against black, like the hero
+    'cover': (
+        ground: $fixed-stage,
+        ink: $fixed-surface-text,
+        mark: ink-on-dark('primary-color', $hero-ink-lightness),
+        fill: var(--mw-primary-color),
+        fill-ink: var(--mw-primary-accent-text-color),
+        accent: var(--mw-deck-second-ink-dark),
+        accent-fill: var(--mw-deck-second),
+        accent-fill-ink: var(--mw-deck-second-label),
+      ),
+  );
+
+  @mixin tone($name) {
+    @each $key, $value in map.get($_tones, $name) {
+      --mw-deck-#{$key}: #{$value};
+    }
+  }
+
+  // The deck is the page: put it on <body>. Everything inside is placed
+  // against it rather than the viewport, so it also works in a box of its own.
+  .mw-deck {
+    // The second colour of the site, as the chrome uses it. Pointed at the
+    // primary by .mw-deck-accent-primary below, or site-wide by
+    // .mw-accent-single on <html>, which makes the second colour the first.
+    --mw-deck-second: var(--mw-secondary-color);
+    --mw-deck-second-label: var(--mw-secondary-accent-text-color);
+    --mw-deck-second-ink: var(--mw-secondary-text-color);
+    --mw-deck-second-ink-dark: #{$_secondary-ink-dark};
+    --mw-deck-first-ink: var(--mw-primary-text-color);
+
+    // A browser without light-dark() keeps the theme's own inks
+    @supports (color: light-dark(#000, #fff)) {
+      --mw-deck-first-ink: light-dark(
+        var(--mw-light-primary-text-color),
+        #{$_primary-ink-dark}
+      );
+      --mw-deck-second-ink: light-dark(
+        var(--mw-light-secondary-text-color),
+        #{$_secondary-ink-dark}
+      );
+    }
+
+    @include tone('page');
+
+    // vmin rather than the fluid() ramp: a slide has to fit its height as much
+    // as its width, and on a beamer the height is the short side
+    --mw-deck-gutter: clamp(1.25rem, 4.6vmin, 4.75rem);
+    --mw-deck-text-xl: clamp(2.6rem, 8.8vmin, 8.6rem);
+    --mw-deck-text-lg: clamp(1.9rem, 5.6vmin, 5.2rem);
+    --mw-deck-text-md: clamp(1.25rem, 3.1vmin, 2.6rem);
+    --mw-deck-text: clamp(1rem, 2.05vmin, 1.4rem);
+    --mw-deck-text-sm: clamp(0.76rem, 1.45vmin, 1rem);
+    // The voice of the titles - the knobs a brand turns next to its colours
+    --mw-deck-title-weight: 600;
+    --mw-deck-title-tracking: -0.035em;
+    --mw-deck-title-leading: 0.98;
+    --mw-deck-title-case: none;
+    // currentColor resolves where the token is used, so one line and one muted
+    // tone serve every surface
+    --mw-deck-line: color-mix(in srgb, currentColor 16%, transparent);
+    --mw-deck-muted: color-mix(in oklab, currentColor 72%, transparent);
+    --mw-deck-radius: #{radius('sm')};
+    // Written by the script, read by the progress bar
+    --mw-deck-progress: 0;
+
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background-color: var(--mw-page-background);
+    color: var(--mw-deck-ink);
+    font-size: var(--mw-deck-text);
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+  }
+
+  // One brand colour in the chrome: the second one gives way to the first
+  .mw-deck-accent-primary {
+    --mw-deck-second: var(--mw-primary-color);
+    --mw-deck-second-label: var(--mw-primary-accent-text-color);
+    --mw-deck-second-ink: var(--mw-deck-first-ink);
+    --mw-deck-second-ink-dark: var(--mw-header-navbar-list-active-color);
+  }
+
+  // A deck page is exactly the window: nothing scrolls past it, and the reset's
+  // 320px floor goes - an embedded phone deck is often narrower than that, and
+  // the floor pushed its right edge out of the frame
+  :root:has(> body.mw-deck) {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  // The base layer spaces headings and paragraphs for a page of text; a slide
+  // places every block itself
+  :where(.mw-deck)
+    :where(h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote) {
+    margin: 0;
+  }
+
+  // The reset clears ul only; steps and notes number themselves
+  :where(.mw-deck) ol {
+    list-style: none;
+  }
+
+  // Big type in a phone-wide column: a German compound breaks mid-word
+  // otherwise. Only long words, so a headline does not fill with hyphens.
+  :where(.mw-deck) :where(h1, h2, h3, .mw-deck-title, .mw-deck-aside-title) {
+    hyphens: auto;
+    hyphenate-limit-chars: 10 4 4;
+  }
+
+  :where(.mw-deck) a {
+    color: inherit;
+  }
+
+  .mw-deck-head,
+  .mw-deck-foot {
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    color: var(--mw-deck-ink);
+    font-size: var(--mw-deck-text-sm);
+    // The bars lie over the slide: only their controls may catch a click
+    pointer-events: none;
+    transition: color var(--mw-duration-slow) var(--mw-ease-out);
+
+    > * {
+      pointer-events: auto;
+    }
+  }
+
+  .mw-deck-head {
+    justify-content: space-between;
+    gap: spacing('5');
+  }
+
+  .mw-deck-brand {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    small {
+      display: block;
+      margin-top: 0.15em;
+      color: inherit;
+      font-size: 0.82em;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+    }
+  }
+
+  .mw-deck-tools,
+  .mw-deck-arrows {
+    display: flex;
+    align-items: center;
+    gap: spacing('3');
+  }
+
+  // A long brand note wraps, the counter and the button keep their line
+  .mw-deck-tools {
+    flex: none;
+    gap: spacing('4');
+  }
+
+  .mw-deck-counter {
+    color: color-mix(in srgb, currentColor 75%, transparent);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .mw-deck-counter-current {
+    color: var(--mw-deck-accent);
+    font-weight: 700;
+  }
+
+  // An outline button drawn in whatever ink the current slide hands the
+  // chrome, filled with the second colour under the pointer
+  .mw-deck-btn {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: spacing('0');
+    border: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+    border-radius: radius('full');
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    color: inherit;
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include focus-ring(3px, currentColor);
+
+    svg {
+      width: 1.05rem;
+      height: 1.05rem;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    // Only under a pointer: a tap on a tablet would leave the fill standing
+    @include hover {
+      border-color: var(--mw-deck-accent-fill);
+      background: var(--mw-deck-accent-fill);
+      color: var(--mw-deck-accent-fill-ink);
+    }
+
+    &:active {
+      transform: scale(0.92);
+      transition-duration: var(--mw-duration-instant);
+    }
+  }
+
+  // A class the script sets, not :fullscreen - a browser that only knows the
+  // prefixed pseudo-class would drop the whole rule and show both icons
+  .mw-deck-icon-collapse,
+  .mw-deck-fullscreen .mw-deck-icon-expand {
+    display: none;
+  }
+
+  .mw-deck-fullscreen .mw-deck-icon-collapse {
+    display: block;
+  }
+
+  .mw-deck-progress {
+    flex: 1;
+    height: 2px;
+    background: var(--mw-deck-line);
+
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      background: var(--mw-deck-accent);
+      transform: scaleX(var(--mw-deck-progress));
+      transform-origin: left;
+      transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
+    }
+  }
+
+  // Positioned, so a slide's offsetLeft and offsetTop are its scroll position
+  .mw-deck-slides {
+    position: relative;
+    height: 100%;
+  }
+
+  // Until the script runs - and if it never does - the slides keep their
+  // scrollbar to be moved with, and the controls that would do nothing stay
+  // out of sight
+  .mw-deck-ready .mw-deck-slides {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .mw-deck:not(.mw-deck-ready)
+    :is(
+      [data-deck-next],
+      [data-deck-prev],
+      [data-deck-fullscreen],
+      .mw-deck-counter,
+      .mw-deck-progress
+    ) {
+    visibility: hidden;
+  }
+
+  .mw-slide {
+    @include tone('page');
+
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    background-color: var(--mw-deck-ground);
+    color: var(--mw-deck-ink);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    --mw-corner-accent: var(--mw-deck-mark);
+  }
+
+  @each $name in ('surface', 'dark', 'primary', 'cover') {
+    .mw-slide-#{$name} {
+      @include tone($name);
+    }
+  }
+
+  // The chrome follows the slide on screen. The slides set their own tone
+  // above, so what this puts on the chrome never reaches them. Behind
+  // @supports so the minifier cannot fold it into the rules above: a browser
+  // without :has() would drop the slide tones along with it.
+  @supports selector(:has(*)) {
+    @each $name in ('surface', 'dark', 'primary', 'cover') {
+      .mw-deck:has(.mw-slide-#{$name}.mw-active)
+        :is(.mw-deck-head, .mw-deck-foot, .mw-deck-segments, .mw-deck-stage) {
+        @include tone($name);
+      }
+    }
+  }
+
+  .mw-deck-landscape {
+    .mw-deck-head {
+      position: absolute;
+      inset: 0 0 auto;
+      padding: calc(var(--mw-deck-gutter) * 0.6) var(--mw-deck-gutter);
+    }
+
+    .mw-deck-foot {
+      position: absolute;
+      inset: auto 0 0;
+      gap: spacing('6');
+      padding: 0 var(--mw-deck-gutter) calc(var(--mw-deck-gutter) * 0.55);
+    }
+
+    .mw-deck-slides {
+      display: flex;
+      overflow: auto hidden;
+      scroll-snap-type: x mandatory;
+      // Only sideways: the back gesture stays off, a page around an embedded
+      // deck still scrolls on
+      overscroll-behavior-x: contain;
+    }
+
+    // Never less than the bars over it need: head and foot carry a 2.5rem
+    // button each, and at a small gutter the multiples alone fall short
+    .mw-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      padding: max(
+          var(--mw-deck-gutter) * 2.3,
+          var(--mw-deck-gutter) * 1.2 + 2.5rem
+        )
+        var(--mw-deck-gutter)
+        max(var(--mw-deck-gutter) * 2.4, var(--mw-deck-gutter) * 1.15 + 2.5rem);
+    }
+
+    .mw-slide-split {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      column-gap: 7vmin;
+      align-items: center;
+    }
+
+    .mw-slide-reverse > :first-child {
+      order: 2;
+    }
+
+    .mw-slide-statement,
+    .mw-slide-cover {
+      align-content: end;
+    }
+
+    .mw-slide-stack {
+      row-gap: 8vmin;
+      align-content: center;
+    }
+
+    // A tablet held upright: the two columns stack, the picture on top
+    @media (orientation: portrait) {
+      .mw-slide-split {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto;
+        row-gap: 5vmin;
+        align-items: end;
+      }
+
+      .mw-slide-reverse > :first-child {
+        order: 0;
+      }
+    }
+
+    // A phone turned sideways, where the rotate hint sends it: 390px of
+    // height do not hold the rem floors of the scale
+    @media (orientation: landscape) and (height < 500px) {
+      --mw-deck-gutter: 1rem;
+      --mw-deck-text-xl: 2rem;
+      --mw-deck-text-lg: 1.5rem;
+      --mw-deck-text-md: 1.05rem;
+      --mw-deck-text: 0.85rem;
+      --mw-deck-text-sm: 0.7rem;
+
+      // What still does not fit scrolls inside its slide, and the bars turn
+      // solid so the text never runs beneath the counter
+      .mw-deck-head,
+      .mw-deck-foot {
+        background-color: var(--mw-deck-ground);
+        transition-property: color, background-color;
+      }
+
+      // A squeezed row spills past the padding, under the foot and out of reach
+      .mw-slide {
+        grid-auto-rows: max-content;
+        overflow: hidden auto;
+        overscroll-behavior-y: contain;
+      }
+
+      // safe keeps an overflow off the top edge; start where it is unknown
+      .mw-slide-stack {
+        align-content: start;
+        align-content: safe center;
+      }
+
+      .mw-slide-statement,
+      .mw-slide-cover {
+        align-content: start;
+        align-content: safe end;
+      }
+    }
+  }
+
+  .mw-deck-portrait {
+    // Against the phone's width, not the window's: on a desktop the slides
+    // stay a phone
+    --mw-deck-text-xl: clamp(2.2rem, 12cqi, 3.5rem);
+    --mw-deck-text-lg: clamp(1.75rem, 9cqi, 2.7rem);
+    --mw-deck-text-md: clamp(1.2rem, 6cqi, 1.65rem);
+    --mw-deck-text: clamp(0.95rem, 4.2cqi, 1.1rem);
+    --mw-deck-text-sm: clamp(0.72rem, 3.2cqi, 0.86rem);
+    --mw-deck-gutter: 1.4rem;
+
+    background-color: var(--mw-footer-background);
+
+    .mw-deck-stage {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      container-type: inline-size;
+      background-color: var(--mw-page-background);
+
+      // Keeps the counter and the segments readable over a bright picture
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto;
+        z-index: 4;
+        height: 7rem;
+        background: linear-gradient(
+          color-mix(in srgb, var(--mw-deck-ground) 85%, transparent),
+          color-mix(in srgb, var(--mw-deck-ground) 60%, transparent) 55%,
+          transparent
+        );
+        pointer-events: none;
+      }
+    }
+
+    .mw-deck-segments {
+      position: absolute;
+      top: max(#{spacing('4')}, env(safe-area-inset-top));
+      right: spacing('5');
+      left: spacing('5');
+      z-index: 5;
+      display: flex;
+      gap: 4px;
+      color: var(--mw-deck-ink);
+      pointer-events: none;
+
+      > span {
+        flex: 1;
+        height: 3px;
+        border-radius: 3px;
+        background: color-mix(in srgb, currentColor 24%, transparent);
+        transition: background-color var(--mw-duration-slow) var(--mw-ease-out);
+      }
+
+      > .mw-done {
+        background: var(--mw-deck-accent);
+      }
+    }
+
+    .mw-deck-head {
+      position: absolute;
+      top: calc(max(#{spacing('4')}, env(safe-area-inset-top)) + 0.85rem);
+      right: spacing('5');
+      left: 1.1rem;
+    }
+
+    .mw-deck-slides {
+      overflow: hidden auto;
+      scroll-snap-type: y mandatory;
+      overscroll-behavior: contain;
+    }
+
+    .mw-slide {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      height: 100%;
+      padding: 5.2rem var(--mw-deck-gutter)
+        calc(#{spacing('8')} + env(safe-area-inset-bottom));
+    }
+
+    .mw-slide-statement,
+    .mw-slide-cover {
+      justify-content: flex-end;
+    }
+  }
+
+  .mw-deck-aside {
+    display: none;
+  }
+
+  @media (width >= #{breakpoint('sm')}) and (height >= 560px) {
+    .mw-deck-portrait {
+      display: grid;
+      place-content: center;
+      gap: clamp(2rem, 6vw, 6rem);
+
+      .mw-deck-stage {
+        position: relative;
+        inset: auto;
+        // 430 x 932, the tallest phone in common use, scaled down to the window
+        width: min(430px, calc((100vh - 4rem) * 0.4615));
+        width: min(430px, calc((100dvh - 4rem) * 0.4615));
+        height: min(932px, calc(100vh - 4rem));
+        height: min(932px, calc(100dvh - 4rem));
+        border-radius: 2.4rem;
+        outline: 1px solid var(--mw-border);
+        box-shadow: var(--mw-elevation-5);
+      }
+    }
+  }
+
+  @media (width >= #{breakpoint('lg')}) and (height >= 560px) {
+    .mw-deck-portrait {
+      grid-template-columns: minmax(0, 21rem) auto;
+    }
+
+    .mw-deck-aside {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      gap: spacing('6');
+
+      .mw-deck-aside-title {
+        font-family: var(--mw-font-family-heading);
+        font-size: font-size('3xl');
+        font-weight: var(--mw-deck-title-weight);
+        line-height: 1.05;
+        letter-spacing: var(--mw-deck-title-tracking);
+        text-transform: var(--mw-deck-title-case);
+      }
+
+      p:not(.mw-deck-kicker, .mw-deck-aside-title) {
+        font-size: font-size('base');
+        color: var(--mw-text-muted-color);
+      }
+
+      .mw-deck-arrows {
+        margin-top: spacing('3');
+      }
+
+      a {
+        font-size: font-size('sm');
+        color: var(--mw-text-muted-color);
+
+        &:hover {
+          color: var(--mw-primary-text-color);
+        }
+      }
+    }
+  }
+
+  // A landscape deck on a phone held upright asks to be turned
+  .mw-deck-rotate {
+    display: none;
+  }
+
+  @media (orientation: portrait) and (width < #{breakpoint('md')}) {
+    .mw-deck-landscape .mw-deck-rotate {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-content: center;
+      gap: spacing('6');
+      padding: spacing('8');
+      background-color: var(--mw-page-background);
+      text-align: center;
+
+      svg {
+        width: 4.5rem;
+        margin-inline: auto;
+        fill: none;
+        stroke: var(--mw-deck-second-ink);
+        stroke-width: 1.5;
+        animation: mw-deck-rotate motion(2.4s) var(--mw-ease-in-out) infinite;
+      }
+
+      p {
+        max-width: 22rem;
+        color: var(--mw-text-muted-color);
+      }
+
+      a {
+        color: var(--mw-deck-first-ink);
+        text-decoration: underline;
+        text-underline-offset: 0.22em;
+      }
+    }
+  }
+
+  @keyframes mw-deck-rotate {
+    0%,
+    30% {
+      transform: rotate(0);
+    }
+
+    60%,
+    100% {
+      transform: rotate(-90deg);
+    }
+  }
+
+  // Entrance: only once the script runs, so without it every slide stays whole
+
+  .mw-deck-ready [data-deck-in] {
+    opacity: 0;
+    transform: translateY(1.1rem);
+    transition:
+      opacity var(--mw-duration-zoom) var(--mw-ease-out),
+      transform var(--mw-duration-zoom) var(--mw-ease-out);
+  }
+
+  .mw-deck-ready .mw-slide.mw-active [data-deck-in] {
+    opacity: 1;
+    transform: none;
+  }
+
+  @for $step from 2 through 7 {
+    .mw-deck-ready .mw-slide.mw-active [data-deck-in='#{$step}'] {
+      transition-delay: motion(($step - 1) * 90ms);
+    }
+  }
+}
