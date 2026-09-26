@@ -796,14 +796,20 @@ $_host: '#{$_surface}, .mw-occasion-spot';
 
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
+      // Timed by the card's entry, which even the last card on a page completes;
+      // 60vh keeps a tall card from arriving only at the top of the screen
+      :root.mw-occasion-scroll :is(#{$_host}) {
+        view-timeline: --mw-occasion-arrival;
+      }
+
       @each $effect, $arrival in $_arrivals {
         #{_on($effect, '.mw-occasion-scroll')}::before {
           animation-name: mw-occasion-#{$arrival};
           animation-duration: auto;
           animation-timing-function: linear;
           animation-fill-mode: both;
-          animation-timeline: view();
-          animation-range: entry 30% cover 40%;
+          animation-timeline: --mw-occasion-arrival;
+          animation-range: entry 0% entry min(100%, 60vh);
         }
       }
     }
@@ -936,6 +942,25 @@ $_host: '#{$_surface}, .mw-occasion-spot';
     --mw-occasion-laps: 3;
 
     z-index: z-index('header') - 20;
+    opacity: 0;
+  }
+
+  // Visible only while the scroll drives it - on a page too short to scroll the
+  // timeline is inactive, and every piece would stand in the top left corner
+  @supports (animation-timeline: scroll()) {
+    .mw-occasion-drift {
+      animation-name: mw-occasion-shown;
+      animation-duration: auto;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root);
+    }
+  }
+
+  @keyframes mw-occasion-shown {
+    from,
+    to {
+      opacity: 1;
+    }
   }
 
   @supports not (animation-timeline: scroll()) {

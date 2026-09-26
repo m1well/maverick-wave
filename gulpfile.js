@@ -31,7 +31,7 @@ const paths = {
   scss: 'src/scss/**/*.scss',
   html: '*.html',
   decks: 'src/decks/*.html',
-  js: 'src/js/*.js',
+  js: 'src/js/main.js',
   assets: 'src/assets/**/*',
 };
 

@@ -2866,7 +2866,9 @@
   // page does. A lap is a little more than a screen of scrolling, which makes
   // the count a matter of page length.
   function startOccasionDrift(effect) {
-    if (!CSS.supports('animation-timeline: scroll()')) return;
+    // Not CSS.supports: Firefox behind its flag parses the syntax, but plays
+    // the whole page as one lap - pieces that crawl read as stuck
+    if (!window.ScrollTimeline) return;
 
     const layer = document.createElement('div');
     layer.className = 'mw-occasion-drift';

@@ -229,6 +229,17 @@ for (const f of filesWithExt(path.join(ROOT, 'src', 'scss'), '.scss')) {
   }
 }
 
+// --- 7: the bundle is main.js ---------------------------------------------
+// 5.34.0 shipped the occasions head script as maverick-wave.min.js - a build
+// glob picked up both files and the second overwrote the first.
+
+for (const f of ['dist/maverick-wave.min.js', 'maverick-wave.min.js']) {
+  const bundle = read(path.join(ROOT, f));
+  if (bundle !== null && !/MaverickWave\s*=/.test(bundle)) {
+    errors.push(`${f} does not define window.MaverickWave - it is not main.js`);
+  }
+}
+
 // Informational: framework classes the showcase never demonstrates
 const undocumented = [...classesInCss].filter(
   (c) => !classesInMarkup.has(c) && !classesInJs.has(c)
