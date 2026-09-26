@@ -65,6 +65,7 @@
     initMosaics(scope);
     initStoryReels(scope);
     initDecks(scope);
+    initDevices(scope);
     initAccordions(scope);
     initProgressBars(scope);
     initReveals(scope);
@@ -815,6 +816,41 @@
     reel.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') step(-1);
       else if (e.key === 'ArrowRight') step(1);
+    });
+  }
+
+  // ===== Devices =====
+  // A device written as a button tours its screenshot on a tap: to the end at
+  // the pace the CSS sets, a pause to take the last screen in, then back. The
+  // laptop's hover is CSS alone - this is the touch-side equivalent.
+  function initDevices(root) {
+    root.querySelectorAll('button.mw-device').forEach((device) => {
+      if (!fresh(device)) return;
+      const screen = device.querySelector('.mw-device-screen');
+      const shot = screen && screen.querySelector(':scope > img');
+      if (!shot) return;
+
+      let hold = 0;
+      const stop = () => {
+        clearTimeout(hold);
+        setActive(device, false);
+        device.setAttribute('aria-pressed', 'false');
+      };
+
+      device.setAttribute('aria-pressed', 'false');
+      device.addEventListener('click', () => {
+        if (isActive(device)) return stop();
+        // A screenshot no taller than the glass has nowhere to go, and a tour
+        // that never ends would leave the button pressed
+        if (shot.offsetHeight <= screen.clientHeight) return;
+        setActive(device, true);
+        device.setAttribute('aria-pressed', 'true');
+      });
+
+      shot.addEventListener('transitionend', (event) => {
+        if (event.propertyName !== 'translate' || !isActive(device)) return;
+        hold = setTimeout(stop, 1200);
+      });
     });
   }
 

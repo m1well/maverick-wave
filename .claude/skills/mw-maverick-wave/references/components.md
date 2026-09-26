@@ -2140,6 +2140,51 @@ loading="lazy" title="…"></iframe></div>`, `mw-deck-frame-portrait` for a
   `mw-deck-embed-actions` beside it. `mw-deck-card` on an `mw-card` link keeps
   the 4:3 preview uncropped.
 
+## Device frames
+
+A laptop and a phone drawn in CSS with a page on the glass - for showing a
+site the way people meet it. Module `components/devices`.
+
+```html
+<div class="mw-devices">
+  <div class="mw-device mw-device-laptop">
+    <span class="mw-device-screen">
+      <img src="shots/desktop.png" alt="The homepage on a laptop" />
+    </span>
+  </div>
+  <button
+    type="button"
+    class="mw-device mw-device-phone"
+    aria-label="Scroll through the phone view"
+  >
+    <span class="mw-device-screen">
+      <img src="shots/phone.png" alt="" />
+    </span>
+  </button>
+</div>
+```
+
+- `mw-devices` stands the phone over the laptop's lower right corner, at
+  22% of the width; under 30rem it moves below the laptop. Both frames also
+  stand alone: `mw-device-laptop` fills its column, `mw-device-phone` takes up
+  to 22rem, centred.
+- The glass is `mw-device-screen` (a `span`, so it fits inside a button).
+  An `img` or `video` in it is a full-page screenshot: as wide as the glass,
+  clipped below. An `iframe` is the live page, laid out at
+  `--mw-device-viewport` (1280px, the phone sets 390px) and scaled to the
+  glass - it scrolls by hand like the real thing.
+- **Tour.** While the pointer rests on the laptop the screenshot scrolls to
+  its end (fine pointer only, off under reduced motion). A device written as a
+  `<button>` tours on a tap: `mw-active` from the script, to the end at
+  `--mw-device-tour` (7s, on the motion scale), a pause, and back. A bobbing
+  chevron on the glass says it can be tapped and goes while the tour runs.
+  Without the script the button does nothing; the hover still works.
+- The frames are hardware-coloured in both themes. The shadow is
+  `--mw-elevation-4`, so the dark theme gets its light rim.
+- Screenshots: take the desktop one at 1280px wide and the phone one at
+  390px, full page - the aspect of the glass is 16:10 and 9:19.5, anything
+  taller scrolls.
+
 ## Occasions
 
 Seasonal decoration on every surface, switched by one class on `<html>`:
