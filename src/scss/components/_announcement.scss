@@ -52,14 +52,29 @@
   // notice inside a page, or a demo of the component itself. Static, it scrolls
   // with the content and shifts no anchor offset below.
   .mw-announcement-static {
-    position: static;
+    // Relative for the close button, without a z-index lifting it over nearby menus
+    position: relative;
+    z-index: auto;
+  }
+
+  // Centred by margin, not by transform - the button's press state scales it
+  .mw-announcement > .mw-announcement-close {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: spacing('4');
+    margin-block: auto;
+  }
+
+  // The same room on both sides, so the text stays centred
+  .mw-announcement:has(> .mw-announcement-close) .mw-announcement-content {
+    padding-inline: spacing('9');
   }
 
   // Anchors scrolled to under the fixed chrome would land under the ribbon too -
   // the same reason the reset reserves the header height. Scoped with :has, so a
   // page without a ribbon keeps the plain offset - and a static ribbon does not
-  // count, it scrolls with the content.
-  html:has(.mw-announcement:not(.mw-announcement-static)) {
+  // count, it scrolls with the content, nor does a dismissed one.
+  html:has(.mw-announcement:not(.mw-announcement-static, [hidden])) {
     --mw-announcement-offset: var(--mw-announcement-height);
   }
 

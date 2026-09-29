@@ -129,7 +129,45 @@
       <code>mw-select-custom</code> draws the open list in the framework's look
       where the browser can (Chrome 135+, Safari 27+) and leaves the native list
       everywhere else - the value, the keyboard and the form stay the select's.
+      Fields fill their column; <code>mw-w-auto</code> sizes one by its content
+      in a row of controls.
     </p>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Tag Field</h3>
+    <p class="mw-text-muted mw-text-measure">
+      <code>mw-input mw-input-tags</code> is a box that looks like the field and
+      holds the tags plus a bare input that adds them. It takes the field's
+      focus halo while the input inside has focus.
+    </p>
+    <label for="tag-field-demo">
+      <div class="mw-input mw-input-tags">
+        <div class="mw-tags">
+          <span class="mw-tags-item mw-tags-removable">
+            astro
+            <button
+              type="button"
+              class="mw-btn-mini mw-tags-remove"
+              aria-label="Remove astro"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </span>
+          <span class="mw-tags-item mw-tags-removable">
+            angular
+            <button
+              type="button"
+              class="mw-btn-mini mw-tags-remove"
+              aria-label="Remove angular"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </span>
+          <input id="tag-field-demo" type="text" placeholder="Add a tag" />
+        </div>
+      </div>
+    </label>
   </div>
 
   <div class="mw-card mw-card-simple">

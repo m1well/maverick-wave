@@ -516,9 +516,11 @@
     @include tappable;
     @include focus-ring-inset;
 
-    // A pill by padding: an icon font's own display cannot push the glyph aside
+    // A pill by padding: an icon font's own display cannot push the glyph aside.
+    // `.mw-icon` for a wrapper around the SVG, such as a component's host.
     > i,
-    > svg {
+    > svg,
+    > .mw-icon {
       padding: 0.35rem 1.1rem;
       border-radius: radius-sharp() radius('lg') radius-sharp() radius('lg');
       font-size: font-size('md');
@@ -556,7 +558,7 @@
     &[aria-current='page'] {
       color: var(--mw-primary-text-color);
 
-      > :is(i, svg) {
+      > :is(i, svg, .mw-icon) {
         background: var(--mw-primary-background);
       }
     }
@@ -564,7 +566,7 @@
     @include active {
       color: var(--mw-primary-text-color);
 
-      > :is(i, svg) {
+      > :is(i, svg, .mw-icon) {
         background: var(--mw-primary-background);
       }
     }

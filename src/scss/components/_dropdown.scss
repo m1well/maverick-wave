@@ -196,8 +196,14 @@
   .mw-card-body:has(.mw-dropdown[open]),
   .mw-table-responsive:has(.mw-dropdown[open]),
   .mw-tile:has(.mw-dropdown[open]),
-  .mw-modal-body:has(.mw-dropdown[open]) {
+  .mw-modal-body:has(.mw-dropdown[open]),
+  .mw-item-list-compact:has(.mw-dropdown[open]) {
     overflow: visible;
+  }
+
+  // A lifted card is its own stacking context - without this the menu opens under the next card
+  .mw-card:has(.mw-dropdown[open]) {
+    z-index: z-index('lift');
   }
 
   // The clipping caveat at the top of this file, lifted where the browser can do

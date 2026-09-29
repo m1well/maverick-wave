@@ -94,6 +94,7 @@
     initReveals(scope);
     initTabs(scope);
     initAlerts(scope);
+    initAnnouncements(scope);
     initFormSliders(scope);
     initImageSliders(scope);
     initCompares(scope);
@@ -1993,6 +1994,16 @@
   }
 
   // ===== Alerts =====
+  function initAnnouncements(root) {
+    root.querySelectorAll('.mw-announcement-close').forEach((button) => {
+      if (!fresh(button)) return;
+      button.addEventListener('click', () => {
+        const ribbon = button.closest('.mw-announcement');
+        if (ribbon) ribbon.hidden = true;
+      });
+    });
+  }
+
   function initAlerts(root) {
     const alertCloseButtons = root.querySelectorAll('.mw-alert-close');
 

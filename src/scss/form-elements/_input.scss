@@ -46,6 +46,27 @@
       min-height: var(--mw-control-height-lg);
     }
 
+    // A box that looks like the field and holds tags plus the bare input adding them
+    &-tags {
+      cursor: text;
+      @include field-focus('focus-within');
+
+      > .mw-tags {
+        align-items: center;
+      }
+
+      input {
+        flex: 1 1 8rem;
+        min-width: 6rem;
+        padding: spacing('1');
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+      }
+    }
+
     // Numeric input for money and other figures - the entry counterpart to the
     // `mw-text-numeric` utility, so a value looks the same while being typed and
     // once it is rendered into a table.

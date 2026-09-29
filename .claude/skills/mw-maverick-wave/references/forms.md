@@ -180,6 +180,33 @@ identical while being typed and once it is rendered into a table.
 > comes back empty. `inputmode="decimal"` still brings up the numeric keypad on
 > mobile. Parsing the comma stays the application's job.
 
+## Tag field
+
+Tags and the input that adds them, in one box that looks like the field:
+
+```html
+<div class="mw-input mw-input-tags">
+  <div class="mw-tags">
+    <span class="mw-tags-item mw-tags-removable">
+      astro
+      <button
+        type="button"
+        class="mw-btn-mini mw-tags-remove"
+        aria-label="Remove astro"
+      >
+        <i class="fas fa-times"></i>
+      </button>
+    </span>
+    <input type="text" aria-label="Add tag" />
+  </div>
+</div>
+```
+
+- The bare `input` inside takes the free room and wraps under the tags; the box
+  gets the field's focus halo through `:focus-within`.
+- The tags keep dark ink on the field, which stays light in both themes.
+- Adding a tag on Enter and removing it is the application's job.
+
 ## Input group
 
 Prefix, suffix and buttons glued to the control:

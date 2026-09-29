@@ -42,6 +42,80 @@
       }
     }
 
+    // Fields are built full width - here they share a row, under the title until there is room
+    &-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: spacing('3');
+      order: 1;
+      flex: 1 1 100%;
+
+      .mw-input {
+        flex: 1 1 7rem;
+        width: auto;
+      }
+
+      .mw-select {
+        flex: 0 1 auto;
+        width: auto;
+      }
+
+      .mw-segmented {
+        flex: 1 0 100%;
+      }
+
+      @include media-up('sm') {
+        .mw-segmented {
+          flex: 0 1 auto;
+        }
+      }
+
+      @include media-up('lg') {
+        order: 0;
+        flex: 0 1 auto;
+        margin-left: auto;
+
+        .mw-input {
+          flex: none;
+          width: 14rem;
+        }
+      }
+    }
+
+    // For an app screen, where every line of header costs list rows
+    &-compact {
+      margin-bottom: spacing('4');
+      padding-bottom: spacing('3');
+
+      h1,
+      h2,
+      h3 {
+        font-size: font-size('md');
+      }
+
+      @include media-up('sm') {
+        margin-bottom: spacing('6');
+        padding-bottom: spacing('4');
+
+        h1,
+        h2,
+        h3 {
+          font-size: font-size('lg');
+        }
+      }
+    }
+
+    // Opaque, or rows shine through; not on a phone, where it would take a third of the screen
+    &-sticky {
+      @include media-up('sm') {
+        position: sticky;
+        top: var(--mw-header-height);
+        z-index: z-index('card');
+        background: var(--mw-page-background);
+      }
+    }
+
     &-plain {
       padding-bottom: spacing('0');
       border-bottom: none;

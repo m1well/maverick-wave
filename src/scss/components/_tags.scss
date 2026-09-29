@@ -170,4 +170,9 @@
       color: var(--mw-#{$name}-accent-text-color);
     }
   }
+
+  // The field stays light in both themes - the theme's ink would vanish on it
+  .mw-input-tags .mw-tags-item {
+    color: var(--mw-form-elements-color);
+  }
 }

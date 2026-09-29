@@ -62,6 +62,42 @@
     </header>
   </div>
 
+  <div class="mw-card mw-card-simple mw-mb-6">
+    <h4 class="mw-mb-4">Compact, with Filters</h4>
+    <p class="mw-text-muted mw-text-sm mw-mb-3">
+      <code>mw-page-header-filters</code> puts fields in one row with the
+      actions and moves them under the title below <code>lg</code>.
+      <code>mw-page-header-compact</code> is the size for an app screen, and
+      <code>mw-page-header-sticky</code> keeps it under the fixed header while a
+      list scrolls.
+    </p>
+    <header class="mw-page-header mw-page-header-compact">
+      <div>
+        <h2>Invoices</h2>
+        <p>128 entries</p>
+      </div>
+      <div class="mw-page-header-filters">
+        <input
+          type="search"
+          class="mw-input mw-input-sm"
+          placeholder="Search..."
+          aria-label="Search invoices"
+        />
+        <select class="mw-select mw-select-sm" aria-label="Status">
+          <option>All</option>
+          <option>Open</option>
+          <option>Paid</option>
+        </select>
+      </div>
+      <div class="mw-page-header-actions">
+        <button type="button" class="mw-btn mw-btn-primary mw-btn-sm">
+          <i class="fas fa-plus"></i>
+          New Invoice
+        </button>
+      </div>
+    </header>
+  </div>
+
   <div class="mw-card mw-card-simple">
     <h4 class="mw-mb-4">Without a Separator</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-3">
