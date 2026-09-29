@@ -12,10 +12,9 @@
 
   @media print {
     // Paper is white and ink is black, whatever the screen was told to be. The
-    // tokens are redeclared on .mw-theme-light too - that copy sits further
-    // down the tree and would otherwise shadow the one on :root.
+    // dark footer brings its own copy of these, which would shadow the root's.
     :root,
-    .mw-theme-light {
+    .mw-footer-dark {
       --mw-page-background: #fff;
       --mw-card-background: #fff;
       --mw-footer-background: #fff;
@@ -36,6 +35,11 @@
     body {
       background: #fff;
       color: #000;
+    }
+
+    .mw-footer-dark {
+      --mw-primary-text-color: inherit;
+      color-scheme: light;
     }
 
     // Chrome that is fixed on screen would print on the first page and cover

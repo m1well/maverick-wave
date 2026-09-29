@@ -14,20 +14,23 @@
     transition: var(--mw-transition);
     font-family: inherit;
 
+    // Firefox fades placeholders by default, which took the muted ink to 2.4:1
     &::placeholder {
       color: var(--mw-text-muted-color);
-      opacity: 0.7;
+      opacity: 1;
     }
 
-    &:hover:not(:focus):not(:read-only):not(:disabled) {
+    &:hover:not(:focus, [readonly], :disabled) {
       border-color: var(--mw-gray-color);
     }
 
     @include field-focus;
 
-    &:read-only {
-      background-color: var(--mw-gray-background);
-      color: var(--mw-text-muted-color);
+    // Not :read-only, which also matches colour, range and file inputs
+    &[readonly] {
+      // Light and in full ink in both themes - the value is content
+      background-color: var(--mw-form-elements-readonly-background);
+      color: var(--mw-form-elements-color);
       cursor: default;
       box-shadow: none;
     }
@@ -84,7 +87,7 @@
     }
 
     &:disabled {
-      background-color: var(--mw-gray-background);
+      background-color: var(--mw-form-elements-disabled-background);
       color: var(--mw-text-muted-color);
       cursor: not-allowed;
     }

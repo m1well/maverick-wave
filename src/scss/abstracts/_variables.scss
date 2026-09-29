@@ -3,6 +3,9 @@
 
 $mw-theme-mode: 'switchable' !default; // 'dark', 'light', or 'switchable'
 
+// Opt-in, because a page only crossfades into one that carries the rule too
+$mw-page-transitions: false !default;
+
 $mw-hero-image: url('https://images.unsplash.com/photo-1591638462868-19cfad9c49d1?q=80&w=1300&auto=format&fit=crop') !default;
 
 // A second, flatter layer over the image - see mw-parallax-pattern. Fine lines
@@ -292,6 +295,13 @@ $base-colors: (
   'section-alternate-pattern': fade('gray-color', 30%),
   'form-elements-background': $form-elements-background,
   'form-elements-color': shade('light-text-color', 18%),
+  // Opaque and alike in both themes; readonly keeps full ink, disabled mutes it
+  'form-elements-readonly-background': string.unquote(
+      'color-mix(in oklab, var(--mw-form-elements-background) 70%, var(--mw-gray-color))'
+    ),
+  'form-elements-disabled-background': string.unquote(
+      'color-mix(in oklab, var(--mw-form-elements-background) 70%, var(--mw-gray-color))'
+    ),
 );
 
 // Status colors. Every status offers the same four tones.
@@ -525,6 +535,8 @@ $z-index: (
   'lift': 3,
   'card': 10,
   'menu': 30,
+  // Over the page and its menus, under the open navigation's scrim
+  'action-bar': 98,
   // The scrim sits under the bar, the panel hangs off it, the logo clears the
   // panel and the burger stays on top of all of them while it is the X.
   'header-scrim': 99,
@@ -539,6 +551,9 @@ $z-index: (
   // The intro overlay of an occasion - five seconds, above everything
   'occasion': 1000,
 );
+
+// Native, ARIA, and Angular's classes for a validator that lives in TypeScript
+$invalid-states: ':user-invalid, [aria-invalid="true"], .ng-invalid.ng-touched';
 
 // Native select arrow, drawn as a background layer because `appearance: none`
 // removes the OS one. Shared, because any control that adds a second

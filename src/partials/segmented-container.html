@@ -64,3 +64,27 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-mb-4 mw-mt-6">Native Radios</h3>
+<p class="mw-text-muted mw-text-measure">
+  A label per segment around a radio: the checked one lights up, the keyboard
+  and the form value are the browser's, and <code>formControlName</code> on the
+  inputs is all Angular needs. <code>aria-pressed</code>,
+  <code>aria-checked</code> and <code>aria-selected</code> mark a segment too.
+</p>
+<div class="mw-card mw-card-simple">
+  <div class="mw-segmented" role="radiogroup" aria-label="Billing cycle">
+    <label class="mw-segmented-item">
+      <input type="radio" name="segmented-billing" value="monthly" checked />
+      Monthly
+    </label>
+    <label class="mw-segmented-item">
+      <input type="radio" name="segmented-billing" value="yearly" />
+      Yearly
+    </label>
+    <label class="mw-segmented-item">
+      <input type="radio" name="segmented-billing" value="lifetime" disabled />
+      Lifetime
+    </label>
+  </div>
+</div>

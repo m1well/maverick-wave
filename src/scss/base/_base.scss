@@ -107,12 +107,13 @@
 
     // The only way the chrome the browser draws itself follows the theme:
     // scrollbars, the select popup, the date picker panel, number spinners.
-    // Under `switchable` this is also what light-dark() reads, so the pair below
-    // does double duty and the @supports block widens it to `light dark`.
+    // Under `switchable` it is also what every light-dark() token reads.
     @if $mw-theme-mode == 'light' {
       color-scheme: light;
-    } @else {
+    } @else if $mw-theme-mode == 'dark' {
       color-scheme: dark;
+    } @else {
+      color-scheme: light dark;
     }
     // Native controls the framework does not paint over take the brand, not OS blue
     accent-color: var(--mw-primary-color);
@@ -202,68 +203,44 @@
   }
 
   @if $mw-theme-mode == 'switchable' {
-    .mw-theme-light {
-      // Light theme variables for switching
-      @each $name, $value in $light-theme-colors {
-        --mw-#{$name}: var(--mw-light-#{$name});
+    // A custom property holding light-dark() is resolved where it is *used*,
+    // against that element's color-scheme - so one declaration on :root serves
+    // both themes, and a class further down switches every token by changing
+    // nothing but the scheme. The page also follows the OS before any script.
+    :root {
+      @each $name, $value in $_theme-colors {
+        --mw-#{$name}: light-dark(
+          var(--mw-light-#{$name}),
+          var(--mw-dark-#{$name})
+        );
       }
-
-      color-scheme: light;
     }
 
-    // The same two themes, declared once instead of twice. A custom property
-    // holding light-dark() is resolved where it is *used*, against that
-    // element's color-scheme - so one declaration on :root serves both, and a
-    // class further down switches every token by changing nothing but the
-    // scheme. The page then also follows the OS out of the box, which the
-    // class-only route could never do: before the script had run, a machine set
-    // to light still got the dark theme for a frame.
-    //
-    // The block above stays as the fallback for Chrome 119-122 and Safari
-    // 16.4-17.4, which are inside the declared browserslist but predate
-    // light-dark(). Drop it, and the two class rules with it, once the support
-    // floor moves past Chrome 123 / Safari 17.5.
-    @supports (color: light-dark(#000, #fff)) {
-      :root,
-      .mw-theme-light {
-        @each $name, $value in $_theme-colors {
-          --mw-#{$name}: light-dark(
-            var(--mw-light-#{$name}),
-            var(--mw-dark-#{$name})
-          );
-        }
-      }
-
+    // Not a color, so it cannot ride along above - it follows the OS here and
+    // is overridden by whichever class the toggle puts on <html>
+    @media (prefers-color-scheme: light) {
       :root {
-        color-scheme: light dark;
-      }
-
-      // Not a color, so it cannot ride along above - it follows the OS here and
-      // is overridden by whichever class the toggle puts on the body
-      @media (prefers-color-scheme: light) {
-        :root {
-          @each $name in $theme-non-colors {
-            --mw-#{$name}: var(--mw-light-#{$name});
-          }
-        }
-      }
-
-      .mw-theme-light {
-        color-scheme: light;
-
         @each $name in $theme-non-colors {
           --mw-#{$name}: var(--mw-light-#{$name});
         }
       }
+    }
 
-      // Only reachable once the OS says light: the explicit counterpart to the
-      // class above, so a reader who wants dark on a light machine gets it
-      .mw-theme-dark {
-        color-scheme: dark;
+    .mw-theme-light {
+      color-scheme: light;
 
-        @each $name in $theme-non-colors {
-          --mw-#{$name}: var(--mw-dark-#{$name});
-        }
+      @each $name in $theme-non-colors {
+        --mw-#{$name}: var(--mw-light-#{$name});
+      }
+    }
+
+    // Only reachable once the OS says light: the explicit counterpart to the
+    // class above, so a reader who wants dark on a light machine gets it
+    .mw-theme-dark {
+      color-scheme: dark;
+
+      @each $name in $theme-non-colors {
+        --mw-#{$name}: var(--mw-dark-#{$name});
       }
     }
   }
@@ -294,27 +271,47 @@
   // The duration tokens cover everything built on them, the blanket rule below
   // the few animations that name their own timing. 1ms and not 0: a zero-length
   // transition never fires transitionend, and a script waiting for it would hang.
+  @mixin _still-tokens {
+    --mw-duration-instant: 1ms;
+    --mw-duration-fast: 1ms;
+    --mw-duration-base: 1ms;
+    --mw-duration-slow: 1ms;
+    --mw-duration-slower: 1ms;
+  }
+
+  @mixin _still-everything {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     :root {
-      --mw-duration-instant: 1ms;
-      --mw-duration-fast: 1ms;
-      --mw-duration-base: 1ms;
-      --mw-duration-slow: 1ms;
-      --mw-duration-slower: 1ms;
+      @include _still-tokens;
     }
 
     *,
     *::before,
     *::after {
-      animation-duration: 1ms !important;
-      animation-delay: 0ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 1ms !important;
-      transition-delay: 0ms !important;
+      @include _still-everything;
     }
 
     html {
       scroll-behavior: auto;
+    }
+  }
+
+  // The same switch, thrown by the page instead of the OS
+  :root.mw-motion-off {
+    @include _still-tokens;
+    scroll-behavior: auto;
+
+    *,
+    *::before,
+    *::after {
+      @include _still-everything;
     }
   }
 
@@ -324,5 +321,51 @@
   .mw-theme-switching *::before,
   .mw-theme-switching *::after {
     transition: none !important;
+  }
+}
+
+@layer mw.base {
+  // The dark-*/light-* sources: the theme aliases read them, so both themes follow
+  @media (prefers-contrast: more) {
+    :root {
+      --mw-dark-border: #{fade('dark-text-color', 55%)};
+      --mw-light-border: #{fade('light-text-color', 55%)};
+      --mw-dark-border-accent: var(--mw-dark-primary-text-color);
+      --mw-light-border-accent: var(--mw-light-primary-text-color);
+      --mw-light-corner-accent: var(--mw-light-primary-text-color);
+      --mw-dark-text-muted-color: #{muted(0.82)};
+      --mw-light-text-muted-color: #{muted(0.4)};
+      --mw-focus-ring-width: 3px;
+
+      // 4.5:1 on a card instead of the 3:1 the default ink is tuned to
+      @each $name
+        in ('primary', 'secondary', 'success', 'warning', 'danger', 'info')
+      {
+        --mw-dark-#{$name}-text-color: #{ink-on-dark('#{$name}-color', 0.66)};
+        --mw-light-#{$name}-text-color: oklch(
+          from var(--mw-#{$name}-color) min(l, 0.45) c h
+        );
+      }
+    }
+  }
+
+  // Text on a see-through fill only - the hero's backdrop-filter is brightness
+  @media (prefers-reduced-transparency: reduce) {
+    .mw-announcement,
+    .mw-hero-badge,
+    .mw-container:has(.mw-hero) .mw-btn-outline:not(:hover) {
+      backdrop-filter: none !important;
+    }
+
+    .mw-announcement {
+      background: var(--mw-primary-color) !important;
+    }
+
+    .mw-hero-badge,
+    .mw-container:has(.mw-hero) .mw-btn-outline:not(:hover) {
+      background: oklch(
+        from var(--mw-hero-text-color) calc(1 - l) 0 h
+      ) !important;
+    }
   }
 }

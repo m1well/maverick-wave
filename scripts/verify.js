@@ -9,6 +9,8 @@
  *   4. the committed root release files match a fresh build   (--release)
  *   5. the CDN version pinned in the docs matches package.json (--release)
  *   6. no `animation:` shorthand in a file that uses a scroll timeline
+ *   7. every built bundle is main.js
+ *   8. every link between the showcase pages lands on an id that exists
  *
  * 4 and 5 describe the release state, which release.sh produces on the release
  * branch - on main they are stale by construction and would fail every CI run.
@@ -237,6 +239,37 @@ for (const f of ['dist/maverick-wave.min.js', 'maverick-wave.min.js']) {
   const bundle = read(path.join(ROOT, f));
   if (bundle !== null && !/MaverickWave\s*=/.test(bundle)) {
     errors.push(`${f} does not define window.MaverickWave - it is not main.js`);
+  }
+}
+
+// --- 8: links between the showcase pages -----------------------------------
+// A section that moves to another page takes its anchor with it
+
+// Code samples in <pre> are text: their ids and hrefs are not the page's
+const markupOf = (f) => read(f).replace(/<pre[\s\S]*?<\/pre>/g, '');
+const pageIds = new Map(
+  HTML_FILES.map((f) => [
+    path.relative(path.join(ROOT, 'dist'), f),
+    new Set(all(markupOf(f), /\sid="([^"]+)"/g)),
+  ])
+);
+for (const page of pageIds.keys()) {
+  const links = all(markupOf(path.join(ROOT, 'dist', page)), /href="([^"]*)"/g);
+  for (const link of links) {
+    const [target, id = ''] = link.split('#');
+    const bare = target.replace(/\?.*$/, '');
+    // Links out, files that are not pages and share links carrying a setup
+    if (/^([a-z]+:|\/\/)/.test(bare) || id.includes('=')) continue;
+    if (bare ? !bare.endsWith('.html') : !id) continue;
+    const file = bare
+      ? path.normalize(path.join(path.dirname(page), bare))
+      : page;
+    const onPage = pageIds.get(file);
+    if (!onPage)
+      errors.push(`${page} links to ${link}, but there is no ${file}`);
+    else if (id && !onPage.has(id)) {
+      errors.push(`${page} links to ${link}, but ${file} has no id "${id}"`);
+    }
   }
 }
 

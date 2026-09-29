@@ -36,10 +36,12 @@
     overflow-x: auto;
     border: none;
 
+    // The pre decides whether a long line wraps or scrolls
     code {
       color: inherit;
       padding: spacing('0');
-      white-space: pre-wrap;
+      white-space: inherit;
+      word-break: inherit;
       display: block;
       line-height: 1.5;
       font-size: font-size('3xs');

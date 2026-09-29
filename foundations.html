@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include('./src/partials/site-head.html')
+    <title>Foundations - MaverickWave</title>
+  </head>
+
+  <body>
+    @@include('./src/partials/site-top.html')
+
+    <main class="mw-main" id="main">
+      <!-- Foundations section -->
+      <section id="foundations" class="mw-section">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Foundations</h2>
+            <p class="mw-section-head-intro">
+              The raw material - type, color, spacing and the small utilities
+              everything else is built from.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#typography" class="mw-section-btn">Typography</a>
+            <a href="#colors" class="mw-section-btn">Main Colors</a>
+            <a href="#utilities" class="mw-section-btn">Utilities</a>
+            <a href="#header-utilities" class="mw-section-btn"
+              >Header Utilities</a
+            >
+            <a href="#coming-soon" class="mw-section-btn">Coming Soon Banner</a>
+            <a href="#divider" class="mw-section-btn">Divider</a>
+          </nav>
+
+          <!-- Typography container -->
+          <div id="typography">
+            @@include('./src/partials/typography-container.html')
+          </div>
+
+          <!-- Colors container -->
+          <div id="colors">
+            @@include('./src/partials/colors-container.html')
+          </div>
+
+          <!-- Utilities container -->
+          <div id="utilities">
+            @@include('./src/partials/utilities-container.html')
+          </div>
+
+          <!-- Header Utilities container -->
+          <div id="header-utilities">
+            @@include('./src/partials/header-utilities-container.html')
+          </div>
+
+          <!-- Coming Soon container -->
+          <div id="coming-soon">
+            @@include('./src/partials/coming-soon-container.html')
+          </div>
+
+          <!-- Divider container -->
+          <div id="divider">
+            @@include('./src/partials/divider-container.html')
+          </div>
+        </div>
+      </section>
+    </main>
+
+    @@include('./src/partials/site-bottom.html')
+  </body>
+</html>

@@ -491,9 +491,38 @@
   </div>
 </div>
 
+<h3 class="mw-mb-4 mw-mt-6">Image Shapes</h3>
+<p class="mw-text-muted mw-text-measure">
+  A cut-out photo instead of another rectangle.
+  <code>mw-shape-arch</code> rounds the top into a half circle,
+  <code>mw-shape-signature</code> gives a picture the same sharp and round
+  diagonal as the cards next to it, and <code>mw-shape-leaf</code> opens the
+  round pair up to the full side. All three follow
+  <code>--mw-radius-scale</code> where they have a radius to follow, and work on
+  an <code>img</code> or on a wrapper around one.
+</p>
+<div class="mw-grid-4 mw-gap-6">
+  <div class="mw-aspect-portrait mw-shape-arch">
+    <img src="images/photo-tower.svg" alt="Tower at dusk under an arch" />
+  </div>
+  <div class="mw-aspect-portrait mw-shape-signature">
+    <img src="images/photo-lighthouse.svg" alt="Lighthouse at sunset" />
+  </div>
+  <div class="mw-aspect-square mw-shape-leaf">
+    <img src="images/photo-palm.svg" alt="Palm against an evening sky" />
+  </div>
+  <img
+    class="mw-shape-signature"
+    src="images/photo-balloon.svg"
+    alt="Hot air balloon"
+    width="400"
+    height="300"
+  />
+</div>
+
 <h3 class="mw-mb-4 mw-mt-6">Site-wide Variants</h3>
 <p class="mw-text-muted mw-text-measure">
-  Twelve classes on <code>&lt;html&gt;</code> retune the whole look without
+  Fifteen classes on <code>&lt;html&gt;</code> retune the whole look without
   touching markup. They stack, and the palette button in the corner switches all
   of them live - the box at the bottom of that panel prints the setup a project
   would carry, and reads it back: paste one in to see someone else's.
@@ -508,8 +537,16 @@
     <code>mw-btn-secondary</code> turns outline
   </li>
   <li>
+    <code>mw-accent-text-auto</code> - the label on every filled colour turns
+    black or white by <code>contrast-color()</code>, where the browser has it
+  </li>
+  <li>
     <code>mw-shadows-flat</code> - elevation 1-3 to <code>none</code>, dropdown
     and modal keep theirs
+  </li>
+  <li>
+    <code>mw-shadows-hard</code> - every elevation turns into a hard offset
+    without blur; <code>--mw-shadow-hard</code> sets its colour
   </li>
   <li>
     <code>mw-surfaces-flush</code> - cards, panels and footer on the page
@@ -518,6 +555,10 @@
   <li>
     <code>mw-hover-static</code> - no hover travels; colour and border still
     respond
+  </li>
+  <li>
+    <code>mw-motion-off</code> - the reduced-motion page for everyone, script
+    included; the static pair around it are two of its parts
   </li>
   <li>
     <code>mw-scroll-static</code> - no scroll entrance;

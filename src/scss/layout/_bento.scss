@@ -1,0 +1,43 @@
+@use '../abstracts' as *;
+
+@layer mw.layout {
+  .mw-bento {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-flow: dense;
+    gap: spacing('6');
+
+    > * {
+      min-width: 0;
+    }
+
+    // The rhythm starts with the second column; a stack keeps content height
+    @include media-up('sm') {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: minmax(var(--mw-bento-row, 11rem), auto);
+
+      > .mw-bento-wide,
+      > .mw-bento-lg {
+        grid-column: span 2;
+      }
+
+      > .mw-bento-tall,
+      > .mw-bento-lg {
+        grid-row: span 2;
+      }
+    }
+
+    @include media-up('lg') {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    > .mw-bento-full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  // Short tiles - a row of figures on a dashboard
+  .mw-bento-compact {
+    --mw-bento-row: 7rem;
+  }
+}

@@ -62,6 +62,29 @@
       align-items: center;
     }
 
+    // Footer links grow to a target; the text's own underline replaces the drawn one
+    .mw-footer-column li a,
+    .mw-footer-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2.5rem;
+    }
+
+    .mw-footer-column li a {
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+      text-underline-offset: 0.25em;
+
+      &::after {
+        content: none;
+      }
+    }
+
+    .mw-footer .mw-social-links a {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
+
     // A checkbox or radio is tapped by its label as much as by the box, so the
     // whole row has to be the target - which it only is if the row is tall enough
     .mw-checkbox,

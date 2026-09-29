@@ -1,0 +1,561 @@
+/* Additional styles only for the showcase page */
+.position-relative {
+  position: relative;
+}
+
+/* A version number is digits, so it gets the mono stack - the rest of
+   the pill is mw-hero-badge */
+.version-corner {
+  font-family: var(--mw-font-family-mono);
+}
+
+.color-card {
+  padding: 18px;
+}
+
+.color-card p {
+  margin-bottom: 5px !important;
+  font-size: 0.9rem;
+}
+
+.color-swatch {
+  width: 100%;
+  height: 70px;
+  border-radius: 6px;
+  margin-bottom: 9px;
+  border: 1px solid var(--mw-border);
+}
+
+/* The parallax pattern demo: a gradient has no edge across the travel,
+   the second layer brings one */
+.parallax-demo-ground {
+  background-image: linear-gradient(
+    158deg,
+    #3c4f78 0%,
+    #2a3550 45%,
+    #1b2334 100%
+  );
+}
+
+.parallax-demo-lines {
+  --mw-parallax-pattern-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 24%) 0 1px,
+      transparent 1px 34px
+    ),
+    repeating-linear-gradient(
+      to right,
+      rgb(255 255 255 / 14%) 0 1px,
+      transparent 1px 34px
+    );
+}
+
+/* The travel has to sit on the animated section, the height on the block
+   inside it */
+.parallax-band-demo {
+  --mw-parallax-slow-travel: 72vh;
+}
+
+.parallax-band-demo .mw-parallax {
+  min-height: 88vh;
+  --mw-parallax-depth: 18vh;
+}
+
+/* Reuses the hero picture through the token, not a second download */
+.parallax-band-demo .mw-parallax-media {
+  background-image: var(--mw-hero-background);
+}
+
+/* A calendar fills its container; across the full page that stretches the
+   cells to 150px, so the demos get a realistic column instead */
+.calendar-demo {
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+/* Here, not inline - inline it would outrank the compact value too */
+#kanban-demo {
+  --mw-kanban-column-min-height: 390px;
+}
+
+#kanban-demo.mw-kanban-compact {
+  --mw-kanban-column-min-height: 210px;
+}
+
+/* A compact calendar has no dots, so its legend has nothing to explain */
+.calendar-demo .mw-calendar-compact .mw-calendar-legend {
+  display: none;
+}
+
+/* Medium screens */
+@media (max-width: 992px) {
+  /* Two calendars side by side squeeze their cells below md, so they
+     stack one breakpoint earlier than mw-grid-2 would on its own */
+  .calendar-demos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Small screens */
+@media (max-width: 576px) {
+  .color-swatch {
+    margin: 0 auto 7px auto;
+    width: 92%;
+    height: 50px;
+  }
+}
+
+/* Palette switcher, showcase only. The framework derives every tone from
+   the root colors, so the panel writes nothing but those. */
+.palette-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: calc(10px * var(--mw-radius-scale, 1));
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-accent-text-color);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--mw-transition);
+}
+
+/* Below sm the panel would cover the very thing it is changing */
+@media (min-width: 576px) {
+  .palette-toggle {
+    display: flex;
+  }
+}
+
+.palette-toggle:hover {
+  background: var(--mw-primary-color-hover);
+}
+
+.palette-toggle:active {
+  transform: scale(0.94);
+}
+
+.palette-panel {
+  position: fixed;
+  top: calc(var(--mw-header-height) + 8px);
+  /* Flush with the container edge, so it lines up with the button in the
+     header rather than sitting further out */
+  right: max(18px, calc((100% - var(--mw-container-width)) / 2));
+  z-index: 400;
+  /* Wide enough for three palettes in a row; the min() is for the narrow
+     end, where the panel would otherwise reach past the viewport */
+  width: min(440px, calc(100% - 24px));
+  /* The variant list makes the panel taller than a laptop in landscape -
+     it takes what is left under the header and scrolls the rest */
+  max-height: calc(100dvh - var(--mw-header-height) - 24px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--mw-border);
+  background: var(--mw-card-background);
+  box-shadow: var(--mw-elevation-5);
+  transform: translateY(0);
+  opacity: 1;
+  /* display is in the list so allow-discrete keeps the panel mounted
+     through the fade out - `hidden` is the state the script writes */
+  transition-property: opacity, transform, display;
+  transition-duration: var(--mw-duration-base);
+  transition-timing-function: var(--mw-ease-out);
+  transition-behavior: allow-discrete;
+}
+
+@starting-style {
+  .palette-panel {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+.palette-panel[hidden] {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.palette-heading {
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.palette-hint {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--mw-text-muted-color);
+  margin-bottom: 14px;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--mw-border);
+  background: transparent;
+  color: var(--mw-text-color);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--mw-transition);
+}
+
+.palette-item::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--swatch-primary) 50%,
+    var(--swatch-secondary) 50%
+  );
+}
+
+.palette-item:hover,
+.palette-item.mw-active {
+  border-color: var(--mw-primary-text-color);
+}
+
+.palette-item.mw-active {
+  background: var(--mw-primary-background);
+}
+
+.palette-custom {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--mw-border);
+}
+
+.palette-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--mw-text-muted-color);
+}
+
+.palette-field input {
+  width: 100%;
+  height: 30px;
+  padding: 2px;
+  border: 1px solid var(--mw-border);
+  border-radius: 6px;
+  background: var(--mw-card-background);
+  cursor: pointer;
+}
+
+/* Single accent means the secondary picker writes a token nothing reads any
+   more - left live it is a knob that does nothing */
+:root.mw-accent-single .palette-field:has(#palette-secondary) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.palette-heading-split {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--mw-border);
+}
+
+/* Splits the list by where a switch shows up, because half of them act on
+   parts of the page the preview does not contain */
+.variant-group {
+  margin: 20px 0 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--mw-text-color);
+}
+
+.variant-group:first-child {
+  margin-top: 4px;
+}
+
+.variant-group-hint {
+  margin: 0 0 4px;
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--mw-text-muted-color);
+}
+
+.variant-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 9px;
+  font-size: 0.8rem;
+  color: var(--mw-text-color);
+  cursor: pointer;
+}
+
+.variant-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.variant-label small {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: var(--mw-text-muted-color);
+}
+
+.variant-row + .variant-row {
+  border-top: 1px solid var(--mw-border);
+}
+
+/* Width and the two size tokens are taken back from .mw-select for the
+   same reason the switch below is hand-drawn: the field must not resize
+   itself while it is the knob for density and radius */
+.variant-row .mw-select {
+  --mw-radius-scale: 1;
+  --mw-control-height-sm: 1.875rem;
+  flex-shrink: 0;
+  width: auto;
+  max-width: 135px;
+  cursor: pointer;
+}
+
+/* Drawn by hand rather than reusing mw-toggle: a framework switch would
+   reshape itself along with the variants it is there to control */
+.variant-row input[type='checkbox'] {
+  appearance: none;
+  flex-shrink: 0;
+  position: relative;
+  width: 34px;
+  height: 18px;
+  margin: 0;
+  border: 1px solid var(--mw-border);
+  border-radius: 9px;
+  background: var(--mw-gray-background);
+  cursor: pointer;
+  transition: var(--mw-transition);
+}
+
+.variant-row input[type='checkbox']::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--mw-text-muted-color);
+  transition: var(--mw-transition);
+}
+
+.variant-row input[type='checkbox']:checked {
+  background: var(--mw-primary-color);
+  border-color: var(--mw-primary-color);
+}
+
+.variant-row input[type='checkbox']:checked::after {
+  left: 18px;
+  background: var(--mw-primary-accent-text-color);
+}
+
+/* The sticky bar would otherwise sit on the section title it jumps to */
+#preview {
+  scroll-margin-top: calc(var(--mw-header-height) + 1rem);
+}
+
+.preview-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.preview-title {
+  margin: 0 0 0.35rem;
+}
+
+.preview-lede {
+  margin: 0;
+  max-inline-size: 60ch;
+}
+
+/* The panel is fixed over the right of the page, flush with the container
+   edge. Below xl there is no room to dodge it and it simply covers part of
+   the preview; from there the preview keeps to the strip beside it,
+   because a switch that moves something hidden behind the panel
+   demonstrates nothing. */
+@media (width >= 1200px) {
+  body:has(.palette-panel:not([hidden])) #preview > .mw-container {
+    padding-inline-end: 460px;
+  }
+}
+
+/* Both wrap rather than squeezing a field to nothing on a phone */
+.preview-row,
+.preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.preview-row .mw-input {
+  flex: 1 1 12rem;
+}
+
+/* The one thing here that keeps moving without being touched, so Motion
+   tempo has something to show that a hover state cannot */
+.preview-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 1.25rem;
+  font-size: 0.82rem;
+  color: var(--mw-text-muted-color);
+}
+
+.preview-status strong {
+  display: block;
+  color: var(--mw-text-color);
+  font-weight: 500;
+}
+
+.preview-status small {
+  font-size: 0.75rem;
+}
+
+.preview-row .mw-select {
+  flex: 0 1 14rem;
+}
+
+/* The spacing sits on the row and not on the label: the button is taller
+   than the caption beside it, so a margin under the label leaves the
+   button itself resting on the box */
+.variant-setup-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 14px 0 10px;
+}
+
+.variant-setup-label {
+  display: block;
+  margin: 0;
+  font-size: 0.7rem;
+  color: var(--mw-text-muted-color);
+}
+
+/* The one control here that leads somewhere - everything else in the
+   panel only changes what is on screen. Carries the brand colour so it
+   reads as the way out rather than as one more switch. */
+.variant-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--mw-primary-color);
+  background: var(--mw-primary-color);
+  color: var(--mw-primary-accent-text-color);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--mw-transition-fast);
+}
+
+.variant-share:hover {
+  background: var(--mw-primary-color-hover, var(--mw-primary-color));
+  transform: translateY(-1px);
+}
+
+.variant-share:active {
+  transform: translateY(0);
+}
+
+.variant-share:focus-visible {
+  outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+  outline-offset: var(--mw-focus-ring-offset);
+}
+
+.variant-setup {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--mw-border);
+  background: var(--mw-gray-background);
+  color: var(--mw-text-muted-color);
+  font-family: var(--mw-font-family-mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 24 flags: every column count divides 24, so no row ends half empty */
+.flag-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem 1.25rem;
+}
+
+@media (width >= 576px) {
+  .flag-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 768px) {
+  .flag-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 1200px) {
+  .flag-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* $mw-page-transitions for the showcase; one name per page, so on the site header only */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--mw-duration-slow);
+  animation-timing-function: var(--mw-ease-in-out);
+}
+
+:root.mw-motion-off::view-transition-group(*),
+:root.mw-motion-off::view-transition-old(*),
+:root.mw-motion-off::view-transition-new(*) {
+  animation-name: none;
+}
+
+body > .mw-header {
+  view-transition-name: mw-header;
+}

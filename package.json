@@ -1,8 +1,8 @@
 {
   "name": "maverick-wave",
-  "version": "5.39.0",
+  "version": "6.0.0",
   "config": {
-    "version_short": "5.39"
+    "version_short": "6.0"
   },
   "description": "A lightweight, modern CSS framework for building responsive websites with elegance and speed.",
   "main": "src/js/main.js",
@@ -44,11 +44,11 @@
     "web"
   ],
   "browserslist": [
-    "Chrome >= 119",
-    "Edge >= 119",
-    "Firefox >= 128",
-    "Safari >= 16.4",
-    "iOS >= 16.4"
+    "Chrome >= 123",
+    "Edge >= 123",
+    "Firefox >= 140",
+    "Safari >= 17.5",
+    "iOS >= 17.5"
   ],
   "devDependencies": {
     "autoprefixer": "^10.4.21",

@@ -6,6 +6,75 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.0.0] - 2026-09-29
+
+### Added
+
+- app shell (`mw-app`) - sidebar beside a scrolling column, folds to an icon rail, a panel over the content on a phone
+- app shell aside (`mw-app-aside`) - an inspector or assistant column, docked from `xl`, over the content below
+- app shell tab bar (`mw-app-tabbar`) - the phone's navigation at the bottom edge
+- `data-mw-app-persist` remembers the rail and the docked aside, `mw-app-content-flush` gives a canvas the whole column
+- Czech flag (`mw-flag-cz`)
+- footer bar (`mw-footer-bottom`) with a line for imprint and privacy (`mw-footer-links`), a dark footer (`mw-footer-dark`) and one for apps (`mw-footer-compact`)
+- progress ring (`mw-progress-ring`) and an indeterminate bar (`mw-progress-indeterminate`)
+- filter chips - a `button.mw-tag` with `aria-pressed`
+- `mw-alert-actions`, `mw-spinner-inline` and `mw-empty-state-inline`
+- tables: `aria-sort` arrows, row selection from `aria-selected` or a checked first cell, a bulk-action bar (`mw-table-bulk`) and a sticky first column (`mw-table-sticky-col`)
+- pagination with numbered pages that turns into "3 of 12" on a phone (`mw-pagination-pages`), a compact timeline for activity feeds (`mw-timeline-compact`), `mw-avatar-more`, shortcuts in dropdown items, segmented controls on native radios
+- tabs, accordions, breadcrumbs, stepper, dropdown, segmented and navbar links follow their ARIA state (`aria-selected`, `aria-expanded`, `aria-current`, `aria-pressed`) as well as their classes, and keep it visible under forced colors
+- `--mw-form-elements-readonly-background` and `--mw-form-elements-disabled-background`
+- drawer (`mw-modal-drawer`, `mw-modal-drawer-start`) - the `<dialog>` modal as a full-height side panel
+- bento grid (`mw-bento`, `-wide`, `-tall`, `-lg`, `-full`, `-compact`)
+- chat (`mw-chat`, `mw-chat-message`, `mw-chat-bubble`, `mw-chat-composer`, typing and thinking states)
+- stat tiles (`mw-stat`, `mw-stat-group`, `mw-stat-delta-*`) and meters (`mw-meter`) on the native `<meter>`; a stat group keeps its row with `mw-card` on the same element
+- before/after compare (`mw-compare`) on a native range input
+- mobile action bar (`mw-action-bar`) for call, route and booking
+- marquee (`mw-marquee`) for logos, seals and quotes
+- image shapes (`mw-shape-arch`, `mw-shape-signature`, `mw-shape-leaf`)
+- `mw-shadows-hard`, `mw-motion-off` and `mw-accent-text-auto` as site-wide variants
+- `mw-tooltip-inline-end` places the bubble beside the trigger where the browser can anchor it
+- `$mw-page-transitions` - opt-in crossfade between pages
+- `prefers-contrast: more` and `prefers-reduced-transparency` support
+- `motion-safe`, `motion-reduced` and `visually-hidden` mixins
+- z-index key `action-bar`
+- `mw-select-custom` - the open list in the framework's look where the browser supports `appearance: base-select`
+- form controls read their error from `aria-invalid="true"` and Angular's `ng-invalid ng-touched` as well as `:user-invalid`
+- checkbox, radio and toggle take `disabled` from the input, checkbox draws `indeterminate` as a bar, both show an invalid state
+- forced-colors fallbacks for checkbox, radio, toggle and slider, including a visible keyboard focus
+
+### Changed
+
+- the showcase is split into one page per section
+- browser floor raised to Chrome and Edge 123, Firefox 140, Safari and iOS 17.5 - the class-based theme fallback for browsers without `light-dark()` is gone
+- bottom toast stacks move up while an action bar is visible
+- the `scrollbar` mixin and the accordion's scroll area no longer style `::-webkit-scrollbar`
+- placeholders at full opacity - faded they fell to 2.4:1
+- `readonly` fields are matched by `[readonly]` instead of `:read-only`
+- disabled and readonly fields share an opaque, clearly grey tone in both themes; readonly keeps full-strength text
+- table rows only tint under the pointer with `mw-table-hover`
+- breadcrumbs mark the current page only through `mw-breadcrumbs-current` or `aria-current="page"`, no longer by being last
+- only a tag that is a link or a button reacts to hover
+- alert text at full opacity; spinners draw in the system ink under forced colors
+- the hidden input of checkbox, radio and toggle covers the row behind the label content, so VoiceOver finds it by touch
+
+### Removed
+
+- BREAKING: `mw-modal-overlay`, `mw-modal-open`, `mw-modal-backdrop` and the body scroll lock that came with them - use `<dialog class="mw-modal">`
+- `mwOpenModal` / `mwCloseModal` only act on a `<dialog>`; the script closes a dialog on a backdrop click only for `closedby="any"`, where the browser does not do it itself
+
+### Fixed
+
+- occasions arrive and drift with the scroll in Firefox and in Safari before 26, which have no scroll timelines
+- `pre code` no longer wraps mid-line on a phone
+- badges keep their shape under forced colors
+- dot spinners stay visible with reduced motion instead of freezing at scale 0
+- progress, skeletons and spinners stay visible under forced colors; footer links and social buttons carry a focus ring and grow on touch
+- the parked skip link no longer throws its shadow into the top of the page
+- the timeline's entrance no longer scrolls a phone sideways, and entries past the tenth no longer stay invisible
+- blocked storage (Safari with all cookies blocked, a sandboxed iframe) no longer stops the page script
+- the focus ring on the header takes the header's light ink instead of the page's in a fixed light theme
+- the scroll spy only moves the mark between links into the page itself - on a site with several pages the current page stays marked
+
 ## [5.39.0] - 2026-09-26
 
 ### Added

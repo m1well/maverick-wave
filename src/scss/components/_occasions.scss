@@ -814,16 +814,18 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
   );
 
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      // Timed by the card's entry, which even the last card on a page completes;
-      // 60vh keeps a tall card from arriving only at the top of the screen
-      :root.mw-occasion-scroll :is(#{$_host}),
-      .mw-occasion-scroll:is(#{$_effect-classes}):is(#{$_carriers}) {
+    // Timed by the card's entry, which even the last card on a page completes;
+    // 60vh keeps a tall card from arriving only at the top of the screen
+    :root.mw-occasion-scroll :is(#{$_host}),
+    .mw-occasion-scroll:is(#{$_effect-classes}):is(#{$_carriers}) {
+      @include motion-safe {
         view-timeline: --mw-occasion-arrival;
       }
+    }
 
-      @each $effect, $arrival in $_arrivals {
-        #{_on($effect, '.mw-occasion-scroll')} {
+    @each $effect, $arrival in $_arrivals {
+      #{_on($effect, '.mw-occasion-scroll')} {
+        @include motion-safe {
           animation-name: mw-occasion-#{$arrival};
           animation-duration: auto;
           animation-timing-function: linear;
@@ -831,6 +833,24 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
           animation-timeline: --mw-occasion-arrival;
           animation-range: entry 0% entry min(100%, 60vh);
         }
+      }
+    }
+  }
+
+  // No view timelines (Firefox): main.js marks each host and swaps it on entry
+  @each $effect, $arrival in $_arrivals {
+    #{_on($effect, '.mw-occasion-scroll', '.mw-occasion-waiting::before')} {
+      @include motion-safe {
+        opacity: 0;
+      }
+    }
+
+    #{_on($effect, '.mw-occasion-scroll', '.mw-occasion-arriving::before')} {
+      @include motion-safe {
+        animation-name: mw-occasion-#{$arrival};
+        animation-duration: var(--mw-duration-slower);
+        animation-timing-function: var(--mw-ease-out);
+        animation-fill-mode: backwards;
       }
     }
   }
@@ -960,9 +980,15 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
   // Below the header, so the bar stays clean, above cards and sections.
   .mw-occasion-drift {
     --mw-occasion-laps: 3;
+    --mw-occasion-progress: 0;
 
     z-index: z-index('header') - 20;
     opacity: 0;
+  }
+
+  .mw-occasion-drift.mw-occasion-driven {
+    opacity: 1;
+    animation-name: none;
   }
 
   // Visible only while the scroll drives it - on a page too short to scroll the
@@ -984,14 +1010,14 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
   }
 
   @supports not (animation-timeline: scroll()) {
-    .mw-occasion-drift {
+    .mw-occasion-drift:not(.mw-occasion-driven) {
       display: none;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .mw-occasion-intro,
-    .mw-occasion-drift {
+  .mw-occasion-intro,
+  .mw-occasion-drift {
+    @include motion-reduced {
       display: none;
     }
   }
@@ -1017,6 +1043,7 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
     --mw-occasion-angle: 0deg;
     --mw-occasion-tint: #fff;
     --mw-occasion-start: 0%;
+    --mw-occasion-from: 0;
     --mw-occasion-lap: 0;
 
     position: absolute;
@@ -1076,6 +1103,30 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
         animation-iteration-count: $laps;
         animation-timeline: scroll(root);
       }
+    }
+  }
+
+  // The same scrub fed by main.js: paused, parked at the laps travelled, 1s a lap
+  .mw-occasion-driven > .mw-occasion-particle {
+    $laps: calc(var(--mw-occasion-laps) + var(--mw-occasion-lap));
+    $travelled: calc(
+      max(0, var(--mw-occasion-progress) - var(--mw-occasion-from)) /
+        (1 - var(--mw-occasion-from)) * #{$laps} * -1s
+    );
+
+    animation-duration: 1s, 0.25s;
+    animation-delay: $travelled;
+    animation-iteration-count: $laps, calc(#{$laps} * 4);
+    animation-play-state: paused;
+    animation-timeline: auto;
+    animation-range: normal;
+
+    &::before {
+      animation-duration: 1s;
+      animation-delay: $travelled;
+      animation-iteration-count: $laps;
+      animation-play-state: paused;
+      animation-timeline: auto;
     }
   }
 

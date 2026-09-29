@@ -322,4 +322,20 @@
       ),
       linear-gradient(to right, #046a38 0 40%, #da291c 40%);
   }
+
+  // The wedge is two half-diagonals, one per quarter of the hoist half
+  .mw-flag-cz {
+    background-image:
+      linear-gradient(to top right, #11457e 50%, transparent 50%),
+      linear-gradient(to bottom right, #11457e 50%, transparent 50%),
+      linear-gradient(to bottom, #fff 0 50%, #d7141a 50%);
+    background-size:
+      50% 50%,
+      50% 50%,
+      100% 100%;
+    background-position:
+      left top,
+      left bottom,
+      0 0;
+  }
 }

@@ -37,13 +37,18 @@
     cursor: pointer;
     user-select: none;
     position: relative;
+    isolation: isolate;
 
+    // Row-sized for touch exploration, behind the content so a label link works
     input[type='checkbox'] {
       position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
+      inset: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
       margin: spacing('0');
+      opacity: 0;
+      cursor: inherit;
     }
 
     .mw-checkbox-box {
@@ -76,11 +81,28 @@
       border-color: var(--mw-primary-color);
     }
 
-    input[type='checkbox']:checked + .mw-checkbox-box {
+    &:hover
+      input[type='checkbox']:not(:checked, :indeterminate, :disabled)
+      + .mw-checkbox-box {
+      border-color: var(--mw-gray-color);
+    }
+
+    input[type='checkbox']:is(:checked, :indeterminate) + .mw-checkbox-box {
       border-color: var(--mw-primary-color);
     }
     input[type='checkbox']:checked + .mw-checkbox-box::after {
       transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+    }
+
+    // A bar instead of the tick - the "some of them" state of a select-all box
+    input[type='checkbox']:indeterminate + .mw-checkbox-box::after {
+      height: 0;
+      border-left-width: 0;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    input[type='checkbox']:is(#{$invalid-states}) + .mw-checkbox-box {
+      border-color: var(--mw-danger-color);
     }
 
     .mw-checkbox-label {
@@ -119,16 +141,19 @@
 
     @each $name, $col in $semantic-colors {
       &-#{$name} {
-        input[type='checkbox']:checked + .mw-checkbox-box {
+        input[type='checkbox']:is(:checked, :indeterminate) + .mw-checkbox-box {
           border-color: #{$col};
         }
-        input[type='checkbox']:checked + .mw-checkbox-box::after {
+        input[type='checkbox']:is(:checked, :indeterminate)
+          + .mw-checkbox-box::after {
           border-color: #{$col};
         }
       }
     }
 
-    &-disabled {
+    // The attribute too: a reactive form disables the input, not the label
+    &-disabled,
+    &:has(input[type='checkbox']:disabled) {
       cursor: not-allowed;
 
       input[type='checkbox'] {
@@ -140,6 +165,14 @@
       .mw-checkbox-label {
         color: var(--mw-text-muted-color);
       }
+    }
+  }
+
+  // Forced colours drop the halo, which is the whole focus indicator here
+  @media (forced-colors: active) {
+    .mw-checkbox input[type='checkbox']:focus-visible + .mw-checkbox-box {
+      outline: 2px solid;
+      outline-offset: 2px;
     }
   }
 }

@@ -1,0 +1,277 @@
+<h3 class="mw-section-subtitle">App Shell</h3>
+<p class="mw-text-muted mw-text-measure">
+  The frame of an application rather than a page: a sidebar beside a column that
+  scrolls on its own under a sticky top bar. From <code>lg</code> the sidebar is
+  docked and the toggle folds it to an icon rail with
+  <code>mw-app-collapsed</code>; below that it is a panel over the content,
+  opened with <code>mw-app-sidebar-open</code>. The framework script sets both
+  from a button carrying <code>data-mw-app-toggle</code> - an Angular app can
+  bind the two classes itself.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-app-aside</code> is the third column for an inspector, an assistant
+  or a game's inventory: docked beside the content from <code>xl</code>, a panel
+  over it below, toggled by <code>data-mw-app-aside-toggle</code>. On a phone
+  <code>mw-app-tabbar</code> takes the main destinations to the bottom edge.
+  <code>data-mw-app-persist="name"</code> remembers the rail and the docked
+  aside across reloads - try it here.
+</p>
+
+<div class="mw-segmented mw-mb-4" data-modifier-demo="app-shell-demo-nav">
+  <button type="button" class="mw-segmented-item mw-active" data-modifier="">
+    Theme sidebar
+  </button>
+  <button
+    type="button"
+    class="mw-segmented-item"
+    data-modifier="mw-app-sidebar-dark"
+  >
+    Dark sidebar
+  </button>
+</div>
+
+<div
+  class="mw-app mw-mb-6"
+  data-mw-app-persist="showcase"
+  style="
+    --mw-app-height: 34rem;
+    border: 1px solid var(--mw-border);
+    border-radius: 10px;
+  "
+>
+  <aside class="mw-app-sidebar" id="app-shell-demo-nav" aria-label="Main">
+    <a class="mw-app-brand" href="#app-shell">
+      <i class="fas fa-water" aria-hidden="true"></i>
+      <span class="mw-app-label">Wavelength</span>
+    </a>
+    <nav class="mw-app-nav">
+      <p class="mw-app-nav-title">Workspace</p>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        aria-current="page"
+        data-tooltip="Dashboard"
+      >
+        <i class="fas fa-gauge" aria-hidden="true"></i>
+        <span class="mw-app-label">Dashboard</span>
+      </a>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        data-tooltip="Projects"
+      >
+        <i class="fas fa-folder" aria-hidden="true"></i>
+        <span class="mw-app-label">Projects</span>
+      </a>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        data-tooltip="Inbox"
+      >
+        <i class="fas fa-inbox" aria-hidden="true"></i>
+        <span class="mw-app-label">Inbox</span>
+        <span class="mw-badge mw-badge-primary mw-badge-sm">4</span>
+      </a>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        data-tooltip="Reports"
+      >
+        <i class="fas fa-chart-line" aria-hidden="true"></i>
+        <span class="mw-app-label">Reports</span>
+      </a>
+      <p class="mw-app-nav-title">Account</p>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        data-tooltip="Billing"
+      >
+        <i class="fas fa-credit-card" aria-hidden="true"></i>
+        <span class="mw-app-label">Billing</span>
+      </a>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="#app-shell"
+        data-tooltip="Settings"
+      >
+        <i class="fas fa-gear" aria-hidden="true"></i>
+        <span class="mw-app-label">Settings</span>
+      </a>
+    </nav>
+    <div class="mw-app-sidebar-footer">
+      <div class="mw-avatar mw-avatar-initials mw-avatar-xs">JD</div>
+      <span class="mw-app-label">Jane Doe</span>
+    </div>
+  </aside>
+
+  <div class="mw-app-main">
+    <header class="mw-app-topbar">
+      <button
+        type="button"
+        class="mw-app-toggle"
+        data-mw-app-toggle
+        aria-controls="app-shell-demo-nav"
+        aria-expanded="true"
+        aria-label="Navigation"
+      >
+        <span class="mw-app-toggle-icon"></span>
+      </button>
+      <h4 class="mw-app-title">Dashboard</h4>
+      <div class="mw-app-actions">
+        <button type="button" class="mw-btn mw-btn-primary mw-btn-sm">
+          New project
+        </button>
+        <button
+          type="button"
+          class="mw-app-toggle"
+          data-mw-app-aside-toggle
+          aria-controls="app-shell-demo-aside"
+          aria-label="Assistant"
+        >
+          <i class="fas fa-comments" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+    <div class="mw-app-content">
+      <div class="mw-grid-3 mw-mb-6">
+        <div class="mw-card mw-card-simple">
+          <p class="mw-text-muted mw-mb-2">Active projects</p>
+          <p class="mw-text-xl mw-mb-0"><strong>12</strong></p>
+        </div>
+        <div class="mw-card mw-card-simple">
+          <p class="mw-text-muted mw-mb-2">Open tasks</p>
+          <p class="mw-text-xl mw-mb-0"><strong>48</strong></p>
+        </div>
+        <div class="mw-card mw-card-simple">
+          <p class="mw-text-muted mw-mb-2">Team members</p>
+          <p class="mw-text-xl mw-mb-0"><strong>7</strong></p>
+        </div>
+      </div>
+      <div class="mw-card mw-card-simple mw-mb-6">
+        <h4 class="mw-mb-3">Recent activity</h4>
+        <p class="mw-mb-3">
+          The column scrolls on its own and the top bar stays - the page around
+          an app never moves, which is why the shell takes the height of the
+          screen through <code>--mw-app-height</code> (set to 34rem here).
+        </p>
+        <p class="mw-mb-0">
+          Fold the sidebar with the button in the top bar. In the rail the
+          labels stay in the markup for a screen reader and
+          <code>data-tooltip</code> on each link names it under the pointer,
+          beside the icon with <code>mw-tooltip-inline-end</code>. A browser
+          without anchor positioning shows none there, since the rail would cut
+          it off.
+        </p>
+      </div>
+      <div class="mw-card mw-card-simple">
+        <h4 class="mw-mb-3">Release notes</h4>
+        <p class="mw-mb-0">
+          On a phone the same toggle slides the sidebar in over a scrim. A tap
+          on the scrim, Escape or a link closes it again, and the content behind
+          it is inert while it is open.
+        </p>
+      </div>
+    </div>
+    <footer class="mw-footer mw-footer-compact">
+      <div class="mw-footer-bottom">
+        <p class="mw-copyright">&copy; 2026 Wavelength &middot; v2.4.0</p>
+        <ul class="mw-footer-links">
+          <li><a href="#app-shell">Status</a></li>
+          <li><a href="#app-shell">Privacy</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <aside class="mw-app-aside" id="app-shell-demo-aside" aria-label="Assistant">
+    <div class="mw-app-aside-header">
+      <h4>Assistant</h4>
+      <button
+        type="button"
+        class="mw-app-toggle"
+        data-mw-app-aside-toggle
+        aria-label="Close the assistant"
+      >
+        &#x2715;
+      </button>
+    </div>
+    <div class="mw-app-aside-body">
+      <div class="mw-chat" role="log">
+        <div class="mw-chat-message mw-chat-message-user">
+          <div class="mw-chat-body">
+            <div class="mw-chat-bubble">Which projects are late?</div>
+          </div>
+        </div>
+        <div class="mw-chat-message">
+          <div class="mw-chat-body">
+            <div class="mw-chat-bubble">
+              Two: the harbour relaunch is three days behind, the booking app
+              one. Both wait on the same review.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <nav class="mw-app-tabbar" aria-label="Primary">
+    <a class="mw-app-tabbar-item" href="#app-shell" aria-current="page">
+      <i class="fas fa-gauge" aria-hidden="true"></i>
+      <span class="mw-app-label">Dashboard</span>
+    </a>
+    <a class="mw-app-tabbar-item" href="#app-shell">
+      <i class="fas fa-folder" aria-hidden="true"></i>
+      <span class="mw-app-label">Projects</span>
+    </a>
+    <a class="mw-app-tabbar-item" href="#app-shell">
+      <i class="fas fa-inbox" aria-hidden="true"></i>
+      <span class="mw-app-label">Inbox</span>
+      <span class="mw-badge mw-badge-primary mw-badge-sm">4</span>
+    </a>
+    <a class="mw-app-tabbar-item" href="#app-shell">
+      <i class="fas fa-chart-line" aria-hidden="true"></i>
+      <span class="mw-app-label">Reports</span>
+    </a>
+  </nav>
+</div>
+
+<div class="mw-card mw-card-simple">
+  <pre
+    class="mw-code-block"
+  ><code>&lt;div class="mw-app" data-mw-app-persist="crm"&gt;
+  &lt;aside class="mw-app-sidebar" id="nav"&gt;
+    &lt;a class="mw-app-brand" href="/"&gt;&lt;img src="logo.svg" alt="" /&gt;&lt;span class="mw-app-label"&gt;Acme&lt;/span&gt;&lt;/a&gt;
+    &lt;nav class="mw-app-nav"&gt;
+      &lt;p class="mw-app-nav-title"&gt;Workspace&lt;/p&gt;
+      &lt;a class="mw-app-nav-link mw-tooltip-inline-end" href="/" aria-current="page" data-tooltip="Dashboard"&gt;
+        &lt;i class="fas fa-gauge"&gt;&lt;/i&gt;&lt;span class="mw-app-label"&gt;Dashboard&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;div class="mw-app-sidebar-footer"&gt;...&lt;/div&gt;
+  &lt;/aside&gt;
+  &lt;div class="mw-app-main"&gt;
+    &lt;header class="mw-app-topbar"&gt;
+      &lt;button class="mw-app-toggle" data-mw-app-toggle aria-controls="nav" aria-label="Navigation"&gt;
+        &lt;span class="mw-app-toggle-icon"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+      &lt;h1 class="mw-app-title"&gt;Dashboard&lt;/h1&gt;
+      &lt;div class="mw-app-actions"&gt;...&lt;/div&gt;
+    &lt;/header&gt;
+    &lt;main class="mw-app-content"&gt;...&lt;/main&gt;
+  &lt;/div&gt;
+  &lt;aside class="mw-app-aside" id="details"&gt;
+    &lt;div class="mw-app-aside-header"&gt;&lt;h2&gt;Details&lt;/h2&gt;&lt;button class="mw-app-toggle" data-mw-app-aside-toggle aria-label="Close"&gt;&amp;#x2715;&lt;/button&gt;&lt;/div&gt;
+    &lt;div class="mw-app-aside-body"&gt;...&lt;/div&gt;
+  &lt;/aside&gt;
+  &lt;nav class="mw-app-tabbar" aria-label="Primary"&gt;
+    &lt;a class="mw-app-tabbar-item" href="/" aria-current="page"&gt;&lt;i class="fas fa-gauge"&gt;&lt;/i&gt;&lt;span class="mw-app-label"&gt;Dashboard&lt;/span&gt;&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/div&gt;</code></pre>
+  <p class="mw-text-muted mw-text-sm">
+    Tune it through <code>--mw-app-sidebar-width</code>,
+    <code>--mw-app-rail-width</code>, <code>--mw-app-aside-width</code>,
+    <code>--mw-app-topbar-height</code> and <code>--mw-app-gutter</code> on
+    <code>.mw-app</code>. <code>mw-app-content-flush</code> on the content hands
+    a canvas or a game board the whole column, without gutter and scroll.
+  </p>
+</div>

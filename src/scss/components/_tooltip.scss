@@ -188,6 +188,19 @@
         position-area: block-start;
         transform: rotate(45deg);
       }
+
+      // Beside the trigger, for an icon rail - anchored only, or a scroller cuts it
+      &.mw-tooltip-inline-end {
+        &::before {
+          position-area: inline-end;
+          margin: 0 0 0 ($_mw-tooltip-gap + $_mw-tooltip-arrow);
+        }
+
+        &::after {
+          position-area: inline-end;
+          margin: 0 0 0 $_mw-tooltip-arrow-inset;
+        }
+      }
     }
   }
 }

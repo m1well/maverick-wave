@@ -308,8 +308,8 @@
   }
 
   // Longhands only in this file: the shorthand would reset the scroll timeline
-  @media (prefers-reduced-motion: no-preference) {
-    .mw-story-reel {
+  .mw-story-reel {
+    @include motion-safe {
       overflow: hidden;
       scroll-snap-type: none;
 
@@ -338,21 +338,25 @@
         display: none;
       }
     }
+  }
 
-    .mw-story-reel-head::after {
+  .mw-story-reel-head::after {
+    @include motion-safe {
       clip-path: inset(0 100% 0 0);
       animation-name: mw-story-reel-fill;
       animation-duration: $frame-time;
       animation-timing-function: linear;
       animation-fill-mode: forwards;
     }
+  }
 
-    // One segment per frame, and the fill takes as long as all of them
-    @for $frames from 2 through $max-frames {
-      .mw-story-reel:has(
-          > :nth-child(#{$frames} of img, video):nth-last-child(1 of img, video)
-        )
-        .mw-story-reel-head {
+  // One segment per frame, and the fill takes as long as all of them
+  @for $frames from 2 through $max-frames {
+    .mw-story-reel:has(
+        > :nth-child(#{$frames} of img, video):nth-last-child(1 of img, video)
+      )
+      .mw-story-reel-head {
+      @include motion-safe {
         &::before {
           background: segments(rgb(255 255 255 / 35%), $frames);
         }
@@ -363,10 +367,12 @@
         }
       }
     }
+  }
 
-    // A longer story ends at the last timed frame
-    .mw-story-reel:has(> :nth-child(#{$max-frames + 1} of img, video))
-      .mw-story-reel-head {
+  // A longer story ends at the last timed frame
+  .mw-story-reel:has(> :nth-child(#{$max-frames + 1} of img, video))
+    .mw-story-reel-head {
+    @include motion-safe {
       &::before {
         background: segments(rgb(255 255 255 / 35%), $max-frames);
       }
@@ -376,8 +382,10 @@
         animation-duration: $max-frames * $frame-time;
       }
     }
+  }
 
-    .mw-story-reel:is(:active, :has(.mw-story-reel-pause :checked)) {
+  .mw-story-reel:is(:active, :has(.mw-story-reel-pause :checked)) {
+    @include motion-safe {
       > *,
       .mw-story-reel-head::after {
         animation-play-state: paused;
@@ -386,29 +394,35 @@
   }
 
   // No autoplay with reduced motion: the frames stay a strip to page through
-  @media (prefers-reduced-motion: reduce) {
-    .mw-story-reel-pause,
-    .mw-story-reel-prev,
-    .mw-story-reel-next {
+  .mw-story-reel-pause,
+  .mw-story-reel-prev,
+  .mw-story-reel-next {
+    @include motion-reduced {
       display: none;
     }
+  }
 
-    .mw-story-reel-head::after {
+  .mw-story-reel-head::after {
+    @include motion-reduced {
       transform-origin: left;
       transform: scaleX(0);
     }
+  }
 
-    @supports (animation-timeline: scroll()) {
-      .mw-story-reel-head::after {
+  @supports (animation-timeline: scroll()) {
+    .mw-story-reel-head::after {
+      @include motion-reduced {
         animation-name: mw-story-reel-scroll;
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: scroll();
       }
     }
+  }
 
-    @supports not (animation-timeline: scroll()) {
-      .mw-story-reel-head {
+  @supports not (animation-timeline: scroll()) {
+    .mw-story-reel-head {
+      @include motion-reduced {
         &::before,
         &::after {
           display: none;

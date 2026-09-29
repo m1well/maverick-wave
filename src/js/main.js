@@ -28,6 +28,27 @@
     return true;
   }
 
+  // Blocked storage (all cookies blocked, a sandboxed iframe) throws on access
+  const storage = {
+    get(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch {
+        return null;
+      }
+    },
+    set(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch {}
+    },
+    remove(key) {
+      try {
+        localStorage.removeItem(key);
+      } catch {}
+    },
+  };
+
   // Bound to the document, the window, or the one element of its kind a page
   // has. Running any of this twice would double the listeners, so it happens
   // once and is not part of init().
@@ -40,6 +61,7 @@
     initThemeToggle();
     initColorSwatches();
     initMobileNav();
+    initAppShell();
     initHeaderReveal();
     initParallax();
     initSmoothScrolling();
@@ -66,6 +88,7 @@
     initStoryReels(scope);
     initDecks(scope);
     initDevices(scope);
+    initAppShells(scope);
     initAccordions(scope);
     initProgressBars(scope);
     initReveals(scope);
@@ -73,6 +96,7 @@
     initAlerts(scope);
     initFormSliders(scope);
     initImageSliders(scope);
+    initCompares(scope);
     initCheckboxLists(scope);
     initKanbanBoards(scope);
     initCalendars(scope);
@@ -933,9 +957,7 @@
 
     function show(index, smooth = true) {
       const slide = slides[Math.max(0, Math.min(slides.length - 1, index))];
-      const reduced =
-        window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduced = reducedMotion();
       scroller.scrollTo({
         left: across ? slide.offsetLeft : 0,
         top: across ? 0 : slide.offsetTop,
@@ -1127,7 +1149,7 @@
       themeToggle.setAttribute('aria-disabled', 'true');
 
       // Clean up potentially conflicting localStorage
-      localStorage.removeItem('mw-theme');
+      storage.remove('mw-theme');
 
       // Ensure the theme classes are gone for fixed mode
       root.classList.remove('mw-theme-light', 'mw-theme-dark');
@@ -1137,15 +1159,9 @@
 
     // mode switchable - only runs if themeMode === 'switchable'
     const systemLight = window.matchMedia('(prefers-color-scheme: light)');
+    const preferred = () => systemLight.matches;
 
-    // Only trust the OS where the stylesheet can act on it. Without light-dark()
-    // the theme tokens sit on :root as the dark set and the light one arrives by
-    // class alone, so a light machine would get a sun icon over a dark page.
-    const followsSystem =
-      window.CSS && CSS.supports('color', 'light-dark(#000, #fff)');
-    const preferred = () => followsSystem && systemLight.matches;
-
-    const stored = localStorage.getItem('mw-theme');
+    const stored = storage.get('mw-theme');
     let isLight = stored ? stored === 'light' : preferred();
 
     // Function to apply theme styles and icon
@@ -1173,7 +1189,7 @@
 
     // Until the reader picks a side, the page keeps tracking the OS switch
     systemLight.addEventListener('change', () => {
-      if (localStorage.getItem('mw-theme')) return;
+      if (storage.get('mw-theme')) return;
       isLight = preferred();
       applyTheme(isLight);
       updateColorSwatchHexValues();
@@ -1183,7 +1199,7 @@
     themeToggle.addEventListener('click', () => {
       isLight = !isLight;
       applyTheme(isLight);
-      localStorage.setItem('mw-theme', isLight ? 'light' : 'dark'); // Save
+      storage.set('mw-theme', isLight ? 'light' : 'dark');
 
       // No transition left to wait out, so the swatches can read the new values now
       updateColorSwatchHexValues();
@@ -1316,6 +1332,197 @@
     });
   }
 
+  // ===== App Shell =====
+  // Only classes change, so an application can drive the same states itself
+  // Where _app-shell.scss docks the sidebar (lg) and the aside (xl)
+  function appBreakpoints() {
+    return {
+      sidebar: window.matchMedia('(width >= 992px)'),
+      aside: window.matchMedia('(width >= 1200px)'),
+    };
+  }
+
+  // The panel lying over the content, if one does
+  function appOverlay(app, docked) {
+    if (
+      !docked.sidebar.matches &&
+      app.classList.contains('mw-app-sidebar-open')
+    )
+      return app.querySelector('.mw-app-sidebar');
+    if (!docked.aside.matches && app.classList.contains('mw-app-aside-open'))
+      return app.querySelector('.mw-app-aside');
+    return null;
+  }
+
+  // Whatever an open panel covers goes inert, and every toggle states its panel
+  function syncAppShell(app, docked) {
+    const panel = appOverlay(app, docked);
+    [...app.children].forEach((child) => {
+      child.inert = Boolean(panel) && child !== panel;
+    });
+
+    const sidebarOpen = docked.sidebar.matches
+      ? !app.classList.contains('mw-app-collapsed')
+      : app.classList.contains('mw-app-sidebar-open');
+    const states = [
+      ['[data-mw-app-toggle]', '.mw-app-sidebar', sidebarOpen],
+      [
+        '[data-mw-app-aside-toggle]',
+        '.mw-app-aside',
+        app.classList.contains('mw-app-aside-open'),
+      ],
+    ];
+    states.forEach(([toggles, selector, open]) => {
+      const target = app.querySelector(selector);
+      app.querySelectorAll(toggles).forEach((toggle) => {
+        toggle.setAttribute('aria-expanded', String(open));
+        if (target && target.id && !toggle.hasAttribute('aria-controls')) {
+          toggle.setAttribute('aria-controls', target.id);
+        }
+      });
+    });
+  }
+
+  // `data-mw-app-persist="name"` keeps the rail and the docked aside per app
+  function appMemory(app, key, value) {
+    const name = app.dataset.mwAppPersist;
+    if (!name) return null;
+    if (value === undefined) return storage.get(`mw-app:${name}:${key}`);
+    storage.set(`mw-app:${name}:${key}`, value ? '1' : '0');
+    return null;
+  }
+
+  function initAppShell() {
+    const docked = appBreakpoints();
+
+    function focusInto(panel) {
+      const target =
+        panel.querySelector('[aria-current="page"], .mw-active') ||
+        panel.querySelector(
+          'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+      if (target) target.focus({ preventScroll: true });
+    }
+
+    // Back to the toggle outside the panel, or focus is left on a hidden one
+    function focusToggle(app, selector, panel) {
+      const toggle = [...app.querySelectorAll(selector)].find(
+        (el) => !panel || !panel.contains(el)
+      );
+      if (toggle) toggle.focus({ preventScroll: true });
+    }
+
+    function closeOverlay(app, returnFocus) {
+      const panel = appOverlay(app, docked);
+      if (!panel) return;
+      const aside = panel.classList.contains('mw-app-aside');
+      app.classList.remove(aside ? 'mw-app-aside-open' : 'mw-app-sidebar-open');
+      syncAppShell(app, docked);
+      if (returnFocus) {
+        focusToggle(
+          app,
+          aside ? '[data-mw-app-aside-toggle]' : '[data-mw-app-toggle]',
+          panel
+        );
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const app = e.target.closest('.mw-app');
+      if (!app) return;
+
+      const toggle = e.target.closest('[data-mw-app-toggle]');
+      if (toggle) {
+        if (docked.sidebar.matches) {
+          appMemory(app, 'collapsed', app.classList.toggle('mw-app-collapsed'));
+          syncAppShell(app, docked);
+          return;
+        }
+        const sidebar = app.querySelector('.mw-app-sidebar');
+        app.classList.remove('mw-app-aside-open');
+        const opened = app.classList.toggle('mw-app-sidebar-open');
+        syncAppShell(app, docked);
+        if (opened) focusInto(sidebar);
+        else if (sidebar && sidebar.contains(toggle)) {
+          focusToggle(app, '[data-mw-app-toggle]', sidebar);
+        }
+        return;
+      }
+
+      const asideToggle = e.target.closest('[data-mw-app-aside-toggle]');
+      if (asideToggle) {
+        const aside = app.querySelector('.mw-app-aside');
+        if (!docked.sidebar.matches)
+          app.classList.remove('mw-app-sidebar-open');
+        const opened = app.classList.toggle('mw-app-aside-open');
+        if (docked.aside.matches) appMemory(app, 'aside', opened);
+        syncAppShell(app, docked);
+        if (opened && aside && !docked.aside.matches) focusInto(aside);
+        if (!opened && aside && aside.contains(asideToggle)) {
+          focusToggle(app, '[data-mw-app-aside-toggle]', aside);
+        }
+        return;
+      }
+
+      const panel = appOverlay(app, docked);
+      if (!panel) return;
+      // Scrim taps land on the app; an SPA link in the nav keeps the page
+      if (!panel.contains(e.target)) closeOverlay(app, true);
+      else if (
+        panel.classList.contains('mw-app-sidebar') &&
+        e.target.closest('a[href]')
+      ) {
+        closeOverlay(app, false);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      // An open dialog or menu owns this Escape; the next one closes the panel
+      if (document.querySelector('dialog:modal, .mw-dropdown[open]')) return;
+      const app = [...document.querySelectorAll('.mw-app')].find((el) =>
+        appOverlay(el, docked)
+      );
+      if (app) closeOverlay(app, true);
+    });
+
+    // An undocking aside closes instead of landing on top of the content
+    function onResize() {
+      document.querySelectorAll('.mw-app').forEach((app) => {
+        if (docked.sidebar.matches) app.classList.remove('mw-app-sidebar-open');
+        if (!docked.aside.matches) app.classList.remove('mw-app-aside-open');
+        syncAppShell(app, docked);
+      });
+    }
+
+    docked.sidebar.addEventListener('change', onResize);
+    docked.aside.addEventListener('change', onResize);
+  }
+
+  // Per shell, so MaverickWave.init() after a render restores that one too
+  function initAppShells(root) {
+    const docked = appBreakpoints();
+    root.querySelectorAll('.mw-app').forEach((app) => {
+      if (!fresh(app)) return;
+      const collapsed = appMemory(app, 'collapsed');
+      const aside = appMemory(app, 'aside');
+      if (collapsed !== null || aside !== null) {
+        // Straight into the remembered state, without animating there
+        app.classList.add('mw-app-restoring');
+        if (collapsed !== null) {
+          app.classList.toggle('mw-app-collapsed', collapsed === '1');
+        }
+        if (aside !== null && docked.aside.matches) {
+          app.classList.toggle('mw-app-aside-open', aside === '1');
+        }
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => app.classList.remove('mw-app-restoring'))
+        );
+      }
+      syncAppShell(app, docked);
+    });
+  }
+
   // ===== Progress Bars =====
 
   // The fill is driven from CSS where the browser can do it (_progress.scss), so
@@ -1368,7 +1575,7 @@
   // it arrives.
   function initReveals(root) {
     if (CSS.supports('animation-timeline', 'view()')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (reducedMotion()) return;
 
     const targets = Array.from(
       root.querySelectorAll('.mw-reveal, .mw-reveal-stagger > *')
@@ -1415,7 +1622,7 @@
     const header = document.querySelector('.mw-header-reveal');
     if (!header) return;
     if (CSS.supports('animation-timeline', 'scroll()')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (reducedMotion()) return;
 
     const ribbon = document.querySelector(
       '.mw-announcement:not(.mw-announcement-static)'
@@ -1453,7 +1660,7 @@
   // CSS where the depth variants can still reach it.
   function initParallax() {
     if (CSS.supports('animation-timeline', 'view()')) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (reducedMotion()) return;
 
     const media = document.querySelectorAll('.mw-parallax-media');
     if (!media.length) return;
@@ -1618,7 +1825,7 @@
 
         // Not `behavior: 'smooth'`: the browser's own curve takes no duration,
         // and the one it picks cannot be slowed down.
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (reducedMotion()) {
           window.scrollTo({ top: target, behavior: 'instant' });
         } else {
           glideTo(target);
@@ -1635,7 +1842,14 @@
   // ===== Scroll Spy =====
   function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.mw-navbar-link');
+    // Links into this page only, or a scroll clears the current page's mark
+    const page = (path) => path.replace(/index\.html$/, '');
+    const navLinks = [...document.querySelectorAll('.mw-navbar-link')].filter(
+      (link) => {
+        const url = new URL(link.href, location.href);
+        return url.hash && page(url.pathname) === page(location.pathname);
+      }
+    );
 
     if (sections.length === 0 || navLinks.length === 0) return;
 
@@ -1797,6 +2011,14 @@
   }
 
   // ===== Utility Functions =====
+  // The OS setting or mw-motion-off on <html> - the stylesheet honours both
+  function reducedMotion() {
+    return (
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      document.documentElement.classList.contains('mw-motion-off')
+    );
+  }
+
   function debounce(func, wait) {
     let timeout;
     return function () {
@@ -1876,20 +2098,14 @@
 
   // ===== Modals =====
 
-  // Two shapes: the older `mw-modal-overlay` div toggled by class, and `<dialog>`,
-  // where focus trap, Escape and the inert background are the browser's job.
-  // Delegated, so a modal added later works too.
+  // A `<dialog>`: focus trap, Escape and the inert background are the
+  // browser's job. Delegated, so a modal added later works too.
   function initModals() {
     document.addEventListener('click', (e) => {
       const closer = e.target.closest('.mw-modal-close');
       if (closer) {
         const dialog = closer.closest('dialog.mw-modal');
-        if (dialog) {
-          dialog.close();
-          return;
-        }
-        const overlay = closer.closest('.mw-modal-overlay');
-        if (overlay) overlay.classList.remove('mw-modal-open');
+        if (dialog) dialog.close();
         return;
       }
 
@@ -1899,42 +2115,27 @@
         return;
       }
 
-      // Light dismiss for a dialog the browser does not dismiss itself. A click
+      // `closedby="any"` where the browser does not understand it yet. A click
       // that lands on the dialog element is a click on the backdrop - the
       // content sits in .mw-modal-header/body/footer inside it.
       if (
-        e.target.matches('dialog.mw-modal[open]') &&
-        !dismissesItself(e.target)
+        e.target.matches('dialog.mw-modal[open][closedby="any"]') &&
+        !('closedBy' in e.target)
       ) {
         e.target.close();
       }
     });
   }
 
-  // True when `closedby` is on the element *and* understood, which is the only
-  // case where the browser closes the dialog on a backdrop click by itself.
-  function dismissesItself(dialog) {
-    return 'closedBy' in dialog && dialog.getAttribute('closedby') !== null;
-  }
-
-  // Opens either shape. Exposed, because which modal opens when is the
-  // application's decision and not something markup can express on its own.
+  // Exposed, because which modal opens when is the application's decision and
+  // not something markup can express on its own
+  // Not over itself: showModal() throws on a dialog already open as a drawer
   function openModal(modal) {
-    if (!modal) return;
-    if (modal.tagName === 'DIALOG') {
-      modal.showModal();
-    } else {
-      modal.classList.add('mw-modal-open');
-    }
+    if (modal instanceof HTMLDialogElement && !modal.open) modal.showModal();
   }
 
   function closeModal(modal) {
-    if (!modal) return;
-    if (modal.tagName === 'DIALOG') {
-      modal.close();
-    } else {
-      modal.classList.remove('mw-modal-open');
-    }
+    if (modal instanceof HTMLDialogElement) modal.close();
   }
 
   window.mwOpenModal = (id) => openModal(document.getElementById(id));
@@ -1981,6 +2182,26 @@
       });
 
       updateSliderView();
+    });
+  }
+
+  // ===== Before/After Compare =====
+  // The range is the control; this only hands its position to the CSS
+  function initCompares(root) {
+    root.querySelectorAll('.mw-compare-range').forEach((range) => {
+      if (!fresh(range)) return;
+      const frame = range.closest('.mw-compare');
+      if (!frame) return;
+
+      const update = () => {
+        const min = Number(range.min) || 0;
+        const max = Number(range.max) || 100;
+        const share = ((range.valueAsNumber - min) / (max - min)) * 100;
+        frame.style.setProperty('--mw-compare-position', share + '%');
+      };
+
+      range.addEventListener('input', update);
+      update();
     });
   }
 
@@ -2553,8 +2774,9 @@
     const effect = effects.find((name) =>
       html.classList.contains('mw-occasion-' + name)
     );
+    if (reducedMotion()) return;
+    initOccasionArrivals(effect);
     if (!effect) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     if (html.classList.contains('mw-occasion-scroll')) {
       startOccasionDrift(effect);
@@ -2913,20 +3135,58 @@
     });
   }
 
+  // No view timeline for the card pieces (Firefox): an observer plays them
+  function initOccasionArrivals(effect) {
+    if (CSS.supports('animation-timeline', 'view()')) return;
+
+    const siteWide =
+      effect &&
+      document.documentElement.classList.contains('mw-occasion-scroll');
+    const hosts = [
+      ...document.querySelectorAll(
+        siteWide
+          ? '.mw-card, .mw-panel, .mw-testimonial, .mw-occasion-spot'
+          : '.mw-occasion-scroll:not(:root)'
+      ),
+    ].filter((el) => el.getBoundingClientRect().top >= window.innerHeight);
+    if (!hosts.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          entry.target.classList.replace(
+            'mw-occasion-waiting',
+            'mw-occasion-arriving'
+          );
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    hosts.forEach((el) => {
+      el.classList.add('mw-occasion-waiting');
+      obs.observe(el);
+    });
+  }
+
   // Scrubbed by the scroll on the compositor, so it stands still whenever the
   // page does. A lap is a little more than a screen of scrolling, which makes
   // the count a matter of page length.
   function startOccasionDrift(effect) {
-    // Not CSS.supports: Firefox behind its flag parses the syntax, but plays
-    // the whole page as one lap - pieces that crawl read as stuck
-    if (!window.ScrollTimeline) return;
-
     const layer = document.createElement('div');
     layer.className = 'mw-occasion-drift';
     layer.setAttribute('aria-hidden', 'true');
+    // Not CSS.supports: Firefox behind its flag parses the syntax, but plays
+    // the whole page as one lap - pieces that crawl read as stuck
+    const driven = !window.ScrollTimeline;
+    // Before the append, or the particles start on the clock and park mid-lap
+    if (driven) layer.classList.add('mw-occasion-driven');
     if (effect === 'summer') occasionBeams(layer);
     else occasionDriftParticles(layer, effect);
     document.body.appendChild(layer);
+    if (driven) driveOccasionDrift(layer);
 
     function laps() {
       const scrollable = document.documentElement.scrollHeight - innerHeight;
@@ -2938,6 +3198,32 @@
     laps();
     window.addEventListener('load', laps);
     window.addEventListener('resize', debounce(laps, 200), { passive: true });
+  }
+
+  // Hands the CSS the progress scroll(root) would; hidden where that is idle
+  function driveOccasionDrift(layer) {
+    const root = document.documentElement;
+    let queued = false;
+
+    const update = () => {
+      queued = false;
+      const scrollable = root.scrollHeight - root.clientHeight;
+      const progress =
+        scrollable > 0 ? Math.min(1, Math.max(0, scrollY / scrollable)) : 0;
+      layer.style.visibility = scrollable > 0 ? '' : 'hidden';
+      layer.style.setProperty('--mw-occasion-progress', progress.toFixed(4));
+    };
+
+    const request = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('load', request);
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
   }
 
   // Sizes at a 1280px window, scaled with it within limits. Smaller than this a
@@ -2974,12 +3260,15 @@
     for (let i = 0; i < count; i++) {
       const shape = shapes[i % shapes.length];
       const soft = ['maple', 'oak', 'birch', 'petal'].includes(shape);
+      const start = ((i * 37) % 100) * 0.3;
       occasionParticle(layer, shape, 'falling', {
         '--mw-occasion-x':
           ((i + between(0.1, 0.9)) * (100 / count)).toFixed(1) + 'vw',
         '--mw-occasion-size':
           (between(sizes[shape][0], sizes[shape][1]) * scale).toFixed(1) + 'px',
-        '--mw-occasion-start': (((i * 37) % 100) * 0.3).toFixed(1) + '%',
+        '--mw-occasion-start': start.toFixed(1) + '%',
+        // The start again as a number - a calc() cannot turn a % into one
+        '--mw-occasion-from': (start / 100).toFixed(3),
         '--mw-occasion-lap': String(i % 3),
         '--mw-occasion-drift': between(-6, 6).toFixed(1) + 'vw',
         '--mw-occasion-sway': between(8, 24).toFixed(0) + 'px',

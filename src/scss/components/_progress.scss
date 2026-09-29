@@ -89,11 +89,11 @@
         @supports (animation-timeline: view()) {
           // Reduced motion skips the animation below, so the width has to be set
           // outright - the blanket rule in _base.scss keeps the transition instant.
-          @media (prefers-reduced-motion: reduce) {
+          @include motion-reduced {
             width: var(--mw-progress-value);
           }
 
-          @media (prefers-reduced-motion: no-preference) {
+          @include motion-safe {
             // Longhands and never the shorthand, which esbuild collapses into one
             // `animation:` that cannot carry a timeline.
             animation-name: mw-progress-fill;
@@ -148,6 +148,126 @@
     }
     to {
       width: var(--mw-progress-value);
+    }
+  }
+
+  // Busy without a figure: a segment sweeps the track, a still hatch without motion
+  .mw-progress-indeterminate {
+    --mw-progress-indeterminate: var(--mw-secondary-color);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--mw-progress-indeterminate) 0 6px,
+        transparent 6px 12px
+      );
+      opacity: 0.55;
+
+      @include motion-safe {
+        inset: 0 auto 0 0;
+        width: 35%;
+        background: var(--mw-progress-indeterminate);
+        opacity: 1;
+        animation-name: mw-progress-sweep;
+        animation-duration: motion(1.6s);
+        animation-timing-function: var(--mw-ease-in-out);
+        animation-iteration-count: infinite;
+      }
+    }
+  }
+
+  @keyframes mw-progress-sweep {
+    from {
+      translate: -100% 0;
+    }
+
+    to {
+      translate: 300% 0;
+    }
+  }
+
+  // The same figure round; the value is a registered property, so a change animates
+  .mw-progress-ring {
+    --mw-progress-ring-color: var(--mw-secondary-color);
+    --mw-progress-ring-size: 4.5rem;
+    --mw-progress-ring-thickness: 0.5rem;
+
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: var(--mw-progress-ring-size);
+    aspect-ratio: 1;
+    color: var(--mw-text-color);
+    font-size: calc(var(--mw-progress-ring-size) * 0.24);
+    font-weight: font-weight('bold');
+    font-variant-numeric: tabular-nums lining-nums;
+    transition: --mw-progress-value var(--mw-duration-slower)
+      var(--mw-ease-in-out);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: radius('full');
+      background: conic-gradient(
+        var(--mw-progress-ring-color) var(--mw-progress-value),
+        var(--mw-gray-background) 0
+      );
+      mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - var(--mw-progress-ring-thickness)),
+        #000 calc(100% - var(--mw-progress-ring-thickness) + 1px)
+      );
+    }
+  }
+
+  .mw-progress-ring-sm {
+    --mw-progress-ring-size: 3rem;
+    --mw-progress-ring-thickness: 0.35rem;
+  }
+
+  .mw-progress-ring-lg {
+    --mw-progress-ring-size: 7rem;
+    --mw-progress-ring-thickness: 0.7rem;
+  }
+
+  @each $name, $col in $semantic-colors {
+    .mw-progress-ring-#{$name} {
+      --mw-progress-ring-color: #{$col};
+    }
+  }
+
+  // Fill, sweep and arc are all backgrounds, which forced colours would drop
+  @media (forced-colors: active) {
+    .mw-progress-bar {
+      outline: 1px solid CanvasText;
+    }
+
+    .mw-progress-fill,
+    .mw-progress-indeterminate::after,
+    .mw-progress-ring::before {
+      forced-color-adjust: none;
+    }
+
+    .mw-progress-fill {
+      --mw-progress-ink: HighlightText;
+
+      background: Highlight;
+    }
+
+    .mw-progress-indeterminate {
+      --mw-progress-indeterminate: Highlight;
+    }
+
+    .mw-progress-ring::before {
+      background: conic-gradient(
+        Highlight var(--mw-progress-value),
+        GrayText 0
+      );
     }
   }
 }

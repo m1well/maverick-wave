@@ -8,6 +8,18 @@
 $frame: #1b1d22;
 $frame-edge: #3a3d45;
 $frame-lip: #0c0d10;
+// Black glass round the display, the metal only as a thin band outside it
+$bezel: #060708;
+$metal: #2e3138;
+$metal-light: #5b606b;
+
+// A window caught in the glass: one soft diagonal with a hard edge
+$glare: linear-gradient(
+  115deg,
+  rgb(255 255 255 / 0.1),
+  rgb(255 255 255 / 0.03) 36%,
+  transparent 36.2%
+);
 
 // The screenshot at its lower edge. Percentages in translate are the image's
 // own height, cqh is the glass: the difference is the way down, and min()
@@ -83,6 +95,15 @@ $frame-lip: #0c0d10;
     container-type: size;
     background-color: $fixed-stage;
 
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: z-index('lift');
+      background: $glare;
+      pointer-events: none;
+    }
+
     > img,
     > video {
       display: block;
@@ -152,10 +173,12 @@ $frame-lip: #0c0d10;
     > .mw-device-screen {
       margin-inline: 6cqw;
       aspect-ratio: 16 / 10;
-      border: 1.5cqw solid $frame;
+      border: 1.5cqw solid $bezel;
       border-bottom-width: 2.4cqw;
       border-radius: 1.6cqw 1.6cqw 0 0;
-      box-shadow: var(--mw-elevation-4);
+      box-shadow:
+        0 0 0 0.3cqw $metal-light,
+        var(--mw-elevation-4);
     }
 
     // The base: a bevel along the top edge, the lip in the middle where a
@@ -194,23 +217,27 @@ $frame-lip: #0c0d10;
 
     > .mw-device-screen {
       height: 100%;
-      border: 3cqw solid $frame;
+      border: 3cqw solid $bezel;
       border-radius: 14cqw;
-      box-shadow: var(--mw-elevation-4);
+      box-shadow:
+        0 0 0 0.6cqw $metal,
+        0 0 0 0.85cqw $metal-light,
+        var(--mw-elevation-4);
     }
 
-    // The island, drawn on the glass so the clip keeps it inside the curve
+    // The island shares the glare's pseudo: two round ends and the stretch between
     > .mw-device-screen::before {
-      content: '';
-      position: absolute;
-      top: 3.5cqw;
-      left: 50%;
-      z-index: z-index('lift');
-      width: 27cqw;
-      height: 7.5cqw;
-      translate: -50% 0;
-      border-radius: radius('full');
-      background-color: #000;
+      $end: radial-gradient(
+        circle closest-side,
+        #000 calc(100% - 0.5px),
+        transparent
+      );
+
+      background:
+        $end calc(50% - 9.75cqw) 3.5cqw / 7.5cqw 7.5cqw no-repeat,
+        $end calc(50% + 9.75cqw) 3.5cqw / 7.5cqw 7.5cqw no-repeat,
+        linear-gradient(#000, #000) 50% 3.5cqw / 19.5cqw 7.5cqw no-repeat,
+        $glare;
     }
 
     // Mute switch and the two volume keys on the left, power on the right.
@@ -225,7 +252,7 @@ $frame-lip: #0c0d10;
 
     &::before {
       top: 22cqw;
-      left: -1.3cqw;
+      left: -2.1cqw;
       height: 34cqw;
       background: linear-gradient(
         $frame-edge 0 18%,
@@ -238,7 +265,7 @@ $frame-lip: #0c0d10;
 
     &::after {
       top: 32cqw;
-      right: -1.3cqw;
+      right: -2.1cqw;
       height: 18cqw;
       background-color: $frame-edge;
     }
@@ -282,12 +309,14 @@ $frame-lip: #0c0d10;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .mw-device {
+  .mw-device {
+    @include motion-reduced {
       --mw-device-tour: 1ms;
     }
+  }
 
-    button.mw-device > .mw-device-screen::after {
+  button.mw-device > .mw-device-screen::after {
+    @include motion-reduced {
       animation: none;
     }
   }

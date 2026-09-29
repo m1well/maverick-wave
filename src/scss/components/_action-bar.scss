@@ -1,0 +1,143 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  :root {
+    --mw-action-bar-height: 3.75rem;
+  }
+
+  // Reserved while the bar is up, so focus never lands under it (WCAG 2.4.11)
+  :root:has(.mw-action-bar:not(.mw-action-bar-embedded)) {
+    --mw-action-bar-reserve: calc(
+      var(--mw-action-bar-height) + env(safe-area-inset-bottom, 0px)
+    );
+
+    scroll-padding-bottom: var(--mw-action-bar-reserve);
+
+    > body {
+      padding-bottom: var(--mw-action-bar-reserve);
+    }
+  }
+
+  // Chrome like the header, so it takes the header's colours in both themes
+  .mw-action-bar {
+    --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
+
+    position: fixed;
+    inset: auto 0 0;
+    z-index: z-index('action-bar');
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    align-items: stretch;
+    gap: spacing('2');
+    min-height: calc(
+      var(--mw-action-bar-height) + env(safe-area-inset-bottom, 0px)
+    );
+    padding: spacing('2') max(#{spacing('3')}, env(safe-area-inset-right, 0px))
+      calc(#{spacing('2')} + env(safe-area-inset-bottom, 0px))
+      max(#{spacing('3')}, env(safe-area-inset-left, 0px));
+    background: var(--mw-header-background);
+    border-top: 1px solid var(--mw-header-border);
+    box-shadow: 0 -6px 18px var(--mw-shadow-far);
+
+    &-embedded {
+      position: absolute;
+    }
+
+    &-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: spacing('1');
+      min-width: 0;
+      min-height: 2.75rem;
+      padding: spacing('1') spacing('2');
+      border: 0;
+      border-radius: radius('md');
+      background: transparent;
+      color: var(--mw-header-navbar-list-color);
+      font: inherit;
+      font-size: font-size('xs');
+      font-weight: font-weight('medium');
+      line-height: 1.15;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--mw-transition-fast);
+
+      @include tappable;
+      @include focus-ring;
+
+      > i {
+        font-size: font-size('lg');
+      }
+
+      > :is(svg, img) {
+        flex-shrink: 0;
+        width: 1.35rem;
+        height: 1.35rem;
+      }
+
+      > span {
+        max-width: 100%;
+        @include truncate;
+      }
+
+      &:hover {
+        color: var(--mw-header-text-color);
+        background: color-mix(
+          in srgb,
+          var(--mw-header-text-color) 10%,
+          transparent
+        );
+      }
+
+      @include motion-safe {
+        &:active {
+          transform: scale(0.96);
+          transition-duration: var(--mw-duration-instant);
+        }
+      }
+    }
+
+    &-primary {
+      background: var(--mw-primary-color);
+      color: var(--mw-primary-accent-text-color);
+      box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 15%, transparent);
+
+      &:hover {
+        background: var(--mw-primary-color-hover);
+        color: var(--mw-primary-accent-text-color);
+      }
+    }
+  }
+
+  @include media-up('md') {
+    :root:has(
+      .mw-action-bar:not(.mw-action-bar-embedded, .mw-action-bar-always)
+    ) {
+      --mw-action-bar-reserve: 0px;
+    }
+
+    .mw-action-bar:not(.mw-action-bar-always, .mw-action-bar-embedded) {
+      display: none;
+    }
+
+    // Stretched across a desktop the four targets would sit a screen apart
+    .mw-action-bar {
+      justify-content: center;
+      grid-auto-columns: minmax(0, 10rem);
+    }
+  }
+
+  @media print {
+    :root:has(.mw-action-bar:not(.mw-action-bar-embedded)) {
+      --mw-action-bar-reserve: 0px;
+    }
+
+    .mw-action-bar {
+      display: none;
+    }
+  }
+}

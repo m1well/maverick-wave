@@ -104,8 +104,8 @@
   }
 
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .mw-parallax-slow {
+    .mw-parallax-slow {
+      @include motion-safe {
         animation-name: mw-parallax-band;
         animation-timing-function: linear;
         animation-fill-mode: both;
@@ -188,19 +188,21 @@
   // `animation:` that cannot carry a timeline. The default range is the whole
   // cover pass, so the band keeps moving as long as any part of it is on screen.
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .mw-parallax-media {
+    .mw-parallax-media {
+      @include motion-safe {
         animation-name: mw-parallax;
         animation-timing-function: linear;
         animation-fill-mode: both;
         animation-timeline: view();
       }
+    }
 
-      // A pinned block does not travel through the viewport, so its view()
-      // timeline stands still with it. The document's own scroll is what the
-      // picture has left to play against - over the first screen, because after
-      // that the page has covered it anyway.
-      .mw-parallax-sticky .mw-parallax-media {
+    // A pinned block does not travel through the viewport, so its view()
+    // timeline stands still with it. The document's own scroll is what the
+    // picture has left to play against - over the first screen, because after
+    // that the page has covered it anyway.
+    .mw-parallax-sticky .mw-parallax-media {
+      @include motion-safe {
         animation-timeline: scroll(root);
         animation-range: 0 100dvh;
       }
@@ -213,8 +215,8 @@
   // inline `--mw-parallax-depth` - go on working untouched.
   //
   // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes.
-  @media (prefers-reduced-motion: no-preference) {
-    .mw-parallax-driven {
+  .mw-parallax-driven {
+    @include motion-safe {
       transform: translate3d(
         0,
         calc(var(--mw-parallax-depth) * (1 - 2 * var(--mw-parallax-progress))),

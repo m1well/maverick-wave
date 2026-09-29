@@ -44,6 +44,12 @@
   a page has one single content area. `mw-content-centered` centers it
   vertically over the full viewport - login pages, error pages.
 - `<section>` has **no** padding of its own. Always add `mw-section`.
+- `mw-action-bar` (the phone bar with call, directions, book -
+  `components.md`) is fixed to the bottom edge. While one is on screen `:root`
+  reserves its height as body `padding-bottom` and `scroll-padding-bottom`
+  (`--mw-action-bar-reserve`), so the footer and a focused field stay clear of
+  it (WCAG 2.4.11), and a bottom toast stack sits above it. From `md` up it
+  hides unless it carries `mw-action-bar-always`, and the reserve drops to 0.
 
 In an Angular app the shell above lives in `app.component.html` and the router
 outlet goes inside the `mw-container`:
@@ -111,6 +117,9 @@ its children are styled through descendant selectors:
 - **Collapse breakpoint follows the item count**: default (1-3 items) collapses
   at `md`, `mw-navbar-medium` (4-5) at `lg`, `mw-navbar-large` (6+) at `xl`.
   Pick the class by how many links you have.
+- The current page takes `mw-active` or `aria-current="page"` on its
+  `mw-navbar-link`. The scroll spy only moves the mark between links into the
+  page itself, so on a site with several pages that mark stays.
 - Below the breakpoint the list becomes a panel under the bar, full width, and
   `mw-menu-btn` appears. Opening it means `open` on **both** `mw-menu-btn` and
   `mw-navbar`, `mw-nav-open` on the `<body>`, and `aria-expanded` on the button -
@@ -159,7 +168,7 @@ A fixed `mw-announcement` rides along without a class of its own - both cover
 the height of the pair, so they arrive as one block rather than the ribbon
 catching up. Focus inside either brings both back regardless of the scroll
 position, so tabbing never lands on a link that is off screen (WCAG 2.4.11).
-Under `prefers-reduced-motion` the bar is simply there, and so it is without
+Under `prefers-reduced-motion` or `mw-motion-off` the bar is simply there, and so it is without
 scroll timelines unless `maverick-wave.min.js` is on the page - in Firefox that
 is what rides it in (`javascript.md`).
 
@@ -216,11 +225,34 @@ as the header's first child under the same condition.
     </div>
 
     <p class="mw-disclaimer">Long-form text under the columns.</p>
-    <p class="mw-copyright">&copy; 2026 Example</p>
-    <p class="mw-last-updated">Last updated: 2026-08-04</p>
+    <div class="mw-footer-bottom">
+      <div>
+        <p class="mw-copyright">&copy; 2026 Example</p>
+        <p class="mw-last-updated">Last updated: 2026-08-04</p>
+      </div>
+      <ul class="mw-footer-links">
+        <li><a href="/impressum">Imprint</a></li>
+        <li><a href="/datenschutz">Privacy</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 ```
+
+- Column headings may be `h2`, `h3`, `h4` or `.mw-footer-title`. Two or three
+  columns fill the row from `lg` instead of leaving a slot of the 4-grid empty.
+- `mw-footer-bottom` is the bar under the rule: the copyright (alone or stacked
+  over `mw-last-updated` in a wrapper) at one end, `mw-footer-links` at the
+  other, both centred and stacked on a phone. `mw-footer-links` is the line for
+  imprint, privacy and cookie settings - the links a German site carries on
+  every page.
+- `mw-footer-dark` paints the footer with the header bar tokens, dark in both
+  themes - the bookend to the bar. `mw-footer-compact` is the bar alone with
+  little padding: the footer an application puts last in `mw-app-main`, where it
+  sits on the column's gutter.
+- The footer keeps clear of the home indicator, links and social buttons carry
+  the focus ring, and on touch the links grow to a 40px target (the drawn
+  underline gives way to the text's own) and the social buttons to 44px.
 
 `data-tooltip="..."` is a global attribute hook, not a class - it works on any
 element and shows a tooltip above it on hover or keyboard focus. It is pure CSS
@@ -234,6 +266,125 @@ above is off the screen - and `mw-tooltip-end` / `mw-tooltip-start` line the
 bubble up with that edge of the trigger instead of centring it, which is what
 keeps a tooltip on an outermost element inside the viewport. The arrow keeps
 pointing at the trigger in every combination.
+
+`mw-tooltip-inline-end` puts the bubble beside the trigger instead - for an icon
+rail, where one above covers the item above. It moves only where the browser can
+anchor it (Chrome 129, Firefox 147, Safari 26) and stays above elsewhere: an
+absolute bubble beside the trigger is cut off by any scrolling parent. In the
+app shell's collapsed rail it is not shown at all there, since the rail cuts off
+the one above too.
+
+## App shell
+
+The frame of an application behind a login, instead of `mw-header` and
+`mw-main`: a sidebar beside a column that scrolls on its own under a sticky top
+bar.
+
+```html
+<div class="mw-app" data-mw-app-persist="crm">
+  <aside class="mw-app-sidebar" id="nav" aria-label="Main">
+    <a class="mw-app-brand" href="/"
+      ><img src="logo.svg" alt="" /><span class="mw-app-label">Acme</span></a
+    >
+    <nav class="mw-app-nav">
+      <p class="mw-app-nav-title">Workspace</p>
+      <a
+        class="mw-app-nav-link mw-tooltip-inline-end"
+        href="/"
+        aria-current="page"
+        data-tooltip="Dashboard"
+        ><i class="fas fa-gauge"></i
+        ><span class="mw-app-label">Dashboard</span></a
+      >
+    </nav>
+    <div class="mw-app-sidebar-footer">...</div>
+  </aside>
+  <div class="mw-app-main">
+    <header class="mw-app-topbar">
+      <button
+        type="button"
+        class="mw-app-toggle"
+        data-mw-app-toggle
+        aria-controls="nav"
+        aria-label="Navigation"
+      >
+        <span class="mw-app-toggle-icon"></span>
+      </button>
+      <h1 class="mw-app-title">Dashboard</h1>
+      <div class="mw-app-actions">...</div>
+    </header>
+    <main class="mw-app-content">...</main>
+    <footer class="mw-footer mw-footer-compact">...</footer>
+  </div>
+  <aside class="mw-app-aside" id="details" aria-label="Details">
+    <div class="mw-app-aside-header">
+      <h2>Details</h2>
+      <button class="mw-app-toggle" data-mw-app-aside-toggle aria-label="Close">
+        &#x2715;
+      </button>
+    </div>
+    <div class="mw-app-aside-body">...</div>
+  </aside>
+  <nav class="mw-app-tabbar" aria-label="Primary">
+    <a class="mw-app-tabbar-item" href="/" aria-current="page"
+      ><i class="fas fa-gauge"></i
+      ><span class="mw-app-label">Dashboard</span></a
+    >
+  </nav>
+</div>
+```
+
+- The shell is `--mw-app-height` tall (`100dvh`) and `mw-app-main` scrolls
+  inside it, so the top bar and the sidebar never move.
+- From `lg` the sidebar is docked. `mw-app-collapsed` on `mw-app` folds it to an
+  icon rail: `mw-app-label` stays in the markup for a screen reader, a badge
+  shrinks to a dot on the icon (the count is still read), section titles turn
+  into a rule. `mw-tooltip-inline-end` on each link
+  names the icon beside it.
+- Below `lg` it is a panel over the content; `mw-app-sidebar-open` slides it in
+  over a scrim that `mw-app` draws itself.
+- Active link: `aria-current="page"` or `mw-active`. `mw-app-sidebar-dark`
+  paints the sidebar with the header bar tokens, for an app next to a site that
+  wears that bar.
+- `mw-app-aside` is the third column - an inspector, an assistant, a game's
+  inventory. From `xl` it docks beside the content and pushes it aside; below
+  that it lies over the content like the phone sidebar. `mw-app-aside-open` on
+  `mw-app` opens it, `mw-app-aside-header` and `mw-app-aside-body` give it a
+  bar and its own scroll. Only one panel lies over the content at a time.
+- `mw-app-tabbar` holds 3-5 `mw-app-tabbar-item`s (icon plus `mw-app-label`,
+  `aria-current="page"` for the current one) below `lg`. It is a grid row under
+  the column, not `fixed`: nothing scrolls under it and the iOS keyboard cannot
+  push it over the content. A badge in an item sits on the icon's pill.
+- `data-mw-app-persist="name"` keeps the rail and the docked aside in
+  `localStorage` and restores both without animating. A shell rendered later
+  (an Angular route) gets it through `MaverickWave.init(element)`.
+- `mw-app-content-flush` on the content hands a canvas or a game board the
+  whole column: no gutter, no scroll, the only child fills it.
+- A `mw-footer mw-footer-compact` last in `mw-app-main` sits on the column's
+  gutter under the content.
+- Brand, top bar, aside and tab bar keep clear of the notch and the home
+  indicator (`viewport-fit=cover`). Printing drops the chrome and prints the
+  whole column, not one screen of it.
+- `data-mw-app-toggle` / `data-mw-app-aside-toggle` are the shipped script's
+  hooks (`javascript.md`). Angular binds the classes itself, plus `[inert]` on
+  every child of `mw-app` except the panel while one lies over the content,
+  and `aria-expanded` on the toggles.
+- Tokens on `mw-app`: `--mw-app-sidebar-width` (16rem), `--mw-app-rail-width`
+  (4.25rem), `--mw-app-aside-width` (22rem), `--mw-app-topbar-height` (3.5rem),
+  `--mw-app-gutter`, `--mw-app-height`.
+
+## Page transitions
+
+`$mw-page-transitions: true` in the `@use ... with (...)` switches on
+cross-document view transitions: `@view-transition { navigation: auto; }` under
+`prefers-reduced-motion: no-preference`, the page crossfading on
+`--mw-duration-slow`, and `view-transition-name: mw-header` on `.mw-header`, so
+the bar stands still while the page under it changes. Off by default, because a
+page only fades into one that carries the rule too - switch it on for the whole
+site. Chrome 126 and Safari 18.2 run it; Firefox navigates plainly, which is the
+entire fallback. `mw-motion-off` drops the fade, the at-rule itself cannot see a
+class. The header name assumes one `mw-header` per page. The CDN build ships
+none of it - copy the rules from `base/_page-transitions.scss` there.
 
 ## Sections
 
@@ -402,7 +553,8 @@ it, so buttons under the hero text never land on top of the cue.
 `mw-scroll-hint-end` puts it in the bottom right corner instead - for a hero
 whose text is not centred either - and gives the hero its full height back.
 Below `md` both variants sit in the corner, because the middle under the text
-is taken on a phone. The bobbing stops under `prefers-reduced-motion`.
+is taken on a phone. The bobbing stops under `prefers-reduced-motion` and
+`mw-motion-off`.
 
 **Parallax** - `mw-parallax` on the container plus a `mw-parallax-media` child
 moves the picture into its own layer. The container drops its own background and
@@ -476,8 +628,8 @@ put the dial on the inner block and it never reaches the animation. Everything
 after it gets the same page background and layer that a pinned block gives its
 siblings, and the section directly after it the same edge shadow.
 
-Without scroll timelines, or under `prefers-reduced-motion`, the picture stands
-still and nothing else changes.
+Without scroll timelines, or under `prefers-reduced-motion` or `mw-motion-off`,
+the picture stands still and nothing else changes.
 
 ## Grid
 
@@ -548,6 +700,27 @@ anything ranked or chronological.
 </div>
 ```
 
+**Bento** - `mw-bento` for a services or feature section, or a dashboard, where
+tiles of different weight share one row rhythm. One column at content height on
+a phone, two from `sm`, four from `lg`; from `sm` the rows are
+`minmax(var(--mw-bento-row, 11rem), auto)`. On a child, `mw-bento-wide` spans two
+columns, `mw-bento-tall` two rows and `mw-bento-lg` both - all three only from
+`sm`, so a phone never gets an implicit extra column - and `mw-bento-full` the
+whole row. `mw-bento-compact` on the grid itself sets the row to 7rem, for a
+row of figures. The
+grid packs `dense`, so a later tile can fill an earlier gap: keep the source
+order the reading order and check the tab order when the sizes differ a lot. A
+`mw-card` child fills its cell.
+
+```html
+<div class="mw-bento">
+  <article class="mw-card mw-bento-lg">...</article>
+  <article class="mw-card mw-bento-tall">...</article>
+  <article class="mw-card">...</article>
+  <article class="mw-card mw-bento-wide">...</article>
+</div>
+```
+
 ## Utilities
 
 **Spacing** - margin `mw-m-*`, `mw-mt-*`, `mw-mb-*`, `mw-ml-*`, `mw-mr-*`,
@@ -606,7 +779,7 @@ The block stays hidden while it is still below the bottom edge and has arrived
 three fifths of the way in - measured along its own entry, so it is never still
 transparent once it stands in its place, whatever its height. A block taller
 than the screen is capped at one viewport by the entry phase itself. Doubly guarded:
-`prefers-reduced-motion` turns it off, and a browser without scroll timelines
+`prefers-reduced-motion` and `mw-motion-off` turn it off, and a browser without scroll timelines
 renders the block in place instead of leaving it invisible. Firefox is that
 browser - there the shipped JS runs the entrance off an `IntersectionObserver`,
 so a page without the script keeps the block and loses only the motion
@@ -650,6 +823,13 @@ far - everywhere else the box is simply the normal one.
 **Aspect ratio** - `mw-aspect-square|video|wide|portrait|photo`. Reserves the
 box before the image inside it has loaded, so the page does not reflow when the
 picture arrives. The child fills the box and crops rather than stretching.
+
+**Image shapes** - `mw-shape-arch` rounds the top into a half circle,
+`mw-shape-signature` gives a picture the sharp-and-round diagonal of the cards
+around it, and `mw-shape-leaf` opens that round pair up to the full side. They
+clip with `overflow: clip`, so they work on an `img` or on a wrapper around one;
+`-signature` and `-leaf` follow `--mw-radius-scale`. Pair them with
+`mw-aspect-*` for the box.
 
 **Overflow and scrolling** - `mw-overflow-auto`, `mw-overflow-x-auto` (which
 also contains the overscroll, so a sideways swipe on a wide table does not walk
@@ -695,11 +875,12 @@ button, a label beside an icon.
 
 Wherever an icon carries the whole message. Not `display: none` and not
 `visibility: hidden` - both drop the element out of the accessibility tree,
-which is precisely what must not happen.
+which is precisely what must not happen. On the SCSS path the same declarations
+are the `visually-hidden` mixin.
 
-There are no responsive display variants. Show/hide per breakpoint is the
-application's job (media query in your own stylesheet, or `@if` in the
-template).
+Show/hide per breakpoint is the responsive display set above
+(`mw-d-md-none`), or `mw-hide-mobile` / `mw-hide-desktop` with `md` as the
+edge.
 
 ### `mw-d-contents` - wrapper components inside a layout container
 

@@ -48,20 +48,20 @@ Load the one you need - do not read them all up front.
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.css"
+  href="https://cdn.jsdelivr.net/npm/maverick-wave@6/maverick-wave.min.css"
 />
 <link
   rel="stylesheet"
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 />
 ...
-<script src="https://cdn.jsdelivr.net/npm/maverick-wave@5/maverick-wave.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/maverick-wave@6/maverick-wave.min.js"></script>
 ```
 
-`@5` keeps this snippet current; in a real project pin the exact version so a
+`@6` keeps this snippet current; in a real project pin the exact version so a
 build stays reproducible. The JS file is optional and only for
 server-rendered/static pages - see below. `viewport-fit=cover` is not optional -
-see pitfall 30.
+see pitfall 31.
 
 ### Angular (or any SPA)
 
@@ -76,10 +76,10 @@ Or from the npm package via SCSS: `@use 'maverick-wave/src/scss/main';`
 belongs in `src/index.html` there, with `viewport-fit=cover` just the same.
 
 **`main-lean` for a page that uses a handful of components.** The full build is
-~41 kB gzipped and carries all 48 of them. `main-lean` is the same framework
-without the components - tokens, reset, typography, layout, utilities, plus the
-tooltip and the hero badge the layout itself uses - and the components come in
-one by one next to it:
+~72 kB gzipped and carries every component. `main-lean` is the same framework
+without the components - tokens, reset, typography, layout (app shell and bento
+included), utilities, plus the tooltip and the hero badge the layout itself
+uses - and the components come in one by one next to it:
 
 ```scss
 @use 'maverick-wave/src/scss/main-lean' with (
@@ -89,8 +89,9 @@ one by one next to it:
 @use 'maverick-wave/src/scss/components/cards';
 ```
 
-That lands at ~16 kB gzipped plus what the components add (three of them ≈ 19 kB
-in total). The configuration goes on `main-lean`, not on the component imports.
+That lands at ~19 kB gzipped plus what the components add (buttons, cards and
+modals ≈ 22 kB in total). The configuration goes on `main-lean`, not on the
+component imports.
 
 > **Never load `maverick-wave.min.js` in a SPA.** Everything in it is wired up
 > once on `DOMContentLoaded` and writes straight into the DOM. In an Angular
@@ -143,18 +144,27 @@ leave a second tab lit.
 
 The classes that mean something _other_ than "on" keep their own names:
 
-| Component                                    | State class                                              |
-| -------------------------------------------- | -------------------------------------------------------- |
-| Anything switchable, "on"                    | `mw-active` (`active` deprecated)                        |
-| Burger button + navbar panel                 | `open` (no prefix), plus `mw-nav-open` on `<body>`       |
-| Stepper indicator / label / connector / step | `mw-active`, `mw-done`                                   |
-| Checkbox list item (`li`)                    | `mw-selected`                                            |
-| Calendar day, picked                         | `mw-selected`                                            |
-| Kanban ticket being edited                   | `mw-kanban-editing`                                      |
-| Modal, older overlay div                     | `mw-modal-open` (a `<dialog>` carries `open` itself)     |
-| Alert, dismissing / dismissed                | `mw-alert-closing` → `mw-alert-closed` (`display: none`) |
-| Field wrapper in error                       | `mw-field-has-error`                                     |
-| Single form control in error                 | `mw-form-element-error`                                  |
+| Component                                     | State class                                              |
+| --------------------------------------------- | -------------------------------------------------------- |
+| Anything switchable, "on"                     | `mw-active` (`active` deprecated)                        |
+| Burger button + navbar panel                  | `open` (no prefix), plus `mw-nav-open` on `<body>`       |
+| Stepper indicator / label / connector / step  | `mw-active`, `mw-done`                                   |
+| Checkbox list item (`li`)                     | `mw-selected`                                            |
+| Calendar day, picked                          | `mw-selected`                                            |
+| Kanban ticket being edited                    | `mw-kanban-editing`                                      |
+| Modal                                         | `open` on the `<dialog>`, set by `showModal()`           |
+| App shell: icon rail (from `lg`) / panel      | `mw-app-collapsed` / `mw-app-sidebar-open` on `mw-app`   |
+| App shell aside: docked (`xl`) / over content | `mw-app-aside-open` on `mw-app`                          |
+| Alert, dismissing / dismissed                 | `mw-alert-closing` → `mw-alert-closed` (`display: none`) |
+| Field wrapper in error                        | `mw-field-has-error`                                     |
+| Single form control in error                  | `mw-form-element-error`                                  |
+
+ARIA carries the same states where an application renders it without the
+classes: `aria-selected="true"` (tab, segment, table row), `aria-current="page"`
+(pagination, breadcrumb, dropdown item) and `"step"` (stepper step),
+`aria-expanded="true"` (accordion header, dropdown trigger),
+`aria-pressed="true"` (segment, filter chip), `aria-sort` (table header), and a
+checked native radio in a segment.
 
 `mw-active` and `mw-selected` are not the same thing and not interchangeable:
 active is the one of several that is currently showing, selected is a choice the
@@ -222,7 +232,9 @@ Two shadows per level - a tight contact layer plus a wide ambient one:
 `1` resting (inputs, tags), `2` raised (cards, panels at rest), `3` floating
 (a card under the pointer), `4` overlay (dropdown, popover, drawer), `5` modal.
 `0` is explicitly flat. Never write a `box-shadow` by hand - the twelve one-off
-values that used to exist are exactly what this replaced.
+values that used to exist are exactly what this replaced. `mw-shadows-flat` on
+`<html>` drops levels 1-3, `mw-shadows-hard` turns all five into a hard offset
+without blur (colour: `--mw-shadow-hard`) - see `references/theming.md`.
 
 **Glow** (`mw-glow`, `mw-glow-{primary,secondary,info,success,warning,danger}`).
 The same two-layer idea without the offset, so the surface reads as giving off
@@ -237,7 +249,9 @@ back), `--mw-ease-spring` (a pop). Two ready-made transitions:
 for anything that should feel instant under the pointer. Both list their
 properties explicitly rather than saying `all`. All six durations are multiplied
 by `--mw-motion-scale` (default 1), the tempo counterpart to
-`--mw-radius-scale`; `prefers-reduced-motion` overrides the result.
+`--mw-radius-scale`; `prefers-reduced-motion` overrides the result, and so does
+`mw-motion-off` on `<html>` - the same reduced page as a site setting, script
+included.
 
 **Control sizes** `--mw-control-height-sm|base|lg` = 1.875 / 2.125 / 2.375rem (an
 even 30 / 34 / 38px step, moved by `mw-density-compact` and `-roomy`) and
@@ -267,8 +281,18 @@ none of them survive into the compiled CSS. Full list in `references/theming.md`
 - `hit-area($grow: 6px, $box: 1.5rem)` - grows the hit area through `::after`
   without touching the silhouette. An element carrying a `data-tooltip` owns that
   pseudo for its arrow, so those are skipped and grow to `$box` instead.
+- `motion-safe` / `motion-reduced` - the two sides of the motion switch, used
+  inside a rule. They cover `prefers-reduced-motion` _and_ `mw-motion-off`; a
+  bare `@media (prefers-reduced-motion: ...)` misses the class. A leading
+  `:root` in the rule's selector is merged, not nested.
+- `visually-hidden` - the declarations behind `mw-sr-only`, for a label that
+  hides in one state only (the app shell's icon rail).
 - `hover` / `hover-move`, `focus-ring`, `focus-ring-inset`, `field-focus`,
   `truncate`, `surface`.
+
+**Config flags** go on `@use '...' with (...)` like the colours:
+`$mw-theme-mode` and `$mw-page-transitions: true` (cross-document view
+transitions for a multi-page site, off by default) - see `references/theming.md`.
 
 ## Component index
 
@@ -278,12 +302,14 @@ Everything below is documented in `references/components.md` unless marked other
 `ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`, `sm`,
 `lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
 `mw-button-bar`
-(+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note`
+(+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note` ·
+`mw-action-bar` (+ `-item`, `-primary`, `-always`, `-embedded`; the phone's
+call / directions / book strip)
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
 `mw-panel` · `mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
-`mw-modal` ·
+`mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `drawer`, `drawer-start`) ·
 `mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
 `mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·
@@ -292,30 +318,38 @@ feature frame) ·
 **Pricing** `mw-price` (+ `-amount`, `-fraction`, `-currency`, `-original`,
 `-period`, `-word`, `-note`, `xs`/`sm`/`lg`, `inline`, `center`, `plain`)
 
-**Data & status** `mw-table` (+ `subtle`, `sticky-head`, `cards`, `compact`,
-`hover`, responsive wrappers) · `mw-kanban` (+ `plain`, `compact`) ·
-`mw-calendar` (+ `compact`, `plain`) · `mw-tag` /
-`mw-tags` · `mw-badge` (+ `-dot`, `-status`, `-anchor`, `-float`, `-pulse`) ·
-`mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` ·
+**Data & status** `mw-table` (+ `subtle`, `sticky-head`, `sticky-col`, `cards`,
+`compact`, `hover`, responsive wrappers; `mw-table-bulk` + `-bulk-bar` /
+`-bulk-count`; `aria-sort` on a header) · `mw-kanban` (+ `plain`, `compact`) ·
+`mw-calendar` (+ `compact`, `plain`) · `mw-tag` (a `button` with
+`aria-pressed` is a filter chip) / `mw-tags` · `mw-badge` (+ `-dot`, `-status`, `-anchor`, `-float`, `-pulse`) ·
+`mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` (+
+`mw-progress-indeterminate`) · `mw-progress-ring` (+ `-sm`, `-lg`, colours) ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
-`mw-timeline-simple`
+`mw-timeline-simple` / `mw-timeline-compact` (+ `-item`, `-time`, `-body`,
+colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
+`-note`, `-chart`, `-delta-up|down|flat|invert`, `-group`) · `mw-meter` (+ `sm`,
+`lg`; on a native `<meter>`) · `mw-chat` (+ `-message`, `-message-user`,
+`-body`, `-bubble`, `-meta`, `-actions`, `-note`, `-typing`, `-thinking`,
+`-suggestions`, `-composer`, `-composer-bar`)
 
-**Feedback** `mw-alert` · `mw-toast-stack` · `mw-announcement` (+ `-content`,
-`-highlight`, `-static`, color variants) · `mw-empty-state` ·
-`mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` · `mw-skeleton`
+**Feedback** `mw-alert` (+ `-actions`) · `mw-toast-stack` · `mw-announcement`
+(+ `-content`, `-highlight`, `-static`, color variants) · `mw-empty-state` (+
+`-inline`) · `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` /
+`mw-spinner-inline` · `mw-skeleton`
 
 **Occasions** `mw-occasion-snow` and nine more on `<html>` or a single surface
 (+ `mw-occasion-scroll`, `mw-occasion-sm` / `-lg`, `mw-occasion-spot`,
 `mw-occasion-skip`); scheduled by `src/js/occasions.js` in the `<head>`
 
 **Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
-`mw-navbar` · `mw-breadcrumbs` · `mw-pagination` ·
-`mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
-`-caret`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
-`inverted`) · `mw-flag` (+ 23 country codes) ·
+`mw-navbar` · `mw-breadcrumbs` · `mw-pagination` (+ `-pages`, `-page`, `-gap`,
+`-status`) · `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`,
+`-label`, `-caret`, `-shortcut`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
+`inverted`) · `mw-flag` (+ 24 country codes) ·
 `mw-section-nav` (`references/layout.md`)
 
-**Media & content** `mw-avatar` (+ `initials`, `group`, `landscape`,
+**Media & content** `mw-avatar` (+ `initials`, `group`, `more`, `landscape`,
 `portrait`) · `mw-gallery` · `mw-image-slider` · `mw-mosaic` (+ lightbox) ·
 `mw-portrait-gallery` · `mw-feed` · `mw-stories` / `mw-story-reel` ·
 `mw-deck` + `mw-slide` (a presentation page, + `mw-deck-frame`,
@@ -323,7 +357,9 @@ feature frame) ·
 `-screen`; a screenshot or an iframe on the glass) · `mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
 `-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
 `mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
-`mw-kbd` · `mw-list` family
+`mw-kbd` · `mw-list` family · `mw-compare` (+ `-before`, `-after`, `-label`,
+`-label-after`, `-range`; before/after slider) · `mw-marquee` (+ `-track`,
+`-group`, `-item`, `-reverse`)
 
 **Forms** (`references/forms.md`) `mw-field` · `mw-input` · `mw-select` ·
 `mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
@@ -337,7 +373,13 @@ feature frame) ·
 (+ `mw-grid-even`, `mw-grid-from-{sm,md,lg,xl}`) ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
-`-slow`, `-pattern`) · `mw-footer`
+`-slow`, `-pattern`) · `mw-footer` (+ `-top`, `-column`, `-title`, `-bottom`,
+`-links`, `-dark`, `-compact`) · `mw-app` (+ `-sidebar`, `-sidebar-dark`,
+`-brand`, `-nav`, `-nav-title`, `-nav-link`, `-label`, `-sidebar-footer`,
+`-main`, `-topbar`, `-title`, `-actions`, `-content`, `-content-flush`,
+`-toggle`, `-toggle-icon`, `-aside`, `-aside-header`, `-aside-body`, `-tabbar`,
+`-tabbar-item`; the SaaS app shell, `data-mw-app-persist` remembers its state) · `mw-bento` (+ `-wide`, `-tall`, `-lg`,
+`-full`, `-compact`)
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -345,10 +387,18 @@ feature frame) ·
 `mw-text-break` / `mw-text-nowrap` · `mw-text-balance` / `mw-text-pretty` /
 `mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` · `mw-glow` /
 `mw-glow-{primary,secondary,info,success,warning,danger}` ·
-`mw-corner-plain` ·
+`mw-corner-plain` · `mw-shape-arch|signature|leaf` · `data-tooltip` (+
+`mw-tooltip-below`, `-start`, `-end`, `-inline-end`) ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` / `mw-hide-print` / `mw-print-only` · `mw-overflow-*` / `mw-snap-x` ·
 `mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
+
+**Site-wide on `<html>`** (`references/theming.md`) `mw-corners-even` ·
+`mw-accent-single` · `mw-accent-text-auto` · `mw-shadows-flat` / `-hard` ·
+`mw-surfaces-flush` · `mw-sections-plain` · `mw-hover-static` ·
+`mw-scroll-static` · `mw-motion-off` · `mw-headings-caps` ·
+`mw-links-underline` · `mw-btn-pill` / `-square` / `-tactile` / `-glass` ·
+`mw-density-compact` / `-roomy`
 
 ## Pitfalls
 
@@ -386,9 +436,13 @@ feature frame) ·
    backgrounds and borders are derived with `color-mix()` at runtime. Setting
    `--mw-primary-color-hover` by hand is usually a sign the base token was not
    set.
-10. **Browser floor: `color-mix()` and `oklch(from ...)`** - Chrome 119+,
-    Safari 16.4+, Firefox 128+. Both carry the derived tones, so older browsers
-    get no colours at all, not merely worse ones.
+10. **Browser floor: Chrome / Edge 123+, Firefox 140+, Safari / iOS 17.5+**
+    (since 6.0). `color-mix()` and `oklch(from ...)` carry the derived tones and
+    `light-dark()` carries the theme - there is no class-based fallback for the
+    light theme any more, so an older browser gets no colours at all, not
+    merely worse ones. Everything newer than that floor (scroll timelines,
+    anchor positioning, `contrast-color()`, `field-sizing`) sits behind
+    `@supports` with a complete result without it.
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
     `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm`,
     `mw-select-sm` and `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
@@ -447,8 +501,10 @@ feature frame) ·
     `var(--mw-transition)` for a hover or focus state,
     `var(--mw-transition-fast)` for something that should feel instant, and
     `var(--mw-duration-*)` with `var(--mw-ease-*)` for anything else. That is
-    also what makes `prefers-reduced-motion` work - it turns the duration tokens
-    down, so anything built on them is covered for free.
+    also what makes `prefers-reduced-motion` and `mw-motion-off` work - both
+    turn the duration tokens down, so anything built on them is covered for
+    free. A movement that must not run at all goes inside
+    `@include motion-safe`.
 20. **A hover effect that _moves_ something needs the `hover` mixin.** On touch
     `:hover` latches after a tap and stays on, so a lifted card stays lifted,
     visibly out of line with its row. `@include hover { transform: ... }` -
@@ -457,7 +513,8 @@ feature frame) ·
 21. **Below 576px a modal is a bottom sheet.** Full width, anchored to the bottom
     edge, rounded on the top two corners, with a grab handle and full-width
     actions in the footer. Nothing to switch on - do not fight it with your own
-    media query, and do not put a fixed height on `mw-modal`.
+    media query, and do not put a fixed height on `mw-modal`. The exception is
+    `mw-modal-drawer`, which stays a side panel at every width.
 22. **Press states exist on every control**, because a finger never hovers.
     `mw-btn` and friends dip 1px and invert their highlight, `mw-btn-mini` and
     `mw-modal-close` scale down. If you build your own control, give it an
@@ -540,5 +597,19 @@ feature frame) ·
     framework sets `width: 100%` on its own containers already.
 33. **A scheduled occasion needs `src/js/occasions.js` in the `<head>`.**
     `data-mw-occasions` on `<html>` does nothing without it - main.js only
-    plays the intro and the particles. Late classes would shift every card by
+    plays the intro, the particles and, where the browser has no scroll
+    timelines, the arrival on the cards. Late classes would shift every card by
     the room an occasion adds above it, which is why the choice moved there.
+34. **A modal is a `<dialog>` - the overlay div is gone since 6.0** (mw-modal-overlay,
+    its -open state class and the -backdrop child). `showModal()` brings
+    Escape, the focus trap and the inert page; `data-mw-modal` and
+    `mwOpenModal(id)` only open a `<dialog>` and ignore anything else, and the
+    page scroll lock is `:root:has(dialog.mw-modal[open])`. Old markup moves to
+    `<dialog class="mw-modal">` with the same header, body and footer inside.
+35. **A fixed bottom bar reserves its own room.** `mw-action-bar` sets
+    `--mw-action-bar-reserve` while it is visible: the body gets that much
+    bottom padding, `scroll-padding-bottom` keeps a focused field clear of it
+    (WCAG 2.4.11) and `mw-toast-stack-bottom-right` sits above it. Your own
+    fixed element at the bottom edge adds the same token -
+    `var(--mw-action-bar-reserve, 0px)`, because it only exists while a bar is
+    on screen.

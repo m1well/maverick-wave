@@ -1,0 +1,155 @@
+<h3 class="mw-section-subtitle">Bento Grid</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  Tiles of different sizes on one row rhythm - the layout a services page or a
+  dashboard reaches for when a plain grid makes every item look equally
+  important. One column on a phone, two from <code>sm</code>, four from
+  <code>lg</code>. <code>mw-bento-wide</code> spans two columns,
+  <code>-tall</code> two rows, <code>-lg</code> both and <code>-full</code> the
+  whole row. Spans only start with the second column, so a phone gets a plain
+  stack at content height. The grid packs dense, which can move a later tile
+  into an earlier gap - keep the tile order the reading order.
+</p>
+
+<h3 class="mw-mb-4 mw-mt-6">Services of a craftsman</h3>
+<div class="mw-bento mw-mb-8">
+  <article class="mw-card mw-bento-lg">
+    <div class="mw-card-img">
+      <img src="images/photo-peak.svg" alt="Roof against a mountain sky" />
+    </div>
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Roof renovation</h3>
+      <p class="mw-card-text">
+        Tiles, insulation and gutters from one hand - with a fixed price before
+        the first ladder goes up.
+      </p>
+      <div class="mw-card-footer">
+        <span class="mw-text-muted mw-text-sm">From 4 weeks lead time</span>
+        <a href="#bento" class="mw-btn mw-btn-primary">Request a quote</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="mw-card mw-bento-tall">
+    <div class="mw-card-img">
+      <img src="images/photo-tower.svg" alt="Tower at dusk" />
+    </div>
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">Solar</h3>
+      <p class="mw-card-text">Mounting, wiring and the paperwork.</p>
+    </div>
+  </article>
+
+  <article class="mw-card">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">
+        <span class="mw-card-title-icon"><i class="fas fa-hammer"></i></span>
+        Repairs
+      </h3>
+      <p class="mw-card-text">Storm damage fixed within 48 hours.</p>
+    </div>
+  </article>
+
+  <article class="mw-card mw-card-addon-secondary">
+    <div class="mw-card-body">
+      <h3 class="mw-card-title">
+        <span class="mw-card-title-icon"><i class="fas fa-water"></i></span>
+        Gutters
+      </h3>
+      <p class="mw-card-text">Cleaning plans twice a year.</p>
+    </div>
+  </article>
+
+  <article class="mw-card mw-card-simple mw-bento-wide">
+    <p class="mw-text-eyebrow mw-mb-2">Since 1998</p>
+    <h3 class="mw-card-title">Master craftsman, guild member, insured</h3>
+    <p class="mw-mb-0">
+      Three generations on the roofs of the region - every job done by our own
+      team, never subcontracted.
+    </p>
+  </article>
+
+  <article class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Emergency</h3>
+    <p class="mw-mb-0">
+      <a href="tel:+49123456789" class="mw-link">0123 456789</a>
+    </p>
+  </article>
+
+  <article class="mw-card mw-card-simple">
+    <h3 class="mw-card-title">Service area</h3>
+    <p class="mw-mb-0">30 km around the workshop.</p>
+  </article>
+</div>
+
+<h3 class="mw-mb-4">Dashboard</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-bento-compact</code> drops the row rhythm to 7rem for a row of
+  figures. Any other height goes into <code>--mw-bento-row</code>, on the grid
+  or on anything above it.
+</p>
+<div class="mw-bento mw-bento-compact">
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Revenue</p>
+    <p class="mw-text-2xl mw-text-bold mw-text-numeric mw-mb-0">48,210 EUR</p>
+  </div>
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Active users</p>
+    <p class="mw-text-2xl mw-text-bold mw-text-numeric mw-mb-0">1,284</p>
+  </div>
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Churn</p>
+    <p class="mw-text-2xl mw-text-bold mw-text-numeric mw-mb-0">2.1%</p>
+  </div>
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Open tickets</p>
+    <p class="mw-text-2xl mw-text-bold mw-text-numeric mw-mb-0">17</p>
+  </div>
+
+  <div class="mw-card mw-card-simple mw-bento-lg">
+    <h3 class="mw-card-title">Sign-ups this week</h3>
+    <svg
+      class="mw-text-primary"
+      viewBox="0 0 300 100"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label="Sign-ups rising from 20 on Monday to 64 on Sunday"
+      style="width: 100%; height: 8rem"
+    >
+      <polyline
+        fill="none"
+        stroke="currentColor"
+        stroke-width="3"
+        vector-effect="non-scaling-stroke"
+        points="0,80 50,72 100,76 150,55 200,48 250,30 300,20"
+      />
+    </svg>
+  </div>
+
+  <div class="mw-card mw-card-simple mw-bento-tall">
+    <h3 class="mw-card-title">Deployments</h3>
+    <div class="mw-row-split mw-row-split-center">
+      <span>#4812</span>
+      <span class="mw-badge-status mw-badge-status-success">
+        <span class="mw-badge-dot"></span> Passed
+      </span>
+    </div>
+    <hr class="mw-divider" />
+    <div class="mw-row-split mw-row-split-center">
+      <span>#4811</span>
+      <span class="mw-badge-status mw-badge-status-danger">
+        <span class="mw-badge-dot"></span> Failed
+      </span>
+    </div>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Uptime</p>
+    <p class="mw-text-2xl mw-text-bold mw-text-numeric mw-mb-0">99.98%</p>
+  </div>
+
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-1">Plan</p>
+    <p class="mw-text-lg mw-text-bold mw-mb-0">Business</p>
+  </div>
+</div>

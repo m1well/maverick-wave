@@ -201,4 +201,42 @@
       opacity: 0;
     }
   }
+
+  // In a button or a line of text: sized and coloured by the text around it
+  .mw-spinner-inline {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    border: 0.14em solid color-mix(in srgb, currentColor 25%, transparent);
+    border-top-color: currentColor;
+    border-radius: radius('full');
+    animation-name: mw-spin;
+    animation-duration: motion(0.8s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  // One pass at 1ms would leave the dots at their scale(0) end, i.e. gone
+  .mw-spinner-dots > div {
+    @include motion-reduced {
+      animation-name: none;
+    }
+  }
+
+  // Ring, arcs and dots are borders and fills that forced colours flatten
+  @media (forced-colors: active) {
+    .mw-spinner-border,
+    .mw-spinner-dots,
+    .mw-spinner-dual-ring,
+    .mw-spinner-inline {
+      forced-color-adjust: none;
+      --mw-primary-color: CanvasText;
+      --mw-secondary-color: CanvasText;
+      --mw-primary-text-color: CanvasText;
+      --mw-secondary-text-color: CanvasText;
+      --mw-border: GrayText;
+    }
+  }
 }

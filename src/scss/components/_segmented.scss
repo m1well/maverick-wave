@@ -1,5 +1,7 @@
 @use '../abstracts' as *;
 
+$_segment-on: ':is([aria-pressed="true"], [aria-checked="true"], [aria-selected="true"], :has(> input:checked))';
+
 @layer mw.components {
   // Two or three positions of *one* switch - income/expense on a booking form,
   // offer/quote on a document form.
@@ -40,7 +42,14 @@
     cursor: pointer;
     transition: var(--mw-transition);
 
-    &:hover:not(:disabled):not(.mw-active):not(.active) {
+    &:hover:not(
+        :disabled,
+        [aria-disabled='true'],
+        :has(> input:disabled),
+        .mw-active,
+        .active,
+        #{$_segment-on}
+      ) {
       color: var(--mw-text-color);
     }
 
@@ -54,15 +63,19 @@
     // Inset, because an outline outside the item would be clipped by the frame
     @include focus-ring-inset;
 
-    &:disabled {
+    &:is(:disabled, [aria-disabled='true']),
+    &:has(> input:disabled) {
       cursor: not-allowed;
       opacity: 0.6;
     }
 
+    // The state from ARIA or from a native radio inside, as much as from the class
     @include active() {
       background: var(--mw-primary-color);
       border-color: var(--mw-primary-text-color);
       color: var(--mw-primary-accent-text-color);
+      // The ring ink is the fill's own tone; the label's ink stands out on it
+      --mw-focus-ring-color: currentColor;
 
       // A tag inside an item - the saving on a billing cycle, a count on a
       // filter. Its colour variants mix their background from the *page*, so on
@@ -99,6 +112,56 @@
 
     .mw-segmented-item {
       flex: 0 1 auto;
+    }
+  }
+
+  .mw-segmented-item#{$_segment-on} {
+    background: var(--mw-primary-color);
+    border-color: var(--mw-primary-text-color);
+    color: var(--mw-primary-accent-text-color);
+    --mw-focus-ring-color: currentColor;
+
+    .mw-tag {
+      background: transparent;
+      border-color: currentColor;
+      color: inherit;
+    }
+  }
+
+  .mw-segmented-secondary .mw-segmented-item#{$_segment-on} {
+    background: var(--mw-secondary-color);
+    border-color: var(--mw-secondary-text-color);
+    color: var(--mw-secondary-accent-text-color);
+  }
+
+  // A native radio group: unseen, but kept for the keyboard and the form value
+  .mw-segmented-item:has(> input) {
+    position: relative;
+  }
+
+  .mw-segmented-item > input[type='radio'] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .mw-segmented-item:has(> input:focus-visible) {
+    outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+    outline-offset: -2px;
+  }
+
+  // Forced colours drop the fill that is the whole state
+  @media (forced-colors: active) {
+    .mw-segmented-item:is(.mw-active, .active),
+    .mw-segmented-item#{$_segment-on} {
+      forced-color-adjust: none;
+      background: Highlight;
+      border-color: Highlight;
+      color: HighlightText;
     }
   }
 }

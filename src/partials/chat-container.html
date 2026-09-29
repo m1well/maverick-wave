@@ -1,0 +1,162 @@
+<h3 class="mw-section-subtitle">Chat</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  The pieces of an assistant or support chat. The bubble takes the framework's
+  silhouette - sharp on the corner the message comes from, mirrored for the
+  person typing. Streaming, scrolling and sending stay the application's job;
+  this is only what it renders into.
+</p>
+
+<div class="mw-grid-2 mw-gap-6">
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Conversation</h3>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-chat" role="log" aria-label="Conversation with Assistant">
+        <div class="mw-divider-text"><span>Today</span></div>
+
+        <div class="mw-chat-message mw-chat-message-user">
+          <div class="mw-chat-body">
+            <div class="mw-chat-meta">
+              <strong>You</strong><time datetime="09:41">09:41</time>
+            </div>
+            <div class="mw-chat-bubble">
+              <p>
+                Which invoices from September are still open? The export at
+                https://app.example.com/billing/exports/2026-09/invoices-open.csv
+                looks incomplete.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mw-chat-note">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i> Searched 42
+          invoices
+        </div>
+
+        <div class="mw-chat-message">
+          <span class="mw-avatar mw-avatar-xs mw-avatar-initials">AI</span>
+          <div class="mw-chat-body">
+            <div class="mw-chat-meta">
+              <strong>Assistant</strong><time datetime="09:41">09:41</time>
+            </div>
+            <div class="mw-chat-bubble">
+              <p>
+                Three are open. The export skips drafts, which is why it looked
+                short:
+              </p>
+              <pre><code>INV-2026-0912  1.240,00 EUR  due 2026-10-05
+INV-2026-0917    380,50 EUR  due 2026-10-12
+INV-2026-0923  2.115,00 EUR  due 2026-10-20</code></pre>
+            </div>
+            <div class="mw-chat-actions">
+              <button
+                class="mw-btn mw-btn-ghost mw-btn-sm mw-btn-icon"
+                aria-label="Copy answer"
+              >
+                <i class="far fa-copy"></i>
+              </button>
+              <button
+                class="mw-btn mw-btn-ghost mw-btn-sm mw-btn-icon"
+                aria-label="Helpful"
+              >
+                <i class="far fa-thumbs-up"></i>
+              </button>
+              <button
+                class="mw-btn mw-btn-ghost mw-btn-sm mw-btn-icon"
+                aria-label="Not helpful"
+              >
+                <i class="far fa-thumbs-down"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mw-chat-message">
+          <span class="mw-avatar mw-avatar-xs mw-avatar-initials">AI</span>
+          <div class="mw-chat-body">
+            <div class="mw-chat-bubble">
+              <span class="mw-chat-typing" role="status"
+                ><span></span><span></span><span></span
+                ><span class="mw-sr-only">Assistant is typing</span></span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Composer</h3>
+    <div class="mw-card mw-card-simple mw-grid-1 mw-gap-6">
+      <div>
+        <h4 class="mw-text-medium mw-mb-2">Suggestions</h4>
+        <div class="mw-chat-suggestions">
+          <button class="mw-btn mw-btn-outline mw-btn-sm">
+            Summarise this month
+          </button>
+          <button class="mw-btn mw-btn-outline mw-btn-sm">
+            Draft a reminder
+          </button>
+          <button class="mw-btn mw-btn-outline mw-btn-sm">
+            Compare with August
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="mw-text-medium mw-mb-2">Prompt</h4>
+        <form class="mw-chat-composer" action="#chat">
+          <label class="mw-sr-only" for="chat-demo-prompt"
+            >Message the assistant</label
+          >
+          <textarea
+            id="chat-demo-prompt"
+            class="mw-textarea"
+            rows="1"
+            placeholder="Ask about your invoices..."
+          ></textarea>
+          <div class="mw-chat-composer-bar">
+            <button
+              type="button"
+              class="mw-btn mw-btn-ghost mw-btn-sm mw-btn-icon"
+              aria-label="Attach a file"
+            >
+              <i class="fas fa-paperclip"></i>
+            </button>
+            <span class="mw-tag mw-tag-neutral">
+              <i class="far fa-file-pdf mw-tags-icon" aria-hidden="true"></i>
+              invoice-0917.pdf
+            </span>
+            <button
+              type="button"
+              class="mw-btn mw-btn-primary mw-btn-sm mw-btn-icon"
+              aria-label="Send"
+            >
+              <i class="fas fa-arrow-up"></i>
+            </button>
+          </div>
+        </form>
+        <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+          The field grows with what is typed and scrolls from twelve lines on.
+          Where <code>field-sizing</code> is missing it keeps a three-line box.
+          Like every field it stays light in both themes.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="mw-text-medium mw-mb-2">While it works</h4>
+        <p class="mw-mb-2">
+          <span class="mw-chat-thinking">Thinking about your invoices...</span>
+        </p>
+        <p class="mw-text-muted mw-text-sm mw-mb-0">
+          <code>mw-chat-thinking</code> sweeps a highlight across the text,
+          <code>mw-chat-typing</code> bounces three dots. Both stand still under
+          reduced motion, and the log itself carries <code>role="log"</code> so
+          a screen reader announces new messages.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

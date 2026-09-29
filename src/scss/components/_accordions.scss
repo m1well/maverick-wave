@@ -1,6 +1,27 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
+  // aria-expanded on the header opens it too, for markup an application renders
+  @mixin _open-header {
+    @include active {
+      @content;
+    }
+
+    &[aria-expanded='true'] {
+      @content;
+    }
+  }
+
+  @mixin _open-content {
+    @include active {
+      @content;
+    }
+
+    @at-root .mw-accordion-header[aria-expanded='true'] + #{&} {
+      @content;
+    }
+  }
+
   .mw-accordion {
     border: 1px solid var(--mw-border);
     @include surface;
@@ -73,7 +94,7 @@
         transform: rotate(0deg);
       }
 
-      @include active() {
+      @include _open-header {
         background: var(--mw-primary-color);
         color: var(--mw-primary-accent-text-color);
 
@@ -113,7 +134,7 @@
         }
       }
 
-      @include active() {
+      @include _open-content {
         grid-template-rows: 1fr;
         max-height: 500px;
         overflow-y: auto;
@@ -123,24 +144,8 @@
           border-top-width: 1px;
         }
 
-        // Both spellings: the standard pair is what Firefox reads, the webkit
-        // pseudos are for Safari below 18.2.
         scrollbar-width: thin;
         scrollbar-color: var(--mw-primary-color-hover) var(--mw-card-background);
-
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        &::-webkit-scrollbar-track {
-          background: var(--mw-card-background);
-          border-radius: radius('sm');
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: var(--mw-primary-color-hover);
-          border-radius: radius('sm');
-        }
       }
     }
   }

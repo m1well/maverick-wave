@@ -42,9 +42,52 @@
     }
 
     &:disabled {
-      background-color: var(--mw-gray-background);
+      background-color: var(--mw-form-elements-disabled-background);
       color: var(--mw-text-muted-color);
       cursor: not-allowed;
+    }
+  }
+
+  // Opt-in: the page draws the open list where base-select exists, else native
+  @supports (appearance: base-select) {
+    .mw-select-custom,
+    .mw-select-custom::picker(select) {
+      appearance: base-select;
+    }
+
+    // The field keeps the framework's arrow, base-select would add its own
+    .mw-select-custom::picker-icon {
+      display: none;
+    }
+
+    .mw-select-custom::picker(select) {
+      margin-block: spacing('1');
+      padding: spacing('1');
+      border: 1px solid var(--mw-border);
+      border-radius: radius('md');
+      background: var(--mw-form-elements-background);
+      color: var(--mw-form-elements-color);
+      box-shadow: var(--mw-elevation-4);
+    }
+
+    .mw-select-custom option {
+      padding: spacing('2') spacing('3');
+      border-radius: radius('sm');
+      cursor: pointer;
+      @include focus-ring-inset;
+
+      &:hover,
+      &:focus-visible {
+        background: var(--mw-primary-background);
+      }
+
+      &:checked {
+        font-weight: font-weight('medium');
+      }
+
+      &::checkmark {
+        color: var(--mw-primary-text-color);
+      }
     }
   }
 }

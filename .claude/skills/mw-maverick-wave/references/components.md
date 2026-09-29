@@ -185,12 +185,31 @@ picker.
 - Stays horizontal at every width and splits the row into equal shares - which
   is the whole point. Stacked in a `mw-button-bar`, two positions of a switch
   look like two buttons you could press both of.
-- Active position: `mw-active` on the item.
+- Active position: `mw-active`, `aria-pressed="true"`, `aria-checked="true"`
+  or `aria-selected="true"` on the item. Under forced colours it takes
+  Highlight.
 - `mw-segmented-secondary` switches the active fill to the secondary colour,
   `mw-segmented-auto` shrinks the control to its content instead of filling the
   row - capped at `100%`, so labels wider than a 320px screen truncate instead
-  of pushing the row off it. `disabled` works on an item.
+  of pushing the row off it. `disabled` or `aria-disabled="true"` works on an
+  item.
 - Items reach a 2.5rem minimum height on a coarse pointer.
+
+**On native radios** - a label per segment around a radio: the checked one
+lights up, the keyboard and the form value are the browser's, and
+`formControlName` on the inputs is all Angular needs. A disabled radio dims its
+segment, a focused one draws the ring on it.
+
+```html
+<div class="mw-segmented" role="radiogroup" aria-label="Billing cycle">
+  <label class="mw-segmented-item">
+    <input type="radio" name="cycle" value="monthly" checked /> Monthly
+  </label>
+  <label class="mw-segmented-item">
+    <input type="radio" name="cycle" value="yearly" /> Yearly
+  </label>
+</div>
+```
 
 ## Cards
 
@@ -244,6 +263,8 @@ picker.
 - `mw-card-badge` (top right corner) and `mw-card-ribbon` (diagonal banner) are
   absolutely positioned overlays; colour them with `mw-card-addon-primary`,
   `-secondary`, `-success`, `-warning`, `-danger`, `-info`.
+- Cards of different sizes on one row rhythm - a services page, a dashboard -
+  go in `mw-bento` (`references/layout.md`); the card fills its cell.
 - A card does not clip its content, so a tooltip or dropdown inside it can reach
   outside. The exception is `mw-card-ribbon`: that banner has to be cut off at
   the edge, so a card with one as its **direct child** switches to
@@ -557,7 +578,9 @@ The `mw-accordion-content-inner` wrapper is required and not decoration: the
 panel opens by animating a grid row and that wrapper is the row, so content
 placed straight into `mw-accordion-content` never collapses when closed.
 Toggling is JS - see `references/javascript.md`; the shipped script keeps
-`aria-expanded` in step when the header is a button.
+`aria-expanded` in step when the header is a button. `aria-expanded="true"` on
+the header opens the content after it on its own, without `mw-active` - for
+markup an application renders.
 
 ## FAQ
 
@@ -618,6 +641,9 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
   `mw-tile` and `mw-calendar` - override it if the strip sits on some other
   surface.
 - Tab items reach a 2.75rem minimum height on a coarse pointer.
+- `aria-selected="true"` on an item marks it like `mw-active` - horizontal,
+  vertical and pills alike. `:disabled` or `aria-disabled="true"` dims it.
+  Under forced colours the marker and the active pill take Highlight.
 
 ## Modal
 
@@ -640,16 +666,19 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
 </dialog>
 ```
 
-- Escape, the focus trap, `inert` on the page behind it and the body scroll lock
-  all come from the element. There is no overlay wrapper and no backdrop div.
+- Escape, the focus trap and `inert` on the page behind it come from the
+  element, the page scroll lock from the stylesheet
+  (`:root:has(dialog.mw-modal[open])`). There is no overlay wrapper and no
+  backdrop element.
 - Opened with `showModal()`, closed with `close()`. `main.js` wires the close
-  buttons and exposes `mwOpenModal(id)` / `mwCloseModal(id)`; a trigger can also
-  carry `data-mw-modal="delete-modal"` and needs no script at all.
+  buttons and exposes `mwOpenModal(id)` / `mwCloseModal(id)`, which act on a
+  `<dialog>` and ignore anything else; a trigger carrying
+  `data-mw-modal="delete-modal"` needs no script of your own.
 - `closedby="any"` dismisses it on a backdrop click; where that attribute is not
   understood yet the script handles the click instead.
 - Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
   `mw-modal-xl` 960px. Height is capped at 80-92dvh (`--mw-modal-max-height`),
-  the body scrolls. Below 576px it becomes a bottom sheet.
+  the body scrolls. Below 576px it becomes a bottom sheet - a drawer does not.
 - `mw-modal-close` is the hook, not a look: on the header X it styles the button,
   on a footer action it only closes. Combine it with `mw-btn mw-btn-primary` and
   the button keeps its own paint.
@@ -664,23 +693,36 @@ Angular: `[open]="isOpen()"` does **not** work - the attribute opens a non-modal
 dialog with no top layer, backdrop or focus trap. It takes a directive calling
 `showModal()`, see `examples/angular-services.md`.
 
-### The older overlay div
+The overlay div that predates the `<dialog>` (mw-modal-overlay, its -open
+state class and the -backdrop child) was removed in 6.0. Move such markup to
+the `<dialog>` above - header, body and footer stay as they are.
 
-Still styled, for markup that predates the `<dialog>` above. It cannot trap
-focus or make the page inert, so it is not what to write now.
+### Drawer
+
+The same `<dialog>` as a full-height side panel - filters, a detail view, a
+copilot next to the content:
 
 ```html
-<div id="delete-modal" class="mw-modal-overlay">
-  <div class="mw-modal mw-modal-sm">…</div>
-  <div class="mw-modal-backdrop"></div>
-</div>
+<dialog id="filters" class="mw-modal mw-modal-drawer" closedby="any">
+  <div class="mw-modal-header">...</div>
+  <div class="mw-modal-body">...</div>
+  <div class="mw-modal-footer">...</div>
+</dialog>
 ```
 
-- `display: none` until `mw-modal-open` is added to the overlay - that class is
-  the whole open/close mechanism, in Angular
-  `[class.mw-modal-open]="isOpen()"`.
-- Body scroll lock comes from `body:has(.mw-modal-open)`.
-- `mw-modal-backdrop` is the click-to-close surface; put the handler on it.
+- Against the right edge; `mw-modal-drawer-start` next to it moves it to the
+  left. Physical sides, so it does not flip in a right-to-left page. Width `min(420px, 100vw - 2.5rem)`, height `100dvh` with the
+  safe-area insets as padding.
+- Stays a side panel on a phone, where every other modal turns into a sheet.
+  Header and footer stay put, the body scrolls between them.
+- Only the inner edge is visible, and it keeps its half of the silhouette with
+  the corner arc; under `mw-corners-even` the single mark moves to the inner
+  corner.
+- Opened and closed like any modal - `data-mw-modal`, `mwOpenModal(id)`, no new
+  script. `show()` instead of `showModal()` leaves the page usable and
+  scrollable beside it; the drawer then carries `--mw-elevation-4`.
+- A navigation that is always there is not a drawer - that is `mw-app-sidebar`
+  in `references/layout.md`.
 
 ## Alerts & toasts
 
@@ -697,6 +739,13 @@ focus or make the page inert, so it is not what to write now.
 </div>
 ```
 
+`mw-alert-actions` inside `mw-alert-content` puts Undo or Retry under the
+message; `mw-btn-link` and `mw-btn-ghost` in it take the alert's own text colour,
+which holds on every status tint. `role="alert"` for what needs attention now,
+`role="status"` for a confirmation that can wait. Give the toast stack
+`role="status"` and `aria-live="polite"` yourself, so a screen reader reads
+each new toast - the framework sets neither.
+
 Variants: `mw-alert-primary`, `-secondary`, `-success`, `-warning`, `-danger`,
 `-info`. `mw-alert-title` and the close button are optional. Dismissal runs in
 two steps: `mw-alert-closing` fades the alert out over `--mw-duration-base`, then
@@ -706,7 +755,11 @@ the list instead.
 **Toasts** are alerts inside a fixed stack:
 
 ```html
-<div class="mw-toast-stack mw-toast-stack-top-right">
+<div
+  class="mw-toast-stack mw-toast-stack-top-right"
+  role="status"
+  aria-live="polite"
+>
   <div class="mw-alert mw-alert-success">...</div>
 </div>
 ```
@@ -715,7 +768,8 @@ Positions: `mw-toast-stack-top-right` (also the default without a position
 class), `-top-center`, `-bottom-right`. Width is capped at
 `min(380px, 100vw - 2rem)`, clicks pass through everywhere except on a toast,
 the entry animation respects `prefers-reduced-motion`. Auto-dismiss is the
-application's job.
+application's job. While an `mw-action-bar` is on screen the bottom stack sits
+above it (`--mw-action-bar-reserve`); without one nothing moves.
 
 ## Announcement
 
@@ -747,6 +801,44 @@ On a page whose header carries `mw-header-reveal` the ribbon leaves and arrives
 with it, without a class of its own - both cover the height of the pair, so they
 come in as one block. See `references/layout.md`.
 
+## Action bar
+
+The phone's shortcut to the business - call, directions, book - fixed to the
+bottom edge where the thumb already is:
+
+```html
+<!-- last in the body -->
+<nav class="mw-action-bar" aria-label="Contact">
+  <a class="mw-action-bar-item" href="tel:+49891234567">
+    <i class="fas fa-phone" aria-hidden="true"></i><span>Call</span>
+  </a>
+  <a class="mw-action-bar-item" href="https://maps.google.com/?q=...">
+    <i class="fas fa-location-dot" aria-hidden="true"></i
+    ><span>Directions</span>
+  </a>
+  <a class="mw-action-bar-item mw-action-bar-primary" href="/booking">
+    <i class="fas fa-calendar-check" aria-hidden="true"></i><span>Book</span>
+  </a>
+</nav>
+```
+
+- Two to four items share the width: an icon (`<i>`, `<svg>` or `<img>`) over
+  a short label that truncates, at least 2.75rem high. `mw-action-bar-primary`
+  fills the one action that matters most.
+- Header colours in both themes, so the page has chrome at both ends; the
+  safe-area inset is added at the bottom.
+- Hidden from `md` (768px) up. `mw-action-bar-always` keeps it there, centred
+  with items up to 10rem wide.
+- While it is visible the root sets `--mw-action-bar-reserve`
+  (`--mw-action-bar-height` 3.75rem plus the inset): that much body padding at
+  the foot, the same as `scroll-padding-bottom` so a focused field never ends
+  up underneath (WCAG 2.4.11), and `mw-toast-stack-bottom-right` above it.
+  Where the bar is hidden, and in print, the reserve is 0.
+- `mw-action-bar-embedded` is absolute instead of fixed and reserves nothing -
+  for a preview inside a frame, like the showcase's `mw-device-phone`.
+- z-index key `action-bar` (98): over the page and its menus, under the open
+  navigation's scrim, modals and toasts.
+
 ## Empty state
 
 ```html
@@ -759,7 +851,9 @@ come in as one block. See `references/layout.md`.
 ```
 
 Variants: `mw-empty-state-primary`, `-success`, `-warning`, `-danger`. Size:
-`mw-empty-state-sm`.
+`mw-empty-state-sm`. `mw-empty-state-inline` is the shape for a table body or a
+panel: the icon beside the text, the action under it, everything on the left.
+Without an icon the text takes the whole row.
 
 ## Spinners
 
@@ -776,6 +870,10 @@ Variants: `mw-empty-state-primary`, `-success`, `-warning`, `-danger`. Size:
 - `mw-spinner-container` centers in the available space.
   `mw-spinner-container-overlay` lays a dimmed, blurred scrim over the parent -
   the parent needs `position: relative`.
+- `mw-spinner-inline` is 1em and the text colour - for a busy button that keeps
+  its label (`aria-busy="true"` on the button, `aria-hidden` on the spinner).
+- With reduced motion or `mw-motion-off` every shape stands still and stays
+  visible; under forced colours they draw in the system ink.
 
 ## Skeleton
 
@@ -806,7 +904,7 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
       <tr>
         <th>Name</th>
         <th>Status</th>
-        <th class="mw-text-numeric">Amount</th>
+        <th class="mw-text-currency">Amount</th>
       </tr>
     </thead>
     <tbody>
@@ -815,24 +913,26 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
         <td data-label="Status">
           <span class="mw-tag mw-tag-success">Paid</span>
         </td>
-        <td data-label="Amount" class="mw-text-numeric">1.204,50</td>
+        <td data-label="Amount" class="mw-text-currency">1.204,50</td>
       </tr>
     </tbody>
   </table>
 </div>
 ```
 
-| Class                        | Effect                                                                                                                  |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `mw-table`                   | Base: zebra rows, row hover, primary-coloured header                                                                    |
-| `mw-table-subtle`            | Quiet grey header with an accent rule - for data-heavy lists                                                            |
-| `mw-table-compact`           | Less padding, smaller type                                                                                              |
-| `mw-table-hover`             | Stronger row hover                                                                                                      |
-| `mw-table-cards`             | Below `md` every row becomes a card; keep `<thead>` (hidden via CSS) and give each cell a `data-label`                  |
-| `mw-table-responsive`        | Wrapper, horizontal scroll                                                                                              |
-| `mw-table-responsive-hint`   | On top of the wrapper: a soft right edge showing there are more columns. Opt-in - see below                             |
-| `mw-table-responsive-scroll` | Wrapper with a height cap (`--mw-table-scroll-height`, 400px / 260px below `sm`) and vertical scroll                    |
-| `mw-table-sticky-head`       | Header stays put while the body scrolls - only works inside a height-limited wrapper, i.e. `mw-table-responsive-scroll` |
+| Class                        | Effect                                                                                                                               |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `mw-table`                   | Base: zebra rows, primary-coloured header                                                                                            |
+| `mw-table-subtle`            | Quiet grey header with an accent rule - for data-heavy lists                                                                         |
+| `mw-table-compact`           | Less padding, smaller type                                                                                                           |
+| `mw-table-hover`             | Rows tint under the pointer - off unless this class is set                                                                           |
+| `mw-table-cards`             | Below `md` every row becomes a card; keep `<thead>` (hidden via CSS) and give each cell a `data-label`                               |
+| `mw-table-responsive`        | Wrapper, horizontal scroll                                                                                                           |
+| `mw-table-responsive-hint`   | On top of the wrapper: a soft right edge showing there are more columns. Opt-in - see below                                          |
+| `mw-table-responsive-scroll` | Wrapper with a height cap (`--mw-table-scroll-height`, 400px / 260px below `sm`) and vertical scroll                                 |
+| `mw-table-sticky-head`       | Header stays put while the body scrolls - only works inside a height-limited wrapper, i.e. `mw-table-responsive-scroll`              |
+| `mw-table-sticky-col`        | The first column stays put while a wide table scrolls sideways, with opaque zebra, hover (with `mw-table-hover`) and selection tones |
+| `mw-table-bulk`              | Wrapper around the table and a `mw-table-bulk-bar`: the bar shows while any first-cell checkbox is checked                           |
 
 `mw-table-responsive-hint` is opt-in, unlike the automatic hint on a tab bar,
 and works differently for a reason: a table paints its own opaque surface, so
@@ -848,6 +948,45 @@ tables you know overflow, leave it off the ones that fit.
   </table>
 </div>
 ```
+
+**Sorting and selection.** `aria-sort` on a `th` draws an arrow for `ascending`
+or `descending` and a dimmed one for `none`; the `<button>` inside does the
+sorting and gets a plain, focusable reset. A row is selected by
+`aria-selected="true"`, `mw-selected` or a checked checkbox in its first cell:
+tinted, plus an edge on the first cell so it does not rest on colour alone.
+Under forced colours the selection takes Highlight.
+
+```html
+<div class="mw-table-bulk">
+  <div class="mw-table-responsive">
+    <table class="mw-table">
+      <thead>
+        <tr>
+          <th><span class="mw-sr-only">Select</span></th>
+          <th aria-sort="ascending"><button type="button">Client</button></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" aria-label="Select Harbourline" /></td>
+          <td>Harbourline</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mw-table-bulk-bar" role="region" aria-label="Bulk actions">
+    <span><span class="mw-table-bulk-count"></span> selected</span>
+    <button type="button" class="mw-btn mw-btn-sm mw-btn-primary">
+      Export
+    </button>
+  </div>
+</div>
+```
+
+The bar sticks to the bottom of the view, dark in both themes like the header.
+Left empty, `mw-table-bulk-count` counts the checked rows itself - a CSS
+counter, which is why the bar comes after the table in the markup; an app that
+knows the number writes it in.
 
 ## Kanban
 
@@ -1170,6 +1309,20 @@ Container variants: `mw-tags-primary`, `-secondary`, `-success`, `-info`,
 `-warning`, `-danger`, `-muted`, size `mw-tags-lg`. `mw-tags-remove` only
 positions the button - its look comes from `mw-btn-mini` plus a colour variant.
 
+Only a tag that is a link or a button reacts to the pointer; a `span` stays
+still, so nothing suggests a click that does nothing.
+
+**Filter chips** - a tag that does something is a `button.mw-tag` or `a.mw-tag`:
+it gets the focus ring and a 36px floor on touch. `aria-pressed="true"` (or
+`mw-active` on a link) fills it in its colour and puts a tick in front, so the
+state never rests on colour alone:
+
+```html
+<button type="button" class="mw-tag mw-tag-success" aria-pressed="true">
+  Paid
+</button>
+```
+
 ## Badges
 
 A count or a status, not a label. See the pitfall list in `SKILL.md` for the
@@ -1218,6 +1371,10 @@ the dot inside it. A bare `mw-badge-dot-{colour}` works on its own too. Add
 ring grows out and fades while the dot underneath stays put, so a column of them
 in a table stays readable. Not for decoration.
 
+Under forced colours (Windows high contrast) a badge keeps a `CanvasText`
+border and a dot keeps its fill in `CanvasText` - the system takes every
+other fill away.
+
 ## Dropdown
 
 Built on `<details>` / `<summary>`. That is where the keyboard handling, the
@@ -1244,12 +1401,13 @@ click-outside.
 ```
 
 Parts: `mw-dropdown-menu`, `-item`, `-item-danger`, `-divider`, `-label`,
-`-caret` (rotates with the open state on its own). Alignment:
+`-caret` (rotates with the open state on its own, and with
+`aria-expanded="true"` on a trigger an app opens itself). Alignment:
 `mw-dropdown-end` anchors the menu to the trigger's right edge,
 `mw-dropdown-up` opens it upward.
 
-`mw-active` (or `aria-checked="true"`) marks the current choice, for a menu that
-picks rather than acts. Icons inside items keep one column, so labels line up
+`mw-active` (or `aria-checked="true"`, or `aria-current="page"`) marks the
+current choice, for a menu that picks rather than acts. Icons inside items keep one column, so labels line up
 whether or not every item has one.
 
 Where the browser supports anchor positioning the menu is `position: fixed`,
@@ -1258,9 +1416,36 @@ a clipping ancestor by itself. Everywhere else it is absolutely positioned and
 is clipped by any ancestor that hides its overflow. The framework's own containers lift that clip while a menu is open; on
 your own it is `:has(.mw-dropdown[open]) { overflow: visible }`.
 
+A `<kbd>` or `mw-dropdown-shortcut` at the end of an item sits right-aligned in
+the muted ink and drops out on touch, where there is no keyboard to use it on:
+`<button class="mw-dropdown-item"><i class="fas fa-copy"></i> Copy <kbd>Ctrl C</kbd></button>`.
+
 The menu is at least 200px wide; `--mw-dropdown-min-width` on the dropdown or a
 wrapper changes that. On a coarse pointer the rows grow to 2.75rem and the menu
 takes at least the trigger's full width.
+
+## Tooltip beside the trigger
+
+`data-tooltip` itself is in `references/layout.md`. `mw-tooltip-inline-end`
+puts the bubble next to the trigger instead of above it - for an icon rail,
+where above would cover the item before it:
+
+```html
+<a
+  class="mw-app-nav-link mw-tooltip-inline-end"
+  href="/"
+  data-tooltip="Dashboard"
+>
+  <i class="fas fa-gauge" aria-hidden="true"></i>
+  <span class="mw-app-label">Dashboard</span>
+</a>
+```
+
+It only acts where the browser has anchor positioning (Chrome 129, Firefox 147,
+Safari 26): the bubble is then `position: fixed` and escapes the scrolling nav
+it sits in. An absolute bubble would be cut off by that same scroll container,
+so in the collapsed rail older browsers show no tooltip at all - the label stays
+for a screen reader.
 
 ## Language switcher
 
@@ -1305,7 +1490,7 @@ for a dark bar built without `mw-header`; inside `mw-header` those colours apply
 on their own.
 
 Flags: `mw-flag` plus `mw-flag-<iso>` for de, at, ch, gb, us, ie, fr, it, es,
-pt, nl, be, pl, hu, ro, bg, ua, se, dk, no, fi, tr and jp - CSS gradients, all
+pt, nl, be, pl, cz, hu, ro, bg, ua, se, dk, no, fi, tr and jp - CSS gradients, all
 in the same 4:3 box whatever the real ratio. Never an emoji flag: Windows ships
 no glyphs for them. Anything outside the set goes as an `<img>` or an inline
 `<svg>` inside `mw-flag`.
@@ -1383,6 +1568,140 @@ edge drops and the key sits 1px lower.
 - `mw-progress-hide-info` on the info row hides the labels while keeping the
   layout; `mw-progress-inline-label` on the container puts the text inside the
   bar.
+- `mw-progress-indeterminate` on the bar, with `role="progressbar"` and no
+  `aria-valuenow`: a segment sweeps the track while nobody knows how long it
+  takes, a still hatch where motion is off. `--mw-progress-indeterminate` sets
+  its colour.
+- `mw-progress-ring` draws `--mw-progress-value` as an arc and animates a new
+  value (a registered property). Sizes `mw-progress-ring-sm` / `-lg`, colours
+  `mw-progress-ring-primary` and the other five; tune `--mw-progress-ring-size`,
+  `--mw-progress-ring-thickness`, `--mw-progress-ring-color`. In Angular:
+  `[style.--mw-progress-value.%]="done()"`.
+- Under forced colours fill, sweep and arc turn Highlight and the track gets an
+  outline; a skeleton turns into GrayText blocks.
+
+## Stat & meter
+
+```html
+<div class="mw-card mw-card-simple">
+  <div class="mw-stat">
+    <span class="mw-stat-label">Monthly revenue</span>
+    <span class="mw-stat-value"
+      >48.2<span class="mw-stat-unit">k EUR</span></span
+    >
+    <div class="mw-stat-footer">
+      <span class="mw-stat-delta mw-stat-delta-up">+12.4%</span>
+      <span class="mw-stat-note">vs. August</span>
+    </div>
+  </div>
+</div>
+```
+
+- The value sizes to the stat's own width (`2xl` to `4xl` between 180 and
+  420px), not to the window - the same markup in a sidebar and in a wide row.
+  Digits are `tabular-nums`.
+- `mw-stat-delta-up` / `-down` / `-flat`: the arrow shape carries the
+  direction and the sign belongs in the text, so neither depends on colour. Up
+  is success, down is danger; `mw-stat-delta-invert` swaps the two for a number
+  where up is bad - churn, cost, open tickets.
+- `mw-stat-chart` holds an inline `<svg>` sparkline: its `path`, `polyline` or
+  `line` gets a 2px non-scaling stroke in the primary ink, whatever the viewBox.
+- `mw-stat-group` around several stats lines them up with a rule between them
+  once the group is 30rem wide, and stacks them with rules below that.
+
+The meter is the native element, styled:
+
+```html
+<span id="storage-label">Storage</span>
+<meter
+  class="mw-meter"
+  aria-labelledby="storage-label"
+  min="0"
+  max="10"
+  low="7"
+  high="9"
+  optimum="0"
+  value="3.1"
+>
+  3.1 of 10 GB
+</meter>
+```
+
+- The tone is the browser's reading of `low`, `high` and `optimum`: optimum
+  success, sub-optimum warning, worse danger - in Chromium, Safari and Firefox
+  alike. No class decides it. With the optimum at 0 less is better, which is
+  what a usage limit wants.
+- 10px high like the progress bar; `mw-meter-sm` 6px, `mw-meter-lg` 15px. The
+  label row above it is `mw-row-split`; point `aria-labelledby` at the label or
+  a screen reader announces a bare value.
+- A value with no thresholds - an upload, a step count - is `mw-progress-bar`.
+
+## Chat
+
+The pieces an assistant or support chat renders into. Streaming, scrolling and
+sending stay the application's job.
+
+```html
+<div class="mw-chat" role="log" aria-label="Conversation">
+  <div class="mw-chat-message mw-chat-message-user">
+    <div class="mw-chat-body">
+      <div class="mw-chat-meta"><strong>You</strong><time>09:41</time></div>
+      <div class="mw-chat-bubble"><p>Which invoices are still open?</p></div>
+    </div>
+  </div>
+  <div class="mw-chat-note">
+    <i class="fas fa-magnifying-glass" aria-hidden="true"></i> Searched 42
+    invoices
+  </div>
+  <div class="mw-chat-message">
+    <span class="mw-avatar mw-avatar-xs mw-avatar-initials">AI</span>
+    <div class="mw-chat-body">
+      <div class="mw-chat-bubble"><p>Three are open.</p></div>
+      <div class="mw-chat-actions"><!-- mw-btn-ghost icon buttons --></div>
+    </div>
+  </div>
+</div>
+```
+
+- The bubble carries the surface silhouette, sharp on the corner the message
+  comes from. `mw-chat-message-user` mirrors the row to the right and tints the
+  bubble with the primary. Long URLs and `<pre>` blocks stay inside it.
+- The bubble tone is `--mw-chat-bubble`: the card background on the page, the
+  muted surface inside a card, panel, modal or tile.
+- `mw-chat-note` is the quieter line for tool activity or a system event.
+- `mw-chat-typing` takes three empty `<span>`s plus an `mw-sr-only` text;
+  `mw-chat-thinking` sweeps a highlight across its own text. Both stand still
+  under reduced motion and `mw-motion-off`.
+- `role="log"` on the list is what makes a screen reader announce new messages.
+
+```html
+<form class="mw-chat-composer">
+  <textarea class="mw-textarea" rows="1" aria-label="Message"></textarea>
+  <div class="mw-chat-composer-bar">
+    <button
+      type="button"
+      class="mw-btn mw-btn-ghost mw-btn-sm mw-btn-icon"
+      aria-label="Attach"
+    >
+      <i class="fas fa-paperclip"></i>
+    </button>
+    <button
+      type="submit"
+      class="mw-btn mw-btn-primary mw-btn-sm mw-btn-icon"
+      aria-label="Send"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+  </div>
+</form>
+```
+
+- Light in both themes like every field, with the focus halo on the whole box.
+  The textarea grows with its text up to 12 lines (`field-sizing`); where that
+  is missing it is a three-line box.
+- The last item of `mw-chat-composer-bar` goes right - the send button.
+  Attachments sit between as `mw-tag`s.
+- `mw-chat-suggestions` is a wrapping row of `mw-btn` prompt chips, rounded off.
 
 ## Rating
 
@@ -1435,7 +1754,10 @@ Small icon + text counters, e.g. under a page title.
 </div>
 ```
 
-State classes here are prefixed: `mw-done`, `mw-active`. The horizontal variant
+State classes here are prefixed: `mw-done`, `mw-active`; `aria-current="step"`
+on a `mw-stepper-step` marks it as the current one too, for an app's markup.
+Under forced colours the current step takes Highlight, done steps invert and the
+connectors stay lines. The horizontal variant
 needs the explicit `mw-stepper-connector` elements between the steps; the
 vertical one (`mw-stepper-vertical`) draws the line itself and takes
 `mw-stepper-content` with `mw-stepper-content-title` / `-desc` instead of a
@@ -1455,7 +1777,8 @@ label:
 
 ## Timelines
 
-Both are chronicles (CV, changelog), not schedulable time axes.
+`mw-timeline-big` and `mw-timeline-simple` are chronicles (CV, changelog), not
+schedulable time axes.
 
 ```html
 <div class="mw-timeline-big">
@@ -1487,6 +1810,26 @@ Both are chronicles (CV, changelog), not schedulable time axes.
 The current step gets `mw-active` (bare `active` still works but is
 deprecated). Any card fits into the content wrapper.
 
+`mw-timeline-compact` is the third shape, for an activity feed or an audit log:
+a dot and a time per line, as many lines as there are, no entrance to wait for.
+
+```html
+<ol class="mw-timeline-compact">
+  <li class="mw-timeline-compact-item mw-timeline-compact-success">
+    <time class="mw-timeline-compact-time" datetime="2026-09-29T09:41">
+      Today 09:41
+    </time>
+    <div class="mw-timeline-compact-body">
+      <strong>Mira Brandt</strong> approved invoice 2026-041
+    </div>
+  </li>
+</ol>
+```
+
+Dot tones: `mw-timeline-compact-primary`, `-secondary`, `-info`, `-success`,
+`-warning`, `-danger`. Under forced colours lines and dots take system colours
+and the active date takes Highlight.
+
 ## Avatars
 
 ```html
@@ -1512,7 +1855,9 @@ deprecated). Any card fits into the content wrapper.
 - `mw-avatar-initials` centers text and scales the font with the size class -
   the standard display for a signed-in user without a picture.
 - `mw-avatar-group` overlaps its avatars; `mw-avatar-group-sm` / `-lg` change
-  the overlap.
+  the overlap. `mw-avatar-more` closes a group with the count of the rest
+  (`+4`) - give it `role="img"` and an `aria-label` that says it in words; on a
+  plain `div` the label is ignored.
 - Hover on an avatar **with an image** zooms the picture and sweeps a light
   across it. Nothing to switch on. It is skipped on `mw-avatar-initials`, on
   touch, under `prefers-reduced-motion` and under `mw-hover-static`.
@@ -1646,9 +1991,9 @@ it. `mw-selected` on the `<li>` is the selected-row highlight - bind it to the
 checkbox state yourself in a SPA. The `mw-checkbox-content` block is optional;
 a bare `mw-checkbox-label` renders a single-line row.
 
-The `mw-checkbox` inside is the ordinary form-element checkbox, so
-`mw-checkbox-disabled` and the colour variants (`mw-checkbox-success` and the
-rest, see `references/forms.md`) work here too. Row height is a list concern -
+The `mw-checkbox` inside is the ordinary form-element checkbox, so `disabled`
+on the input, `indeterminate` and the colour variants (`mw-checkbox-success`
+and the rest, see `references/forms.md`) work here too. Row height is a list concern -
 use the list's own `-compact` / `-large` modifiers rather than
 `mw-checkbox-sm` / `-lg`, which sit on the wrong element to reach the box.
 
@@ -1719,15 +2064,18 @@ row retunes with `--mw-leader-row-color`, `--mw-leader-row-style` and
 </nav>
 ```
 
-The last item takes `mw-breadcrumbs-current` on the `li` and
-`mw-breadcrumbs-active` on the anchor. `mw-breadcrumbs-sm` is the small variant,
+The current item takes `mw-breadcrumbs-current` on the `li` and
+`mw-breadcrumbs-active` on the anchor, or `aria-current="page"` on the anchor -
+the one a trail an app renders will carry anyway. Position alone marks nothing,
+so a last item that is not the current page stays a link. Under forced colours
+the current entry is underlined. `mw-breadcrumbs-sm` is the small variant,
 `mw-breadcrumbs-collapse` hides middle items on narrow screens.
 
 ## Pagination
 
-A titled content frame with prev/next controls - not a page-number list. Same
+`mw-pagination` is a titled content frame with prev/next controls. Same
 surface and header as `mw-calendar`; only the body differs, and the body is
-yours.
+yours. A numbered page list is `mw-pagination-pages`, below.
 
 ```html
 <div class="mw-pagination">
@@ -1765,6 +2113,35 @@ yours.
   also on the content.
 - The body has a 200px floor so a short page does not collapse the frame. Paging
   is application state - the framework ships no JavaScript for it.
+
+**Numbered pages** - `mw-pagination-pages` for a list or a table:
+
+```html
+<nav class="mw-pagination-pages" aria-label="Pages">
+  <a
+    class="mw-btn mw-btn-outline mw-pagination-nav"
+    href="?page=2"
+    aria-label="Previous page"
+    ><i class="fas fa-chevron-left"></i
+  ></a>
+  <span class="mw-pagination-status">Page 3 of 12</span>
+  <a class="mw-pagination-page" href="?page=1">1</a>
+  <a class="mw-pagination-page" href="?page=3" aria-current="page">3</a>
+  <span class="mw-pagination-gap" aria-hidden="true">&hellip;</span>
+  <a class="mw-pagination-page" href="?page=12">12</a>
+  <a
+    class="mw-btn mw-btn-outline mw-pagination-nav"
+    href="?page=4"
+    aria-label="Next page"
+    ><i class="fas fa-chevron-right"></i
+  ></a>
+</nav>
+```
+
+`aria-current="page"` (or `mw-active`) marks where you are,
+`aria-disabled="true"` dims an arrow that leads nowhere. Below `sm` the numbers
+give way to `mw-pagination-status` between the arrows; on touch the page
+buttons are 44px.
 
 ## Divider
 
@@ -2185,6 +2562,78 @@ site the way people meet it. Module `components/devices`.
   390px, full page - the aspect of the glass is 16:10 and 9:19.5, anything
   taller scrolls.
 
+## Before & after
+
+Two pictures of one place on a single frame, split where the reader drags - the
+renovated bathroom, the cleared garden, the restored facade:
+
+```html
+<div class="mw-compare mw-aspect-video">
+  <img class="mw-compare-before" src="before.jpg" alt="The bathroom before" />
+  <img class="mw-compare-after" src="after.jpg" alt="The bathroom after" />
+  <span class="mw-compare-label">Before</span>
+  <span class="mw-compare-label mw-compare-label-after">After</span>
+  <input
+    type="range"
+    class="mw-compare-range"
+    min="0"
+    max="100"
+    value="50"
+    aria-label="Move the split between before and after"
+  />
+</div>
+```
+
+- The control is a native range laid invisibly over the whole frame: a finger,
+  a mouse and the arrow keys move it, a screen reader reads the value. It needs
+  its `aria-label`. The focus ring shows on the round handle.
+- main.js writes the value to `--mw-compare-position` (default 50%), which
+  clips the after picture and places the line and the handle. Without the
+  script the frame stays at 50/50; in a SPA set the property on `input`.
+- The frame needs a height - an `mw-aspect-*` class or your own. Both slots
+  take an `img` or a wrapper around one (a `<picture>`), covered with
+  `object-fit: cover`.
+- The frame has the surface silhouette without the arc, `radius('md')` under
+  `mw-corners-even`. Labels sit on a dark translucent chip that reads on any
+  photo; `mw-compare-label-after` moves one to the right.
+- Vertical swipes still scroll the page on a phone (`touch-action: pan-y`).
+
+## Marquee
+
+A strip that keeps moving: partner logos, seals, the one line from a review
+everybody should read.
+
+```html
+<div class="mw-marquee" role="region" aria-label="Partners" tabindex="0">
+  <div class="mw-marquee-track">
+    <ul class="mw-marquee-group">
+      <li class="mw-marquee-item"><img src="partner.svg" alt="Partner" /></li>
+      ...
+    </ul>
+    <!-- the same items again, for the seam -->
+    <ul class="mw-marquee-group" aria-hidden="true" inert>
+      <li class="mw-marquee-item"><img src="partner.svg" alt="" /></li>
+      ...
+    </ul>
+  </div>
+</div>
+```
+
+- The items go in twice. Sliding the track by half its width puts the copy
+  where the original started, so the loop has no seam; `aria-hidden` and
+  `inert` keep a screen reader and the keyboard on the first group. Each group
+  is at least as wide as the strip, so a short list leaves no gap.
+- `--mw-marquee-duration` (40s, on the motion scale), `--mw-marquee-gap`,
+  `--mw-marquee-fade` (the soft mask at both edges),
+  `--mw-marquee-logo-height` (2.25rem). `mw-marquee-reverse` runs the other way.
+- The pointer or the focus on the strip holds it still. `tabindex="0"` makes
+  the strip focusable when nothing inside it is - without it a keyboard cannot
+  stop a loop that never ends (WCAG 2.2.2).
+- Logos are greyscale and come into colour under a fine pointer. Text items
+  take the muted ink, an icon inside one the primary.
+- Under reduced motion or `mw-motion-off` nothing moves: the first group wraps
+  centred and the copy is hidden.
+
 ## Occasions
 
 Seasonal decoration on every surface, switched by one class on `<html>`:
@@ -2205,7 +2654,11 @@ Seasonal decoration on every surface, switched by one class on `<html>`:
   (`<div class="mw-card mw-occasion-easter mw-occasion-lg">`), size and scroll
   too. It skips the site's occasion; intro and particles stay off.
 - `mw-occasion-scroll`: pieces land as their surface scrolls in, main.js adds
-  particles scrubbed by the page scroll. No scroll timelines: static.
+  particles scrubbed by the page scroll. Without scroll timelines (Firefox,
+  Safari before 26) main.js drives both: an observer plays the arrival once a
+  surface enters, and the particles are paused animations parked at the
+  scroll progress it writes. `mw-occasion-waiting`, `-arriving` and
+  `mw-occasion-driven` are set by the script, never by the markup.
 - `mw-occasion-sm` / `-lg` set `--mw-occasion-scale` (0.88 / 1.1, piece size)
   and `--mw-occasion-amount` (0.55 / 1.3: snow depth, drips, baubles,
   particles). main.js reads the amount from CSS - any value set there counts.
@@ -2364,7 +2817,10 @@ silhouette and a resting shadow. Works with `<audio controls>` the same way.
 Token classes for manual highlighting: `mw-code-keyword`, `mw-code-function`,
 `mw-code-string`, `mw-code-number`, `mw-code-comment`, `mw-code-operator`. There
 is no highlighting engine - wrap spans yourself or plug in Prism/highlight.js.
-`mw-code-nowrap` disables wrapping. `<code>` on its own is styled as inline code.
+`mw-code-nowrap` disables wrapping. `<code>` on its own is styled as inline code;
+inside a `<pre>` it takes the `pre`'s wrapping - since 6.0, before that it
+forced `pre-wrap` and a long line broke mid-word on a phone. A bare `<pre>`
+scrolls sideways.
 
 ## Tech stack bucket
 

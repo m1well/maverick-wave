@@ -228,3 +228,62 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-card-title mw-mt-8 mw-mb-4">Without a figure, and round</h3>
+<div class="mw-grid-2 mw-gap-6">
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-4">
+      <code>mw-progress-indeterminate</code> on the bar: a segment sweeps the
+      track while nobody knows how long it takes, a still hatch where motion is
+      off. Leave <code>aria-valuenow</code> out - that is what makes it
+      indeterminate for a screen reader.
+    </p>
+    <div
+      class="mw-progress-bar mw-progress-indeterminate"
+      role="progressbar"
+      aria-label="Uploading"
+    ></div>
+  </div>
+  <div class="mw-card mw-card-simple">
+    <p class="mw-text-muted mw-text-sm mw-mb-4">
+      <code>mw-progress-ring</code> draws <code>--mw-progress-value</code> as an
+      arc, and a new value animates there. In Angular:
+      <code>[style.--mw-progress-value.%]="done()"</code>.
+    </p>
+    <div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-6">
+      <div
+        class="mw-progress-ring mw-progress-ring-sm"
+        role="progressbar"
+        aria-label="Storage"
+        aria-valuenow="30"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="--mw-progress-value: 30%"
+      >
+        30%
+      </div>
+      <div
+        class="mw-progress-ring mw-progress-ring-success"
+        role="progressbar"
+        aria-label="Tasks done"
+        aria-valuenow="72"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="--mw-progress-value: 72%"
+      >
+        72%
+      </div>
+      <div
+        class="mw-progress-ring mw-progress-ring-lg mw-progress-ring-primary"
+        role="progressbar"
+        aria-label="Level progress"
+        aria-valuenow="88"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="--mw-progress-value: 88%"
+      >
+        88%
+      </div>
+    </div>
+  </div>
+</div>

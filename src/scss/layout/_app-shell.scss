@@ -1,0 +1,661 @@
+@use '../abstracts' as *;
+
+@layer mw.layout {
+  .mw-app {
+    --mw-app-height: 100dvh;
+    --mw-app-sidebar-width: 16rem;
+    --mw-app-rail-width: 4.25rem;
+    --mw-app-aside-width: 22rem;
+    --mw-app-topbar-height: 3.5rem;
+    --mw-app-gutter: #{spacing('5')};
+    // The tracks read these, so collapsing and opening stay one animatable value
+    --_sidebar: var(--mw-app-sidebar-width);
+    --_aside: 0px;
+
+    position: relative;
+    // Keeps the sidebar and scrim z-indices out of the page's own stacking
+    isolation: isolate;
+    display: grid;
+    grid-template:
+      'main' minmax(0, 1fr)
+      'tabbar' auto
+      / minmax(0, 1fr);
+    height: var(--mw-app-height);
+    overflow: hidden;
+    background: var(--mw-page-background);
+    color: var(--mw-text-color);
+
+    @include media-up('md') {
+      --mw-app-gutter: #{spacing('7')};
+    }
+
+    @include media-up('lg') {
+      grid-template:
+        'sidebar main aside' minmax(0, 1fr)
+        / var(--_sidebar) minmax(0, 1fr) var(--_aside);
+      transition: grid-template-columns var(--mw-duration-base)
+        var(--mw-ease-out);
+
+      &.mw-app-collapsed {
+        --_sidebar: var(--mw-app-rail-width);
+      }
+    }
+
+    @include media-up('xl') {
+      &.mw-app-aside-open {
+        --_aside: var(--mw-app-aside-width);
+      }
+    }
+
+    // The scrim lives on the app, so a tap on it lands on `.mw-app` itself
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: z-index('menu');
+      background: var(--mw-overlay-background);
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity var(--mw-duration-slow) var(--mw-ease-out),
+        visibility var(--mw-duration-slow);
+    }
+
+    &:is(.mw-app-sidebar-open, .mw-app-aside-open)::after {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    // From lg only the aside still lays itself over the content, from xl nothing
+    @include media-up('lg') {
+      &:not(.mw-app-aside-open)::after {
+        display: none;
+      }
+    }
+
+    @include media-up('xl') {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  // A remembered state is applied without animating into it (main.js)
+  .mw-app-restoring,
+  .mw-app-restoring * {
+    transition: none !important;
+  }
+
+  .mw-app-sidebar {
+    --mw-app-nav-color: var(--mw-text-muted-color);
+    --mw-app-nav-hover-color: var(--mw-text-color);
+    --mw-app-nav-hover-background: var(--mw-gray-background);
+    --mw-app-nav-active-color: var(--mw-primary-text-color);
+    --mw-app-nav-active-background: var(--mw-primary-background);
+
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    z-index: z-index('menu') + 1;
+    display: flex;
+    flex-direction: column;
+    width: min(var(--mw-app-sidebar-width), 85%);
+    min-height: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    background: var(--mw-footer-background);
+    border-right: 1px solid var(--mw-border);
+    // `visibility` rides along so the closed panel's links leave the tab order
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition:
+      transform var(--mw-duration-slow) var(--mw-ease-out),
+      visibility var(--mw-duration-slow),
+      box-shadow var(--mw-duration-slow) var(--mw-ease-out);
+
+    // Visible at once on the way in, or the script's focus() hits a hidden panel
+    .mw-app-sidebar-open & {
+      transform: none;
+      visibility: visible;
+      box-shadow: var(--mw-elevation-4);
+      transition-duration: var(--mw-duration-slow), 0s, var(--mw-duration-slow);
+    }
+
+    @include media-up('lg') {
+      grid-area: sidebar;
+      position: relative;
+      inset: auto;
+      z-index: auto;
+      width: auto;
+      overflow: hidden;
+      transform: none;
+      visibility: visible;
+      transition: none;
+
+      .mw-app-sidebar-open & {
+        box-shadow: none;
+      }
+    }
+  }
+
+  // Dark in both themes, from the header bar tokens
+  .mw-app-sidebar-dark {
+    --mw-app-nav-color: var(--mw-header-navbar-list-color);
+    --mw-app-nav-hover-color: var(--mw-header-text-color);
+    --mw-app-nav-hover-background: #{fade('header-text-color', 10%)};
+    --mw-app-nav-active-color: var(--mw-header-navbar-list-active-color);
+    --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
+
+    background: var(--mw-header-background);
+    color: var(--mw-header-text-color);
+    border-color: var(--mw-header-border);
+    color-scheme: dark;
+
+    .mw-app-brand,
+    .mw-app-sidebar-footer {
+      border-color: var(--mw-header-border);
+    }
+  }
+
+  // Brand and topbar share the height and the notch inset, so their rules align
+  .mw-app-brand {
+    display: flex;
+    align-items: center;
+    gap: spacing('3');
+    flex-shrink: 0;
+    min-height: calc(
+      var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
+    );
+    padding: env(safe-area-inset-top, 0px) spacing('5') 0;
+    border-bottom: 1px solid var(--mw-border);
+    font-size: font-size('md');
+    font-weight: font-weight('bold');
+    color: inherit;
+    text-decoration: none;
+
+    > i,
+    > svg,
+    > img {
+      flex-shrink: 0;
+      width: 1.75rem;
+      height: 1.75rem;
+      font-size: font-size('xl');
+      line-height: 1.75rem;
+      text-align: center;
+      color: var(--mw-primary-text-color);
+      object-fit: contain;
+    }
+  }
+
+  .mw-app-nav {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    gap: spacing('1');
+    padding: spacing('4') spacing('3');
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    @include scrollbar;
+  }
+
+  .mw-app-nav-title {
+    margin: spacing('5') spacing('3') spacing('2');
+    font-size: font-size('2xs');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mw-app-nav-color);
+    @include truncate;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .mw-app-nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: spacing('4');
+    min-height: 2.5rem;
+    padding: spacing('2') spacing('4');
+    // The framework silhouette at link size: sharp and round on the two diagonals
+    border-radius: radius-sharp() radius('lg') radius-sharp() radius('lg');
+    color: var(--mw-app-nav-color);
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+    text-decoration: none;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include touch-floor;
+    @include focus-ring;
+
+    > i,
+    > svg {
+      flex-shrink: 0;
+      width: 1.25rem;
+      font-size: font-size('md');
+      text-align: center;
+    }
+
+    > .mw-badge {
+      margin-left: auto;
+    }
+
+    &:hover {
+      color: var(--mw-app-nav-hover-color);
+      background: var(--mw-app-nav-hover-background);
+    }
+
+    &[aria-current='page'] {
+      color: var(--mw-app-nav-active-color);
+      background: var(--mw-app-nav-active-background);
+    }
+
+    @include active {
+      color: var(--mw-app-nav-active-color);
+      background: var(--mw-app-nav-active-background);
+    }
+
+    // The label says it already; mw.layout outranks the tooltip's layer
+    &[data-tooltip]::before,
+    &[data-tooltip]::after {
+      display: none;
+    }
+  }
+
+  .mw-app-nav-link .mw-app-label {
+    min-width: 0;
+    @include truncate;
+  }
+
+  .mw-app-sidebar-footer {
+    display: flex;
+    align-items: center;
+    gap: spacing('3');
+    flex-shrink: 0;
+    padding: spacing('4') spacing('5');
+    border-top: 1px solid var(--mw-border);
+    font-size: font-size('sm');
+
+    .mw-avatar {
+      flex-shrink: 0;
+      margin: 0;
+    }
+
+    .mw-app-label {
+      min-width: 0;
+      @include truncate;
+    }
+  }
+
+  .mw-app-main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-padding-top: calc(
+      var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
+    );
+    // Below lg the column reaches both screen edges, notch included
+    --_gutter-start: max(var(--mw-app-gutter), env(safe-area-inset-left, 0px));
+    --_gutter-end: max(var(--mw-app-gutter), env(safe-area-inset-right, 0px));
+    @include scrollbar;
+  }
+
+  .mw-app-topbar {
+    position: sticky;
+    top: 0;
+    z-index: z-index('menu') - 1;
+    display: flex;
+    align-items: center;
+    gap: spacing('3');
+    flex-shrink: 0;
+    min-height: calc(
+      var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
+    );
+    padding: calc(#{spacing('2')} + env(safe-area-inset-top, 0px))
+      var(--_gutter-end) spacing('2') var(--_gutter-start);
+    background: var(--mw-page-background);
+    border-bottom: 1px solid var(--mw-border);
+  }
+
+  .mw-app-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin: 0;
+    font-size: font-size('lg');
+    line-height: 1.2;
+    @include truncate;
+  }
+
+  .mw-app-actions {
+    display: flex;
+    align-items: center;
+    gap: spacing('2');
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .mw-app-content {
+    flex: 1 0 auto;
+    padding: spacing('6') var(--_gutter-end) spacing('6') var(--_gutter-start);
+  }
+
+  // A footer under the content sits on the column's gutter, not a container's
+  .mw-app-main > .mw-footer {
+    padding-inline: var(--_gutter-start) var(--_gutter-end);
+  }
+
+  // A game board or a canvas: the whole column, no gutter, no page scroll
+  .mw-app-content-flush {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+
+    > :only-child {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+  }
+
+  .mw-app-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    color: var(--mw-text-color);
+    font: inherit;
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include touch-floor {
+      min-width: 2.75rem;
+    }
+    @include focus-ring;
+
+    &:hover {
+      background: var(--mw-gray-background);
+    }
+  }
+
+  // Three bars drawn from one element, so the toggle needs no icon font
+  .mw-app-toggle-icon {
+    display: block;
+    width: 18px;
+    height: 12px;
+    background:
+      linear-gradient(currentColor 0 0) top / 100% 2px no-repeat,
+      linear-gradient(currentColor 0 0) center / 100% 2px no-repeat,
+      linear-gradient(currentColor 0 0) bottom / 100% 2px no-repeat;
+  }
+
+  // Beside the content from xl, over it below - the same panel either way
+  .mw-app-aside {
+    position: absolute;
+    inset-block: 0;
+    right: 0;
+    z-index: z-index('menu') + 1;
+    display: flex;
+    flex-direction: column;
+    width: min(var(--mw-app-aside-width), 90%);
+    min-height: 0;
+    padding-right: env(safe-area-inset-right, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--mw-card-background);
+    border-left: 1px solid var(--mw-border);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition:
+      transform var(--mw-duration-slow) var(--mw-ease-out),
+      visibility var(--mw-duration-slow),
+      box-shadow var(--mw-duration-slow) var(--mw-ease-out);
+
+    .mw-app-aside-open & {
+      transform: none;
+      visibility: visible;
+      box-shadow: var(--mw-elevation-4);
+      transition-duration: var(--mw-duration-slow), 0s, var(--mw-duration-slow);
+    }
+
+    // Own width in a track growing from 0: slides in, no reflow on every frame
+    @include media-up('xl') {
+      grid-area: aside;
+      position: relative;
+      inset: auto;
+      z-index: auto;
+      width: var(--mw-app-aside-width);
+      transform: none;
+      transition: visibility 0s var(--mw-duration-base);
+
+      .mw-app-aside-open & {
+        box-shadow: none;
+        transition-delay: 0s;
+      }
+    }
+  }
+
+  .mw-app-aside-header {
+    display: flex;
+    align-items: center;
+    gap: spacing('3');
+    flex-shrink: 0;
+    min-height: calc(
+      var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
+    );
+    padding: env(safe-area-inset-top, 0px) spacing('4') 0 spacing('5');
+    border-bottom: 1px solid var(--mw-border);
+
+    > :is(h1, h2, h3, h4, h5, h6) {
+      flex: 1 1 auto;
+      min-width: 0;
+      margin: 0;
+      font-size: font-size('md');
+      line-height: 1.2;
+      @include truncate;
+    }
+  }
+
+  .mw-app-aside-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: spacing('5');
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    @include scrollbar;
+  }
+
+  // A grid row, not fixed: nothing scrolls under it, no keyboard pushes it up
+  .mw-app-tabbar {
+    grid-area: tabbar;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: spacing('1');
+    padding: spacing('1') max(#{spacing('2')}, env(safe-area-inset-right, 0px))
+      calc(#{spacing('1')} + env(safe-area-inset-bottom, 0px))
+      max(#{spacing('2')}, env(safe-area-inset-left, 0px));
+    background: var(--mw-footer-background);
+    border-top: 1px solid var(--mw-border);
+
+    @include media-up('lg') {
+      display: none;
+    }
+  }
+
+  .mw-app-tabbar-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('1');
+    min-width: 0;
+    min-height: 3.25rem;
+    padding: spacing('1');
+    border-radius: radius('md');
+    color: var(--mw-text-muted-color);
+    font-size: font-size('2xs');
+    font-weight: font-weight('medium');
+    line-height: 1.1;
+    text-decoration: none;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include focus-ring-inset;
+
+    // A pill by padding: an icon font's own display cannot push the glyph aside
+    > i,
+    > svg {
+      padding: 0.35rem 1.1rem;
+      border-radius: radius-sharp() radius('lg') radius-sharp() radius('lg');
+      font-size: font-size('md');
+      line-height: 1;
+      transition: var(--mw-transition-fast);
+    }
+
+    > svg {
+      width: 1.25em;
+      height: 1.25em;
+      box-sizing: content-box;
+    }
+
+    > .mw-app-label {
+      max-width: 100%;
+      @include truncate;
+    }
+
+    // On the pill's top right corner, wherever the column puts the pill
+    > .mw-badge {
+      position: absolute;
+      top: 0;
+      left: calc(50% + 0.9rem);
+    }
+
+    &:hover {
+      color: var(--mw-text-color);
+    }
+
+    &:active {
+      transform: scale(0.96);
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    &[aria-current='page'] {
+      color: var(--mw-primary-text-color);
+
+      > :is(i, svg) {
+        background: var(--mw-primary-background);
+      }
+    }
+
+    @include active {
+      color: var(--mw-primary-text-color);
+
+      > :is(i, svg) {
+        background: var(--mw-primary-background);
+      }
+    }
+  }
+
+  @include media-up('lg') {
+    .mw-app-collapsed {
+      .mw-app-brand,
+      .mw-app-sidebar-footer {
+        justify-content: center;
+        padding-inline: 0;
+      }
+
+      .mw-app-nav {
+        padding-inline: spacing('2');
+      }
+
+      .mw-app-nav-link {
+        justify-content: center;
+        padding-inline: 0;
+
+        // A dot on the icon; the count stays for a screen reader
+        > .mw-badge {
+          position: absolute;
+          top: spacing('1');
+          left: calc(50% + 0.35rem);
+          width: 0.6rem;
+          height: 0.6rem;
+          min-width: 0;
+          padding: 0;
+          font-size: 0;
+        }
+
+        // Only where it can be anchored: placed above, the rail's scroller cuts it
+        @supports (position-area: block-start) {
+          &[data-tooltip]::before,
+          &[data-tooltip]::after {
+            display: revert-layer;
+          }
+        }
+      }
+
+      // Kept as a rule between the groups - the text stays for a screen reader
+      .mw-app-nav-title {
+        height: 1px;
+        margin-inline: spacing('3');
+        background: var(--mw-border);
+        color: transparent;
+      }
+
+      .mw-app-label {
+        @include visually-hidden;
+      }
+    }
+  }
+
+  // Forced colours drop the fill that marks the current page; not while focused
+  @media (forced-colors: active) {
+    :is(.mw-app-nav-link, .mw-app-tabbar-item):is(
+        [aria-current='page'],
+        .mw-active,
+        .active
+      ):not(:focus-visible) {
+      outline: 2px solid;
+      outline-offset: -2px;
+    }
+  }
+
+  // The contained scroll would print one screen: the page gets its length back
+  @media print {
+    .mw-app {
+      display: block;
+      height: auto;
+      overflow: visible;
+    }
+
+    .mw-app::after,
+    .mw-app-sidebar,
+    .mw-app-aside,
+    .mw-app-tabbar,
+    .mw-app-toggle,
+    .mw-app-actions {
+      display: none;
+    }
+
+    .mw-app-main {
+      overflow: visible;
+    }
+
+    .mw-app-topbar {
+      position: static;
+    }
+  }
+}

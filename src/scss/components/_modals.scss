@@ -1,42 +1,6 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
-  // Modal overlay - hidden by default
-  .mw-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--mw-overlay-background);
-    backdrop-filter: blur(3px);
-    z-index: z-index('modal')-10;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: spacing('7');
-    opacity: 0;
-    // `display` in the list and `allow-discrete` behind it, or the overlay is
-    // taken off the page the frame the class comes off and the fade out never
-    // renders - the modal inside it would slide down over nothing. The dialog
-    // version below has had this; the div version was landing hard.
-    transition:
-      opacity var(--mw-duration-base) var(--mw-ease-out),
-      display var(--mw-duration-base) allow-discrete;
-
-    // Show modal when class is added
-    &.mw-modal-open {
-      display: flex;
-      opacity: 1;
-
-      // A box that goes from `display: none` starts at its end state otherwise,
-      // so there is nothing to fade from
-      @starting-style {
-        opacity: 0;
-      }
-    }
-  }
-
   // Modal container
   .mw-modal {
     background: var(--mw-card-background);
@@ -49,12 +13,6 @@
     display: flex;
     flex-direction: column;
     z-index: z-index('modal');
-    transform: scale(0.96) translateY(12px);
-    transition: transform var(--mw-duration-base) var(--mw-ease-out);
-
-    .mw-modal-open & {
-      transform: scale(1) translateY(0);
-    }
 
     // The four widths grow by a roughly even step (150 / 200 / 240px) so each
     // size is recognisably a size. Before, default and lg sat 130px apart - the
@@ -76,11 +34,6 @@
 
   // Phone: the dialog becomes a sheet
   @include media-down('sm') {
-    .mw-modal-overlay {
-      padding: spacing('0');
-      align-items: flex-end;
-    }
-
     .mw-modal,
     .mw-modal.mw-modal-sm,
     .mw-modal.mw-modal-lg,
@@ -89,13 +42,6 @@
       --mw-modal-max-height: 92dvh;
       border-radius: radius('xl') radius('xl') radius('none') radius('none');
       padding-bottom: env(safe-area-inset-bottom, 0px);
-      // Straight up from the bottom edge - a sheet does not scale in
-      transform: translateY(100%);
-      transition: transform var(--mw-duration-slow) var(--mw-ease-out);
-    }
-
-    .mw-modal-open .mw-modal {
-      transform: translateY(0);
     }
 
     // The grab handle. It does nothing - there is no drag-to-dismiss behind it -
@@ -136,11 +82,10 @@
     }
   }
 
-  // The same modal as a <dialog>, which brings the focus trap, Escape, the inert
-  // background and the scroll lock a div cannot have. Every rule above is
-  // class-based and applies unchanged; what follows is only what the top layer
-  // changes. `closedby="any"` dismisses on a backdrop click, and where that is
-  // not understood the framework script handles the click itself.
+  // A <dialog>, which brings the focus trap, Escape and the inert background.
+  // What follows is what the top layer changes on top of the rules above.
+  // `closedby="any"` dismisses on a backdrop click, and where that is not
+  // understood the framework script handles the click itself.
   dialog.mw-modal {
     // The UA draws its own box - a border, padding and a white background - and
     // `.mw-modal` above already has all three.
@@ -174,7 +119,7 @@
       display var(--mw-duration-base) allow-discrete;
 
     &[open] {
-      // A block, not the flex column of the div version and not a grid: iOS
+      // A block, not the flex column `.mw-modal` sets and not a grid: iOS
       // WebKit takes the intrinsic height of a scrolling flex or grid item in a
       // top-layer dialog as zero. A dialog shorter than its cap then shows its
       // header and footer and nothing between - a grid only hides it until the
@@ -223,17 +168,15 @@
       }
     }
 
-    // Phone: the same bottom sheet the div version turns into. The width, the
-    // height cap, the corners and the safe-area padding all come from the
-    // `.mw-modal` rule above, which is class-based and applies here too - only
-    // what a top-layer box needs on top of it is repeated.
+    // Phone: a bottom sheet. The width, the height cap, the corners and the
+    // safe-area padding come from the `.mw-modal` phone rule above.
     @include media-down('sm') {
       // The UA centres a dialog; a sheet sits on the bottom edge.
       margin: auto auto 0;
       width: 100%;
       // Straight up from the bottom edge - a sheet does not scale in, and it
       // travels the height of itself rather than twelve pixels, so it gets the
-      // slow duration the div sheet above uses for the same move.
+      // slow duration.
       transform: translateY(100%);
       transition:
         opacity var(--mw-duration-slow) var(--mw-ease-out),
@@ -251,9 +194,9 @@
     }
   }
 
-  // Neither shape locks the page scroll behind it - the <dialog> only makes the
-  // page inert, which still lets a finger or a wheel move it
-  :root:has(dialog.mw-modal[open], .mw-modal-overlay.mw-modal-open) {
+  // The <dialog> only makes the page inert, which still lets a finger or a
+  // wheel move it
+  :root:has(dialog.mw-modal[open]) {
     overflow: hidden;
     scrollbar-gutter: stable; // Or the page shifts by the hidden scrollbar
   }
@@ -339,21 +282,107 @@
     }
   }
 
-  // Backdrop for click-outside-to-close.
-  // The cursor says it is clickable, so it should also be reachable by keyboard -
-  // which means it wants to be a <button>. These four lines clear the browser
-  // defaults that come with one; on a <div> they change nothing.
-  .mw-modal-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
+  // Stays a side panel on a phone, where every other modal becomes a sheet
+  dialog.mw-modal.mw-modal-drawer {
+    inset-block: 0;
     right: 0;
-    bottom: 0;
-    z-index: z-index('modal')-5;
-    cursor: pointer;
-    appearance: none;
-    padding: 0;
-    background: none;
-    border: 0;
+    left: auto;
+    width: min(420px, 100vw - #{spacing('9')});
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px);
+    // Only the inner edge shows, and it keeps its half of the silhouette
+    border-radius: radius-sharp() radius('none') radius('none') radius('xl');
+    opacity: 1;
+    transform: translateX(100%);
+    transition:
+      transform var(--mw-duration-slow) var(--mw-ease-out),
+      overlay var(--mw-duration-slow) allow-discrete,
+      display var(--mw-duration-slow) allow-discrete;
+
+    &::after {
+      @include corner-accent(0, 'bottom');
+    }
+
+    &[open] {
+      // Flex is safe here: the height is fixed, so the body never sizes itself
+      display: flex;
+      flex-direction: column;
+      transform: none;
+
+      @starting-style {
+        transform: translateX(100%);
+      }
+    }
+
+    .mw-modal-body {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: none;
+    }
+
+    .mw-modal-header {
+      padding: spacing('3') spacing('5');
+
+      &::before {
+        content: none;
+      }
+    }
+
+    .mw-modal-footer {
+      padding: spacing('3') spacing('5');
+    }
+
+    // Opened with show() it is outside the top layer and needs its own z-index
+    &:not(:modal) {
+      z-index: z-index('modal');
+      box-shadow: var(--mw-elevation-4);
+    }
+  }
+
+  dialog.mw-modal.mw-modal-drawer-start {
+    right: auto;
+    left: 0;
+    border-radius: radius('none') radius('xl') radius-sharp() radius('none');
+    transform: translateX(-100%);
+
+    &::after {
+      @include corner-accent(0, 'top');
+    }
+
+    &[open] {
+      transform: none;
+
+      @starting-style {
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  :root.mw-corners-even dialog.mw-modal.mw-modal-drawer {
+    border-radius: radius('md') radius('none') radius('none') radius('md');
+
+    // The single mark would sit on the screen edge - mirrored to the inner corner
+    &::after {
+      transform: scaleX(-1);
+    }
+  }
+
+  :root.mw-corners-even dialog.mw-modal.mw-modal-drawer-start {
+    border-radius: radius('none') radius('md') radius('md') radius('none');
+
+    &::after {
+      transform: none;
+    }
+  }
+
+  // A non-modal drawer leaves the page usable, so it keeps the page scroll
+  :root:has(dialog.mw-modal-drawer[open]:not(:modal)):not(
+      :has(dialog.mw-modal:modal)
+    ) {
+    overflow: visible;
+    scrollbar-gutter: auto;
   }
 }

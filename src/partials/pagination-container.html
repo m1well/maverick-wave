@@ -38,6 +38,39 @@
   </div>
 </div>
 
+<h3 class="mw-mb-4 mw-mt-6">Numbered Pages</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-pagination-pages</code> for a list or a table.
+  <code>aria-current="page"</code> marks where you are,
+  <code>aria-disabled="true"</code> an arrow that leads nowhere. On a phone the
+  numbers give way to <code>mw-pagination-status</code> between the arrows.
+</p>
+<div class="mw-card mw-card-simple mw-mb-6">
+  <nav class="mw-pagination-pages" aria-label="Pages">
+    <a
+      class="mw-btn mw-btn-outline mw-pagination-nav"
+      href="#pagination"
+      aria-label="Previous page"
+    >
+      <i class="fas fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span class="mw-pagination-status">Page 3 of 12</span>
+    <a class="mw-pagination-page" href="#pagination">1</a>
+    <a class="mw-pagination-page" href="#pagination">2</a>
+    <a class="mw-pagination-page" href="#pagination" aria-current="page">3</a>
+    <a class="mw-pagination-page" href="#pagination">4</a>
+    <span class="mw-pagination-gap" aria-hidden="true">&hellip;</span>
+    <a class="mw-pagination-page" href="#pagination">12</a>
+    <a
+      class="mw-btn mw-btn-outline mw-pagination-nav"
+      href="#pagination"
+      aria-label="Next page"
+    >
+      <i class="fas fa-chevron-right" aria-hidden="true"></i>
+    </a>
+  </nav>
+</div>
+
 <script>
   // Showcase only: the framework ships no pagination JS, this just proves the
   // two arrows are ordinary buttons

@@ -1,0 +1,250 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  .mw-chat {
+    --mw-chat-bubble: var(--mw-card-background);
+
+    display: flex;
+    flex-direction: column;
+    gap: spacing('5');
+  }
+
+  // On a surface the card tone is the surface itself, only the border would show
+  :is(.mw-card, .mw-panel, .mw-modal, .mw-tile) .mw-chat {
+    --mw-chat-bubble: var(--mw-surface-muted);
+  }
+
+  .mw-chat-message {
+    display: flex;
+    align-items: flex-start;
+    gap: spacing('3');
+    max-width: min(100%, 44rem);
+
+    > .mw-avatar {
+      margin: 0;
+    }
+  }
+
+  .mw-chat-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: spacing('1');
+    min-width: 0;
+  }
+
+  .mw-chat-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: spacing('1') spacing('2');
+    padding-inline: spacing('1');
+    font-size: font-size('xs');
+    color: var(--mw-text-muted-color);
+
+    strong {
+      color: var(--mw-text-color);
+      font-weight: font-weight('medium');
+    }
+  }
+
+  // The brand silhouette, sharp on the corner the message comes from
+  .mw-chat-bubble {
+    max-width: 100%;
+    padding: spacing('3') spacing('4');
+    background: var(--mw-chat-bubble);
+    border: 1px solid var(--mw-border);
+    border-radius: radius-sharp() radius('xl') radius-sharp() radius('xl');
+    color: var(--mw-text-color);
+    overflow-wrap: anywhere;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+  }
+
+  .mw-chat-message-user {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+    max-width: min(88%, 36rem);
+
+    .mw-chat-body {
+      align-items: flex-end;
+    }
+
+    .mw-chat-meta {
+      justify-content: flex-end;
+    }
+
+    .mw-chat-bubble {
+      background: var(--mw-primary-background);
+      border-color: var(--mw-border-accent);
+      border-radius: radius('xl') radius-sharp() radius('xl') radius-sharp();
+    }
+  }
+
+  .mw-chat-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: spacing('1');
+    color: var(--mw-text-muted-color);
+
+    .mw-btn-ghost {
+      color: inherit;
+    }
+  }
+
+  // Tool activity and system lines - quieter than a message, in the message column
+  .mw-chat-note {
+    display: flex;
+    align-items: center;
+    gap: spacing('2');
+    padding-inline: spacing('1');
+    font-size: font-size('xs');
+    color: var(--mw-text-muted-color);
+  }
+
+  .mw-chat-typing {
+    display: inline-flex;
+    align-items: center;
+    gap: spacing('1');
+    height: 1lh;
+
+    > span {
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: radius('full');
+      background: currentcolor;
+      opacity: 0.6;
+      animation-name: mw-chat-typing;
+      animation-duration: motion(1.2s);
+      animation-timing-function: var(--mw-ease-in-out);
+      animation-iteration-count: infinite;
+
+      &:nth-child(2) {
+        animation-delay: motion(0.15s);
+      }
+
+      &:nth-child(3) {
+        animation-delay: motion(0.3s);
+      }
+    }
+  }
+
+  @keyframes mw-chat-typing {
+    0%,
+    60%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  .mw-chat-thinking {
+    color: var(--mw-text-muted-color);
+  }
+
+  // Clipped text is invisible under forced colours, hence the extra media guard
+  @supports (background-clip: text) {
+    .mw-chat-thinking {
+      @include motion-safe {
+        @media (forced-colors: none) {
+          background-image: linear-gradient(
+            90deg,
+            var(--mw-text-muted-color) 40%,
+            var(--mw-text-color) 50%,
+            var(--mw-text-muted-color) 60%
+          );
+          background-size: 250% 100%;
+          background-clip: text;
+          color: transparent;
+          animation-name: mw-chat-shimmer;
+          animation-duration: motion(2.2s);
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+        }
+      }
+    }
+  }
+
+  @keyframes mw-chat-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: 0 0;
+    }
+  }
+
+  .mw-chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: spacing('2');
+
+    .mw-btn {
+      border-radius: radius('xl');
+    }
+  }
+
+  // Drawn like a field, light in both themes - see $form-elements-background
+  .mw-chat-composer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--mw-form-elements-background);
+    color: var(--mw-form-elements-color);
+    border: 2px solid var(--mw-border);
+    border-radius: radius('md');
+    color-scheme: light;
+    transition: var(--mw-transition);
+
+    &:focus-within {
+      border-color: var(--mw-primary-color);
+      @include focus-halo;
+    }
+
+    .mw-textarea {
+      min-height: 3lh;
+      max-height: 12lh;
+      padding: spacing('3') spacing('4') spacing('1');
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+
+      @supports (field-sizing: content) {
+        min-height: 0;
+      }
+    }
+
+    .mw-btn-ghost {
+      color: inherit;
+    }
+  }
+
+  .mw-chat-composer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: spacing('2');
+    padding: spacing('2');
+
+    > :last-child {
+      margin-inline-start: auto;
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@use '../abstracts' as *;
+
 // Carried by the float and not by the class, or the ring would still be there in
 // the arrived bar. Fixed values and not the elevation ramp: this lands on a
 // picture, not on a theme surface, and the light theme cuts its shadows for paper.
@@ -9,35 +11,40 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   // shorthand, which a consumer bundler folds together with a timeline into a
   // declaration no browser accepts.
   @supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .mw-header-reveal {
+    .mw-header-reveal {
+      @include motion-safe {
         animation-name: mw-header-reveal;
         animation-timing-function: var(--mw-ease-out);
         animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 420px;
       }
+    }
 
-      // The bar travels, a keep element travels the same distance back and stays
-      // put - for a burger that has to be reachable while the hero is untouched.
-      .mw-header-reveal .mw-header-keep {
+    // The bar travels, a keep element travels the same distance back and stays
+    // put - for a burger that has to be reachable while the hero is untouched.
+    .mw-header-reveal .mw-header-keep {
+      @include motion-safe {
         animation-name: mw-header-keep;
         animation-timing-function: var(--mw-ease-out);
         animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 420px;
       }
+    }
 
-      // A group's opacity cannot be taken back by a child, so the fade goes as
-      // soon as something is meant to stay visible through it.
-      .mw-header-reveal:has(.mw-header-keep) {
+    // A group's opacity cannot be taken back by a child, so the fade goes as
+    // soon as something is meant to stay visible through it.
+    .mw-header-reveal:has(.mw-header-keep) {
+      @include motion-safe {
         animation-name: mw-header-slide;
       }
+    }
 
-      // Glued under the bar, so it leaves and arrives with it. No class of its
-      // own: a ribbon under a revealing header has no other sensible behaviour.
-      body:has(.mw-header-reveal)
-        .mw-announcement:not(.mw-announcement-static) {
+    // Glued under the bar, so it leaves and arrives with it. No class of its
+    // own: a ribbon under a revealing header has no other sensible behaviour.
+    body:has(.mw-header-reveal) .mw-announcement:not(.mw-announcement-static) {
+      @include motion-safe {
         animation-name: mw-announcement-reveal;
         animation-timing-function: var(--mw-ease-out);
         animation-fill-mode: both;
@@ -115,8 +122,8 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   // No scroll timelines: the script toggles these classes instead (main.js).
   // State and transition are separate because the script sets the state a frame
   // earlier - together the bar would slide away in front of the reader.
-  @media (prefers-reduced-motion: no-preference) {
-    .mw-header-reveal.mw-header-away {
+  .mw-header-reveal.mw-header-away {
+    @include motion-safe {
       top: calc(-1 * var(--mw-header-reveal-offset));
       opacity: 0;
 
@@ -129,8 +136,10 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
         box-shadow: $float-edge;
       }
     }
+  }
 
-    .mw-header-driven {
+  .mw-header-driven {
+    @include motion-safe {
       // The shared list plus `top`: writing only `top` drops the bar's own.
       transition:
         var(--mw-transition),
@@ -142,15 +151,19 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
           box-shadow var(--mw-duration-slow) var(--mw-ease-out);
       }
     }
+  }
 
-    .mw-announcement.mw-announcement-away {
+  .mw-announcement.mw-announcement-away {
+    @include motion-safe {
       transform: translateY(
         calc(-1 * (var(--mw-header-height) + var(--mw-announcement-height)))
       );
       opacity: 0;
     }
+  }
 
-    .mw-announcement-driven {
+  .mw-announcement-driven {
+    @include motion-safe {
       transition:
         transform var(--mw-duration-slow) var(--mw-ease-out),
         opacity var(--mw-duration-slow) var(--mw-ease-out);
