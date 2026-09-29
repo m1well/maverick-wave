@@ -687,6 +687,9 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
 - Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
   `mw-modal-xl` 960px. Height is capped at 80-92dvh (`--mw-modal-max-height`),
   the body scrolls. Below 576px it becomes a bottom sheet - a drawer does not.
+- `mw-modal-full` is the document viewer: up to 1400px wide and a fixed 92dvh
+  high, whatever the content - a one-page invoice gets the same box as a
+  twelve-page one, and the body takes the room between header and footer.
 - `mw-modal-close` is the hook, not a look: on the header X it styles the button,
   on a footer action it only closes. Combine it with `mw-btn mw-btn-primary` and
   the button keeps its own paint.
@@ -950,7 +953,8 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
 
 In `mw-table-cards` the value is the cell's direct `span`, `a` or `div` - it
 takes the right-hand side of the card row. A dot or icon nested inside it keeps
-its own size.
+its own size. A row header (`<th scope="row">` in `tbody`) stands first in its
+card and becomes its title.
 
 `mw-table-responsive-hint` is opt-in, unlike the automatic hint on a tab bar,
 and works differently for a reason: a table paints its own opaque surface, so
@@ -2265,6 +2269,9 @@ Photos of any shape in one grid; a tap opens the lightbox.
 - Gaps: `mw-mosaic-gap-sm`, `-gap-lg`.
 - The tile crops, the lightbox does not. The `figcaption` is hidden in the tile
   and shown in the lightbox.
+- In an application that opens its own viewer the tile holds a `<button>`
+  instead of the link - same tile, same press state. Without the script the
+  application picks `mw-mosaic-wide` / `-tall` itself, at the same ratios.
 
 ### Lightbox
 
@@ -2649,7 +2656,8 @@ everybody should read.
   the strip focusable when nothing inside it is - without it a keyboard cannot
   stop a loop that never ends (WCAG 2.2.2).
 - Logos are greyscale and come into colour under a fine pointer. Text items
-  take the muted ink, an icon inside one the primary.
+  take the muted ink, an icon inside one (`i`, inline `svg` or `.mw-icon`) the
+  primary.
 - Under reduced motion or `mw-motion-off` nothing moves: the first group wraps
   centred and the copy is hidden.
 

@@ -85,6 +85,11 @@
         cursor: text;
       }
 
+      // A row header stands first in its card and becomes its title
+      tbody th {
+        display: block;
+      }
+
       // Style each cell as a row in the card
       td {
         display: flex;

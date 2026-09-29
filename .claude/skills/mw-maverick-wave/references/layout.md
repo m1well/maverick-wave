@@ -114,6 +114,10 @@ its children are styled through descendant selectors:
 </header>
 ```
 
+- The theme toggle takes one `<i>` that the script swaps between `fa-moon` and
+  `fa-sun`. With an inline SVG put both icons in instead, as
+  `mw-theme-toggle-moon` and `mw-theme-toggle-sun` - the toggle's state shows
+  one, no script involved.
 - **Collapse breakpoint follows the item count**: default (1-3 items) collapses
   at `md`, `mw-navbar-medium` (4-5) at `lg`, `mw-navbar-large` (6+) at `xl`.
   Pick the class by how many links you have.

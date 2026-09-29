@@ -30,6 +30,13 @@
       max-width: 960px;
       --mw-modal-max-height: 92dvh;
     }
+
+    // A document at a fixed height - one page gets the same box as twelve
+    &.mw-modal-full {
+      max-width: 1400px;
+      height: 92dvh;
+      --mw-modal-max-height: 92dvh;
+    }
   }
 
   // Phone: the dialog becomes a sheet
@@ -279,6 +286,20 @@
     @include media-down('sm') {
       min-width: 2.75rem;
       min-height: 2.75rem;
+    }
+  }
+
+  // Flex is safe at a fixed height, as in the drawer below: the body takes the rest
+  dialog.mw-modal.mw-modal-full {
+    &[open] {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mw-modal-body {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: none;
     }
   }
 
