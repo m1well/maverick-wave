@@ -19,6 +19,10 @@
   // shape rather than a diamond stuck to a box.
   $_mw-tooltip-arrow-inset: $_mw-tooltip-gap +
     $_mw-tooltip-arrow - math.div($_mw-tooltip-arrow-side, 2);
+  // No room above in a top-edge bar; `:is`, not `:where`, to weigh like .mw-tooltip-below
+  $_mw-tooltip-top-bars: ':is(.mw-header, .mw-app-topbar, .mw-tooltips-below)';
+  // Not the header: its backdrop-filter makes it the containing block of `fixed`
+  $_mw-tooltip-anchored-bars: ':is(.mw-app-topbar, .mw-tooltips-below)';
 
   [data-tooltip] {
     position: relative;
@@ -84,7 +88,8 @@
     // itself. Leave that cleared and the box falls to its static position, which
     // for a pseudo element is inside the trigger it is supposed to sit above.
     // The three rules under this one then move the one edge each of them owns.
-    &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start) {
+    &:is(.mw-tooltip-below, .mw-tooltip-end, .mw-tooltip-start),
+    #{$_mw-tooltip-top-bars} & {
       &::before,
       &::after {
         position: absolute;
@@ -103,7 +108,8 @@
       }
     }
 
-    &.mw-tooltip-below {
+    &.mw-tooltip-below,
+    #{$_mw-tooltip-top-bars} & {
       &::before {
         top: 100%;
         bottom: auto;
@@ -199,6 +205,29 @@
         &::after {
           position-area: inline-end;
           margin: 0 0 0 $_mw-tooltip-arrow-inset;
+        }
+      }
+
+      // Below, still anchored - a trigger that truncates its label clips a positioned bubble
+      #{$_mw-tooltip-anchored-bars} & {
+        &::before,
+        &::after {
+          position: fixed;
+          top: auto;
+          bottom: auto;
+          left: auto;
+        }
+
+        &::before {
+          position-area: block-end;
+          transform: none;
+          margin: ($_mw-tooltip-gap + $_mw-tooltip-arrow) 0 0;
+        }
+
+        &::after {
+          position-area: block-end;
+          transform: rotate(45deg);
+          margin: $_mw-tooltip-arrow-inset 0 0;
         }
       }
     }
