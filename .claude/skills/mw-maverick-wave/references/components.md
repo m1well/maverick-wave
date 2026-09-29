@@ -515,6 +515,14 @@ A bordered box with a header rule - the "titled section" of an application.
 - Header colour: `mw-panel-primary`, `mw-panel-secondary`; without them the
   header is neutral. Title and action sit at opposite ends and wrap to two rows
   when the panel gets too narrow for both.
+- Title with a subtitle and several actions: `mw-panel-heading` wraps
+  `mw-panel-title` and `mw-panel-subtitle`, `mw-panel-actions` holds the buttons
+  at the end. The heading shrinks, so a long title cannot push the actions out.
+- `mw-panel-edge-{primary|secondary|success|warning|danger|info}` draws a 3px
+  left edge in the ink tone - the one panel in a row that needs attention.
+- A `mw-item-list-compact` directly in `mw-panel-body` drops its own box.
+- A tooltip inside unclips the panel while it shows; a capped body
+  (`-max-height-*`, `-scrollable`) keeps clipping and scrolling.
 - Height: `mw-panel-scrollable` (500px), `mw-panel-max-height-sm` (300px),
   `-md` (500px), `-lg` (700px) - the body scrolls, header and footer stay.
 - Panels in a grid row end up equally tall on their own - a grid item stretches.
@@ -765,7 +773,8 @@ the list instead.
 ```
 
 Positions: `mw-toast-stack-top-right` (also the default without a position
-class), `-top-center`, `-bottom-right`. Width is capped at
+class), `-top-center`, `-bottom-right`, `-bottom-center`. The alert icon inside
+a toast takes the text ink - its own tone vanishes on the tint. Width is capped at
 `min(380px, 100vw - 2rem)`, clicks pass through everywhere except on a toast,
 the entry animation respects `prefers-reduced-motion`. Auto-dismiss is the
 application's job. While an `mw-action-bar` is on screen the bottom stack sits
@@ -792,6 +801,11 @@ there - the page scrolls beneath it. Variants: `mw-announcement-secondary`,
 element is usually an `<a>` but a plain `<div>` works.
 `mw-announcement-static` puts the ribbon into the document flow instead - it
 then scrolls with the content and shifts no anchor offset.
+
+A close button is a `mw-btn-mini mw-announcement-close` as the ribbon's last
+child. It sits at the inline end, the text stays centred, and `main.js` sets
+`hidden` on the ribbon, which also frees the anchor offset - in a SPA remove the
+ribbon instead.
 
 The height lives in `--mw-announcement-height` and drives the anchor scroll
 offset (`scroll-padding-top`) automatically - a taller ribbon raises the token
@@ -933,6 +947,10 @@ Shapes: `mw-skeleton-title`, `-text`, `-circle`, `-rect` (+ `-rect-sm`,
 | `mw-table-sticky-head`       | Header stays put while the body scrolls - only works inside a height-limited wrapper, i.e. `mw-table-responsive-scroll`              |
 | `mw-table-sticky-col`        | The first column stays put while a wide table scrolls sideways, with opaque zebra, hover (with `mw-table-hover`) and selection tones |
 | `mw-table-bulk`              | Wrapper around the table and a `mw-table-bulk-bar`: the bar shows while any first-cell checkbox is checked                           |
+
+In `mw-table-cards` the value is the cell's direct `span`, `a` or `div` - it
+takes the right-hand side of the card row. A dot or icon nested inside it keeps
+its own size.
 
 `mw-table-responsive-hint` is opt-in, unlike the automatic hint on a tab bar,
 and works differently for a reason: a table paints its own opaque surface, so
@@ -1533,7 +1551,8 @@ edge drops and the key sits 1px lower.
   `-secondary`, `-success`, `-warning`, `-danger`, `-info` (tinted background +
   a 6px left border).
 - `mw-info-counter` turns it into a big number over a small label
-  (`mw-info-value`, `mw-info-label`).
+  (`mw-info-value`, `mw-info-label`). With `mw-info-sm` the counter shrinks to
+  a row of key figures above a list.
 - The cursor is `default` because a figure is usually not clickable. On `<a>`
   and `<button>` it turns into a pointer automatically; on anything else use
   `mw-info-clickable`.

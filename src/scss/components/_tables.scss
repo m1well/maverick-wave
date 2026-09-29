@@ -101,10 +101,10 @@
           text-align: left;
         }
 
-        // The cell value
-        span,
-        a,
-        div {
+        // The cell value - direct children only, or every dot inside one stretches
+        > span,
+        > a,
+        > div {
           flex: 2;
           text-align: right;
         }

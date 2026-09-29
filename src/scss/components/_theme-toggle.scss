@@ -24,6 +24,13 @@
       transition-duration: var(--mw-duration-instant);
     }
 
+    // A theme pinned by the site leaves nothing to switch
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     &-slider {
       position: absolute;
       left: 3px;

@@ -355,7 +355,8 @@ needs none.
 
 `$mw-theme-mode: 'dark'` or `'light'` compiles a single theme - the other set of
 variables is omitted and `mw-theme-light` has no effect. The theme toggle
-component reads `--mw-internal-theme-mode` and disables itself.
+component reads `--mw-internal-theme-mode` and disables itself; a disabled
+`mw-theme-toggle` is greyed out with a `not-allowed` cursor.
 
 Overriding a value that is not on the list above is done in CSS afterwards -
 they are all `var()` references anyway:

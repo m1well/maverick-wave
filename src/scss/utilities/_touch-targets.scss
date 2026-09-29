@@ -130,6 +130,11 @@
       @include hit-area(5px);
     }
 
+    // Already positioned in its ribbon, which is all the hit area needs
+    .mw-announcement > .mw-announcement-close {
+      position: absolute;
+    }
+
     // Edit and delete on a ticket. The 32px box stays - a 44px one would push
     // the assignee off the card footer - and the row carries the gap the two
     // grown hit areas need, or they overlap and a tap meant for edit deletes.

@@ -21,6 +21,15 @@
       margin-top: spacing('1');
     }
 
+    // An SVG has no glyph metrics - boxed to the title's line it sits on the title
+    &-icon:has(> :is(svg, .mw-icon)) {
+      display: flex;
+      align-items: center;
+      height: 1.3rem;
+      margin-top: 0;
+      line-height: 1;
+    }
+
     &-content {
       flex: 1;
       color: var(--mw-text-color);

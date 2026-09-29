@@ -91,6 +91,11 @@
     overflow: hidden;
   }
 
+  // A field sized by its content in a row of controls - fields fill their column
+  .mw-w-auto {
+    width: auto;
+  }
+
   // Snap a horizontal strip so it comes to rest on an item instead of halfway
   // between two - a row of cards swiped through on a phone
   .mw-snap-x {

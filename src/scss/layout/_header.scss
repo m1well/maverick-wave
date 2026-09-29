@@ -502,13 +502,12 @@ $_control-size: 40px;
     }
   }
 
-  // Profile button - a round avatar until there is room for the signed-in name
-  // beside it
-  .mw-profile-btn {
+  // The profile button and the round icon control beside it share one silhouette
+  .mw-profile-btn,
+  .mw-header-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: spacing('3');
     height: $_control-size;
     width: $_control-size;
     padding: spacing('0');
@@ -519,10 +518,41 @@ $_control-size: 40px;
     cursor: pointer;
     transition: var(--mw-transition);
     flex-shrink: 0;
-    max-width: 220px;
 
     @include tappable;
-    @include touch-floor;
+
+    // Round at the grown height too, not an upright oval
+    @include touch-floor {
+      min-width: 2.75rem;
+    }
+
+    &:hover:not(:disabled) {
+      background: var(--mw-primary-background-hover);
+      border-color: var(--mw-primary-text-color);
+    }
+
+    @include focus-ring;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .mw-header-btn {
+    font-size: font-size('md');
+
+    > svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  // Profile button - a round avatar until there is room for the signed-in name
+  // beside it
+  .mw-profile-btn {
+    gap: spacing('3');
+    max-width: 220px;
 
     // The avatar brings spacing of its own that would break the pill shape
     .mw-avatar {
@@ -536,18 +566,6 @@ $_control-size: 40px;
       font-weight: font-weight('medium');
       line-height: 1.2;
       @include truncate;
-    }
-
-    &:hover:not(:disabled) {
-      background: var(--mw-primary-background-hover);
-      border-color: var(--mw-primary-text-color);
-    }
-
-    @include focus-ring;
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
     }
 
     > i,

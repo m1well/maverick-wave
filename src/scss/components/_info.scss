@@ -104,6 +104,21 @@
         opacity: 0.7;
         text-align: center;
       }
+
+      // A row of key figures above a list, where the full size would outweigh it
+      &.mw-info-sm {
+        min-width: spacing('11');
+        padding: spacing('3') spacing('4');
+
+        .mw-info-value {
+          font-size: font-size('2xl');
+          line-height: 1.2;
+        }
+
+        .mw-info-label {
+          font-size: font-size('xs');
+        }
+      }
     }
   }
 

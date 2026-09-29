@@ -150,6 +150,22 @@ An icon (`<i class="fas fa-user-circle"></i>`) works instead of the avatar.
 Below `md` the name hides and the button becomes a round 40px control, the
 same height as the login and burger buttons.
 
+- `mw-header-btn` is the round icon control beside it - search, notifications,
+  a command palette - with the same border, hover and focus. It works on a
+  `<button>` and on a dropdown's `<summary>`; on touch both grow to a round
+  44px:
+
+```html
+<button
+  type="button"
+  class="mw-header-btn"
+  aria-label="Search"
+  data-tooltip="Search"
+>
+  <i class="fas fa-search"></i>
+</button>
+```
+
 - Header colours have their own tokens (`--mw-header-background`,
   `--mw-header-text-color`, `--mw-header-navbar-list-color`,
   `--mw-header-navbar-list-active-color`, `--mw-header-burgerbutton-color`,
@@ -261,11 +277,15 @@ overflow cuts it off: a scroll container, a tile, or a card carrying a ribbon -
 plain cards do not clip.
 
 Three classes steer where it lands, and they combine: `mw-tooltip-below` puts it
-under the trigger instead of over it - for a control in a fixed header, where
-above is off the screen - and `mw-tooltip-end` / `mw-tooltip-start` line the
+under the trigger instead of over it, and `mw-tooltip-end` / `mw-tooltip-start` line the
 bubble up with that edge of the trigger instead of centring it, which is what
 keeps a tooltip on an outermost element inside the viewport. The arrow keeps
 pointing at the trigger in every combination.
+
+In a bar at the top edge there is no room above, so every tooltip in
+`mw-header` and `mw-app-topbar` goes below on its own. `mw-tooltips-below` does
+the same for your own bar - a sticky page header, a toolbar - and is set on the
+bar, not on each trigger.
 
 `mw-tooltip-inline-end` puts the bubble beside the trigger instead - for an icon
 rail, where one above covers the item above. It moves only where the browser can
@@ -471,6 +491,15 @@ width.
 - `mw-meta-header` fits under the title instead of the `<p>` (see
   `references/components.md`).
 - `mw-page-header-plain` removes the bottom rule.
+- `mw-page-header-filters` is a second group for fields - a search box, a
+  status select, a `mw-segmented`. The fields drop their full width and share a
+  row; below `lg` the group moves under title and actions and takes the width.
+- `mw-page-header-compact` is the app-screen size: the title steps down to `lg`
+  (`md` below `sm`), with less space under the rule.
+- `mw-page-header-sticky` keeps the header under the fixed header while a list
+  scrolls, on an opaque page background - from `sm` up only, on a phone it
+  would cost too much height.
+- On paper filters and actions are dropped.
 
 ## Hero
 
@@ -742,7 +771,8 @@ row from a tablet on. `mw-hide-mobile` (gone below md) and `mw-hide-desktop`
 **Print** - the framework ships a print stylesheet, so a page that is dark on
 screen comes out of the printer as black on white: the surface, ink, border and
 elevation tokens are redeclared for paper, the fixed chrome (header, ribbon,
-section nav, scroll cue, burger, theme toggle, toasts) is dropped, cards keep a
+section nav, scroll cue, burger, theme toggle, toasts) and the page header's
+filters and actions are dropped, cards keep a
 hairline instead of a tone, headings do not end a page and cards, rows and
 figures are not torn across one. A link in `mw-prose` or `mw-disclaimer` that
 points at an http(s) address prints its target after the text. `mw-hide-print`
@@ -835,6 +865,9 @@ clip with `overflow: clip`, so they work on an `img` or on a wrapper around one;
 also contains the overscroll, so a sideways swipe on a wide table does not walk
 the whole page), `mw-overflow-hidden`, and `mw-snap-x` to make a horizontal
 strip come to rest on an item instead of halfway between two.
+
+**Width** - `mw-w-auto` sizes a field by its content in a row of controls, a
+page-size select in a pager for example. Fields are full width everywhere else.
 
 **Numbers** - `mw-text-numeric` is fixed-width digits and nothing else, for a
 clock, a counter or an ID that must not jitter while it changes.

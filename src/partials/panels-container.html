@@ -124,3 +124,53 @@
     </div>
   </div>
 </div>
+
+<p class="mw-text-muted mw-text-measure">
+  A head with a subtitle and several actions:
+  <code>mw-panel-heading</code> holds <code>mw-panel-title</code> and
+  <code>mw-panel-subtitle</code>, <code>mw-panel-actions</code> the buttons.
+  <code>mw-panel-edge-*</code> marks the one panel in a row that needs
+  attention, and a compact item list in the body drops its own box.
+</p>
+
+<div class="mw-grid-2-lg mw-mb-6">
+  <section class="mw-panel mw-panel-edge-warning">
+    <div class="mw-panel-header">
+      <div class="mw-panel-heading">
+        <h4 class="mw-panel-title">Open invoices</h4>
+        <p class="mw-panel-subtitle">3 overdue &middot; 1,240 EUR in total</p>
+      </div>
+      <div class="mw-panel-actions">
+        <button
+          type="button"
+          class="mw-btn mw-btn-outline mw-btn-sm"
+          data-tooltip="Export as CSV"
+        >
+          <i class="fas fa-download"></i>
+        </button>
+        <button type="button" class="mw-btn mw-btn-primary mw-btn-sm">
+          Remind all
+        </button>
+      </div>
+    </div>
+    <div class="mw-panel-body">
+      <div class="mw-item-list-compact">
+        <div>2026-041 &middot; Pfotenwerk &middot; 12 days overdue</div>
+        <div>2026-038 &middot; Kontor Nord &middot; 5 days overdue</div>
+        <div>2026-035 &middot; Bäckerei Lind &middot; 2 days overdue</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mw-panel mw-panel-edge-success">
+    <div class="mw-panel-header">
+      <div class="mw-panel-heading">
+        <h4 class="mw-panel-title">Builds</h4>
+        <p class="mw-panel-subtitle">All sites deployed</p>
+      </div>
+    </div>
+    <div class="mw-panel-body">
+      <p>Nothing waiting - the last build ran two hours ago.</p>
+    </div>
+  </section>
+</div>

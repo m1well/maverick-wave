@@ -38,11 +38,10 @@
     }
 
     // The reserve only exists while an action bar holds the foot of the screen
-    &-bottom-right {
+    &-bottom-right,
+    &-bottom-center {
       bottom: calc(#{spacing('5')} + var(--mw-action-bar-reserve, 0px));
-      right: spacing('5');
       top: auto;
-      left: auto;
       max-height: calc(
         100dvh - #{2 * spacing('5')} - var(--mw-action-bar-reserve, 0px)
       );
@@ -53,6 +52,17 @@
       }
     }
 
+    &-bottom-right {
+      right: spacing('5');
+      left: auto;
+    }
+
+    &-bottom-center {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+    }
+
     // On phones the stack spans the full width at the top
     @include media-down('sm') {
       left: spacing('5');
@@ -60,10 +70,16 @@
       width: auto;
       transform: none;
 
-      &-bottom-right {
+      &-bottom-right,
+      &-bottom-center {
         top: auto;
       }
     }
+  }
+
+  // On the wash of its own tone the icon nearly vanishes - the ink does not
+  .mw-toast-stack > .mw-alert .mw-alert-icon {
+    color: var(--mw-text-color);
   }
 
   @keyframes mw-toast-in {

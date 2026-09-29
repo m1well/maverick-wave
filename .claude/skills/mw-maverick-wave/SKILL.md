@@ -308,7 +308,8 @@ call / directions / book strip)
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
-`mw-panel` · `mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
+`mw-panel` (+ `-heading`, `-title`, `-subtitle`, `-actions`, `-edge-{colour}`) ·
+`mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
 `mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `drawer`, `drawer-start`) ·
 `mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
@@ -333,8 +334,9 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `-body`, `-bubble`, `-meta`, `-actions`, `-note`, `-typing`, `-thinking`,
 `-suggestions`, `-composer`, `-composer-bar`)
 
-**Feedback** `mw-alert` (+ `-actions`) · `mw-toast-stack` · `mw-announcement`
-(+ `-content`, `-highlight`, `-static`, color variants) · `mw-empty-state` (+
+**Feedback** `mw-alert` (+ `-actions`) · `mw-toast-stack` (+ `-top-right`,
+`-top-center`, `-bottom-right`, `-bottom-center`) · `mw-announcement`
+(+ `-content`, `-highlight`, `-static`, `-close`, color variants) · `mw-empty-state` (+
 `-inline`) · `mw-spinner-border` / `mw-spinner-dots` / `mw-spinner-dual-ring` /
 `mw-spinner-inline` · `mw-skeleton`
 
@@ -343,7 +345,7 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `mw-occasion-skip`); scheduled by `src/js/occasions.js` in the `<head>`
 
 **Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
-`mw-navbar` · `mw-breadcrumbs` · `mw-pagination` (+ `-pages`, `-page`, `-gap`,
+`mw-navbar` · `mw-header-btn` / `mw-profile-btn` · `mw-breadcrumbs` · `mw-pagination` (+ `-pages`, `-page`, `-gap`,
 `-status`) · `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`,
 `-label`, `-caret`, `-shortcut`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
 `inverted`) · `mw-flag` (+ 24 country codes) ·
@@ -361,7 +363,7 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `-label-after`, `-range`; before/after slider) · `mw-marquee` (+ `-track`,
 `-group`, `-item`, `-reverse`)
 
-**Forms** (`references/forms.md`) `mw-field` · `mw-input` · `mw-select` ·
+**Forms** (`references/forms.md`) `mw-field` · `mw-input` (+ `-tags`) · `mw-select` ·
 `mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
 `mw-input-group` · `mw-prefilled` · `mw-form` / `mw-form-group` /
 `mw-form-actions` · `mw-login`
@@ -369,7 +371,7 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` (+ `-narrow`) ·
 `mw-content` ·
 `mw-section` · `mw-section-head` (+ `-title`, `-intro`, `-numbered`, colours) ·
-`mw-page-header` · `mw-grid-*`
+`mw-page-header` (+ `-actions`, `-filters`, `-compact`, `-sticky`, `-plain`) · `mw-grid-*`
 (+ `mw-grid-even`, `mw-grid-from-{sm,md,lg,xl}`) ·
 `mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
@@ -388,7 +390,8 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `mw-text-eyebrow` / `mw-text-measure` · `mw-elevation-0..5` · `mw-glow` /
 `mw-glow-{primary,secondary,info,success,warning,danger}` ·
 `mw-corner-plain` · `mw-shape-arch|signature|leaf` · `data-tooltip` (+
-`mw-tooltip-below`, `-start`, `-end`, `-inline-end`) ·
+`mw-tooltip-below`, `-start`, `-end`, `-inline-end`; `mw-tooltips-below` on a
+bar) · `mw-w-auto` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` / `mw-hide-print` / `mw-print-only` · `mw-overflow-*` / `mw-snap-x` ·
 `mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
