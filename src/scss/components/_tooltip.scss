@@ -177,6 +177,8 @@
       &::before,
       &::after {
         position: fixed;
+        // Spelled out: before Chrome 154 the default was `none` and the bubble fell into the trigger
+        position-anchor: auto;
         // The absolute placement these replace - left as-is they fight the
         // position-area, which resolves the inset properties itself.
         bottom: auto;
