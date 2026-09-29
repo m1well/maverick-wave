@@ -1,0 +1,80 @@
+<meta charset="UTF-8" />
+<meta
+  name="viewport"
+  content="width=device-width, minimum-scale=1, initial-scale=1, viewport-fit=cover"
+/>
+<meta
+  name="format-detection"
+  content="telephone=no,email=no,address=no,date=no"
+/>
+<!-- Third-party CSS goes into a layer of its own, declared ahead of the
+     framework's. Unlayered CSS beats every layer, so a plain <link> here
+     would let Font Awesome's `.fas { display }` win over `.mw-tags-icon`.
+     Any project that loads a vendor stylesheet next to MaverickWave wants
+     these two lines. -->
+<style>
+  @layer vendor, mw;
+  @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+  layer(vendor);
+</style>
+<!-- ?v= so every build actually reaches a browser that has the last one
+     cached: the filename never changes, and without it a stale stylesheet
+     survives a normal reload. The hash of the built files, because the
+     version stays the same between two releases -->
+<link
+  rel="stylesheet"
+  href="maverick-wave.min.css?v={{VERSION}}.{{ASSET_HASH}}"
+/>
+
+<!-- Applies a stored theme choice before the first paint. Without it a
+     reader whose choice differs from the OS sees the other theme for a
+     frame, because main.js only runs at the end of the body. Inline and
+     synchronous on purpose - an external file would paint first. -->
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem('mw-theme');
+      if (stored === 'light' || stored === 'dark') {
+        document.documentElement.classList.add('mw-theme-' + stored);
+      }
+    } catch (e) {}
+  })();
+</script>
+<!-- The panel's look from an earlier page of this tab, before the first paint -->
+<script>
+  (function () {
+    try {
+      var root = document.documentElement;
+      var setup = new URLSearchParams(
+        sessionStorage.getItem('mw-showcase-setup') || ''
+      );
+      (setup.get('c') || '').split(' ').forEach(function (name) {
+        if (name) root.classList.add(name);
+      });
+      setup.forEach(function (value, key) {
+        if (key.indexOf('--') === 0) root.style.setProperty(key, value);
+      });
+    } catch (e) {}
+  })();
+</script>
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="96x96"
+  href="favicon/favicon-96x96.png"
+/>
+<link rel="shortcut icon" href="favicon.ico" />
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="favicon/apple-touch-icon.png"
+/>
+<link rel="manifest" href="favicon/site.webmanifest" />
+
+<!-- Showcase starts in dark mode unless localStorage says otherwise -->
+<meta name="theme-color" content="#171f30" />
+<link rel="stylesheet" href="showcase.css?v={{VERSION}}.{{ASSET_HASH}}" />
+
+<script src="maverick-wave.min.js?v={{VERSION}}.{{ASSET_HASH}}"></script>

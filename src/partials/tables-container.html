@@ -36,7 +36,7 @@
     </div>
 
     <div class="mw-table-responsive">
-      <table class="mw-table" id="table-demo">
+      <table class="mw-table mw-table-hover" id="table-demo">
         <thead>
           <tr>
             <th>#</th>
@@ -305,5 +305,141 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Sortable, Selectable, Sticky</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>aria-sort</code> on a header draws which way the column runs - the
+  button inside does the sorting. A checked box in the first cell selects the
+  row, and <code>mw-table-bulk</code> around the table shows its bar while any
+  row is checked, with the count filled in by CSS where the bar is left empty.
+  <code>mw-table-sticky-col</code> keeps the first column in place while a wide
+  table scrolls sideways.
+</p>
+<div class="mw-grid-1 mw-gap-6">
+  <div class="mw-table-bulk">
+    <div class="mw-table-responsive">
+      <table class="mw-table mw-table-subtle">
+        <thead>
+          <tr>
+            <th><span class="mw-sr-only">Select</span></th>
+            <th aria-sort="ascending"><button type="button">Client</button></th>
+            <th aria-sort="none"><button type="button">Project</button></th>
+            <th aria-sort="none" class="mw-text-currency">
+              <button type="button">Budget</button>
+            </th>
+            <th>Owner</th>
+            <th aria-sort="descending"><button type="button">Due</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="checkbox" aria-label="Select Harbourline" checked />
+            </td>
+            <td>Harbourline</td>
+            <td>Relaunch</td>
+            <td class="mw-text-currency">12.400 EUR</td>
+            <td>Mira Brandt</td>
+            <td>2026-10-14</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" aria-label="Select Pfotenwerk" /></td>
+            <td>Pfotenwerk</td>
+            <td>Booking app</td>
+            <td class="mw-text-currency">8.950 EUR</td>
+            <td>Jonas Reuter</td>
+            <td>2026-11-02</td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" aria-label="Select Kontor Nord" checked />
+            </td>
+            <td>Kontor Nord</td>
+            <td>Audit log</td>
+            <td class="mw-text-currency">3.200 EUR</td>
+            <td>Tom Aldridge</td>
+            <td>2026-10-21</td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" aria-label="Select Bäckerei Lind" /></td>
+            <td>Bäckerei Lind</td>
+            <td>Homepage</td>
+            <td class="mw-text-currency">2.480 EUR</td>
+            <td>Mara Kessler</td>
+            <td>2026-12-01</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mw-table-bulk-bar" role="region" aria-label="Bulk actions">
+      <span><span class="mw-table-bulk-count"></span> selected</span>
+      <button type="button" class="mw-btn mw-btn-sm mw-btn-primary">
+        Export
+      </button>
+      <button type="button" class="mw-btn mw-btn-sm mw-btn-danger">
+        Archive
+      </button>
+    </div>
+  </div>
+
+  <div class="mw-table-responsive">
+    <table class="mw-table mw-table-sticky-col">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Project</th>
+          <th class="mw-text-currency">Budget</th>
+          <th>Owner</th>
+          <th>Due</th>
+          <th>Quarter</th>
+          <th>Contract</th>
+          <th>Office</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Harbourline</td>
+          <td>Relaunch</td>
+          <td class="mw-text-currency">12.400 EUR</td>
+          <td>Mira Brandt</td>
+          <td>2026-10-14</td>
+          <td>Q4</td>
+          <td>Retainer</td>
+          <td>Berlin</td>
+        </tr>
+        <tr>
+          <td>Pfotenwerk</td>
+          <td>Booking app</td>
+          <td class="mw-text-currency">8.950 EUR</td>
+          <td>Jonas Reuter</td>
+          <td>2026-11-02</td>
+          <td>Q4</td>
+          <td>Retainer</td>
+          <td>Berlin</td>
+        </tr>
+        <tr>
+          <td>Kontor Nord</td>
+          <td>Audit log</td>
+          <td class="mw-text-currency">3.200 EUR</td>
+          <td>Tom Aldridge</td>
+          <td>2026-10-21</td>
+          <td>Q4</td>
+          <td>Retainer</td>
+          <td>Berlin</td>
+        </tr>
+        <tr>
+          <td>Bäckerei Lind</td>
+          <td>Homepage</td>
+          <td class="mw-text-currency">2.480 EUR</td>
+          <td>Mara Kessler</td>
+          <td>2026-12-01</td>
+          <td>Q4</td>
+          <td>Retainer</td>
+          <td>Berlin</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

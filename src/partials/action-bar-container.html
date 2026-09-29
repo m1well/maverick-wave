@@ -1,0 +1,91 @@
+<h3 class="mw-section-subtitle">Action Bar</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  The shortcut a local business needs on a phone: call, directions, book - held
+  at the bottom edge where the thumb already is. Up to four actions, one of them
+  filled as the one that matters most. It takes the header's colours, so the
+  page has chrome at both ends in either theme.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  From a tablet up it steps aside, unless it carries
+  <code>mw-action-bar-always</code>. While it is on screen the page reserves its
+  height at the foot and in the scroll padding, so neither the footer nor a
+  focused field ends up underneath it. The two below are
+  <code>mw-action-bar-embedded</code>, which sits at the bottom of its own frame
+  instead of the window - here, the phone's glass.
+</p>
+
+<div class="mw-grid-2 mw-gap-6 mw-mt-7">
+  <div class="mw-device mw-device-phone">
+    <div class="mw-device-screen">
+      <img
+        src="images/mockup-phone.svg"
+        alt="A bakery's homepage on a phone"
+        loading="lazy"
+      />
+      <nav
+        class="mw-action-bar mw-action-bar-embedded"
+        aria-label="Contact the bakery"
+      >
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fas fa-phone" aria-hidden="true"></i><span>Call</span>
+        </a>
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fas fa-location-dot" aria-hidden="true"></i
+          ><span>Directions</span>
+        </a>
+        <a class="mw-action-bar-item mw-action-bar-primary" href="#action-bar">
+          <i class="fas fa-bag-shopping" aria-hidden="true"></i
+          ><span>Pre-order</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mw-device mw-device-phone">
+    <div class="mw-device-screen">
+      <img
+        src="images/mockup-phone.svg"
+        alt="The same homepage with four equal actions"
+        loading="lazy"
+      />
+      <nav class="mw-action-bar mw-action-bar-embedded" aria-label="Contact">
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fas fa-phone" aria-hidden="true"></i><span>Call</span>
+        </a>
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i
+          ><span>WhatsApp</span>
+        </a>
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fas fa-location-dot" aria-hidden="true"></i
+          ><span>Directions</span>
+        </a>
+        <a class="mw-action-bar-item" href="#action-bar">
+          <i class="fas fa-envelope" aria-hidden="true"></i><span>Email</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="mw-code-block mw-mt-7">
+  <div class="mw-code-block-header">
+    <span class="mw-code-block-filename">index.html</span>
+    <span class="mw-code-block-language">HTML</span>
+  </div>
+  <div class="mw-code-container">
+    <pre><code>&lt;!-- Last in the body, after the footer --&gt;
+&lt;nav class="mw-action-bar" aria-label="Contact"&gt;
+  &lt;a class="mw-action-bar-item" href="tel:+49891234567"&gt;
+    &lt;i class="fas fa-phone" aria-hidden="true"&gt;&lt;/i&gt;&lt;span&gt;Call&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;a class="mw-action-bar-item" href="https://maps.google.com/?q=..."&gt;
+    &lt;i class="fas fa-location-dot" aria-hidden="true"&gt;&lt;/i&gt;&lt;span&gt;Directions&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;a class="mw-action-bar-item mw-action-bar-primary" href="/booking"&gt;
+    &lt;i class="fas fa-calendar-check" aria-hidden="true"&gt;&lt;/i&gt;&lt;span&gt;Book&lt;/span&gt;
+  &lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+  </div>
+</div>

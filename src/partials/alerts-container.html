@@ -124,13 +124,34 @@
   </div>
 </div>
 
+<h4 class="mw-mb-2 mw-mt-8">With actions</h4>
+<p class="mw-text-muted mw-mb-3">
+  <code>mw-alert-actions</code> inside the content puts Undo or Retry under the
+  message. <code>role="alert"</code> is for what needs attention now,
+  <code>role="status"</code> for a confirmation that can wait its turn.
+</p>
+<div class="mw-alert mw-alert-warning" role="status">
+  <div class="mw-alert-icon"><i class="fas fa-rotate-left"></i></div>
+  <div class="mw-alert-content">
+    <span class="mw-alert-title">Invoice deleted</span>
+    <p>INV-2026-0917 is gone from the list and stays restorable for 30 days.</p>
+    <div class="mw-alert-actions">
+      <button type="button" class="mw-btn mw-btn-sm mw-btn-primary">
+        Undo
+      </button>
+      <a class="mw-btn mw-btn-sm mw-btn-link" href="#alerts">Show deleted</a>
+    </div>
+  </div>
+</div>
+
 <h4 class="mw-mb-2 mw-mt-8">Toast Stack</h4>
 <p class="mw-text-muted mw-mb-3">
   Alerts become toasts by putting them in a fixed, stacked container. Positions:
   <code>mw-toast-stack-top-right</code> (default),
   <code>mw-toast-stack-top-center</code>,
   <code>mw-toast-stack-bottom-right</code>. Auto-dismiss stays the application's
-  job.
+  job. Give the stack <code>role="status"</code> and
+  <code>aria-live="polite"</code>, so a screen reader reads each new toast.
 </p>
 
 <div class="mw-card mw-card-simple">

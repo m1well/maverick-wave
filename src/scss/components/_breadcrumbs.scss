@@ -72,9 +72,9 @@
         }
       }
 
-      // Current page styling
+      // Marked, never guessed from position: a last item may well be a link
       &.mw-breadcrumbs-current a,
-      &:last-child a {
+      a[aria-current='page'] {
         color: var(--mw-text-color);
         border-color: var(--mw-primary-text-color);
         cursor: default;
@@ -113,6 +113,14 @@
           margin-right: spacing('1');
         }
       }
+    }
+  }
+
+  // Forced colours paint every border alike, so the current step is underlined
+  @media (forced-colors: active) {
+    .mw-breadcrumbs-item.mw-breadcrumbs-current a,
+    .mw-breadcrumbs-item a[aria-current='page'] {
+      text-decoration: underline 2px;
     }
   }
 }

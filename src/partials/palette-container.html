@@ -260,13 +260,28 @@
 
     <label class="variant-row">
       <span class="variant-label">
-        Flat surfaces
+        Automatic label colour
         <small
-          >Cards and panels lose their shadow and sit flat on the page.
-          Dropdowns and dialogs still float.</small
+          >Text on every filled colour turns black or white, whichever reads
+          better. Needs a browser with contrast-color().</small
         >
       </span>
-      <input type="checkbox" data-variant-class="mw-shadows-flat" />
+      <input type="checkbox" data-variant-class="mw-accent-text-auto" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Shadows
+        <small
+          >Flat takes the shadow off cards and panels - dropdowns and dialogs
+          still float. Hard offset trades every blur for a solid edge.</small
+        >
+      </span>
+      <select class="mw-select mw-select-sm" data-variant-classes>
+        <option value="" selected>Default</option>
+        <option value="mw-shadows-flat">Flat</option>
+        <option value="mw-shadows-hard">Hard offset</option>
+      </select>
     </label>
 
     <label class="variant-row">
@@ -371,6 +386,17 @@
         >
       </span>
       <input type="checkbox" data-variant-class="mw-hover-static" />
+    </label>
+
+    <label class="variant-row">
+      <span class="variant-label">
+        Motion off
+        <small
+          >Everything a reader with reduced motion gets, for every reader: no
+          travel, no loops, no scroll effects.</small
+        >
+      </span>
+      <input type="checkbox" data-variant-class="mw-motion-off" />
     </label>
 
     <label class="variant-row">

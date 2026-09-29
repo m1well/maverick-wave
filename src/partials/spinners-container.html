@@ -94,3 +94,24 @@
     </p>
   </div>
 </div>
+
+<h3 class="mw-mt-6">Inline</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-spinner-inline</code> takes the size and colour of the text it sits
+  in - a busy button, a line still loading. The button keeps its label and says
+  <code>aria-busy="true"</code>.
+</p>
+<div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-4 mw-mt-4">
+  <button type="button" class="mw-btn mw-btn-primary" aria-busy="true" disabled>
+    <span class="mw-spinner-inline" aria-hidden="true"></span>
+    Saving
+  </button>
+  <button type="button" class="mw-btn mw-btn-outline" aria-busy="true" disabled>
+    <span class="mw-spinner-inline" aria-hidden="true"></span>
+    Syncing
+  </button>
+  <span class="mw-text-muted">
+    <span class="mw-spinner-inline" aria-hidden="true"></span>
+    Loading the last 30 days
+  </span>
+</div>

@@ -49,7 +49,9 @@
       // filled circle and so is every finished one, which leaves the hue as the
       // only thing telling them apart - and a stepper is read at a glance, by
       // people who do not all see blue against green.
-      &.mw-active {
+      // aria-current="step" on the step marks it as well, for an app's markup
+      &.mw-active,
+      .mw-stepper-step[aria-current='step'] > & {
         border-color: var(--mw-primary-color);
         background: var(--mw-primary-color);
         color: var(--mw-primary-accent-text-color);
@@ -70,7 +72,8 @@
       line-height: 1.2;
       transition: color var(--mw-duration-base) var(--mw-ease-out);
 
-      &.mw-active {
+      &.mw-active,
+      .mw-stepper-step[aria-current='step'] > & {
         color: var(--mw-primary-text-color);
         font-weight: font-weight('medium');
       }
@@ -145,6 +148,43 @@
         color: var(--mw-text-muted-color);
         line-height: 1.5;
       }
+    }
+  }
+
+  // Forced colours drop the fills: current in Highlight, done inverted
+  @media (forced-colors: active) {
+    .mw-stepper-indicator,
+    .mw-stepper-connector,
+    .mw-stepper-vertical .mw-stepper-step:not(:last-child)::after {
+      forced-color-adjust: none;
+    }
+
+    .mw-stepper-connector,
+    .mw-stepper-vertical .mw-stepper-step:not(:last-child)::after {
+      background: GrayText;
+    }
+
+    .mw-stepper-connector.mw-done,
+    .mw-stepper-vertical .mw-stepper-step.mw-done:not(:last-child)::after {
+      background: CanvasText;
+    }
+
+    .mw-stepper-indicator {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .mw-stepper-indicator.mw-done {
+      background: CanvasText;
+      color: Canvas;
+    }
+
+    .mw-stepper-indicator.mw-active,
+    .mw-stepper-step[aria-current='step'] > .mw-stepper-indicator {
+      border-color: Highlight;
+      background: Highlight;
+      color: HighlightText;
     }
   }
 }

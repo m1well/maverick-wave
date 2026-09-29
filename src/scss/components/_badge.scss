@@ -153,4 +153,16 @@
   .mw-badge-status-muted .mw-badge-dot {
     background: var(--mw-gray-color);
   }
+
+  // Forced colours drop every fill: a border keeps the badge, the dot its ink
+  @media (forced-colors: active) {
+    .mw-badge {
+      border: 1px solid CanvasText;
+    }
+
+    .mw-badge-dot {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+  }
 }

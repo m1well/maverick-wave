@@ -1,0 +1,214 @@
+<h3 class="mw-section-subtitle">Marquee</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  A strip that keeps moving: partner logos, seals, the one line from a review
+  everybody should read. The items sit in the track twice - the second group
+  <code>aria-hidden</code> and <code>inert</code>, so a screen reader reads the
+  list once and the keyboard never lands on the copy. The pointer or the focus
+  on the strip holds it still - <code>tabindex="0"</code> makes it focusable
+  when nothing inside it is.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  With reduced motion the strip stands: the first group wraps centered and the
+  copy is gone. <code>--mw-marquee-duration</code> sets the pace,
+  <code>mw-marquee-reverse</code> the direction, and a logo shows its colours
+  only under the pointer.
+</p>
+
+<h4 class="mw-text-medium mw-mt-7 mw-mb-4">Seals and promises</h4>
+<div
+  class="mw-marquee"
+  role="region"
+  aria-label="What we stand for"
+  tabindex="0"
+>
+  <div class="mw-marquee-track">
+    <ul class="mw-marquee-group">
+      <li class="mw-marquee-item">
+        <i class="fas fa-award" aria-hidden="true"></i>Master craftsman since
+        1998
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-star" aria-hidden="true"></i>4.9 from 312 reviews
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-leaf" aria-hidden="true"></i>Certified eco partner
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-shield-halved" aria-hidden="true"></i>Five-year
+        warranty
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-truck" aria-hidden="true"></i>Same-week appointments
+      </li>
+    </ul>
+    <ul class="mw-marquee-group" aria-hidden="true" inert>
+      <li class="mw-marquee-item">
+        <i class="fas fa-award" aria-hidden="true"></i>Master craftsman since
+        1998
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-star" aria-hidden="true"></i>4.9 from 312 reviews
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-leaf" aria-hidden="true"></i>Certified eco partner
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-shield-halved" aria-hidden="true"></i>Five-year
+        warranty
+      </li>
+      <li class="mw-marquee-item">
+        <i class="fas fa-truck" aria-hidden="true"></i>Same-week appointments
+      </li>
+    </ul>
+  </div>
+</div>
+
+<h4 class="mw-text-medium mw-mt-8 mw-mb-4">Logos, the other way round</h4>
+<div
+  class="mw-marquee mw-marquee-reverse"
+  role="region"
+  aria-label="Tools we work with"
+  tabindex="0"
+>
+  <div class="mw-marquee-track">
+    <ul class="mw-marquee-group">
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"
+          alt="TypeScript"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
+          alt="Vue.js"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/96/Sass_Logo_Color.svg"
+          alt="Sass"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+          alt="React"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+          alt="Python"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg"
+          alt="Docker"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg"
+          alt="Figma"
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"
+          alt="Git"
+          loading="lazy"
+        />
+      </li>
+    </ul>
+    <ul class="mw-marquee-group" aria-hidden="true" inert>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/9/96/Sass_Logo_Color.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+      <li class="mw-marquee-item">
+        <img
+          src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"
+          alt=""
+          loading="lazy"
+        />
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="mw-code-block mw-mt-7">
+  <div class="mw-code-block-header">
+    <span class="mw-code-block-filename">index.html</span>
+    <span class="mw-code-block-language">HTML</span>
+  </div>
+  <div class="mw-code-container">
+    <pre><code>&lt;div class="mw-marquee" role="region" aria-label="Partners" tabindex="0"&gt;
+  &lt;div class="mw-marquee-track"&gt;
+    &lt;ul class="mw-marquee-group"&gt;
+      &lt;li class="mw-marquee-item"&gt;&lt;img src="partner.svg" alt="Partner" /&gt;&lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+    &lt;!-- The same items again, for the seam --&gt;
+    &lt;ul class="mw-marquee-group" aria-hidden="true" inert&gt;
+      &lt;li class="mw-marquee-item"&gt;&lt;img src="partner.svg" alt="" /&gt;&lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+</div>

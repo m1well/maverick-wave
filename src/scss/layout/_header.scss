@@ -10,6 +10,8 @@ $_control-size: 40px;
     left: spacing('0');
     width: 100%;
     z-index: z-index('header');
+    // Dark in both themes, fixed light included, where no light-dark() flips
+    --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
     background: var(--mw-header-background);
     backdrop-filter: blur(7px);
     border-bottom: 1px solid var(--mw-header-border);
@@ -338,7 +340,7 @@ $_control-size: 40px;
       }
 
       // Last, so the current page keeps its look while being hovered
-      @include active() {
+      &:is(.mw-active, .active, [aria-current='page']) {
         color: var(--mw-header-navbar-list-active-color);
         background: var(--mw-primary-background);
         // Marks the left edge of a stacked list. In a row the links are pills
@@ -369,7 +371,7 @@ $_control-size: 40px;
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @include motion-reduced {
       transition-duration: 0.01ms;
 
       .mw-navbar-item {
@@ -470,13 +472,15 @@ $_control-size: 40px;
 
       &:hover,
       &.mw-active,
-      &.active {
+      &.active,
+      &[aria-current='page'] {
         color: var(--mw-header-navbar-list-active-color);
       }
 
       &:hover::after,
       &.mw-active::after,
-      &.active::after {
+      &.active::after,
+      &[aria-current='page']::after {
         transform: scaleX(1);
         opacity: 1;
       }
@@ -571,6 +575,19 @@ $_control-size: 40px;
       .mw-profile-btn-name {
         display: inline;
       }
+    }
+  }
+
+  // Menus in the bar lie on the page's card, so their ring is the page's
+  .mw-header .mw-dropdown-menu {
+    --mw-focus-ring-color: var(--mw-primary-text-color);
+  }
+
+  // Forced colours paint the drawn line away; the current page gets a real one
+  @media (forced-colors: active) {
+    .mw-navbar-link:is(.mw-active, .active, [aria-current='page']) {
+      text-decoration: underline 2px;
+      text-underline-offset: 0.35em;
     }
   }
 }

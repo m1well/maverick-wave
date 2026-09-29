@@ -1,0 +1,93 @@
+<h3 class="mw-section-subtitle">Footer</h3>
+<p class="mw-text-muted mw-text-measure">
+  The page footer at the bottom of this site is the full shape: columns, social
+  links, a note and the copyright. Three pieces make it fit everything else.
+  <code>mw-footer-bottom</code> puts the copyright at one end and
+  <code>mw-footer-links</code> at the other - the imprint and the privacy policy
+  a German site has to link from every page - and stacks both, centred, on a
+  phone. <code>mw-footer-dark</code> turns the footer into the dark bookend of
+  the header bar, and <code>mw-footer-compact</code> is the bar alone, the
+  footer an application puts under its content.
+</p>
+
+<h4 class="mw-mb-3">Homepage, dark</h4>
+<div
+  class="mw-mb-8"
+  style="
+    border: 1px solid var(--mw-border);
+    border-radius: 10px;
+    overflow: hidden;
+  "
+>
+  <footer class="mw-footer mw-footer-dark">
+    <div class="mw-container">
+      <div class="mw-footer-top">
+        <div class="mw-footer-column">
+          <h2 class="mw-footer-title">Bäckerei Brandt</h2>
+          <p>Sourdough, rye and the cinnamon rolls everybody asks about.</p>
+        </div>
+        <div class="mw-footer-column">
+          <h2 class="mw-footer-title">Visit</h2>
+          <p>Hafenstraße 12<br />24937 Flensburg</p>
+        </div>
+        <div class="mw-footer-column">
+          <h2 class="mw-footer-title">Opening hours</h2>
+          <p>Mon to Fri 6:30 - 18:00<br />Sat 7:00 - 13:00</p>
+        </div>
+      </div>
+      <div class="mw-footer-bottom">
+        <p class="mw-copyright">&copy; 2026 Bäckerei Brandt</p>
+        <ul class="mw-footer-links">
+          <li><a href="#footer-variants">Imprint</a></li>
+          <li><a href="#footer-variants">Privacy</a></li>
+          <li><a href="#footer-variants">Cookie settings</a></li>
+          <li><a href="#footer-variants">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<h4 class="mw-mb-3">Application, compact</h4>
+<div
+  class="mw-mb-6"
+  style="
+    border: 1px solid var(--mw-border);
+    border-radius: 10px;
+    overflow: hidden;
+  "
+>
+  <footer class="mw-footer mw-footer-compact">
+    <div class="mw-container">
+      <div class="mw-footer-bottom">
+        <p class="mw-copyright">&copy; 2026 Harbourline &middot; v4.2.1</p>
+        <ul class="mw-footer-links">
+          <li><a href="#footer-variants">Status</a></li>
+          <li><a href="#footer-variants">Imprint</a></li>
+          <li><a href="#footer-variants">Privacy</a></li>
+          <li><a href="#footer-variants">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="mw-card mw-card-simple">
+  <pre class="mw-code-block"><code>&lt;footer class="mw-footer"&gt;
+  &lt;div class="mw-container"&gt;
+    &lt;div class="mw-footer-top"&gt;...columns...&lt;/div&gt;
+    &lt;div class="mw-footer-bottom"&gt;
+      &lt;p class="mw-copyright"&gt;&amp;copy; 2026 Bäckerei Brandt&lt;/p&gt;
+      &lt;ul class="mw-footer-links"&gt;
+        &lt;li&gt;&lt;a href="/impressum"&gt;Imprint&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/datenschutz"&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+
+&lt;!-- In an app: last in .mw-app-main, without a container --&gt;
+&lt;footer class="mw-footer mw-footer-compact"&gt;
+  &lt;div class="mw-footer-bottom"&gt;...&lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+</div>

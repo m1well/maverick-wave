@@ -1,0 +1,84 @@
+<h3 class="mw-section-subtitle">Before &amp; After</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  Two pictures of the same place on one frame, split where the reader drags -
+  the renovated bathroom, the cleared garden, the restored facade. The control
+  is a native range laid over the whole frame, so a finger, a mouse and the
+  arrow keys all move it, and a screen reader announces the position. Without
+  the script the frame shows a fixed half-and-half split.
+</p>
+
+<div class="mw-grid-2 mw-gap-6">
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Default</h3>
+    <div class="mw-compare mw-aspect-video">
+      <img
+        class="mw-compare-before"
+        src="images/gallery-mountain.svg"
+        alt="The valley at night"
+        loading="lazy"
+      />
+      <img
+        class="mw-compare-after"
+        src="images/slider-mountains.svg"
+        alt="The same valley by day"
+        loading="lazy"
+      />
+      <span class="mw-compare-label">Before</span>
+      <span class="mw-compare-label mw-compare-label-after">After</span>
+      <input
+        type="range"
+        class="mw-compare-range"
+        min="0"
+        max="100"
+        value="50"
+        aria-label="Move the split between before and after"
+      />
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-card-title mw-mb-4">Own labels, other ratio</h3>
+    <div class="mw-compare mw-aspect-photo">
+      <img
+        class="mw-compare-before"
+        src="images/gallery-snow.svg"
+        alt="The meadow in February"
+        loading="lazy"
+      />
+      <img
+        class="mw-compare-after"
+        src="images/slider-field.svg"
+        alt="The meadow in July"
+        loading="lazy"
+      />
+      <span class="mw-compare-label">February</span>
+      <span class="mw-compare-label mw-compare-label-after">July</span>
+      <input
+        type="range"
+        class="mw-compare-range"
+        min="0"
+        max="100"
+        value="35"
+        aria-label="Move the split between February and July"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="mw-code-block mw-mt-7">
+  <div class="mw-code-block-header">
+    <span class="mw-code-block-filename">index.html</span>
+    <span class="mw-code-block-language">HTML</span>
+  </div>
+  <div class="mw-code-container">
+    <pre><code>&lt;div class="mw-compare mw-aspect-video"&gt;
+  &lt;img class="mw-compare-before" src="before.jpg" alt="..." /&gt;
+  &lt;img class="mw-compare-after" src="after.jpg" alt="..." /&gt;
+  &lt;span class="mw-compare-label"&gt;Before&lt;/span&gt;
+  &lt;span class="mw-compare-label mw-compare-label-after"&gt;After&lt;/span&gt;
+  &lt;input type="range" class="mw-compare-range" min="0" max="100" value="50"
+         aria-label="Move the split between before and after" /&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+</div>

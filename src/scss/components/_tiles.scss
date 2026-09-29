@@ -60,7 +60,7 @@
     // A tile is tapped, so it needs a press of its own - the lift above never
     // runs on a finger. Guarded like every other travel in the framework; what
     // is left without it is the latched hover, which is feedback enough.
-    @media (prefers-reduced-motion: no-preference) {
+    @include motion-safe {
       &:active {
         transform: scale(0.985);
         transition-duration: var(--mw-duration-instant);

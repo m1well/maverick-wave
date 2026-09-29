@@ -96,4 +96,95 @@
       font-size: font-size('md');
     }
   }
+
+  // A phone gets "3 of 12" between the arrows instead of a row of numbers
+  .mw-pagination-pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('1');
+  }
+
+  .mw-pagination-page,
+  .mw-pagination-gap {
+    display: none;
+  }
+
+  .mw-pagination-status {
+    padding-inline: spacing('3');
+    color: var(--mw-text-muted-color);
+    font-size: font-size('sm');
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .mw-pagination-page {
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding-inline: spacing('2');
+    border: 1px solid transparent;
+    // The framework silhouette at button size
+    border-radius: radius-sharp() radius('md') radius-sharp() radius('md');
+    background: none;
+    color: var(--mw-text-color);
+    font: inherit;
+    font-size: font-size('sm');
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+    @include focus-ring;
+    @include touch-floor {
+      min-width: 2.75rem;
+    }
+
+    &:hover {
+      background: var(--mw-gray-background);
+    }
+
+    &:is([aria-current='page'], .mw-active, .active) {
+      background: var(--mw-primary-color);
+      border-color: var(--mw-primary-text-color);
+      color: var(--mw-primary-accent-text-color);
+      font-weight: font-weight('medium');
+      cursor: default;
+    }
+  }
+
+  .mw-pagination-gap {
+    min-width: 1.5rem;
+    color: var(--mw-text-muted-color);
+    text-align: center;
+  }
+
+  // First and last page: an arrow that leads nowhere says so
+  .mw-pagination-pages [aria-disabled='true'] {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  @include media-up('sm') {
+    .mw-pagination-page {
+      display: inline-flex;
+    }
+
+    .mw-pagination-gap {
+      display: inline-block;
+    }
+
+    .mw-pagination-status {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .mw-pagination-page:is([aria-current='page'], .mw-active, .active) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
 }

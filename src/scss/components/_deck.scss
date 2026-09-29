@@ -87,21 +87,15 @@
     // .mw-accent-single on <html>, which makes the second colour the first.
     --mw-deck-second: var(--mw-secondary-color);
     --mw-deck-second-label: var(--mw-secondary-accent-text-color);
-    --mw-deck-second-ink: var(--mw-secondary-text-color);
     --mw-deck-second-ink-dark: #{$_secondary-ink-dark};
-    --mw-deck-first-ink: var(--mw-primary-text-color);
-
-    // A browser without light-dark() keeps the theme's own inks
-    @supports (color: light-dark(#000, #fff)) {
-      --mw-deck-first-ink: light-dark(
-        var(--mw-light-primary-text-color),
-        #{$_primary-ink-dark}
-      );
-      --mw-deck-second-ink: light-dark(
-        var(--mw-light-secondary-text-color),
-        #{$_secondary-ink-dark}
-      );
-    }
+    --mw-deck-first-ink: light-dark(
+      var(--mw-light-primary-text-color),
+      #{$_primary-ink-dark}
+    );
+    --mw-deck-second-ink: light-dark(
+      var(--mw-light-secondary-text-color),
+      #{$_secondary-ink-dark}
+    );
 
     @include tone('page');
 

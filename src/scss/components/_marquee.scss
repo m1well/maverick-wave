@@ -1,0 +1,132 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // Items twice, the copy inert: sliding by half the width makes a seamless loop
+  .mw-marquee {
+    --mw-marquee-duration: #{motion(40s)};
+    --mw-marquee-gap: #{spacing('9')};
+    --mw-marquee-fade: min(#{spacing('10')}, 12%);
+    --mw-marquee-logo-height: 2.25rem;
+
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    // The groups measure the strip in cqi to stay at least one screen wide
+    container-type: inline-size;
+  }
+
+  .mw-marquee-track {
+    display: flex;
+    width: 100%;
+  }
+
+  .mw-marquee-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: spacing('5') var(--mw-marquee-gap);
+    width: 100%;
+
+    & ~ & {
+      display: none;
+    }
+  }
+
+  .mw-marquee-item {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: spacing('3');
+    color: var(--mw-text-muted-color);
+    font-size: font-size('md');
+    font-weight: font-weight('medium');
+    white-space: nowrap;
+
+    > i {
+      color: var(--mw-primary-text-color);
+    }
+
+    img {
+      display: block;
+      width: auto;
+      height: var(--mw-marquee-logo-height);
+      filter: grayscale(1);
+      opacity: 0.75;
+      transition: var(--mw-transition);
+    }
+
+    @include hover {
+      img {
+        filter: none;
+        opacity: 1;
+      }
+    }
+  }
+
+  .mw-marquee {
+    @include motion-safe {
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--mw-marquee-fade),
+        #000 calc(100% - var(--mw-marquee-fade)),
+        transparent
+      );
+    }
+  }
+
+  // The fade would mask the focus ring away, and a held strip needs no fade
+  .mw-marquee:focus-visible {
+    @include motion-safe {
+      mask-image: none;
+    }
+  }
+
+  .mw-marquee-track {
+    @include motion-safe {
+      width: max-content;
+      animation-name: mw-marquee;
+      animation-duration: var(--mw-marquee-duration);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  }
+
+  .mw-marquee-reverse .mw-marquee-track {
+    @include motion-safe {
+      animation-direction: reverse;
+    }
+  }
+
+  .mw-marquee:is(:hover, :focus-within) .mw-marquee-track {
+    @include motion-safe {
+      animation-play-state: paused;
+    }
+  }
+
+  // As wide as the strip, or a short list leaves a gap before the copy
+  .mw-marquee-group {
+    @include motion-safe {
+      flex-shrink: 0;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      width: auto;
+      min-width: 100cqi;
+      padding-inline-end: var(--mw-marquee-gap);
+    }
+  }
+
+  // Not nested as `& ~ &`: motion-safe would prefix both halves and never match
+  .mw-marquee-group ~ .mw-marquee-group {
+    @include motion-safe {
+      display: flex;
+    }
+  }
+
+  @keyframes mw-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}

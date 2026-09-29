@@ -70,4 +70,47 @@
       opacity: 0.7;
     }
   }
+
+  // A row for a table body or a panel: icon beside the text, the action below it
+  .mw-empty-state-inline {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: spacing('4');
+    align-items: center;
+    justify-items: start;
+    padding: spacing('4');
+    text-align: left;
+
+    > .mw-empty-state-icon {
+      grid-row: 1 / span 3;
+      align-self: start;
+      margin-bottom: 0;
+      font-size: font-size('2xl');
+    }
+
+    > .mw-empty-state-title {
+      margin-bottom: 0;
+      font-size: font-size('md');
+    }
+
+    > .mw-empty-state-desc {
+      max-width: none;
+      margin-bottom: 0;
+      font-size: font-size('sm');
+    }
+
+    > :not(.mw-empty-state-icon, .mw-empty-state-title, .mw-empty-state-desc) {
+      grid-column: 2;
+      margin-top: spacing('3');
+    }
+
+    // Without an icon the text would land in the icon's column
+    &:not(:has(> .mw-empty-state-icon)) {
+      grid-template-columns: minmax(0, 1fr);
+
+      > * {
+        grid-column: 1;
+      }
+    }
+  }
 }

@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:selector';
 @use 'sass:math';
 @use 'variables' as v;
 @use 'functions' as *;
@@ -109,6 +110,19 @@
   }
 }
 
+// Out of sight, still read by a screen reader
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 // Without the `min-width: 0` that mw-text-truncate carries: that fixes the layout
 // around the text, and handing it to seven components would change how they size
 @mixin truncate {
@@ -127,6 +141,26 @@
   }
 }
 
+// Motion the OS and `mw-motion-off` both allow; unify() merges a leading :root
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @at-root #{selector.unify(&, ':root:not(.mw-motion-off) *')} {
+      @content;
+    }
+  }
+}
+
+// The other side of the same switch
+@mixin motion-reduced {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+
+  @at-root #{selector.unify(&, ':root.mw-motion-off *')} {
+    @content;
+  }
+}
+
 // A hover that *travels*. Separate from `hover`, because movement has two more
 // opt-outs than a colour change does: reduced motion, where a transform still
 // jumps to its end position in one frame however short the duration is, and the
@@ -138,7 +172,7 @@
 // and a label that lands where it belongs beats two pixels of travel.
 @mixin hover-move {
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    :root:not(.mw-hover-static) &:hover:not([data-tooltip]) {
+    :root:not(.mw-hover-static, .mw-motion-off) &:hover:not([data-tooltip]) {
       @content;
     }
   }
@@ -200,29 +234,6 @@
   scrollbar-width: thin;
   // Firefox needs both values - a single one is invalid and drops the declaration
   scrollbar-color: #{$thumb} #{$track};
-
-  &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #{$track};
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #{$thumb};
-    border-radius: 4px;
-
-    &:hover {
-      background: var(--mw-primary-text-color);
-    }
-  }
-
-  &::-webkit-scrollbar-corner {
-    background: #{$track};
-  }
 }
 
 // A hairline of light along the top edge and a shadow underneath, as if the light

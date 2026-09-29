@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include('./src/partials/site-head.html')
+    <title>Data &amp; Display - MaverickWave</title>
+  </head>
+
+  <body>
+    @@include('./src/partials/site-top.html')
+
+    <main class="mw-main" id="main">
+      <!-- Data & display section -->
+      <section id="data-display" class="mw-section">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Data & Display</h2>
+            <p class="mw-section-head-intro">
+              Tables, boards, timelines and long-form content - everything that
+              shows real data.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#page-header" class="mw-section-btn">Page Header</a>
+            <a href="#meta-info" class="mw-section-btn">Meta Info</a>
+            <a href="#tables" class="mw-section-btn">Tables</a>
+            <a href="#stats" class="mw-section-btn">Stats &amp; Meters</a>
+            <a href="#chat" class="mw-section-btn">Chat</a>
+            <a href="#kanban" class="mw-section-btn">Kanban</a>
+            <a href="#calendar" class="mw-section-btn">Calendar</a>
+            <a href="#lunch-menu" class="mw-section-btn">Lunch Menu</a>
+            <a href="#contact" class="mw-section-btn">Contact</a>
+            <a href="#pagination" class="mw-section-btn">Pagination</a>
+            <a href="#timelines" class="mw-section-btn">Timelines</a>
+            <a href="#gallery" class="mw-section-btn">Image Gallery</a>
+            <a href="#portrait-gallery" class="mw-section-btn"
+              >Portrait Gallery</a
+            >
+            <a href="#mosaic" class="mw-section-btn">Mosaic</a>
+            <a href="#feed" class="mw-section-btn">Photo Feed</a>
+            <a href="#stories" class="mw-section-btn">Story Archive</a>
+            <a href="#content-slider" class="mw-section-btn">Content Slider</a>
+            <a href="#testimonials" class="mw-section-btn">Testimonials</a>
+            <a href="#prose" class="mw-section-btn">Prose</a>
+            <a href="#media" class="mw-section-btn">Media</a>
+          </nav>
+
+          <!-- Page Header container -->
+          <div id="page-header">
+            @@include('./src/partials/page-header-container.html')
+          </div>
+
+          <!-- Meta Info container -->
+          <div id="meta-info">
+            @@include('./src/partials/meta-info-container.html')
+          </div>
+
+          <!-- Tables container -->
+          <div id="tables">
+            @@include('./src/partials/tables-container.html')
+          </div>
+
+          <!-- Stats container -->
+          <div id="stats">@@include('./src/partials/stat-container.html')</div>
+
+          <!-- Chat container -->
+          <div id="chat">@@include('./src/partials/chat-container.html')</div>
+
+          <!-- Kanban container -->
+          <div id="kanban">
+            @@include('./src/partials/kanban-container.html')
+          </div>
+
+          <!-- Calendar container -->
+          <div id="calendar">
+            @@include('./src/partials/calendar-container.html')
+          </div>
+
+          <!-- Lunch Menu container -->
+          <div id="lunch-menu">
+            @@include('./src/partials/lunch-menu-container.html')
+          </div>
+
+          <!-- Contact container -->
+          <div id="contact">
+            @@include('./src/partials/contact-container.html')
+          </div>
+
+          <!-- Pagination container -->
+          <div id="pagination">
+            @@include('./src/partials/pagination-container.html')
+          </div>
+
+          <!-- Timeline container -->
+          <div id="timelines">
+            @@include('./src/partials/timelines-container.html')
+          </div>
+
+          <!-- Gallery container-->
+          <div id="gallery">
+            @@include('./src/partials/gallery-container.html')
+          </div>
+
+          <!-- Portrait gallery container-->
+          <div id="portrait-gallery">
+            @@include('./src/partials/portrait-gallery-container.html')
+          </div>
+
+          <!-- Mosaic container-->
+          <div id="mosaic">
+            @@include('./src/partials/mosaic-container.html')
+          </div>
+
+          <!-- Feed container-->
+          <div id="feed">@@include('./src/partials/feed-container.html')</div>
+
+          <!-- Stories container-->
+          <div id="stories">
+            @@include('./src/partials/stories-container.html')
+          </div>
+
+          <!-- Content slider container-->
+          <div id="content-slider">
+            @@include('./src/partials/content-slider-container.html')
+          </div>
+
+          <!-- Testimonials container-->
+          <div id="testimonials">
+            @@include('./src/partials/testimonials-container.html')
+          </div>
+
+          <!-- Prose container-->
+          <div id="prose">@@include('./src/partials/prose-container.html')</div>
+
+          <!-- Media container-->
+          <div id="media">@@include('./src/partials/media-container.html')</div>
+        </div>
+      </section>
+    </main>
+
+    @@include('./src/partials/site-bottom.html')
+  </body>
+</html>

@@ -38,7 +38,6 @@
       margin: 0;
       line-height: 1.5;
       font-size: font-size('sm');
-      opacity: 0.9;
 
       & + p {
         margin-top: spacing('2');
@@ -85,6 +84,19 @@
       .mw-alert-icon {
         color: var(--mw-#{$name}-text-color);
       }
+    }
+  }
+
+  // Undo, Retry, a link to the details - under the message, never beside it
+  .mw-alert-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: spacing('2');
+    margin-top: spacing('3');
+
+    // On a status tint the brand ink can fail; the alert's own text never does
+    :is(.mw-btn-link, .mw-btn-ghost) {
+      color: inherit;
     }
   }
 }

@@ -82,12 +82,12 @@
     <h3 class="mw-card-title mw-mb-4">Validation & Readonly States</h3>
     <div class="mw-card mw-card-simple">
       <p class="mw-text-muted mw-text-sm mw-mb-4">
-        The error look is not automatic: bind
-        <code>mw-field-has-error</code> to the control state (in Angular
-        <code>[class.mw-field-has-error]="c.invalid &amp;&amp; c.touched"</code
-        >). A control without a field wrapper - also a
-        <code>mw-checkbox-group</code>, <code>mw-radio-group</code> or
-        <code>mw-slider-container</code> - takes
+        The control turns red by itself from <code>:user-invalid</code>,
+        <code>aria-invalid="true"</code> or Angular's
+        <code>ng-invalid ng-touched</code>; <code>mw-field-has-error</code> on
+        the wrapper is for a control the framework cannot see. A control without
+        a field wrapper - also a <code>mw-checkbox-group</code>,
+        <code>mw-radio-group</code> or <code>mw-slider-container</code> - takes
         <code>mw-form-element-error</code> instead.
       </p>
 

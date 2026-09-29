@@ -128,8 +128,9 @@
         <p>Set <code>$mw-theme-mode</code> to control theme behavior:</p>
         <ul>
           <li>
-            <code>'switchable'</code> (default) - dark base, toggleable to light
-            via <code>.mw-theme-light</code> on <code>&lt;body&gt;</code>
+            <code>'switchable'</code> (default) - follows the OS;
+            <code>.mw-theme-light</code> or <code>.mw-theme-dark</code> on
+            <code>&lt;html&gt;</code> pins one side
           </li>
           <li><code>'dark'</code> - compile dark theme only</li>
           <li><code>'light'</code> - compile light theme only</li>
@@ -299,7 +300,7 @@ body {
 );</code></pre>
         <h5 class="mw-mt-4">Theme switching</h5>
         <p>
-          Light mode is one class on <code>&lt;body&gt;</code>. Keep it in a
+          Light mode is one class on <code>&lt;html&gt;</code>. Keep it in a
           service so the choice survives navigation:
         </p>
         <pre class="mw-code-block"><code>// theme.service.ts
@@ -308,25 +309,25 @@ readonly light = signal(localStorage.getItem('mw-theme') === 'light');
 constructor() {
   effect(() =&gt; {
     const light = this.light();
-    document.body.classList.toggle('mw-theme-light', light);
+    document.documentElement.classList.toggle('mw-theme-light', light);
+    document.documentElement.classList.toggle('mw-theme-dark', !light);
     localStorage.setItem('mw-theme', light ? 'light' : 'dark');
   });
 }</code></pre>
         <h5 class="mw-mt-4">Reactive Forms</h5>
         <p>
           The <code>mw-field</code> wrapper groups label, control, hint and
-          error. Bind the error state yourself - the framework does not style
-          Angular's <code>ng-invalid</code> / <code>ng-touched</code>
-          classes:
+          error. The control turns red by itself from Angular's
+          <code>ng-invalid ng-touched</code>; the message is yours:
         </p>
-        <pre
-          class="mw-code-block"
-        ><code>&lt;div class="mw-field" [class.mw-field-has-error]="email.invalid && email.touched"&gt;
+        <pre class="mw-code-block"><code>&lt;div class="mw-field"&gt;
   &lt;label class="mw-field-label mw-required" for="email"&gt;Email&lt;/label&gt;
   &lt;input id="email" type="email" class="mw-input" formControlName="email" /&gt;
-  &lt;span class="mw-field-error" *ngIf="email.invalid && email.touched"&gt;
-    &lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; Please enter a valid email.
-  &lt;/span&gt;
+  @if (email.invalid && email.touched) {
+    &lt;span class="mw-field-error"&gt;
+      &lt;i class="fas fa-exclamation-circle"&gt;&lt;/i&gt; Please enter a valid email.
+    &lt;/span&gt;
+  }
 &lt;/div&gt;</code></pre>
       </div>
     </div>

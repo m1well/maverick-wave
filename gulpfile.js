@@ -116,6 +116,8 @@ gulp.task('inject-build-info', function () {
     .createHash('sha256')
     .update(fs.readFileSync(path.join(paths.dist, 'maverick-wave.min.css')))
     .update(fs.readFileSync(path.join(paths.dist, 'maverick-wave.min.js')))
+    .update(fs.readFileSync(path.join(paths.dist, 'showcase.css')))
+    .update(fs.readFileSync(path.join(paths.dist, 'showcase.js')))
     .digest('hex')
     .slice(0, 10);
 
@@ -174,7 +176,7 @@ gulp.task('watch', function () {
   gulp.watch('src/partials/*.html', gulp.series('html', 'inject-build-info'));
   gulp.watch(paths.decks, gulp.series('html', 'inject-build-info'));
   gulp.watch(paths.js, gulp.series('js-build', 'html', 'inject-build-info'));
-  gulp.watch(paths.assets, gulp.series('assets'));
+  gulp.watch(paths.assets, gulp.series('assets', 'html', 'inject-build-info'));
 });
 
 // Build task

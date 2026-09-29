@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include('./src/partials/site-head.html')
+    <title>Specials - MaverickWave</title>
+  </head>
+
+  <body>
+    @@include('./src/partials/site-top.html')
+
+    <main class="mw-main" id="main">
+      <!-- Specials section -->
+      <section id="specials" class="mw-section">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Specials</h2>
+            <p class="mw-section-head-intro">
+              Whole pages and site-wide extras rather than building blocks - an
+              article, a slide deck, a tool stack and a seasonal dress for every
+              card.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#compare" class="mw-section-btn">Before &amp; After</a>
+            <a href="#deck" class="mw-section-btn">Presentations</a>
+            <a href="#devices" class="mw-section-btn">Device Frames</a>
+            <a href="#action-bar" class="mw-section-btn">Action Bar</a>
+            <a href="#techstack-bucket" class="mw-section-btn"
+              >Technology Stack Bucket</a
+            >
+            <a href="#occasions" class="mw-section-btn">Occasions</a>
+            <a href="#blog-posts" class="mw-section-btn">Blog Posts</a>
+          </nav>
+
+          <!-- Compare container -->
+          <div id="compare">
+            @@include('./src/partials/compare-container.html')
+          </div>
+
+          <!-- Deck container-->
+          <div id="deck">@@include('./src/partials/deck-container.html')</div>
+
+          <!-- Devices container-->
+          <div id="devices">
+            @@include('./src/partials/devices-container.html')
+          </div>
+
+          <!-- Action bar container -->
+          <div id="action-bar">
+            @@include('./src/partials/action-bar-container.html')
+          </div>
+
+          <!-- Tech stack container-->
+          <div id="techstack-bucket">
+            @@include('./src/partials/techstack-bucket-container.html')
+          </div>
+
+          <!-- Occasions container -->
+          <div id="occasions">
+            @@include('./src/partials/occasions-container.html')
+          </div>
+
+          <!-- Blogposts container-->
+          <div id="blog-posts">
+            @@include('./src/partials/blog-posts-container.html')
+          </div>
+        </div>
+      </section>
+    </main>
+
+    @@include('./src/partials/site-bottom.html')
+  </body>
+</html>

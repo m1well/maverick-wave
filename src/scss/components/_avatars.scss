@@ -272,4 +272,21 @@
       background: #{$col};
     }
   }
+
+  // The rest of a group as a count - "+4" after the faces that fit
+  .mw-avatar-more {
+    align-items: center;
+    justify-content: center;
+    background: var(--mw-surface-muted);
+    color: var(--mw-text-color);
+    font-weight: font-weight('bold');
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    user-select: none;
+
+    // No photo, so neither the corner arc nor the sweep has anything to mark
+    &::before {
+      content: none;
+    }
+  }
 }

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include('./src/partials/site-head.html')
+    <title>Forms - MaverickWave</title>
+  </head>
+
+  <body>
+    @@include('./src/partials/site-top.html')
+
+    <main class="mw-main" id="main">
+      <!-- Forms section -->
+      <section id="forms" class="mw-section">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Forms</h2>
+            <p class="mw-section-head-intro">
+              Inputs, selects, toggles and validation - fields and buttons share
+              one height scale by construction.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#form-elements" class="mw-section-btn">Form Elements</a>
+            <a href="#input-group" class="mw-section-btn">Input Group</a>
+            <a href="#segmented" class="mw-section-btn">Segmented Control</a>
+            <a href="#form-field" class="mw-section-btn">Field Pattern</a>
+            <a href="#form" class="mw-section-btn">Form</a>
+            <a href="#login" class="mw-section-btn">Login</a>
+          </nav>
+
+          <!-- Form elements container -->
+          <div id="form-elements">
+            @@include('./src/partials/form-elements-container.html')
+          </div>
+
+          <!-- Input Group container -->
+          <div id="input-group">
+            @@include('./src/partials/input-group-container.html')
+          </div>
+
+          <!-- Segmented control container -->
+          <div id="segmented">
+            @@include('./src/partials/segmented-container.html')
+          </div>
+
+          <!-- Form Field pattern container -->
+          <div id="form-field">
+            @@include('./src/partials/form-field-container.html')
+          </div>
+
+          <!-- Form container -->
+          <div id="form">@@include('./src/partials/form-container.html')</div>
+
+          <!-- Login container -->
+          <div id="login">@@include('./src/partials/login-container.html')</div>
+        </div>
+      </section>
+    </main>
+
+    @@include('./src/partials/site-bottom.html')
+  </body>
+</html>

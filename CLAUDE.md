@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MaverickWave is a lightweight, modern CSS framework providing a grid system, 59 UI components, utility classes, and light/dark mode support. The repo also contains the showcase/documentation website bundled into the distribution.
+MaverickWave is a lightweight, modern CSS framework providing a grid system, 70 UI components, utility classes, and light/dark mode support. The repo also contains the showcase/documentation website bundled into the distribution.
 
 ## Commands
 
@@ -30,7 +30,7 @@ There are no test or lint scripts.
 
 - `abstracts/` - CSS custom properties, mixins, SCSS functions (color variant generation)
 - `base/` - Reset, element defaults, typography
-- `components/` - Self-contained component styles (59 files, one per component)
+- `components/` - Self-contained component styles (70 files, one per component)
 - `form-elements/` - Form input/select/checkbox-specific styles
 - `layout/` - Grid, container, header/footer, section
 - `utilities/` - Spacing, flex, display utility classes
@@ -40,16 +40,16 @@ There are no test or lint scripts.
 to it. `media-down($bp)` only for rules that set what the base never sets, or
 where the narrow layout costs more properties than the wide one.
 
-**JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery and image sliders, theme toggle (persisted to localStorage, transitions suppressed during the flip), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs (which also get their ARIA and arrow-key handling here), alerts/toasts, modals, range inputs, dropdowns, language switcher, checkbox lists, kanban board, calendar, portrait gallery, mosaic, lightbox, story reels.
+**JavaScript** (`src/js/main.js`) - Single file. All components auto-initialize on `DOMContentLoaded`. Includes: gallery and image sliders, theme toggle (persisted to localStorage, transitions suppressed during the flip), accordion, mobile nav, progress bar (IntersectionObserver), scroll spy, tabs (which also get their ARIA and arrow-key handling here), alerts/toasts, modals (native `<dialog>`), app shell (sidebar, aside, remembered state), compare slider, occasions scroll fallback, range inputs, dropdowns, language switcher, checkbox lists, kanban board, calendar, portrait gallery, mosaic, lightbox, story reels.
 
-**HTML showcase** (`index.html` + `src/partials/`) - The top-level `index.html` uses `@@include()` syntax to pull in 72 partials from `src/partials/`. These compile into `dist/index.html`.
+**HTML showcase** (`*.html` + `src/partials/`) - One top-level page per section (`index.html`, `foundations.html`, `layout.html`, `components.html`, `forms.html`, `data-display.html`, `specials.html`), each pulling its partials from `src/partials/` with `@@include()`. Head, header and footer with the palette panel come from `site-head.html`, `site-top.html` and `site-bottom.html`; showcase-only CSS and JS live in `src/assets/showcase.css` and `showcase.js`. `npm run verify` checks that every link between the pages lands on an id.
 
 ## Naming Conventions
 
 - **CSS classes**: `mw-` prefix for all framework classes (`.mw-btn`, `.mw-card`, `.mw-modal`)
 - **State classes**: `.mw-active`, `.mw-selected`
 - **CSS custom properties**: `--mw-` prefix (`--mw-primary-color`, `--mw-font-family-base`)
-- **Theme control**: `--mw-internal-theme-mode` CSS var controls whether theme is switchable/fixed-light/fixed-dark; body class `mw-theme-light` toggles light mode
+- **Theme control**: `--mw-internal-theme-mode` CSS var controls whether theme is switchable/fixed-light/fixed-dark; class `mw-theme-light` / `mw-theme-dark` on `<html>` pins a theme, without it the page follows the OS
 
 ## Code Formatting
 

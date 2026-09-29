@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+@if $mw-page-transitions {
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
+  }
+
+  @layer mw.base {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: var(--mw-duration-slow);
+      animation-timing-function: var(--mw-ease-in-out);
+    }
+
+    // mw-motion-off cannot reach the at-rule above, so the pages swap unfaded
+    :root.mw-motion-off::view-transition-group(*),
+    :root.mw-motion-off::view-transition-old(*),
+    :root.mw-motion-off::view-transition-new(*) {
+      animation-name: none;
+    }
+
+    // Its own group, so the bar stands still while the page under it fades
+    .mw-header {
+      view-transition-name: mw-header;
+    }
+  }
+}

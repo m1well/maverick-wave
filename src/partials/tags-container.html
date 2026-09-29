@@ -240,3 +240,37 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-card-title mw-mt-8 mw-mb-4">Filter chips</h3>
+<div class="mw-card mw-card-simple">
+  <p class="mw-text-muted mw-text-sm mw-mb-3">
+    A <code>mw-tag</code> written as a <code>&lt;button&gt;</code> or a link is
+    a control: focus ring, and a thumb-sized floor on touch.
+    <code>aria-pressed="true"</code> (or <code>mw-active</code> on a link) fills
+    it and adds a tick, so the state never rests on colour alone.
+  </p>
+  <div
+    class="mw-tags"
+    role="group"
+    aria-label="Filter by status"
+    data-chip-demo
+  >
+    <button type="button" class="mw-tag" aria-pressed="true">All</button>
+    <button type="button" class="mw-tag" aria-pressed="false">Open</button>
+    <button type="button" class="mw-tag mw-tag-success" aria-pressed="true">
+      Paid
+    </button>
+    <button type="button" class="mw-tag mw-tag-danger" aria-pressed="false">
+      Overdue
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-chip-demo] button').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const pressed = chip.getAttribute('aria-pressed') === 'true';
+      chip.setAttribute('aria-pressed', String(!pressed));
+    });
+  });
+</script>

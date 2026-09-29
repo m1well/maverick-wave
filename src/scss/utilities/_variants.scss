@@ -44,12 +44,7 @@
   // page, told apart by their line alone. That line then has to carry them:
   // --mw-border is a neighbouring shade of the surface and reads as nothing once
   // the surface *is* the page, so it is redrawn from the ink instead.
-  //
-  // Theme-bound tokens, and those *are* re-declared on <body> when the toggle puts
-  // .mw-theme-light there - a value written on :root alone would be shadowed for
-  // the whole body subtree and the switch would do nothing in light mode.
-  :root.mw-surfaces-flush,
-  :root.mw-surfaces-flush .mw-theme-light {
+  :root.mw-surfaces-flush {
     --mw-card-background: var(--mw-page-background);
     --mw-footer-background: var(--mw-page-background);
     --mw-border: color-mix(in srgb, var(--mw-text-color) 20%, transparent);
@@ -223,6 +218,30 @@
       // would otherwise go completely dead under the pointer.
       &:hover:not(:disabled) {
         text-decoration-thickness: 3px;
+      }
+    }
+  }
+}
+
+@layer mw.utilities {
+  // Near-black from a root source: ink would be a light slab on a dark page
+  :root.mw-shadows-hard {
+    --mw-shadow-hard: oklch(from var(--mw-light-text-color) min(l, 0.12) c h);
+
+    @each $level, $offset in (1: 2px, 2: 4px, 3: 6px, 4: 8px, 5: 10px) {
+      --mw-elevation-#{$level}: #{$offset} #{$offset} 0 var(--mw-shadow-hard);
+    }
+  }
+}
+
+@layer mw.utilities {
+  // Black or white per fill by contrast-color(); without it the set tokens stay
+  @supports (color: contrast-color(red)) {
+    :root.mw-accent-text-auto {
+      @each $name in (primary, secondary, success, warning, danger, info) {
+        --mw-#{$name}-accent-text-color: contrast-color(
+          var(--mw-#{$name}-color)
+        );
       }
     }
   }

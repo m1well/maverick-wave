@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    @@include('./src/partials/site-head.html')
+    <title>Layout - MaverickWave</title>
+  </head>
+
+  <body>
+    @@include('./src/partials/site-top.html')
+
+    <main class="mw-main" id="main">
+      <!-- Layout section -->
+      <section id="layout" class="mw-section">
+        <div class="mw-container">
+          <div class="mw-section-head">
+            <h2 class="mw-section-head-title">Layout</h2>
+            <p class="mw-section-head-intro">
+              The bones of a page - grids, cards, panels and the containers that
+              hold content together.
+            </p>
+          </div>
+          <nav class="mw-section-nav">
+            <a href="#section-head" class="mw-section-btn">Section Head</a>
+            <a href="#grid" class="mw-section-btn">Grid System</a>
+            <a href="#bento" class="mw-section-btn">Bento Grid</a>
+            <a href="#app-shell" class="mw-section-btn">App Shell</a>
+            <a href="#footer-variants" class="mw-section-btn">Footer</a>
+            <a href="#cards" class="mw-section-btn">Cards</a>
+            <a href="#panels" class="mw-section-btn">Panels</a>
+            <a href="#tabs" class="mw-section-btn">Tabs</a>
+            <a href="#accordions" class="mw-section-btn">Accordions</a>
+            <a href="#faq" class="mw-section-btn">FAQ</a>
+            <a href="#tiles" class="mw-section-btn">Tiles</a>
+            <a href="#breadcrumbs" class="mw-section-btn">Breadcrumbs</a>
+            <a href="#modals" class="mw-section-btn">Modals</a>
+            <a href="#html-lists" class="mw-section-btn">HTML Lists</a>
+            <a href="#item-lists" class="mw-section-btn">Item Lists</a>
+            <a href="#leader-row" class="mw-section-btn">Leader Row</a>
+            <a href="#stepper" class="mw-section-btn">Stepper</a>
+            <a href="#parallax" class="mw-section-btn">Parallax</a>
+          </nav>
+
+          <!-- Section head container -->
+          <div id="section-head">
+            @@include('./src/partials/section-head-container.html')
+          </div>
+
+          <!-- Grid container -->
+          <div id="grid">@@include('./src/partials/grid-container.html')</div>
+
+          <!-- Bento container -->
+          <div id="bento">@@include('./src/partials/bento-container.html')</div>
+
+          <!-- App shell container -->
+          <div id="app-shell">
+            @@include('./src/partials/app-shell-container.html')
+          </div>
+
+          <!-- Footer variants container -->
+          <div id="footer-variants">
+            @@include('./src/partials/footer-variants-container.html')
+          </div>
+
+          <!-- Cards container -->
+          <div id="cards">@@include('./src/partials/cards-container.html')</div>
+
+          <!-- Panels container -->
+          <div id="panels">
+            @@include('./src/partials/panels-container.html')
+          </div>
+
+          <!-- Tabs container -->
+          <div id="tabs">@@include('./src/partials/tabs-container.html')</div>
+
+          <!-- Accordions contaier -->
+          <div id="accordions">
+            @@include('./src/partials/accordions-container.html')
+          </div>
+
+          <!-- FAQ container -->
+          <div id="faq">@@include('./src/partials/faq-container.html')</div>
+
+          <!-- Tiles container -->
+          <div id="tiles">@@include('./src/partials/tiles-container.html')</div>
+
+          <!-- Breadcrumbs container -->
+          <div id="breadcrumbs">
+            @@include('./src/partials/breadcrumbs-container.html')
+          </div>
+
+          <!-- Modals container -->
+          <div id="modals">
+            @@include('./src/partials/modals-container.html')
+          </div>
+
+          <!-- HTML Lists container -->
+          <div id="html-lists">
+            @@include('./src/partials/html-lists-container.html')
+          </div>
+
+          <!-- Item Lists container -->
+          <div id="item-lists">
+            @@include('./src/partials/item-lists-container.html')
+          </div>
+
+          <!-- Leader Row container -->
+          <div id="leader-row">
+            @@include('./src/partials/leader-row-container.html')
+          </div>
+
+          <!-- Stepper container -->
+          <div id="stepper">
+            @@include('./src/partials/stepper-container.html')
+          </div>
+
+          <!-- Parallax container -->
+          <div id="parallax">
+            @@include('./src/partials/parallax-container.html')
+          </div>
+        </div>
+      </section>
+
+      <!-- Parallax band -->
+      <section class="mw-parallax-slow parallax-band-demo">
+        <div class="mw-parallax mw-parallax-dimmed">
+          <div class="mw-parallax-media"></div>
+          <div class="mw-parallax-content mw-text-center">
+            <div class="mw-container">
+              <h2>The page rides over the picture</h2>
+              <p class="mw-mb-0">
+                This band travels at a fifth of your scrolling. The components
+                close in from below.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    @@include('./src/partials/site-bottom.html')
+  </body>
+</html>

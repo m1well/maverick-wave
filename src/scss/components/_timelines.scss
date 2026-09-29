@@ -16,14 +16,29 @@
     }
   }
 
+  // Never further than the page gutter, or the slide scrolls the page sideways
   @keyframes mw-slide-in-right {
     from {
       opacity: 0;
-      transform: translateX(60px);
+      transform: translateX(
+        min(60px, calc(var(--mw-container-gutter) - #{spacing('3')}))
+      );
     }
     to {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+
+  // From the side, a full-width column runs past the screen edge while it plays
+  @keyframes mw-timeline-rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -223,6 +238,7 @@
       // Override odd/even: content always full-width below the date
       &-step:nth-child(odd) &-content,
       &-step:nth-child(even) &-content {
+        animation-name: mw-timeline-rise;
         align-self: stretch;
         width: 100%;
         padding-left: 0;
@@ -305,6 +321,14 @@
       opacity: 0;
     }
 
+    // Every step: the stagger covers ten, an eleventh stayed at opacity 0
+    &-step &-content {
+      animation-name: mw-slide-in-right;
+      animation-duration: var(--mw-duration-slow);
+      animation-timing-function: var(--mw-ease-out);
+      animation-fill-mode: forwards;
+    }
+
     // Staggered animation
     @for $i from 1 through 10 {
       &-step:nth-child(#{$i}) &-content {
@@ -314,6 +338,10 @@
           forwards;
         animation-delay: $i * 0.2s;
       }
+    }
+
+    &-step:nth-child(n + 11) &-content {
+      animation-delay: 2.2s;
     }
 
     // Active step
@@ -350,6 +378,115 @@
       &-content {
         align-self: stretch;
         padding-left: spacing('3');
+      }
+
+      &-step:nth-child(n) &-content {
+        animation-name: mw-timeline-rise;
+      }
+    }
+  }
+
+  // An activity feed or audit log: many lines, no entrance to wait for
+  .mw-timeline-compact {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: spacing('2');
+      bottom: spacing('2');
+      left: calc(#{spacing('2')} - 1px);
+      width: 2px;
+      background: var(--mw-border);
+    }
+  }
+
+  .mw-timeline-compact-item {
+    --mw-timeline-dot: var(--mw-primary-text-color);
+
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0 spacing('3');
+    padding: 0 0 spacing('4') spacing('6');
+    font-size: font-size('sm');
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    // The dot sits on the line, ringed in the page colour so the line breaks
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.4em;
+      left: 0;
+      width: spacing('4');
+      height: spacing('4');
+      border-radius: radius('full');
+      background: var(--mw-timeline-dot);
+      box-shadow: 0 0 0 3px var(--mw-page-background);
+    }
+
+    @include media-up('sm') {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+    }
+  }
+
+  .mw-timeline-compact-time {
+    color: var(--mw-text-muted-color);
+    font-size: font-size('xs');
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    @include media-up('sm') {
+      padding-top: 0.15em;
+    }
+  }
+
+  .mw-timeline-compact-body {
+    min-width: 0;
+    color: var(--mw-text-color);
+    overflow-wrap: anywhere;
+  }
+
+  @each $name, $col in $semantic-colors {
+    .mw-timeline-compact-#{$name} {
+      --mw-timeline-dot: var(--mw-#{$name}-text-color);
+    }
+  }
+
+  // On a surface the ring has to match the surface, not the page
+  :is(.mw-card, .mw-panel, .mw-modal, .mw-app-aside)
+    .mw-timeline-compact-item::before {
+    box-shadow: 0 0 0 3px var(--mw-card-background);
+  }
+
+  // Forced colours drop the lines and dots (fills) and the active date's colour
+  @media (forced-colors: active) {
+    .mw-timeline-big::before,
+    .mw-timeline-simple::before,
+    .mw-timeline-compact::before,
+    .mw-timeline-compact-item::before {
+      forced-color-adjust: none;
+      background: CanvasText;
+    }
+
+    .mw-timeline-big-step:is(.mw-active, .active)
+      .mw-timeline-big-date-container,
+    .mw-timeline-simple-step:is(.mw-active, .active) .mw-timeline-simple-date {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+
+      // The date classes named too: they outweigh a bare `*`
+      *,
+      .mw-timeline-big-date-main,
+      .mw-timeline-big-date-sub {
+        color: inherit;
       }
     }
   }

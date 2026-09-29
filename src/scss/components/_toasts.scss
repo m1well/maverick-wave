@@ -37,11 +37,15 @@
       transform: translateX(-50%);
     }
 
+    // The reserve only exists while an action bar holds the foot of the screen
     &-bottom-right {
-      bottom: spacing('5');
+      bottom: calc(#{spacing('5')} + var(--mw-action-bar-reserve, 0px));
       right: spacing('5');
       top: auto;
       left: auto;
+      max-height: calc(
+        100dvh - #{2 * spacing('5')} - var(--mw-action-bar-reserve, 0px)
+      );
       flex-direction: column-reverse;
 
       > * {

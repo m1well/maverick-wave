@@ -33,7 +33,7 @@
       display: none;
     }
 
-    @media (prefers-reduced-motion: no-preference) {
+    @include motion-safe {
       scroll-behavior: smooth;
     }
   }

@@ -3,8 +3,6 @@
   A <code>&lt;dialog&gt;</code> carrying the same <code>mw-modal</code> classes.
   Escape, the focus trap and the inert page behind it come from the element, the
   page scroll lock from the stylesheet - only opening it needs a line of script.
-  The older <code>mw-modal-overlay</code> div is still styled for markup that
-  predates this.
 </p>
 
 <!-- Size Triggers -->
@@ -35,10 +33,28 @@
   </button>
 </div>
 
+<h4 class="mw-mb-3">Drawers</h4>
+<p class="mw-text-muted mw-text-measure mw-mb-3">
+  <code>mw-modal-drawer</code> turns the same dialog into a full-height panel on
+  the right edge, with <code>mw-modal-drawer-start</code> on the left. The body
+  scrolls between a fixed header and footer, and on a phone it stays a side
+  panel instead of becoming a sheet. Opened with <code>show()</code> instead of
+  <code>showModal()</code> it sits beside the content and leaves the page usable
+  - a copilot or a detail view.
+</p>
+<div class="mw-grid-2 mw-mb-8">
+  <button data-mw-modal="modal-drawer" class="mw-btn mw-btn-outline">
+    Open Filter Drawer
+  </button>
+  <button data-mw-modal="modal-drawer-start" class="mw-btn mw-btn-outline">
+    Open Drawer From the Start
+  </button>
+</div>
+
 <!-- The close buttons carry no handler - the framework script closes the dialog
-     they sit in - and closedby="any" dismisses it on a backdrop click, so there
-     is no mw-modal-backdrop element either. `data-mw-modal` on a trigger opens
-     the dialog with that id. -->
+     they sit in - and closedby="any" dismisses it on a backdrop click, so no
+     backdrop element is needed. `data-mw-modal` on a trigger opens the dialog
+     with that id. -->
 <!-- Small Modal -->
 <dialog id="modal-sm" class="mw-modal mw-modal-sm" closedby="any">
   <div class="mw-modal-header">
@@ -195,5 +211,77 @@
     <p class="mw-actions-note">This action cannot be undone.</p>
     <button class="mw-modal-close mw-btn mw-btn-outline">Cancel</button>
     <button class="mw-modal-close mw-btn mw-btn-danger">Delete</button>
+  </div>
+</dialog>
+
+<!-- Drawer -->
+<dialog
+  id="modal-drawer"
+  class="mw-modal mw-modal-drawer"
+  closedby="any"
+  aria-labelledby="modal-drawer-title"
+>
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title" id="modal-drawer-title">Filters</h4>
+    <button class="mw-modal-close" aria-label="Close">&#120299;</button>
+  </div>
+  <div class="mw-modal-body">
+    <div class="mw-mb-4">
+      <label for="drawer-search">
+        <span>Search</span>
+        <input
+          id="drawer-search"
+          type="search"
+          class="mw-input"
+          placeholder="Name or number"
+        />
+      </label>
+    </div>
+    <div class="mw-mb-4">
+      <label for="drawer-status">
+        <span>Status</span>
+        <select id="drawer-status" class="mw-select">
+          <option>Any</option>
+          <option>Open</option>
+          <option>In progress</option>
+          <option>Done</option>
+        </select>
+      </label>
+    </div>
+    <label class="mw-toggle mw-mb-4">
+      <input type="checkbox" checked />
+      <div class="mw-toggle-track"></div>
+      <span class="mw-toggle-label">Only my projects</span>
+    </label>
+    <p class="mw-text-muted">
+      The body takes whatever height the header and footer leave and scrolls
+      inside it, so the actions stay in reach however long the form gets.
+    </p>
+  </div>
+  <div class="mw-modal-footer">
+    <button class="mw-modal-close mw-btn mw-btn-outline">Reset</button>
+    <button class="mw-modal-close mw-btn mw-btn-primary">Apply</button>
+  </div>
+</dialog>
+
+<!-- Drawer from the start edge -->
+<dialog
+  id="modal-drawer-start"
+  class="mw-modal mw-modal-drawer mw-modal-drawer-start"
+  closedby="any"
+  aria-labelledby="modal-drawer-start-title"
+>
+  <div class="mw-modal-header">
+    <h4 class="mw-modal-title" id="modal-drawer-start-title">Chapters</h4>
+    <button class="mw-modal-close" aria-label="Close">&#120299;</button>
+  </div>
+  <div class="mw-modal-body">
+    <p>
+      The start edge suits navigation - a table of contents, a folder tree, a
+      list of conversations.
+    </p>
+    <p class="mw-text-muted mw-mb-0">
+      Without a footer the body runs down to the bottom edge.
+    </p>
   </div>
 </dialog>

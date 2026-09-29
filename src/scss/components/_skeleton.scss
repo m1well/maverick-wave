@@ -81,4 +81,12 @@
       gap: spacing('3');
     }
   }
+
+  // The placeholder is nothing but a fill, which forced colours would drop
+  @media (forced-colors: active) {
+    .mw-skeleton {
+      forced-color-adjust: none;
+      background: GrayText;
+    }
+  }
 }

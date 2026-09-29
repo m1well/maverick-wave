@@ -29,18 +29,6 @@
       background: var(--mw-gray-background);
     }
 
-    // The tinted surface at rest, not the hovered one. A row starts out
-    // transparent, so it takes the whole step in one go - and at the hover tone
-    // it lands close enough to the solid header above it to read as selected
-    // rather than as pointed at. A badge or a tag is already sitting on the
-    // resting tint, which is why the louder one is right there and not here.
-    tr:hover {
-      td {
-        background: var(--mw-primary-background);
-        color: var(--mw-text-color);
-      }
-    }
-
     @include media-up('sm') {
       th,
       td {
@@ -145,11 +133,10 @@
     }
   }
 
-  // Hoverable rows
-  .mw-table-hover {
-    tbody tr:hover {
-      background: var(--mw-primary-background);
-    }
+  // The resting tint: the hover tone next to the solid header reads as selected
+  .mw-table-hover tbody tr:hover > td {
+    background: var(--mw-primary-background);
+    color: var(--mw-text-color);
   }
 
   // Quiet header for data-heavy views
@@ -190,6 +177,162 @@
     // Rows get shorter on small screens
     @include media-up('sm') {
       --mw-table-scroll-height: 400px;
+    }
+  }
+
+  // The button sorts, aria-sort says which way - the arrow only repeats it
+  .mw-table th[aria-sort] > button {
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    // The header's fill is the ring's usual tone
+    @include focus-ring($color: currentColor);
+  }
+
+  .mw-table th[aria-sort]::after {
+    content: '';
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    margin-left: spacing('2');
+    vertical-align: middle;
+    background: currentColor;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    opacity: 0.45;
+  }
+
+  .mw-table th[aria-sort='ascending']::after {
+    clip-path: polygon(50% 10%, 100% 90%, 0 90%);
+    opacity: 1;
+  }
+
+  .mw-table th[aria-sort='descending']::after {
+    clip-path: polygon(0 10%, 100% 10%, 50% 90%);
+    opacity: 1;
+  }
+
+  // Set by the app or by a checked first cell; an edge too, not colour alone
+  $_selected-row: ':is([aria-selected="true"], .mw-selected, :has(> :first-child input[type="checkbox"]:checked))';
+
+  .mw-table tr#{$_selected-row} > td {
+    background: var(--mw-primary-background-hover);
+    color: var(--mw-text-color);
+
+    &:first-child {
+      box-shadow: inset 3px 0 0 var(--mw-primary-text-color);
+    }
+  }
+
+  // After the table in the markup, so the counter has seen every row first
+  .mw-table-bulk {
+    counter-reset: mw-table-selected;
+  }
+
+  .mw-table-bulk tbody tr > :first-child input[type='checkbox']:checked {
+    counter-increment: mw-table-selected;
+  }
+
+  .mw-table-bulk-bar {
+    position: sticky;
+    bottom: calc(#{spacing('4')} + var(--mw-action-bar-reserve, 0px));
+    z-index: z-index('menu');
+    display: none;
+    align-items: center;
+    gap: spacing('3');
+    width: fit-content;
+    max-width: 100%;
+    margin: spacing('4') auto 0;
+    padding: spacing('2') spacing('2') spacing('2') spacing('5');
+    border-radius: radius-sharp() radius('lg') radius-sharp() radius('lg');
+    background: var(--mw-header-background);
+    color: var(--mw-header-text-color);
+    box-shadow: var(--mw-elevation-4);
+    // Dark in both themes like the header bar, so what sits in it reads dark too
+    color-scheme: dark;
+    --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
+  }
+
+  .mw-table-bulk:has(tbody tr > :first-child input[type='checkbox']:checked)
+    .mw-table-bulk-bar {
+    display: flex;
+  }
+
+  .mw-table-bulk-count {
+    font-weight: font-weight('medium');
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+
+    // Empty, the bar counts for itself; an app that knows the number writes it
+    &:empty::before {
+      content: counter(mw-table-selected);
+    }
+  }
+
+  // Sticky cells need an opaque tone of their own, or the row slides through
+  .mw-table-sticky-col :is(th, td):first-child {
+    position: sticky;
+    left: 0;
+    z-index: z-index('lift');
+    // A collapsed border stays behind when the cell sticks, so it draws its own
+    box-shadow: inset -1px 0 0 var(--mw-border);
+  }
+
+  .mw-table-sticky-col th:first-child {
+    z-index: z-index('lift') + 1;
+  }
+
+  .mw-table-sticky-col td:first-child {
+    background: var(--mw-card-background);
+  }
+
+  .mw-table-sticky-col tr:nth-child(even) > td:first-child {
+    background: color-mix(
+      in srgb,
+      var(--mw-gray-color) 20%,
+      var(--mw-card-background)
+    );
+  }
+
+  .mw-table-sticky-col.mw-table-hover tr:hover > td:first-child {
+    background: color-mix(
+      in srgb,
+      var(--mw-primary-color) 30%,
+      var(--mw-card-background)
+    );
+  }
+
+  .mw-table-sticky-col tr#{$_selected-row} > td:first-child {
+    background: color-mix(
+      in srgb,
+      var(--mw-primary-color) 50%,
+      var(--mw-card-background)
+    );
+    box-shadow:
+      inset 3px 0 0 var(--mw-primary-text-color),
+      inset -1px 0 0 var(--mw-border);
+  }
+
+  // Forced colours drop fills: selection in Highlight, the arrow in text colour
+  @media (forced-colors: active) {
+    .mw-table tr#{$_selected-row} > td,
+    .mw-table-sticky-col tr#{$_selected-row} > td:first-child {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      box-shadow: none;
+
+      * {
+        color: inherit;
+      }
+    }
+
+    .mw-table th[aria-sort]::after {
+      forced-color-adjust: none;
+      background: CanvasText;
     }
   }
 }

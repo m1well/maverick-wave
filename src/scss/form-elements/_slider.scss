@@ -121,4 +121,22 @@
       }
     }
   }
+
+  // The filled track is a gradient, which forced colours would drop
+  @media (forced-colors: active) {
+    .mw-slider {
+      forced-color-adjust: none;
+      --fill: Highlight;
+      --track: GrayText;
+      --mw-focus-ring-color: CanvasText;
+
+      &::-webkit-slider-thumb {
+        border-color: CanvasText;
+      }
+
+      &::-moz-range-thumb {
+        border-color: CanvasText;
+      }
+    }
+  }
 }

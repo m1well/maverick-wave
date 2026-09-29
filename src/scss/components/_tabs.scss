@@ -1,6 +1,17 @@
 @use '../abstracts' as *;
 
 @layer mw.components {
+  // aria-selected carries the same state, for a tablist an application renders
+  @mixin _selected {
+    @include active {
+      @content;
+    }
+
+    &[aria-selected='true'] {
+      @content;
+    }
+  }
+
   // Registered, so a half-written value from the script cannot invalidate the
   // whole `transform` and leave the marker somewhere other than at rest.
   // `inherits: true` because the bar is the nav's ::after, and a pseudo element
@@ -85,9 +96,15 @@
         transition-duration: var(--mw-duration-instant);
       }
 
-      @include active() {
+      @include _selected {
         color: var(--mw-primary-text-color);
         border-bottom-color: var(--mw-primary-text-color);
+      }
+
+      &:is(:disabled, [aria-disabled='true']) {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
       }
     }
 
@@ -177,7 +194,7 @@
         border-bottom: none;
         border-right: 2px solid transparent;
 
-        @include active() {
+        @include _selected {
           border-right-color: var(--mw-primary-text-color);
         }
 
@@ -186,7 +203,7 @@
           border-bottom: 2px solid transparent;
           flex-shrink: 0;
 
-          @include active() {
+          @include _selected {
             border-right-color: transparent;
             border-bottom-color: var(--mw-primary-text-color);
           }
@@ -273,7 +290,7 @@
         border: 1px solid var(--mw-border-accent);
         background: var(--mw-card-background);
 
-        @include active() {
+        @include _selected {
           background: var(--mw-primary-color);
           color: var(--mw-primary-accent-text-color);
         }
@@ -287,6 +304,27 @@
     }
     to {
       opacity: 1;
+    }
+  }
+
+  // Forced colours drop the travelling bar and the pill's fill
+  @media (forced-colors: active) {
+    .mw-tabs-nav[data-mw-tabs-marker]::after {
+      forced-color-adjust: none;
+      background: Highlight;
+    }
+
+    .mw-tabs-nav-item:is(.mw-active, .active, [aria-selected='true']) {
+      text-decoration: underline 2px;
+      text-underline-offset: 0.35em;
+    }
+
+    .mw-tabs-pills
+      .mw-tabs-nav-item:is(.mw-active, .active, [aria-selected='true']) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+      text-decoration: none;
     }
   }
 }

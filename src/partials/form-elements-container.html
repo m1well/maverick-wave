@@ -115,7 +115,21 @@
           <option>Option Three</option>
         </select>
       </label>
+      <!-- Custom list -->
+      <label for="select-custom">
+        <span>Custom list</span>
+        <select id="select-custom" class="mw-select mw-select-custom">
+          <option>Option One</option>
+          <option>Option Two</option>
+          <option>Option Three</option>
+        </select>
+      </label>
     </div>
+    <p class="mw-text-muted mw-text-measure mw-mb-0">
+      <code>mw-select-custom</code> draws the open list in the framework's look
+      where the browser can (Chrome 135+, Safari 27+) and leaves the native list
+      everywhere else - the value, the keyboard and the form stay the select's.
+    </p>
   </div>
 
   <div class="mw-card mw-card-simple">
@@ -188,8 +202,40 @@
           </label>
         </div>
       </div>
+
+      <!-- States a form sets on the input itself -->
+      <div class="mw-mb-6">
+        <h4 class="mw-mb-2">Set on the input</h4>
+        <div class="mw-checkbox-group">
+          <label class="mw-checkbox">
+            <input type="checkbox" id="checkbox-some" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">Some selected</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" disabled />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">disabled</div>
+          </label>
+          <label class="mw-checkbox">
+            <input type="checkbox" aria-invalid="true" />
+            <div class="mw-checkbox-box"></div>
+            <div class="mw-checkbox-label">aria-invalid</div>
+          </label>
+        </div>
+      </div>
     </div>
+    <p class="mw-text-muted mw-text-measure mw-mb-0">
+      The last group needs no class on the label: <code>indeterminate</code>,
+      <code>disabled</code> and <code>aria-invalid</code> on the input are
+      enough, and so are Angular's <code>ng-invalid ng-touched</code> - which is
+      what a reactive form sets when it disables or validates a control.
+    </p>
   </div>
+
+  <script>
+    document.getElementById('checkbox-some').indeterminate = true;
+  </script>
 
   <div class="mw-card mw-card-simple">
     <h3 class="mw-card-title">Radio Buttons with different sizes and colors</h3>

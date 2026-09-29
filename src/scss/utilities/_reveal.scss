@@ -10,26 +10,30 @@
   // context. Longhands and never the shorthand, which esbuild collapses into one
   // `animation:` that cannot carry a timeline.
   @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      :root:not(.mw-scroll-static) :is(.mw-reveal, .mw-reveal-stagger > *) {
+    :root:not(.mw-scroll-static) :is(.mw-reveal, .mw-reveal-stagger > *) {
+      @include motion-safe {
         animation-name: mw-reveal;
         animation-timing-function: var(--mw-ease-out);
         animation-fill-mode: backwards;
         animation-timeline: view();
         @include reveal-range(1);
       }
+    }
 
-      // A row crosses the viewport edge on one scroll step, so mw-reveal on each
-      // card rises as one slab. This shifts every second and third child instead -
-      // a wave. On the grid and not the cards, because the grid knows the columns.
-      //
-      // Cycles of three are the fallback for anything that is not one of the fixed
-      // grids; mw-grid-2 to -5 restate the cycle to their own count in _grid.scss.
-      .mw-reveal-stagger > :nth-child(3n + 2) {
+    // A row crosses the viewport edge on one scroll step, so mw-reveal on each
+    // card rises as one slab. This shifts every second and third child instead -
+    // a wave. On the grid and not the cards, because the grid knows the columns.
+    //
+    // Cycles of three are the fallback for anything that is not one of the fixed
+    // grids; mw-grid-2 to -5 restate the cycle to their own count in _grid.scss.
+    .mw-reveal-stagger > :nth-child(3n + 2) {
+      @include motion-safe {
         @include reveal-range(2);
       }
+    }
 
-      .mw-reveal-stagger > :nth-child(3n + 3) {
+    .mw-reveal-stagger > :nth-child(3n + 3) {
+      @include motion-safe {
         @include reveal-range(3);
       }
     }
@@ -40,21 +44,25 @@
   // waits below the fold, `mw-reveal-run` once it enters. Both classes are
   // added by the script and never by the markup - a page without JS keeps
   // everything visible, which is what the guard above is for.
-  @media (prefers-reduced-motion: no-preference) {
-    .mw-reveal-hidden {
+  .mw-reveal-hidden {
+    @include motion-safe {
       opacity: 0;
       transform: translateY(40px);
     }
+  }
 
-    // The script has already hidden whatever was below the fold when the class
-    // arrives, and it only ever un-hides on intersection - without this the
-    // switch would leave those elements invisible instead of static.
-    :root.mw-scroll-static .mw-reveal-hidden {
+  // The script has already hidden whatever was below the fold when the class
+  // arrives, and it only ever un-hides on intersection - without this the
+  // switch would leave those elements invisible instead of static.
+  :root.mw-scroll-static .mw-reveal-hidden {
+    @include motion-safe {
       opacity: 1;
       transform: none;
     }
+  }
 
-    .mw-reveal-run {
+  .mw-reveal-run {
+    @include motion-safe {
       // `backwards` for the reason above - a forwards fill would pin the
       // transform and cost the card its hover lift. The delay comes inline,
       // from the element's column.

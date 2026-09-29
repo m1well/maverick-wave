@@ -33,7 +33,9 @@
       transition: transform var(--mw-duration-fast) var(--mw-ease-out);
     }
 
-    &[open] .mw-dropdown-caret {
+    // aria-expanded too, for a trigger an app opens itself instead of <details>
+    &[open] .mw-dropdown-caret,
+    > [aria-expanded='true'] .mw-dropdown-caret {
       transform: rotate(180deg);
     }
   }
@@ -128,7 +130,8 @@
 
     // The current choice, for a menu that picks rather than acts
     &.mw-active,
-    &[aria-checked='true'] {
+    &[aria-checked='true'],
+    &[aria-current='page'] {
       background: var(--mw-primary-background);
       color: var(--mw-primary-text-color);
       font-weight: font-weight('medium');
@@ -288,6 +291,44 @@
     .mw-dropdown-item {
       min-height: 2.75rem;
       font-size: font-size('base');
+    }
+  }
+
+  // A shortcut at the end of the row, the way a desktop menu shows it
+  .mw-dropdown-item > :is(kbd, .mw-dropdown-shortcut) {
+    margin-left: auto;
+    padding-left: spacing('4');
+    color: var(--mw-text-muted-color);
+    font-size: font-size('2xs');
+    white-space: nowrap;
+  }
+
+  // A <kbd> brings its key cap; in a menu row the text alone is enough
+  .mw-dropdown-item > kbd {
+    padding-block: 0;
+    padding-right: 0;
+    border: 0;
+    background: none;
+    box-shadow: none;
+    font-family: inherit;
+  }
+
+  // Touch has no keyboard to use them on
+  @include touch-context('sm') {
+    .mw-dropdown-item > :is(kbd, .mw-dropdown-shortcut) {
+      display: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .mw-dropdown-item:is(
+      .mw-active,
+      [aria-checked='true'],
+      [aria-current='page']
+    ) {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
     }
   }
 }

@@ -1,0 +1,232 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // `width: 100%` because inline-size containment otherwise sizes it as if empty
+  .mw-stat {
+    display: flex;
+    flex-direction: column;
+    gap: spacing('1');
+    width: 100%;
+    min-width: 0;
+    container: mw-stat / inline-size;
+  }
+
+  .mw-stat-label {
+    font-size: font-size('sm');
+    font-weight: font-weight('medium');
+    color: var(--mw-text-muted-color);
+  }
+
+  .mw-stat-value {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 spacing('1');
+    font-size: fluid-container('2xl', '4xl', 180px, 420px);
+    font-weight: font-weight('bold');
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums lining-nums;
+    color: var(--mw-text-color);
+  }
+
+  .mw-stat-unit {
+    font-size: 0.5em;
+    font-weight: font-weight('medium');
+    color: var(--mw-text-muted-color);
+  }
+
+  .mw-stat-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: spacing('1') spacing('3');
+    margin-top: spacing('1');
+  }
+
+  .mw-stat-note {
+    font-size: font-size('xs');
+    color: var(--mw-text-muted-color);
+  }
+
+  // The shape carries the direction, the colour only repeats it
+  .mw-stat-delta {
+    --mw-stat-delta-ink: var(--mw-text-muted-color);
+    --mw-stat-delta-tint: var(--mw-gray-background);
+
+    display: inline-flex;
+    align-items: center;
+    gap: spacing('1');
+    padding: spacing('1') spacing('3');
+    border-radius: radius('xl');
+    background: var(--mw-stat-delta-tint);
+    color: var(--mw-text-color);
+    font-size: font-size('xs');
+    font-weight: font-weight('medium');
+    font-variant-numeric: tabular-nums lining-nums;
+    white-space: nowrap;
+  }
+
+  :is(.mw-stat-delta-up, .mw-stat-delta-down, .mw-stat-delta-flat)::before {
+    content: '';
+    width: 0.6em;
+    height: 0.6em;
+    background: var(--mw-stat-delta-ink);
+  }
+
+  .mw-stat-delta-flat::before {
+    clip-path: inset(38% 0);
+  }
+
+  .mw-stat-delta-up,
+  .mw-stat-delta-invert.mw-stat-delta-down {
+    --mw-stat-delta-ink: var(--mw-success-text-color);
+    --mw-stat-delta-tint: var(--mw-success-info-background);
+  }
+
+  .mw-stat-delta-down,
+  .mw-stat-delta-invert.mw-stat-delta-up {
+    --mw-stat-delta-ink: var(--mw-danger-text-color);
+    --mw-stat-delta-tint: var(--mw-danger-info-background);
+  }
+
+  .mw-stat-delta-up::before {
+    clip-path: polygon(50% 5%, 100% 90%, 0 90%);
+  }
+
+  .mw-stat-delta-down::before {
+    clip-path: polygon(0 10%, 100% 10%, 50% 95%);
+  }
+
+  // A drawn shape loses its background under forced colours, text does not
+  @media (forced-colors: active) {
+    .mw-stat-delta::before {
+      background: CanvasText;
+    }
+  }
+
+  // For an inline <svg> sparkline - the line takes the ink, whatever the viewBox
+  .mw-stat-chart {
+    height: 2.5rem;
+    margin-top: spacing('2');
+    color: var(--mw-primary-text-color);
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    :is(path, polyline, line) {
+      fill: none;
+      stroke: currentcolor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  .mw-stat-group {
+    display: flex;
+    // Spelled out: a card on the same element would turn it into a column
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    container: mw-stat-group / inline-size;
+
+    > .mw-stat {
+      flex: 1 1 100%;
+      padding-block: spacing('4');
+
+      & + .mw-stat {
+        border-top: 1px solid var(--mw-border);
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  // A container cannot query itself, so the children decide whether they wrap
+  @container mw-stat-group (width >= 30rem) {
+    .mw-stat-group > .mw-stat {
+      flex: 1 1 0;
+      padding: 0 spacing('5');
+
+      & + .mw-stat {
+        border-top: 0;
+        border-inline-start: 1px solid var(--mw-border);
+      }
+
+      &:first-child {
+        padding-inline-start: 0;
+      }
+
+      &:last-child {
+        padding-inline-end: 0;
+      }
+    }
+  }
+
+  // The native element keeps low / high / optimum, and with them the three tones
+  .mw-meter {
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 10px;
+    border: 0;
+    border-radius: radius('sm');
+    background: var(--mw-gray-background);
+    overflow: hidden;
+
+    &::-webkit-meter-bar {
+      height: 100%;
+      border: 0;
+      border-radius: radius('sm');
+      background: var(--mw-gray-background);
+    }
+
+    &::-webkit-meter-optimum-value {
+      border-radius: radius('sm');
+      background: var(--mw-success-color);
+    }
+
+    &::-webkit-meter-suboptimum-value {
+      border-radius: radius('sm');
+      background: var(--mw-warning-color);
+    }
+
+    &::-webkit-meter-even-less-good-value {
+      border-radius: radius('sm');
+      background: var(--mw-danger-color);
+    }
+
+    &::-moz-meter-bar {
+      border-radius: radius('sm');
+      background: var(--mw-success-color);
+    }
+
+    &:-moz-meter-sub-optimum::-moz-meter-bar {
+      background: var(--mw-warning-color);
+    }
+
+    &:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+      background: var(--mw-danger-color);
+    }
+  }
+
+  .mw-meter-sm {
+    height: 6px;
+  }
+
+  .mw-meter-lg {
+    height: 15px;
+    border-radius: radius('lg');
+  }
+}

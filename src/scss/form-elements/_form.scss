@@ -169,14 +169,12 @@
   // mw-field-has-error. `:user-invalid` and never `:invalid`, which is true from
   // page load and would mark an empty required field before anyone typed.
   // The class stays authoritative for a validator that lives in the application.
-  .mw-input:user-invalid,
-  .mw-select:user-invalid,
-  .mw-textarea:user-invalid {
+  :is(.mw-input, .mw-select, .mw-textarea):is(#{$invalid-states}) {
     border-color: var(--mw-danger-color);
     @include focus-halo('danger-text-color');
   }
 
-  .mw-field:has(> :user-invalid) > .mw-field-hint {
+  .mw-field:has(> :is(#{$invalid-states})) > .mw-field-hint {
     color: var(--mw-danger-text-color);
   }
 }

@@ -1,0 +1,24 @@
+@use '../abstracts' as *;
+
+@layer mw.utilities {
+  // `clip`, not `hidden`: a wrapper clips without becoming a scroll container
+  .mw-shape-arch,
+  .mw-shape-signature,
+  .mw-shape-leaf {
+    overflow: clip;
+  }
+
+  // Oversized radii are scaled down together, which lands on a half circle
+  .mw-shape-arch {
+    border-radius: 999px 999px 0 0;
+  }
+
+  .mw-shape-signature {
+    border-radius: radius-sharp() radius('xl') radius-sharp() radius('xl');
+  }
+
+  // The silhouette taken to its end: the round pair opened up to the full side
+  .mw-shape-leaf {
+    border-radius: radius-sharp() 50% radius-sharp() 50%;
+  }
+}

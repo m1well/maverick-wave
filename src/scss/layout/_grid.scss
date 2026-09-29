@@ -350,9 +350,12 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 @layer mw.utilities {
   // The `:nth-child(n)` reset carries the same specificity as the cycle rules,
   // so a narrower breakpoint can override the wider one's cycle for every child.
+  // Behind motion-safe too, or the cycle's :root guard outweighs these
   @mixin _reveal-stagger($cols) {
     &.mw-reveal-stagger > :nth-child(n) {
-      @include reveal-range(1);
+      @include motion-safe {
+        @include reveal-range(1);
+      }
     }
 
     // Guarded: Sass counts `from 2 through 1` downwards and would emit a rule
@@ -360,7 +363,9 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
     @if $cols > 1 {
       @for $i from 2 through $cols {
         &.mw-reveal-stagger > :nth-child(#{$cols}n + #{$i}) {
-          @include reveal-range($i);
+          @include motion-safe {
+            @include reveal-range($i);
+          }
         }
       }
     }

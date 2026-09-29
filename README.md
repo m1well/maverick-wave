@@ -16,8 +16,10 @@ The result is a framework that balances utility with simplicity, offering develo
 
 ## Features
 
-- Responsive Grid System
+- Responsive Grid System, plus a bento grid for tiles of mixed size
 - 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Badges, Dropdown, Ratings, Stepper, Skeleton Loader, Empty State, Price, Offer Cards, Divider, and more
+- Application building blocks: an app shell with a sidebar that folds to an icon rail, drawers, chat, stat tiles and meters
+- Homepage specials: before/after compare, a mobile action bar for call, route and booking, a logo marquee, image shapes
 - Form Elements: Input, Select, Textarea, Checkbox, Radio, Toggle, Input Group, with `mw-field` wrapper pattern for Angular Reactive Forms
 - Utility Classes for spacing, flex, display, typography, text overflow, elevation and aspect ratio
 - A five-step elevation ramp and a motion scale, so every shadow and every transition in the framework comes from one place
@@ -25,8 +27,8 @@ The result is a framework that balances utility with simplicity, offering develo
 - Easy Customization via CSS Custom Properties
 - Built-in Light & Dark Mode - follows the OS by default, switchable per reader
 - SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
-- Modals as `<div>` or as `<dialog>` - the latter brings the focus trap, Escape and the inert background from the platform
-- Native form validation is styled through `:user-invalid`, alongside the class-driven error states for reactive forms
+- Modals and drawers on `<dialog>` - the focus trap, Escape and the inert background come from the platform
+- Validation state read from the control itself - `:user-invalid`, `aria-invalid` and Angular's `ng-invalid ng-touched`
 - Minimal JavaScript footprint (single vanilla JS file, no dependencies)
 
 ## Installation & Usage
@@ -45,12 +47,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@5.39.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.0.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@5.39.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.0.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -123,10 +125,11 @@ which drives the dark card, footer and border tones. Each derived token can
 still be overridden individually if you want to break out of the scale.
 
 > The derivation needs `color-mix()` **and** relative colour syntax
-> (`oklch(from ...)`): Chrome 119+, Safari 16.4+, Firefox 128+. Older browsers
-> get no colours at all, not merely worse ones. The same floor is set as
-> `browserslist` in `package.json`, which is what Autoprefixer and cssnano read
-> when building `dist/`.
+> (`oklch(from ...)`), and the two themes need `light-dark()`: Chrome and Edge
+> 123+, Safari and iOS 17.5+, Firefox 140+ (ESR). Older browsers get no colours
+> at all, not merely worse ones. The same floor is set as `browserslist` in
+> `package.json`, which is what Autoprefixer and cssnano read when building
+> `dist/`.
 
 ### Elevation and motion
 
@@ -196,7 +199,8 @@ one font scale instead of the select sitting a step below the input next to it.
 Under `prefers-reduced-motion: reduce` the duration tokens all drop to 1ms and a
 blanket rule catches anything that names its own timing - including whatever you
 wrote yourself. 1ms rather than 0, so a script waiting on `transitionend` still
-gets one.
+gets one. `mw-motion-off` on `<html>` gives every reader the same page, script
+included - for a motion switch on the site itself.
 
 To retune from SCSS instead, the same values are `$duration-*`, `$ease-*`,
 `$control-height*` / `$control-font*`, `$focus-ring-*` and `$shadow-near-*` /
@@ -356,26 +360,29 @@ layer of its own:
 
 ### Site-wide variants
 
-Fifteen classes on `<html>` retune the whole look without touching markup or
+Eighteen classes on `<html>` retune the whole look without touching markup or
 rebuilding. They stack.
 
-| Class                | Effect                                                                  |
-| -------------------- | ----------------------------------------------------------------------- |
-| `mw-corners-even`    | Drops the surface signature - every panel becomes an evenly rounded box |
-| `mw-accent-single`   | One brand colour instead of two; `mw-btn-secondary` turns outline       |
-| `mw-shadows-flat`    | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
-| `mw-surfaces-flush`  | Cards, panels and footer on the page colour, held by their border       |
-| `mw-hover-static`    | No hover travels - lifts and image zooms go, colour still responds      |
-| `mw-scroll-static`   | No scroll entrance - `mw-reveal` blocks sit where they land             |
-| `mw-sections-plain`  | The hatch behind `mw-section-alternate` collapses into the page colour  |
-| `mw-headings-caps`   | `h1`-`h3` in capitals                                                   |
-| `mw-links-underline` | Links underlined at rest; the stroke thickens on hover                  |
-| `mw-btn-pill`        | Fully rounded buttons; form fields keep their radius                    |
-| `mw-btn-square`      | Buttons cut to a hard corner while the page keeps its radius            |
-| `mw-btn-glass`       | Filled buttons become a translucent wash with a lit top edge            |
-| `mw-btn-tactile`     | Filled buttons stand on a darker edge and sink onto it when pressed     |
-| `mw-density-compact` | Less padding in cards, panels and controls; type stays put              |
-| `mw-density-roomy`   | More of the same                                                        |
+| Class                 | Effect                                                                  |
+| --------------------- | ----------------------------------------------------------------------- |
+| `mw-corners-even`     | Drops the surface signature - every panel becomes an evenly rounded box |
+| `mw-accent-single`    | One brand colour instead of two; `mw-btn-secondary` turns outline       |
+| `mw-accent-text-auto` | The label on every fill turns black or white by `contrast-color()`      |
+| `mw-shadows-flat`     | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
+| `mw-shadows-hard`     | Every elevation becomes a hard offset without blur                      |
+| `mw-surfaces-flush`   | Cards, panels and footer on the page colour, held by their border       |
+| `mw-hover-static`     | No hover travels - lifts and image zooms go, colour still responds      |
+| `mw-motion-off`       | The reduced-motion page for every reader, script included               |
+| `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit where they land             |
+| `mw-sections-plain`   | The hatch behind `mw-section-alternate` collapses into the page colour  |
+| `mw-headings-caps`    | `h1`-`h3` in capitals                                                   |
+| `mw-links-underline`  | Links underlined at rest; the stroke thickens on hover                  |
+| `mw-btn-pill`         | Fully rounded buttons; form fields keep their radius                    |
+| `mw-btn-square`       | Buttons cut to a hard corner while the page keeps its radius            |
+| `mw-btn-glass`        | Filled buttons become a translucent wash with a lit top edge            |
+| `mw-btn-tactile`      | Filled buttons stand on a darker edge and sink onto it when pressed     |
+| `mw-density-compact`  | Less padding in cards, panels and controls; type stays put              |
+| `mw-density-roomy`    | More of the same                                                        |
 
 Six properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
 squares the framework off), `--mw-root-font-size` moves the whole rem scale,
@@ -388,10 +395,9 @@ and the URL carries whatever is set - send that link and the next person opens
 the page exactly as you left it. The panel prints the same setup as markup and
 CSS to copy into a project.
 
-A variant of your own that retunes a theme-bound token has to target
-`:root.your-class` **and** `:root.your-class .mw-theme-light` - the light theme
-re-declares those on `<body>` and would shadow a root-only value. The elevation
-tokens are the exception and need only `:root`.
+A variant of your own needs only `:root.your-class`: the theme tokens are
+`light-dark()` pairs resolved where they are used, and the theme classes switch
+`color-scheme` plus the one non-colour token, `--mw-hero-image-filter`.
 
 ### SCSS Source
 
@@ -403,6 +409,9 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
 @use 'path/to/maverick-wave/src/scss/main' with (
   // Optional: choose theme mode ('switchable' | 'dark' | 'light')
   $mw-theme-mode: 'switchable',
+
+  // Optional: crossfade between pages (cross-document view transitions)
+  $mw-page-transitions: true,
 
   // Override root colors
   $primary-color: #0f766e,
@@ -447,6 +456,10 @@ They exist on the SCSS path only - the compiled CSS carries none of them.
 - `hit-area($grow: 6px)` - grows the hit area through `::after` without touching
   the silhouette, for a control whose size is the design. Neighbours need a gap
   of at least twice `$grow`, or two hit areas overlap.
+- `motion-safe` / `motion-reduced` - inside a rule, the content applies only when
+  motion is allowed, or only when it is not. Both read `prefers-reduced-motion`
+  and `mw-motion-off`, so your own animation follows the site's switch too.
+- `visually-hidden` - out of sight, still read by a screen reader.
 
 ```scss
 @use 'maverick-wave/src/scss/abstracts' as *;
@@ -487,8 +500,8 @@ have no use for the marketing components (`blog-post`, `gallery`,
 @use 'maverick-wave/src/scss/utilities';
 ```
 
-A typical application subset like the one above compiles to roughly 113 kB raw /
-17 kB gzipped, against 281 kB / 40 kB for the full build.
+A typical application subset like the one above compiles to roughly 129 kB raw /
+20 kB gzipped, against 518 kB / 72 kB for the full build.
 
 > **`base` is not optional.** It carries the `:root` custom properties - without
 > it every component renders without colors. If you bring your own reset, use
@@ -511,7 +524,7 @@ above):
 > change detection. The behaviors it covers (accordion, tabs, modal close, mobile
 > nav, scroll spy, theme toggle, progress bars, sliders, alerts, galleries) are a
 > few lines each in a component - the framework's state classes are the whole
-> contract. Theme switching, for example, is a pair of classes on `<body>`:
+> contract. Theme switching, for example, is a pair of classes on `<html>`:
 
 ```typescript
 // theme.service.ts - mw-theme-switching suppresses the transitions the flip
@@ -519,10 +532,10 @@ above):
 const root = document.documentElement;
 
 root.classList.add('mw-theme-switching');
-document.body.classList.toggle('mw-theme-light', isLight);
+root.classList.toggle('mw-theme-light', isLight);
 // the explicit counterpart - without it a dark choice on a light machine
 // falls back to the OS preference
-document.body.classList.toggle('mw-theme-dark', !isLight);
+root.classList.toggle('mw-theme-dark', !isLight);
 void root.offsetHeight;
 root.classList.remove('mw-theme-switching');
 ```
@@ -530,19 +543,22 @@ root.classList.remove('mw-theme-switching');
 With neither class the page follows `prefers-color-scheme`, so an app that has
 nothing stored yet can simply leave both off.
 
-The `mw-field` wrapper groups label, control, hint and error. Bind the error
-state yourself - the framework does not style Angular's `ng-invalid` /
-`ng-touched` classes:
+The `mw-field` wrapper groups label, control, hint and error. The control turns
+red on its own from Angular's `ng-invalid ng-touched`; the message is yours to
+render:
 
 ```html
-<div
-  class="mw-field"
-  [class.mw-field-has-error]="email.invalid && email.touched"
->
+<div class="mw-field">
   <label class="mw-field-label mw-required" for="email">Email</label>
-  <input id="email" type="email" class="mw-input" formControlName="email" />
+  <input
+    id="email"
+    type="email"
+    class="mw-input"
+    formControlName="email"
+    aria-describedby="email-error"
+  />
   @if (email.invalid && email.touched) {
-  <span class="mw-field-error">
+  <span class="mw-field-error" id="email-error">
     <i class="fas fa-exclamation-circle"></i> Please enter a valid email
     address.
   </span>
@@ -608,7 +624,7 @@ maverick-wave/
 ├── scripts/verify.js       # Class and token consistency check (npm run verify)
 ├── .prettierrc.json        # Prettier configuration
 ├── gulpfile.js             # Gulp tasks configuration
-├── index.html              # Showcase entry point
+├── *.html                  # Showcase pages, one per section
 └── package.json
 ```
 
