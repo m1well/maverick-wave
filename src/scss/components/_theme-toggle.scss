@@ -61,5 +61,17 @@
       font-size: font-size('base');
       transform: rotate(16deg);
     }
+
+    // Both icons in the markup, for an inline SVG the script cannot swap by class
+    &-sun,
+    &.mw-active &-moon,
+    &.active &-moon {
+      display: none;
+    }
+
+    &.mw-active &-sun,
+    &.active &-sun {
+      display: block;
+    }
   }
 }

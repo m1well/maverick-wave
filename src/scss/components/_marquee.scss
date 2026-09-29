@@ -43,7 +43,7 @@
     font-weight: font-weight('medium');
     white-space: nowrap;
 
-    > i {
+    > :is(i, svg, .mw-icon) {
       color: var(--mw-primary-text-color);
     }
 

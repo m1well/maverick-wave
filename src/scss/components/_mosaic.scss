@@ -32,10 +32,16 @@
     background: var(--mw-card-background);
     transition: transform var(--mw-duration-fast) var(--mw-ease-out);
 
-    > a {
+    // A button where an application opens its own lightbox
+    > :is(a, button) {
       position: absolute;
       inset: 0;
       display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
       @include tappable;
       @include focus-ring-inset(-3px);
     }
@@ -58,7 +64,7 @@
       }
     }
 
-    &:has(> a:active) {
+    &:has(> :is(a, button):active) {
       transform: scale(0.97);
       transition-duration: var(--mw-duration-instant);
     }

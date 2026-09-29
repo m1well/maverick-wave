@@ -310,7 +310,7 @@ call / directions / book strip)
 feature frame) ·
 `mw-panel` (+ `-heading`, `-title`, `-subtitle`, `-actions`, `-edge-{colour}`) ·
 `mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
-`mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `drawer`, `drawer-start`) ·
+`mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `full`, `drawer`, `drawer-start`) ·
 `mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
 `mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·
