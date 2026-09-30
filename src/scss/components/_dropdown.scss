@@ -256,10 +256,16 @@
     // only have to stop pushing the menu around with insets
     .mw-dropdown-end .mw-dropdown-menu {
       position-area: block-end span-inline-start;
+      right: auto;
     }
 
     .mw-dropdown-up .mw-dropdown-menu {
       position-area: block-start span-inline-end;
+      bottom: auto;
+    }
+
+    .mw-dropdown-end.mw-dropdown-up .mw-dropdown-menu {
+      position-area: block-start span-inline-start;
     }
 
     // In the bar a menu hangs off the bar's lower edge, not the trigger's - the
