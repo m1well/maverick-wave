@@ -136,7 +136,7 @@
 
       @include _open-content {
         grid-template-rows: 1fr;
-        max-height: 500px;
+        max-height: var(--mw-accordion-max-height);
         overflow-y: auto;
 
         > .mw-accordion-content-inner {

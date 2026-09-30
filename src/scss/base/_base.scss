@@ -148,6 +148,9 @@
     --mw-announcement-offset: 0px;
     --mw-section-nav-offset: 0px;
 
+    // On :root, so an item, an accordion or the page can set it; `none` lifts the cap
+    --mw-accordion-max-height: 500px;
+
     // Fluid rather than stepped: ~24px at 375px up to 64px, where the 1200px cap
     // takes over. Stepping at a breakpoint makes the container jump *backwards*
     // there, because the gutter grows faster than the viewport does.
