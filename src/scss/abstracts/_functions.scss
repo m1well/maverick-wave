@@ -114,12 +114,21 @@
 // rather than off the end.
 $_radius-floor: map.get(v.$radius, 'xs');
 
+// The sharp half of the signature on a value of its own, so the scale can round
+// controls up without softening the one corner meant to read as sharp
+$_radius-sharp-base: 5px;
+
 // Emitted through --mw-radius-scale, so one number retunes every rounded box in
 // the framework at once - 0 squares them off, above 1 rounds them further, and
 // the corner arc follows. 'none' and 'full' pass through: an explicit 0 stays
-// 0, and a circle has to stay a circle.
+// 0, and a circle has to stay a circle. A length instead of a key takes the
+// same scale and floor, for the few values that sit off the scale.
 @function radius($key) {
-  $value: map.get(v.$radius, $key);
+  $value: $key;
+
+  @if meta.type-of($key) != 'number' {
+    $value: map.get(v.$radius, $key);
+  }
 
   @if $key == 'none' or $key == 'full' {
     @return $value;
@@ -137,7 +146,21 @@ $_radius-floor: map.get(v.$radius, 'xs');
 
   @return max(
     #{$_radius-floor},
-    calc(#{map.get(v.$radius, 'sm')} * #{$scale} * #{$scale})
+    calc(#{$_radius-sharp-base} * #{$scale} * #{$scale})
+  );
+}
+
+// Where a floating island sits: percentages on a fixed box are the viewport's,
+// so this puts the header's content box on the page container,
+// $header-island-reach wider on either side - and the bar at the foot on the
+// same edges. Logo and links stay put while the header docks around them.
+@function island-edge() {
+  @return max(
+    calc(var(--mw-header-inset) - #{v.$header-island-reach}),
+    calc(
+      (100% - var(--mw-container-width)) / 2 - var(--mw-header-pad) -
+        #{v.$header-island-reach}
+    )
   );
 }
 

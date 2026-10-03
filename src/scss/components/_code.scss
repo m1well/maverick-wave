@@ -95,7 +95,7 @@
     &-language {
       font-size: font-size('2xs');
       padding: spacing('1');
-      border-radius: radius('sm');
+      border-radius: radius($chip-radius-sm);
 
       @include media-up('sm') {
         font-size: font-size('xs');

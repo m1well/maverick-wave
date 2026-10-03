@@ -7,17 +7,6 @@ $_control-size: 40px;
 // frame on a box this short
 $_mark-round: radius('lg');
 
-// Where the island sits: percentages on a fixed box are the viewport's, so this
-// puts its content box on the page container, $header-island-reach wider on
-// either side. Logo and links stay put while the bar docks around them.
-$_island-edge: max(
-  calc(var(--mw-header-inset) - #{$header-island-reach}),
-  calc(
-    (100% - var(--mw-container-width)) / 2 - var(--mw-header-pad) -
-      #{$header-island-reach}
-  )
-);
-
 @mixin navbar-mark-shape {
   border-radius: radius-sharp() $_mark-round radius-sharp() $_mark-round;
 
@@ -51,16 +40,12 @@ $_island-edge: max(
   .mw-header {
     position: fixed;
     top: var(--mw-header-inset);
-    left: $_island-edge;
-    right: $_island-edge;
+    left: island-edge();
+    right: island-edge();
     z-index: z-index('header');
     // Dark in both themes, fixed light included, where no light-dark() flips
     --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
-    background: var(--mw-header-glass);
-    backdrop-filter: blur(20px) saturate(1.6);
-    border: 1px solid var(--mw-header-island-border);
-    border-radius: radius('xl');
-    box-shadow: var(--mw-elevation-4);
+    @include island-surface;
     // The height comes from min-height; the padding only has to let a control
     // grown to its 2.75rem touch floor fit inside it
     padding: spacing('2') var(--mw-header-pad);
@@ -79,7 +64,7 @@ $_island-edge: max(
       min-width: 0;
     }
 
-    // The island already sits on the page container, see $_island-edge
+    // The island already sits on the page container, see island-edge()
     .mw-container {
       width: 100%;
       display: flex;
@@ -600,8 +585,8 @@ $_island-edge: max(
   // rounding seam opens between them.
   .mw-announcement:not(.mw-announcement-static) {
     top: calc(var(--mw-header-height) - 1px);
-    left: $_island-edge;
-    right: $_island-edge;
+    left: island-edge();
+    right: island-edge();
     border: 1px solid var(--mw-header-island-border);
     border-top: none;
     border-radius: 0 0 radius('xl') radius('xl');
@@ -630,14 +615,16 @@ $_island-edge: max(
     visibility: hidden;
   }
 
-  // The flat bar, for a site that wants the header to just stand there: full
-  // width, fixed at the top, no island and no reveal (_header-reveal.scss is off
-  // under the same class). On <html> like the other site-wide variants.
+  // The flat bar: full width, fixed at the top, no island and no docking (the
+  // dock in _header-reveal.scss is off under the same class). mw-header-reveal
+  // still rides it in. On <html> like the other site-wide variants.
   :root.mw-header-bar {
     --mw-header-height: #{$header-bar-height};
+    // Not `top: 0` on the header: that would outrank the reveal's resting and
+    // away positions, which are both counted from the inset
+    --mw-header-inset: 0px;
 
     .mw-header {
-      top: 0;
       left: 0;
       right: 0;
       min-height: var(--mw-header-height);

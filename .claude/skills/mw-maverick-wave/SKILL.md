@@ -303,8 +303,8 @@ Everything below is documented in `references/components.md` unless marked other
 `lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
 `mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note` ·
-`mw-action-bar` (+ `-item`, `-primary`, `-always`, `-embedded`; the phone's
-call / directions / book strip)
+`mw-action-bar` (+ `-item`, `-primary`, `-always`, `-embedded`, `-island`; the
+phone's call / directions / book strip)
 
 **Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
 feature frame) ·
