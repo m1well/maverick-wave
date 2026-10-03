@@ -1,172 +1,222 @@
 @use '../abstracts' as *;
 
+// Short enough that the bar is the island by the time the hero's headline is gone
+$dock-range: 160px;
+
 // Carried by the float and not by the class, or the ring would still be there in
 // the arrived bar. Fixed values and not the elevation ramp: this lands on a
 // picture, not on a theme surface, and the light theme cuts its shadows for paper.
 $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
 
 @layer mw.layout {
-  // The bar starts above the screen and rides in over the first stretch of scroll.
-  // Its own file, and not next to .mw-header: that one uses the `animation`
-  // shorthand, which a consumer bundler folds together with a timeline into a
-  // declaration no browser accepts.
-  @supports (animation-timeline: scroll()) {
+  // None of it on the flat bar, which stands where it is from the first frame
+  :root:not(.mw-header-bar) {
+    // A header that stays put starts as the full bar and docks into the island over
+    // the first stretch of scroll. A revealing one is off screen up there anyway and
+    // arrives as the island directly. Without scroll timelines it is the island
+    // from the start. The card under the island docks with it, so a menu opened at
+    // the top hangs from the bar edge to edge like the bar itself.
+    @supports (animation-timeline: scroll()) {
+      .mw-header:not(.mw-header-reveal) {
+        @include motion-safe {
+          animation-name: mw-header-dock;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: both;
+          animation-timeline: scroll(root);
+          animation-range: 0 $dock-range;
+        }
+
+        // In the row the nav is static and has no radius, so the same keyframes
+        // pass over it without a trace
+        .mw-navbar {
+          @include motion-safe {
+            animation-name: mw-header-dock-sheet;
+            animation-timing-function: var(--mw-ease-out);
+            animation-fill-mode: both;
+            animation-timeline: scroll(root);
+            animation-range: 0 $dock-range;
+          }
+        }
+      }
+
+      // The ribbon hangs from the island, so it docks with it
+      body:not(:has(.mw-header-reveal))
+        .mw-announcement:not(.mw-announcement-static) {
+        @include motion-safe {
+          animation-name: mw-announcement-dock;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: both;
+          animation-timeline: scroll(root);
+          animation-range: 0 $dock-range;
+        }
+      }
+    }
+
+    // The bar starts above the screen and rides in over the first stretch of scroll.
+    // Its own file, and not next to .mw-header: that one uses the `animation`
+    // shorthand, which a consumer bundler folds together with a timeline into a
+    // declaration no browser accepts.
+    @supports (animation-timeline: scroll()) {
+      .mw-header-reveal {
+        @include motion-safe {
+          animation-name: mw-header-reveal;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: both;
+          animation-timeline: scroll(root);
+          animation-range: 0 420px;
+        }
+      }
+
+      // The bar travels, a keep element travels the same distance back and stays
+      // put - for a burger that has to be reachable while the hero is untouched.
+      .mw-header-reveal .mw-header-keep {
+        @include motion-safe {
+          animation-name: mw-header-keep;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: both;
+          animation-timeline: scroll(root);
+          animation-range: 0 420px;
+        }
+      }
+
+      // A group's opacity cannot be taken back by a child, so the fade goes as
+      // soon as something is meant to stay visible through it.
+      .mw-header-reveal:has(.mw-header-keep) {
+        @include motion-safe {
+          animation-name: mw-header-slide;
+        }
+      }
+
+      // Glued under the bar, so it leaves and arrives with it. No class of its
+      // own: a ribbon under a revealing header has no other sensible behaviour.
+      body:has(.mw-header-reveal)
+        .mw-announcement:not(.mw-announcement-static) {
+        @include motion-safe {
+          animation-name: mw-announcement-reveal;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: both;
+          animation-timeline: scroll(root);
+          animation-range: 0 420px;
+        }
+      }
+    }
+
+    // Both cover the height of the pair, or the shorter traveller arrives first and
+    // the two come in as two things instead of one block.
     .mw-header-reveal {
-      @include motion-safe {
-        animation-name: mw-header-reveal;
-        animation-timing-function: var(--mw-ease-out);
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 420px;
-      }
+      --mw-header-reveal-offset: var(--mw-header-height);
     }
 
-    // The bar travels, a keep element travels the same distance back and stays
-    // put - for a burger that has to be reachable while the hero is untouched.
-    .mw-header-reveal .mw-header-keep {
-      @include motion-safe {
-        animation-name: mw-header-keep;
-        animation-timing-function: var(--mw-ease-out);
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 420px;
-      }
-    }
-
-    // A group's opacity cannot be taken back by a child, so the fade goes as
-    // soon as something is meant to stay visible through it.
-    .mw-header-reveal:has(.mw-header-keep) {
-      @include motion-safe {
-        animation-name: mw-header-slide;
-      }
-    }
-
-    // Glued under the bar, so it leaves and arrives with it. No class of its
-    // own: a ribbon under a revealing header has no other sensible behaviour.
-    body:has(.mw-header-reveal) .mw-announcement:not(.mw-announcement-static) {
-      @include motion-safe {
-        animation-name: mw-announcement-reveal;
-        animation-timing-function: var(--mw-ease-out);
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 420px;
-      }
-    }
-  }
-
-  // Both cover the height of the pair, or the shorter traveller arrives first and
-  // the two come in as two things instead of one block.
-  .mw-header-reveal {
-    --mw-header-reveal-offset: var(--mw-header-height);
-  }
-
-  body:has(.mw-announcement:not(.mw-announcement-static)) .mw-header-reveal {
-    --mw-header-reveal-offset: calc(
-      var(--mw-header-height) + var(--mw-announcement-height)
-    );
-  }
-
-  // A focus ring on something off screen is WCAG 2.4.11, so focus brings the bar
-  // back. `!important` is the one author declaration that outranks a running
-  // animation; `animation-name: none` would strand the element on its last value
-  // until the next scroll. Keeps are left out - they are on screen already, and a
-  // click on the theme toggle would otherwise haul in the whole bar. `:focus` on a
-  // descendant and not `:focus-within`: that matches every wrapper too.
-  body:has(
-    .mw-header-reveal :focus:not(.mw-header-keep, .mw-header-keep *),
-    .mw-announcement:focus-within
-  ) {
-    .mw-header-reveal {
-      top: 0 !important;
-      opacity: 1 !important;
-    }
-
-    .mw-header-keep {
-      translate: none !important;
-      box-shadow: none !important;
-    }
-
-    .mw-announcement:not(.mw-announcement-static) {
-      transform: none !important;
-      opacity: 1 !important;
-    }
-  }
-
-  // The panel hangs off the bar, so the bar has to be in place - and the burger,
-  // which is the X while the panel is out, has to stay on its own position.
-  //
-  // A class the script sets, not `:has(.mw-navbar.mw-active)`: the burger is the
-  // control that closes the panel and cannot wait for a selector re-match, which
-  // is where WebKit's invalidation has been unreliable.
-  //
-  // Zeroing the distance rather than overriding each position that reads it: four
-  // mechanisms carry the pair - `top` and `translate`, each once as a class and
-  // once as a keyframe - and all four resolve this one property. Overriding the
-  // values instead pits `!important` against a running animation, which WebKit
-  // does not reliably hand to the author.
-  body.mw-nav-open {
-    .mw-header-reveal {
-      // The ribbon variant above raises the same property from a `:has()`, which
-      // counts its argument and outranks this rule - author against author, which
-      // every engine resolves the same way, not author against an animation.
-      --mw-header-reveal-offset: 0px !important;
-      opacity: 1 !important;
-    }
-
-    // Not carried by the offset, and there is no picture behind an open panel.
-    .mw-header-keep {
-      box-shadow: none !important;
-    }
-  }
-
-  // No scroll timelines: the script toggles these classes instead (main.js).
-  // State and transition are separate because the script sets the state a frame
-  // earlier - together the bar would slide away in front of the reader.
-  .mw-header-reveal.mw-header-away {
-    @include motion-safe {
-      top: calc(-1 * var(--mw-header-reveal-offset));
-      opacity: 0;
-
-      &:has(.mw-header-keep) {
-        opacity: 1;
-      }
-
-      .mw-header-keep {
-        translate: 0 var(--mw-header-reveal-offset);
-        box-shadow: $float-edge;
-      }
-    }
-  }
-
-  .mw-header-driven {
-    @include motion-safe {
-      // The shared list plus `top`: writing only `top` drops the bar's own.
-      transition:
-        var(--mw-transition),
-        top var(--mw-duration-slow) var(--mw-ease-out);
-
-      .mw-header-keep {
-        transition:
-          translate var(--mw-duration-slow) var(--mw-ease-out),
-          box-shadow var(--mw-duration-slow) var(--mw-ease-out);
-      }
-    }
-  }
-
-  .mw-announcement.mw-announcement-away {
-    @include motion-safe {
-      transform: translateY(
-        calc(-1 * (var(--mw-header-height) + var(--mw-announcement-height)))
+    body:has(.mw-announcement:not(.mw-announcement-static)) .mw-header-reveal {
+      --mw-header-reveal-offset: calc(
+        var(--mw-header-height) + var(--mw-announcement-height)
       );
-      opacity: 0;
     }
-  }
 
-  .mw-announcement-driven {
-    @include motion-safe {
-      transition:
-        transform var(--mw-duration-slow) var(--mw-ease-out),
-        opacity var(--mw-duration-slow) var(--mw-ease-out);
+    // A focus ring on something off screen is WCAG 2.4.11, so focus brings the bar
+    // back. `!important` is the one author declaration that outranks a running
+    // animation; `animation-name: none` would strand the element on its last value
+    // until the next scroll. Keeps are left out - they are on screen already, and a
+    // click on the theme toggle would otherwise haul in the whole bar. `:focus` on a
+    // descendant and not `:focus-within`: that matches every wrapper too.
+    body:has(
+      .mw-header-reveal :focus:not(.mw-header-keep, .mw-header-keep *),
+      .mw-announcement:focus-within
+    ) {
+      .mw-header-reveal {
+        top: var(--mw-header-inset) !important;
+        opacity: 1 !important;
+      }
+
+      .mw-header-keep {
+        translate: none !important;
+        box-shadow: none !important;
+      }
+
+      .mw-announcement:not(.mw-announcement-static) {
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+
+    // The panel hangs off the bar, so the bar has to be in place - and the burger,
+    // which is the X while the panel is out, has to stay on its own position.
+    //
+    // A class the script sets, not `:has(.mw-navbar.mw-active)`: the burger is the
+    // control that closes the panel and cannot wait for a selector re-match, which
+    // is where WebKit's invalidation has been unreliable.
+    //
+    // Zeroing the distance rather than overriding each position that reads it: four
+    // mechanisms carry the pair - `top` and `translate`, each once as a class and
+    // once as a keyframe - and all four resolve this one property. Overriding the
+    // values instead pits `!important` against a running animation, which WebKit
+    // does not reliably hand to the author.
+    body.mw-nav-open {
+      .mw-header-reveal {
+        // The ribbon variant above raises the same property from a `:has()`, which
+        // counts its argument and outranks this rule - author against author, which
+        // every engine resolves the same way, not author against an animation.
+        --mw-header-reveal-offset: 0px !important;
+        opacity: 1 !important;
+      }
+
+      // Not carried by the offset, and there is no picture behind an open panel.
+      .mw-header-keep {
+        box-shadow: none !important;
+      }
+    }
+
+    // No scroll timelines: the script toggles these classes instead (main.js).
+    // State and transition are separate because the script sets the state a frame
+    // earlier - together the bar would slide away in front of the reader.
+    .mw-header-reveal.mw-header-away {
+      @include motion-safe {
+        top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
+        opacity: 0;
+
+        // Visible through the slide, so its shadow would hang into the hero
+        &:has(.mw-header-keep) {
+          opacity: 1;
+          box-shadow: none;
+        }
+
+        .mw-header-keep {
+          translate: 0 var(--mw-header-reveal-offset);
+          box-shadow: $float-edge;
+        }
+      }
+    }
+
+    .mw-header-driven {
+      @include motion-safe {
+        // The shared list plus `top`: writing only `top` drops the bar's own.
+        transition:
+          var(--mw-transition),
+          top var(--mw-duration-slow) var(--mw-ease-out);
+
+        .mw-header-keep {
+          transition:
+            translate var(--mw-duration-slow) var(--mw-ease-out),
+            box-shadow var(--mw-duration-slow) var(--mw-ease-out);
+        }
+      }
+    }
+
+    .mw-announcement.mw-announcement-away {
+      @include motion-safe {
+        transform: translateY(
+          calc(-1 * (var(--mw-header-height) + var(--mw-announcement-height)))
+        );
+        opacity: 0;
+      }
+    }
+
+    .mw-announcement-driven {
+      @include motion-safe {
+        transition:
+          transform var(--mw-duration-slow) var(--mw-ease-out),
+          opacity var(--mw-duration-slow) var(--mw-ease-out);
+      }
     }
   }
 
@@ -177,25 +227,63 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   @keyframes mw-header-reveal {
     0%,
     30% {
-      top: calc(-1 * var(--mw-header-reveal-offset));
+      top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
       opacity: 0;
     }
 
     100% {
-      top: 0;
+      top: var(--mw-header-inset);
       opacity: 1;
     }
   }
 
-  // The same ride without the fade, for a bar something stays visible through
+  // The same ride without the fade, for a bar something stays visible through -
+  // and without the shadow while it is up there, or it hangs into the hero
   @keyframes mw-header-slide {
     0%,
     30% {
-      top: calc(-1 * var(--mw-header-reveal-offset));
+      top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
+      box-shadow: none;
     }
 
     100% {
+      top: var(--mw-header-inset);
+    }
+  }
+
+  // Only the start: the end is the island the header already is
+  @keyframes mw-header-dock {
+    from {
       top: 0;
+      left: 0;
+      right: 0;
+      min-height: var(--mw-header-height);
+      // Percentages of the viewport here, so the content box is the page
+      // container in both states and the logo does not move sideways
+      padding-inline: calc(
+        (100% - var(--mw-container-width)) / 2 - #{$header-island-reach}
+      );
+      border-radius: 0;
+      border-color: transparent transparent var(--mw-header-border);
+      background-color: var(--mw-header-background);
+      box-shadow: none;
+    }
+  }
+
+  @keyframes mw-header-dock-sheet {
+    from {
+      top: 100%;
+      border-radius: 0;
+    }
+  }
+
+  @keyframes mw-announcement-dock {
+    from {
+      left: 0;
+      right: 0;
+      border-radius: 0;
+      border-color: transparent;
+      box-shadow: none;
     }
   }
 

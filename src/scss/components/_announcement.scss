@@ -54,6 +54,8 @@
   .mw-announcement-static {
     // Relative for the close button, without a z-index lifting it over nearby menus
     position: relative;
+    // The fixed ribbon's offsets would shift a relative one by the header height
+    inset: auto;
     z-index: auto;
   }
 

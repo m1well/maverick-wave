@@ -11,6 +11,12 @@
     background: var(--mw-warning-color);
     z-index: z-index('modal')-10;
     animation: mw-pulse-indicator motion(4s) infinite;
+
+    // Clear of the island's rounded corners
+    .mw-header > & {
+      inset-inline: radius('xl');
+      width: auto;
+    }
   }
 
   // Keyframes for the pulsing indicator

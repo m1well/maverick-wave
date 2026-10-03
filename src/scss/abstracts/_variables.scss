@@ -426,10 +426,25 @@ $header-colors: (
   'burgerbutton-color': token('primary-accent-text-color'),
   'burgerbutton-open-color': token('secondary-accent-text-color'),
   'border': fade('header-navbar-list-active-color', 40%),
+  // Translucent enough for the blur to show, dense enough that the light ink
+  // still reads over a white page
+  'glass': fade('header-background', 88%),
+  'island-border': fade('header-text-color', 13%),
+  'navbar-mark': fade('header-navbar-list-active-color', 16%),
 );
-// Drives bar height, anchor scroll offset and drawer padding. Intrinsic height is
-// 59px: 42px logo + 2 × spacing('3') + 1px border.
-$header-height: 62px;
+// The room the header takes from the top of the viewport - island plus the gap
+// above it - so every offset that reads it clears the island without knowing it
+// floats. The island itself is 60px: a 44px touch control + 2 × spacing('2') +
+// 2px border, with room to spare around the 42px logo.
+$header-height: 74px;
+// Between the island and the viewport edge
+$header-inset: 14px;
+// How far the island reaches past the page container on either side, and in
+// from the inset where that is closer: room for the links, at the price of the
+// logo standing that much left of the text below it
+$header-island-reach: 5px;
+// The flat bar under mw-header-bar, at the height it had before the island
+$header-bar-height: 62px;
 
 // Here and not next to the typography rules, because this is the file
 // `@use 'main' with (...)` configures. No font is bundled.
