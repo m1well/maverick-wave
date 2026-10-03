@@ -857,6 +857,10 @@ bottom edge where the thumb already is:
   Where the bar is hidden, and in print, the reserve is 0.
 - `mw-action-bar-embedded` is absolute instead of fixed and reserves nothing -
   for a preview inside a frame, like the showcase's `mw-device-phone`.
+- `mw-action-bar-island` floats it as the counterpart to the header island:
+  the same glass and side edges, `--mw-header-inset` (14px) off the bottom or
+  clear of the home indicator, 4px lower than the flat bar. The reserve
+  follows. With `-always` from `md` up it shrinks to a dock around its items.
 - z-index key `action-bar` (98): over the page and its menus, under the open
   navigation's scrim, modals and toasts.
 

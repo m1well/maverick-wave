@@ -434,9 +434,9 @@ $header-colors: (
 );
 // The room the header takes from the top of the viewport - island plus the gap
 // above it - so every offset that reads it clears the island without knowing it
-// floats. The island itself is 60px: a 44px touch control + 2 × spacing('2') +
+// floats. The island itself is 63px: a 44px touch control + 2 × spacing('2') +
 // 2px border, with room to spare around the 42px logo.
-$header-height: 74px;
+$header-height: 77px;
 // Between the island and the viewport edge
 $header-inset: 14px;
 // How far the island reaches past the page container on either side, and in
@@ -537,13 +537,19 @@ $breakpoints: (
 $radius: (
   'none': 0,
   'xs': 2px,
-  'sm': 5px,
-  'md': 10px,
+  'sm': 7px,
+  'md': 12px,
   'lg': 15px,
   'xl': 20px,
   '2xl': 30px,
   'full': 50%,
 );
+
+// Off the scale on purpose: a chip next to a tag stays tighter than the buttons
+// and fields it would otherwise be mistaken for. Outside the map, or every key
+// would turn into a mw-radius-* utility.
+$chip-radius: 10px;
+$chip-radius-sm: 5px;
 
 // Z-index
 $z-index: (

@@ -7,7 +7,7 @@
    island, or the flat bar while the palette has mw-header-bar on */
 .demo-island {
   position: relative;
-  min-height: 60px;
+  min-height: 63px;
   padding: 0.35rem 1rem;
   background: var(--mw-header-glass);
   border: 1px solid var(--mw-header-island-border);

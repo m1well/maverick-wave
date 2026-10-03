@@ -1,5 +1,11 @@
 @use '../abstracts' as *;
 
+// Clear of the home indicator where there is one, the header's gap where not
+$_island-bottom: max(var(--mw-header-inset), env(safe-area-inset-bottom, 0px));
+// Lighter than the flat bar, and as low as it goes: the items keep their
+// 2.75rem touch floor, so the rest is only the padding around them
+$_island-height: calc(var(--mw-action-bar-height) - 4px);
+
 @layer mw.components {
   :root {
     --mw-action-bar-height: 3.75rem;
@@ -16,6 +22,10 @@
     > body {
       padding-bottom: var(--mw-action-bar-reserve);
     }
+  }
+
+  :root:has(.mw-action-bar-island:not(.mw-action-bar-embedded)) {
+    --mw-action-bar-reserve: calc(#{$_island-height} + #{$_island-bottom});
   }
 
   // Chrome like the header, so it takes the header's colours in both themes
@@ -42,6 +52,19 @@
 
     &-embedded {
       position: absolute;
+    }
+
+    &-island {
+      inset-inline: island-edge();
+      bottom: $_island-bottom;
+      min-height: $_island-height;
+      padding: spacing('1');
+      @include island-surface;
+
+      // Its own frame has no page container to line up with
+      &.mw-action-bar-embedded {
+        inset-inline: calc(var(--mw-header-inset) - #{$header-island-reach});
+      }
     }
 
     &-item {
@@ -128,6 +151,12 @@
     .mw-action-bar {
       justify-content: center;
       grid-auto-columns: minmax(0, 10rem);
+    }
+
+    // A dock: a container-wide island would float the targets in empty glass
+    .mw-action-bar-island {
+      width: fit-content;
+      margin-inline: auto;
     }
   }
 

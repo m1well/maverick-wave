@@ -276,6 +276,15 @@
   }
 }
 
+// The floating chrome, shared by the header island and the action bar island
+@mixin island-surface {
+  background: var(--mw-header-glass);
+  backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid var(--mw-header-island-border);
+  border-radius: radius('xl');
+  box-shadow: var(--mw-elevation-4);
+}
+
 // The MaverickWave silhouette: sharp corners on one diagonal, round on the other,
 // with an accent arc on the round pair - the asymmetry alone reads as an accident.
 //

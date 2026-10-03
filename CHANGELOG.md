@@ -6,6 +6,13 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.8.0] - 2026-10-03
+
+### Changes
+
+- new header changes
+- action bar also as floating island
+
 ## [6.7.0] - 2026-10-03
 
 ### Added

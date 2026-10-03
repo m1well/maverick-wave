@@ -45,7 +45,8 @@
   vertically over the full viewport - login pages, error pages.
 - `<section>` has **no** padding of its own. Always add `mw-section`.
 - `mw-action-bar` (the phone bar with call, directions, book -
-  `components.md`) is fixed to the bottom edge. While one is on screen `:root`
+  `components.md`) is fixed to the bottom edge, or floats above it as
+  `mw-action-bar-island`. While one is on screen `:root`
   reserves its height as body `padding-bottom` and `scroll-padding-bottom`
   (`--mw-action-bar-reserve`), so the footer and a focused field stay clear of
   it (WCAG 2.4.11), and a bottom toast stack sits above it. From `md` up it
@@ -187,15 +188,17 @@ same height as the login and burger buttons.
 
 **Island.** The header floats `--mw-header-inset` (14px) below the top edge, and
 its content box reaches `$header-island-reach` (5px) past the page container on
-either side - room for the links, the logo that much left of the text below. `--mw-header-height` (74px) is the room it takes - island plus
+either side - room for the links, the logo that much left of the text below.
+`--mw-header-height` (77px) is the room it takes - the 63px island plus the
 gap - so main padding, sticky offsets and the anchor scroll clear it without
 knowing it floats. Without `mw-header-reveal` it starts as the full bar and
 docks into the island over the first 160px of scroll; without scroll timelines
 (Firefox) or under reduced motion it is the island from the start.
 `mw-header-bar` on `<html>` brings back the flat bar: full width, fixed at the
-top, 62px, never revealing - also on a header that carries `mw-header-reveal`.
+top, 62px, no docking. `mw-header-reveal` still rides it in, as before the
+island.
 
-**Reveal on scroll.** `mw-header-reveal` keeps the island above the screen and
+**Reveal on scroll.** `mw-header-reveal` keeps the header above the screen and
 rides it in over the first 420px of scroll - for a page that opens on a
 full-bleed hero and wants nothing on top of it. It animates `top` and not a
 transform, because a transform on the header would make it the containing block

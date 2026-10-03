@@ -13,7 +13,7 @@
       text-decoration: none;
       background: var(--mw-card-background);
       border: 1px solid var(--mw-border);
-      border-radius: radius('md');
+      border-radius: radius($chip-radius);
       padding: spacing('2');
       transition: var(--mw-transition-fast);
       color: var(--mw-text-color);
@@ -55,7 +55,7 @@
       padding: spacing('1') spacing('2');
       min-width: 32px;
       min-height: 32px;
-      border-radius: radius('sm');
+      border-radius: radius($chip-radius-sm);
 
       .mw-techstack-logo {
         width: 18px;
@@ -78,7 +78,7 @@
 
     &-logo {
       object-fit: contain;
-      border-radius: radius('sm');
+      border-radius: radius($chip-radius-sm);
       transition: transform var(--mw-duration-fast) var(--mw-ease-out);
       flex-shrink: 0;
     }
