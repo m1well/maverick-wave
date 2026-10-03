@@ -3,23 +3,71 @@
 // Shared by the three controls in .mw-header-actions
 $_control-size: 40px;
 
+// The surface signature at link size - the surface's 20px arc would close into a
+// frame on a box this short
+$_mark-round: radius('lg');
+
+// Where the island sits: percentages on a fixed box are the viewport's, so this
+// puts its content box on the page container, $header-island-reach wider on
+// either side. Logo and links stay put while the bar docks around them.
+$_island-edge: max(
+  calc(var(--mw-header-inset) - #{$header-island-reach}),
+  calc(
+    (100% - var(--mw-container-width)) / 2 - var(--mw-header-pad) -
+      #{$header-island-reach}
+  )
+);
+
+@mixin navbar-mark-shape {
+  border-radius: radius-sharp() $_mark-round radius-sharp() $_mark-round;
+
+  :root.mw-corners-even & {
+    border-radius: radius('md');
+  }
+}
+
+// The arc pair on the mark. Set on the pseudo-element itself and not on the
+// header, or every surface inside the bar would take the bar's accent.
+@mixin navbar-mark-arcs {
+  @include corner-accent(0, 'both', radius-sharp(), $_mark-round);
+  --mw-corner-accent: var(--mw-header-navbar-list-active-color);
+
+  :root.mw-corners-even & {
+    @include corner-accent(0, 'top', radius('md'), radius('md'));
+  }
+}
+
 @layer mw.layout {
+  // The island's side padding. On the root and not on the header, so the ribbon
+  // hanging under the island can find the same edges.
+  :root {
+    --mw-header-pad: #{spacing('4')};
+
+    @include media-up('md') {
+      --mw-header-pad: #{spacing('5')};
+    }
+  }
+
   .mw-header {
     position: fixed;
-    top: spacing('0');
-    left: spacing('0');
-    width: 100%;
+    top: var(--mw-header-inset);
+    left: $_island-edge;
+    right: $_island-edge;
     z-index: z-index('header');
     // Dark in both themes, fixed light included, where no light-dark() flips
     --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
-    background: var(--mw-header-background);
-    backdrop-filter: blur(7px);
-    border-bottom: 1px solid var(--mw-header-border);
-    padding: spacing('3') spacing('0');
+    background: var(--mw-header-glass);
+    backdrop-filter: blur(20px) saturate(1.6);
+    border: 1px solid var(--mw-header-island-border);
+    border-radius: radius('xl');
+    box-shadow: var(--mw-elevation-4);
+    // The height comes from min-height; the padding only has to let a control
+    // grown to its 2.75rem touch floor fit inside it
+    padding: spacing('2') var(--mw-header-pad);
     transition: var(--mw-transition);
     display: flex;
     align-items: center;
-    min-height: var(--mw-header-height);
+    min-height: calc(var(--mw-header-height) - var(--mw-header-inset));
 
     // A component host (Angular, React) sitting between the header and its
     // container would become the flex item and shrink to content width, leaving
@@ -31,7 +79,9 @@ $_control-size: 40px;
       min-width: 0;
     }
 
+    // The island already sits on the page container, see $_island-edge
     .mw-container {
+      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -213,41 +263,37 @@ $_control-size: 40px;
     }
   }
 
-  // The panel rides under the bar, not beside it. A drawer pinned to the right
-  // edge runs into the logo: 250px of panel against a 180px logo leaves 60px of
-  // overlap on a phone, and .mw-logo sits higher in the header's stacking
-  // context, so the logo prints on top of the menu. Under the bar there is
-  // nothing to collide with, at any logo width.
+  // The panel hangs under the island as a card of its own, not beside it. A
+  // drawer pinned to the right edge runs into the logo: 250px of panel against a
+  // 180px logo leaves 60px of overlap on a phone, and .mw-logo sits higher in the
+  // header's stacking context, so the logo prints on top of the menu. Under the
+  // island there is nothing to collide with, at any logo width.
   //
   // position: absolute against the header and not fixed against the viewport:
   // the header carries a backdrop-filter, which makes it the containing block
   // for a fixed child anyway - at that point the anchoring is only nominally to
-  // the viewport, and every place the bar moves has to be undone by hand. Bound
-  // to the bar it simply travels with it.
+  // the viewport, and every place the island moves has to be undone by hand.
+  // Bound to it, the card simply travels with it.
   @mixin navbar-top-sheet {
     position: absolute;
-    top: 100%;
-    left: spacing('0');
-    right: spacing('0');
+    top: calc(100% + #{spacing('3')});
+    // Out to the island's outer edge, past its border
+    left: -1px;
+    right: -1px;
     width: auto;
     height: auto;
+    // Opaque: a backdrop-filter nested in the header's own samples only the
+    // header, so a translucent card would show the page through it unblurred
     background: var(--mw-header-background);
-    backdrop-filter: blur(7px);
-    // Both edges: the panel covers the bar's own bottom border - top: 100%
-    // lands on the padding box, which is above it - so without one of its own
-    // the bar and the panel read as a single block of colour.
-    border-top: 1px solid var(--mw-header-border);
-    border-bottom: 1px solid var(--mw-header-border);
-    box-shadow:
-      0 6px 12px var(--mw-shadow-near),
-      0 18px 40px var(--mw-shadow-far);
+    border: 1px solid var(--mw-header-island-border);
+    border-radius: radius('xl');
     z-index: z-index('header-panel');
 
-    // Rolled out from under the bar rather than slid in. A slide needs a place
-    // to start, and the only direction with room is straight up through the
-    // header - which would take the panel behind its own stacking context root,
-    // where a child cannot go. The clip does the same thing visually and needs
-    // no z-index trick.
+    // Rolled out from under the island rather than slid in. A slide needs a
+    // place to start, and the only direction with room is straight up through
+    // the header - which would take the panel behind its own stacking context
+    // root, where a child cannot go. The clip does the same thing visually and
+    // needs no z-index trick.
     clip-path: inset(0 0 100% 0);
     visibility: hidden;
     transition:
@@ -258,29 +304,36 @@ $_control-size: 40px;
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      gap: spacing('0');
+      gap: spacing('1');
       // The list is a flex item of the panel, so without this it shrinks to the
       // width of its longest label and the rows end a third of the way across
       width: 100%;
-      // Tall menus stay reachable without the panel growing past the screen
-      max-height: calc(100dvh - var(--mw-header-height));
+      // Tall menus stay reachable without the card growing past the screen: the
+      // room under the island, less the gap above the card and the inset below
+      max-height: calc(
+        100dvh - var(--mw-header-height) -
+          #{spacing('3')} - var(--mw-header-inset)
+      );
       overflow-y: auto;
       // Keeps a rubber-band scroll inside the panel from moving the page
       overscroll-behavior: contain;
-      // The gutter sits on the link, not here, so a row's hover and its tap
-      // target run the full width of the panel instead of stopping at the text
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding: spacing('3') spacing('3')
+        calc(#{spacing('3')} + env(safe-area-inset-bottom, 0px));
 
-      // From here a row fits, and a full-width band with four links stacked in
-      // its left corner is mostly empty band. Wrapping, because the count is
+      // The card is the surface here - no gliding mark
+      &::before,
+      &::after {
+        content: none;
+      }
+
+      // From here a row fits, and a full-width card with four links stacked in
+      // its left corner is mostly empty card. Wrapping, because the count is
       // the page's business, not the framework's.
       @include media-up('sm') {
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         gap: spacing('2');
-        padding: spacing('3') var(--mw-container-gutter)
-          calc(#{spacing('3')} + env(safe-area-inset-bottom, 0px));
       }
     }
 
@@ -290,19 +343,8 @@ $_control-size: 40px;
       opacity: 0;
       transform: translateY(-8px);
 
-      // Rules between the rows, not around the block: a line above the first
-      // one would double the panel's own top border, one below the last would
-      // double its bottom.
-      + .mw-navbar-item .mw-navbar-link {
-        border-top: 1px solid var(--mw-header-border);
-      }
-
       @include media-up('sm') {
         width: auto;
-
-        + .mw-navbar-item .mw-navbar-link {
-          border-top: none;
-        }
       }
     }
 
@@ -311,45 +353,34 @@ $_control-size: 40px;
       align-items: center;
       min-height: 52px;
       width: 100%;
-      padding: spacing('3') var(--mw-container-gutter);
-      border-radius: radius('none');
+      padding: spacing('3') spacing('5');
       font-size: font-size('lg');
       text-align: left;
-      color: var(--mw-header-text-color);
+      color: var(--mw-header-navbar-list-color);
 
       @include media-up('sm') {
         min-height: 44px;
         padding: spacing('3') spacing('4');
-        border-radius: radius('md');
         font-size: font-size('md');
-      }
-
-      // The sliding underline is a hover affordance and has no place on touch
-      &::after {
-        display: none;
       }
 
       // Restated here: the plain color above already outranks the base
       &:hover {
-        color: var(--mw-header-navbar-list-active-color);
-        background: var(--mw-primary-background);
+        color: var(--mw-header-text-color);
+        background: var(--mw-header-navbar-mark);
       }
 
       &:active {
-        background: var(--mw-primary-background-hover);
+        background: #{fade('header-navbar-list-active-color', 26%)};
       }
 
       // Last, so the current page keeps its look while being hovered
       &:is(.mw-active, .active, [aria-current='page']) {
-        color: var(--mw-header-navbar-list-active-color);
-        background: var(--mw-primary-background);
-        // Marks the left edge of a stacked list. In a row the links are pills
-        // and the same rule would draw a stray tick inside each of them.
-        box-shadow: inset 3px 0 0 var(--mw-header-navbar-list-active-color);
-        font-weight: font-weight('medium');
+        color: var(--mw-header-text-color);
+        background: var(--mw-header-navbar-mark);
 
-        @include media-up('sm') {
-          box-shadow: none;
+        &::after {
+          @include navbar-mark-arcs;
         }
       }
     }
@@ -430,14 +461,10 @@ $_control-size: 40px;
       list-style: none;
       margin: spacing('0');
       padding: spacing('0');
-      gap: spacing('2');
+      gap: spacing('0');
       align-items: center;
       flex-wrap: nowrap;
       overflow: visible;
-
-      @include media-up('lg') {
-        gap: spacing('4');
-      }
     }
 
     &-item {
@@ -448,41 +475,32 @@ $_control-size: 40px;
 
     &-link {
       position: relative;
+      display: block;
+      padding: spacing('2') spacing('3');
+      @include navbar-mark-shape;
       font-weight: font-weight('medium');
-      font-size: inherit;
+      // A step under the body text, which is what pays for the padding the mark
+      // needs - the row takes no more room than the bare labels used to
+      font-size: font-size('sm');
       transition: var(--mw-transition);
       color: var(--mw-header-navbar-list-color);
-      padding-bottom: 3px;
 
-      &::after {
-        content: '';
-        position: absolute;
-        left: 10%;
-        bottom: 0;
-        width: 80%;
-        height: 2px;
-        background: currentColor;
-        transform: scaleX(0);
-        transform-origin: center;
-        transition:
-          transform var(--mw-duration-fast),
-          opacity var(--mw-duration-fast);
-        opacity: 0;
+      &:hover {
+        color: var(--mw-header-text-color);
+        background: var(--mw-header-navbar-mark);
       }
 
-      &:hover,
-      &.mw-active,
-      &.active,
-      &[aria-current='page'] {
-        color: var(--mw-header-navbar-list-active-color);
+      &:active {
+        background: #{fade('header-navbar-list-active-color', 26%)};
       }
 
-      &:hover::after,
-      &.mw-active::after,
-      &.active::after,
-      &[aria-current='page']::after {
-        transform: scaleX(1);
-        opacity: 1;
+      &:is(.mw-active, .active, [aria-current='page']) {
+        color: var(--mw-header-text-color);
+        background: var(--mw-header-navbar-mark);
+
+        &::after {
+          @include navbar-mark-arcs;
+        }
       }
     }
 
@@ -499,6 +517,157 @@ $_control-size: 40px;
           }
         }
       }
+    }
+  }
+
+  // The mark follows the pointer and the keyboard and comes back to rest on the
+  // current page: the link under the pointer takes the anchor name, the current
+  // one holds it only while no other does. Chromium animates the move, WebKit
+  // and Gecko jump - both land in the right place. Without anchor positioning
+  // each link paints its own mark, see above.
+  @supports (anchor-scope: all) and (position-anchor: --mw-a) {
+    .mw-navbar-list {
+      position: relative;
+      anchor-scope: --mw-navbar-mark;
+
+      &::before {
+        content: '';
+        position: absolute;
+        pointer-events: none;
+        @include navbar-mark-shape;
+        background: var(--mw-header-navbar-mark);
+      }
+
+      &::after {
+        @include navbar-mark-arcs;
+      }
+
+      // After the arcs: corner-accent() sets `inset: 0` for the box it frames
+      &::before,
+      &::after,
+      :root.mw-corners-even &::after {
+        position-anchor: --mw-navbar-mark;
+        inset: anchor(top) anchor(right) anchor(bottom) anchor(left);
+        opacity: 0;
+        transition:
+          left var(--mw-duration-base) var(--mw-ease-out),
+          right var(--mw-duration-base) var(--mw-ease-out),
+          opacity var(--mw-duration-fast) var(--mw-ease-out);
+      }
+
+      &:has(
+        .mw-navbar-link:is(
+          :hover,
+          :focus-visible,
+          .mw-active,
+          .active,
+          [aria-current='page']
+        )
+      ) {
+        &::before,
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    .mw-navbar-link {
+      &:is(:hover, :focus-visible) {
+        anchor-name: --mw-navbar-mark;
+      }
+
+      &:hover,
+      &:is(.mw-active, .active, [aria-current='page']) {
+        background: transparent;
+      }
+
+      &:is(.mw-active, .active, [aria-current='page'])::after,
+      :root.mw-corners-even
+        &:is(.mw-active, .active, [aria-current='page'])::after {
+        content: none;
+      }
+    }
+
+    .mw-navbar-list:not(:has(.mw-navbar-link:is(:hover, :focus-visible)))
+      .mw-navbar-link:is(.mw-active, .active, [aria-current='page']) {
+      anchor-name: --mw-navbar-mark;
+    }
+  }
+
+  // An announcement hangs from the island as its lower half: the same edges, the
+  // island squared off where the two meet and its shadow handed down to the
+  // ribbon, so they float as one piece. 1px up, under the island's border, so no
+  // rounding seam opens between them.
+  .mw-announcement:not(.mw-announcement-static) {
+    top: calc(var(--mw-header-height) - 1px);
+    left: $_island-edge;
+    right: $_island-edge;
+    border: 1px solid var(--mw-header-island-border);
+    border-top: none;
+    border-radius: 0 0 radius('xl') radius('xl');
+    box-shadow: var(--mw-elevation-4);
+    // The link's hover fill would square off the rounded corners
+    overflow: hidden;
+  }
+
+  html:has(.mw-announcement:not(.mw-announcement-static, [hidden])) .mw-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+
+    // The open menu covers the ribbon instead of hanging below it - a phone
+    // would otherwise lose the height of both before the first link
+    .mw-navbar {
+      top: 100%;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  // The open menu covers it, but through the scrim's blur its edge would still
+  // bleed out around the card
+  body.mw-nav-open .mw-announcement:not(.mw-announcement-static) {
+    visibility: hidden;
+  }
+
+  // The flat bar, for a site that wants the header to just stand there: full
+  // width, fixed at the top, no island and no reveal (_header-reveal.scss is off
+  // under the same class). On <html> like the other site-wide variants.
+  :root.mw-header-bar {
+    --mw-header-height: #{$header-bar-height};
+
+    .mw-header {
+      top: 0;
+      left: 0;
+      right: 0;
+      min-height: var(--mw-header-height);
+      // Percentages of the viewport, so the content box is the page container
+      padding-inline: calc((100% - var(--mw-container-width)) / 2);
+      border-width: 0 0 1px;
+      border-color: var(--mw-header-border);
+      border-radius: 0;
+      background: var(--mw-header-background);
+      box-shadow: none;
+    }
+
+    // The menu hangs straight from the bar, edge to edge. In the row the nav is
+    // static and has no border style, so none of this reaches it.
+    .mw-navbar {
+      top: 100%;
+      left: 0;
+      right: 0;
+      border-width: 1px 0;
+      border-radius: 0;
+    }
+
+    // The ribbon under the bar, as it always was
+    .mw-announcement:not(.mw-announcement-static) {
+      top: var(--mw-header-height);
+      left: 0;
+      right: 0;
+      border: none;
+      border-radius: 0;
+      box-shadow: var(--mw-elevation-2);
     }
   }
 
@@ -601,7 +770,7 @@ $_control-size: 40px;
     --mw-focus-ring-color: var(--mw-primary-text-color);
   }
 
-  // Forced colours paint the drawn line away; the current page gets a real one
+  // Forced colours paint the mark's fill away; the current page gets a real line
   @media (forced-colors: active) {
     .mw-navbar-link:is(.mw-active, .active, [aria-current='page']) {
       text-decoration: underline 2px;

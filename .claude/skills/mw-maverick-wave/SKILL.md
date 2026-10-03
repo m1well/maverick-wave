@@ -344,7 +344,7 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 (+ `mw-occasion-scroll`, `mw-occasion-sm` / `-lg`, `mw-occasion-spot`,
 `mw-occasion-skip`); scheduled by `src/js/occasions.js` in the `<head>`
 
-**Navigation** `mw-header` (+ `mw-header-reveal`, `mw-header-keep`) +
+**Navigation** `mw-header` (an island; + `mw-header-reveal`, `mw-header-keep`) +
 `mw-navbar` · `mw-header-btn` / `mw-profile-btn` · `mw-breadcrumbs` · `mw-pagination` (+ `-pages`, `-page`, `-gap`,
 `-status`) · `mw-dropdown` (+ `-menu`, `-item`, `-item-danger`, `-divider`,
 `-label`, `-caret`, `-shortcut`, `-end`, `-up`) · `mw-lang-switch` (+ `-code`, `-name`, `-check`,
@@ -398,8 +398,8 @@ bar) · `mw-w-auto` ·
 
 **Site-wide on `<html>`** (`references/theming.md`) `mw-corners-even` ·
 `mw-accent-single` · `mw-accent-text-auto` · `mw-shadows-flat` / `-hard` ·
-`mw-surfaces-flush` · `mw-sections-plain` · `mw-hover-static` ·
-`mw-scroll-static` · `mw-motion-off` · `mw-headings-caps` ·
+`mw-surfaces-flush` · `mw-sections-plain` · `mw-header-bar` ·
+`mw-hover-static` · `mw-scroll-static` · `mw-motion-off` · `mw-headings-caps` ·
 `mw-links-underline` · `mw-btn-pill` / `-square` / `-tactile` / `-glass` ·
 `mw-density-compact` / `-roomy`
 

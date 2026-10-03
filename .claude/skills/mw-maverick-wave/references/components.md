@@ -798,7 +798,10 @@ maintenance window. One per page.
 ```
 
 Positioned fixed below the header and one z-index layer under it, and it stays
-there - the page scrolls beneath it. Variants: `mw-announcement-secondary`,
+there - the page scrolls beneath it. It hangs from the island as its lower half:
+the same edges, the island squared off where the two meet. Under
+`mw-header-bar` it runs full width under the bar. The open mobile menu covers
+it. Variants: `mw-announcement-secondary`,
 `-success`, `-warning`, `-danger`, `-info` (primary is the default).
 `mw-announcement-highlight` is the pill in front of the text; the content
 element is usually an `<a>` but a plain `<div>` works.
@@ -816,7 +819,8 @@ instead of fighting the offset.
 
 On a page whose header carries `mw-header-reveal` the ribbon leaves and arrives
 with it, without a class of its own - both cover the height of the pair, so they
-come in as one block. See `references/layout.md`.
+come in as one block. Without it the ribbon docks into the island together with
+the bar. See `references/layout.md`.
 
 ## Action bar
 

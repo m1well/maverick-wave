@@ -352,14 +352,20 @@ $_corner-opaque: 55%;
   );
 }
 
-// The arc alone, for a variant that redraws it without restating the shape
-@mixin corner-accent($border-width: 1px, $corners: 'both') {
+// The arc alone, for a variant that redraws it without restating the shape.
+// The radii are only for a box too small to carry the surface's 20px.
+@mixin corner-accent(
+  $border-width: 1px,
+  $corners: 'both',
+  $sharp-radius: radius-sharp(),
+  $round-radius: radius('xl')
+) {
   // max(), not a bare subtraction: --mw-radius-scale can take the radius to 0,
   // and while a negative border-radius is clamped for us, a negative circle in
   // the mask below would throw the whole gradient away and lose the arc.
   $width: _accent-width($border-width);
-  $sharp: max(0px, calc(#{radius-sharp()} - #{$width}));
-  $round: max(0px, calc(#{radius('xl')} - #{$width}));
+  $sharp: max(0px, calc(#{$sharp-radius} - #{$width}));
+  $round: max(0px, calc(#{$round-radius} - #{$width}));
   // Opaque to where the curve ends, fading from there, so the arc runs into the
   // straight edge instead of stopping at the tangent. 1.8 is bounded by the
   // shortest surface: past about 2 the two arcs meet on a 50px box and read as

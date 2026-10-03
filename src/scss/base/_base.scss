@@ -131,6 +131,7 @@
 
     // header height
     --mw-header-height: #{$header-height};
+    --mw-header-inset: #{$header-inset};
 
     // Read by the anchor offset of anything the sticky section nav can cover.
     // The strip at its tallest: a 2.75rem button under a thumb plus its two

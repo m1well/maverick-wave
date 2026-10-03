@@ -3,6 +3,53 @@
   position: relative;
 }
 
+/* The fake headers under Header Utilities, drawn like the real one: the
+   island, or the flat bar while the palette has mw-header-bar on */
+.demo-island {
+  position: relative;
+  min-height: 60px;
+  padding: 0.35rem 1rem;
+  background: var(--mw-header-glass);
+  border: 1px solid var(--mw-header-island-border);
+  border-radius: max(2px, calc(20px * var(--mw-radius-scale, 1)));
+  box-shadow: var(--mw-elevation-4);
+}
+
+/* Nothing to click here - the real links are in the header at the top */
+.demo-island .mw-navbar-link {
+  cursor: default;
+}
+
+/* Logo and controls only on a phone, as on the real header, where the links
+   sit behind the burger */
+.demo-island > :first-child {
+  white-space: nowrap;
+}
+
+@media (width < 768px) {
+  .demo-island .mw-navbar-list {
+    display: none;
+  }
+}
+
+.demo-island > .mw-localhost-indicator-pulse {
+  inset-inline: max(2px, calc(20px * var(--mw-radius-scale, 1)));
+  width: auto;
+}
+
+:root.mw-header-bar .demo-island {
+  min-height: 62px;
+  background: var(--mw-header-background);
+  border-width: 0 0 1px;
+  border-color: var(--mw-header-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+:root.mw-header-bar .demo-island > .mw-localhost-indicator-pulse {
+  inset-inline: 0;
+}
+
 /* A version number is digits, so it gets the mono stack - the rest of
    the pill is mw-hero-badge */
 .version-corner {

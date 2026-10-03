@@ -64,8 +64,8 @@ outlet goes inside the `mw-container`:
 
 ## Header & navigation
 
-The header is fixed, dark in both themes, and expects exactly this structure -
-its children are styled through descendant selectors:
+The header is a fixed island, dark in both themes, and expects exactly this
+structure - its children are styled through descendant selectors:
 
 ```html
 <header class="mw-header">
@@ -124,7 +124,7 @@ its children are styled through descendant selectors:
 - The current page takes `mw-active` or `aria-current="page"` on its
   `mw-navbar-link`. The scroll spy only moves the mark between links into the
   page itself, so on a site with several pages that mark stays.
-- Below the breakpoint the list becomes a panel under the bar, full width, and
+- Below the breakpoint the list becomes a card under the island, and
   `mw-menu-btn` appears. Opening it means `open` on **both** `mw-menu-btn` and
   `mw-navbar`, `mw-nav-open` on the `<body>`, and `aria-expanded` on the button -
   below the breakpoint it is the only route to the navigation, so it has to be a
@@ -136,11 +136,15 @@ its children are styled through descendant selectors:
   change several levels down. Forget it and the panel opens without a scrim, the
   page behind it still scrolls, and on a `mw-header-reveal` bar the burger sits a
   header height below the panel it belongs to.
-- The rows stack and run the full width of the panel. From `sm` they turn into a
-  wrapping row of pills, so a wide screen below the collapse breakpoint does not
-  get a tall band with four links in its left corner.
-- The active link carries `mw-active` (bare `active` still works but is
-  deprecated).
+- The rows stack inside the card, the current one marked as in the row. From
+  `sm` they turn into a wrapping row of pills, so a wide screen below the
+  collapse breakpoint does not get a tall card with four links in its left
+  corner.
+- The current link carries the mark: the surface signature at link size, a fill
+  with the two corner arcs. Where anchor positioning exists one mark glides to
+  the link under the pointer or the keyboard focus and back; without it each
+  link paints its own. The class is `mw-active` (bare `active` still works but
+  is deprecated).
 - `mw-profile-btn` is the signed-in pill, next to or instead of the login button:
 
 ```html
@@ -173,13 +177,25 @@ same height as the login and burger buttons.
 - Header colours have their own tokens (`--mw-header-background`,
   `--mw-header-text-color`, `--mw-header-navbar-list-color`,
   `--mw-header-navbar-list-active-color`, `--mw-header-burgerbutton-color`,
-  `--mw-header-border`) so the chrome can be retuned without touching the brand
-  palette. All of them derive from `--mw-primary-color`, not from a theme
+  `--mw-header-border`, `--mw-header-glass`, `--mw-header-island-border`,
+  `--mw-header-navbar-mark`) so the chrome can be retuned without touching the
+  brand palette. All of them derive from `--mw-primary-color`, not from a theme
   colour: the bar is dark in both themes and a light-only project must not have
-  to configure dark-theme values to change it. The bar itself is the primary
-  darkened toward black, `$header-surface` (14%) - see `theming.md`.
+  to configure dark-theme values to change it. The island is the primary
+  darkened toward black, `$header-surface` (14%), at 88% over a 20px blur
+  (`--mw-header-glass`) - see `theming.md`.
 
-**Reveal on scroll.** `mw-header-reveal` keeps the bar above the screen and
+**Island.** The header floats `--mw-header-inset` (14px) below the top edge, and
+its content box reaches `$header-island-reach` (5px) past the page container on
+either side - room for the links, the logo that much left of the text below. `--mw-header-height` (74px) is the room it takes - island plus
+gap - so main padding, sticky offsets and the anchor scroll clear it without
+knowing it floats. Without `mw-header-reveal` it starts as the full bar and
+docks into the island over the first 160px of scroll; without scroll timelines
+(Firefox) or under reduced motion it is the island from the start.
+`mw-header-bar` on `<html>` brings back the flat bar: full width, fixed at the
+top, 62px, never revealing - also on a header that carries `mw-header-reveal`.
+
+**Reveal on scroll.** `mw-header-reveal` keeps the island above the screen and
 rides it in over the first 420px of scroll - for a page that opens on a
 full-bleed hero and wants nothing on top of it. It animates `top` and not a
 transform, because a transform on the header would make it the containing block
