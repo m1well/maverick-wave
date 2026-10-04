@@ -248,7 +248,7 @@ $_mark-round: radius('lg');
     }
   }
 
-  // The panel hangs under the island as a card of its own, not beside it. A
+  // The panel hangs under the island as its lower half, not beside it. A
   // drawer pinned to the right edge runs into the logo: 250px of panel against a
   // 180px logo leaves 60px of overlap on a phone, and .mw-logo sits higher in the
   // header's stacking context, so the logo prints on top of the menu. Under the
@@ -261,7 +261,8 @@ $_mark-round: radius('lg');
   // Bound to it, the card simply travels with it.
   @mixin navbar-top-sheet {
     position: absolute;
-    top: calc(100% + #{spacing('3')});
+    // On the island's bottom border, so the two share one seam line
+    top: 100%;
     // Out to the island's outer edge, past its border
     left: -1px;
     right: -1px;
@@ -271,7 +272,7 @@ $_mark-round: radius('lg');
     // header, so a translucent card would show the page through it unblurred
     background: var(--mw-header-background);
     border: 1px solid var(--mw-header-island-border);
-    border-radius: radius('xl');
+    border-radius: 0 0 radius('xl') radius('xl');
     z-index: z-index('header-panel');
 
     // Rolled out from under the island rather than slid in. A slide needs a
@@ -294,10 +295,9 @@ $_mark-round: radius('lg');
       // width of its longest label and the rows end a third of the way across
       width: 100%;
       // Tall menus stay reachable without the card growing past the screen: the
-      // room under the island, less the gap above the card and the inset below
+      // room under the island, less the inset below
       max-height: calc(
-        100dvh - var(--mw-header-height) -
-          #{spacing('3')} - var(--mw-header-inset)
+        100dvh - var(--mw-header-height) - var(--mw-header-inset)
       );
       overflow-y: auto;
       // Keeps a rubber-band scroll inside the panel from moving the page
@@ -414,6 +414,11 @@ $_mark-round: radius('lg');
       backdrop-filter: blur(2px);
       z-index: z-index('header-scrim');
       animation: mw-navbar-scrim-in var(--mw-duration-base) var(--mw-ease-out);
+    }
+
+    .mw-header {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 
@@ -599,14 +604,6 @@ $_mark-round: radius('lg');
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     box-shadow: none;
-
-    // The open menu covers the ribbon instead of hanging below it - a phone
-    // would otherwise lose the height of both before the first link
-    .mw-navbar {
-      top: 100%;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
   }
 
   // The open menu covers it, but through the scrim's blur its edge would still
