@@ -1724,6 +1724,17 @@
     return Number.isNaN(padding) ? 0 : padding;
   }
 
+  // A header shared with subpages has to write its section links as /#id
+  function isSamePageAnchor(link) {
+    const url = new URL(link.href, location.href);
+    const page = (path) => path.replace(/index\.html$/, '');
+    return (
+      url.hash !== '' &&
+      url.origin === location.origin &&
+      page(url.pathname) === page(location.pathname)
+    );
+  }
+
   function openFaqItem(target) {
     const item = target && target.closest('.mw-faq-item');
     if (item) item.open = true;
@@ -1793,10 +1804,11 @@
       requestAnimationFrame(step);
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    document.querySelectorAll('a[href*="#"]').forEach((anchor) => {
+      if (!isSamePageAnchor(anchor)) return;
       anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
+        const href = this.getAttribute('href');
+        const targetId = href.slice(href.indexOf('#'));
 
         const targetElement = document.querySelector(targetId);
         if (!targetElement) return;
@@ -1844,12 +1856,8 @@
   function initScrollSpy() {
     const sections = document.querySelectorAll('section[id]');
     // Links into this page only, or a scroll clears the current page's mark
-    const page = (path) => path.replace(/index\.html$/, '');
     const navLinks = [...document.querySelectorAll('.mw-navbar-link')].filter(
-      (link) => {
-        const url = new URL(link.href, location.href);
-        return url.hash && page(url.pathname) === page(location.pathname);
-      }
+      isSamePageAnchor
     );
 
     if (sections.length === 0 || navLinks.length === 0) return;
