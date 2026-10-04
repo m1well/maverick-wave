@@ -305,9 +305,12 @@ $_mark-round: radius('lg');
       padding: spacing('3') spacing('3')
         calc(#{spacing('3')} + env(safe-area-inset-bottom, 0px));
 
-      // The card is the surface here - no gliding mark
+      // The card is the surface here - no gliding mark. The corners-even arcs
+      // come later in the anchor block at the same specificity, so they are
+      // named here as well.
       &::before,
-      &::after {
+      &::after,
+      :root.mw-corners-even &::after {
         content: none;
       }
 
