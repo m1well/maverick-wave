@@ -1724,15 +1724,19 @@
     return Number.isNaN(padding) ? 0 : padding;
   }
 
-  // A header shared with subpages has to write its section links as /#id
-  function isSamePageAnchor(link) {
+  // A header shared with subpages has to write its links as / and /#id
+  function pointsHere(link) {
     const url = new URL(link.href, location.href);
     const page = (path) => path.replace(/index\.html$/, '');
     return (
-      url.hash !== '' &&
       url.origin === location.origin &&
-      page(url.pathname) === page(location.pathname)
+      page(url.pathname) === page(location.pathname) &&
+      url.search === location.search
     );
+  }
+
+  function isSamePageAnchor(link) {
+    return new URL(link.href, location.href).hash !== '' && pointsHere(link);
   }
 
   function openFaqItem(target) {
@@ -1804,15 +1808,21 @@
       requestAnimationFrame(step);
     }
 
-    document.querySelectorAll('a[href*="#"]').forEach((anchor) => {
-      if (!isSamePageAnchor(anchor)) return;
-      anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        const targetId = href.slice(href.indexOf('#'));
+    document.querySelectorAll('a[href]').forEach((anchor) => {
+      const href = anchor.getAttribute('href');
+      if (href === '#' || anchor.target === '_blank' || !pointsHere(anchor)) {
+        return;
+      }
+      // Without a hash the link means the top of this page, the way a logo
+      // does, and glides there instead of loading the page again
+      const targetId = href.includes('#') ? href.slice(href.indexOf('#')) : '';
 
-        const targetElement = document.querySelector(targetId);
-        if (!targetElement) return;
-        openFaqItem(targetElement);
+      anchor.addEventListener('click', function (e) {
+        // A modified click asks for a new tab or window - left to the browser
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+        const targetElement = targetId && document.querySelector(targetId);
+        if (targetId && !targetElement) return;
 
         const menuBtn = document.querySelector('.mw-menu-btn');
         const nav = document.querySelector('.mw-navbar');
@@ -1826,15 +1836,20 @@
         }
 
         e.preventDefault();
-        const target = Math.max(0, documentTop(targetElement) - anchorOffset());
+        let target = 0;
 
-        // The browser moves focus on an anchor jump of its own; preventDefault
-        // takes that away, and a skip link that only scrolls leaves the next Tab
-        // back where it started. -1 keeps the target out of the tab order.
-        if (!targetElement.hasAttribute('tabindex')) {
-          targetElement.setAttribute('tabindex', '-1');
+        if (targetElement) {
+          openFaqItem(targetElement);
+          target = Math.max(0, documentTop(targetElement) - anchorOffset());
+
+          // The browser moves focus on an anchor jump of its own; preventDefault
+          // takes that away, and a skip link that only scrolls leaves the next
+          // Tab back where it started. -1 keeps the target out of the tab order.
+          if (!targetElement.hasAttribute('tabindex')) {
+            targetElement.setAttribute('tabindex', '-1');
+          }
+          targetElement.focus({ preventScroll: true });
         }
-        targetElement.focus({ preventScroll: true });
 
         // Not `behavior: 'smooth'`: the browser's own curve takes no duration,
         // and the one it picks cannot be slowed down.
@@ -1847,7 +1862,11 @@
         // replaceState and not the default hash change: the glide is the
         // navigation, and a history entry per section link buries the page the
         // user arrived from
-        history.replaceState(null, '', targetId);
+        history.replaceState(
+          null,
+          '',
+          targetId || location.pathname + location.search
+        );
       });
     });
   }
