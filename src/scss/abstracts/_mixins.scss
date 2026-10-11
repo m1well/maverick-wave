@@ -270,6 +270,15 @@
   }
 }
 
+// An outline whose fill runs in from the left on hover instead of switching at
+// once. Hover only sets `background-size: 100% 100%`, so whatever restates the
+// background has to come through here or the fill is gone.
+@mixin btn-fill-sweep($under: transparent) {
+  background: #{$under}
+    linear-gradient(var(--mw-primary-color), var(--mw-primary-color)) left / 0%
+    100% no-repeat;
+}
+
 // Shared by mw-link and mw-btn-link, which differ in whether they carry a control
 // height, not in how they look. The underline sits low so descenders clear it.
 @mixin link-look {

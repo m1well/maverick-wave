@@ -139,9 +139,7 @@
           var(--mw-hero-text-color) 45%,
           transparent
         );
-        background: rgb(0 0 0 / 30%)
-          linear-gradient(var(--mw-primary-color), var(--mw-primary-color))
-          left / 0% 100% no-repeat;
+        @include btn-fill-sweep(rgb(0 0 0 / 30%));
         backdrop-filter: blur(6px);
         color: var(--mw-hero-text-color);
 

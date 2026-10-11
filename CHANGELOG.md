@@ -6,6 +6,18 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.14.0] - 2026-10-11
+
+### Changed
+
+- buttons: the icon that edges out under the pointer is opt-in with `mw-btn-forward` - as `:last-child` it also caught a leading icon before a bare text label
+
+### Fixed
+
+- small fixes
+- `mw-accent-single`: `mw-btn-secondary` fills in from the left like `mw-btn-outline` and casts no shadow at rest
+- the spinner of a busy button follows `--mw-motion-scale`
+
 ## [6.13.0] - 2026-10-11
 
 ### Added
@@ -30,13 +42,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `mw-density-compact` / `-roomy`: also reach modals, `mw-card-simple`, `mw-card-stack` and the panel footer; compact stops at the second spacing step
 - showcase: the palette button opens the preview on the start page from every page, and the jump lands on the title
 
-## [6.12.0] - 2026-10-ß4
+## [6.12.0] - 2026-10-04
 
 ### Fixed
 
 - small fixes
 
-## [6.11.0] - 2026-10-ß4
+## [6.11.0] - 2026-10-04
 
 ### Fixed
 
