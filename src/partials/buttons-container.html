@@ -3,8 +3,9 @@
   Three emphasis levels: primary fills, outline draws a line, ghost does neither
   until you point at it. Every variant gives a little when pressed and springs
   back - on touch that press is the only feedback there is. A solid button casts
-  a shadow in its own colour, the outline fills in from the left, and an icon
-  after the label edges out under the pointer.
+  a shadow in its own colour, the outline fills in from the left, and with
+  <code>mw-btn-forward</code> an icon after the label edges out under the
+  pointer.
 </p>
 
 <div class="mw-grid-1">
@@ -163,7 +164,7 @@
           Upload File
         </button>
 
-        <button type="button" class="mw-btn mw-btn-primary">
+        <button type="button" class="mw-btn mw-btn-primary mw-btn-forward">
           Next Step
           <i class="fas fa-arrow-right"></i>
         </button>
@@ -175,10 +176,11 @@
     <h3 class="mw-mb-4">Loading &amp; Shine</h3>
     <p class="mw-text-muted mw-text-measure">
       <code>aria-busy="true"</code> on any button swaps the label for a spinner
-      in its colour and keeps the width - the state is announced along with it.
-      <code>mw-btn-shine</code> draws a streak of light across the button once
-      per hover; meant for the one call to action in a hero. Both share a
-      pseudo-element with <code>data-tooltip</code>, so not on the same button.
+      in its colour and keeps the width - the label stays the button's
+      accessible name. <code>mw-btn-shine</code> draws a streak of light across
+      the button once per hover; meant for the one call to action in a hero.
+      Both share a pseudo-element with <code>data-tooltip</code>, so not on the
+      same button.
     </p>
     <div class="mw-card mw-card-simple">
       <div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-4">

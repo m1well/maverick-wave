@@ -100,12 +100,8 @@
       border: 1px solid var(--mw-success-color);
     }
   }
-  // The fill runs in from the left on hover instead of switching at once; where
-  // it ends is the same filled button as before.
   .mw-btn-outline {
-    background: transparent
-      linear-gradient(var(--mw-primary-color), var(--mw-primary-color)) left /
-      0% 100% no-repeat;
+    @include btn-fill-sweep;
     border-color: var(--mw-primary-text-color);
     color: var(--mw-primary-text-color);
     &:hover:not(:disabled) {
@@ -183,12 +179,13 @@
   }
 
   // An icon after the label edges out under the pointer, the button pointing
-  // where it leads. Not on mw-btn-icon, where the icon is the whole button.
-  .mw-btn:not(.mw-btn-icon) > :is(svg, i, fa-icon):last-child {
+  // where it leads. Opt-in, because a leading icon before a bare text label is
+  // just as much :last-child - text nodes do not count.
+  .mw-btn-forward > :is(svg, i, fa-icon):last-child {
     transition: translate var(--mw-duration-fast) var(--mw-ease-out);
   }
 
-  .mw-btn:not(.mw-btn-icon, :disabled) {
+  .mw-btn-forward:not(:disabled) {
     @include hover-move {
       > :is(svg, i, fa-icon):last-child {
         translate: 3px 0;
@@ -196,9 +193,9 @@
     }
   }
 
-  // aria-busy="true" while a form sends: a spinner in the label's colour, the
-  // width kept, and the state announced. The label is hidden through
-  // text-fill-color, not color, so currentColor still paints the spinner.
+  // aria-busy="true" while a form sends: a spinner in the label's colour and
+  // the width kept. The label is hidden through text-fill-color, not color, so
+  // currentColor still paints the spinner.
   // Shares ::after with data-tooltip - a busy button carries no tooltip.
   .mw-btn[aria-busy='true'] {
     position: relative;
@@ -219,13 +216,7 @@
       border: 2px solid currentColor;
       border-inline-end-color: transparent;
       border-radius: radius('full');
-      animation: mw-btn-spin 0.7s linear infinite;
-    }
-  }
-
-  @keyframes mw-btn-spin {
-    to {
-      rotate: 1turn;
+      animation: mw-spin motion(0.7s) linear infinite;
     }
   }
 

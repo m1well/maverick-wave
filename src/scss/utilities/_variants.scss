@@ -15,12 +15,14 @@
     // Or the two solid buttons would be the same button. Outline keeps the
     // emphasis order the markup asked for: primary fills, secondary draws a line.
     .mw-btn-secondary {
-      background: transparent;
+      --mw-btn-shadow: 0 0 #0000;
+
+      @include btn-fill-sweep;
       border-color: var(--mw-primary-text-color);
       color: var(--mw-primary-text-color);
 
       &:hover:not(:disabled) {
-        background: var(--mw-primary-color);
+        background-size: 100% 100%;
         border-color: var(--mw-primary-color);
         color: var(--mw-primary-accent-text-color);
       }
