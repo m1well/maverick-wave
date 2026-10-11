@@ -139,12 +139,14 @@
           var(--mw-hero-text-color) 45%,
           transparent
         );
-        background: rgb(0 0 0 / 30%);
+        background: rgb(0 0 0 / 30%)
+          linear-gradient(var(--mw-primary-color), var(--mw-primary-color))
+          left / 0% 100% no-repeat;
         backdrop-filter: blur(6px);
         color: var(--mw-hero-text-color);
 
         &:hover:not(:disabled) {
-          background: var(--mw-primary-color);
+          background-size: 100% 100%;
           border-color: var(--mw-primary-color);
           color: var(--mw-primary-accent-text-color);
         }

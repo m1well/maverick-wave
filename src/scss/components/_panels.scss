@@ -18,7 +18,7 @@
     flex-direction: column;
 
     &-header {
-      padding: spacing('4') spacing('5');
+      padding: spacing('4', $padding-scale) spacing('5', $padding-scale);
       border-bottom: 1px solid var(--mw-border-accent);
       display: flex;
       // A title with an action beside it runs out of room on a phone long
@@ -32,7 +32,7 @@
     }
 
     &-body {
-      padding: spacing('4') spacing('5');
+      padding: spacing('4', $padding-scale) spacing('5', $padding-scale);
       flex: 1;
       overflow-y: auto;
       @include scrollbar;
@@ -80,7 +80,7 @@
     }
 
     &-footer {
-      padding: spacing('4') spacing('5');
+      padding: spacing('4', $padding-scale) spacing('5', $padding-scale);
       border-top: 1px solid var(--mw-border-accent);
       display: flex;
       justify-content: flex-end;

@@ -181,12 +181,6 @@
   }
 
   @include media-down('sm') {
-    // Cards sit edge to edge on a phone, so the padding inside them is all that
-    // separates the text from the screen edge - it cannot be the desktop value
-    .mw-card-simple {
-      padding: spacing('4');
-    }
-
     // Stacked buttons at their label's width read as a list of unrelated things.
     // Not mw-card-footer: that stacks on its *container*, so at 390px it is still
     // a row, and flex-grow on a row makes a card's action a full-bleed band.

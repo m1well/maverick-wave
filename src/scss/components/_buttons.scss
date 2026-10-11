@@ -18,7 +18,12 @@
     min-height: var(--mw-control-height);
     text-decoration: none;
     cursor: pointer;
-    transition: var(--mw-transition);
+    // The spring on transform is the release after a press; background-size
+    // carries the outline's fill.
+    transition:
+      var(--mw-transition),
+      transform var(--mw-duration-base) var(--mw-ease-spring),
+      background-size var(--mw-duration-base) var(--mw-ease-out);
     box-sizing: border-box;
     font-family: inherit;
     font-size: inherit;
@@ -27,7 +32,7 @@
     @include tappable;
 
     &:active:not(:disabled) {
-      transform: translateY(1px);
+      transform: scale(0.97);
       transition-duration: var(--mw-duration-instant);
     }
 
@@ -39,6 +44,8 @@
   }
 
   .mw-btn-primary {
+    --mw-btn-tone: var(--mw-primary-color);
+
     @include btn-solid;
     background: var(--mw-primary-color);
     color: var(--mw-primary-accent-text-color);
@@ -51,6 +58,8 @@
     }
   }
   .mw-btn-secondary {
+    --mw-btn-tone: var(--mw-secondary-color);
+
     @include btn-solid;
     background: var(--mw-secondary-color);
     color: var(--mw-secondary-accent-text-color);
@@ -64,6 +73,8 @@
   }
   // Semantic variants for destructive / confirming actions
   .mw-btn-danger {
+    --mw-btn-tone: var(--mw-danger-color);
+
     @include btn-solid;
     background: var(--mw-danger-color);
     color: var(--mw-danger-accent-text-color);
@@ -76,6 +87,8 @@
     }
   }
   .mw-btn-success {
+    --mw-btn-tone: var(--mw-success-color);
+
     @include btn-solid;
     background: var(--mw-success-color);
     color: var(--mw-success-accent-text-color);
@@ -87,12 +100,16 @@
       border: 1px solid var(--mw-success-color);
     }
   }
+  // The fill runs in from the left on hover instead of switching at once; where
+  // it ends is the same filled button as before.
   .mw-btn-outline {
-    background: transparent;
+    background: transparent
+      linear-gradient(var(--mw-primary-color), var(--mw-primary-color)) left /
+      0% 100% no-repeat;
     border-color: var(--mw-primary-text-color);
     color: var(--mw-primary-text-color);
     &:hover:not(:disabled) {
-      background: var(--mw-primary-color);
+      background-size: 100% 100%;
       border-color: var(--mw-primary-color);
       color: var(--mw-primary-accent-text-color);
       box-shadow: var(--mw-elevation-1);
@@ -101,7 +118,7 @@
       box-shadow: inset 0 2px 5px color-mix(in srgb, #000 25%, transparent);
     }
     @include active(':not(:disabled)') {
-      background: var(--mw-primary-color);
+      background-size: 100% 100%;
       color: var(--mw-primary-accent-text-color);
     }
   }
@@ -162,6 +179,85 @@
 
     &:active:not(:disabled) {
       background: var(--mw-danger-info-background-hover);
+    }
+  }
+
+  // An icon after the label edges out under the pointer, the button pointing
+  // where it leads. Not on mw-btn-icon, where the icon is the whole button.
+  .mw-btn:not(.mw-btn-icon) > :is(svg, i, fa-icon):last-child {
+    transition: translate var(--mw-duration-fast) var(--mw-ease-out);
+  }
+
+  .mw-btn:not(.mw-btn-icon, :disabled) {
+    @include hover-move {
+      > :is(svg, i, fa-icon):last-child {
+        translate: 3px 0;
+      }
+    }
+  }
+
+  // aria-busy="true" while a form sends: a spinner in the label's colour, the
+  // width kept, and the state announced. The label is hidden through
+  // text-fill-color, not color, so currentColor still paints the spinner.
+  // Shares ::after with data-tooltip - a busy button carries no tooltip.
+  .mw-btn[aria-busy='true'] {
+    position: relative;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+
+    > * {
+      visibility: hidden;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      width: 1.1em;
+      height: 1.1em;
+      margin: auto;
+      border: 2px solid currentColor;
+      border-inline-end-color: transparent;
+      border-radius: radius('full');
+      animation: mw-btn-spin 0.7s linear infinite;
+    }
+  }
+
+  @keyframes mw-btn-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  // A streak of light across the button once per hover - for the one call to
+  // action in a hero, not for every button on the page. Shares ::before with
+  // data-tooltip.
+  .mw-btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgb(255 255 255 / 40%) 47%,
+        rgb(255 255 255 / 40%) 53%,
+        transparent 70%
+      );
+      translate: -110% 0;
+      pointer-events: none;
+    }
+
+    @include hover-move {
+      &::before {
+        translate: 110% 0;
+        transition: translate 0.75s var(--mw-ease-out);
+      }
     }
   }
 

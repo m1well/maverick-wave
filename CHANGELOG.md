@@ -6,6 +6,30 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.13.0] - 2026-10-11
+
+### Added
+
+- `mw-stack` - cards that pile up while the page scrolls, from `lg`, one `--mw-stack-step` lower each
+- `mw-link-arrow` - an arrow after `mw-link` or `mw-link-muted` that edges out under the pointer
+- buttons: `aria-busy="true"` shows a spinner in the label's colour and keeps the width
+- `mw-btn-shine` - a streak of light across the button once per hover, for a hero's call to action
+- `--mw-btn-tone`, `--mw-btn-shadow`, `--mw-btn-shadow-hover` - the button shadow's colour and the hook the shadow switch uses
+- `spacing($key, $scale)` - an optional factor on the step; `$padding-scale` (1.125) and `$padding-scale-compact` (1.25) carry it for cards, panels and modals
+
+### Changed
+
+- headings: line height `calc(1em + 0.25rem)` instead of `1.2`, tighter the larger the type
+- solid buttons: flat, no light line; a soft shadow in their own colour that grows on hover
+- buttons: give to 97 % when pressed and spring back, instead of dipping 1px
+- `mw-btn-outline`: the fill runs in from the left on hover
+- buttons: an icon after the label edges out 3px under the pointer (not on `mw-btn-icon`)
+- `mw-btn-glass`: light rim, gloss band over the upper half, soft lower edge, tint 92/80 instead of 88/70
+- `mw-btn-tactile`: 4px edge, rises onto 5px on hover, sinks onto 1px when pressed
+- padding inside cards, panels and modals: 12.5 % more at default and roomy, 25 % more in compact
+- `mw-density-compact` / `-roomy`: also reach modals, `mw-card-simple`, `mw-card-stack` and the panel footer; compact stops at the second spacing step
+- showcase: the palette button opens the preview on the start page from every page, and the jump lands on the title
+
 ## [6.12.0] - 2026-10-ß4
 
 ### Fixed

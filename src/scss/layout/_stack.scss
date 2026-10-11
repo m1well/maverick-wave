@@ -1,0 +1,31 @@
+@use '../abstracts' as *;
+
+@layer mw.layout {
+  // Cards that pile up while the page scrolls: each stops below the fixed
+  // chrome, one step lower than the card before, and the next slides over it.
+  // Only from lg - on a phone a card is often taller than the screen, and a
+  // sticky box taller than the viewport never shows its own end.
+  .mw-stack {
+    --mw-stack-step: #{spacing('4')};
+
+    display: grid;
+    gap: spacing('8');
+
+    @include media-up('lg') {
+      > * {
+        position: sticky;
+        top: calc(
+          var(--mw-header-height) + var(--mw-announcement-offset) +
+            var(--mw-section-nav-offset) + #{spacing('6')} +
+            var(--mw-stack-index, 0) * var(--mw-stack-step)
+        );
+      }
+
+      @for $index from 2 through 12 {
+        > :nth-child(#{$index}) {
+          --mw-stack-index: #{$index - 1};
+        }
+      }
+    }
+  }
+}

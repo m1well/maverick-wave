@@ -8,6 +8,7 @@
 @forward 'main';
 @forward 'page-header';
 @forward 'section';
+@forward 'stack';
 
 // Last on purpose: mw-parallax-sticky has to beat the `position: relative`
 @forward 'parallax';

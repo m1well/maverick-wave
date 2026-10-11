@@ -207,19 +207,38 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const preview = document.getElementById('preview');
+  const OPEN_KEY = 'mw-showcase-palette-open';
 
   const toggle = (open) => {
     panel.hidden = !open;
     toggleBtn.setAttribute('aria-expanded', String(open));
 
-    // Only the start page has a preview; `instant`, or the jump animates
+    // `instant`, or the jump animates
     if (open) preview?.scrollIntoView({ block: 'start', behavior: 'instant' });
   };
 
+  // Only the start page has a preview, so the other pages send the reader
+  // there and the panel opens on arrival
   toggleBtn.addEventListener('click', (event) => {
     event.stopPropagation();
-    toggle(panel.hidden);
+    if (preview) {
+      toggle(panel.hidden);
+      return;
+    }
+    try {
+      sessionStorage.setItem(OPEN_KEY, '1');
+    } catch {}
+    location.href = 'index.html';
   });
+
+  try {
+    if (preview && sessionStorage.getItem(OPEN_KEY)) {
+      sessionStorage.removeItem(OPEN_KEY);
+      // A frame later, once the setup handler below has resized the page
+      requestAnimationFrame(() => toggle(true));
+    }
+  } catch {}
+
   document.addEventListener('click', (event) => {
     if (!panel.hidden && !panel.contains(event.target)) toggle(false);
   });

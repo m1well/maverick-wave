@@ -1,8 +1,10 @@
 <h3 class="mw-section-subtitle">Buttons</h3>
 <p class="mw-text-muted mw-text-measure">
   Three emphasis levels: primary fills, outline draws a line, ghost does neither
-  until you point at it. Every variant dips a pixel when pressed - on touch that
-  press is the only feedback there is.
+  until you point at it. Every variant gives a little when pressed and springs
+  back - on touch that press is the only feedback there is. A solid button casts
+  a shadow in its own colour, the outline fills in from the left, and an icon
+  after the label edges out under the pointer.
 </p>
 
 <div class="mw-grid-1">
@@ -160,6 +162,38 @@
           <i class="fas fa-upload"></i>
           Upload File
         </button>
+
+        <button type="button" class="mw-btn mw-btn-primary">
+          Next Step
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="mw-mb-4">Loading &amp; Shine</h3>
+    <p class="mw-text-muted mw-text-measure">
+      <code>aria-busy="true"</code> on any button swaps the label for a spinner
+      in its colour and keeps the width - the state is announced along with it.
+      <code>mw-btn-shine</code> draws a streak of light across the button once
+      per hover; meant for the one call to action in a hero. Both share a
+      pseudo-element with <code>data-tooltip</code>, so not on the same button.
+    </p>
+    <div class="mw-card mw-card-simple">
+      <div class="mw-d-flex mw-flex-wrap mw-items-center mw-gap-4">
+        <button type="button" class="mw-btn mw-btn-primary" aria-busy="true">
+          Sending
+        </button>
+        <button type="button" class="mw-btn mw-btn-outline" aria-busy="true">
+          Loading
+        </button>
+        <button
+          type="button"
+          class="mw-btn mw-btn-primary mw-btn-lg mw-btn-shine"
+        >
+          Start a project
+        </button>
       </div>
     </div>
   </div>
@@ -256,6 +290,24 @@
     and written up in the
     <a href="index.html#get-started" class="mw-link-muted">Get Started</a>
     section - both sit on the line, not above it.
+  </p>
+</div>
+
+<h3 class="mw-mb-4 mw-mt-6">Arrow Links</h3>
+<p class="mw-text-muted">
+  <code>mw-link-arrow</code> next to <code>mw-link</code> or
+  <code>mw-link-muted</code> puts an arrow after the label, for a link that
+  leads on to more: all projects, the full price list. The arrow takes the
+  link's colour, stays out of the underline and edges out under the pointer -
+  not with reduced motion or <code>mw-hover-static</code>.
+</p>
+<div class="mw-card mw-card-simple">
+  <p class="mw-mb-0">
+    Every tile in the
+    <a href="layout.html#bento" class="mw-link mw-link-arrow">Bento Grid</a>
+    links on, the quieter way
+    <a href="layout.html#stack" class="mw-link-muted mw-link-arrow">Stack</a>
+    too.
   </p>
 </div>
 
