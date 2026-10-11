@@ -593,7 +593,7 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
 
     > :is(.mw-panel-header, .mw-panel-body):first-child {
       padding-top: max(
-        #{spacing('4')},
+        spacing('4', $padding-scale),
         calc(var(--mw-occasion-reach) * var(--mw-occasion-scale))
       );
     }

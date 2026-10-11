@@ -99,8 +99,8 @@
 }
 
 // Function to get a spacing value from the spacing map
-@function spacing($key) {
-  @return map.get(v.$spacing, $key);
+@function spacing($key, $scale: 1) {
+  @return map.get(v.$spacing, $key) * $scale;
 }
 
 // Function to get a breakpoint from the breakpoints map

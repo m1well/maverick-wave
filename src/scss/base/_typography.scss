@@ -23,7 +23,9 @@
   h5,
   h6 {
     font-family: var(--mw-font-family-heading);
-    line-height: 1.2;
+    // Tighter the larger the type: 1.08 at 48px, 1.17 at 24px. A fixed ratio
+    // leaves a two-line display title with a gap between its lines.
+    line-height: calc(1em + 0.25rem);
     margin-bottom: spacing('4');
     font-weight: font-weight('bold');
     text-wrap: balance;

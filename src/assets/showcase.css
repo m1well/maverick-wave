@@ -420,9 +420,10 @@
   background: var(--mw-primary-accent-text-color);
 }
 
-/* The sticky bar would otherwise sit on the section title it jumps to */
+/* Lands on the title instead of the section padding above it - the header is
+   already kept clear by the scroll-padding on html */
 #preview {
-  scroll-margin-top: calc(var(--mw-header-height) + 1rem);
+  scroll-margin-top: calc(1rem - var(--mw-section-padding-block));
 }
 
 .preview-head {

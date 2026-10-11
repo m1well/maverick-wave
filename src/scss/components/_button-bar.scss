@@ -71,6 +71,8 @@
     .mw-btn:not([class*='mw-btn-primary']):not([class*='mw-btn-outline']):not(
         [class*='mw-btn-link']
       ) {
+      --mw-btn-tone: var(--mw-secondary-color);
+
       background: var(--mw-secondary-color);
       color: var(--mw-secondary-accent-text-color);
 

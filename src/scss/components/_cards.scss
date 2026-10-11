@@ -99,7 +99,14 @@
     // children keep flowing instead of turning into flex items
     &-simple {
       display: block;
-      padding: spacing('5');
+      // Cards sit edge to edge on a phone, so the padding inside them is all
+      // that separates the text from the screen edge - it cannot be the desktop
+      // value
+      padding: spacing('4', $padding-scale);
+
+      @include media-up('sm') {
+        padding: spacing('5', $padding-scale);
+      }
     }
 
     &-badge {
@@ -198,10 +205,12 @@
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      padding: spacing('6') spacing('4') spacing('5');
+      padding: spacing('6', $padding-scale) spacing('4', $padding-scale)
+        spacing('5', $padding-scale);
 
       @container mw-card (width >= #{$mw-card-wide}) {
-        padding: spacing('7') spacing('5') spacing('6');
+        padding: spacing('7', $padding-scale) spacing('5', $padding-scale)
+          spacing('6', $padding-scale);
       }
 
       > *:last-child:not(.mw-card-footer) {
@@ -329,7 +338,7 @@
     }
 
     &-stack {
-      padding: spacing('4') spacing('5');
+      padding: spacing('4', $padding-scale) spacing('5', $padding-scale);
 
       &-icon {
         @include _card-icon-circle;

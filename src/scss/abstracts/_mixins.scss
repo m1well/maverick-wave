@@ -236,25 +236,33 @@
   scrollbar-color: #{$thumb} #{$track};
 }
 
-// A hairline of light along the top edge and a shadow underneath, as if the light
-// came from above the page; the pressed state inverts both. White and black and
-// not tokens on purpose - this is lighting, not palette.
+// Flat on purpose - no sheen, no light line, those belong to mw-btn-glass. What
+// lifts the button is a soft shadow in its own colour (--mw-btn-tone, set by the
+// variant), which on a dark page reads as a faint glow. The shadow switch swaps
+// it for nothing or a hard edge through --mw-btn-shadow / -hover, both of which
+// have to stay list-safe: glass and tactile append them to inset shadows.
 @mixin btn-solid {
-  box-shadow:
-    inset 0 1px 0 color-mix(in srgb, #fff 15%, transparent),
-    var(--mw-elevation-1);
+  $tone: var(--mw-btn-tone, var(--mw-primary-color));
 
-  // A pixel up and the shadow steps with it - the pair reads as the button coming
-  // toward the pointer. Guarded, so it never latches after a tap.
+  box-shadow: var(
+    --mw-btn-shadow,
+    0 1px 2px color-mix(in srgb, #{$tone} 30%, transparent),
+    0 4px 12px -4px color-mix(in srgb, #{$tone} 55%, transparent)
+  );
+
+  // A pixel up and the shadow grows with it - the pair reads as the button
+  // coming toward the pointer. Guarded, so it never latches after a tap.
   @include hover {
-    box-shadow:
-      inset 0 1px 0 color-mix(in srgb, #fff 20%, transparent),
-      var(--mw-elevation-2);
+    box-shadow: var(
+      --mw-btn-shadow-hover,
+      0 2px 4px color-mix(in srgb, #{$tone} 30%, transparent),
+      0 10px 22px -8px color-mix(in srgb, #{$tone} 65%, transparent)
+    );
     transform: translateY(-1px);
   }
 
   &:active:not(:disabled) {
-    box-shadow: inset 0 2px 5px color-mix(in srgb, #000 25%, transparent);
+    box-shadow: inset 0 2px 4px color-mix(in srgb, #000 22%, transparent);
   }
 
   &:disabled {

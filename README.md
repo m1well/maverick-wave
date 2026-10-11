@@ -16,7 +16,7 @@ The result is a framework that balances utility with simplicity, offering develo
 
 ## Features
 
-- Responsive Grid System, plus a bento grid for tiles of mixed size
+- Responsive Grid System, plus a bento grid for tiles of mixed size and a stack for cards that pile up while the page scrolls
 - 30+ UI Components: Buttons, Cards, Panels, Tabs, Accordions, Modals, Tiles, Alerts, Spinners, Progress Bars, Avatars, Tags, Badges, Dropdown, Ratings, Stepper, Skeleton Loader, Empty State, Price, Offer Cards, Divider, and more
 - Application building blocks: an app shell with a sidebar that folds to an icon rail, drawers, chat, stat tiles and meters
 - Homepage specials: before/after compare, a mobile action bar for call, route and booking, a logo marquee, image shapes
@@ -47,12 +47,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.12.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.13.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.12.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.13.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -363,26 +363,26 @@ layer of its own:
 Eighteen classes on `<html>` retune the whole look without touching markup or
 rebuilding. They stack.
 
-| Class                 | Effect                                                                  |
-| --------------------- | ----------------------------------------------------------------------- |
-| `mw-corners-even`     | Drops the surface signature - every panel becomes an evenly rounded box |
-| `mw-accent-single`    | One brand colour instead of two; `mw-btn-secondary` turns outline       |
-| `mw-accent-text-auto` | The label on every fill turns black or white by `contrast-color()`      |
-| `mw-shadows-flat`     | Elevation 1-3 to `none`; dropdown and modal keep theirs                 |
-| `mw-shadows-hard`     | Every elevation becomes a hard offset without blur                      |
-| `mw-surfaces-flush`   | Cards, panels and footer on the page colour, held by their border       |
-| `mw-hover-static`     | No hover travels - lifts and image zooms go, colour still responds      |
-| `mw-motion-off`       | The reduced-motion page for every reader, script included               |
-| `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit where they land             |
-| `mw-sections-plain`   | The hatch behind `mw-section-alternate` collapses into the page colour  |
-| `mw-headings-caps`    | `h1`-`h3` in capitals                                                   |
-| `mw-links-underline`  | Links underlined at rest; the stroke thickens on hover                  |
-| `mw-btn-pill`         | Fully rounded buttons; form fields keep their radius                    |
-| `mw-btn-square`       | Buttons cut to a hard corner while the page keeps its radius            |
-| `mw-btn-glass`        | Filled buttons become a translucent wash with a lit top edge            |
-| `mw-btn-tactile`      | Filled buttons stand on a darker edge and sink onto it when pressed     |
-| `mw-density-compact`  | Less padding in cards, panels and controls; type stays put              |
-| `mw-density-roomy`    | More of the same                                                        |
+| Class                 | Effect                                                                             |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `mw-corners-even`     | Drops the surface signature - every panel becomes an evenly rounded box            |
+| `mw-accent-single`    | One brand colour instead of two; `mw-btn-secondary` turns outline                  |
+| `mw-accent-text-auto` | The label on every fill turns black or white by `contrast-color()`                 |
+| `mw-shadows-flat`     | Elevation 1-3 and the button shadow to none; dropdown and modal keep theirs        |
+| `mw-shadows-hard`     | Every elevation and the button shadow become a hard offset without blur            |
+| `mw-surfaces-flush`   | Cards, panels and footer on the page colour, held by their border                  |
+| `mw-hover-static`     | No hover travels - lifts and image zooms go, colour still responds                 |
+| `mw-motion-off`       | The reduced-motion page for every reader, script included                          |
+| `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit where they land                        |
+| `mw-sections-plain`   | The hatch behind `mw-section-alternate` collapses into the page colour             |
+| `mw-headings-caps`    | `h1`-`h3` in capitals                                                              |
+| `mw-links-underline`  | Links underlined at rest; the stroke thickens on hover                             |
+| `mw-btn-pill`         | Fully rounded buttons; form fields keep their radius                               |
+| `mw-btn-square`       | Buttons cut to a hard corner while the page keeps its radius                       |
+| `mw-btn-glass`        | Filled buttons become tinted glass: light rim, gloss band, soft lower edge         |
+| `mw-btn-tactile`      | Filled buttons stand on a darker edge, rise on hover and sink onto it when pressed |
+| `mw-density-compact`  | Less padding in cards, panels, modals and controls; type stays put                 |
+| `mw-density-roomy`    | More of the same                                                                   |
 
 Six properties do the rest: `--mw-radius-scale` multiplies every radius (`0`
 squares the framework off), `--mw-root-font-size` moves the whole rem scale,
@@ -423,6 +423,11 @@ For full control, clone the repository and integrate `src/scss/main.scss` into y
   $ink-lightness-dark: 0.68,
   $ink-lightness-light: 0.55,
   $muted-tint: 12%,
+
+  // Optional: padding inside cards, panels and modals, as a factor on its
+  // spacing step - the second one is for mw-density-compact
+  $padding-scale: 1.125,
+  $padding-scale-compact: 1.25,
 
   // Optional: how far card and footer sit from the page background
   $card-surface-dark: 0.85,

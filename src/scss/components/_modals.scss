@@ -57,7 +57,7 @@
     .mw-modal-header::before {
       content: '';
       position: absolute;
-      top: spacing('2');
+      bottom: calc(100% + #{spacing('1')});
       left: 50%;
       transform: translateX(-50%);
       width: 36px;
@@ -67,17 +67,11 @@
       opacity: 0.45;
     }
 
+    // The handle's room sits above the header, not in its padding, which the
+    // density switches rewrite
     .mw-modal-header {
       position: relative;
-      padding: spacing('6') spacing('4') spacing('3');
-    }
-
-    .mw-modal-footer {
-      padding: spacing('4');
-    }
-
-    .mw-modal-body {
-      padding: spacing('4');
+      margin-top: spacing('4');
     }
 
     // On a phone the actions are the reason the sheet is open. Full width, in
@@ -210,7 +204,7 @@
 
   // Modal sections
   .mw-modal-header {
-    padding: spacing('3') spacing('5');
+    padding: spacing('3', $padding-scale) spacing('5', $padding-scale);
     border-bottom: 1px solid var(--mw-border-accent);
     display: flex;
     justify-content: space-between;
@@ -233,7 +227,7 @@
   }
 
   .mw-modal-body {
-    padding: spacing('4') spacing('5');
+    padding: spacing('4', $padding-scale) spacing('5', $padding-scale);
     overflow-y: auto;
     flex: 1;
     overscroll-behavior: contain;
@@ -241,7 +235,7 @@
   }
 
   .mw-modal-footer {
-    padding: spacing('3') spacing('5');
+    padding: spacing('3', $padding-scale) spacing('5', $padding-scale);
     border-top: 1px solid var(--mw-border-accent);
     display: flex;
     // Three actions do not fit one line inside a phone-width dialog, and a row

@@ -513,6 +513,12 @@ $spacing: (
   '14': 9rem,
 );
 
+// Padding inside cards and panels, as a factor on the spacing step it is written
+// on: the steps lie 30 to 50% apart, too coarse to tune a padding by. The first
+// carries default and roomy, so roomy keeps its distance above the default.
+$padding-scale: 1.125 !default;
+$padding-scale-compact: 1.25 !default;
+
 // Breakpoints
 // Shared by _cards.scss and _pricing.scss, which have to agree on it
 $mw-card-narrow: 360px !default;

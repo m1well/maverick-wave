@@ -38,6 +38,9 @@
     --mw-elevation-1: none;
     --mw-elevation-2: none;
     --mw-elevation-3: none;
+    // An empty shadow rather than none: glass and tactile list it after insets
+    --mw-btn-shadow: 0 0 #0000;
+    --mw-btn-shadow-hover: 0 0 #0000;
   }
 
   // Cards, panels and the footer give up their own tone and sit flush on the
@@ -77,25 +80,46 @@
   // Mixed toward black rather than taken from --mw-*-color-hover, which moves
   // toward the light in one theme and away from it in the other - an edge has to
   // be darker than its face in both.
+  //
+  // The edge is the travel: the button rises a pixel onto a 5px edge under the
+  // pointer and sinks 3px onto 1px when pressed, so the face moves the way a key
+  // does instead of only losing its shadow.
   :root.mw-btn-tactile {
     @each $name in ('primary', 'secondary', 'danger', 'success') {
       .mw-btn-#{$name} {
-        box-shadow: 0
-          3px
-          0
-          color-mix(in srgb, var(--mw-#{$name}-color) 72%, #000);
+        $tone: var(--mw-#{$name}-color);
+        $edge: color-mix(in srgb, #{$tone} 68%, #000);
 
-        // Travels the full height of the edge, where the base button moves 1px
+        box-shadow:
+          0 4px 0 #{$edge},
+          var(
+            --mw-btn-shadow,
+            0 6px 14px -6px color-mix(in srgb, #{$tone} 60%, transparent)
+          );
+
+        @include hover {
+          &:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow:
+              0 5px 0 #{$edge},
+              var(
+                --mw-btn-shadow-hover,
+                0 10px 18px -8px color-mix(in srgb, #{$tone} 65%, transparent)
+              );
+          }
+        }
+
         &:active:not(:disabled) {
           transform: translateY(3px);
-          box-shadow: none;
+          box-shadow: 0 1px 0 #{$edge};
         }
       }
     }
   }
 
-  // Tinted glass: a translucent wash with a vertical ramp and a specular line
-  // along the top edge, which is what gives the button its thickness.
+  // Tinted glass: a light rim all round, a gloss band over the upper half and a
+  // soft darker edge below - what tells it from the flat button is the light in
+  // it, not that one can see through it.
   //
   // Deliberately without `backdrop-filter`, and that omission has to stay. The
   // filter makes the button a containing block for its own fixed-position
@@ -103,10 +127,9 @@
   // of above it; and nested inside the header's own blur it flickers while the
   // page scrolls. At the tint below there was next to nothing to see through.
   //
-  // The tint stays heavy on purpose, and that is the other trade-off: a 20%
-  // wash reads as real glass, but the label then rides on whatever is behind
-  // it, and over a light card that contrast is gone. At 88/70 the label keeps
-  // roughly the fill's contrast.
+  // The tint stays heavy on purpose: a 20% wash reads as real glass, but the
+  // label then rides on whatever is behind it, and over a light card that
+  // contrast is gone. At 92/80 the label keeps roughly the fill's contrast.
   //
   // Hover and active are restated rather than inherited: this sits in
   // mw.utilities, which outranks every rule in mw.components whatever its
@@ -114,33 +137,49 @@
   :root.mw-btn-glass {
     @each $name in ('primary', 'secondary', 'danger', 'success') {
       .mw-btn-#{$name} {
-        background: linear-gradient(
-          to bottom,
-          color-mix(in srgb, var(--mw-#{$name}-color) 88%, transparent),
-          color-mix(in srgb, var(--mw-#{$name}-color) 70%, transparent)
-        );
-        border-color: color-mix(
-          in srgb,
-          var(--mw-#{$name}-color) 70%,
-          transparent
-        );
+        $tone: var(--mw-#{$name}-color);
+
+        background:
+          linear-gradient(
+            rgb(255 255 255 / 32%),
+            rgb(255 255 255 / 8%) 48%,
+            rgb(255 255 255 / 0%) 52%
+          ),
+          linear-gradient(
+            color-mix(in srgb, #{$tone} 92%, transparent),
+            color-mix(in srgb, #{$tone} 80%, transparent)
+          );
+        border-color: color-mix(in srgb, #{$tone} 55%, #fff);
         box-shadow:
-          inset 0 1px 0 rgb(255 255 255 / 28%),
-          0 1px 3px rgb(0 0 0 / 14%);
+          inset 0 1px 0 rgb(255 255 255 / 50%),
+          inset 0 0 0 1px rgb(255 255 255 / 12%),
+          inset 0 -2px 0 rgb(0 0 0 / 12%),
+          var(
+            --mw-btn-shadow,
+            0 4px 14px -6px color-mix(in srgb, #{$tone} 55%, transparent)
+          );
 
         &:hover:not(:disabled),
         &.mw-active:not(:disabled),
         &.active:not(:disabled) {
-          background: linear-gradient(
-            to bottom,
-            color-mix(in srgb, var(--mw-#{$name}-color) 97%, transparent),
-            color-mix(in srgb, var(--mw-#{$name}-color) 82%, transparent)
-          );
-          border-color: color-mix(
-            in srgb,
-            var(--mw-#{$name}-color) 85%,
-            transparent
-          );
+          background:
+            linear-gradient(
+              rgb(255 255 255 / 40%),
+              rgb(255 255 255 / 10%) 48%,
+              rgb(255 255 255 / 0%) 52%
+            ),
+            linear-gradient(
+              color-mix(in srgb, #{$tone} 98%, transparent),
+              color-mix(in srgb, #{$tone} 88%, transparent)
+            );
+          box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 55%),
+            inset 0 0 0 1px rgb(255 255 255 / 16%),
+            inset 0 -2px 0 rgb(0 0 0 / 12%),
+            var(
+              --mw-btn-shadow-hover,
+              0 10px 22px -8px color-mix(in srgb, #{$tone} 65%, transparent)
+            );
         }
       }
     }
@@ -162,26 +201,51 @@
   //
   // --mw-section-padding-block is deliberately untouched: section spacing is
   // its own switch, and both writing it would have the panel print a setup that
-  // contradicts itself. Steps along the spacing scale rather than free values,
-  // because that scale is what every other measure is built from - two of them
-  // down for compact, where the point is to fit more on screen, one up for
-  // roomy, where a second step would only look loose.
+  // contradicts itself. Steps along the spacing scale, times $padding-scale -
+  // two of them down for compact, where the point is to fit more on screen, but
+  // no lower than the second; one up for roomy, where a second step would only
+  // look loose. A card's inline padding takes only one step down: at two a
+  // full-width footer button ends up on the border and inside the corner arc.
   :root.mw-density-compact {
     --mw-control-height-sm: 1.5rem;
     --mw-control-height: 1.75rem;
     --mw-control-height-lg: 2rem;
 
     .mw-card-body {
-      padding: spacing('4') spacing('2') spacing('3');
+      padding: spacing('4', $padding-scale-compact)
+        spacing('3', $padding-scale-compact)
+        spacing('3', $padding-scale-compact);
 
       @container mw-card (width >= #{$mw-card-wide}) {
-        padding: spacing('5') spacing('3') spacing('4');
+        padding: spacing('5', $padding-scale-compact)
+          spacing('4', $padding-scale-compact)
+          spacing('4', $padding-scale-compact);
       }
     }
 
+    .mw-card-simple {
+      padding: spacing('2', $padding-scale-compact)
+        spacing('3', $padding-scale-compact);
+
+      @include media-up('sm') {
+        padding: spacing('3', $padding-scale-compact)
+          spacing('4', $padding-scale-compact);
+      }
+    }
+
+    .mw-card-stack {
+      padding: spacing('2', $padding-scale-compact)
+        spacing('4', $padding-scale-compact);
+    }
+
     .mw-panel-header,
-    .mw-panel-body {
-      padding: spacing('2') spacing('3');
+    .mw-panel-body,
+    .mw-panel-footer,
+    .mw-modal-header,
+    .mw-modal-body,
+    .mw-modal-footer {
+      padding: spacing('2', $padding-scale-compact)
+        spacing('3', $padding-scale-compact);
     }
   }
 
@@ -191,16 +255,37 @@
     --mw-control-height-lg: 2.75rem;
 
     .mw-card-body {
-      padding: spacing('7') spacing('5') spacing('6');
+      padding: spacing('7', $padding-scale) spacing('5', $padding-scale)
+        spacing('6', $padding-scale);
 
       @container mw-card (width >= #{$mw-card-wide}) {
-        padding: spacing('8') spacing('6') spacing('7');
+        padding: spacing('8', $padding-scale) spacing('6', $padding-scale)
+          spacing('7', $padding-scale);
       }
     }
 
+    .mw-card-simple {
+      padding: spacing('5', $padding-scale);
+
+      @include media-up('sm') {
+        padding: spacing('6', $padding-scale);
+      }
+    }
+
+    .mw-card-stack {
+      padding: spacing('5', $padding-scale) spacing('6', $padding-scale);
+    }
+
     .mw-panel-header,
-    .mw-panel-body {
-      padding: spacing('5') spacing('6');
+    .mw-panel-body,
+    .mw-panel-footer,
+    .mw-modal-body {
+      padding: spacing('5', $padding-scale) spacing('6', $padding-scale);
+    }
+
+    .mw-modal-header,
+    .mw-modal-footer {
+      padding: spacing('4', $padding-scale) spacing('6', $padding-scale);
     }
   }
 
@@ -231,6 +316,9 @@
     @each $level, $offset in (1: 2px, 2: 4px, 3: 6px, 4: 8px, 5: 10px) {
       --mw-elevation-#{$level}: #{$offset} #{$offset} 0 var(--mw-shadow-hard);
     }
+
+    --mw-btn-shadow: var(--mw-elevation-1);
+    --mw-btn-shadow-hover: var(--mw-elevation-2);
   }
 }
 
