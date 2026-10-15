@@ -291,22 +291,9 @@
     }
   }
 
-  :root.mw-links-underline {
-    .mw-link,
-    .mw-link-muted,
-    .mw-btn-link {
-      // The longhand, because the `text-decoration` shorthand resets
-      // text-decoration-thickness along with it and would drop the 1.5px
-      // link-look() draws the line at.
-      text-decoration-line: underline;
-
-      // The underline was the hover signal and is now the resting state, so the
-      // weight takes over: .mw-link carries no colour change of its own and
-      // would otherwise go completely dead under the pointer.
-      &:hover:not(:disabled) {
-        text-decoration-thickness: 3px;
-      }
-    }
+  // mw-link is underlined on its own, this adds the link among the buttons.
+  :root.mw-links-underline .mw-btn-link {
+    @include link-underline;
   }
 }
 

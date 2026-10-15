@@ -3,16 +3,26 @@
 @layer mw.components {
   // The ribbon under the fixed header - a discount, a launch note, a maintenance
   // window. One per page, and always a single line of content with an optional
-  // highlight pill in front of it.
+  // highlight pill in front of it. Tone and label are tokens because the pill
+  // swaps them - a colour variant only sets the two.
   .mw-announcement {
+    --mw-announcement-tone: var(--mw-primary-color);
+    --mw-announcement-label: var(--mw-primary-accent-text-color);
+
     position: fixed;
     top: var(--mw-header-height);
     right: 0;
     left: 0;
     z-index: z-index('header') - 10;
-    background: color-mix(in srgb, var(--mw-primary-color) 75%, transparent);
+    // Not below 85 %: the glass lets the page through, and a dark label over a
+    // black page then drops under 4.5:1.
+    background: color-mix(
+      in srgb,
+      var(--mw-announcement-tone) 85%,
+      transparent
+    );
     backdrop-filter: blur(7px);
-    color: var(--mw-primary-accent-text-color);
+    color: var(--mw-announcement-label);
     box-shadow: var(--mw-elevation-2);
   }
 
@@ -38,13 +48,15 @@
     @include tappable;
   }
 
-  // The highlight pill - the "-20 %", the "NEW". Darkened glass rather than a
-  // color of its own, so it works on every variant without a token per pair.
+  // The highlight pill - the "-20 %", the "NEW". The ribbon's pair turned
+  // around and solid, so it works on every variant and nothing behind the glass
+  // eats into it. Not darkened glass: that sinks towards a dark label.
   .mw-announcement-highlight {
     flex-shrink: 0;
     padding: spacing('1') spacing('3');
     border-radius: 999px;
-    background: color-mix(in srgb, #000 18%, transparent);
+    background: var(--mw-announcement-label);
+    color: var(--mw-announcement-tone);
     font-weight: font-weight('bold');
   }
 
@@ -93,8 +105,8 @@
 
   @each $name in $_mw-announcement-colors {
     .mw-announcement-#{$name} {
-      background: color-mix(in srgb, var(--mw-#{$name}-color) 75%, transparent);
-      color: var(--mw-#{$name}-accent-text-color);
+      --mw-announcement-tone: var(--mw-#{$name}-color);
+      --mw-announcement-label: var(--mw-#{$name}-accent-text-color);
     }
   }
 }

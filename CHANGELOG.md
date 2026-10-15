@@ -6,6 +6,20 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.15.0] - 2026-10-15
+
+### Added
+
+- `--mw-announcement-tone`, `--mw-announcement-label` - the ribbon's colour pair; a colour variant sets only these two
+- `link-underline` mixin - underlined at rest, a thicker line under the pointer
+
+### Changed
+
+- `mw-link`, `mw-link-muted`: underlined at rest, the line thickens on hover - in running text colour alone did not mark them (WCAG 1.4.1)
+- `mw-links-underline` only adds `mw-btn-link` now, the text links carry the underline on their own
+- `mw-announcement`: 85 % opaque instead of 75 %
+- `mw-announcement-highlight`: solid, the ribbon's pair turned around, instead of darkened glass
+
 ## [6.14.0] - 2026-10-11
 
 ### Changed

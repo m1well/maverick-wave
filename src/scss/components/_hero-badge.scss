@@ -45,4 +45,16 @@
     border-radius: radius('full');
     background: var(--mw-secondary-color);
   }
+
+  // What has to be read first, like a closed door. The other badges of the
+  // same hero step aside while it is there - two pills compete instead of
+  // adding up
+  .mw-hero-badge-urgent .mw-hero-badge-dot {
+    background: var(--mw-warning-color);
+  }
+
+  .mw-home-text:has(.mw-hero-badge-urgent)
+    .mw-hero-badge:not(.mw-hero-badge-urgent) {
+    display: none;
+  }
 }
