@@ -44,11 +44,13 @@ exhaustive: what is not named does not exist.
 
 ### Text links
 
-`mw-link` and `mw-link-muted` are the inline links, added in 4.13.0. Same look
-as the two button variants - no box, underline on hover - but without
-`inline-flex` and without the control height, which is what makes them sit on
-the line instead of above it. `font` and the focus ring are set explicitly, so
-a `<button>` in the middle of a paragraph works as well as an `<a>`.
+`mw-link` and `mw-link-muted` are the inline links, added in 4.13.0. No box,
+like the two button variants, but underlined at rest - inside a sentence colour
+alone does not mark a link (WCAG 1.4.1) - and the line thickens under the
+pointer. Without `inline-flex` and without the control height, which is what
+makes them sit on the line instead of above it. `font` and the focus ring are
+set explicitly, so a `<button>` in the middle of a paragraph works as well as an
+`<a>`.
 
 ```html
 <p>
@@ -804,7 +806,11 @@ the same edges, the island squared off where the two meet. Under
 it. Variants: `mw-announcement-secondary`,
 `-success`, `-warning`, `-danger`, `-info` (primary is the default).
 `mw-announcement-highlight` is the pill in front of the text; the content
-element is usually an `<a>` but a plain `<div>` works.
+element is usually an `<a>` but a plain `<div>` works. The pill is the ribbon's
+pair turned around and solid - `--mw-announcement-label` as fill,
+`--mw-announcement-tone` as text - so nothing showing through the 85 % glass
+eats into its contrast. A variant sets only those two tokens; a ribbon in a
+colour of your own does the same.
 `mw-announcement-static` puts the ribbon into the document flow instead - it
 then scrolls with the content and shifts no anchor offset.
 
@@ -2812,7 +2818,9 @@ the container, bare `h2`/`h3`/`p`/`ul` inside:
 
 Headings are deliberately small (`lg`/`md`, primary ink) - in a document they
 structure the reading rather than compete with the page title. First and last
-child lose their outer margins, so the container's own padding rules.
+child lose their outer margins, so the container's own padding rules. A bare
+`ul` gets disc markers and a bare `<a>` the underlined `mw-link` look; a list or
+link with a class of its own (`mw-list-check`, `mw-link`, a button) keeps it.
 
 ## Media
 

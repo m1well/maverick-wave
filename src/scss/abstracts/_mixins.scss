@@ -293,6 +293,17 @@
   }
 }
 
+// Underlined at rest, for a link inside running text, where colour alone does
+// not set it apart (WCAG 1.4.1) - the weight becomes the hover signal. After
+// link-look(): the longhand keeps its 1.5px, the shorthand would reset it.
+@mixin link-underline {
+  text-decoration-line: underline;
+
+  &:hover:not(:disabled) {
+    text-decoration-thickness: 3px;
+  }
+}
+
 // The floating chrome, shared by the header island and the action bar island
 @mixin island-surface {
   background: var(--mw-header-glass);

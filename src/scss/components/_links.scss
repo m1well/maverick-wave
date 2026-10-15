@@ -12,6 +12,7 @@
     font: inherit;
 
     @include link-look;
+    @include link-underline;
     @include focus-ring;
   }
 
