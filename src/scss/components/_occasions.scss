@@ -407,9 +407,11 @@ $_effect-classes: _list-classes();
 // Cards, panels and testimonials, unless inside one another - a nested card
 // would stack a second garland into the first - plus whatever opts in. A
 // surface with an effect class of its own shows that one and leaves the site's.
+// A link card stays out: its ::before is the mark at the end, and a column of
+// links in garlands is tinsel, not a dress.
 $_surfaces: '.mw-card, .mw-panel, .mw-testimonial';
 $_carriers: '#{$_surfaces}, .mw-occasion-spot';
-$_surface: ':is(#{$_surfaces}):not(:is(#{$_surfaces}) *, .mw-occasion-skip, #{$_effect-classes})';
+$_surface: ':is(#{$_surfaces}):not(:is(#{$_surfaces}) *, .mw-occasion-skip, .mw-card-link, #{$_effect-classes})';
 $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
 
 // Every surface while the site wears the effect, and the one surface that

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="A scored loaf of bread on warm orange">
+  <defs>
+    <linearGradient id="ba-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6c47e"/>
+      <stop offset="1" stop-color="#bb5710"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#ba-bg)"/>
+  <ellipse cx="100" cy="146" rx="66" ry="10" fill="#7a3709" opacity="0.35"/>
+  <path d="M36 132c0-40 29-66 64-66s64 26 64 66v4a8 8 0 0 1-8 8H44a8 8 0 0 1-8-8z" fill="#fbe8cf"/>
+  <path d="M36 132c0-40 29-66 64-66s64 26 64 66" fill="none" stroke="#e8b47a" stroke-width="5"/>
+  <g stroke="#d98c3f" stroke-width="8" stroke-linecap="round">
+    <path d="M66 96l16 18"/>
+    <path d="M94 86l17 20"/>
+    <path d="M124 92l15 17"/>
+  </g>
+</svg>

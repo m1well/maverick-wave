@@ -304,6 +304,14 @@
   }
 }
 
+// Light instead of shadow, two offsetless layers - see mw-glow. $near and $far
+// are the opacities of the tight and the wide one.
+@mixin glow($color, $near: 45%, $far: 28%, $spread: 26px) {
+  box-shadow:
+    0 0 6px color-mix(in srgb, #{$color} #{$near}, transparent),
+    0 0 #{$spread} color-mix(in srgb, #{$color} #{$far}, transparent);
+}
+
 // The floating chrome, shared by the header island and the action bar island
 @mixin island-surface {
   background: var(--mw-header-glass);

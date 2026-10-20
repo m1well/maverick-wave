@@ -1,0 +1,149 @@
+<h3 class="mw-section-subtitle">Link in Bio</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  The page an Instagram profile links to, as part of the real site instead of a
+  third-party page: the same header with a way back to the start, then one
+  section. <code>mw-bio</code> goes on that section and keeps its container
+  phone-wide on every screen, with a soft glow in the brand colours behind it.
+  Inside, <code>mw-bio-head</code> carries the ringed
+  <code>mw-bio-avatar</code>, the name, a tagline, an optional
+  <code>mw-bio-status</code> for what is true today and a row of
+  <code>mw-bio-social</code> icons; <code>mw-bio-links</code> stacks the cards,
+  with an <code>mw-bio-label</code> between two groups. Head and cards rise in
+  one after another on load.
+</p>
+<p class="mw-text-muted mw-text-measure">
+  The cards are <code>mw-card mw-card-link</code> on an <code>&lt;a&gt;</code>:
+  an <code>mw-card-link-media</code> in front - an icon in the addon colour,
+  <code>-logo</code> on a white plate or <code>-photo</code> as a thumbnail -
+  then the title and an optional <code>mw-card-link-subtitle</code>. A title on
+  its own sits centred on the card, a second line ranges the text left. The mark
+  at the end is a chevron for a page of the site and an arrow out for a link
+  with <code>rel="external"</code>, <code>target="_blank"</code> or an
+  <code>http</code> address. <code>mw-card-link-cover</code> puts a picture
+  above, <code>mw-card-link-featured</code> fills the one link that matters most
+  and sends a streak of light across it once the page has settled, and
+  <code>mw-card-link-quiet</code> is the imprint at the bottom - flat, but at
+  full contrast, since a legal notice may be quiet but not hard to find.
+</p>
+
+<div class="mw-grid-2 mw-gap-8 mw-mt-7">
+  <div class="mw-device mw-device-phone">
+    <span class="mw-device-screen">
+      <iframe
+        src="examples/bio.html"
+        title="A bakery's link page on a phone"
+        loading="lazy"
+      ></iframe>
+    </span>
+  </div>
+
+  <div class="mw-bio-links">
+    <a class="mw-card mw-card-link" href="#bio">
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">Title only, centred</span>
+      </span>
+    </a>
+    <a class="mw-card mw-card-link" href="#bio">
+      <span class="mw-card-link-media">
+        <i class="fas fa-euro-sign" aria-hidden="true"></i>
+      </span>
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">Icon in front</span>
+      </span>
+    </a>
+    <a class="mw-card mw-card-link mw-card-addon-secondary" href="#bio">
+      <span class="mw-card-link-media">
+        <i class="fas fa-calendar-check" aria-hidden="true"></i>
+      </span>
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">With a second line</span>
+        <span class="mw-card-link-subtitle"
+          >Up to two lines, then it ends in an ellipsis - the addon colour is
+          secondary here</span
+        >
+      </span>
+    </a>
+    <a class="mw-card mw-card-link" href="#bio" rel="external">
+      <span class="mw-card-link-media mw-card-link-media-logo">
+        <img src="images/logo-mill.svg" alt="" loading="lazy" />
+      </span>
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">A logo, leading out</span>
+        <span class="mw-card-link-subtitle"
+          >White plate in both themes, arrow for another site</span
+        >
+      </span>
+    </a>
+    <a class="mw-card mw-card-link" href="#bio">
+      <span class="mw-card-link-media mw-card-link-media-photo">
+        <img src="images/photo-lighthouse.svg" alt="" loading="lazy" />
+      </span>
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">A photo as thumbnail</span>
+        <span class="mw-card-link-subtitle">Square, a size up</span>
+      </span>
+    </a>
+    <a class="mw-card mw-card-link mw-card-link-featured" href="#bio">
+      <span class="mw-card-link-media">
+        <i class="fas fa-star" aria-hidden="true"></i>
+      </span>
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-kicker">Featured</span>
+        <span class="mw-card-link-title">The one that matters most</span>
+      </span>
+    </a>
+    <a class="mw-card mw-card-link mw-card-link-quiet" href="#bio">
+      <span class="mw-card-link-body">
+        <span class="mw-card-link-title">Imprint</span>
+      </span>
+    </a>
+  </div>
+</div>
+
+<div class="mw-code-block mw-mt-7">
+  <div class="mw-code-block-header">
+    <span class="mw-code-block-filename">bio.html</span>
+    <span class="mw-code-block-language">HTML</span>
+  </div>
+  <div class="mw-code-container">
+    <pre><code>&lt;section class="mw-section mw-bio"&gt;
+  &lt;div class="mw-container"&gt;
+    &lt;div class="mw-bio-head"&gt;
+      &lt;div class="mw-bio-avatar"&gt;&lt;img src="/logo.jpg" alt="" /&gt;&lt;/div&gt;
+      &lt;h1 class="mw-bio-name"&gt;Bäckerei Brandt&lt;/h1&gt;
+      &lt;p class="mw-bio-tagline"&gt;Sourdough, rye and cinnamon rolls&lt;/p&gt;
+      &lt;p class="mw-bio-status"&gt;Stollen orders open until 15 December&lt;/p&gt;
+      &lt;ul class="mw-bio-socials"&gt;
+        &lt;li&gt;&lt;a class="mw-bio-social" href="..." aria-label="Instagram"&gt;
+          &lt;i class="fab fa-instagram" aria-hidden="true"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;nav class="mw-bio-links" aria-label="Links"&gt;
+      &lt;a class="mw-card mw-card-link mw-card-link-featured" href="/order"&gt;
+        &lt;span class="mw-card-link-media"&gt;&lt;i class="fas fa-basket-shopping"&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class="mw-card-link-body"&gt;
+          &lt;span class="mw-card-link-kicker"&gt;New&lt;/span&gt;
+          &lt;span class="mw-card-link-title"&gt;Pre-order your Sunday bread&lt;/span&gt;
+          &lt;span class="mw-card-link-subtitle"&gt;Order by Friday noon&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class="mw-card mw-card-link" href="/#preise"&gt;
+        &lt;span class="mw-card-link-media"&gt;&lt;i class="fas fa-euro-sign"&gt;&lt;/i&gt;&lt;/span&gt;
+        &lt;span class="mw-card-link-body"&gt;
+          &lt;span class="mw-card-link-title"&gt;Prices&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/a&gt;
+      &lt;p class="mw-bio-label"&gt;Visit us&lt;/p&gt;
+      ...
+      &lt;a class="mw-card mw-card-link mw-card-link-quiet" href="/impressum"&gt;
+        &lt;span class="mw-card-link-body"&gt;
+          &lt;span class="mw-card-link-title"&gt;Imprint&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+  </div>
+</div>

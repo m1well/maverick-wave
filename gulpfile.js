@@ -31,6 +31,7 @@ const paths = {
   scss: 'src/scss/**/*.scss',
   html: '*.html',
   decks: 'src/decks/*.html',
+  examples: 'src/examples/*.html',
   js: 'src/js/main.js',
   assets: 'src/assets/**/*',
 };
@@ -46,15 +47,16 @@ function convertDateFormat(dateStr) {
 gulp.task('html', function () {
   return (
     gulp
-      .src([paths.html, paths.decks], { base: paths.root })
+      .src([paths.html, paths.decks, paths.examples], { base: paths.root })
       .pipe(
         fileinclude({
           prefix: '@@',
           basepath: '@file',
         })
       )
-      // The demo decks live in src/decks and are served from decks/ next to
-      // the showcase that embeds them
+      // The demo decks and example pages live in src/decks and src/examples
+      // and are served from decks/ and examples/ next to the showcase that
+      // embeds them
       .pipe(
         rename((file) => {
           file.dirname = file.dirname.replace(/^src[\\/]?/, '');
@@ -174,7 +176,10 @@ gulp.task('watch', function () {
   );
   gulp.watch('*.html', gulp.series('html', 'inject-build-info'));
   gulp.watch('src/partials/*.html', gulp.series('html', 'inject-build-info'));
-  gulp.watch(paths.decks, gulp.series('html', 'inject-build-info'));
+  gulp.watch(
+    [paths.decks, paths.examples],
+    gulp.series('html', 'inject-build-info')
+  );
   gulp.watch(paths.js, gulp.series('js-build', 'html', 'inject-build-info'));
   gulp.watch(paths.assets, gulp.series('assets', 'html', 'inject-build-info'));
 });
