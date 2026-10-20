@@ -1,0 +1,360 @@
+@use '../abstracts' as *;
+
+// Chevron for a link that stays on the site, arrow out of the box for one that
+// leaves it - masks, so they take the card's colour and need no icon set
+$_mark-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 5 7 7-7 7'/%3E%3C/svg%3E");
+$_mark-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
+
+// The cover sits in a row of its own above the three columns, so every column
+// layout below needs a second spelling with that row in front
+@mixin _columns($columns, $areas, $cover) {
+  grid-template-columns: $columns;
+  grid-template-areas: $areas;
+
+  &:has(> .mw-card-link-cover) {
+    grid-template-areas: $cover $areas;
+  }
+}
+
+@layer mw.components {
+  @keyframes mw-card-link-shine {
+    to {
+      background-position:
+        250% 0,
+        0 0;
+    }
+  }
+
+  // A card that is one link: a picture in front, a title, an optional second
+  // line, and a mark at the end that says where it leads. Written on an <a>
+  // next to mw-card, which brings the surface, the lift and the corner arc.
+  //
+  // The two outer columns are the same width, so a title on its own centres on
+  // the card and not in the room between picture and mark. A second line makes
+  // it a text block, which reads ranged left.
+  .mw-card-link {
+    --mw-card-link-media: 2.75rem;
+    --_mark: 1.25rem;
+
+    display: grid;
+    @include _columns(
+      var(--mw-card-link-media) minmax(0, 1fr) var(--mw-card-link-media),
+      'media body end',
+      'cover cover cover'
+    );
+    align-items: center;
+    gap: spacing('4');
+    min-height: 4.5rem;
+    padding: spacing('3') spacing('4');
+    color: var(--mw-text-color);
+    text-decoration: none;
+
+    @include focus-ring;
+    @include tappable;
+
+    &:has(.mw-card-link-subtitle) {
+      @include _columns(
+        var(--mw-card-link-media) minmax(0, 1fr) var(--_mark),
+        'media body end',
+        'cover cover cover'
+      );
+    }
+
+    &:not(:has(> .mw-card-link-media)) {
+      @include _columns(
+        var(--_mark) minmax(0, 1fr) var(--_mark),
+        '. body end',
+        'cover cover cover'
+      );
+    }
+
+    &:not(:has(> .mw-card-link-media)):has(.mw-card-link-subtitle) {
+      @include _columns(minmax(0, 1fr) var(--_mark), 'body end', 'cover cover');
+    }
+
+    &:has(> .mw-card-link-media-photo) {
+      --mw-card-link-media: 3.5rem;
+    }
+
+    // ::after is the corner arc of the surface, so the mark takes ::before -
+    // as a grid item of its own, placed like any child
+    &::before {
+      content: '';
+      grid-area: end;
+      justify-self: end;
+      width: 1rem;
+      height: 1rem;
+      background: currentColor;
+      opacity: 0.5;
+      mask: $_mark-on center / contain no-repeat;
+      transition:
+        translate var(--mw-duration-fast) var(--mw-ease-out),
+        opacity var(--mw-duration-fast) var(--mw-ease-out);
+    }
+
+    &:is([href^='http'], [target='_blank'], [rel~='external'])::before {
+      mask-image: $_mark-out;
+    }
+
+    &:hover::before {
+      opacity: 0.9;
+    }
+
+    @include hover-move {
+      &::before {
+        translate: 3px 0;
+      }
+
+      &:is([href^='http'], [target='_blank'], [rel~='external'])::before {
+        translate: 2px -2px;
+      }
+
+      .mw-card-link-media {
+        transform: rotate(-8deg) scale(1.06);
+      }
+
+      .mw-card-link-cover img {
+        transform: scale(1.04);
+      }
+    }
+
+    // Tapped far more than clicked - the lift above never runs on a finger
+    @include motion-safe {
+      &:active {
+        transform: scale(0.985);
+        transition-duration: var(--mw-duration-instant);
+      }
+    }
+  }
+
+  // Round and filled in the card's addon colour, like the title icon, so
+  // mw-card-addon-* on the card recolours it. An <img> fills the circle.
+  .mw-card-link-media {
+    grid-area: media;
+    display: grid;
+    place-items: center;
+    width: var(--mw-card-link-media);
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: radius('full');
+    background: var(--mw-card-addon-color, var(--mw-primary-color));
+    color: var(--mw-card-addon-text-color, var(--mw-primary-accent-text-color));
+    box-shadow: var(--mw-elevation-1);
+    font-size: font-size('lg');
+    transition: transform var(--mw-duration-base) var(--mw-ease-spring);
+
+    // A responsive image arrives wrapped - the <img> has to be the grid item
+    picture {
+      display: contents;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // A logo is drawn for white paper, in either theme - on the dark card it
+  // keeps its plate instead of losing its dark lettering
+  .mw-card-link-media-logo {
+    padding: spacing('1');
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    background: #fff;
+    box-shadow: none;
+
+    img {
+      object-fit: contain;
+    }
+  }
+
+  .mw-card-link-media-photo {
+    border-radius: radius('md');
+  }
+
+  // Inset rather than edge to edge: the card does not clip, and a picture
+  // inside the padding keeps the corners concentric without it
+  .mw-card-link-cover {
+    grid-area: cover;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    margin: spacing('-1') spacing('-2') spacing('0');
+    border-radius: radius('xs') radius('lg') radius('sm') radius('sm');
+
+    picture {
+      display: contents;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--mw-duration-zoom) var(--mw-ease-out);
+    }
+  }
+
+  .mw-card-link-body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    gap: spacing('1');
+    min-width: 0;
+  }
+
+  .mw-card-link:not(:has(.mw-card-link-subtitle)) .mw-card-link-body {
+    text-align: center;
+  }
+
+  .mw-card-link-kicker {
+    color: var(--mw-primary-text-color);
+    font-size: font-size('2xs');
+    font-weight: font-weight('bold');
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  // Two lines at most for both - the whole card is the link, so the full text
+  // still reaches a screen reader through its name
+  .mw-card-link-title,
+  .mw-card-link-subtitle {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .mw-card-link-title {
+    font-family: var(--mw-font-family-heading);
+    font-size: font-size('md');
+    font-weight: font-weight('bold');
+    line-height: 1.25;
+    text-wrap: balance;
+
+    @container mw-card (width >= #{$mw-card-wide}) {
+      font-size: font-size('lg');
+    }
+  }
+
+  .mw-card-link-subtitle {
+    color: var(--mw-text-muted-color);
+    font-size: font-size('sm');
+    line-height: 1.35;
+    text-wrap: pretty;
+  }
+
+  // The one link that matters most: filled in the brand colours, with a
+  // single streak of light once the page has settled and again under the
+  // pointer. One per page - two of them and neither is first.
+  .mw-card-link-featured {
+    --_shine: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgb(255 255 255 / 35%) 47%,
+      rgb(255 255 255 / 35%) 53%,
+      transparent 70%
+    );
+
+    border-color: transparent;
+    // A neighbour of the primary on the colour wheel, not the secondary: two
+    // complementary brand colours mixed meet in grey
+    background:
+      var(--_shine) -150% 0 / 60% 100% no-repeat,
+      linear-gradient(
+        135deg,
+        var(--mw-primary-color),
+        oklch(from var(--mw-primary-color) calc(l - 0.03) c calc(h + 35))
+      );
+    color: var(--mw-primary-accent-text-color);
+    @include glow(var(--mw-primary-color));
+    transition:
+      var(--mw-transition),
+      background-position 0s;
+
+    &,
+    &:hover {
+      &::after {
+        --mw-corner-accent: color-mix(
+          in srgb,
+          var(--mw-primary-accent-text-color) 55%,
+          transparent
+        );
+      }
+    }
+
+    &:hover {
+      border-color: transparent;
+      @include glow(var(--mw-primary-color), 55%, 38%, 36px);
+    }
+
+    &::before {
+      opacity: 0.85;
+    }
+
+    .mw-card-link-media {
+      background: color-mix(in srgb, currentColor 18%, transparent);
+      color: inherit;
+      box-shadow: none;
+    }
+
+    .mw-card-link-media-logo,
+    .mw-card-link-media-photo {
+      background: #fff;
+    }
+
+    .mw-card-link-kicker,
+    .mw-card-link-subtitle {
+      color: inherit;
+      opacity: 0.85;
+    }
+
+    @include motion-safe {
+      animation: mw-card-link-shine 1.1s var(--mw-ease-in-out) 0.9s 1;
+    }
+
+    @include hover-move {
+      background-position:
+        250% 0,
+        0 0;
+      transition:
+        var(--mw-transition),
+        background-position 0.75s var(--mw-ease-out);
+    }
+  }
+
+  // The link that has to be there and nobody came for - an imprint, a privacy
+  // notice. Flat and unfilled, but at full contrast: a legal notice may sit
+  // quietly, it may not be hard to find.
+  .mw-card-link-quiet {
+    --mw-card-link-media: 2rem;
+
+    min-height: 3.25rem;
+    padding-block: spacing('2');
+    background: transparent;
+    box-shadow: none;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      box-shadow: none;
+      background: var(--mw-card-background);
+    }
+
+    .mw-card-link-title {
+      font-family: inherit;
+      font-size: font-size('sm');
+      font-weight: font-weight('normal');
+    }
+
+    .mw-card-link-media {
+      background: transparent;
+      color: var(--mw-text-muted-color);
+      box-shadow: none;
+      font-size: font-size('base');
+    }
+  }
+}

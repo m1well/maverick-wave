@@ -376,7 +376,7 @@ rebuilding. They stack.
 | `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit where they land                        |
 | `mw-sections-plain`   | The hatch behind `mw-section-alternate` collapses into the page colour             |
 | `mw-headings-caps`    | `h1`-`h3` in capitals                                                              |
-| `mw-links-underline`  | Links underlined at rest; the stroke thickens on hover                             |
+| `mw-links-underline`  | `mw-btn-link` underlined at rest, as text links always are                         |
 | `mw-btn-pill`         | Fully rounded buttons; form fields keep their radius                               |
 | `mw-btn-square`       | Buttons cut to a hard corner while the page keeps its radius                       |
 | `mw-btn-glass`        | Filled buttons become tinted glass: light rim, gloss band, soft lower edge         |

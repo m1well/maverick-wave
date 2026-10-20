@@ -6,6 +6,20 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.16.0] - 2026-10-20
+
+### Added
+
+- `mw-card-link` - a card that is one link: `-media` in front (icon, `-logo` on a white plate, `-photo`), title, optional `-subtitle` and `-kicker`, a chevron or an arrow out at the end; a lone title centres on the card
+- `mw-card-link-cover`, `mw-card-link-featured` (filled, one streak of light after load), `mw-card-link-quiet` (flat, for the imprint)
+- `mw-bio` - the link-in-bio page: `-head`, `-avatar` with the story ring, `-name`, `-tagline`, `-status` (+ `-urgent`), `-socials` / `-social`, `-links`, `-label`; head and cards rise in one after another
+- showcase: Specials > Link in Bio, with the example page `examples/bio.html` in a phone frame
+- `glow($color, $near, $far, $spread)` mixin - the two layers behind `mw-glow`
+
+### Changed
+
+- occasions leave `mw-card-link` out - its `::before` is the mark at the end
+
 ## [6.15.0] - 2026-10-15
 
 ### Added

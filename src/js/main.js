@@ -3183,7 +3183,7 @@
     const hosts = [
       ...document.querySelectorAll(
         siteWide
-          ? '.mw-card, .mw-panel, .mw-testimonial, .mw-occasion-spot'
+          ? '.mw-card:not(.mw-card-link), .mw-panel, .mw-testimonial, .mw-occasion-spot'
           : '.mw-occasion-scroll:not(:root)'
       ),
     ].filter((el) => el.getBoundingClientRect().top >= window.innerHeight);

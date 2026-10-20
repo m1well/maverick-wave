@@ -33,9 +33,7 @@
     }
 
     #{$selector} {
-      box-shadow:
-        0 0 6px color-mix(in srgb, #{$col} 45%, transparent),
-        0 0 26px color-mix(in srgb, #{$col} 28%, transparent);
+      @include glow($col);
     }
   }
 }
