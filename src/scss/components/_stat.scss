@@ -174,6 +174,112 @@
     }
   }
 
+  // The figure of a small box - a round number, a rating. Label and value a
+  // step down and nothing between them.
+  .mw-stat-sm {
+    gap: 0;
+
+    .mw-stat-label {
+      font-size: font-size('2xs');
+    }
+
+    .mw-stat-value {
+      font-size: font-size('xl');
+    }
+  }
+
+  // One number first and the rest small beside it, not five tiles of the same
+  // size: at one size the eye looks for the important figure every time.
+  // "Where do I stand" then reads in the same place on every page.
+  .mw-stat-lead {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: spacing('5') spacing('6');
+  }
+
+  .mw-stat-head {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 5.5rem;
+    padding-inline-end: spacing('6');
+    border-inline-end: 1px solid var(--mw-border);
+  }
+
+  // `max-content` and not `1fr`: four facts on a wide card would otherwise sit
+  // 20rem apart and read as four separate figures instead of one block
+  .mw-stat-facts {
+    display: grid;
+    flex: 1 1 12rem;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, max-content));
+    justify-content: start;
+    gap: spacing('4') spacing('8');
+    min-width: 0;
+    margin: 0;
+
+    > * {
+      min-width: 0;
+    }
+
+    dt {
+      font-size: font-size('2xs');
+      color: var(--mw-text-muted-color);
+    }
+
+    dd {
+      margin: spacing('1') 0 0;
+      font-weight: font-weight('bold');
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+  }
+
+  // Narrow, the head goes on top and the facts take two columns. On the
+  // children: the lead is the container and cannot query itself.
+  @container mw-stat (width < 28rem) {
+    .mw-stat-lead > .mw-stat-head {
+      flex-basis: 100%;
+      padding: 0 0 spacing('4');
+      border-inline-end: 0;
+      border-bottom: 1px solid var(--mw-border);
+    }
+
+    .mw-stat-lead > .mw-stat-facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  // Several figures in one box, a hairline between every two - the strip
+  // under a page title. The gap shows the box's own background, so the lines
+  // are drawn by nothing and run both ways once the cells wrap.
+  // `background-color` and not the shorthand, so an edge painted on a cell
+  // stays.
+  .mw-stat-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    width: 100%;
+    border: 1px solid var(--mw-border);
+    border-radius: radius('md');
+    background-color: var(--mw-border);
+    overflow: hidden;
+    container: mw-stat-strip / inline-size;
+
+    > .mw-stat {
+      flex: 1 1 calc(50% - 1px);
+      padding: spacing('3') spacing('4');
+      background-color: var(--mw-card-background);
+    }
+  }
+
+  // One row once there is room - on the children, the strip cannot query itself
+  @container mw-stat-strip (width >= 30rem) {
+    .mw-stat-strip > .mw-stat {
+      flex: 1 1 0;
+    }
+  }
+
   // The native element keeps low / high / optimum, and with them the three tones
   .mw-meter {
     appearance: none;

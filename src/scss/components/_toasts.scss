@@ -9,7 +9,9 @@
     flex-direction: column;
     gap: spacing('3');
     width: min(380px, calc(100vw - #{2 * spacing('5')}));
-    max-height: calc(100dvh - #{2 * spacing('5')});
+    max-height: calc(
+      100dvh - #{2 * spacing('5')} - var(--mw-toast-top-reserve, 0px)
+    );
     overflow-y: auto;
     pointer-events: none;
 
@@ -19,18 +21,19 @@
       animation: mw-toast-in var(--mw-duration-base) var(--mw-ease-spring);
     }
 
-    top: spacing('5');
+    // The reserve only exists while a fixed header or app topbar holds the top
+    top: calc(#{spacing('5')} + var(--mw-toast-top-reserve, 0px));
     right: spacing('5');
 
     &-top-right {
-      top: spacing('5');
+      top: calc(#{spacing('5')} + var(--mw-toast-top-reserve, 0px));
       right: spacing('5');
       bottom: auto;
       left: auto;
     }
 
     &-top-center {
-      top: spacing('5');
+      top: calc(#{spacing('5')} + var(--mw-toast-top-reserve, 0px));
       left: 50%;
       right: auto;
       bottom: auto;

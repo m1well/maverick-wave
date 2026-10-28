@@ -17,6 +17,12 @@
       border-top-style: dashed;
     }
 
+    // Inside a card, between two blocks of the same thing - the default
+    // margins there cost the height of a line
+    &-tight {
+      margin-block: spacing('2');
+    }
+
     &-primary {
       border-top-color: var(--mw-primary-text-color);
     }

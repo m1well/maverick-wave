@@ -119,6 +119,31 @@
     }
   }
 
+  // Combined with a solid colour variant the outline keeps its line and sweep and
+  // takes that colour - otherwise "Delete account" looks like "Download data".
+  @each $name in ('secondary', 'success', 'danger') {
+    .mw-btn-outline.mw-btn-#{$name} {
+      @include btn-fill-sweep($tone: var(--mw-#{$name}-color));
+      border-color: var(--mw-#{$name}-text-color);
+      color: var(--mw-#{$name}-text-color);
+      box-shadow: none;
+
+      &:hover:not(:disabled) {
+        @include btn-fill-sweep($tone: var(--mw-#{$name}-color));
+        background-size: 100% 100%;
+        border-color: var(--mw-#{$name}-color);
+        color: var(--mw-#{$name}-accent-text-color);
+      }
+
+      @include active(':not(:disabled)') {
+        @include btn-fill-sweep($tone: var(--mw-#{$name}-color));
+        background-size: 100% 100%;
+        border-color: var(--mw-#{$name}-color);
+        color: var(--mw-#{$name}-accent-text-color);
+      }
+    }
+  }
+
   // A button that looks like a link but is still a button: it keeps the control
   // height, so it lines up with the Save next to it in a card's actions or a
   // button bar. A link inside a sentence is `mw-link` instead - see _links.scss.
@@ -289,6 +314,15 @@
   .mw-btn-block {
     display: flex;
     width: 100%;
+  }
+
+  // Full width on a phone only - the one action at the foot of a card, which
+  // sits right on a desktop and takes the whole line under a thumb
+  .mw-btn-block-sm {
+    @include media-down('sm') {
+      display: flex;
+      width: 100%;
+    }
   }
 
   // A button that brings nothing but its operability - settings tabs, calendar

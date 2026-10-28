@@ -17,7 +17,11 @@ exhaustive: what is not named does not exist.
 - Variants: `mw-btn-primary`, `mw-btn-secondary`, `mw-btn-danger`,
   `mw-btn-success`, `mw-btn-outline`, `mw-btn-ghost`, `mw-btn-ghost-danger`,
   `mw-btn-link`, `mw-btn-link-muted`
-- Shapes: `mw-btn-icon` (square, for an icon-only button), `mw-btn-block`
+- `mw-btn-outline` with `mw-btn-secondary`, `-success` or `-danger` draws the
+  line, the text and the hover fill in that colour
+- Shapes: `mw-btn-icon` (square, for an icon-only button), `mw-btn-block` (and
+  `mw-btn-block-sm`, full width below `sm` only - the action at the foot of a
+  card that sits right on a desktop)
   (full width)
 - Sizes: `mw-btn-sm`, `mw-btn-lg`
 - `mw-btn` is `inline-flex` with a gap - icons need no wrapper and no extra class
@@ -32,7 +36,8 @@ exhaustive: what is not named does not exist.
   - the height does it, not the padding. Keep `mw-btn` only where the link
     really is a button in a row of buttons and has to line up with them
 - On a coarse pointer or below 768px `mw-btn` grows to a 2.75rem minimum height
-  and `mw-btn-sm` to 2.5rem, on their own
+  on its own, `mw-btn-sm` included - under a thumb the small size is the same
+  target
 
 ```html
 <!-- a button that happens to look like a link -->
@@ -50,7 +55,9 @@ alone does not mark a link (WCAG 1.4.1) - and the line thickens under the
 pointer. Without `inline-flex` and without the control height, which is what
 makes them sit on the line instead of above it. `font` and the focus ring are
 set explicitly, so a `<button>` in the middle of a paragraph works as well as an
-`<a>`.
+`<a>`. Inside `mw-header`, `mw-link-muted` and `mw-btn-link-muted` take the
+header's ink at 72% - the page's grey reads 2.4:1 on the bar; a dropdown menu
+in the header keeps the page's colours.
 
 ```html
 <p>
@@ -59,6 +66,31 @@ set explicitly, so a `<button>` in the middle of a paragraph works as well as an
   <a href="#get-started" class="mw-link-muted">Get Started</a> section.
 </p>
 ```
+
+### Stretched link - the whole card as the hit area
+
+`mw-link-stretched` on the title link spreads its hit area over the nearest
+positioned ancestor - every card, panel and tile is one. The focus ring then
+goes round that surface, not round the title. Anything else clickable on the
+card needs `mw-above-link`, or the stretched link swallows its clicks:
+
+```html
+<article class="mw-card">
+  <div class="mw-card-body">
+    <h3 class="mw-card-title">
+      <a href="/customers/12" class="mw-link-stretched">Bakery Miller</a>
+    </h3>
+    <p>3 open orders</p>
+    <button type="button" class="mw-btn mw-btn-sm mw-above-link">
+      Copy code
+    </button>
+  </div>
+</article>
+```
+
+For a card that is nothing but one link, `mw-card-link` is the simpler choice.
+The stretched area is the link's `::before`, so it combines with
+`mw-link-arrow`.
 
 ### Three emphasis levels
 
@@ -239,6 +271,10 @@ segment, a focused one draws the ring on it.
 - `mw-card-simple` is the flat variant with even padding for arbitrary content.
   Use it when you only need a padded surface - it stays a block container, so
   inline children keep flowing side by side.
+- `mw-card-body-row` next to `mw-card-body` turns the body into one wrapping
+  row - a name at the left, three figures at the right - for a list of weeks or
+  results, where the column would put the figures under the name and leave
+  half the card empty.
 - Image height: 210px, `mw-card-lg` 340px, `mw-card-xl` 480px (260px/340px below
   `sm`). Set `--mw-card-img-height` on the card for any other height.
   `mw-card-img-contain` shows the whole image instead of cropping it.
@@ -331,6 +367,25 @@ tech-stack grids:
   </div>
 </div>
 ```
+
+### Edge - the state on the rim
+
+```html
+<div class="mw-card mw-edge-warning">...</div>
+<div class="mw-card mw-edge" style="--mw-edge-color: var(--phase-tone)">
+  ...
+</div>
+```
+
+`mw-edge-{primary|secondary|success|warning|danger|info|muted}` paints a 3px
+stripe down the left and a 10% tint of the same ink across the surface - the
+reader's own card, the step that is due, the phase a board is in. Painted into
+the background and not a border, so it stops short of the round corners; it
+goes on a card, a tile, a panel, a `mw-stat` cell. `mw-edge-top` moves the
+stripe to the top edge. `--mw-edge-color` is the ink: set it inline on the bare
+`mw-edge` class for a tone of your own. Put a word next to the colour - two
+tones alone are not a state anyone can tell apart. A table row takes
+`mw-row-*` instead.
 
 ## Pricing
 
@@ -522,6 +577,9 @@ A bordered box with a header rule - the "titled section" of an application.
   at the end. The heading shrinks, so a long title cannot push the actions out.
 - `mw-panel-edge-{primary|secondary|success|warning|danger|info}` draws a 3px
   left edge in the ink tone - the one panel in a row that needs attention.
+  `mw-panel-edge-muted` keeps the edge in the border colour for a done or
+  archived one, so it still lines up with its neighbours.
+  `mw-edge-*` (see Cards) is the same idea for every surface, tint included.
 - A `mw-item-list-compact` directly in `mw-panel-body` drops its own box.
 - A tooltip inside unclips the panel while it shows; a capped body
   (`-max-height-*`, `-scrollable`) keeps clipping and scrolling.
@@ -554,6 +612,19 @@ Container: `mw-tiles` (1 / 2 at `sm` / 3 at `md`), `mw-tiles-2col` (1 / 2 at
 `sm`), `mw-tiles-4col` (1 / 2 at `sm` / 4 at `lg`) - the same ramps `mw-grid-3`,
 `-2` and `-4` use, and the full container width like any other grid.
 Tile sizes: `mw-tile-sm`, `mw-tile-lg`.
+
+A tile that is a choice - one option of several, a radio drawn large - takes
+`mw-selected`, `aria-pressed="true"` or `aria-selected="true"`: a ring inside
+the border, and a `mw-tile-check` child in the top right corner shows a tick.
+Put the check in every tile of the set; it is invisible until the tile is
+chosen.
+
+```html
+<button type="button" class="mw-tile mw-tile-sm" aria-pressed="true">
+  <span class="mw-tile-check" aria-hidden="true"></span>
+  <h3 class="mw-tile-header">Matte black</h3>
+</button>
+```
 
 ## Accordion
 
@@ -591,6 +662,26 @@ Toggling is JS - see `references/javascript.md`; the shipped script keeps
 `aria-expanded` in step when the header is a button. `aria-expanded="true"` on
 the header opens the content after it on its own, without `mw-active` - for
 markup an application renders.
+
+**Without a script**: an item written as `<details>` is opened and closed by
+the browser, announced by it and reachable by keyboard, so a SPA that cannot
+load `main.js` needs nothing of its own. Same classes, `details[open]` is the
+state and the shipped JS leaves a `<summary>` alone; the panel still animates
+open, closing is a jump.
+
+```html
+<div class="mw-accordion">
+  <details class="mw-accordion-item" open>
+    <summary class="mw-accordion-header">
+      <span>Question</span>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </summary>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">Answer</div>
+    </div>
+  </details>
+</div>
+```
 
 ## FAQ
 
@@ -783,7 +874,12 @@ a toast takes the text ink - its own tone vanishes on the tint. Width is capped 
 `min(380px, 100vw - 2rem)`, clicks pass through everywhere except on a toast,
 the entry animation respects `prefers-reduced-motion`. Auto-dismiss is the
 application's job. While an `mw-action-bar` is on screen the bottom stack sits
-above it (`--mw-action-bar-reserve`); without one nothing moves.
+above it (`--mw-action-bar-reserve`); without one nothing moves. The top stack
+starts under a fixed `mw-header` or an `mw-app-topbar` (notch included) through
+`--mw-toast-top-reserve`, which the framework sets on the stack itself - on a
+phone too. With both on the page the header wins. Under `mw-header-reveal` the
+reserve stays when the header scrolls away, so the toast then sits one header
+height lower.
 
 ## Announcement
 
@@ -991,6 +1087,13 @@ sorting and gets a plain, focusable reset. A row is selected by
 `aria-selected="true"`, `mw-selected` or a checked checkbox in its first cell:
 tinted, plus an edge on the first cell so it does not rest on colour alone.
 Under forced colours the selection takes Highlight.
+
+**Row tones.** `mw-row-{primary|secondary|success|warning|danger|info}` on a
+`tr` tints its cells and edges the first one like a selected row, for a row
+that means something - the reader's own line in a standings table, a deadline,
+a warning. Secondary is the one for "mine": the hover is primary, and the own
+row must not look like the one under the pointer. `mw-row-muted` greys a row
+that is out of it - retired, archived - and keeps it readable.
 
 ```html
 <div class="mw-table-bulk">
@@ -1318,6 +1421,18 @@ Two forms, picked by count - see also the pitfall list in `SKILL.md`.
 Variants: `mw-tag-primary`, `-secondary`, `-success`, `-info`, `-warning`,
 `-danger`, `-muted`, `-neutral`. Size: `mw-tag-lg`.
 
+`mw-tag-outline` keeps the border in the tone and drops the fill - a label that
+classifies next to one that judges. A `<span class="mw-tag-dot">` as the first
+child is a dot in the tag's ink; `mw-tag-pulse` on the tag makes it pulse, for
+a state that is live right now. Both work on the list form too
+(`mw-tags-outline`, the dot inside a `mw-tags-item`).
+
+```html
+<span class="mw-tag mw-tag-danger mw-tag-pulse"
+  ><span class="mw-tag-dot"></span>Live</span
+>
+```
+
 `mw-tag-muted` and `mw-tag-neutral` are not the same and the difference carries
 meaning. **Muted** means the label steps back - draft, archived, a shortcoming
 ("no e-invoice"). **Neutral** is an identifier with no judgement attached and
@@ -1490,7 +1605,7 @@ hovered, so a header bar does not turn into a row of competing buttons.
 
 ```html
 <details class="mw-dropdown mw-dropdown-end mw-lang-switch">
-  <summary aria-label="Language: Deutsch">
+  <summary aria-label="Language: Deutsch (DE)">
     <span class="mw-flag mw-flag-de"></span>
     <span class="mw-lang-switch-code">de</span>
     <i class="fas fa-chevron-down mw-dropdown-caret"></i>
@@ -1645,6 +1760,34 @@ edge drops and the key sits 1px lower.
   `line` gets a 2px non-scaling stroke in the primary ink, whatever the viewBox.
 - `mw-stat-group` around several stats lines them up with a rule between them
   once the group is 30rem wide, and stacks them with rules below that.
+- `mw-stat-strip` holds several `mw-stat` cells in one bordered box with a
+  hairline between every two - the strip under a page title. Two per row, one
+  row once the strip is 30rem wide.
+- `mw-stat-sm` takes label and value a step down with nothing between them -
+  the figure of a small box: a round number, a rating.
+- `mw-stat-lead` is one number first and the rest small beside it: a
+  `mw-stat-head` with value and label, then a `<dl class="mw-stat-facts">` of
+  `dt`/`dd` pairs. Below 28rem the head goes on top and the facts take two
+  columns. "Where do I stand" then reads in the same place on every page.
+
+```html
+<div class="mw-stat mw-stat-lead">
+  <div class="mw-stat-head">
+    <span class="mw-stat-value">4.</span>
+    <span class="mw-stat-label">Championship</span>
+  </div>
+  <dl class="mw-stat-facts">
+    <div>
+      <dt>Points</dt>
+      <dd>61</dd>
+    </div>
+    <div>
+      <dt>Budget</dt>
+      <dd class="mw-text-danger">-2,400</dd>
+    </div>
+  </dl>
+</div>
+```
 
 The meter is the native element, styled:
 
@@ -1986,11 +2129,19 @@ Layout containers for arbitrary children - the children need no classes.
 | `mw-item-list-compact`    | Bordered card-surface box, divided rows, hover indent (nests) |
 | `mw-item-list-menu`       | Elevated menu card, pointer cursor, press feedback            |
 | `mw-item-list-slide`      | Cards sliding sideways with an accent border on hover         |
+| `mw-item-list-flush`      | `-compact` rows without the box, for a card body or a modal   |
 | `mw-item-list-scroll`     | Scroll box, 300px tall                                        |
 
 Modifiers are additive - keep the base class and add the modifier:
 `mw-item-list-scroll` + `-sm` (200px), `-lg` (400px) or `-xl` (500px), and
-`mw-item-list-slide` + `-secondary` for the secondary accent.
+`mw-item-list-slide` + `-secondary` for the secondary accent,
+`mw-item-list-compact` + `-flush` for the rows alone.
+
+`mw-item-list-menu` beside a detail view: `mw-active` or `aria-current` on a row
+marks the one whose content is showing (`aria-current=""` and `"false"` do not
+count). A row may be the `<button>` or `<a>` itself - it keeps the separator
+and drops the button look. The focus ring sits inside the row, because the list
+clips its rows to the rounded frame.
 
 ```html
 <div class="mw-item-list-compact">
@@ -2080,6 +2231,20 @@ row retunes with `--mw-leader-row-color`, `--mw-leader-row-style` and
 ```html
 <ul class="mw-list mw-list-check">
   <li>Done</li>
+</ul>
+```
+
+A bare `<ul>` already has no bullets, padding or margin - the reset takes them.
+No class is needed for a list that is only structure.
+
+`mw-list-divided` stands alone: rows with a rule between them, flush at the top
+and the bottom, so it sits in a panel body or under a heading like any other
+block. It works on `<ul>`, `<ol>` and a `<div>` of rows alike.
+
+```html
+<ul class="mw-list-divided">
+  <li class="mw-row-split"><span>Receipts</span><span>12</span></li>
+  <li class="mw-row-split"><span>Invoices</span><span>4</span></li>
 </ul>
 ```
 
@@ -2189,7 +2354,8 @@ buttons are 44px.
 ```
 
 Variants: `mw-divider-thick`, `mw-divider-dashed`, `mw-divider-primary`,
-`mw-divider-secondary`. `mw-divider-text` is a labelled rule (the colour
+`mw-divider-secondary`, `mw-divider-tight` (half the margin - a rule between
+two blocks inside a card). `mw-divider-text` is a labelled rule (the colour
 variants apply to it too), `mw-divider-vertical` needs a flex row with a height.
 
 ## Gallery & image slider

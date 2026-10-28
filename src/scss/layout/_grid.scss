@@ -167,9 +167,20 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
     }
   }
 
+  // As many columns as fit, none narrower than --mw-grid-min. The sizes are
+  // presets of that token, so a page sets its own width on the grid itself.
+  @mixin _auto-columns($min) {
+    --mw-grid-min: #{$min};
+    --_mw-grid-repeat: auto-fill;
+    grid-template-columns: repeat(
+      var(--_mw-grid-repeat),
+      minmax(min(var(--mw-grid-min), 100%), 1fr)
+    );
+  }
+
   .mw-grid-auto {
     @extend %grid-base;
-    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    @include _auto-columns(300px);
 
     > * {
       width: auto !important;
@@ -180,12 +191,12 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 
   .mw-grid-auto-sm {
     @extend %grid-base;
-    grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+    @include _auto-columns(250px);
   }
 
   .mw-grid-auto-md {
     @extend %grid-base;
-    grid-template-columns: repeat(auto-fill, minmax(min(350px, 100%), 1fr));
+    @include _auto-columns(350px);
   }
 
   // Every row as tall as the tallest rather than as tall as its own contents.
@@ -215,7 +226,13 @@ $_grid-from: ('sm', 'md', 'lg', 'xl');
 
   .mw-grid-auto-lg {
     @extend %grid-base-lg;
-    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    @include _auto-columns(300px);
+  }
+
+  // Three tiles on a row built for five share the whole row instead of leaving
+  // two empty tracks. After the auto grids, because it overrides their repeat.
+  .mw-grid-fit {
+    --_mw-grid-repeat: auto-fit;
   }
 
   .mw-grid-flex-lg {

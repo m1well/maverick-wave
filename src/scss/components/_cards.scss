@@ -452,4 +452,19 @@
       --mw-card-addon-text-color: var(--mw-#{$name}-accent-text-color);
     }
   }
+
+  // The body as one row - a name on the left, three figures on the right. The
+  // column the body is by default puts the figures under the name and leaves
+  // half the card empty. Wraps when the row runs out of room.
+  .mw-card-body-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: spacing('3') spacing('5');
+
+    > * {
+      min-width: 0;
+    }
+  }
 }

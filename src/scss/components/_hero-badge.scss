@@ -57,4 +57,32 @@
     .mw-hero-badge:not(.mw-hero-badge-urgent) {
     display: none;
   }
+
+  // "In development", "live now" - a running state, not a label. The ring
+  // pulses outward and fades, the dot underneath never moves; same as
+  // mw-badge-pulse, with its own keyframes because main-lean carries this
+  // file and not the badge.
+  .mw-hero-badge-pulse .mw-hero-badge-dot {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: inherit;
+      animation: mw-hero-badge-pulse motion(1.8s) var(--mw-ease-out) infinite;
+    }
+  }
+
+  @keyframes mw-hero-badge-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
 }

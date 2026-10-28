@@ -50,4 +50,39 @@
       }
     }
   }
+
+  // Own line: a thumb target. In running text the floor would spread the lines.
+  .mw-link-arrow:not(:is(p, li, dd, td, figcaption, label) > *) {
+    @include touch-floor {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  // The whole surface as the hit area: the link's ::before spreads over the
+  // nearest positioned ancestor, and every framework surface is one. ::before
+  // because ::after is the arrow. Anything else clickable on that surface
+  // climbs above it with mw-above-link, or the link swallows its clicks.
+  .mw-link-stretched::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .mw-above-link {
+    position: relative;
+    z-index: 2;
+  }
+
+  // The ring goes round the surface - on the title alone nobody would see that
+  // the whole card is the link
+  :is(.mw-card, .mw-panel, .mw-tile):has(.mw-link-stretched:focus-visible) {
+    outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+    outline-offset: var(--mw-focus-ring-offset);
+
+    .mw-link-stretched:focus-visible {
+      outline: none;
+    }
+  }
 }

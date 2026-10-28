@@ -266,6 +266,27 @@
   </div>
 </div>
 
+<h3 class="mw-card-title mw-mt-8 mw-mb-4">Outline, dot and pulse</h3>
+<div class="mw-card mw-card-simple">
+  <p class="mw-text-muted mw-text-sm mw-mb-3">
+    <code>mw-tag-outline</code> keeps the border and drops the fill - a label
+    that classifies next to one that judges. A <code>mw-tag-dot</code> inside is
+    a dot in the tag's ink, and <code>mw-tag-pulse</code> on the tag makes it
+    pulse for a state that is live right now.
+  </p>
+  <div class="mw-d-flex mw-flex-wrap mw-gap-2">
+    <span class="mw-tag mw-tag-outline">GT3</span>
+    <span class="mw-tag mw-tag-primary mw-tag-outline">Pro</span>
+    <span class="mw-tag mw-tag-muted mw-tag-outline">Retired</span>
+    <span class="mw-tag mw-tag-success"
+      ><span class="mw-tag-dot"></span>Online</span
+    >
+    <span class="mw-tag mw-tag-danger mw-tag-pulse"
+      ><span class="mw-tag-dot"></span>Live</span
+    >
+  </div>
+</div>
+
 <script>
   document.querySelectorAll('[data-chip-demo] button').forEach((chip) => {
     chip.addEventListener('click', () => {

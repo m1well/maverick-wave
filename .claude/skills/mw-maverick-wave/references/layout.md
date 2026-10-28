@@ -397,7 +397,12 @@ bar.
 - `mw-app-tabbar` holds 3-5 `mw-app-tabbar-item`s (icon plus `mw-app-label`,
   `aria-current="page"` for the current one) below `lg`. It is a grid row under
   the column, not `fixed`: nothing scrolls under it and the iOS keyboard cannot
-  push it over the content. A badge in an item sits on the icon's pill.
+  push it over the content. A badge in an item sits on the icon's pill. While
+  it is showing, a bottom toast stack rises above it; a top stack starts under
+  the topbar.
+- `mw-app-main` is the scroll container, and it sets `--mw-header-height` to
+  its topbar (0 without one). A `mw-page-header-sticky` or anything else
+  reading that token pins under the topbar, not at the top of the column.
 - `data-mw-app-persist="name"` keeps the rail and the docked aside in
   `localStorage` and restores both without animating. A shell rendered later
   (an Angular route) gets it through `MaverickWave.init(element)`.
@@ -542,6 +547,11 @@ width.
 </div>
 ```
 
+`mw-hero-badge` above the headline is a glass pill with a `mw-hero-badge-dot`
+in the secondary colour - a state, not a label. `mw-hero-badge-urgent` turns
+the dot warning and hides the hero's other badges; `mw-hero-badge-pulse` makes
+the dot pulse, for a state that is running: "in development", "live now".
+
 A `mw-container` that contains a `mw-hero` switches to full-bleed, full-height
 mode with the background image from `--mw-hero-background`.
 `mw-home-content-fade` fades the content in. `mw-home-start` puts the whole
@@ -605,7 +615,8 @@ it, so buttons under the hero text never land on top of the cue.
 `mw-scroll-hint-end` puts it in the bottom right corner instead - for a hero
 whose text is not centred either - and gives the hero its full height back.
 Below `md` both variants sit in the corner, because the middle under the text
-is taken on a phone. The bobbing stops under `prefers-reduced-motion` and
+is taken on a phone. With an `mw-action-bar` on the page the cue moves up by
+`--mw-action-bar-reserve`, so the bar does not cover it. The bobbing stops under `prefers-reduced-motion` and
 `mw-motion-off`.
 
 **Parallax** - `mw-parallax` on the container plus a `mw-parallax-media` child
@@ -708,6 +719,14 @@ way.
 row becomes as tall as the tallest instead of as tall as its own contents. For a
 column of cards that should end on one line even when one of them carries an
 extra sentence.
+
+The three auto sizes are presets of `--mw-grid-min`. Set it on the grid itself
+for a width of your own - `style="--mw-grid-min: 12rem"` or a rule on the same
+element; on an ancestor it does not reach, the grid class sets its own.
+`mw-grid-fit` switches an auto grid to `auto-fit`: three tiles on a row with
+room for five share the whole row instead of leaving two empty tracks. Right
+for a row of figures whose count depends on the user's role, wrong for a
+catalogue where a lone last card should not grow.
 
 `mw-grid-from-sm|md|lg|xl` is the second modifier: it holds the grid at one
 column until that breakpoint, and the grid's own ramp takes over from there.
@@ -981,7 +1000,7 @@ there. The grid, tag, button-bar, form-action, modal-footer and toast containers
 do not.
 
 **Flex** - `mw-flex-row`, `mw-flex-column`, `mw-flex-wrap`, `mw-flex-nowrap`,
-`mw-flex-1`, `mw-flex-grow-1`, `mw-flex-shrink-0`,
+`mw-flex-1`, `mw-flex-grow-1`, `mw-flex-shrink-0`, `mw-min-w-0`,
 `mw-justify-start|end|center|between|around|evenly`,
 `mw-items-start|end|center|stretch`,
 `mw-self-start|end|center|stretch`.
@@ -990,7 +1009,9 @@ do not.
 grows and keeps the content width as the basis - that is the one you want next
 to an avatar or an icon. `mw-self-*` is the per-item counterpart to
 `mw-items-*`: it goes on the child, for the one that sits differently from the
-rest of the row.
+rest of the row. `mw-min-w-0` goes on the text column of a row: a flex or grid
+child never shrinks below its content on its own, so a long name pushes the row
+instead of truncating - `mw-text-truncate` needs it beside it.
 
 **Text** - alignment `mw-text-left|center|right`; colour `mw-text-primary`,
 `-secondary`, `-success`, `-warning`, `-danger`, `-info`, `-muted`,
@@ -1003,4 +1024,6 @@ wrap - for money and figures in tables. It is locale agnostic (alignment comes
 from the right edge), but the number of decimal places has to be constant per
 column.
 
-**Radius** - `mw-radius-none|xs|sm|md|lg|xl|2xl|full`.
+**Radius** - `mw-radius-none|xs|sm|md|lg|xl|2xl|full|pill`. `pill` is 999px:
+fully round at any width, where `full` (50%) is a circle on a square and an
+ellipse on anything wider.

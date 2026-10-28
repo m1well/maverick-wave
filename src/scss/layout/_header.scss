@@ -37,6 +37,11 @@ $_mark-round: radius('lg');
     }
   }
 
+  // A toast at the top starts below the fixed header, not over its actions
+  :root:has(.mw-header) .mw-toast-stack {
+    --mw-toast-top-reserve: var(--mw-header-height);
+  }
+
   .mw-header {
     position: fixed;
     top: var(--mw-header-inset);
@@ -755,6 +760,15 @@ $_mark-round: radius('lg');
   // Menus in the bar lie on the page's card, so their ring is the page's
   .mw-header .mw-dropdown-menu {
     --mw-focus-ring-color: var(--mw-primary-text-color);
+  }
+
+  // The page's muted grey reads at 2.4:1 on the bar; menus keep the page's
+  .mw-header :is(.mw-link-muted, .mw-btn-link-muted):not(.mw-dropdown-menu *) {
+    color: color-mix(in srgb, var(--mw-header-text-color) 72%, transparent);
+
+    &:hover:not(:disabled) {
+      color: var(--mw-header-text-color);
+    }
   }
 
   // Forced colours paint the mark's fill away; the current page gets a real line

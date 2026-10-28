@@ -69,6 +69,28 @@
     padding-left: spacing('1');
   }
 
+  // Rows with a rule between them and none around the list - it sits flush
+  // in a panel body or under a heading like any other block
+  .mw-list-divided {
+    list-style: none;
+
+    > * {
+      padding-block: spacing('3');
+    }
+
+    > :first-child {
+      padding-top: 0;
+    }
+
+    > :last-child {
+      padding-bottom: 0;
+    }
+
+    > * + * {
+      border-top: 1px solid var(--mw-border);
+    }
+  }
+
   .mw-list-inline {
     list-style: none;
     padding-left: spacing('1');
@@ -376,6 +398,27 @@
         color: var(--mw-primary-accent-text-color);
         transform: scale(0.98);
       }
+
+      // Inset: the list clips its rows to the rounded frame
+      @include focus-ring-inset;
+
+      // The row whose content is showing - a list beside its detail
+      &.mw-active,
+      &[aria-current]:not([aria-current=''], [aria-current='false']) {
+        background: var(--mw-primary-background);
+        color: var(--mw-primary-text-color);
+        font-weight: 600;
+      }
+    }
+
+    // A row that is the control itself keeps the separator, not the button look
+    > :is(button, a) {
+      border-width: 0 0 1px;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: start;
+      text-decoration: none;
     }
   }
 
@@ -662,5 +705,13 @@
     max-height: 300px;
     overflow-y: auto;
     @include _list-scrollbar;
+  }
+
+  // The rows of mw-item-list-compact without its box - inside a card body or
+  // a modal, where the surface around it already draws the border
+  .mw-item-list-flush {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
   }
 }

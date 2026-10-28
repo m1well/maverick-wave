@@ -68,8 +68,12 @@
         left: 50%;
         width: $_check-default-w;
         height: $_check-default-h;
-        border-left: 2px solid var(--mw-primary-color);
-        border-bottom: 2px solid var(--mw-primary-color);
+        // A token with a fallback, so it can be set on any ancestor: a primary
+        // as light as the field leaves the tick invisible
+        border-left: 2px solid
+          var(--mw-checkbox-check-color, var(--mw-primary-color));
+        border-bottom: 2px solid
+          var(--mw-checkbox-check-color, var(--mw-primary-color));
         transform: translate(-50%, -60%) rotate(-45deg) scale(0);
         transform-origin: center;
         transition: var(--mw-transition);
@@ -141,11 +145,9 @@
 
     @each $name, $col in $semantic-colors {
       &-#{$name} {
+        --mw-checkbox-check-color: #{$col};
+
         input[type='checkbox']:is(:checked, :indeterminate) + .mw-checkbox-box {
-          border-color: #{$col};
-        }
-        input[type='checkbox']:is(:checked, :indeterminate)
-          + .mw-checkbox-box::after {
           border-color: #{$col};
         }
       }

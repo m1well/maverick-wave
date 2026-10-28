@@ -177,3 +177,43 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-card-title mw-mt-8 mw-mb-4">Without a script</h3>
+<p class="mw-text-muted mw-text-measure">
+  An item written as <code>&lt;details&gt;</code> is opened by the browser,
+  announced by it and reachable by keyboard - for an app that cannot load
+  <code>main.js</code>. Same classes, <code>details[open]</code> is the state;
+  the panel animates open, closing is a jump.
+</p>
+<div class="mw-accordion">
+  <details class="mw-accordion-item" open>
+    <summary class="mw-accordion-header">
+      <span>Does this need any JavaScript?</span>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </summary>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">
+        <p>
+          No. The browser toggles the <code>open</code> attribute, the shipped
+          script skips a <code>&lt;summary&gt;</code>, and the classes read
+          <code>details[open]</code> instead of <code>mw-active</code>.
+        </p>
+      </div>
+    </div>
+  </details>
+  <details class="mw-accordion-item">
+    <summary class="mw-accordion-header">
+      <span>What is different from the button version?</span>
+      <i class="fas fa-chevron-down mw-accordion-icon"></i>
+    </summary>
+    <div class="mw-accordion-content">
+      <div class="mw-accordion-content-inner">
+        <p>
+          Opening animates from the shut row through
+          <code>@starting-style</code>; closing cannot, because the content is
+          gone before anything could run. Nothing else.
+        </p>
+      </div>
+    </div>
+  </details>
+</div>

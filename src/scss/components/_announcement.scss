@@ -14,11 +14,11 @@
     right: 0;
     left: 0;
     z-index: z-index('header') - 10;
-    // Not below 85 %: the glass lets the page through, and a dark label over a
-    // black page then drops under 4.5:1.
+    // Not below 95 %: the glass lets the page through, and a mid-tone like the
+    // info blue then takes its label under 4.5:1 over a light page.
     background: color-mix(
       in srgb,
-      var(--mw-announcement-tone) 85%,
+      var(--mw-announcement-tone) 95%,
       transparent
     );
     backdrop-filter: blur(7px);

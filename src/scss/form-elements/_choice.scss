@@ -1,0 +1,74 @@
+@use '../abstracts' as *;
+
+@layer mw.forms {
+  // A choice as a card: the radio or checkbox, a title, a line about it. The
+  // card is the label, so all of it is the hit area. A checked input needs no
+  // class; `mw-selected` is for a choice the application tracks itself.
+  .mw-choice {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    // The control sits on the title's line without a pixel offset
+    align-items: baseline;
+    gap: spacing('1') spacing('4');
+    padding: spacing('4');
+    border: 1px solid var(--mw-border);
+    border-radius: radius('sm');
+    background: var(--mw-card-background);
+    cursor: pointer;
+    transition: var(--mw-transition-fast);
+    @include tappable;
+
+    > input {
+      margin: 0;
+      accent-color: var(--mw-primary-color);
+      cursor: inherit;
+    }
+
+    > :not(input) {
+      grid-column: 2;
+    }
+
+    &:hover {
+      border-color: var(--mw-border-accent);
+    }
+
+    &:active:not(:has(> input:disabled)) {
+      transform: scale(0.99);
+      transition-duration: var(--mw-duration-instant);
+    }
+
+    &:has(> input:checked),
+    &.mw-selected {
+      border-color: var(--mw-primary-color);
+      background: color-mix(
+        in srgb,
+        var(--mw-primary-color) 7%,
+        var(--mw-card-background)
+      );
+    }
+
+    // The input has the focus, the card shows it
+    &:has(> input:focus-visible) {
+      outline: var(--mw-focus-ring-width) solid var(--mw-focus-ring-color);
+      outline-offset: var(--mw-focus-ring-offset);
+
+      > input {
+        outline: none;
+      }
+    }
+
+    &:has(> input:disabled) {
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+  }
+
+  .mw-choice-title {
+    font-weight: font-weight('bold');
+  }
+
+  .mw-choice-desc {
+    font-size: font-size('sm');
+    color: var(--mw-text-muted-color);
+  }
+}

@@ -640,3 +640,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 1600);
     });
 });
+
+// just for the showcase: a click on a menu list row makes it the current one
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.mw-item-list-menu').forEach((list) => {
+    const rows = list.querySelectorAll(':scope > button');
+    rows.forEach((row) =>
+      row.addEventListener('click', () => {
+        rows.forEach((other) => other.removeAttribute('aria-current'));
+        row.setAttribute('aria-current', 'true');
+      })
+    );
+  });
+});

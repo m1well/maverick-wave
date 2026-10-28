@@ -119,6 +119,10 @@
       &.mw-slider-percent::after {
         content: attr(data-value) '%';
       }
+      // A scale with ends of its own; `data-suffix=""` shows the bare number
+      &[data-suffix]::after {
+        content: attr(data-value) attr(data-suffix);
+      }
     }
   }
 
