@@ -57,7 +57,9 @@
   // picture in the app leads to
   .mw-bio-avatar {
     width: 6.5rem;
-    aspect-ratio: 1;
+    // A fixed height, not aspect-ratio: WebKit resolves the img's 100% against
+    // the padded box and stretches the ring into an oval
+    height: 6.5rem;
     margin-bottom: spacing('2');
     padding: 3px;
     border-radius: radius('full');
@@ -76,6 +78,17 @@
       border-radius: radius('full');
       background: var(--mw-page-background);
       object-fit: cover;
+    }
+  }
+
+  // Upright for a photo that shows more than a face - 4:5, the shape of a
+  // portrait post on Instagram
+  .mw-bio-avatar-portrait {
+    height: 8.125rem;
+    border-radius: radius('xl');
+
+    img {
+      border-radius: calc(#{radius('xl')} - 3px);
     }
   }
 
