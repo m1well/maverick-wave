@@ -54,7 +54,7 @@ Browser floor: Chrome and Edge 123+, Firefox 140+ (the ESR), Safari and iOS
 | Token                                                                                                                                                                        | Role                                                                                                                                                                                                                                                                                                                                                                              |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--mw-primary-color`                                                                                                                                                         | Brand colour as a **fill**: primary buttons, table headers, bars, badges - the label on top is `--mw-primary-accent-text-color`                                                                                                                                                                                                                                                   |
-| `--mw-primary-text-color`                                                                                                                                                    | Brand colour as **ink** on a theme surface: text, icons, focus rings, accent borders. Derived by clamping OKLch lightness (`max(l, .70)` on dark, `min(l, .50)` on light), so a colour already in range is used untouched                                                                                                                                                         |
+| `--mw-primary-text-color`                                                                                                                                                    | Brand colour as **ink** on a theme surface: text, icons, focus rings, accent borders. Derived by clamping OKLch lightness (`max(l, .59)` on dark, `min(l, .52)` on light), so a colour already in range is used untouched                                                                                                                                                         |
 | `--mw-primary-color-hover`                                                                                                                                                   | Solid hover surface (derived: base + `$hover-shift` black, in both themes)                                                                                                                                                                                                                                                                                                        |
 | `--mw-primary-background`                                                                                                                                                    | 24% tint - focus halo, alert/badge/tag surface, scrollbar tracks                                                                                                                                                                                                                                                                                                                  |
 | `--mw-primary-background-hover`                                                                                                                                              | 36% tint - row and list hover                                                                                                                                                                                                                                                                                                                                                     |
@@ -312,10 +312,10 @@ effect, because the root colours are declared with `!default`.
   $accent-text-color: #f2fafa,
   // the derivation knobs, all optional
   $hover-shift: 15%,
-  $ink-lightness-dark: 0.7,
-  $ink-lightness-light: 0.5,
+  $ink-lightness-dark: 0.59,
+  $ink-lightness-light: 0.52,
   // mw-text-* inside mw-home-text, which sits on the hero photo
-  $hero-ink-lightness: 0.82,
+  $hero-ink-lightness: 0.78,
   $muted-tint: 12%,
   // the surface stack - distance of card and footer from the page
   $card-surface-dark: 0.85,
@@ -326,7 +326,7 @@ effect, because the root colours are declared with `!default`.
   $header-surface: 16%,
   // how far the active navbar link sits off the primary colour - lower is a
   // stronger, more saturated blue, higher is paler with more contrast
-  $header-active-tint: 45%,
+  $header-active-tint: 29%,
   $mw-hero-image: url('/assets/hero.jpg'),
   // a pattern layer over it, for a hero that parallaxes - see mw-parallax-pattern
   $mw-hero-pattern: repeating-linear-gradient(
