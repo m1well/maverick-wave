@@ -1,3 +1,5 @@
+@use 'sass:list';
+@use 'sass:map';
 @use 'sass:math';
 @use 'sass:string';
 
@@ -42,9 +44,9 @@ $form-elements-background: #f4f7fb !default;
 
 // Kept clear of the brand colors, so "accent" never reads as "attention"
 $success-color: #157f1a !default;
-$warning-color: #d1bb21 !default;
+$warning-color: #c8bb17 !default;
 $danger-color: #d41708 !default;
-$info-color: #0780ca !default;
+$info-color: #066eb4 !default;
 
 // Ink on the surfaces that stay a fixed grey in both themes and therefore cannot
 // take --mw-accent-text-color: tooltip, mw-btn-mini, mw-info-mini, gallery arrows
@@ -58,13 +60,10 @@ $fixed-stage: #0b0d12 !default;
 $hover-shift: 15% !default;
 
 // OKLch lightness a color needs to read as ink on a surface. A bound, not a
-// target: a color already inside it passes through untouched. 0.52 is where the
-// default blue clears 3:1 on a dark card, 0.58 does the same for the yellow on a
-// light one - and 0.58 is as low as that end goes without moving three colors.
-$ink-lightness-dark: 0.52 !default;
-$ink-lightness-light: 0.58 !default;
-// On the hero photo 0.52 measured 1.2-2.7:1, 0.72 clears 3:1 and keeps the hue
-$hero-ink-lightness: 0.72 !default;
+// target: a color already inside it passes through untouched.
+$ink-lightness-dark: 0.59 !default;
+$ink-lightness-light: 0.52 !default;
+$hero-ink-lightness: 0.78 !default;
 // How much primary the muted gray picks up, so it belongs to the palette. 0% is true gray.
 $muted-tint: 23% !default;
 
@@ -85,10 +84,7 @@ $footer-surface-light: 0.95 !default;
 // on near-black. Going far up means overriding the header ink tokens with it.
 $header-surface: 14% !default;
 
-// 25% lands at 3.67:1 over the bar: past the 3:1 floor for a bold label, under
-// AA body size. A deliberate trade - the item also carries an underline and a
-// weight change. Raise it toward 35% for the safe end.
-$header-active-tint: 25% !default;
+$header-active-tint: 29% !default;
 
 // How far a dark-theme shadow sits below the page colour - a black shadow on a
 // near-black page is invisible, so this is the near layer that puts weight back
@@ -267,15 +263,16 @@ $base-colors: (
   'primary-color': $primary-color,
   'primary-color-hover': shade('primary-color', $hover-shift),
   // Every tinted surface in the framework, and both stay close enough to the one
-  // underneath that the theme's own --mw-text-color keeps working on top
-  'primary-background': fade('primary-color', 30%),
-  'primary-background-hover': fade('primary-color', 50%),
+  // underneath that the theme's own --mw-text-color and the color's own ink keep
+  // 4.5:1 on top - a near-white primary on a dark page is what sets the share
+  'primary-background': fade('primary-color', 24%),
+  'primary-background-hover': fade('primary-color', 36%),
   // The name the status colors use, so a component can interpolate one token name
   'primary-info-background': token('primary-background'),
   'secondary-color': $secondary-color,
   'secondary-color-hover': shade('secondary-color', $hover-shift),
-  'secondary-background': fade('secondary-color', 30%),
-  'secondary-background-hover': fade('secondary-color', 50%),
+  'secondary-background': fade('secondary-color', 24%),
+  'secondary-background-hover': fade('secondary-color', 36%),
   'secondary-info-background': token('secondary-background'),
   // Derived from neither a brand color nor a theme text color: it has to stay
   // readable on a solid surface however the palette or the theme is retuned
@@ -309,23 +306,23 @@ $base-colors: (
 $status-colors: (
   'success-color': $success-color,
   'success-color-hover': shade('success-color', $hover-shift),
-  'success-info-background': fade('success-color', 30%),
-  'success-info-background-hover': fade('success-color', 50%),
+  'success-info-background': fade('success-color', 26%),
+  'success-info-background-hover': fade('success-color', 42%),
   'success-accent-text-color': token('accent-text-color'),
   'warning-color': $warning-color,
   'warning-color-hover': shade('warning-color', $hover-shift),
-  'warning-info-background': fade('warning-color', 30%),
-  'warning-info-background-hover': fade('warning-color', 50%),
+  'warning-info-background': fade('warning-color', 26%),
+  'warning-info-background-hover': fade('warning-color', 42%),
   'warning-accent-text-color': token('accent-text-color'),
   'danger-color': $danger-color,
   'danger-color-hover': shade('danger-color', $hover-shift),
-  'danger-info-background': fade('danger-color', 30%),
-  'danger-info-background-hover': fade('danger-color', 50%),
+  'danger-info-background': fade('danger-color', 26%),
+  'danger-info-background-hover': fade('danger-color', 42%),
   'danger-accent-text-color': token('accent-text-color'),
   'info-color': $info-color,
   'info-color-hover': shade('info-color', $hover-shift),
-  'info-info-background': fade('info-color', 30%),
-  'info-info-background-hover': fade('info-color', 50%),
+  'info-info-background': fade('info-color', 26%),
+  'info-info-background-hover': fade('info-color', 42%),
   'info-accent-text-color': token('accent-text-color'),
 );
 
@@ -345,6 +342,47 @@ $semantic-colors: (
 // keep the alias-per-theme route while everything else resolves in one line.
 $theme-non-colors: ('hero-image-filter');
 
+// Categorical chart colours in a fixed order, stepped per theme and checked for
+// colour vision deficiency against the default cards. A ninth series folds into
+// series-other rather than a generated hue.
+$chart-series-light: (
+  #2a78d6,
+  #eb6834,
+  #1baf7a,
+  #eda100,
+  #e87ba4,
+  #008300,
+  #6250d6,
+  #e34948
+) !default;
+$chart-series-dark: (
+  #3987e5,
+  #d95926,
+  #199e70,
+  #c98500,
+  #d55181,
+  #008300,
+  #9085e9,
+  #e66767
+) !default;
+$chart-other-light: #a3a29b !default;
+$chart-other-dark: #6b6a64 !default;
+
+@function _chart-colors($theme, $series, $other) {
+  $colors: ();
+  @for $i from 1 through list.length($series) {
+    $colors: map.set($colors, 'series-#{$i}', list.nth($series, $i));
+  }
+  @return map.merge(
+    $colors,
+    (
+      'series-other': $other,
+      'chart-grid': fade('#{$theme}-text-color', 10%),
+      'chart-axis': fade('#{$theme}-text-color', 24%),
+    )
+  );
+}
+
 // Dark theme colors. Emitted as --mw-dark-<key>, hence the prefixed references.
 $dark-theme-colors: (
   'page-background': $dark-background,
@@ -361,7 +399,7 @@ $dark-theme-colors: (
     ),
   'shadow-far': fade('dark-text-color', $shadow-far-dark),
   'text-color': $dark-text-color,
-  'text-muted-color': muted(0.7),
+  'text-muted-color': muted(0.73),
   // Derived, so overriding a root color yields a readable dark variant for free
   'primary-text-color': ink-on-dark('primary-color'),
   'secondary-text-color': ink-on-dark('secondary-color'),
@@ -374,7 +412,7 @@ $dark-theme-colors: (
   // Full strength: against a dark card the ink tone is the faintest it gets
   'corner-accent': token('dark-primary-text-color'),
   // Not tint(): mixing toward white washes the arc out instead of brightening it
-  'corner-accent-hover': ink-on-dark('primary-color', 0.72),
+  'corner-accent-hover': ink-on-dark('primary-color', 0.78),
 );
 
 // Light theme colors. Emitted as --mw-light-<key>.
@@ -388,7 +426,7 @@ $light-theme-colors: (
   'shadow-near': fade('light-text-color', $shadow-near-light),
   'shadow-far': fade('light-text-color', $shadow-far-light),
   'text-color': $light-text-color,
-  'text-muted-color': muted(0.5),
+  'text-muted-color': muted(0.47),
   // Other direction: a color too light to read on paper is deepened
   'primary-text-color': ink-on-light('primary-color'),
   'secondary-text-color': ink-on-light('secondary-color'),
@@ -402,6 +440,15 @@ $light-theme-colors: (
   'corner-accent': fade('light-primary-text-color', 80%),
   // Full strength is the frame a resting card must not have and a hovered one wants
   'corner-accent-hover': token('light-primary-text-color'),
+);
+
+$dark-theme-colors: map.merge(
+  $dark-theme-colors,
+  _chart-colors('dark', $chart-series-dark, $chart-other-dark)
+);
+$light-theme-colors: map.merge(
+  $light-theme-colors,
+  _chart-colors('light', $chart-series-light, $chart-other-light)
 );
 
 // The elevation ramp, shared by both themes - see elevation(). A component names
@@ -549,6 +596,9 @@ $radius: (
   'xl': 20px,
   '2xl': 30px,
   'full': 50%,
+  // A pill at any width - 'full' is 50%, which is a circle on a square and an
+  // ellipse on anything wider
+  'pill': 999px,
 );
 
 // Off the scale on purpose: a chip next to a tag stays tighter than the buttons

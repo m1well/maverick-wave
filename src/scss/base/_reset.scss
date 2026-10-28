@@ -50,6 +50,17 @@
     color: var(--mw-text-color);
   }
 
+  // A field keeps its own pair: on a light field in a dark theme the page's
+  // text colour would select into white on white
+  :is(input, textarea, select)::selection {
+    background: color-mix(
+      in srgb,
+      var(--mw-form-elements-color) 25%,
+      var(--mw-form-elements-background)
+    );
+    color: var(--mw-form-elements-color);
+  }
+
   a {
     text-decoration: none;
     color: var(--mw-text-muted-color);
@@ -83,6 +94,10 @@
     font-family: inherit;
     color: inherit;
     @include tappable;
+  }
+
+  summary {
+    cursor: pointer;
   }
 
   input,

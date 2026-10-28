@@ -92,6 +92,14 @@
     --mw-control-font-lg: #{$control-font-lg};
     --mw-control-line-height: #{$control-line-height};
 
+    // The spacing scale for an application's own styles. Read, not a knob: the
+    // utilities and components keep their compiled values.
+    @each $key, $value in $spacing {
+      @if $value >= 0 {
+        --mw-space-#{$key}: #{$value};
+      }
+    }
+
     // One ramp for both themes - the theme reaches it through the two shadow
     // tokens the levels are built from
     @each $name, $value in $elevations {
@@ -196,7 +204,10 @@
     --mw-section-head-pad: var(--mw-section-head-step);
     --mw-section-head-mark-width: 80px;
     --mw-section-head-mark-color: var(--mw-primary-color);
-    --mw-scroll-hint-offset: #{spacing('9')};
+    // A phone's action bar covers the hero's lower edge, the cue sits above it
+    --mw-scroll-hint-offset: calc(
+      #{spacing('9')} + var(--mw-action-bar-reserve, 0px)
+    );
     --mw-scroll-hint-inline: var(--mw-container-gutter);
     --mw-scroll-hint-reserve: #{spacing('10')};
 
@@ -341,11 +352,11 @@
       --mw-light-text-muted-color: #{muted(0.4)};
       --mw-focus-ring-width: 3px;
 
-      // 4.5:1 on a card instead of the 3:1 the default ink is tuned to
+      // A step past the default ink floors in both directions
       @each $name
         in ('primary', 'secondary', 'success', 'warning', 'danger', 'info')
       {
-        --mw-dark-#{$name}-text-color: #{ink-on-dark('#{$name}-color', 0.66)};
+        --mw-dark-#{$name}-text-color: #{ink-on-dark('#{$name}-color', 0.78)};
         --mw-light-#{$name}-text-color: oklch(
           from var(--mw-#{$name}-color) min(l, 0.45) c h
         );

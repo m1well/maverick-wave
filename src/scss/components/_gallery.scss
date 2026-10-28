@@ -105,7 +105,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: spacing('4');
+      // Centres 27px apart: the 24px spacing WCAG 2.5.8 asks of an 11px target
+      gap: spacing('5');
     }
 
     &-dot {

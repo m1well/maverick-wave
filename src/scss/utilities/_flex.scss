@@ -109,4 +109,10 @@
   .mw-row-split-center {
     align-items: center;
   }
+
+  // The text column of a row: without it a flex or grid child never shrinks
+  // below its content, and a long name pushes the row instead of truncating
+  .mw-min-w-0 {
+    min-width: 0;
+  }
 }

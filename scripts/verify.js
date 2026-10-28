@@ -44,6 +44,10 @@ const TOKEN_ALLOWLIST = new Set([
   '--mw-internal-theme-mode',
   '--mw-warning-color-hover',
   '--mw-info-color-hover',
+  // The lines behind a chart and the spacing scale, for application styles
+  '--mw-chart-grid',
+  '--mw-chart-axis',
+  ...Array.from({ length: 15 }, (_, i) => `--mw-space-${i}`),
 ]);
 
 // Classes that exist only as JS hooks or are applied by the host application

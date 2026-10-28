@@ -159,3 +159,87 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-card-title mw-mb-4">Lead, strip and small</h3>
+<div class="mw-grid-2 mw-gap-6 mw-mb-8">
+  <div class="mw-card mw-card-simple">
+    <div class="mw-stat mw-stat-lead">
+      <div class="mw-stat-head">
+        <span class="mw-stat-value">4.</span>
+        <span class="mw-stat-label">Championship</span>
+      </div>
+      <dl class="mw-stat-facts">
+        <div>
+          <dt>Points</dt>
+          <dd>61</dd>
+        </div>
+        <div>
+          <dt>Gap to leader</dt>
+          <dd>25</dd>
+        </div>
+        <div>
+          <dt>Budget</dt>
+          <dd class="mw-text-danger">-2,400</dd>
+        </div>
+        <div>
+          <dt>Next race</dt>
+          <dd>Sat 20:00</dd>
+        </div>
+      </dl>
+    </div>
+    <p class="mw-text-muted mw-text-sm mw-mt-4 mw-mb-0">
+      <code>mw-stat-lead</code>: one number first, the facts small beside it -
+      "where do I stand" reads in the same place on every page. Below 28rem the
+      head goes on top and the facts take two columns.
+    </p>
+  </div>
+  <div>
+    <div class="mw-stat-strip">
+      <div class="mw-stat mw-stat-sm mw-edge-info">
+        <span class="mw-stat-label">Phase</span>
+        <span class="mw-stat-value">Lineup</span>
+      </div>
+      <div class="mw-stat mw-stat-sm">
+        <span class="mw-stat-label">Week</span>
+        <span class="mw-stat-value">7 / 12</span>
+      </div>
+      <div class="mw-stat mw-stat-sm">
+        <span class="mw-stat-label">Position</span>
+        <span class="mw-stat-value">4.</span>
+      </div>
+      <div class="mw-stat mw-stat-sm">
+        <span class="mw-stat-label">Balance</span>
+        <span class="mw-stat-value mw-text-danger">-2,400</span>
+      </div>
+    </div>
+    <p class="mw-text-muted mw-text-sm mw-mt-4 mw-mb-0">
+      <code>mw-stat-strip</code>: several cells in one box with a hairline
+      between every two, two per row until the strip is 30rem wide.
+      <code>mw-stat-sm</code> takes label and value a step down, and an
+      <code>mw-edge-*</code> on a cell marks the one that carries the phase.
+    </p>
+  </div>
+</div>
+
+<h3 class="mw-card-title mw-mb-4">Chart colors</h3>
+<div class="mw-card mw-card-simple">
+  <div class="chart-series-demo mw-mb-4" aria-hidden="true">
+    <span style="flex-grow: 9; background: var(--mw-series-1)"></span>
+    <span style="flex-grow: 7; background: var(--mw-series-2)"></span>
+    <span style="flex-grow: 6; background: var(--mw-series-3)"></span>
+    <span style="flex-grow: 5; background: var(--mw-series-4)"></span>
+    <span style="flex-grow: 4; background: var(--mw-series-5)"></span>
+    <span style="flex-grow: 3; background: var(--mw-series-6)"></span>
+    <span style="flex-grow: 3; background: var(--mw-series-7)"></span>
+    <span style="flex-grow: 2; background: var(--mw-series-8)"></span>
+    <span style="flex-grow: 2; background: var(--mw-series-other)"></span>
+  </div>
+  <p class="mw-text-muted mw-text-sm mw-mb-0">
+    <code>--mw-series-1</code> to <code>--mw-series-8</code> colour the series
+    of a chart in a fixed order, so a series keeps its colour whatever else is
+    shown; a ninth goes into <code>--mw-series-other</code>. Each is stepped per
+    theme and checked for colour vision deficiency.
+    <code>--mw-chart-grid</code> and <code>--mw-chart-axis</code> are the lines
+    behind the data.
+  </p>
+</div>

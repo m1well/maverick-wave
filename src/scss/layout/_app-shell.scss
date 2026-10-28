@@ -1,12 +1,15 @@
 @use '../abstracts' as *;
 
+$_tabbar-item-height: 3.25rem;
+$_topbar-height: 3.5rem;
+
 @layer mw.layout {
   .mw-app {
     --mw-app-height: 100dvh;
     --mw-app-sidebar-width: 16rem;
     --mw-app-rail-width: 4.25rem;
     --mw-app-aside-width: 22rem;
-    --mw-app-topbar-height: 3.5rem;
+    --mw-app-topbar-height: #{$_topbar-height};
     --mw-app-gutter: #{spacing('5')};
     // The tracks read these, so collapsing and opening stay one animatable value
     --_sidebar: var(--mw-app-sidebar-width);
@@ -206,6 +209,8 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--mw-app-nav-color);
+    // truncate's overflow: hidden lets a long nav squeeze the title to nothing
+    flex-shrink: 0;
     @include truncate;
 
     &:first-child {
@@ -298,13 +303,20 @@
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
-    scroll-padding-top: calc(
-      var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
-    );
+    // The column scrolls, not the page: a sticky page header in it pins under
+    // the topbar, and with no topbar at the edge - never under a site header
+    --mw-header-height: 0px;
+    scroll-padding-top: var(--mw-header-height);
     // Below lg the column reaches both screen edges, notch included
     --_gutter-start: max(var(--mw-app-gutter), env(safe-area-inset-left, 0px));
     --_gutter-end: max(var(--mw-app-gutter), env(safe-area-inset-right, 0px));
     @include scrollbar;
+
+    &:has(> .mw-app-topbar) {
+      --mw-header-height: calc(
+        var(--mw-app-topbar-height) + env(safe-area-inset-top, 0px)
+      );
+    }
   }
 
   .mw-app-topbar {
@@ -496,6 +508,25 @@
     }
   }
 
+  // Only the toasts make room: they are fixed to the screen, the page is not,
+  // because the bar is a grid row and nothing scrolls under it
+  @include media-down('lg') {
+    :root:has(.mw-app-tabbar) .mw-toast-stack {
+      --mw-action-bar-reserve: calc(
+        #{$_tabbar-item-height} + #{2 * spacing('1')} + 1px +
+          env(safe-area-inset-bottom, 0px)
+      );
+    }
+  }
+
+  // The stack usually sits outside .mw-app and cannot inherit the topbar height
+  :root:has(.mw-app-topbar) .mw-toast-stack {
+    --mw-toast-top-reserve: calc(
+      var(--mw-app-topbar-height, #{$_topbar-height}) +
+        env(safe-area-inset-top, 0px)
+    );
+  }
+
   .mw-app-tabbar-item {
     position: relative;
     display: flex;
@@ -504,7 +535,7 @@
     justify-content: center;
     gap: spacing('1');
     min-width: 0;
-    min-height: 3.25rem;
+    min-height: $_tabbar-item-height;
     padding: spacing('1');
     border-radius: radius('md');
     color: var(--mw-text-muted-color);

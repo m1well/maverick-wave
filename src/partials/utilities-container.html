@@ -17,6 +17,11 @@
     <div class="mw-card mw-card-simple mw-p-2">Small padding</div>
     <div class="mw-card mw-card-simple mw-p-4 mw-mt-4">Medium padding</div>
     <div class="mw-card mw-card-simple mw-p-6 mw-mt-4">Large padding</div>
+    <p class="mw-text-muted mw-text-sm mw-mt-4">
+      The same steps as custom properties for your own styles:
+      <code>var(--mw-space-3)</code> is the 0.5rem of <code>mw-mb-3</code>. Read
+      them rather than override them - the classes keep their compiled values.
+    </p>
 
     <h4 class="mw-mt-6 mw-mb-2">Auto Margins</h4>
     <p class="mw-text-muted mw-text-sm mw-mb-3">
@@ -592,3 +597,42 @@
   <code>--mw-font-family-heading</code>, <code>--mw-container-width</code> and
   <code>--mw-section-padding-block</code>.
 </p>
+
+<h3 class="mw-mb-4 mw-mt-6">Min width &amp; pill</h3>
+<div class="mw-grid-2 mw-gap-6">
+  <div class="mw-card mw-card-simple">
+    <div class="mw-d-flex mw-items-center mw-gap-3">
+      <span class="mw-avatar mw-avatar-initials" aria-hidden="true">MB</span>
+      <div class="mw-min-w-0">
+        <div class="mw-text-truncate">
+          Mira Brandt-Hollenstein-Westerkamp, Harbourline Racing
+        </div>
+        <div class="mw-text-muted mw-text-sm">Team principal</div>
+      </div>
+      <span class="mw-tag mw-tag-success">Signed</span>
+    </div>
+    <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+      <code>mw-min-w-0</code> on the text column: a flex child never shrinks
+      below its content on its own, so without it the name pushes the tag off
+      the row instead of truncating.
+    </p>
+  </div>
+  <div class="mw-card mw-card-simple">
+    <span
+      class="mw-radius-pill mw-text-bold"
+      style="
+        display: inline-block;
+        padding: 0.35rem 1rem;
+        border: 1px solid var(--mw-warning-text-color);
+        background: var(--mw-warning-info-background);
+        color: var(--mw-warning-text-color);
+      "
+      >1,250 credits</span
+    >
+    <p class="mw-text-muted mw-text-sm mw-mt-3 mw-mb-0">
+      <code>mw-radius-pill</code> is 999px - round at any width, where
+      <code>mw-radius-full</code> (50%) is a circle on a square and an ellipse
+      on anything wider.
+    </p>
+  </div>
+</div>

@@ -118,10 +118,10 @@
   }
 
   // Days spilling in from the neighbouring month stay readable but clearly step
-  // back - leaving them out would make the first and last row look broken
+  // back - leaving them out would make the first and last row look broken. No
+  // opacity on top of the muted ink: they are buttons and need their 4.5:1.
   .mw-calendar-day.mw-calendar-adjacent {
     color: var(--mw-text-muted-color);
-    opacity: 0.5;
   }
 
   .mw-calendar-day:hover:not(:disabled):not(.mw-selected) {
@@ -260,7 +260,7 @@
     display: inline-flex;
     align-items: center;
     gap: spacing('1');
-    font-size: font-size('2xs');
+    font-size: font-size('xs');
     color: var(--mw-text-muted-color);
   }
 

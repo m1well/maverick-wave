@@ -181,7 +181,9 @@ Angular: `[class.mw-active]="i === current"`.
 | rem | 0   | 0.2 | 0.35 | 0.5 | 0.75 | 1   | 1.35 | 1.75 | 2   | 2.5 | 3.3 | 4.3 | 5.5 | 7   | 9   |
 
 Negative margins exist for keys 1-6 (`mw-mt--3` = -0.5rem). Gap has no negative
-keys at all (negative gap is invalid CSS and is not generated).
+keys at all (negative gap is invalid CSS and is not generated). The same steps
+are `var(--mw-space-0)` … `var(--mw-space-14)` for your own styles - read only,
+overriding them moves nothing.
 
 **Font sizes** (`mw-text-3xs` … `mw-text-6xl`): `3xs` 0.6, `2xs` 0.7, `xs` 0.8,
 `sm` 0.9, `base` 1, `md` 1.1, `lg` 1.3, `xl` 1.5, `2xl` 1.8, `3xl` 2.2, `4xl` 2.5,
@@ -214,9 +216,10 @@ its own:
 `@import url('font-awesome.css') layer(vendor);` with `@layer vendor, mw;`
 declared before it.
 
-**Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full`): 0, 2, 5, 10, 15, 20, 30 px, 50%.
+**Radius** (`mw-radius-none|xs|sm|md|lg|xl|2xl|full|pill`): 0, 2, 7, 12, 15, 20, 30 px, 50%, 999px.
 Every one of them is multiplied by `--mw-radius-scale` (default 1), so one number
-squares the framework off or rounds it further; `none` and `full` pass through.
+squares the framework off or rounds it further; `none`, `full` and `pill` pass
+through - `pill` is the one for a chip of any width, where `full` turns into an ellipse.
 
 **The surface signature.** Every panel-like component - card, panel, modal,
 accordion, tile, calendar, pagination, login box - shares one silhouette: sharp
@@ -299,19 +302,23 @@ transitions for a multi-page site, off by default) - see `references/theming.md`
 Everything below is documented in `references/components.md` unless marked otherwise.
 
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
-`ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`, `sm`,
-`lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
+`ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`,
+`block-sm`, `sm`, `lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
+`mw-link-stretched` + `mw-above-link` (the whole card as a link's hit area) ·
 `mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note` ·
 `mw-action-bar` (+ `-item`, `-primary`, `-always`, `-embedded`, `-island`; the
 phone's call / directions / book strip)
 
-**Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, badge, ribbon,
-feature frame) ·
-`mw-panel` (+ `-heading`, `-title`, `-subtitle`, `-actions`, `-edge-{colour}`) ·
-`mw-tile` · `mw-accordion` · `mw-faq` (+ `-cards`) · `mw-tabs` ·
+**Containers** `mw-card` (+ `simple`, `lg`, `xl`, `stack`, `body-row`, badge,
+ribbon, feature frame) · `mw-edge-{colour}` / `mw-edge-muted` / `mw-edge-top`
+(a stripe and a tint on any surface, `--mw-edge-color` for a tone of your own) ·
+`mw-panel` (+ `-heading`, `-title`, `-subtitle`, `-actions`, `-edge-{colour}`,
+`-edge-muted`) ·
+`mw-tile` (+ `mw-selected`, `-check`) · `mw-accordion` (a `<details>` item
+needs no script) · `mw-faq` (+ `-cards`) · `mw-tabs` ·
 `mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `full`, `drawer`, `drawer-start`) ·
-`mw-item-list` family · `mw-offer` (+ `-head`, `-name`) ·
+`mw-item-list` family (+ `-flush`) · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
 `mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·
 `mw-contact` (+ `-row`, `-label`)
@@ -320,16 +327,17 @@ feature frame) ·
 `-period`, `-word`, `-note`, `xs`/`sm`/`lg`, `inline`, `center`, `plain`)
 
 **Data & status** `mw-table` (+ `subtle`, `sticky-head`, `sticky-col`, `cards`,
-`compact`, `hover`, responsive wrappers; `mw-table-bulk` + `-bulk-bar` /
-`-bulk-count`; `aria-sort` on a header) · `mw-kanban` (+ `plain`, `compact`) ·
-`mw-calendar` (+ `compact`, `plain`) · `mw-tag` (a `button` with
-`aria-pressed` is a filter chip) / `mw-tags` · `mw-badge` (+ `-dot`, `-status`, `-anchor`, `-float`, `-pulse`) ·
+`compact`, `hover`, responsive wrappers; `mw-row-{colour}` / `mw-row-muted` on
+a `tr`; `mw-table-bulk` + `-bulk-bar` / `-bulk-count`; `aria-sort` on a header) · `mw-kanban` (+ `plain`, `compact`) ·
+`mw-calendar` (+ `compact`, `plain`) · `mw-tag` (+ `-outline`, `-dot`, `-pulse`;
+a `button` with `aria-pressed` is a filter chip) / `mw-tags` · `mw-badge` (+ `-dot`, `-status`, `-anchor`, `-float`, `-pulse`) ·
 `mw-info` / `mw-info-mini` / `mw-info-counter` · `mw-progress-bar` (+
 `mw-progress-indeterminate`) · `mw-progress-ring` (+ `-sm`, `-lg`, colours) ·
 `mw-rating` · `mw-meta-header` · `mw-stepper` · `mw-timeline-big` /
 `mw-timeline-simple` / `mw-timeline-compact` (+ `-item`, `-time`, `-body`,
 colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
-`-note`, `-chart`, `-delta-up|down|flat|invert`, `-group`) · `mw-meter` (+ `sm`,
+`-note`, `-chart`, `-delta-up|down|flat|invert`, `-group`, `-sm`, `-lead` +
+`-head` / `-facts`, `-strip`) · `mw-meter` (+ `sm`,
 `lg`; on a native `<meter>`) · `mw-chat` (+ `-message`, `-message-user`,
 `-body`, `-bubble`, `-meta`, `-actions`, `-note`, `-typing`, `-thinking`,
 `-suggestions`, `-composer`, `-composer-bar`)
@@ -358,22 +366,27 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `mw-deck-card` to embed it) · `mw-devices` + `mw-device` (+ `-laptop`, `-phone`,
 `-screen`; a screenshot or an iframe on the glass) · `mw-overlay-btn` · `mw-blog-post` · `mw-testimonial` (+ `-source`, `-detail`,
 `-date`, `-featured`) · `mw-prose` · `mw-media` (+ `-caption`) · `mw-code-block` /
-`mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` ·
-`mw-kbd` · `mw-list` family · `mw-compare` (+ `-before`, `-after`, `-label`,
+`mw-terminal` · `mw-techstack-bucket` · `mw-coming-soon` · `mw-divider` (+
+`-tight`) ·
+`mw-kbd` · `mw-list` family (+ `mw-list-divided`) · `mw-compare` (+ `-before`, `-after`, `-label`,
 `-label-after`, `-range`; before/after slider) · `mw-marquee` (+ `-track`,
 `-group`, `-item`, `-reverse`)
 
-**Forms** (`references/forms.md`) `mw-field` · `mw-input` (+ `-tags`) · `mw-select` ·
-`mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-toggle` · `mw-slider` ·
-`mw-input-group` · `mw-prefilled` · `mw-form` / `mw-form-group` /
-`mw-form-actions` · `mw-login`
+**Forms** (`references/forms.md`) `mw-field` (+ `-short`, `-medium`, `-long`,
+`-inline`) · `mw-fieldset` · `mw-input` (+ `-tags`) · `mw-select` ·
+`mw-textarea` · `mw-checkbox` · `mw-radio` · `mw-choice` (+ `-title`, `-desc`) ·
+`mw-toggle` · `mw-slider` · `mw-input-group` · `mw-prefilled` · `mw-form` /
+`mw-form-group` / `mw-form-row` / `mw-form-actions` (+ `-sticky`, `-dirty`) ·
+`mw-login`
 
 **Layout** (`references/layout.md`) `mw-main` · `mw-container` (+ `-narrow`) ·
 `mw-content` ·
 `mw-section` · `mw-section-head` (+ `-title`, `-intro`, `-numbered`, colours) ·
 `mw-page-header` (+ `-actions`, `-filters`, `-compact`, `-sticky`, `-plain`) · `mw-grid-*`
-(+ `mw-grid-even`, `mw-grid-from-{sm,md,lg,xl}`) ·
-`mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`) ·
+(+ `mw-grid-even`, `mw-grid-fit`, `mw-grid-from-{sm,md,lg,xl}`; `--mw-grid-min`
+on the auto grids) ·
+`mw-columns-2/3` · `mw-row-split` · `mw-hero` (+ `mw-scroll-hint`, `-end`;
+`mw-hero-badge` + `-dot`, `-urgent`, `-pulse`) ·
 `mw-parallax` (+ `-media`, `-content`, `-dimmed`, `-sticky`, `-rise`,
 `-slow`, `-pattern`) · `mw-footer` (+ `-top`, `-column`, `-title`, `-bottom`,
 `-links`, `-dark`, `-compact`) · `mw-app` (+ `-sidebar`, `-sidebar-dark`,
@@ -391,7 +404,7 @@ colours) · `mw-stat` (+ `-label`, `-value`, `-unit`, `-footer`,
 `mw-glow-{primary,secondary,info,success,warning,danger}` ·
 `mw-corner-plain` · `mw-shape-arch|signature|leaf` · `data-tooltip` (+
 `mw-tooltip-below`, `-start`, `-end`, `-inline-end`; `mw-tooltips-below` on a
-bar) · `mw-w-auto` ·
+bar) · `mw-w-auto` / `mw-min-w-0` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` / `mw-hide-print` / `mw-print-only` · `mw-overflow-*` / `mw-snap-x` ·
 `mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
@@ -447,14 +460,15 @@ bar) · `mw-w-auto` ·
     anchor positioning, `contrast-color()`, `field-sizing`) sits behind
     `@supports` with a complete result without it.
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
-    `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm`,
-    `mw-select-sm` and `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
+    `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm` and
+    `mw-select-sm` the same, `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
     44px, `mw-section-btn` 2.75rem, and list rows / menu items / pager pages /
     accordion headers 2.75rem.
     `mw-btn-mini` keeps its 18px circle - it sits in tag rows and table cells
     where a bigger one would shift the layout - and grows its _hit area_ to 28px
     via a pseudo-element, and `mw-kanban-action` does the same - its 32px box
-    stays and the hit area around it reaches 44px.
+    stays and the hit area around it reaches 44px. `mw-theme-toggle` keeps its
+    size too and grows its hit area by 7px on every side.
     `mw-techstack-item-sm` takes a real 2.5rem minimum instead, because half of
     those chips carry a `data-tooltip` and that owns the pseudo-element.
     Nothing to switch on, and no reason to write the media query again in an

@@ -6,6 +6,50 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.17.0] - 2026-10-28
+
+### Added
+
+- `mw-edge-{colour}`, `mw-edge-muted`, `mw-edge-top`, `--mw-edge-color` - a 3px stripe and a tint of the same ink painted into any surface: a card, a tile, a panel, a stat cell
+- `mw-row-{colour}`, `mw-row-muted` - a tone on a table row's cells and an edge on the first, like the selected row
+- `mw-stat-lead` (+ `-head`, `-facts`), `mw-stat-strip`, `mw-stat-sm` - one number first with the facts beside it, several in one hairlined box, the figure of a small box
+- `mw-card-body-row` - the card body as one wrapping row
+- accordion: an item written as `<details>` with `<summary class="mw-accordion-header">` runs without a script; the shipped JS leaves it alone
+- `mw-tile`: `mw-selected`, `aria-pressed="true"` or `aria-selected="true"` ring the chosen tile, `mw-tile-check` is the tick in its corner
+- `mw-tag-outline`, `mw-tag-dot`, `mw-tag-pulse` - and `mw-tags-outline` for the list form
+- `mw-item-list-flush` - the compact rows without their box
+- `mw-fieldset` - a fieldset without the browser's box, the legend as a field label
+- `mw-divider-tight`, `mw-btn-block-sm`, `mw-hero-badge-pulse`, `mw-min-w-0`
+- `radius('pill')` / `mw-radius-pill` - 999px, passed through the radius scale like `full`
+- `mw-field-short`, `-medium`, `-long` - a field as wide as what goes in (11 / 16 / 24rem), on the field or on a control alone
+- `mw-form-row` - fields side by side at their own widths; on a phone short ones share a line, longer ones take one each
+- `mw-field-inline` - label and control on one line, hint and error under both; a phone stacks it
+- `mw-form-actions-sticky` (+ `mw-form-actions-dirty`) - the save row pinned to the foot of the screen, above an action bar; dirty adds a warning frame and a dot before the note
+- `mw-choice` (+ `-title`, `-desc`) - a radio or checkbox as a card, chosen by the checked input or `mw-selected`
+- `mw-list-divided` - rows with a rule between them, flush at top and bottom
+- `mw-link-stretched`, `mw-above-link` - the whole card as the link's hit area, the focus ring around the card; anything else clickable climbs above it
+- `--mw-grid-min` on the auto grids, and `mw-grid-fit` - three tiles on a row built for five share the row instead of leaving empty tracks
+- `mw-panel-edge-muted`
+- `--mw-checkbox-check-color` - the tick, settable on any ancestor; for a primary as light as the field
+- slider: `data-suffix` on `mw-slider-value` - a scale with ends of its own instead of `/10`
+- `--mw-series-1` to `-8`, `--mw-series-other`, `--mw-chart-grid`, `--mw-chart-axis` - chart colours in a fixed order, stepped per theme and checked for colour vision deficiency
+- `--mw-space-0` to `-14` - the spacing scale as custom properties for an application's own styles; read them, the classes keep their compiled values
+- `mw-item-list-menu`: `mw-active` or `aria-current` marks the row whose content is showing; a row written as `<button>` or `<a>` keeps the separator, not the button look
+- `--mw-toast-top-reserve` - the counterpart of `--mw-action-bar-reserve`: the room a fixed `mw-header` or an app topbar takes at the top, set on the toast stack by itself
+
+### Changed
+
+- app shell: `mw-app-main` sets `--mw-header-height` to its topbar, so a sticky page header pins under it - and to 0 without one
+- app shell: below `lg` the bottom toasts rise above `mw-app-tabbar`
+- toasts at the top (`-top-right`, `-top-center`, the bare stack, the full-width one on a phone) start under a fixed header or an app topbar instead of on it
+- kanban: column count and empty note in the text colour - muted fell under 4.5:1 on the grey board
+- a bare `<summary>` gets the pointer
+
+### Fixed
+
+- `mw-app-nav-title` squeezed to nothing when the nav overflowed
+- text selected in a field takes the field's colours - a light field in a dark theme selected into white on white
+
 ## [6.16.0] - 2026-10-20
 
 ### Added

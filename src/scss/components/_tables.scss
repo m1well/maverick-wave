@@ -127,7 +127,7 @@
     th,
     td {
       padding: spacing('1') spacing('2');
-      font-size: font-size('2xs');
+      font-size: font-size('xs');
     }
 
     @include media-up('sm') {
@@ -230,6 +230,34 @@
     &:first-child {
       box-shadow: inset 3px 0 0 var(--mw-primary-text-color);
     }
+  }
+
+  // A row that means something - the reader's own line, a deadline, an entry
+  // that is out - carries a tone on its cells and an edge on the first, like
+  // the selected row. Secondary is the one for "mine": the hover is primary,
+  // and the own row must not look like the one under the pointer.
+  $_mw-row-tones: (
+    'primary': '',
+    'secondary': '',
+    'success': 'info-',
+    'warning': 'info-',
+    'danger': 'info-',
+    'info': 'info-',
+  );
+
+  @each $name, $infix in $_mw-row-tones {
+    .mw-table tr.mw-row-#{$name} > td {
+      background: var(--mw-#{$name}-#{$infix}background);
+
+      &:first-child {
+        box-shadow: inset 3px 0 0 var(--mw-#{$name}-text-color);
+      }
+    }
+  }
+
+  // The row that is out of it - retired, archived - stays readable and steps back
+  .mw-table tr.mw-row-muted > td {
+    color: var(--mw-text-muted-color);
   }
 
   // After the table in the markup, so the counter has seen every row first
