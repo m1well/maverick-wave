@@ -10,6 +10,10 @@
     &[aria-expanded='true'] {
       @content;
     }
+
+    @at-root details[open] > #{&} {
+      @content;
+    }
   }
 
   @mixin _open-content {
@@ -18,6 +22,10 @@
     }
 
     @at-root .mw-accordion-header[aria-expanded='true'] + #{&} {
+      @content;
+    }
+
+    @at-root details[open] > #{&} {
       @content;
     }
   }
@@ -79,6 +87,17 @@
 
       &:hover {
         background: var(--mw-primary-background-hover);
+      }
+
+      // As the <summary> of a <details> item the browser opens and closes the
+      // panel, announces it and takes the keyboard - no script at all. Only
+      // its marker has to go; `details[open]` is the state.
+      &:is(summary) {
+        list-style: none;
+
+        &::-webkit-details-marker {
+          display: none;
+        }
       }
 
       // Markup from before the button: the header carries the type now, the
@@ -146,6 +165,20 @@
 
         scrollbar-width: thin;
         scrollbar-color: var(--mw-primary-color-hover) var(--mw-card-background);
+      }
+    }
+  }
+
+  // A <details> item opens from the shut row: the browser renders the panel
+  // only once `open` is set, and without a starting value it would simply
+  // appear. Closing stays a jump - the content is gone before anything can run.
+  @starting-style {
+    details[open] > .mw-accordion-content {
+      grid-template-rows: 0fr;
+
+      > .mw-accordion-content-inner {
+        padding-block: 0;
+        border-top-width: 0;
       }
     }
   }

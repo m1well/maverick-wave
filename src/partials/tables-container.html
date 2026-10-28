@@ -443,3 +443,50 @@
     </table>
   </div>
 </div>
+
+<h3 class="mw-mb-4 mw-mt-6">Row tones</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-row-*</code> on a row that means something: the reader's own line in
+  the standings, a deadline, a warning. A tone on the cells and an edge on the
+  first, like the selected row. Secondary is the one for "mine" - the hover is
+  primary, and the own row must not look like the one under the pointer.
+  <code>mw-row-muted</code> greys a row that is out of it.
+</p>
+<div class="mw-table-responsive">
+  <table class="mw-table mw-table-hover">
+    <thead>
+      <tr>
+        <th>Pos</th>
+        <th>Team</th>
+        <th class="mw-text-numeric">Points</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Harbourline Racing</td>
+        <td class="mw-text-numeric">86</td>
+        <td></td>
+      </tr>
+      <tr class="mw-row-secondary">
+        <td>2</td>
+        <td>Your team</td>
+        <td class="mw-text-numeric">79</td>
+        <td><span class="mw-tag mw-tag-secondary">You</span></td>
+      </tr>
+      <tr class="mw-row-warning">
+        <td>3</td>
+        <td>Kontor Nord</td>
+        <td class="mw-text-numeric">61</td>
+        <td>Sponsor target at risk</td>
+      </tr>
+      <tr class="mw-row-muted">
+        <td>4</td>
+        <td>Bäckerei Lind</td>
+        <td class="mw-text-numeric">12</td>
+        <td>Retired</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -28,6 +28,31 @@
     return true;
   }
 
+  // What the script labels itself, in the page's language: German, else English
+  const TEXT = /^de\b/i.test(document.documentElement.lang)
+    ? {
+        language: 'Sprache',
+        slide: 'Zu Bild',
+        image: 'Zu Bild',
+        previousImage: 'Vorheriges Bild',
+        nextImage: 'Nächstes Bild',
+        imageViewer: 'Bildbetrachter',
+        close: 'Schließen',
+        previous: 'Zurück',
+        next: 'Weiter',
+      }
+    : {
+        language: 'Language',
+        slide: 'Go to slide',
+        image: 'Go to image',
+        previousImage: 'Previous image',
+        nextImage: 'Next image',
+        imageViewer: 'Image viewer',
+        close: 'Close',
+        previous: 'Previous',
+        next: 'Next',
+      };
+
   // Blocked storage (all cookies blocked, a sandboxed iframe) throws on access
   const storage = {
     get(key) {
@@ -197,7 +222,12 @@
             triggerFlag.className = itemFlag.className;
           }
 
-          if (summary) summary.setAttribute('aria-label', 'Language: ' + label);
+          if (summary) {
+            summary.setAttribute(
+              'aria-label',
+              TEXT.language + ': ' + label + ' (' + lang.toUpperCase() + ')'
+            );
+          }
 
           languageSwitch.dispatchEvent(
             new CustomEvent('mw-language-change', {
@@ -394,7 +424,7 @@
         const dot = document.createElement('button');
         dot.type = 'button';
         dot.className = 'mw-gallery-dot' + (i === 0 ? ' mw-active' : '');
-        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.setAttribute('aria-label', TEXT.slide + ' ' + (i + 1));
         dot.addEventListener('click', () => goToSlide(i));
         dotsBox.appendChild(dot);
       }
@@ -545,12 +575,12 @@
 
     const prev = iconButton(
       'mw-overlay-btn mw-portrait-gallery-prev',
-      'Previous image',
+      TEXT.previousImage,
       'prev'
     );
     const next = iconButton(
       'mw-overlay-btn mw-portrait-gallery-next',
-      'Next image',
+      TEXT.nextImage,
       'next'
     );
     const dots = document.createElement('div');
@@ -563,7 +593,7 @@
       const dot = document.createElement('button');
       dot.type = 'button';
       dot.className = 'mw-portrait-gallery-dot';
-      dot.setAttribute('aria-label', 'Go to image ' + (i + 1));
+      dot.setAttribute('aria-label', TEXT.image + ' ' + (i + 1));
       dot.addEventListener('click', () => track.scrollTo({ left: i * step() }));
       dots.appendChild(dot);
     });
@@ -627,23 +657,23 @@
   function createLightbox() {
     const dialog = document.createElement('dialog');
     dialog.className = 'mw-lightbox';
-    dialog.setAttribute('aria-label', 'Image viewer');
+    dialog.setAttribute('aria-label', TEXT.imageViewer);
 
     const bar = document.createElement('div');
     bar.className = 'mw-lightbox-bar';
     const prev = iconButton(
       'mw-overlay-btn mw-lightbox-prev',
-      'Previous image',
+      TEXT.previousImage,
       'prev'
     );
     const next = iconButton(
       'mw-overlay-btn mw-lightbox-next',
-      'Next image',
+      TEXT.nextImage,
       'next'
     );
     const close = iconButton(
       'mw-overlay-btn mw-lightbox-close',
-      'Close',
+      TEXT.close,
       'close'
     );
     close.autofocus = true;
@@ -743,8 +773,8 @@
     const frames = Array.from(
       reel.querySelectorAll(':scope > img, :scope > video')
     );
-    const back = iconButton('mw-story-reel-prev', 'Previous', 'prev');
-    const forward = iconButton('mw-story-reel-next', 'Next', 'next');
+    const back = iconButton('mw-story-reel-prev', TEXT.previous, 'prev');
+    const forward = iconButton('mw-story-reel-next', TEXT.next, 'next');
     const pause = reel.querySelector('.mw-story-reel-pause input');
     const close = reel.querySelector('[popovertargetaction="hide"]');
     // The popover focuses it on open, so the arrow keys reach the reel at once
@@ -1267,6 +1297,9 @@
   function initAccordions(root) {
     const accordionHeaders = root.querySelectorAll('.mw-accordion-header');
     accordionHeaders.forEach((header) => {
+      // A <summary> is opened by the browser; a second toggle here would shut
+      // it again in the same click
+      if (header.tagName === 'SUMMARY') return;
       if (!fresh(header)) return;
       // A header written as a <button> announces whether its panel is open.
       // Only when the markup says so - setting it on a <div> without a role

@@ -155,4 +155,9 @@
       border-left: 3px solid var(--mw-#{$name}-text-color);
     }
   }
+
+  // Done or archived: the edge stays, so the panel lines up with its neighbours
+  .mw-panel-edge-muted {
+    border-left: 3px solid var(--mw-border);
+  }
 }

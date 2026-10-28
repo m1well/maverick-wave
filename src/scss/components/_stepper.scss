@@ -66,7 +66,7 @@
     }
 
     &-label {
-      font-size: font-size('2xs');
+      font-size: font-size('xs');
       color: var(--mw-text-muted-color);
       text-align: center;
       line-height: 1.2;
@@ -78,16 +78,9 @@
         font-weight: font-weight('medium');
       }
 
+      // The check in the indicator carries the state; small green text misses 4.5:1
       &.mw-done {
-        color: var(--mw-success-text-color);
-      }
-    }
-
-    // The step labels follow the strip's own width, not the window's - a
-    // stepper in a narrow card keeps the small label on a wide desktop.
-    @container mw-stepper (width >= #{breakpoint('sm')}) {
-      &-label {
-        font-size: font-size('xs');
+        color: var(--mw-text-color);
       }
     }
   }

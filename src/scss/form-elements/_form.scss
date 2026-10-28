@@ -88,6 +88,46 @@
           text-align: left;
         }
       }
+
+      // Pinned to the foot of the screen, so a long form keeps its save button
+      // in reach - above an action bar, if one holds the edge
+      &-sticky {
+        position: sticky;
+        bottom: calc(var(--mw-action-bar-reserve, 0px) + #{spacing('4')});
+        z-index: z-index('menu') - 1;
+        align-items: center;
+        padding: spacing('4') spacing('5');
+        border: 1px solid var(--mw-border-accent);
+        border-radius: radius('md');
+        // Over the page and not over nothing: whatever a surface variant does
+        // to the card tone, text scrolling under the bar must not show through
+        background: linear-gradient(
+            var(--mw-card-background),
+            var(--mw-card-background)
+          )
+          var(--mw-page-background);
+        box-shadow: var(--mw-elevation-4);
+
+        .mw-actions-note {
+          flex: 1 1 12rem;
+          text-align: left;
+        }
+      }
+
+      // Unsaved changes: the frame and a dot in front of the note
+      &-dirty {
+        border-color: var(--mw-warning-color);
+
+        .mw-actions-note::before {
+          content: '';
+          display: inline-block;
+          width: 0.55rem;
+          height: 0.55rem;
+          margin-right: spacing('2');
+          border-radius: radius('full');
+          background: var(--mw-warning-color);
+        }
+      }
     }
 
     &-element-error {
@@ -165,6 +205,81 @@
     }
   }
 
+  // Sized for what goes in: a date or an amount, a name, an email address.
+  // On the field or on a control alone; a field without one takes the whole
+  // width, which is right for free text.
+  .mw-field-short {
+    --_mw-field-width: 11rem;
+  }
+
+  .mw-field-medium {
+    --_mw-field-width: 16rem;
+  }
+
+  .mw-field-long {
+    --_mw-field-width: 24rem;
+  }
+
+  :is(.mw-field-short, .mw-field-medium, .mw-field-long):not(.mw-field-inline) {
+    max-width: var(--_mw-field-width);
+  }
+
+  // Label and control on one line, hint and error under both: a settings list
+  // whose values are compared down one column. A phone stacks it like any field.
+  .mw-field-inline {
+    @include media-up('sm') {
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, var(--_mw-field-width, 16rem));
+      align-items: center;
+      column-gap: spacing('5');
+
+      > .mw-field-hint,
+      > .mw-field-error {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  // Fields side by side while there is room, each at its own width. On a phone
+  // short ones share a line, longer ones take a line of their own.
+  .mw-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: spacing('4') spacing('5');
+    min-width: 0;
+
+    > * {
+      flex: 1 1 16rem;
+      min-width: 0;
+    }
+
+    // Descendants, not children: in a SPA a component host often sits between
+    // the row and the field, with mw-d-contents on it
+    .mw-field-short {
+      flex: 1 1 7.5rem;
+    }
+
+    :is(.mw-field-medium, .mw-field-long) {
+      flex: 1 1 100%;
+      max-width: none;
+    }
+
+    @include media-up('sm') {
+      .mw-field-medium {
+        flex: 1 1 10.5rem;
+        max-width: var(--_mw-field-width);
+      }
+
+      .mw-field-long {
+        flex: 2 1 13rem;
+        max-width: var(--_mw-field-width);
+      }
+    }
+  }
+
   // The same look from the browser's own validation, so nothing has to toggle
   // mw-field-has-error. `:user-invalid` and never `:invalid`, which is true from
   // page load and would mark an empty required field before anyone typed.
@@ -176,5 +291,28 @@
 
   .mw-field:has(> :is(#{$invalid-states})) > .mw-field-hint {
     color: var(--mw-danger-text-color);
+  }
+
+  // A group of controls under one legend, without the browser's box around
+  // it: the surface the group sits on is the border. The legend floats so it
+  // behaves like any block instead of the rendered legend the browser cuts
+  // into a border that is no longer there.
+  .mw-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    > legend {
+      @extend .mw-field-label;
+      float: left;
+      width: 100%;
+      padding: 0;
+      margin-bottom: spacing('2');
+    }
+
+    > legend + * {
+      clear: both;
+    }
   }
 }

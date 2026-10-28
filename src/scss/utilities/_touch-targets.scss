@@ -7,16 +7,11 @@
   @include touch-context {
     // Padding and line-height add up to ~35px, under the 44px a thumb needs. Only
     // the height grows: the padding sets the label's relationship to the edges.
+    // The small size included: under a thumb it is the 44px target all the same
     .mw-btn {
       min-height: 2.75rem;
     }
 
-    .mw-btn-sm {
-      min-height: 2.5rem;
-    }
-
-    .mw-input-sm,
-    .mw-select-sm,
     .mw-textarea-sm {
       min-height: 2.5rem;
     }
@@ -24,7 +19,9 @@
     // The base fields sit at 2.125rem from the control scale, which is right under
     // a pointer and short of a thumb. Same floor as the button beside them.
     .mw-input,
-    .mw-select {
+    .mw-input-sm,
+    .mw-select,
+    .mw-select-sm {
       min-height: 2.75rem;
     }
 
@@ -95,6 +92,10 @@
 
     .mw-calendar-day {
       min-height: 44px;
+    }
+
+    .mw-theme-toggle {
+      @include hit-area(7px);
     }
 
     // A gallery dot is 9px here - the target got *smaller* exactly where the

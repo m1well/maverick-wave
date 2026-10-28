@@ -123,7 +123,8 @@
     border-radius: radius('xl');
     background: var(--mw-gray-background);
     border: 1px solid var(--mw-border);
-    color: var(--mw-text-muted-color);
+    // Muted ink sinks under 4.5:1 on the grey board in both themes
+    color: var(--mw-text-color);
     font-size: font-size('xs');
     font-weight: font-weight('medium');
     font-variant-numeric: tabular-nums;
@@ -332,7 +333,7 @@
     justify-content: center;
     flex: 1;
     padding: spacing('5') spacing('3');
-    color: var(--mw-text-muted-color);
+    color: var(--mw-text-color);
     font-size: font-size('sm');
     text-align: center;
   }

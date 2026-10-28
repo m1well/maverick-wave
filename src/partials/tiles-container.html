@@ -245,3 +245,40 @@
     </div>
   </div>
 </div>
+
+<h3 class="mw-card-title mw-mt-8 mw-mb-4">Selectable tiles</h3>
+<p class="mw-text-muted mw-text-measure">
+  A tile that is a choice - one option of several.
+  <code>aria-pressed="true"</code> (or <code>mw-selected</code>) rings it inside
+  the border, and the <code>mw-tile-check</code> in the corner shows on the
+  chosen one. The check sits in every tile of the set.
+</p>
+<div class="mw-tiles" role="group" aria-label="Paint" data-tile-choice>
+  <button type="button" class="mw-tile mw-tile-sm" aria-pressed="true">
+    <span class="mw-tile-check" aria-hidden="true"></span>
+    <h3 class="mw-tile-header">Matte black</h3>
+    <div class="mw-tile-body"><p>The stock look, nothing to pay.</p></div>
+  </button>
+  <button type="button" class="mw-tile mw-tile-sm" aria-pressed="false">
+    <span class="mw-tile-check" aria-hidden="true"></span>
+    <h3 class="mw-tile-header">Racing stripes</h3>
+    <div class="mw-tile-body"><p>Two stripes over the bonnet.</p></div>
+  </button>
+  <button type="button" class="mw-tile mw-tile-sm" aria-pressed="false">
+    <span class="mw-tile-check" aria-hidden="true"></span>
+    <h3 class="mw-tile-header">Chrome</h3>
+    <div class="mw-tile-body"><p>Mirror finish, shows every scratch.</p></div>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll('[data-tile-choice] .mw-tile').forEach((tile) => {
+    tile.addEventListener('click', () => {
+      tile.parentElement
+        .querySelectorAll('.mw-tile')
+        .forEach((other) =>
+          other.setAttribute('aria-pressed', String(other === tile))
+        );
+    });
+  });
+</script>

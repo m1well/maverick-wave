@@ -121,7 +121,7 @@ $_radius-sharp-base: 5px;
 // Emitted through --mw-radius-scale, so one number retunes every rounded box in
 // the framework at once - 0 squares them off, above 1 rounds them further, and
 // the corner arc follows. 'none' and 'full' pass through: an explicit 0 stays
-// 0, and a circle has to stay a circle. A length instead of a key takes the
+// 0, and a circle has to stay a circle - and so does a pill. A length instead of a key takes the
 // same scale and floor, for the few values that sit off the scale.
 @function radius($key) {
   $value: $key;
@@ -130,7 +130,7 @@ $_radius-sharp-base: 5px;
     $value: map.get(v.$radius, $key);
   }
 
-  @if $key == 'none' or $key == 'full' {
+  @if $key == 'none' or $key == 'full' or $key == 'pill' {
     @return $value;
   }
 

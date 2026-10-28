@@ -68,3 +68,5 @@
 @forward 'timelines';
 @forward 'toasts';
 @forward 'tooltip';
+// Last: it paints into the background of the surfaces above
+@forward 'edge';

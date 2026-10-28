@@ -93,6 +93,42 @@ reactive form control.
 > `mw-field-has-error` stays for a control the framework cannot see, such as a
 > custom component.
 
+### Fieldset
+
+`mw-fieldset` on a `<fieldset>` drops the browser's box and renders the
+`<legend>` like a `mw-field-label` - for a group of controls that answer one
+question (which unit, which colour) where the card around them is the border:
+
+```html
+<fieldset class="mw-fieldset">
+  <legend>Session</legend>
+  <div class="mw-radio-group">...</div>
+</fieldset>
+```
+
+### Field widths
+
+A control fills its field, and the field fills its column - right for free
+text, wrong for a date or an amount. `mw-field-short` (11rem), `-medium`
+(16rem) and `-long` (24rem) cap the width at what goes in. They work on the
+`mw-field` or on a bare control:
+
+```html
+<div class="mw-field mw-field-short">
+  <label class="mw-field-label" for="amount">Amount</label>
+  <input id="amount" class="mw-input mw-text-currency" inputmode="decimal" />
+</div>
+```
+
+Not `-sm` / `-lg`: those already mean a smaller or larger control.
+
+### Label beside the control
+
+`mw-field-inline` puts label and control on one line from `sm` up, with hint
+and error under both - a settings or price list whose values are compared down
+one column. The control column is 16rem, or the width class on the same field
+(`mw-field mw-field-inline mw-field-short`). A phone stacks it like any field.
+
 ## Form layout
 
 ```html
@@ -128,8 +164,27 @@ reactive form control.
   100% - login forms).
   `mw-form-actions-hint` is the old name for the note and still styled, but new
   markup should use `mw-actions-note`.
+- `mw-form-actions-sticky` pins the row to the foot of the screen on an opaque,
+  framed bar, above an `mw-action-bar` if there is one - a long form keeps its
+  save button in reach. The note moves left of the buttons. Add
+  `mw-form-actions-dirty` while there are unsaved changes: a warning frame and a
+  dot before the note.
 - Put multi-column layouts inside a group with `mw-grid-2` etc. and let a field
   span everything with `style="grid-column: 1 / -1"`.
+- `mw-form-row` puts fields side by side, each at its width class, and wraps.
+  On a phone short fields share a line and medium or long ones take one each -
+  a start and an end time next to each other, the date above them:
+
+  ```html
+  <div class="mw-form-row">
+    <div class="mw-field mw-field-medium">...date...</div>
+    <div class="mw-field mw-field-short">...from...</div>
+    <div class="mw-field mw-field-short">...to...</div>
+  </div>
+  ```
+
+  The width classes are found as descendants, so a component host in between
+  works with `mw-d-contents` on it (pitfall 14).
 
 ## Text inputs
 
@@ -309,6 +364,9 @@ children matters.
   `required` turn the box border red
 - Under forced colours the tick, the radio dot and the toggle keep system
   colours, and keyboard focus becomes an outline
+- The tick is `--mw-primary-color`. Where the primary is as light as the field,
+  set `--mw-checkbox-check-color` (on `:root` or any ancestor), for example to
+  `var(--mw-form-elements-color)`; the colour variants still win
 - Group: `mw-checkbox-group` (column), `mw-checkbox-group-inline` (row)
 - With a heading and a description use `mw-checkbox-content` containing
   `mw-checkbox-header` + `mw-checkbox-label` - see the checkbox item list in
@@ -332,6 +390,30 @@ Sizes `mw-radio-sm`, `-lg`; colours `mw-radio-primary`, `-secondary`,
 `-success`, `-warning`, `-danger`, `-info`; `disabled` on the input (or
 `mw-radio-disabled` on the label); invalid states as for the checkbox; groups
 `mw-radio-group`, `mw-radio-group-inline`.
+
+## Choice card
+
+A radio or checkbox as a card, for choices that need a sentence each - a plan,
+a design, a delivery option. The card is the `<label>`, so all of it is the hit
+area; the native input stays a direct child and sits on the title's line.
+
+```html
+<div class="mw-grid-auto" style="--mw-grid-min: 14rem">
+  <label class="mw-choice">
+    <input type="radio" name="motion" value="calm" checked />
+    <span class="mw-choice-title">Calm</span>
+    <span class="mw-choice-desc">Little movement, clear surfaces.</span>
+  </label>
+  ...
+</div>
+```
+
+- Chosen by the checked input, no class needed. `mw-selected` is for a choice
+  the application tracks itself.
+- The focus ring goes round the card; `disabled` on the input (or a disabled
+  `<fieldset>` around it) dims the card.
+- Anything after the title - a preview image, a price - lands in the text
+  column.
 
 ## Toggle
 
@@ -369,7 +451,8 @@ Sizes `mw-toggle-sm`, `-lg`; colours `mw-toggle-primary`, `-secondary`,
 ```
 
 - The badge prints `data-value`: `mw-slider-numeric` appends `/10`,
-  `mw-slider-percent` appends `%`.
+  `mw-slider-percent` appends `%`. A scale with ends of its own sets
+  `data-suffix` (`data-suffix=" km"`); `data-suffix=""` prints the bare number.
 - The filled part of the track comes from the custom property `--value` on the
   input (`style="--value: 30%"`).
 - Both `data-value` and `--value` are set by the shipped JS on `input`. In a SPA

@@ -171,6 +171,58 @@
     }
   }
 
+  // Outline: the border names the tone and the surface stays the page's - a
+  // label that classifies, next to one that judges. After the colours, so it
+  // takes their border and drops their fill.
+  .mw-tags-outline .mw-tags-item,
+  .mw-tag-outline {
+    background: transparent;
+  }
+
+  // A dot before the text, in the tag's ink - a state that is a light, not a
+  // word. A child and not ::before, which the pressed chip uses for its tick.
+  .mw-tag-dot {
+    flex-shrink: 0;
+    width: 0.5em;
+    height: 0.5em;
+    margin-right: spacing('2');
+    border-radius: radius('full');
+    background: currentColor;
+  }
+
+  @each $name, $infix in $_mw-tag-colors {
+    .mw-tag-#{$name} .mw-tag-dot,
+    .mw-tags-#{$name} .mw-tag-dot {
+      background: var(--mw-#{$name}-text-color);
+    }
+  }
+
+  // The dot that is live - a race on, a job running. The ring pulses outward
+  // and fades, the dot underneath never moves, like mw-badge-pulse.
+  .mw-tag-pulse .mw-tag-dot {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: inherit;
+      animation: mw-tag-pulse motion(1.8s) var(--mw-ease-out) infinite;
+    }
+  }
+
+  @keyframes mw-tag-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
   // The field stays light in both themes - the theme's ink would vanish on it
   .mw-input-tags .mw-tags-item {
     color: var(--mw-form-elements-color);

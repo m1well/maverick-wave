@@ -1,0 +1,50 @@
+@use '../abstracts' as *;
+
+// Last of the components on purpose: the stripe is painted into the background
+// of whatever surface carries it, and the surface's own `background` has to be
+// in the cascade before it.
+@layer mw.components {
+  // The edge carries the state - the reader's own card, the step that is due,
+  // the phase a board is in - and a word beside it says which, so nobody has
+  // to tell two tones apart. Painted and not a border: a border runs into the
+  // round corners of the surface signature and turns into an arc there.
+  //
+  // `--mw-edge-color` is the ink. The colour classes set it; an application
+  // sets it inline for a tone of its own (`style="--mw-edge-color: var(--phase)"`).
+  .mw-edge {
+    --mw-edge-color: var(--mw-primary-text-color);
+
+    background-image:
+      linear-gradient(var(--mw-edge-color), var(--mw-edge-color)),
+      linear-gradient(
+        color-mix(in srgb, var(--mw-edge-color) 10%, transparent),
+        color-mix(in srgb, var(--mw-edge-color) 10%, transparent)
+      );
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size:
+      3px 100%,
+      100% 100%;
+  }
+
+  // The ink tone, not the fill - a 3px line has to hold 3:1 against the card
+  @each $name, $col in $semantic-colors {
+    .mw-edge-#{$name} {
+      @extend .mw-edge;
+      --mw-edge-color: var(--mw-#{$name}-text-color);
+    }
+  }
+
+  .mw-edge-muted {
+    @extend .mw-edge;
+    --mw-edge-color: var(--mw-text-muted-color);
+  }
+
+  // Along the top instead, for a board whose phase sits above its content
+  .mw-edge-top {
+    @extend .mw-edge;
+    background-size:
+      100% 3px,
+      100% 100%;
+  }
+}
