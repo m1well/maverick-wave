@@ -28,25 +28,29 @@
   }
 
   // A link that leads on: an arrow after the label that edges out under the
-  // pointer. A mask, so it takes the link's colour and needs no icon set;
-  // inline-block, so the underline of link-look() leaves it out.
+  // pointer, a mask in the link's colour. An inline box around a word joiner,
+  // not an inline-block - a label that fills its line would send that down
+  // alone. The mask tile spans the whole box, as WebKit paints an inline box
+  // outside a no-repeat tile, and it moves by offset, as translate skips inlines.
   .mw-link-arrow::after {
-    content: '';
-    display: inline-block;
-    width: 0.75em;
-    height: 0.75em;
-    margin-left: 0.3em;
-    vertical-align: -0.05em;
+    content: '\2060';
+    position: relative;
+    top: 0;
+    left: 0;
+    padding-left: 1.05em;
     background: currentColor;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E")
-      center / contain no-repeat;
-    transition: translate var(--mw-duration-fast) var(--mw-ease-out);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 33.6 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16.6 17 26.6 7M17.6 7h9v9'/%3E%3C/svg%3E")
+      0 0 / 100% 100%;
+    transition:
+      top var(--mw-duration-fast) var(--mw-ease-out),
+      left var(--mw-duration-fast) var(--mw-ease-out);
   }
 
   .mw-link-arrow {
     @include hover-move {
       &::after {
-        translate: 0.15em -0.15em;
+        top: -0.15em;
+        left: 0.15em;
       }
     }
   }
