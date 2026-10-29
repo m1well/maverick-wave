@@ -395,7 +395,7 @@ $_topbar-height: 3.5rem;
     transition: var(--mw-transition-fast);
     @include tappable;
     @include touch-floor {
-      min-width: 2.75rem;
+      min-width: $touch-target;
     }
     @include focus-ring;
 

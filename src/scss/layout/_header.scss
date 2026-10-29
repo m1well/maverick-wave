@@ -1,8 +1,5 @@
 @use '../abstracts' as *;
 
-// Shared by the three controls in .mw-header-actions
-$_control-size: 40px;
-
 // The surface signature at link size - the surface's 20px arc would close into a
 // frame on a box this short
 $_mark-round: radius('lg');
@@ -51,8 +48,8 @@ $_mark-round: radius('lg');
     // Dark in both themes, fixed light included, where no light-dark() flips
     --mw-focus-ring-color: var(--mw-header-navbar-list-active-color);
     @include island-surface;
-    // The height comes from min-height; the padding only has to let a control
-    // grown to its 2.75rem touch floor fit inside it
+    // The height comes from min-height; the padding only has to let the 42px
+    // logo fit inside it
     padding: spacing('2') var(--mw-header-pad);
     transition: var(--mw-transition);
     display: flex;
@@ -122,12 +119,11 @@ $_mark-round: radius('lg');
       display: flex;
       align-items: center;
       justify-content: center;
-      height: $_control-size;
-      width: $_control-size;
+      height: $header-control-size;
+      width: $header-control-size;
       flex-shrink: 0;
 
       @include tappable;
-      @include touch-floor;
 
       &:hover:not(:disabled) {
         background: var(--mw-primary-color-hover);
@@ -157,8 +153,8 @@ $_mark-round: radius('lg');
       outline: none;
       border-radius: radius('md');
       transition: var(--mw-transition);
-      height: $_control-size;
-      width: $_control-size;
+      height: $header-control-size;
+      width: $header-control-size;
       display: none;
       position: relative;
       flex-shrink: 0;
@@ -168,7 +164,6 @@ $_mark-round: radius('lg');
       user-select: none;
 
       @include tappable;
-      @include touch-floor;
 
       &:hover:not(:disabled) {
         background: var(--mw-primary-color-hover);
@@ -474,7 +469,9 @@ $_mark-round: radius('lg');
     &-link {
       position: relative;
       display: block;
-      padding: spacing('2') spacing('3');
+      // Room between the links in the padding, not a gap: the mark would jump
+      // back to the current page across every gap the pointer crosses
+      padding: spacing('2') calc(#{spacing('3')} + 1px);
       @include navbar-mark-shape;
       font-weight: font-weight('medium');
       // A step under the body text, which is what pays for the padding the mark
@@ -669,8 +666,8 @@ $_mark-round: radius('lg');
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: $_control-size;
-    width: $_control-size;
+    height: $header-control-size;
+    width: $header-control-size;
     padding: spacing('0');
     background: transparent;
     border: 1px solid var(--mw-header-border);
@@ -681,11 +678,6 @@ $_mark-round: radius('lg');
     flex-shrink: 0;
 
     @include tappable;
-
-    // Round at the grown height too, not an upright oval
-    @include touch-floor {
-      min-width: 2.75rem;
-    }
 
     &:hover:not(:disabled) {
       background: var(--mw-primary-background-hover);

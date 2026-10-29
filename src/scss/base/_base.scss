@@ -142,14 +142,14 @@
     --mw-header-inset: #{$header-inset};
 
     // Read by the anchor offset of anything the sticky section nav can cover.
-    // The strip at its tallest: a 2.75rem button under a thumb plus its two
-    // 0.5rem paddings. Rounded up rather than down - a pointer gets 2px of
-    // slack, and the offset may overshoot but must not undershoot.
+    // The strip at its tallest: a 42px button under a thumb plus its two
+    // 0.5rem paddings. Rounded up rather than down - the offset may overshoot
+    // but must not undershoot.
     --mw-section-nav-height: 3.75rem;
 
     // The anchor scroll offset is calculated from it, so a taller ribbon raises
     // this token rather than fighting the offset
-    --mw-announcement-height: 2.7rem;
+    --mw-announcement-height: 2.45rem;
 
     // What each layer of sticky chrome below the header adds to the scroll
     // offset in the reset. A length and not a bare 0 - calc() cannot add a
@@ -160,12 +160,12 @@
     // On :root, so an item, an accordion or the page can set it; `none` lifts the cap
     --mw-accordion-max-height: 500px;
 
-    // Fluid rather than stepped: ~24px at 375px up to 64px, where the 1200px cap
-    // takes over. Stepping at a breakpoint makes the container jump *backwards*
-    // there, because the gutter grows faster than the viewport does.
+    // Fluid rather than stepped: 93% of a phone's width up to 64px, where the
+    // 1200px cap takes over. Stepping at a breakpoint makes the container jump
+    // *backwards* there, because the gutter grows faster than the viewport does.
     // max() against the safe-area insets keeps a notched phone clear of the cutout.
     --mw-container-gutter: max(
-      clamp(1rem, 4.2vw + 0.5rem, 4rem),
+      clamp(0.75rem, 5.4vw - 0.45rem, 4rem),
       env(safe-area-inset-left, 0px),
       env(safe-area-inset-right, 0px)
     );

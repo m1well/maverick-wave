@@ -33,7 +33,7 @@
     justify-content: center;
     gap: spacing('4');
     min-height: var(--mw-announcement-height);
-    padding: spacing('1') spacing('4');
+    padding: spacing('1') 0.625rem;
     font-size: font-size('sm');
     text-align: center;
     color: inherit;
@@ -97,7 +97,7 @@
   // picking the component brings the whole behaviour along.
   @include media-down('sm') {
     :root {
-      --mw-announcement-height: 3.4rem;
+      --mw-announcement-height: 3.15rem;
     }
   }
 

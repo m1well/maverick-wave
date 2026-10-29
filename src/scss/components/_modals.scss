@@ -79,7 +79,7 @@
     .mw-modal-footer .mw-btn {
       flex: 1 1 auto;
       min-width: 0;
-      min-height: 2.75rem;
+      min-height: $touch-target;
     }
   }
 
@@ -278,8 +278,8 @@
 
     // The one control on the sheet a thumb has to find without looking
     @include media-down('sm') {
-      min-width: 2.75rem;
-      min-height: 2.75rem;
+      min-width: $touch-target;
+      min-height: $touch-target;
     }
   }
 

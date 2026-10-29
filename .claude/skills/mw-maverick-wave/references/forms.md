@@ -23,7 +23,7 @@ padding above it wins, and the control silently leaves the scale - which is
 exactly how a button once ended up 1.2px taller than the field beside it. So if
 you do override `padding-block` on a control, keep
 `2 x padding + line-height + border` under the height its step allows.
-On a coarse pointer or below 768px every control grows to 2.75rem on its own.
+On a coarse pointer or below 768px every control grows to 42px on its own.
 Retune the whole scale through `--mw-control-height*` / `--mw-control-font*`.
 
 ## The field pattern

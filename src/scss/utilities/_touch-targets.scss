@@ -5,11 +5,21 @@
   // sizes are right under a pointer and too small under a thumb.
   // Loaded last, so these win without extra specificity.
   @include touch-context {
-    // Padding and line-height add up to ~35px, under the 44px a thumb needs. Only
+    // Padding and line-height add up to ~35px, under the 42px a thumb needs. Only
     // the height grows: the padding sets the label's relationship to the edges.
-    // The small size included: under a thumb it is the 44px target all the same
+    // The small size included: under a thumb it is the 42px target all the same
     .mw-btn {
-      min-height: 2.75rem;
+      min-height: $touch-target;
+    }
+
+    .mw-header {
+      .mw-btn {
+        min-height: $header-control-size;
+      }
+
+      .mw-btn-icon {
+        --mw-btn-icon-size: #{$header-control-size};
+      }
     }
 
     .mw-textarea-sm {
@@ -22,7 +32,7 @@
     .mw-input-sm,
     .mw-select,
     .mw-select-sm {
-      min-height: 2.75rem;
+      min-height: $touch-target;
     }
 
     .mw-input,
@@ -41,7 +51,7 @@
     .mw-tabs-nav-item {
       display: flex;
       align-items: center;
-      min-height: 2.75rem;
+      min-height: $touch-target;
     }
 
     .mw-segmented-item {
@@ -54,7 +64,7 @@
     .mw-accordion-header,
     .mw-modal-close,
     .mw-breadcrumbs-item a {
-      min-height: 2.75rem;
+      min-height: $touch-target;
       display: flex;
       align-items: center;
     }
@@ -78,8 +88,8 @@
     }
 
     .mw-footer .mw-social-links a {
-      min-width: 2.75rem;
-      min-height: 2.75rem;
+      min-width: $touch-target;
+      min-height: $touch-target;
     }
 
     // A checkbox or radio is tapped by its label as much as by the box, so the
@@ -91,7 +101,7 @@
     }
 
     .mw-calendar-day {
-      min-height: 44px;
+      min-height: $touch-target;
     }
 
     .mw-theme-toggle {
@@ -136,7 +146,7 @@
       position: absolute;
     }
 
-    // Edit and delete on a ticket. The 32px box stays - a 44px one would push
+    // Edit and delete on a ticket. The 32px box stays - a 42px one would push
     // the assignee off the card footer - and the row carries the gap the two
     // grown hit areas need, or they overlap and a tap meant for edit deletes.
     .mw-kanban-card-actions {

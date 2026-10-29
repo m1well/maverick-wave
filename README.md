@@ -23,7 +23,7 @@ The result is a framework that balances utility with simplicity, offering develo
 - Form Elements: Input, Select, Textarea, Checkbox, Radio, Toggle, Input Group, with `mw-field` wrapper pattern for Angular Reactive Forms
 - Utility Classes for spacing, flex, display, typography, text overflow, elevation and aspect ratio
 - A five-step elevation ramp and a motion scale, so every shadow and every transition in the framework comes from one place
-- Mobile as a first-class target: 44px touch targets on a coarse pointer, modals that become bottom sheets, press states on everything, and hover effects that do not latch after a tap
+- Mobile as a first-class target: 42px touch targets on a coarse pointer, modals that become bottom sheets, press states on everything, and hover effects that do not latch after a tap
 - Easy Customization via CSS Custom Properties
 - Built-in Light & Dark Mode - follows the OS by default, switchable per reader
 - SCSS Source Files for advanced customization (Dart Sass, `@use`/`@forward`)
@@ -47,12 +47,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.18.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.19.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.18.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.19.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -455,9 +455,9 @@ They exist on the SCSS path only - the compiled CSS carries none of them.
   phone, each breakpoint adds to it.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
-- `touch-floor($size: 2.75rem)` - that condition plus a `min-height`. Not for a
-  link inside a sentence: WCAG 2.5.8 exempts those, and a `min-height` there
-  pushes the lines of the paragraph apart.
+- `touch-floor($size: $touch-target)` - that condition plus a `min-height`,
+  42px by default. Not for a link inside a sentence: WCAG 2.5.8 exempts those,
+  and a `min-height` there pushes the lines of the paragraph apart.
 - `hit-area($grow: 6px)` - grows the hit area through `::after` without touching
   the silhouette, for a control whose size is the design. Neighbours need a gap
   of at least twice `$grow`, or two hit areas overlap.

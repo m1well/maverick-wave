@@ -301,7 +301,7 @@
     }
 
     .mw-dropdown-item {
-      min-height: 2.75rem;
+      min-height: $touch-target;
       font-size: font-size('base');
     }
   }

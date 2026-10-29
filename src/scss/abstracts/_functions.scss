@@ -156,7 +156,7 @@ $_radius-sharp-base: 5px;
 // same edges. Logo and links stay put while the header docks around them.
 @function island-edge() {
   @return max(
-    calc(var(--mw-header-inset) - #{v.$header-island-reach}),
+    #{v.$header-island-side},
     calc(
       (100% - var(--mw-container-width)) / 2 - var(--mw-header-pad) -
         #{v.$header-island-reach}

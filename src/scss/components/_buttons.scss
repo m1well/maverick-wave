@@ -300,7 +300,7 @@
 
     // The floor a thumb needs, over the visual size above
     @include touch-context {
-      --mw-btn-icon-size: 2.75rem;
+      --mw-btn-icon-size: #{$touch-target};
 
       &.mw-btn-sm {
         --mw-btn-icon-size: 2.5rem;

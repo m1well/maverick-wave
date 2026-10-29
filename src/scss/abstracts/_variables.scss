@@ -103,6 +103,10 @@ $control-height-sm: 1.875rem !default;
 $control-height: 2.125rem !default;
 $control-height-lg: 2.375rem !default;
 
+// What a control grows to under a thumb. 42px, under Apple's 44pt on purpose: at
+// 44 a phone's buttons read as oversized next to the text they belong to.
+$touch-target: 2.625rem !default;
+
 // All three fields share it; buttons stay one step above, because a button
 // carries a label and a field carries what the user typed
 $control-font-sm: 0.8rem !default;
@@ -481,14 +485,18 @@ $header-colors: (
 );
 // The room the header takes from the top of the viewport - island plus the gap
 // above it - so every offset that reads it clears the island without knowing it
-// floats. The island itself is 63px: a 44px touch control + 2 × spacing('2') +
-// 2px border, with room to spare around the 42px logo.
+// floats. The island itself is 63px, with room to spare around the 42px logo.
 $header-height: 77px;
+// Every control in the bar, on a phone too: the touch target would make them
+// taller than the logo. The island's padding around them is the tap slack.
+$header-control-size: 38px;
 // Between the island and the viewport edge
 $header-inset: 14px;
-// How far the island reaches past the page container on either side, and in
-// from the inset where that is closer: room for the links, at the price of the
-// logo standing that much left of the text below it
+// The side gap on a phone, where the page container would put the island past
+// the screen edge
+$header-island-side: 6px;
+// How far the island reaches past the page container on either side: room for
+// the links, at the price of the logo standing that much left of the text below it
 $header-island-reach: 5px;
 // The flat bar under mw-header-bar, at the height it had before the island
 $header-bar-height: 62px;

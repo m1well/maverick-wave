@@ -230,10 +230,11 @@ body {
             the framework hangs under.
           </li>
           <li>
-            <code>touch-floor($size: 2.75rem)</code> - that condition plus a
-            <code>min-height</code>. Not for a link inside a sentence: WCAG
-            2.5.8 exempts those, and a <code>min-height</code> there pushes the
-            lines of the paragraph apart.
+            <code>touch-floor($size: $touch-target)</code> - that condition plus
+            a <code>min-height</code>, 42px by default. Not for a link inside a
+            sentence: WCAG 2.5.8 exempts those, and a
+            <code>min-height</code> there pushes the lines of the paragraph
+            apart.
           </li>
           <li>
             <code>hit-area($grow: 6px)</code> - grows the hit area through
