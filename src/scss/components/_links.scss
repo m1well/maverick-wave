@@ -52,10 +52,12 @@
   }
 
   // Own line: a thumb target. In running text the floor would spread the lines.
+  // Not inline-flex: the arrow would be a flex item of its own, and a label that
+  // wraps leaves it stranded at the far edge instead of after the last word.
   .mw-link-arrow:not(:is(p, li, dd, td, figcaption, label) > *) {
     @include touch-floor {
-      display: inline-flex;
-      align-items: center;
+      display: inline-block;
+      align-content: center;
     }
   }
 

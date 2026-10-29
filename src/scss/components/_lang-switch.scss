@@ -100,5 +100,9 @@
       height: 40px;
       gap: spacing('2');
     }
+
+    .mw-header .mw-lang-switch > summary {
+      height: $header-control-size;
+    }
   }
 }

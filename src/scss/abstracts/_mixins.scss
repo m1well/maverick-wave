@@ -196,7 +196,7 @@
 // WCAG 2.5.8 floor for a control that is a line of text under a pointer and a
 // target under a thumb. Not for a link inside a sentence - those are exempt, and
 // a min-height there pushes the lines of the paragraph apart.
-@mixin touch-floor($size: 2.75rem) {
+@mixin touch-floor($size: v.$touch-target) {
   @include touch-context {
     min-height: $size;
     @content;

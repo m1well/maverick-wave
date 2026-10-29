@@ -280,7 +280,8 @@ none of them survive into the compiled CSS. Full list in `references/theming.md`
   is the default direction, see **Breakpoints** above.
 - `touch-context($bp: 'md')` - coarse pointer _or_ narrow viewport, the condition
   every target-size rule in the framework hangs under.
-- `touch-floor($size: 2.75rem)` - that condition plus a `min-height`.
+- `touch-floor($size: $touch-target)` - that condition plus a `min-height`,
+  42px by default.
 - `hit-area($grow: 6px, $box: 1.5rem)` - grows the hit area through `::after`
   without touching the silhouette. An element carrying a `data-tooltip` owns that
   pseudo for its arrow, so those are skipped and grow to `$box` instead.
@@ -460,10 +461,11 @@ bar) · `mw-w-auto` / `mw-min-w-0` ·
     anchor positioning, `contrast-color()`, `field-sizing`) sits behind
     `@supports` with a complete result without it.
 11. **Touch targets grow on their own.** On `pointer: coarse` or below 768px,
-    `mw-btn` gets a 2.75rem minimum height, `mw-btn-sm`, `mw-input-sm` and
-    `mw-select-sm` the same, `mw-textarea-sm` 2.5rem, a tab 2.75rem, a calendar day
-    44px, `mw-section-btn` 2.75rem, and list rows / menu items / pager pages /
-    accordion headers 2.75rem.
+    `mw-btn` gets a 42px minimum height (`$touch-target`), `mw-btn-sm`,
+    `mw-input-sm` and `mw-select-sm` the same, `mw-textarea-sm` 2.5rem, and a
+    tab, a calendar day, `mw-section-btn`, list rows / menu items / pager pages /
+    accordion headers 42px. Controls in `mw-header` are the exception: they
+    stay at 38px (`$header-control-size`), under the 42px logo.
     `mw-btn-mini` keeps its 18px circle - it sits in tag rows and table cells
     where a bigger one would shift the layout - and grows its _hit area_ to 28px
     via a pseudo-element, and `mw-kanban-action` does the same - its 32px box

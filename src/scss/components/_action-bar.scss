@@ -3,7 +3,7 @@
 // Clear of the home indicator where there is one, the header's gap where not
 $_island-bottom: max(var(--mw-header-inset), env(safe-area-inset-bottom, 0px));
 // Lighter than the flat bar, and as low as it goes: the items keep their
-// 2.75rem touch floor, so the rest is only the padding around them
+// touch floor, so the rest is only the padding around them
 $_island-height: calc(var(--mw-action-bar-height) - 4px);
 
 @layer mw.components {
@@ -63,7 +63,7 @@ $_island-height: calc(var(--mw-action-bar-height) - 4px);
 
       // Its own frame has no page container to line up with
       &.mw-action-bar-embedded {
-        inset-inline: calc(var(--mw-header-inset) - #{$header-island-reach});
+        inset-inline: $header-island-side;
       }
     }
 
@@ -74,7 +74,7 @@ $_island-height: calc(var(--mw-action-bar-height) - 4px);
       justify-content: center;
       gap: spacing('1');
       min-width: 0;
-      min-height: 2.75rem;
+      min-height: $touch-target;
       padding: spacing('1') spacing('2');
       border: 0;
       border-radius: radius('md');

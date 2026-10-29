@@ -27,10 +27,11 @@
   short pages.
 - `mw-container` is `min(1200px, 100% - 2 * gutter)`, horizontally centered.
   Nest it inside every full-bleed band (header, section, footer), never around
-  them. The gutter is fluid - `clamp(1rem, 4.2vw + 0.5rem, 4rem)`, never smaller
-  than the safe-area inset (which needs `viewport-fit=cover` on the viewport
-  meta to be anything but 0) - so it lands on ~24px at 375px, ~32px at 576px,
-  ~40px on a tablet and tops out at 64px, where the 1200px cap takes over. A
+  them. The gutter is fluid - `clamp(0.75rem, 5.4vw - 0.45rem, 4rem)`, never
+  smaller than the safe-area inset (which needs `viewport-fit=cover` on the
+  viewport meta to be anything but 0) - so it lands on ~13px at 375px (a 93%
+  container), ~24px at 576px, ~34px on a tablet and tops out at 64px, where
+  the 1200px cap takes over. A
   percentage alone keeps too little on a phone and throws away too much on a
   desktop; stepping the gutter at a breakpoint instead would make the container
   jump backwards at the step. Both values are tokens,
@@ -156,13 +157,13 @@ structure - its children are styled through descendant selectors:
 ```
 
 An icon (`<i class="fas fa-user-circle"></i>`) works instead of the avatar.
-Below `md` the name hides and the button becomes a round 40px control, the
+Below `md` the name hides and the button becomes a round 38px control, the
 same height as the login and burger buttons.
 
 - `mw-header-btn` is the round icon control beside it - search, notifications,
   a command palette - with the same border, hover and focus. It works on a
-  `<button>` and on a dropdown's `<summary>`; on touch both grow to a round
-  44px:
+  `<button>` and on a dropdown's `<summary>`. Like every control in the
+  header it stays 38px on touch too, under the 42px logo:
 
 ```html
 <button
@@ -189,6 +190,8 @@ same height as the login and burger buttons.
 **Island.** The header floats `--mw-header-inset` (14px) below the top edge, and
 its content box reaches `$header-island-reach` (5px) past the page container on
 either side - room for the links, the logo that much left of the text below.
+On a phone that would put it past the screen, so there it keeps
+`$header-island-side` (6px) to the side, `mw-action-bar-island` too.
 `--mw-header-height` (77px) is the room it takes - the 63px island plus the
 gap - so main padding, sticky offsets and the anchor scroll clear it without
 knowing it floats. Without `mw-header-reveal` it starts as the full bar and
@@ -291,7 +294,7 @@ as the header's first child under the same condition.
   sits on the column's gutter.
 - The footer keeps clear of the home indicator, links and social buttons carry
   the focus ring, and on touch the links grow to a 40px target (the drawn
-  underline gives way to the text's own) and the social buttons to 44px.
+  underline gives way to the text's own) and the social buttons to 42px.
 
 `data-tooltip="..."` is a global attribute hook, not a class - it works on any
 element and shows a tooltip above it on hover or keyboard focus. It is pure CSS

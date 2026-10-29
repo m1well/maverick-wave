@@ -138,7 +138,7 @@
     @include tappable;
     @include focus-ring;
     @include touch-floor {
-      min-width: 2.75rem;
+      min-width: $touch-target;
     }
 
     &:hover {

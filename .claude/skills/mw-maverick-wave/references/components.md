@@ -35,9 +35,9 @@ exhaustive: what is not named does not exist.
   2.125rem while the lines around it stay where they are. `mw-p-0` does not help
   - the height does it, not the padding. Keep `mw-btn` only where the link
     really is a button in a row of buttons and has to line up with them
-- On a coarse pointer or below 768px `mw-btn` grows to a 2.75rem minimum height
+- On a coarse pointer or below 768px `mw-btn` grows to a 42px minimum height
   on its own, `mw-btn-sm` included - under a thumb the small size is the same
-  target
+  target. In `mw-header` it stays at 38px, under the logo
 
 ```html
 <!-- a button that happens to look like a link -->
@@ -122,7 +122,7 @@ and only leaves them unpainted at rest. `mw-btn-plain` has no look at all.
 ```
 
 `mw-btn-icon` makes the button square and follows the size modifier next to it
-(`mw-btn-sm` / `mw-btn-lg`), growing to 2.75rem on a coarse pointer. It always
+(`mw-btn-sm` / `mw-btn-lg`), growing to 42px on a coarse pointer. It always
 needs an `aria-label` - there is no text to read out. Combine it with any
 variant; ghost is usually the right one.
 
@@ -741,7 +741,7 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
   re-pointed to the card background inside `mw-card`, `mw-panel`, `mw-modal`,
   `mw-tile` and `mw-calendar` - override it if the strip sits on some other
   surface.
-- Tab items reach a 2.75rem minimum height on a coarse pointer.
+- Tab items reach a 42px minimum height on a coarse pointer.
 - `aria-selected="true"` on an item marks it like `mw-active` - horizontal,
   vertical and pills alike. `:disabled` or `aria-disabled="true"` dims it.
   Under forced colours the marker and the active pill take Highlight.
@@ -946,7 +946,7 @@ bottom edge where the thumb already is:
 ```
 
 - Two to four items share the width: an icon (`<i>`, `<svg>` or `<img>`) over
-  a short label that truncates, at least 2.75rem high. `mw-action-bar-primary`
+  a short label that truncates, at least 42px high. `mw-action-bar-primary`
   fills the one action that matters most.
 - Header colours in both themes, so the page has chrome at both ends; the
   safe-area inset is added at the bottom.
@@ -960,7 +960,8 @@ bottom edge where the thumb already is:
 - `mw-action-bar-embedded` is absolute instead of fixed and reserves nothing -
   for a preview inside a frame, like the showcase's `mw-device-phone`.
 - `mw-action-bar-island` floats it as the counterpart to the header island:
-  the same glass and side edges, `--mw-header-inset` (14px) off the bottom or
+  the same glass and side edges (6px on a phone), `--mw-header-inset` (14px)
+  off the bottom or
   clear of the home indicator, 4px lower than the flat bar. The reserve
   follows. With `-always` from `md` up it shrinks to a dock around its items.
 - z-index key `action-bar` (98): over the page and its menus, under the open
@@ -1391,7 +1392,7 @@ itself.
   is what pushes them back.
 - A month gets six rows even when five would do, so the calendar - and
   everything under it - keeps its height while you page through.
-- Cell height is fixed (38px, 44px on a coarse pointer, 29px compact), width
+- Cell height is fixed (38px, 42px on a coarse pointer, 29px compact), width
   follows the container. No aspect ratio: a full-width calendar would otherwise
   grow rows several hundred pixels tall. A calendar therefore wants a column,
   not the full page width - give it one, or cap it.
@@ -1572,7 +1573,7 @@ the muted ink and drops out on touch, where there is no keyboard to use it on:
 `<button class="mw-dropdown-item"><i class="fas fa-copy"></i> Copy <kbd>Ctrl C</kbd></button>`.
 
 The menu is at least 200px wide; `--mw-dropdown-min-width` on the dropdown or a
-wrapper changes that. On a coarse pointer the rows grow to 2.75rem and the menu
+wrapper changes that. On a coarse pointer the rows grow to 42px and the menu
 takes at least the trigger's full width.
 
 ## Tooltip beside the trigger
@@ -2343,7 +2344,7 @@ yours. A numbered page list is `mw-pagination-pages`, below.
 `aria-current="page"` (or `mw-active`) marks where you are,
 `aria-disabled="true"` dims an arrow that leads nowhere. Below `sm` the numbers
 give way to `mw-pagination-status` between the arrows; on touch the page
-buttons are 44px.
+buttons are 42px.
 
 ## Divider
 
