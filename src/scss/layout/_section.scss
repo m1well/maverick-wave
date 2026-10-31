@@ -117,6 +117,41 @@
     }
   }
 
+  // The mark draws itself out along the rule as the head scrolls in. On the
+  // head's timeline and not its own: the mark is 4px tall, and a view() of its
+  // own would be over in four pixels of scroll. `scale` and not `transform`,
+  // which already holds the mark on the rule. Without timelines, under reduced
+  // motion, with mw-scroll-static and on paper - which never scrolls, so the
+  // mark would stay at zero - it is simply there.
+  @media screen {
+    @supports (animation-timeline: view()) {
+      :root:not(.mw-scroll-static) .mw-section-head {
+        @include motion-safe {
+          view-timeline: --mw-section-head;
+        }
+      }
+
+      // Done once the head's top is about two thirds down the screen, before
+      // the title is read.
+      :root:not(.mw-scroll-static) .mw-section-head::before {
+        @include motion-safe {
+          transform-origin: left center;
+          animation-name: mw-section-head-mark;
+          animation-timing-function: var(--mw-ease-out);
+          animation-fill-mode: backwards;
+          animation-timeline: --mw-section-head;
+          animation-range: cover 0% cover 30%;
+        }
+      }
+    }
+  }
+
+  @keyframes mw-section-head-mark {
+    from {
+      scale: 0 1;
+    }
+  }
+
   // The level below the head: the boundary inside a section, not around it.
   // Same left edge, and the rule shrinks to a mark of its own so the two
   // levels read as a hierarchy rather than as two of the same thing.

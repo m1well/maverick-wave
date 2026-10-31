@@ -839,7 +839,8 @@ $_host: '#{$_surface}, .mw-occasion-spot:not(#{$_effect-classes})';
     }
   }
 
-  // No view timelines (Firefox): main.js marks each host and swaps it on entry
+  // No view timelines (Firefox before 159): main.js marks each host and swaps
+  // it on entry
   @each $effect, $arrival in $_arrivals {
     #{_on($effect, '.mw-occasion-scroll', '.mw-occasion-waiting::before')} {
       @include motion-safe {

@@ -47,12 +47,12 @@ The result is a framework that balances utility with simplicity, offering develo
     <title>My MaverickWave Project</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.20.0/maverick-wave.min.css"
+      href="https://cdn.jsdelivr.net/npm/maverick-wave@6.21.0/maverick-wave.min.css"
     />
   </head>
   <body>
     <!-- Your content here -->
-    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.20.0/maverick-wave.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/maverick-wave@6.21.0/maverick-wave.min.js"></script>
   </body>
 </html>
 ```
@@ -373,7 +373,7 @@ rebuilding. They stack.
 | `mw-surfaces-flush`   | Cards, panels and footer on the page colour, held by their border                  |
 | `mw-hover-static`     | No hover travels - lifts and image zooms go, colour still responds                 |
 | `mw-motion-off`       | The reduced-motion page for every reader, script included                          |
-| `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit where they land                        |
+| `mw-scroll-static`    | No scroll entrance - `mw-reveal` blocks sit in place, section marks stand drawn    |
 | `mw-sections-plain`   | The hatch behind `mw-section-alternate` collapses into the page colour             |
 | `mw-headings-caps`    | `h1`-`h3` in capitals                                                              |
 | `mw-links-underline`  | `mw-btn-link` underlined at rest, as text links always are                         |

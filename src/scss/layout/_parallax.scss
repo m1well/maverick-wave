@@ -209,10 +209,10 @@
     }
   }
 
-  // Older Safari and Firefox ship no scroll timelines, so there the script
-  // writes the progress and the travel is worked out here (main.js). Keeping
-  // the transform in CSS is what lets every depth variant above - and an
-  // inline `--mw-parallax-depth` - go on working untouched.
+  // Older Safari and Firefox before 159 ship no scroll timelines, so there the
+  // script writes the progress and the travel is worked out here (main.js).
+  // Keeping the transform in CSS is what lets every depth variant above - and
+  // an inline `--mw-parallax-depth` - go on working untouched.
   //
   // 0 puts the layer at +depth and 1 at -depth, the two ends of the keyframes.
   .mw-parallax-driven {
