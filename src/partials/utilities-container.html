@@ -422,6 +422,33 @@
   </div>
 </div>
 
+<h3 class="mw-mb-4 mw-mt-6">Scroll Reveal</h3>
+<p class="mw-text-muted mw-text-measure">
+  <code>mw-reveal</code> lets a block rise into place as it scrolls in,
+  <code>mw-reveal-stagger</code> on a grid sends its cards in as a wave. Two
+  quieter entrances go next to either: <code>mw-reveal-fade</code> comes in
+  without travel, for text, and <code>mw-reveal-zoom</code> settles from 96%,
+  for pictures and tiles. <code>--mw-reveal-shift</code> sets how far the
+  default rises, 40px. None of them moves sideways - a block pushed past the
+  edge would widen the page on a phone.
+</p>
+<div class="mw-grid-3 mw-gap-6">
+  <div class="mw-card mw-card-simple mw-reveal">
+    <h4 class="mw-text-medium mw-mb-1">mw-reveal</h4>
+    <p class="mw-text-muted mw-text-sm mw-mb-0">Rises 40px as it fades in.</p>
+  </div>
+  <div class="mw-card mw-card-simple mw-reveal mw-reveal-fade">
+    <h4 class="mw-text-medium mw-mb-1">mw-reveal-fade</h4>
+    <p class="mw-text-muted mw-text-sm mw-mb-0">Fades in where it stands.</p>
+  </div>
+  <div class="mw-card mw-card-simple mw-reveal mw-reveal-zoom">
+    <h4 class="mw-text-medium mw-mb-1">mw-reveal-zoom</h4>
+    <p class="mw-text-muted mw-text-sm mw-mb-0">
+      Settles from 96% to full size.
+    </p>
+  </div>
+</div>
+
 <h3 class="mw-mb-4 mw-mt-6">Responsive Display</h3>
 <p class="mw-text-muted mw-text-measure">
   Mobile-first and min-width, like everything else here.
@@ -567,7 +594,7 @@
   </li>
   <li>
     <code>mw-scroll-static</code> - no scroll entrance;
-    <code>mw-reveal</code> blocks sit where they land
+    <code>mw-reveal</code> blocks sit where they land, section marks stand drawn
   </li>
   <li>
     <code>mw-sections-plain</code> - the hatch behind

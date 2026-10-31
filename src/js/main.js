@@ -1604,9 +1604,9 @@
   // ===== Scroll Reveal =====
 
   // The cards ride the browser's own view timeline where there is one
-  // (_reveal.scss). Older Safari and Firefox have none, so there an observer
-  // stands in: hide what is still below the fold, run the same keyframes when
-  // it arrives.
+  // (_reveal.scss). Older Safari and Firefox before 159 have none, so there an
+  // observer stands in: hide what is still below the fold, run the same
+  // keyframes when it arrives.
   function initReveals(root) {
     if (CSS.supports('animation-timeline', 'view()')) return;
     if (reducedMotion()) return;
@@ -1632,6 +1632,19 @@
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           observer.unobserve(entry.target);
+          // In over the top edge, after a jump or a restored scroll position
+          // carried the page past it: a view timeline has the entry range
+          // behind it there and shows the block as it is. Past its own
+          // transition too, or a card still slides the 40px in 300ms.
+          if (entry.boundingClientRect.top < 0) {
+            const el = entry.target;
+            const inline = el.style.transition;
+            el.style.transition = 'none';
+            el.classList.remove('mw-reveal-hidden');
+            void el.offsetHeight;
+            el.style.transition = inline;
+            return;
+          }
           entry.target.style.animationDelay = staggerDelay(entry.target) + 'ms';
           entry.target.classList.replace('mw-reveal-hidden', 'mw-reveal-run');
         });
@@ -1639,13 +1652,16 @@
       { threshold: 0.15 }
     );
 
-    targets.forEach((el) => {
-      // Whatever is on screen already has passed its entry range in a browser
-      // with timelines too, so it stays put instead of fading in after load
-      if (el.getBoundingClientRect().top < window.innerHeight) return;
-      el.classList.add('mw-reveal-hidden');
-      obs.observe(el);
-    });
+    // Whatever is on screen already has passed its entry range in a browser
+    // with timelines too, so it stays put instead of fading in after load.
+    // Every position is read before the first class goes on, or each class
+    // makes the next read work out the styles again.
+    targets
+      .filter((el) => el.getBoundingClientRect().top >= window.innerHeight)
+      .forEach((el) => {
+        el.classList.add('mw-reveal-hidden');
+        obs.observe(el);
+      });
   }
 
   // Same story for the header that rides in over the first stretch of scroll
@@ -1712,11 +1728,15 @@
     // What view() hands the animation over its cover pass: 0 when the top edge
     // touches the bottom of the screen, 1 when the bottom edge leaves at the
     // top. Clamped, because the fill holds a layer at whichever end is off
-    // screen.
-    const progress = (layer, viewport) => {
+    // screen. Measured the way view() does it: on the layout box, not the one
+    // the layer has travelled to, and with scroll-padding-top taken off the
+    // screen - the default inset of view().
+    const progress = (layer, viewport, inset) => {
       if (layer.pinned) return clamp(window.scrollY / viewport);
-      const rect = layer.el.getBoundingClientRect();
-      return clamp((viewport - rect.top) / (viewport + rect.height));
+      const { el } = layer;
+      if (!el.offsetParent) return 0.5;
+      const top = el.offsetParent.getBoundingClientRect().top + el.offsetTop;
+      return clamp((viewport - top) / (viewport - inset + el.offsetHeight));
     };
 
     let queued = false;
@@ -1728,9 +1748,10 @@
       // mid-scroll, which steps every layer at once. clientHeight only moves on
       // a real resize.
       const viewport = document.documentElement.clientHeight;
+      const inset = anchorOffset();
       // Every read before the first write, or each write makes the next read
       // lay the page out again - a reflow per layer per frame.
-      const values = layers.map((layer) => progress(layer, viewport));
+      const values = layers.map((layer) => progress(layer, viewport, inset));
       layers.forEach((layer, i) =>
         layer.el.style.setProperty('--mw-parallax-progress', values[i])
       );
@@ -1779,15 +1800,19 @@
 
   // Same-page anchors go through initSmoothScrolling and never fire hashchange
   function initFaqLinks() {
-    const openFromHash = () =>
-      openFaqItem(document.getElementById(location.hash.slice(1)));
+    const openFromHash = () => {
+      const id = location.hash.slice(1);
+      if (id) openFaqItem(document.getElementById(id));
+    };
     openFromHash();
     window.addEventListener('hashchange', openFromHash);
   }
 
-  // Anything the user does with the wheel or a finger outranks a running glide
+  // Anything the user does with the wheel, a finger or a key outranks a running
+  // glide. The keys and not a moved scroll position: scroll anchoring moves the
+  // page too, in Firefox a frame after a link has opened an FAQ item above it.
   let glide = null;
-  ['wheel', 'touchstart'].forEach((type) => {
+  ['wheel', 'touchstart', 'keydown'].forEach((type) => {
     window.addEventListener(type, () => (glide = null), { passive: true });
   });
 
@@ -3206,7 +3231,8 @@
     });
   }
 
-  // No view timeline for the card pieces (Firefox): an observer plays them
+  // No view timeline for the card pieces (Firefox before 159): an observer
+  // plays them
   function initOccasionArrivals(effect) {
     if (CSS.supports('animation-timeline', 'view()')) return;
 
@@ -3227,6 +3253,11 @@
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           observer.unobserve(entry.target);
+          // In over the top edge: same as the reveals, already arrived
+          if (entry.boundingClientRect.top < 0) {
+            entry.target.classList.remove('mw-occasion-waiting');
+            return;
+          }
           entry.target.classList.replace(
             'mw-occasion-waiting',
             'mw-occasion-arriving'
@@ -3242,6 +3273,27 @@
     });
   }
 
+  // Not CSS.supports, and not window.ScrollTimeline either: Firefox has both
+  // since 159, but plays every lap over the whole page instead of sharing the
+  // scroll out, and pieces that crawl read as stuck. An engine that shares
+  // reports the two laps as one full timeline - asked of the behaviour, so a
+  // fixed release takes the scrubbed path on its own.
+  function scrollSharesLaps() {
+    if (!window.ScrollTimeline) return false;
+    try {
+      const root = document.documentElement;
+      const probe = root.animate(null, {
+        iterations: 2,
+        timeline: new ScrollTimeline({ source: root }),
+      });
+      const active = String(probe.effect.getComputedTiming().activeDuration);
+      probe.cancel();
+      return active === '100%';
+    } catch {
+      return false;
+    }
+  }
+
   // Scrubbed by the scroll on the compositor, so it stands still whenever the
   // page does. A lap is a little more than a screen of scrolling, which makes
   // the count a matter of page length.
@@ -3249,9 +3301,7 @@
     const layer = document.createElement('div');
     layer.className = 'mw-occasion-drift';
     layer.setAttribute('aria-hidden', 'true');
-    // Not CSS.supports: Firefox behind its flag parses the syntax, but plays
-    // the whole page as one lap - pieces that crawl read as stuck
-    const driven = !window.ScrollTimeline;
+    const driven = !scrollSharesLaps();
     // Before the append, or the particles start on the clock and park mid-lap
     if (driven) layer.classList.add('mw-occasion-driven');
     if (effect === 'summer') occasionBeams(layer);
