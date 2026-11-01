@@ -683,6 +683,49 @@ open, closing is a jump.
 </div>
 ```
 
+## Foldout
+
+A text that goes on after "read more" - the long testimonial, the team bio, the
+description only the interested read to the end:
+
+```html
+<div class="mw-card mw-card-simple mw-foldout">
+  <p>The part that is always visible, cut where a sentence ends.</p>
+  <div class="mw-foldout-body" id="more-1">
+    <div class="mw-foldout-body-inner">
+      <p class="mw-mb-0">The rest.</p>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="mw-link mw-foldout-toggle"
+    aria-expanded="false"
+    aria-controls="more-1"
+  >
+    <span class="mw-foldout-more">Read more</span
+    ><span class="mw-foldout-less">Less</span>
+  </button>
+</div>
+```
+
+What stands before `mw-foldout-body` is always visible. The body opens as a
+grid row from `0fr` to `1fr` like an accordion panel, and
+`mw-foldout-body-inner` is that row - content placed straight into the body
+never collapses when shut. Open state = `mw-active` on `mw-foldout`;
+`aria-expanded="true"` on the toggle inside opens it on its own, for markup an
+application renders. With a `mw-foldout-more` and a `mw-foldout-less` span the
+toggle swaps its label by state; with plain text inside, the label stays.
+Toggling is JS - the shipped script wires `mw-foldout-toggle` and keeps
+`aria-expanded` in step; a SPA sets the class and the attribute itself
+(`references/javascript.md`).
+
+Nothing is measured or clamped: cut the text where a sentence ends, by hand or
+at build time, and the preview reads as a whole thought. `mw-foldout` goes on
+any ancestor of body and toggle - on a testimonial it is the `figure`, the body
+sits inside the `blockquote` and the toggle between quote and source. In a grid
+of equal-height cards add `mw-items-start`, or the neighbours of an opened card
+stretch along and show their empty surface beside it.
+
 ## FAQ
 
 ```html
@@ -2967,7 +3010,10 @@ the product. The `datetime` attribute is what Schema.org's `datePublished`
 would read.
 
 For a wall of testimonials of unequal length, put them in `mw-columns-2` or
-`mw-columns-3` (`references/layout.md`) instead of a grid.
+`mw-columns-3` (`references/layout.md`) instead of a grid. A quote too long for
+its card folds instead: `mw-foldout` on the figure, the rest in
+`mw-foldout-body` inside the blockquote, the toggle between quote and source -
+see Foldout.
 
 ## Prose
 

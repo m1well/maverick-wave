@@ -316,7 +316,7 @@ ribbon, feature frame) · `mw-edge-{colour}` / `mw-edge-muted` / `mw-edge-top`
 (a stripe and a tint on any surface, `--mw-edge-color` for a tone of your own) ·
 `mw-panel` (+ `-heading`, `-title`, `-subtitle`, `-actions`, `-edge-{colour}`,
 `-edge-muted`) ·
-`mw-tile` (+ `mw-selected`, `-check`) · `mw-accordion` (a `<details>` item
+`mw-tile` (+ `mw-selected`, `-check`) · `mw-foldout` (+ `-body`, `-body-inner`, `-toggle`, `-more`, `-less`) · `mw-accordion` (a `<details>` item
 needs no script) · `mw-faq` (+ `-cards`) · `mw-tabs` ·
 `mw-modal` on a `<dialog>` (+ `sm`, `lg`, `xl`, `full`, `drawer`, `drawer-start`) ·
 `mw-item-list` family (+ `-flush`) · `mw-offer` (+ `-head`, `-name`) ·
