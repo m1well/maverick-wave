@@ -115,6 +115,7 @@
     initDevices(scope);
     initAppShells(scope);
     initAccordions(scope);
+    initFoldouts(scope);
     initProgressBars(scope);
     initReveals(scope);
     initTabs(scope);
@@ -1313,6 +1314,25 @@
         setActive(this, open);
         setActive(this.nextElementSibling, open);
         if (announces) this.setAttribute('aria-expanded', String(open));
+      });
+    });
+  }
+
+  // ===== Foldouts =====
+  function initFoldouts(root) {
+    root.querySelectorAll('.mw-foldout-toggle').forEach((toggle) => {
+      const foldout = toggle.closest('.mw-foldout');
+      if (!foldout || !fresh(toggle)) return;
+      const announces = toggle.tagName === 'BUTTON';
+      // Either side may carry the initial state
+      const open =
+        isActive(foldout) || toggle.getAttribute('aria-expanded') === 'true';
+      setActive(foldout, open);
+      if (announces) toggle.setAttribute('aria-expanded', String(open));
+      toggle.addEventListener('click', function () {
+        const next = !isActive(foldout);
+        setActive(foldout, next);
+        if (announces) this.setAttribute('aria-expanded', String(next));
       });
     });
   }

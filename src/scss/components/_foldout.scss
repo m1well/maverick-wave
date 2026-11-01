@@ -1,0 +1,62 @@
+@use '../abstracts' as *;
+
+@layer mw.components {
+  // The text that goes on after "read more". What stands before the body is
+  // always visible; the body opens like an accordion panel.
+  @mixin _open {
+    @include active {
+      @content;
+    }
+
+    // aria-expanded on the toggle opens it too, for markup an application renders
+    &:has(.mw-foldout-toggle[aria-expanded='true']) {
+      @content;
+    }
+  }
+
+  .mw-foldout {
+    // A grid row from `0fr` to `1fr`, not `height: 0` to `auto` - see the
+    // accordion for why.
+    &-body {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows var(--mw-duration-slow) var(--mw-ease-out);
+
+      // The gap to the text above travels with the row - as padding, because a
+      // margin would count towards the shut row.
+      &-inner {
+        min-height: 0;
+        padding-top: 0;
+        transition: padding-top var(--mw-duration-slow) var(--mw-ease-out);
+      }
+    }
+
+    &-toggle {
+      align-self: flex-start;
+      margin-top: spacing('3');
+    }
+
+    &-less {
+      display: none;
+    }
+
+    @include _open {
+      .mw-foldout-body {
+        grid-template-rows: 1fr;
+      }
+
+      .mw-foldout-body-inner {
+        padding-top: spacing('3');
+      }
+
+      .mw-foldout-more {
+        display: none;
+      }
+
+      .mw-foldout-less {
+        display: inline;
+      }
+    }
+  }
+}

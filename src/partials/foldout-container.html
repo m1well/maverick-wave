@@ -1,0 +1,102 @@
+<h3 class="mw-section-subtitle">Foldout</h3>
+
+<p class="mw-text-muted mw-text-measure">
+  A text that goes on after "read more". What stands before
+  <code>mw-foldout-body</code> is always visible; the body opens like an
+  accordion panel and the toggle swaps its label by state. Nothing is measured
+  or clamped - cut the text where a sentence ends and put the rest in the body.
+  In a grid of cards add <code>mw-items-start</code>, or the neighbours of an
+  opened card stretch along and show their empty surface beside it.
+</p>
+
+<div class="mw-grid-3-lg mw-gap-6 mw-items-start">
+  <figure class="mw-testimonial mw-foldout">
+    <blockquote>
+      The workshop picked me up after a long day of talking. Within ten minutes
+      my voice felt like my own again.
+      <div class="mw-foldout-body" id="foldout-1">
+        <div class="mw-foldout-body-inner">
+          What stayed with me is how much of it carries into the week: three
+          small exercises before a call, and the afternoon meetings stop wearing
+          me down. I had expected a singing lesson and got a toolbox.
+        </div>
+      </div>
+    </blockquote>
+    <button
+      type="button"
+      class="mw-link mw-foldout-toggle"
+      aria-expanded="false"
+      aria-controls="foldout-1"
+    >
+      <span class="mw-foldout-more">Read more</span
+      ><span class="mw-foldout-less">Less</span>
+    </button>
+    <figcaption class="mw-testimonial-source">
+      Anna M. <span class="mw-testimonial-detail">&middot; voice workshop</span>
+    </figcaption>
+  </figure>
+
+  <figure class="mw-testimonial mw-foldout">
+    <blockquote>
+      Clear, warm and to the point. Every exercise came with the reason behind
+      it, which is why I still do them.
+      <div class="mw-foldout-body" id="foldout-2">
+        <div class="mw-foldout-body-inner">
+          The group was small enough that each of us got a correction of our
+          own, and large enough that nobody felt watched. I left with a plan for
+          the next month and a much quieter throat.
+        </div>
+      </div>
+    </blockquote>
+    <button
+      type="button"
+      class="mw-link mw-foldout-toggle"
+      aria-expanded="false"
+      aria-controls="foldout-2"
+    >
+      <span class="mw-foldout-more">Read more</span
+      ><span class="mw-foldout-less">Less</span>
+    </button>
+    <figcaption class="mw-testimonial-source">
+      Jonas K.
+      <span class="mw-testimonial-detail">&middot; cool-down course</span>
+    </figcaption>
+  </figure>
+
+  <figure class="mw-testimonial">
+    <blockquote>
+      Short, kind, effective. A quote that fits its card needs no foldout, and
+      the markup is the plain testimonial.
+    </blockquote>
+    <figcaption class="mw-testimonial-source">
+      Mira L.
+      <span class="mw-testimonial-detail">&middot; single coaching</span>
+    </figcaption>
+  </figure>
+</div>
+
+<h4 class="mw-text-medium mw-mt-8 mw-mb-3">In running text</h4>
+
+<div class="mw-card mw-card-simple mw-foldout mw-text-measure">
+  <p>
+    The toggle keeps one label when it holds plain text instead of the two spans
+    - fine for a text that is opened once and read to the end.
+  </p>
+  <div class="mw-foldout-body" id="foldout-3">
+    <div class="mw-foldout-body-inner">
+      <p class="mw-mb-0">
+        The body takes any content: paragraphs, a list, a picture. The inner
+        wrapper is the animated row and is not optional - content placed
+        straight into the body never collapses when shut.
+      </p>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="mw-link mw-foldout-toggle"
+    aria-expanded="false"
+    aria-controls="foldout-3"
+  >
+    Read more
+  </button>
+</div>
