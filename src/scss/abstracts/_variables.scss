@@ -73,6 +73,7 @@ $muted-tint: 23% !default;
 // of a near-black page is still near-black, so keep the dark page around L 0.24.
 $card-surface-dark: 0.85 !default;
 $card-surface-light: 1.05 !default;
+$card-hover-tint: 4% !default;
 // Steps further out than the card in the dark theme and the other way in the
 // light one, so the band reads as chrome rather than as another card
 $footer-surface-dark: 0.75 !default;
@@ -235,6 +236,13 @@ $focus-halo-opacity: 28% !default;
   );
 }
 
+// The ink tone and not the fill: a dark brand colour would vanish into a dark card
+@function hover-tint($theme) {
+  @return string.unquote(
+    'color-mix(in oklab, var(--mw-#{$theme}-card-background), var(--mw-#{$theme}-primary-text-color) #{$card-hover-tint})'
+  );
+}
+
 // Built from a true gray, not by stepping the text color back: that would hand a
 // tinted text color's tint straight through - a mint page, mint secondary text
 @function muted($lightness) {
@@ -394,6 +402,7 @@ $dark-theme-colors: (
   // Factors live with the derivation knobs above so the stack retunes from one
   // place. The rule keeps its own: it runs against the card or it disappears.
   'card-background': surface('dark-page-background', $card-surface-dark),
+  'card-background-hover': hover-tint('dark'),
   'footer-background': surface('dark-page-background', $footer-surface-dark),
   'border': surface('dark-page-background', 1.35),
   'shadow': fade('dark-text-color', 30%),
@@ -424,6 +433,7 @@ $light-theme-colors: (
   'page-background': $light-background,
   'hero-image-filter': $hero-filter-light,
   'card-background': surface('light-page-background', $card-surface-light),
+  'card-background-hover': hover-tint('light'),
   'footer-background': surface('light-page-background', $footer-surface-light),
   'border': surface('light-page-background', 0.8),
   'shadow': fade('light-text-color', 30%),

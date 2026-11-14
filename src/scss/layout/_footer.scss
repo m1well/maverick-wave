@@ -129,10 +129,6 @@
           border-color: var(--mw-primary-color);
         }
 
-        @include hover-move {
-          transform: translateY(-2px);
-        }
-
         &:active {
           transform: scale(0.92);
           transition-duration: var(--mw-duration-instant);

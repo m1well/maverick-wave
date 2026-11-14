@@ -27,7 +27,7 @@ $_mark-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 
   // A card that is one link: a picture in front, a title, an optional second
   // line, and a mark at the end that says where it leads. Written on an <a>
-  // next to mw-card, which brings the surface, the lift and the corner arc.
+  // next to mw-card, which brings the surface, the hover and the corner arc.
   //
   // The two outer columns are the same width, so a title on its own centres on
   // the card and not in the room between picture and mark. A second line makes
@@ -118,7 +118,7 @@ $_mark-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
       }
     }
 
-    // Tapped far more than clicked - the lift above never runs on a finger
+    // Tapped far more than clicked - the hover-move above never runs on a finger
     @include motion-safe {
       &:active {
         transform: scale(0.985);

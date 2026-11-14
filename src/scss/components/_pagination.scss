@@ -145,6 +145,10 @@
       background: var(--mw-gray-background);
     }
 
+    &:active {
+      background: var(--mw-primary-background);
+    }
+
     &:is([aria-current='page'], .mw-active, .active) {
       background: var(--mw-primary-color);
       border-color: var(--mw-primary-text-color);

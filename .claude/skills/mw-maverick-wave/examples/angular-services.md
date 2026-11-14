@@ -461,8 +461,9 @@ so does the width.
 ## Scroll reveal
 
 `mw-reveal` runs on the browser's scroll timeline and needs nothing from you -
-except in Firefox, which ships none, where the block appears without motion.
-This directive is the Firefox half: it adds to the class, never replaces it.
+except in a browser without one (older Safari, Firefox before 159, the Firefox
+ESR), where the block appears without motion. This directive is that half: it
+adds to the class, never replaces it.
 
 ```ts
 import {
@@ -509,6 +510,17 @@ export class MwRevealDirective {
         ([entry]) => {
           if (!entry.isIntersecting) return;
           observer.disconnect();
+          // In over the top edge after a jump: a timeline shows it as it is,
+          // so it must not slide in on its own transition either.
+          if (entry.boundingClientRect.top < 0) {
+            const inline = this.host.style.transition;
+            this.host.style.transition = 'none';
+            this.host.classList.remove('mw-reveal-hidden');
+            void this.host.offsetHeight;
+            this.host.style.transition = inline;
+            this.state.set('off');
+            return;
+          }
           this.delay.set(this.columnDelay());
           this.state.set('run');
         },
@@ -533,10 +545,12 @@ export class MwRevealDirective {
 ```
 
 A single block carries `mw-reveal`, a grid carries `mw-reveal-stagger` and its
-children carry nothing but the directive:
+children carry nothing but the directive. `mw-reveal-fade` or `mw-reveal-zoom`
+next to either swaps the rise for a quieter entrance, same directive:
 
 ```html
 <article class="mw-card mw-reveal" mwReveal>...</article>
+<figure class="mw-reveal mw-reveal-zoom" mwReveal>...</figure>
 
 <div class="mw-grid-4 mw-reveal-stagger">
   @for (item of items(); track item.id) {

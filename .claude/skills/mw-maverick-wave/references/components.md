@@ -25,11 +25,31 @@ exhaustive: what is not named does not exist.
   (full width)
 - Sizes: `mw-btn-sm`, `mw-btn-lg`
 - `mw-btn` is `inline-flex` with a gap - icons need no wrapper and no extra class
-- `disabled` gets `opacity: .6` and `not-allowed`; there is no disabled class
+- `disabled` gets `opacity: .6` and `not-allowed`; there is no disabled class.
+  An `<a class="mw-btn">` cannot be disabled - give it `aria-disabled="true"`
+  for the same look. It then takes no pointer, so no hover, click or tooltip;
+  Enter still follows an `href`, so leave that off
 - `mw-active` gives the pressed/selected look on the coloured variants
-- Every variant dips 1px on `:active`, and the solid ones invert their top
-  highlight into an inner shadow. On touch that press is the only feedback there
-  is, so do not override it away
+- Every variant gives to 97 % on `:active` and springs back (`--mw-ease-spring`),
+  the solid ones with an inner shadow. On touch that press is the only feedback
+  there is, so do not override it away
+- Solid variants are flat - no sheen, no light line, those belong to
+  `mw-btn-glass`. They cast a soft shadow in their own colour (`--mw-btn-tone`)
+  that grows on hover; `mw-shadows-flat` / `-hard` swap it through
+  `--mw-btn-shadow` / `-hover` (keep those list-safe, `0 0 #0000` for none).
+  They also rise 1px under the pointer - not with a `data-tooltip` on the
+  button, with reduced motion or under `mw-hover-static`
+- `mw-btn-outline` fills in from the left on hover (a `background-size`
+  transition) - restate its hover with `background-size`, not a `background`
+  shorthand, or the run-in is gone
+- `mw-btn-forward` (since 6.14.0) lets an icon after the label (`svg`, `i` or
+  `fa-icon` as the last child) edge out 3px under the pointer; not with reduced
+  motion. Opt-in because a leading icon before a bare text label is the last
+  child too - in 6.13.0, where it was automatic, that one slid into the text
+- `aria-busy="true"` (since 6.13.0) swaps the label for a spinner in its colour
+  and keeps the width. `mw-btn-shine` draws a streak of light once per hover -
+  for the one hero call to action. Both use a pseudo-element `data-tooltip`
+  also needs, so not on a button with a tooltip
 - **A link inside a sentence is `mw-link`, not `mw-btn mw-btn-link`.** The base
   class carries a control height, so in running text it lifts that one line to
   2.125rem while the lines around it stay where they are. `mw-p-0` does not help
@@ -65,6 +85,15 @@ in the header keeps the page's colours.
   up in the
   <a href="#get-started" class="mw-link-muted">Get Started</a> section.
 </p>
+```
+
+`mw-link-arrow` (since 6.13.0) goes next to either one for a link that leads on
+to more - all projects, the full price list. An arrow ↗ follows the label as a
+CSS mask in the link's colour, outside the underline, and edges out under the
+pointer except with reduced motion or `mw-hover-static`. No icon markup needed.
+
+```html
+<a href="/arbeiten" class="mw-link mw-link-arrow">Alle Arbeiten</a>
 ```
 
 ### Stretched link - the whole card as the hit area
@@ -265,7 +294,9 @@ segment, a focused one draws the ring on it.
 </div>
 ```
 
-- `mw-card` is the shell; the hover lift is built in and has no modifier class.
+- `mw-card` is the shell; the hover is built in and has no modifier class: the
+  corner arcs run out and hold, the surface takes a trace of brand ink, nothing
+  lifts.
   It is a flex column by default, so `mw-card-footer` sticks to the bottom and
   cards in a grid line up without any extra class.
 - `mw-card-simple` is the flat variant with even padding for arbitrary content.
@@ -594,6 +625,10 @@ Compact info blocks. The look is on the class, the click is on the element: put
 `mw-tile` on an `<a>` or a `<button>` and it gets the hand cursor, the focus ring
 and the tap handling. On a `<div>` it stays a plain surface - no cursor, no ring,
 because there would be nothing to reach by keyboard.
+
+An `<a>` tile also carries a chevron after its `mw-tile-header` at rest, an
+arrow out of the box for an external link - a phone has no hover to tell a link
+from a surface. A `<button>` tile has none: it is a choice, not a destination.
 
 ```html
 <div class="mw-tiles mw-tiles-2col">
@@ -1042,7 +1077,9 @@ Without an icon the text takes the whole row.
   `mw-spinner-container-overlay` lays a dimmed, blurred scrim over the parent -
   the parent needs `position: relative`.
 - `mw-spinner-inline` is 1em and the text colour - for a busy button that keeps
-  its label (`aria-busy="true"` on the button, `aria-hidden` on the spinner).
+  its label (`disabled` on the button, `aria-hidden` on the spinner). Not with
+  `aria-busy="true"` on an `mw-btn`: since 6.13.0 that hides the label and every
+  child and draws its own spinner, so the inline one never shows.
 - With reduced motion or `mw-motion-off` every shape stands still and stays
   visible; under forced colours they draw in the system ink.
 
@@ -1127,7 +1164,8 @@ tables you know overflow, leave it off the ones that fit.
 
 **Sorting and selection.** `aria-sort` on a `th` draws an arrow for `ascending`
 or `descending` and a dimmed one for `none`; the `<button>` inside does the
-sorting and gets a plain, focusable reset. A row is selected by
+sorting and gets a plain, focusable reset. Its label cannot be selected; a
+header without a button copies along with the table. A row is selected by
 `aria-selected="true"`, `mw-selected` or a checked checkbox in its first cell:
 tinted, plus an edge on the first cell so it does not rest on colour alone.
 Under forced colours the selection takes Highlight.
@@ -1398,7 +1436,7 @@ itself.
 
 | Class                     | Role                                                                                                                                                |
 | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mw-calendar`             | Surface. Same border, radius and shadow as a card, without the hover lift                                                                           |
+| `mw-calendar`             | Surface. Same border, radius and shadow as a card, without the hover                                                                                |
 | `mw-calendar-plain`       | Drops the surface - for a calendar already sitting on a card or panel                                                                               |
 | `mw-calendar-compact`     | Date picker density: dots hidden, 29px cells, tighter header and labels                                                                             |
 | `mw-calendar-header`      | Arrow, title, arrow                                                                                                                                 |
@@ -1463,7 +1501,8 @@ Two forms, picked by count - see also the pitfall list in `SKILL.md`.
 ```
 
 Variants: `mw-tag-primary`, `-secondary`, `-success`, `-info`, `-warning`,
-`-danger`, `-muted`, `-neutral`. Size: `mw-tag-lg`.
+`-danger`, `-muted`, `-neutral`. Size: `mw-tag-lg`. Written on an `a` or a
+`button`, either form answers the hover and gives to 96 % while pressed.
 
 `mw-tag-outline` keeps the border in the tone and drops the fill - a label that
 classifies next to one that judges. A `<span class="mw-tag-dot">` as the first
@@ -1732,9 +1771,9 @@ edge drops and the key sits 1px lower.
   a row of key figures above a list.
 - The cursor is `default` because a figure is usually not clickable. On `<a>`
   and `<button>` it turns into a pointer automatically; on anything else use
-  `mw-info-clickable`.
+  `mw-info-clickable`. Only a clickable one answers hover, with an accent ring.
 - `mw-info-block` is the same surface carrying a paragraph: 68 characters
-  wide, left-aligned, and it does not lift on hover. It sits at the left edge
+  wide and left-aligned. It sits at the left edge
   like everything else with running text in it - `mw-info-block-center` puts it
   back in the middle of its container.
 - `mw-info-mini` is the 20px status dot: sizes `-sm`, `-lg`, `-xl`, colours
@@ -2385,7 +2424,8 @@ yours. A numbered page list is `mw-pagination-pages`, below.
 ```
 
 `aria-current="page"` (or `mw-active`) marks where you are,
-`aria-disabled="true"` dims an arrow that leads nowhere. Below `sm` the numbers
+`aria-disabled="true"` dims an arrow that leads nowhere. A page takes a primary
+tint while pressed. Below `sm` the numbers
 give way to `mw-pagination-status` between the arrows; on touch the page
 buttons are 42px.
 
@@ -2905,10 +2945,13 @@ Seasonal decoration on every surface, switched by one class on `<html>`:
   (`<div class="mw-card mw-occasion-easter mw-occasion-lg">`), size and scroll
   too. It skips the site's occasion; intro and particles stay off.
 - `mw-occasion-scroll`: pieces land as their surface scrolls in, main.js adds
-  particles scrubbed by the page scroll. Without scroll timelines (Firefox,
-  Safari before 26) main.js drives both: an observer plays the arrival once a
-  surface enters, and the particles are paused animations parked at the
-  scroll progress it writes. `mw-occasion-waiting`, `-arriving` and
+  particles scrubbed by the page scroll. Without scroll timelines (Firefox
+  before 159, Safari before 26) main.js drives both: an observer plays the
+  arrival once a surface enters, and the particles are paused animations parked
+  at the scroll progress it writes. Firefox 159 keeps the script for the
+  particles: it runs every lap over the whole page instead of sharing the
+  scroll out, so main.js asks the engine (`scrollSharesLaps()`), not the
+  version. `mw-occasion-waiting`, `-arriving` and
   `mw-occasion-driven` are set by the script, never by the markup.
 - `mw-occasion-sm` / `-lg` set `--mw-occasion-scale` (0.88 / 1.1, piece size)
   and `--mw-occasion-amount` (0.55 / 1.3: snow depth, drips, baubles,

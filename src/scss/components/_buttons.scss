@@ -36,10 +36,16 @@
       transition-duration: var(--mw-duration-instant);
     }
 
-    &:disabled {
+    &:disabled,
+    &[aria-disabled='true'] {
       cursor: not-allowed;
       opacity: 0.6;
       transform: none;
+    }
+
+    // A link cannot be :disabled, so nothing else stops its hover and click
+    &[aria-disabled='true'] {
+      pointer-events: none;
     }
   }
 

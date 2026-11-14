@@ -196,7 +196,8 @@ On a phone that would put it past the screen, so there it keeps
 gap - so main padding, sticky offsets and the anchor scroll clear it without
 knowing it floats. Without `mw-header-reveal` it starts as the full bar and
 docks into the island over the first 160px of scroll; without scroll timelines
-(Firefox) or under reduced motion it is the island from the start.
+(older Safari, Firefox before 159) or under reduced motion it is the island from
+the start.
 `mw-header-bar` on `<html>` brings back the flat bar: full width, fixed at the
 top, 62px, no docking. `mw-header-reveal` still rides it in, as before the
 island.
@@ -211,8 +212,8 @@ the height of the pair, so they arrive as one block rather than the ribbon
 catching up. Focus inside either brings both back regardless of the scroll
 position, so tabbing never lands on a link that is off screen (WCAG 2.4.11).
 Under `prefers-reduced-motion` or `mw-motion-off` the bar is simply there, and so it is without
-scroll timelines unless `maverick-wave.min.js` is on the page - in Firefox that
-is what rides it in (`javascript.md`).
+scroll timelines unless `maverick-wave.min.js` is on the page - in older Safari
+and Firefox before 159 that is what rides it in (`javascript.md`).
 
 **Something that stays.** `mw-header-keep` on a control inside the bar - the
 login button, the burger - holds it in place while the bar rides in behind it:
@@ -481,7 +482,7 @@ short enough to centre; a section head is not, so the framework does not offer
 the choice.
 
 Its tokens: `--mw-section-head-gap` (space to the content below),
-`--mw-section-head-pad` (rule to title), `--mw-section-head-mark-width` (80px)
+`--mw-section-head-pad` (rule to title), `--mw-section-head-mark-width` (96px)
 and `--mw-section-head-mark-color`.
 
 The first two are multiples of `--mw-section-head-step`, which is derived from
@@ -489,6 +490,12 @@ The first two are multiples of `--mw-section-head-step`, which is derived from
 it, and the fluid preset carries them along without a ramp of its own. A head
 with no `mw-section-head-intro` takes a smaller gap: the gap sized to follow a
 paragraph reads as a hole under a rule and one line of type.
+
+The mark draws itself out along the rule as the head scrolls in, on the head's
+own `view-timeline` (`--mw-section-head`), and is done once the head's top is
+about two thirds down the screen. Nothing to add per head. Without scroll
+timelines, under reduced motion, with `mw-scroll-static` and on paper it simply
+stands drawn.
 
 The strip sticks at `--mw-header-height` and is `--mw-section-nav-height` tall
 (3.75rem). A page carrying one adds that height to `scroll-padding-top` on its
@@ -626,9 +633,9 @@ is taken on a phone. With an `mw-action-bar` on the page the cue moves up by
 moves the picture into its own layer. The container drops its own background and
 the layer reads `--mw-hero-background`, so the image stays configured in one
 place. Every mode runs on the browser's scroll timeline, and on no
-`background-attachment: fixed`, which iOS ignores. Older Safari and Firefox have
-no timelines; there the shipped JS moves the layers instead, and without it the
-picture simply sits still (`javascript.md`).
+`background-attachment: fixed`, which iOS ignores. Older Safari and Firefox
+before 159 have no timelines; there the shipped JS moves the layers instead, and
+without it the picture simply sits still (`javascript.md`).
 
 ```html
 <header class="mw-header mw-header-reveal">...</header>
@@ -696,6 +703,61 @@ siblings, and the section directly after it the same edge shadow.
 
 Without scroll timelines, or under `prefers-reduced-motion` or `mw-motion-off`,
 the picture stands still and nothing else changes.
+
+## Link in Bio
+
+The page an Instagram profile links to, as part of the site: its own header
+with the way back, then one section. `mw-bio` goes on that section and keeps the
+container phone-wide (30rem) on every screen, with a soft glow in the brand
+colours behind it. Head and cards rise in one after another on load.
+
+| Class                              | Use                                                                                                                                                                                                                                                                                                                                                                                               |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mw-bio-head`                      | Avatar, name, tagline, status and icons, centred                                                                                                                                                                                                                                                                                                                                                  |
+| `mw-bio-avatar`                    | Ringed frame around the `img`, round, 104px. `mw-bio-avatar-portrait` makes it an upright 4:5 photo (104 × 130) with rounded corners                                                                                                                                                                                                                                                              |
+| `mw-bio-name` / `mw-bio-tagline`   | The `h1` and the line under it                                                                                                                                                                                                                                                                                                                                                                    |
+| `mw-bio-status`                    | A pill for what is true today, green dot; `mw-bio-status-urgent` turns the dot amber                                                                                                                                                                                                                                                                                                              |
+| `mw-bio-socials` + `mw-bio-social` | A row of round icon links, the name goes in `aria-label`                                                                                                                                                                                                                                                                                                                                          |
+| `mw-bio-links`                     | The column of cards; a `p.mw-bio-label` between two groups                                                                                                                                                                                                                                                                                                                                        |
+| `mw-card mw-card-link`             | One link as a card on an `<a>`: `-media` in front (an icon in the addon colour, `-media-logo` on a white plate, `-media-photo` as a thumbnail) or `-cover` above, then `-body` with `-title`, `-subtitle` (two lines, then an ellipsis) and `-kicker`. A title alone sits centred. The mark at the end is a chevron, or an arrow out for `rel="external"`, `target="_blank"` or an `http` address |
+| `mw-card-link-featured`            | Filled, for the one link that matters most; a streak of light runs across once the page has settled                                                                                                                                                                                                                                                                                               |
+| `mw-card-link-quiet`               | The imprint at the bottom - flat, but full contrast                                                                                                                                                                                                                                                                                                                                               |
+
+```html
+<section class="mw-section mw-bio">
+  <div class="mw-container">
+    <div class="mw-bio-head">
+      <div class="mw-bio-avatar mw-bio-avatar-portrait">
+        <img src="/team.jpg" alt="" />
+      </div>
+      <h1 class="mw-bio-name">Bäckerei Brandt</h1>
+      <p class="mw-bio-tagline">Sourdough, rye and cinnamon rolls</p>
+      <p class="mw-bio-status">Stollen orders open until 15 December</p>
+    </div>
+    <nav class="mw-bio-links" aria-label="Links">
+      <a class="mw-card mw-card-link mw-card-link-featured" href="/order">
+        <span class="mw-card-link-media"
+          ><i class="fas fa-basket-shopping"></i
+        ></span>
+        <span class="mw-card-link-body">
+          <span class="mw-card-link-kicker">New</span>
+          <span class="mw-card-link-title">Pre-order your Sunday bread</span>
+        </span>
+      </a>
+      <p class="mw-bio-label">Visit us</p>
+      <a class="mw-card mw-card-link mw-card-link-quiet" href="/impressum">
+        <span class="mw-card-link-body">
+          <span class="mw-card-link-title">Imprint</span>
+        </span>
+      </a>
+    </nav>
+  </div>
+</section>
+```
+
+Both avatar shapes set a fixed height, not `aspect-ratio`: up to 6.17 WebKit
+resolved the image's `height: 100%` against the padded ring and stretched it
+into an oval. Keep it that way when resizing the avatar.
 
 ## Grid
 
@@ -795,6 +857,24 @@ order the reading order and check the tab order when the sizes differ a lot. A
 </div>
 ```
 
+**Stack** - `mw-stack` (since 6.13.0) for a handful of projects or case studies
+that each take a full row and should pile up while the page scrolls. From `lg`
+every child is `position: sticky` below the fixed chrome (header, announcement,
+section nav), each one `--mw-stack-step` (default `spacing('4')`) lower than the
+one before, so the next card slides over it. Below `lg` it is a plain grid with
+`spacing('8')` gap - a card taller than the phone screen would never show its
+end. The offset counts to the twelfth child. Children need their own background
+(`mw-card` has one), and the stack ends where its container ends: there the
+cards leave together.
+
+```html
+<div class="mw-stack">
+  <article class="mw-card">...</article>
+  <article class="mw-card">...</article>
+  <article class="mw-card">...</article>
+</div>
+```
+
 ## Utilities
 
 **Spacing** - margin `mw-m-*`, `mw-mt-*`, `mw-mb-*`, `mw-ml-*`, `mw-mr-*`,
@@ -855,9 +935,10 @@ three fifths of the way in - measured along its own entry, so it is never still
 transparent once it stands in its place, whatever its height. A block taller
 than the screen is capped at one viewport by the entry phase itself. Doubly guarded:
 `prefers-reduced-motion` and `mw-motion-off` turn it off, and a browser without scroll timelines
-renders the block in place instead of leaving it invisible. Firefox is that
-browser - there the shipped JS runs the entrance off an `IntersectionObserver`,
-so a page without the script keeps the block and loses only the motion
+renders the block in place instead of leaving it invisible. Older Safari and
+Firefox before 159 are those browsers - there the shipped JS runs the entrance
+off an `IntersectionObserver`, so a page without the script keeps the block and
+loses only the motion
 (`javascript.md`). Put it on section content, not on the section itself - a
 screen-high band finishes its entrance before its content is halfway up.
 
@@ -879,6 +960,21 @@ container - `mw-columns-*`, a layout of your own - gets a fixed cycle of three.
 
 The animation lets go once the entrance is done, so a card keeps its hover
 lift and an open dropdown inside it is not trapped under the next card.
+
+Two quieter entrances go next to `mw-reveal` or `mw-reveal-stagger`:
+`mw-reveal-fade` comes in without travel, for text, and `mw-reveal-zoom`
+settles from 96%, for pictures and tiles. On a grid they reach every card by
+inheritance. `--mw-reveal-shift` sets how far the default rises (40px). None of
+them moves sideways: a block pushed past the edge widens the page, and a phone
+then scrolls sideways for it.
+
+```html
+<div class="mw-grid-3 mw-reveal-stagger mw-reveal-zoom">...</div>
+<p class="mw-reveal mw-reveal-fade">...</p>
+```
+
+The entrance is screen-only. Paper does not scroll, and a timeline that never
+starts would print the block as blank space.
 
 **Corner accent** - `mw-corner-plain` drops the accent arc that sits on the
 two round corners of every card, panel, modal, tile, accordion, calendar,

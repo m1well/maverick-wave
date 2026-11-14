@@ -33,12 +33,7 @@
         font-size: font-size('xs');
       }
 
-      @include hover-move {
-        transform: translateY(-2px);
-      }
-
       &:hover {
-        box-shadow: var(--mw-elevation-3);
         border-color: var(--mw-primary-text-color);
 
         .mw-techstack-logo {

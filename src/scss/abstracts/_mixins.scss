@@ -258,14 +258,21 @@
       0 2px 4px color-mix(in srgb, #{$tone} 30%, transparent),
       0 10px 22px -8px color-mix(in srgb, #{$tone} 65%, transparent)
     );
-    transform: translateY(-1px);
+  }
+
+  // :active stays out, or this outweighs the press scale on .mw-btn
+  @include hover-move {
+    &:not(:disabled, :active) {
+      transform: translateY(-1px);
+    }
   }
 
   &:active:not(:disabled) {
     box-shadow: inset 0 2px 4px color-mix(in srgb, #000 22%, transparent);
   }
 
-  &:disabled {
+  &:disabled,
+  &[aria-disabled='true'] {
     box-shadow: none;
   }
 }
@@ -354,6 +361,13 @@
 // mask is an ellipse - see corner-accent() for what that costs.
 $_corner-stretch: 1.5;
 $_corner-opaque: 55%;
+// Extra reach per axis at --mw-corner-pull: 1, as a share of the resting one
+$_corner-pull-x: 2.36;
+$_corner-pull-y: 0.55;
+
+@function _pulled($reach, $share) {
+  @return calc(#{$reach} * (1 + var(--mw-corner-pull, 0) * #{$share}));
+}
 
 // `surface(0)` is the natural way to say "no border to subtract", but a unitless
 // zero makes every `calc(<length> - 0)` below invalid - and an invalid calc takes
@@ -390,7 +404,8 @@ $_corner-opaque: 55%;
   $reach: max(18px, calc(#{radius('md')} * 2.2));
 
   mask-image: radial-gradient(
-    ellipse calc(#{$reach} * #{$_corner-stretch}) #{$reach} at 100% 0,
+    ellipse _pulled(calc(#{$reach} * #{$_corner-stretch}), $_corner-pull-x)
+      _pulled($reach, $_corner-pull-y) at 100% 0,
     #000 $_corner-opaque,
     transparent 100%
   );
@@ -429,14 +444,15 @@ $_corner-opaque: 55%;
   // The stop is a percentage here where the circle could take a length: on an
   // ellipse a length would be measured along one axis only and the fade would
   // start at different points on the two. The default sits where $round fell.
-  $reach-x: calc(#{$reach} * #{$_corner-stretch});
+  $reach-x: _pulled(calc(#{$reach} * #{$_corner-stretch}), $_corner-pull-x);
+  $reach-y: _pulled($reach, $_corner-pull-y);
   $top: radial-gradient(
-    ellipse $reach-x $reach at 100% 0,
+    ellipse $reach-x $reach-y at 100% 0,
     #000 $_corner-opaque,
     transparent 100%
   );
   $bottom: radial-gradient(
-    ellipse $reach-x $reach at 0 100%,
+    ellipse $reach-x $reach-y at 0 100%,
     #000 $_corner-opaque,
     transparent 100%
   );
@@ -456,6 +472,29 @@ $_corner-opaque: 55%;
     mask-image: $top;
   } @else {
     mask-image: $top, $bottom;
+  }
+}
+
+// No lift and no deeper shadow - rising toward the pointer is a button's answer
+@mixin surface-hover {
+  &::after {
+    transition:
+      var(--mw-transition),
+      --mw-corner-pull var(--mw-duration-slow) var(--mw-ease-out);
+  }
+
+  &:hover {
+    background-color: var(--mw-card-background-hover);
+
+    &::after {
+      --mw-corner-accent: var(--mw-corner-accent-hover);
+    }
+  }
+
+  @include hover-move {
+    &::after {
+      --mw-corner-pull: 1;
+    }
   }
 }
 
