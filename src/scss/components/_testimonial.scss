@@ -18,6 +18,8 @@
     background: var(--mw-card-background);
     border: 1px solid var(--mw-border);
     box-shadow: var(--mw-elevation-2);
+    transition: var(--mw-transition);
+    @include surface-hover;
 
     // Several of these in a row, each quote on the base blockquote tint, add up
     // to a solid colored wall nobody reads through. The card already carries the

@@ -6,6 +6,13 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.24.0] - 2026-11-14
+
+### Changed
+
+- `mw-testimonial` answers hover like a card: the corner arcs run out, the surface takes the hover tint
+- `$card-hover-tint` is now `$card-hover-tint-dark` (4%) and `$card-hover-tint-light` (3%)
+
 ## [6.23.0] - 2026-11-14
 
 ### Added

@@ -3042,7 +3042,8 @@ The card carries the surface, so inside it the blockquote drops most of its
 tint and keeps only the edge and the quotation marks. `mw-testimonial-source`
 uses `margin-top: auto` - in a grid of equal-height cards every source line
 sits on its card's bottom edge. `mw-testimonial-featured` sets the quote a
-size larger, for the one voice lifted above the grid.
+size larger, for the one voice lifted above the grid. Under the pointer it
+answers like a card: the corner arcs run out, the surface takes the hover tint.
 
 `mw-testimonial-date` is optional: a `<time>` on the right edge of the source
 line, month and year - a full date is review-platform optics, a bare year
