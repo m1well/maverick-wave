@@ -72,28 +72,8 @@
 
     // The arc on the two round corners is the one mark that makes a card look
     // like this framework and not like a rounded box, so it is what the hover
-    // pulls on. Recoloured through the token the mixin already reads - on the
-    // ::after alone, because set on the card it inherits into every arc inside
-    // it, an avatar's or a nested card's.
-    &::after {
-      transition: var(--mw-transition);
-    }
-
-    &:hover {
-      box-shadow: var(--mw-elevation-3);
-      border-color: var(--mw-border-accent);
-
-      &::after {
-        --mw-corner-accent: var(--mw-corner-accent-hover);
-      }
-    }
-
-    // Pointer-guarded, unlike the colour and shadow above: on touch `:hover`
-    // latches after a tap and the card would stay raised, visibly out of line
-    // with the row it sits in. A latched border is no worse than nothing.
-    @include hover-move {
-      transform: translateY(-2px);
-    }
+    // pulls on.
+    @include surface-hover;
 
     // Padded surface for arbitrary content - stays a block container so inline
     // children keep flowing instead of turning into flex items

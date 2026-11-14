@@ -146,13 +146,6 @@
       transparent
     );
 
-    &:hover {
-      &::before,
-      &::after {
-        opacity: 0.7;
-      }
-    }
-
     &::before,
     &::after {
       font-family: Georgia, serif;
@@ -163,13 +156,13 @@
     }
 
     &::before {
-      content: '"';
+      content: '\201C';
       top: spacing('-1');
       left: spacing('2');
     }
 
     &::after {
-      content: '"';
+      content: '\201D';
       bottom: spacing('-6');
       right: spacing('4');
     }

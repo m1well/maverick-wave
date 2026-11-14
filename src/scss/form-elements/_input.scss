@@ -9,6 +9,7 @@
     min-height: var(--mw-control-height);
     background: var(--mw-form-elements-background);
     color: var(--mw-form-elements-color);
+    caret-color: var(--mw-primary-color);
     border: 2px solid var(--mw-border);
     border-radius: radius('sm');
     transition: var(--mw-transition);

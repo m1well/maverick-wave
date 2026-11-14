@@ -12,6 +12,13 @@
     initial-value: 1;
   }
 
+  // Registered, or the arc's mask cannot interpolate and the hover jumps
+  @property --mw-corner-pull {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+  }
+
   // Active theme set and its token prefix, derived from $mw-theme-mode
   $_active-theme: $dark-theme-colors;
   $_active-prefix: 'dark';

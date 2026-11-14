@@ -51,10 +51,6 @@
       transition: opacity var(--mw-duration-slower) var(--mw-ease-out);
     }
 
-    @include hover-move {
-      transform: translateY(-3px);
-    }
-
     &:hover {
       border-style: solid;
 

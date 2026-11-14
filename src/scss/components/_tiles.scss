@@ -13,6 +13,9 @@
   // below and the queries fall back to the window.
   $_mw-tile-wide: 300px;
   $_mw-tile-narrow: 220px;
+  // 8 units of air on the left, so the mark keeps its distance from the title
+  $_mw-tile-mark-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-8 0 32 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 5 7 7-7 7'/%3E%3C/svg%3E");
+  $_mw-tile-mark-out: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-8 0 32 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
 
   .mw-tile {
     width: 100%;
@@ -34,22 +37,9 @@
 
     // Same hover as a card, arc included - a tile is the larger clickable
     // relative of one, and a pair that looks alike has to react alike.
-    &::after {
-      transition: var(--mw-transition);
-    }
-
-    &:hover {
-      box-shadow: var(--mw-elevation-3);
-      border-color: var(--mw-border-accent);
-
-      &::after {
-        --mw-corner-accent: var(--mw-corner-accent-hover);
-      }
-    }
+    @include surface-hover;
 
     @include hover-move {
-      transform: translateY(-2px);
-
       // The whole tile is the target, unlike a card where the image frame
       // owns its own hover - a tile is one face, not a stack of regions.
       .mw-tile-img img {
@@ -57,7 +47,7 @@
       }
     }
 
-    // A tile is tapped, so it needs a press of its own - the lift above never
+    // A tile is tapped, so it needs a press of its own - the pull above never
     // runs on a finger. Guarded like every other travel in the framework; what
     // is left without it is the latched hover, which is feedback enough.
     @include motion-safe {
@@ -261,6 +251,31 @@
 
     @include focus-ring;
     @include tappable;
+  }
+
+  // Visible at rest: a finger never sees the cursor or the hover. Inline box
+  // around a word joiner and moved by offset, like mw-link-arrow
+  a.mw-tile .mw-tile-header::after {
+    content: '\2060';
+    position: relative;
+    left: 0;
+    padding-left: 0.95em;
+    background: var(--mw-primary-text-color);
+    mask: $_mw-tile-mark-on 0 0 / 100% 100%;
+    transition: left var(--mw-duration-fast) var(--mw-ease-out);
+  }
+
+  a.mw-tile:is([href^='http'], [target='_blank'], [rel~='external'])
+    .mw-tile-header::after {
+    mask-image: $_mw-tile-mark-out;
+  }
+
+  a.mw-tile {
+    @include hover-move {
+      .mw-tile-header::after {
+        left: 0.15em;
+      }
+    }
   }
 
   // A cramped tile reads better ranged left whatever the window is doing - a

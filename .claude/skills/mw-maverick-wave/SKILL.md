@@ -77,8 +77,8 @@ belongs in `src/index.html` there, with `viewport-fit=cover` just the same.
 
 **`main-lean` for a page that uses a handful of components.** The full build is
 ~72 kB gzipped and carries every component. `main-lean` is the same framework
-without the components - tokens, reset, typography, layout (app shell and bento
-included), utilities, plus the tooltip and the hero badge the layout itself
+without the components - tokens, reset, typography, layout (app shell, bento and
+stack included), utilities, plus the tooltip and the hero badge the layout itself
 uses - and the components come in one by one next to it:
 
 ```scss
@@ -100,6 +100,13 @@ component imports.
 > Reimplement the handful of behaviours in your own components -
 > `references/javascript.md` lists all of them, `examples/angular-services.md`
 > shows the code.
+
+**Angular apps of mine use `maverick-wave-angular` (npm) instead** - it brings
+those behaviours and the same markup as `maverick-wave-astro`. Never hand-build
+there what it ships: `mw-header` (`backOnly` on legal pages), `mw-footer full`
+with `social`, `notes`, `builtWith`, and for imprint, privacy and other subpages
+`<mw-subpage>` with `<mw-imprint-card>` or `<mw-privacy-card>` inside. Inputs and
+slots: `README.md` of the package in `node_modules/maverick-wave-angular`.
 
 ### Icons
 
@@ -304,7 +311,9 @@ Everything below is documented in `references/components.md` unless marked other
 
 **Actions** `mw-btn` (+ `primary`, `secondary`, `danger`, `success`, `outline`,
 `ghost`, `ghost-danger`, `link`, `link-muted`, `plain`, `icon`, `block`,
-`block-sm`, `sm`, `lg`) · `mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text) ·
+`block-sm`, `sm`, `lg`, `shine`, `forward`; `aria-busy="true"` shows a spinner) ·
+`mw-btn-mini` · `mw-link` / `mw-link-muted` (the link in running text,
+`+ mw-link-arrow` for one that leads on) ·
 `mw-link-stretched` + `mw-above-link` (the whole card as a link's hit area) ·
 `mw-button-bar`
 (+ `left`, `right`, `center`, `between`) · `mw-segmented` · `mw-actions-note` ·
@@ -322,7 +331,9 @@ needs no script) · `mw-faq` (+ `-cards`) · `mw-tabs` ·
 `mw-item-list` family (+ `-flush`) · `mw-offer` (+ `-head`, `-name`) ·
 `mw-leader-row` (+ `-label`, `-value`, `-top`, `-dashed`, `-solid`) ·
 `mw-date-stamp` (+ `-day`, `-date`, `-body`, `-today`) ·
-`mw-contact` (+ `-row`, `-label`)
+`mw-contact` (+ `-row`, `-label`) · `mw-card-link` on a `mw-card` (+ `-media`,
+`-media-logo`, `-media-photo`, `-cover`, `-body`, `-title`, `-subtitle`,
+`-kicker`, `-featured`, `-quiet`; `references/layout.md`)
 
 **Pricing** `mw-price` (+ `-amount`, `-fraction`, `-currency`, `-original`,
 `-period`, `-word`, `-note`, `xs`/`sm`/`lg`, `inline`, `center`, `plain`)
@@ -395,7 +406,10 @@ on the auto grids) ·
 `-main`, `-topbar`, `-title`, `-actions`, `-content`, `-content-flush`,
 `-toggle`, `-toggle-icon`, `-aside`, `-aside-header`, `-aside-body`, `-tabbar`,
 `-tabbar-item`; the SaaS app shell, `data-mw-app-persist` remembers its state) · `mw-bento` (+ `-wide`, `-tall`, `-lg`,
-`-full`, `-compact`)
+`-full`, `-compact`) · `mw-stack` (cards piling up on scroll, from `lg`,
+`--mw-stack-step`) · `mw-bio` (the link-in-bio page; + `-head`, `-avatar`,
+`-avatar-portrait`, `-name`, `-tagline`, `-status`, `-status-urgent`,
+`-socials`, `-social`, `-links`, `-label`)
 
 **Utilities** (`references/layout.md`) `mw-sr-only` / `mw-sr-only-focusable` /
 `mw-skip-link` · `mw-row-split` (+ `center`) · `mw-text-numeric` /
@@ -408,7 +422,8 @@ on the auto grids) ·
 bar) · `mw-w-auto` / `mw-min-w-0` ·
 `mw-aspect-square|video|wide|portrait|photo` · `mw-d-{sm,md,lg,xl}-*` /
 `mw-hide-mobile` / `mw-hide-desktop` / `mw-hide-print` / `mw-print-only` · `mw-overflow-*` / `mw-snap-x` ·
-`mw-reveal` / `mw-reveal-stagger` · spacing, flex, display, text
+`mw-reveal` / `mw-reveal-stagger` (+ `mw-reveal-fade` / `-zoom`) · spacing,
+flex, display, text
 
 **Site-wide on `<html>`** (`references/theming.md`) `mw-corners-even` ·
 `mw-accent-single` · `mw-accent-text-auto` · `mw-shadows-flat` / `-hard` ·
@@ -446,7 +461,7 @@ bar) · `mw-w-auto` / `mw-min-w-0` ·
    the opposite label - a neon primary on an otherwise dark palette. The fixed
    grey surfaces - tooltip, `mw-btn-mini`, `mw-info-mini`, gallery arrows -
    hardcode white and ignore all of them.
-8. **`mw-card` already lifts on hover** and `mw-btn` already has `inline-flex`
+8. **`mw-card` already answers hover** and `mw-btn` already has `inline-flex`
    plus a gap for icons. Neither has a modifier class for it - adding one from
    memory produces markup that does nothing.
 9. **Overriding one root colour is enough.** Hover tones, translucent

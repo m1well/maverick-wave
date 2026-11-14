@@ -6,6 +6,26 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.23.0] - 2026-11-14
+
+### Added
+
+- `mw-btn` with `aria-disabled="true"`: dimmed like `:disabled` and takes no pointer - for an `<a>`, which cannot be disabled
+- `caret-color` in the primary on `mw-input` and `mw-textarea`
+- Press feedback on `mw-pagination-page` (primary tint) and on a `mw-tag` / `mw-tags-item` that is an `a` or `button` (gives to 96 %)
+
+### Fixed
+
+- Solid `mw-btn-*`: the 1px hover lift no longer runs on a `data-tooltip` trigger, where it dropped the bubble into the button, nor on a disabled button, under `mw-hover-static` or with reduced motion
+- `mw-table`: header text can be selected and copied with the table again - `user-select: none` is down to the sort button in `th[aria-sort]`
+
+### Changed
+
+- `blockquote`: the two marks are typographic quotes (“ ”) instead of a straight one twice, and no longer brighten on hover
+- `mw-card`, `mw-tile`: hover no longer lifts, deepens the shadow or recolours the border - the corner arcs run out along both edges and hold, the surface takes a 4% trace of the brand ink (`--mw-card-background-hover`, `$card-hover-tint`)
+- `a.mw-tile` shows a chevron after its `mw-tile-header` at rest, an arrow out of the box for an external link
+- `mw-info`, `mw-techstack-item`, `mw-coming-soon`, `mw-bio-social`, `mw-social-links`, grouped avatars: no hover lift; a clickable `mw-info` answers with an accent ring
+
 ## [6.22.0] - 2026-11-01
 
 ### Added

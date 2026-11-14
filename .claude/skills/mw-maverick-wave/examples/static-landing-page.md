@@ -521,9 +521,11 @@ accordion FAQ.
 - `mw-reveal-stagger` goes on the grid (or `mw-columns-*`) and reveals every
   child as it scrolls in, the second and third of each three a beat later.
   `mw-reveal` on a single block reveals that block as one. Both are off under
-  `prefers-reduced-motion` and `mw-motion-off`. A page like this one loads the script, so Firefox -
-  which has no scroll timelines - runs the same entrance off an observer;
-  without the script the blocks stand in place, never invisible.
+  `prefers-reduced-motion` and `mw-motion-off`. A page like this one loads the
+  script, so a browser without scroll timelines - older Safari, Firefox before
+  159 - runs the same entrance off an observer; without the script the blocks
+  stand in place, never invisible. `mw-reveal-fade` or `mw-reveal-zoom` next to
+  either class gives a quieter entrance.
 - `mw-offer` on a card pushes the price row to the bottom of the body, so the
   prices in a row line up. The `mw-card-feature` frame around the middle plan
   reaches 29px above its card - the `mw-mt-10` on the grid is that room.

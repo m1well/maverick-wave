@@ -35,6 +35,10 @@
     &:is(a, button):hover {
       background: var(--mw-primary-background-hover);
     }
+
+    &:is(a, button):active {
+      transform: scale(0.96);
+    }
   }
 
   // Tag item - inside a `.mw-tags` container

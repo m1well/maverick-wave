@@ -14,19 +14,9 @@
     background: var(--mw-card-background);
     border: 1px solid var(--mw-border);
     border-radius: radius('md');
-    transition:
-      transform var(--mw-duration-base) var(--mw-ease-out),
-      box-shadow var(--mw-duration-base) var(--mw-ease-out);
+    transition: var(--mw-transition);
     cursor: default;
     text-decoration: none;
-
-    &:hover {
-      box-shadow: var(--mw-elevation-3);
-    }
-
-    @include hover-move {
-      transform: translateY(-2px);
-    }
 
     // Interactive variant
     &-clickable {
@@ -56,8 +46,8 @@
     }
 
     // The same surface carrying a paragraph instead of a figure. The base centres
-    // a short value and lifts on hover, which turns running text into a ragged
-    // stack that twitches under the pointer - this stays put and reads as a note.
+    // a short value, which turns running text into a ragged stack - this reads
+    // as a note.
     &-block {
       display: flex;
       align-items: flex-start;
@@ -71,14 +61,6 @@
       line-height: 1.7;
       text-align: left;
       text-wrap: pretty;
-
-      &:hover {
-        box-shadow: none;
-      }
-
-      @include hover-move {
-        transform: none;
-      }
 
       // For the page that does centre its blocks
       &-center {
@@ -128,6 +110,13 @@
     cursor: pointer;
 
     @include focus-ring;
+  }
+
+  // A ring and not the border or the fill: the colour variants own both
+  a.mw-info:hover,
+  button.mw-info:hover,
+  .mw-info-clickable:hover {
+    box-shadow: 0 0 0 1px var(--mw-border-accent);
   }
 
   // Info like mini-buttons

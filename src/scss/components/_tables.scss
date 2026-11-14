@@ -21,7 +21,6 @@
       font-weight: font-weight('medium');
       color: var(--mw-primary-accent-text-color);
       background: var(--mw-primary-color);
-      user-select: none;
     }
 
     // Zebra striping
@@ -194,6 +193,7 @@
     color: inherit;
     font: inherit;
     cursor: pointer;
+    user-select: none;
     // The header's fill is the ring's usual tone
     @include focus-ring($color: currentColor);
   }

@@ -141,14 +141,9 @@
       .mw-avatar {
         margin: spacing('0') -15px spacing('0') spacing('0');
         border: 2px solid var(--mw-secondary-text-color);
-        transition: transform var(--mw-duration-base) var(--mw-ease-out);
 
         @include hover {
           z-index: z-index('lift');
-        }
-
-        @include hover-move {
-          transform: translateY(-3px);
         }
 
         &:last-child {
