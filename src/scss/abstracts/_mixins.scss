@@ -475,6 +475,8 @@ $_corner-pull-y: 0.55;
   }
 }
 
+$_hover-hosts: '.mw-card, .mw-tile, .mw-testimonial';
+
 // No lift and no deeper shadow - rising toward the pointer is a button's answer
 @mixin surface-hover {
   &::after {
@@ -484,10 +486,23 @@ $_corner-pull-y: 0.55;
   }
 
   &:hover {
-    background-color: var(--mw-card-background-hover);
+    // Mixed in place, not a theme token: an area with its own card colour keeps it
+    --_tone: color-mix(
+      in oklab,
+      var(--mw-card-background),
+      var(--mw-primary-text-color) var(--mw-card-hover-tint)
+    );
+    --mw-scroll-hint-cover: var(--_tone);
+    background-color: var(--_tone);
 
     &::after {
       --mw-corner-accent: var(--mw-corner-accent-hover);
+    }
+
+    // What sits inside paints with the card colour and has to follow - another
+    // host does not, it mixes from this token and would cycle
+    > :not(#{$_hover-hosts}) {
+      --mw-card-background: var(--_tone);
     }
   }
 

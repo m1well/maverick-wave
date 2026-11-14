@@ -237,13 +237,6 @@ $focus-halo-opacity: 28% !default;
   );
 }
 
-// The ink tone and not the fill: a dark brand colour would vanish into a dark card
-@function hover-tint($theme, $amount) {
-  @return string.unquote(
-    'color-mix(in oklab, var(--mw-#{$theme}-card-background), var(--mw-#{$theme}-primary-text-color) #{$amount})'
-  );
-}
-
 // Built from a true gray, not by stepping the text color back: that would hand a
 // tinted text color's tint straight through - a mint page, mint secondary text
 @function muted($lightness) {
@@ -353,7 +346,7 @@ $semantic-colors: (
 
 // The theme keys that are not colors. light-dark() only takes <color>, so these
 // keep the alias-per-theme route while everything else resolves in one line.
-$theme-non-colors: ('hero-image-filter');
+$theme-non-colors: ('hero-image-filter', 'card-hover-tint');
 
 // Categorical chart colours in a fixed order, stepped per theme and checked for
 // colour vision deficiency against the default cards. A ninth series folds into
@@ -403,7 +396,7 @@ $dark-theme-colors: (
   // Factors live with the derivation knobs above so the stack retunes from one
   // place. The rule keeps its own: it runs against the card or it disappears.
   'card-background': surface('dark-page-background', $card-surface-dark),
-  'card-background-hover': hover-tint('dark', $card-hover-tint-dark),
+  'card-hover-tint': $card-hover-tint-dark,
   'footer-background': surface('dark-page-background', $footer-surface-dark),
   'border': surface('dark-page-background', 1.35),
   'shadow': fade('dark-text-color', 30%),
@@ -434,7 +427,7 @@ $light-theme-colors: (
   'page-background': $light-background,
   'hero-image-filter': $hero-filter-light,
   'card-background': surface('light-page-background', $card-surface-light),
-  'card-background-hover': hover-tint('light', $card-hover-tint-light),
+  'card-hover-tint': $card-hover-tint-light,
   'footer-background': surface('light-page-background', $footer-surface-light),
   'border': surface('light-page-background', 0.8),
   'shadow': fade('light-text-color', 30%),
