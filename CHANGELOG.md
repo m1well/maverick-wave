@@ -6,6 +6,12 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.29.0] - 2026-11-17
+
+### Fixed
+
+- `--mw-modal-reserve` is defined on the root instead of on `.mw-modal`, so a wrapper component (`MwDialog`, `Modal.astro`) can set it on its host
+
 ## [6.28.0] - 2026-11-17
 
 ### Added
