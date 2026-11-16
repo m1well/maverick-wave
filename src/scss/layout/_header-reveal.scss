@@ -123,7 +123,7 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
     .mw-announcement:focus-within
   ) {
     .mw-header-reveal {
-      top: var(--mw-header-inset) !important;
+      top: var(--mw-header-top) !important;
       opacity: 1 !important;
     }
 
@@ -170,7 +170,7 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   // earlier - together the bar would slide away in front of the reader.
   .mw-header-reveal.mw-header-away {
     @include motion-safe {
-      top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
+      top: calc(var(--mw-header-top) - var(--mw-header-reveal-offset));
       opacity: 0;
 
       // Visible through the slide, so its shadow would hang into the hero
@@ -225,12 +225,12 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   @keyframes mw-header-reveal {
     0%,
     30% {
-      top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
+      top: calc(var(--mw-header-top) - var(--mw-header-reveal-offset));
       opacity: 0;
     }
 
     100% {
-      top: var(--mw-header-inset);
+      top: var(--mw-header-top);
       opacity: 1;
     }
   }
@@ -240,12 +240,12 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
   @keyframes mw-header-slide {
     0%,
     30% {
-      top: calc(var(--mw-header-inset) - var(--mw-header-reveal-offset));
+      top: calc(var(--mw-header-top) - var(--mw-header-reveal-offset));
       box-shadow: none;
     }
 
     100% {
-      top: var(--mw-header-inset);
+      top: var(--mw-header-top);
     }
   }
 
@@ -256,6 +256,7 @@ $float-edge: (0 0 0 1px rgb(255 255 255 / 0.22), 0 4px 14px rgb(0 0 0 / 0.4));
       left: 0;
       right: 0;
       min-height: var(--mw-header-height);
+      padding-top: calc(#{spacing('2')} + env(safe-area-inset-top, 0px));
       // Percentages of the viewport here, so the content box is the page
       // container in both states and the logo does not move sideways
       padding-inline: calc(

@@ -6,6 +6,18 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.28.0] - 2026-11-17
+
+### Added
+
+- `--mw-header-top`: the edge the header sits at, below the status bar where the page runs under it
+- `--mw-modal-reserve`: room for a fixed row of your own between modal header and body
+
+### Fixed
+
+- Island and `mw-header-bar` respect `env(safe-area-inset-top)` - a home screen app under `viewport-fit=cover` no longer puts the header under the clock; `--mw-header-height` includes the inset
+- Bottom sheet modal on a phone with home indicator: the body cap subtracts the sheet's bottom padding, so the dialog itself no longer scrolls
+
 ## [6.27.0] - 2026-11-16
 
 ### Fixed

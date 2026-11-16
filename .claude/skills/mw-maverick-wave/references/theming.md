@@ -161,6 +161,10 @@ Two rules that prevent most colour bugs:
   preference. On any other element the class switches that subtree only.
 - `--mw-hero-image-filter` is the one theme value that is not a colour and so
   cannot ride along; it follows `prefers-color-scheme` instead.
+- The corner arc on hover is derived on the card from `--mw-corner-accent`: full
+  strength in light, lifted to OKLch lightness 0.78 in dark. An area that
+  recolours the arc keeps it on hover; a light box on a page fixed to dark sets
+  `color-scheme: light` to get the light rule.
 - Card, footer and border are derived from the page background by scaling its
   OKLch lightness and chroma by one factor. A card steps **away from the text
   colour** - darker than the page in the dark theme, lighter in the light one.

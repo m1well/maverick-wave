@@ -7,6 +7,7 @@
     @include surface(0);
     box-shadow: var(--mw-elevation-5);
     --mw-modal-max-height: 85dvh;
+    --mw-modal-reserve: 0px;
     max-width: 520px;
     width: 100%;
     max-height: var(--mw-modal-max-height);
@@ -47,8 +48,9 @@
     .mw-modal.mw-modal-xl {
       max-width: 100%;
       --mw-modal-max-height: 92dvh;
+      --mw-modal-safe-bottom: env(safe-area-inset-bottom, 0px);
       border-radius: radius('xl') radius('xl') radius('none') radius('none');
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+      padding-bottom: var(--mw-modal-safe-bottom);
 
       // Square on the screen edge below: only the top arc stays, as on a drawer
       &::after {
@@ -144,16 +146,24 @@
     }
 
     // With no row to scroll in, the body gets a cap of its own: the dialog's,
-    // less the room its header and footer take (61px each on a phone sheet)
+    // less the room its header and footer take (61px each on a phone sheet), the
+    // sheet's padding over the home indicator, and `--mw-modal-reserve` for a
+    // fixed row of the page's own between header and body
     .mw-modal-body {
-      max-height: calc(var(--mw-modal-max-height) - 8rem);
+      max-height: calc(
+        var(--mw-modal-max-height) -
+          8rem - var(--mw-modal-reserve) - var(--mw-modal-safe-bottom, 0px)
+      );
       // Without it an absolute child - screen reader text, a tooltip - anchors to
       // the dialog, escapes the body's scroll and makes the whole dialog scroll
       position: relative;
     }
 
     &:not(:has(> .mw-modal-footer)) .mw-modal-body {
-      max-height: calc(var(--mw-modal-max-height) - 4rem);
+      max-height: calc(
+        var(--mw-modal-max-height) -
+          4rem - var(--mw-modal-reserve) - var(--mw-modal-safe-bottom, 0px)
+      );
     }
 
     &::backdrop {
