@@ -486,17 +486,24 @@ $_hover-hosts: '.mw-card, .mw-tile, .mw-testimonial';
   }
 
   &:hover {
-    // Mixed in place, not a theme token: an area with its own card colour keeps it
+    // Mixed in place, not theme tokens: an area with its own card colour or arc
+    // colour keeps it
     --_tone: color-mix(
       in oklab,
       var(--mw-card-background),
       var(--mw-primary-text-color) var(--mw-card-hover-tint)
     );
+    // Light: the held-back arc at full strength. Dark: lifted, never mixed toward
+    // white. A light box on a dark page gets the light rule via color-scheme.
+    --_corner-hover: light-dark(
+      oklch(from var(--mw-corner-accent) l c h / 1),
+      oklch(from var(--mw-corner-accent) max(l, 0.78) c h / 1)
+    );
     --mw-scroll-hint-cover: var(--_tone);
     background-color: var(--_tone);
 
     &::after {
-      --mw-corner-accent: var(--mw-corner-accent-hover);
+      --mw-corner-accent: var(--_corner-hover);
     }
 
     // What sits inside paints with the card colour and has to follow - another

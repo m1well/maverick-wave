@@ -106,6 +106,17 @@
           opacity: 1;
         }
       }
+
+      // iOS draws its own centred control there, wider than the column
+      @supports (-webkit-touch-callout: none) {
+        appearance: none;
+        min-width: 0;
+
+        &::-webkit-date-and-time-value {
+          margin: 0;
+          text-align: start;
+        }
+      }
     }
 
     &:disabled {
