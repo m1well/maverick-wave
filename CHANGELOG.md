@@ -6,6 +6,13 @@ Patch releases are only for test purposes - here I only document major and minor
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.27.0] - 2026-11-16
+
+### Fixed
+
+- Corner arc on hover follows a restyled `--mw-corner-accent` instead of falling back to the theme's primary - derived in place, so an area with its own arc colour keeps it; a light box on a dark page sets `color-scheme: light`
+- `mw-input` of type `date`, `time` and `datetime-local` on iOS: no longer wider than its column, value left-aligned
+
 ## [6.26.0] - 2026-11-16
 
 ### Fixed

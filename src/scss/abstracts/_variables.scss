@@ -420,8 +420,6 @@ $dark-theme-colors: (
   'border-accent': fade('dark-primary-text-color', 70%),
   // Full strength: against a dark card the ink tone is the faintest it gets
   'corner-accent': token('dark-primary-text-color'),
-  // Not tint(): mixing toward white washes the arc out instead of brightening it
-  'corner-accent-hover': ink-on-dark('primary-color', 0.78),
 );
 
 // Light theme colors. Emitted as --mw-light-<key>.
@@ -448,8 +446,6 @@ $light-theme-colors: (
   // Held back: on a near-white card the same tone carries far more contrast, and
   // at full strength the arc stops being a detail and starts being a frame
   'corner-accent': fade('light-primary-text-color', 80%),
-  // Full strength is the frame a resting card must not have and a hovered one wants
-  'corner-accent-hover': token('light-primary-text-color'),
 );
 
 $dark-theme-colors: map.merge(
