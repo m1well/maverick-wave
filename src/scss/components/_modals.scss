@@ -49,6 +49,11 @@
       --mw-modal-max-height: 92dvh;
       border-radius: radius('xl') radius('xl') radius('none') radius('none');
       padding-bottom: env(safe-area-inset-bottom, 0px);
+
+      // Square on the screen edge below: only the top arc stays, as on a drawer
+      &::after {
+        @include corner-accent(0, 'top');
+      }
     }
 
     // The grab handle. It does nothing - there is no drag-to-dismiss behind it -
@@ -57,7 +62,7 @@
     .mw-modal-header::before {
       content: '';
       position: absolute;
-      bottom: calc(100% + #{spacing('1')});
+      bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
       width: 36px;
@@ -71,7 +76,7 @@
     // density switches rewrite
     .mw-modal-header {
       position: relative;
-      margin-top: spacing('4');
+      margin-top: spacing('3');
     }
 
     // On a phone the actions are the reason the sheet is open. Full width, in
@@ -210,6 +215,11 @@
     justify-content: space-between;
     align-items: center;
 
+    // On a sheet every line the head takes is a line less of the body
+    @include media-down('sm') {
+      padding-block: spacing('2', $padding-scale);
+    }
+
     h1,
     h2,
     h3,
@@ -276,10 +286,11 @@
       transition-duration: var(--mw-duration-instant);
     }
 
-    // The one control on the sheet a thumb has to find without looking
+    // The one control on the sheet a thumb has to find without looking - a
+    // step under the touch floor, so it does not set the height of the head
     @include media-down('sm') {
-      min-width: $touch-target;
-      min-height: $touch-target;
+      min-width: $modal-close-target;
+      min-height: $modal-close-target;
     }
   }
 
