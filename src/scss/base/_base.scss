@@ -152,6 +152,10 @@
       var(--mw-header-inset) + env(safe-area-inset-top, 0px)
     );
 
+    // A fixed row of the page's own between modal header and body. On the root,
+    // so a wrapper component can set it for the dialog it renders.
+    --mw-modal-reserve: 0px;
+
     // Read by the anchor offset of anything the sticky section nav can cover.
     // The strip at its tallest: a 42px button under a thumb plus its two
     // 0.5rem paddings. Rounded up rather than down - the offset may overshoot

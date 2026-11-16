@@ -862,9 +862,10 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
   `mw-modal-xl` 960px. Height is capped at 80-92dvh (`--mw-modal-max-height`),
   the body scrolls. Below 576px it becomes a bottom sheet - a drawer does not.
 - A fixed row of your own between header and body - tabs, a jump bar - sets its
-  height as `--mw-modal-reserve` on the dialog. Without it the body keeps its
-  full cap and the whole dialog scrolls, header included. The sheet's padding
-  over the home indicator is subtracted already.
+  height as `--mw-modal-reserve` on the dialog or anything around it, so a
+  wrapper component can set it on its host. Without it the body keeps its full
+  cap and the whole dialog scrolls, header included. The sheet's padding over
+  the home indicator is subtracted already.
 - `mw-modal-full` is the document viewer: up to 1400px wide and a fixed 92dvh
   high, whatever the content - a one-page invoice gets the same box as a
   twelve-page one, and the body takes the room between header and footer.
