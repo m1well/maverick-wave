@@ -62,9 +62,14 @@
     // controls that are a line of text on a desktop and a target on a phone
     .mw-dropdown-item,
     .mw-accordion-header,
-    .mw-modal-close,
     .mw-breadcrumbs-item a {
       min-height: $touch-target;
+      display: flex;
+      align-items: center;
+    }
+
+    .mw-modal-close {
+      min-height: $modal-close-target;
       display: flex;
       align-items: center;
     }

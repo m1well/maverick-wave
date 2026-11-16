@@ -108,6 +108,8 @@ $control-height-lg: 2.375rem !default;
 // What a control grows to under a thumb. 42px, under Apple's 44pt on purpose: at
 // 44 a phone's buttons read as oversized next to the text they belong to.
 $touch-target: 2.625rem !default;
+// The close button in a modal's head, which sets the height of that head
+$modal-close-target: 2.5rem !default;
 
 // All three fields share it; buttons stay one step above, because a button
 // carries a label and a field carries what the user typed
