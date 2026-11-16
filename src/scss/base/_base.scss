@@ -144,9 +144,13 @@
     // Read by every radius the framework draws - see the radius() function
     --mw-radius-scale: 1;
 
-    // header height
-    --mw-header-height: #{$header-height};
+    // header height; under viewport-fit=cover a home screen app runs under the
+    // status bar, so the header starts below it
+    --mw-header-height: calc(#{$header-height} + env(safe-area-inset-top, 0px));
     --mw-header-inset: #{$header-inset};
+    --mw-header-top: calc(
+      var(--mw-header-inset) + env(safe-area-inset-top, 0px)
+    );
 
     // Read by the anchor offset of anything the sticky section nav can cover.
     // The strip at its tallest: a 42px button under a thumb plus its two

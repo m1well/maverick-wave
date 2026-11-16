@@ -41,7 +41,7 @@ $_mark-round: radius('lg');
 
   .mw-header {
     position: fixed;
-    top: var(--mw-header-inset);
+    top: var(--mw-header-top);
     left: island-edge();
     right: island-edge();
     z-index: z-index('header');
@@ -54,7 +54,7 @@ $_mark-round: radius('lg');
     transition: var(--mw-transition);
     display: flex;
     align-items: center;
-    min-height: calc(var(--mw-header-height) - var(--mw-header-inset));
+    min-height: calc(var(--mw-header-height) - var(--mw-header-top));
 
     // A component host (Angular, React) sitting between the header and its
     // container would become the flex item and shrink to content width, leaving
@@ -621,15 +621,20 @@ $_mark-round: radius('lg');
   // dock in _header-reveal.scss is off under the same class). mw-header-reveal
   // still rides it in. On <html> like the other site-wide variants.
   :root.mw-header-bar {
-    --mw-header-height: #{$header-bar-height};
-    // Not `top: 0` on the header: that would outrank the reveal's resting and
-    // away positions, which are both counted from the inset
+    --mw-header-height: calc(
+      #{$header-bar-height} + env(safe-area-inset-top, 0px)
+    );
     --mw-header-inset: 0px;
+    // Not `top: 0` on the header: that would outrank the reveal's resting and
+    // away positions, which are both counted from this
+    --mw-header-top: 0px;
 
     .mw-header {
       left: 0;
       right: 0;
       min-height: var(--mw-header-height);
+      // The bar reaches up under the status bar, its content stays below it
+      padding-top: calc(#{spacing('2')} + env(safe-area-inset-top, 0px));
       // Percentages of the viewport, so the content box is the page container
       padding-inline: calc((100% - var(--mw-container-width)) / 2);
       border-width: 0 0 1px;

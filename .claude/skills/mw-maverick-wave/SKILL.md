@@ -614,7 +614,7 @@ flex, display, text
     the first paint - the snippet is in `references/javascript.md`. The theme
     classes live on `<html>` for exactly this reason.
 31. **`viewport-fit=cover` belongs in the viewport meta.** The container
-    gutter, the mobile nav panel and the modal padding all budget for the
+    gutter, the header, the mobile nav panel and the modal padding all budget for the
     cutout with `env(safe-area-inset-*)`, and iOS resolves every one of those
     to `0` without it - on a notched phone the content then sits under the
     rounded corner. Nothing errors, which is why the shipped JS writes a
@@ -623,12 +623,14 @@ flex, display, text
     `mw-tile`, `mw-stepper`, both timelines and - since 5.13.0 -
     `mw-gallery-container` and `mw-image-slider` are `@container` queries, so
     any of them in a half-width column takes its narrow layout there while the
-    window is still a desktop. Two consequences: the query only reaches
+    window is still a desktop. Three consequences: the query only reaches
     _descendants_, which is why the gallery wrapper around `mw-gallery`,
-    `mw-gallery-desc` and `mw-gallery-dots` cannot be dropped; and
+    `mw-gallery-desc` and `mw-gallery-dots` cannot be dropped;
     `container-type: inline-size` computes the width as if the element were
     empty, so one dropped into a flex or grid slot needs a width - the
-    framework sets `width: 100%` on its own containers already.
+    framework sets `width: 100%` on its own containers already; and a container
+    scopes CSS counters, so a heading inside a card cannot read a counter that
+    counts the cards and shows 0.
 33. **A scheduled occasion needs `src/js/occasions.js` in the `<head>`.**
     `data-mw-occasions` on `<html>` does nothing without it - main.js only
     plays the intro, the particles and, where the browser has no scroll

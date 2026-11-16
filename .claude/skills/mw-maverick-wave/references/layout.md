@@ -194,12 +194,15 @@ On a phone that would put it past the screen, so there it keeps
 `$header-island-side` (6px) to the side, `mw-action-bar-island` too.
 `--mw-header-height` (77px) is the room it takes - the 63px island plus the
 gap - so main padding, sticky offsets and the anchor scroll clear it without
-knowing it floats. Without `mw-header-reveal` it starts as the full bar and
+knowing it floats. Both add `env(safe-area-inset-top)`: a home screen app under
+`viewport-fit=cover` runs under the status bar, and the header starts below it.
+`--mw-header-top` is the edge it actually sits at; `--mw-header-inset` stays
+the plain 14px, which the nav panel and `mw-action-bar-island` reuse below. Without `mw-header-reveal` it starts as the full bar and
 docks into the island over the first 160px of scroll; without scroll timelines
 (older Safari, Firefox before 159) or under reduced motion it is the island from
 the start.
 `mw-header-bar` on `<html>` brings back the flat bar: full width, fixed at the
-top, 62px, no docking. `mw-header-reveal` still rides it in, as before the
+top, 62px plus the top safe area, which it fills in its own colour, no docking. `mw-header-reveal` still rides it in, as before the
 island.
 
 **Reveal on scroll.** `mw-header-reveal` keeps the header above the screen and

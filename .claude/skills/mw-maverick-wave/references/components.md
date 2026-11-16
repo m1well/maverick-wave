@@ -322,6 +322,9 @@ segment, a focused one draws the ring on it.
   below 360px, and the title, the subtitle and the body padding step up at
   420px. The image height is the one that still follows the window, because it
   is declared on the card itself and a container cannot query itself.
+- Being a container also scopes CSS counters: a heading inside a card cannot
+  read a counter that counts the cards, so `counter()` there shows 0. Number
+  cards in the markup instead.
 - `mw-tile` works the same way, and so do `mw-stepper`, both timelines, the
   gallery wrapper and the image slider: the step labels shrink and the two-sided
   timeline collapses to one side once the component is narrow, whatever the
@@ -858,6 +861,10 @@ are drawn in CSS, no icon markup. A link to an item's `id` opens it - see
 - Sizes: `mw-modal-sm` 370px, default 520px, `mw-modal-lg` 720px,
   `mw-modal-xl` 960px. Height is capped at 80-92dvh (`--mw-modal-max-height`),
   the body scrolls. Below 576px it becomes a bottom sheet - a drawer does not.
+- A fixed row of your own between header and body - tabs, a jump bar - sets its
+  height as `--mw-modal-reserve` on the dialog. Without it the body keeps its
+  full cap and the whole dialog scrolls, header included. The sheet's padding
+  over the home indicator is subtracted already.
 - `mw-modal-full` is the document viewer: up to 1400px wide and a fixed 92dvh
   high, whatever the content - a one-page invoice gets the same box as a
   twelve-page one, and the body takes the room between header and footer.
