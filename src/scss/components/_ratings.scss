@@ -45,6 +45,11 @@
     .mw-rating[data-rating='#{$i}'] {
       & .mw-rating-icon:nth-child(-n + #{$i}) {
         color: var(--mw-primary-text-color);
+
+        // An SVG icon is only an outline; filled, a given star reads apart from an empty one
+        svg {
+          fill: currentColor;
+        }
       }
     }
   }
