@@ -180,11 +180,14 @@ $focus-halo-opacity: 28% !default;
 // down with the lightness, so one $amount reads as a different step on every hue
 // - the yellow goes grey while the blue only dims. Here the six status colors
 // move by the same perceived amount.
+// The helpers below work in OKLab, not OKLch: scaling a and b is the same as
+// scaling chroma at a kept hue, but an almost gray color has no hue the browser
+// keeps - it reads `none` as 0 degrees, and a gray page got faintly red cards.
 @function shade($name, $amount) {
   $factor: math.div(100% - $amount, 100%);
 
   @return string.unquote(
-    'oklch(from var(--mw-#{$name}) calc(l * #{$factor}) c h)'
+    'oklab(from var(--mw-#{$name}) calc(l * #{$factor}) a b)'
   );
 }
 
@@ -196,7 +199,7 @@ $focus-halo-opacity: 28% !default;
   $rest: math.div(100% - $amount, 100%);
 
   @return string.unquote(
-    'oklch(from var(--mw-#{$name}) calc(l + (1 - l) * #{$lift}) calc(c * #{$rest}) h)'
+    'oklab(from var(--mw-#{$name}) calc(l + (1 - l) * #{$lift}) calc(a * #{$rest}) calc(b * #{$rest}))'
   );
 }
 
@@ -217,17 +220,17 @@ $focus-halo-opacity: 28% !default;
   );
 }
 
-// Clamp lightness in OKLch, keep hue and chroma: the same expression lifts a very
+// Clamp lightness, keep hue and chroma: the same expression lifts a very
 // dark color, deepens a very light one and leaves everything between alone
 @function ink-on-dark($name, $lightness: $ink-lightness-dark) {
   @return string.unquote(
-    'oklch(from var(--mw-#{$name}) max(l, #{$lightness}) c h)'
+    'oklab(from var(--mw-#{$name}) max(l, #{$lightness}) a b)'
   );
 }
 
 @function ink-on-light($name) {
   @return string.unquote(
-    'oklch(from var(--mw-#{$name}) min(l, #{$ink-lightness-light}) c h)'
+    'oklab(from var(--mw-#{$name}) min(l, #{$ink-lightness-light}) a b)'
   );
 }
 
@@ -235,7 +238,7 @@ $focus-halo-opacity: 28% !default;
 // because a darker surface carries less color, not the same color darker.
 @function surface($name, $factor) {
   @return string.unquote(
-    'oklch(from var(--mw-#{$name}) calc(l * #{$factor}) calc(c * #{$factor}) h)'
+    'oklab(from var(--mw-#{$name}) calc(l * #{$factor}) calc(a * #{$factor}) calc(b * #{$factor}))'
   );
 }
 

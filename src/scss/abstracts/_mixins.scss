@@ -496,8 +496,8 @@ $_hover-hosts: '.mw-card, .mw-tile, .mw-testimonial';
     // Light: the held-back arc at full strength. Dark: lifted, never mixed toward
     // white. A light box on a dark page gets the light rule via color-scheme.
     --_corner-hover: light-dark(
-      oklch(from var(--mw-corner-accent) l c h / 1),
-      oklch(from var(--mw-corner-accent) max(l, 0.78) c h / 1)
+      oklab(from var(--mw-corner-accent) l a b / 1),
+      oklab(from var(--mw-corner-accent) max(l, 0.78) a b / 1)
     );
     --mw-scroll-hint-cover: var(--_tone);
     background-color: var(--_tone);

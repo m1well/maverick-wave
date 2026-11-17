@@ -6,7 +6,7 @@
   // surface(), .mw-hover-static in hover-move().
 
   // One brand colour instead of two. Every secondary tone is derived from
-  // --mw-secondary-color with color-mix() and oklch(from ...), so the two lines
+  // --mw-secondary-color with color-mix() and oklab(from ...), so the two lines
   // below carry through to hovers, tints, borders and both themes' ink.
   :root.mw-accent-single {
     --mw-secondary-color: var(--mw-primary-color);
@@ -299,7 +299,7 @@
 @layer mw.utilities {
   // Near-black from a root source: ink would be a light slab on a dark page
   :root.mw-shadows-hard {
-    --mw-shadow-hard: oklch(from var(--mw-light-text-color) min(l, 0.12) c h);
+    --mw-shadow-hard: oklab(from var(--mw-light-text-color) min(l, 0.12) a b);
 
     @each $level, $offset in (1: 2px, 2: 4px, 3: 6px, 4: 8px, 5: 10px) {
       --mw-elevation-#{$level}: #{$offset} #{$offset} 0 var(--mw-shadow-hard);
