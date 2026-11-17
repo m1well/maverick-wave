@@ -12,6 +12,8 @@ $frame-lip: #0c0d10;
 $bezel: #060708;
 $metal: #2e3138;
 $metal-light: #5b606b;
+// How far the phone's side keys reach past its box, in cqw of the phone
+$key-reach: 2.1;
 
 // A window caught in the glass: one soft diagonal with a hard edge
 $glare: linear-gradient(
@@ -210,6 +212,8 @@ $glare: linear-gradient(
   .mw-device-phone {
     --mw-device-viewport: 390px;
 
+    // Leaves the keys room in the column, or they scroll or get cut off
+    width: calc(100% / #{1 + $key-reach * 0.02});
     max-width: 22rem;
     margin-inline: auto;
     aspect-ratio: 9 / 19.5;
@@ -252,7 +256,7 @@ $glare: linear-gradient(
 
     &::before {
       top: 22cqw;
-      left: -2.1cqw;
+      left: -$key-reach * 1cqw;
       height: 34cqw;
       background: linear-gradient(
         $frame-edge 0 18%,
@@ -265,7 +269,7 @@ $glare: linear-gradient(
 
     &::after {
       top: 32cqw;
-      right: -2.1cqw;
+      right: -$key-reach * 1cqw;
       height: 18cqw;
       background-color: $frame-edge;
     }
