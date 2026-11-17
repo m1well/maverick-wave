@@ -39,9 +39,14 @@
     color: inherit;
     text-decoration: none;
 
-    &:hover,
+    &:is(a, button):hover,
     &:focus-visible {
       background: color-mix(in srgb, #000 10%, transparent);
+    }
+
+    // Without a link the ribbon is chrome, so the arrow stays over its text
+    &:not(a, button) {
+      cursor: default;
     }
 
     @include focus-ring-inset;
