@@ -10,8 +10,8 @@
     // would hide the block forever, which is what the @supports guard is for.
     //
     // `backwards`, not `both`: a forwards fill keeps the transform applied, and
-    // that beats every author rule - the card loses its hover lift and stays a
-    // stacking context. Longhands and never the shorthand, which esbuild
+    // that beats every author transform and leaves the block a stacking
+    // context. Longhands and never the shorthand, which esbuild
     // collapses into one `animation:` that cannot carry a timeline.
     @supports (animation-timeline: view()) {
       :root:not(.mw-scroll-static) :is(.mw-reveal, .mw-reveal-stagger > *) {
@@ -71,8 +71,7 @@
     .mw-reveal-run {
       @include motion-safe {
         // `backwards` for the reason above - a forwards fill would pin the
-        // transform and cost the card its hover lift. The delay comes inline,
-        // from the element's column.
+        // transform. The delay comes inline, from the element's column.
         animation-name: mw-reveal;
         animation-duration: var(--mw-duration-slower);
         animation-timing-function: var(--mw-ease-out);
